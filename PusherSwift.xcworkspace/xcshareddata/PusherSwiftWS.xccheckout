@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AEFC3835-6A20-4D21-B2D9-6885DB1C4A9A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PusherSwiftWS</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E8E161960310459E55D34BE2F09138438EABD3E8</key>
+		<string>github.com:hamchapman/pusher-swift-test.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PusherSwiftWS.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E8E161960310459E55D34BE2F09138438EABD3E8</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:hamchapman/pusher-swift-test.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E8E161960310459E55D34BE2F09138438EABD3E8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E8E161960310459E55D34BE2F09138438EABD3E8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PusherSwiftWS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
