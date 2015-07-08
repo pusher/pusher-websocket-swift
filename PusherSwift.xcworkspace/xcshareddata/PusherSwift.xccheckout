@@ -10,14 +10,14 @@
 	<string>PusherSwift</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>E8E161960310459E55D34BE2F09138438EABD3E8</key>
+		<key>476F0FD4FFE5EB719F8FC0D464CB7E220F8131EF</key>
 		<string>github.com:hamchapman/pusher-swift-test.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>PusherSwift.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E8E161960310459E55D34BE2F09138438EABD3E8</key>
+		<key>476F0FD4FFE5EB719F8FC0D464CB7E220F8131EF</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E8E161960310459E55D34BE2F09138438EABD3E8</string>
+	<string>476F0FD4FFE5EB719F8FC0D464CB7E220F8131EF</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E8E161960310459E55D34BE2F09138438EABD3E8</string>
+			<string>476F0FD4FFE5EB719F8FC0D464CB7E220F8131EF</string>
 			<key>IDESourceControlWCCName</key>
 			<string>pusher-websocket-swift</string>
 		</dict>
