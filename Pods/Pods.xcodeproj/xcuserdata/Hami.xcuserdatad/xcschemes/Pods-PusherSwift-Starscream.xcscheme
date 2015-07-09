@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "56E68083EE01636FFFAED045"
+               BlueprintIdentifier = "669EE7DFE453A591FC53A46F"
                BuildableName = "Starscream.framework"
                BlueprintName = "Pods-PusherSwift-Starscream"
                ReferencedContainer = "container:Pods.xcodeproj">

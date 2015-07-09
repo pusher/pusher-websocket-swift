@@ -16,4 +16,5 @@ Pod::Spec.new do |s|
 
   s.dependency 'Starscream', '~> 0.9.1'
   s.dependency 'CryptoSwift', '~> 0.0.10'
+  s.dependency 'ReachabilitySwift'
 end

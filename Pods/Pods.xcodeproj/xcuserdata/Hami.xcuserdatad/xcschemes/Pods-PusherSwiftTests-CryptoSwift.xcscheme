@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AE420676E409EC9E781A61E5"
+               BlueprintIdentifier = "FCB8B7126665B664C5D26F7B"
                BuildableName = "CryptoSwift.framework"
                BlueprintName = "Pods-PusherSwiftTests-CryptoSwift"
                ReferencedContainer = "container:Pods.xcodeproj">
