@@ -14,18 +14,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        let pusher = Pusher(key: "afa4d38348f89ba9c398", options: ["secret": "MY SECRET"])
-        let pusher = Pusher(key: "afa4d38348f89ba9c398", options: ["authEndpoint": "http://localhost:9292/pusher/auth"])
+        let pusher = Pusher(key: "MY APP KEY", options: ["secret": "MY SECRET"])
         pusher.connect()
-        let chan = pusher.subscribe("presence-test-channel")
+        let chan = pusher.subscribe("test-channel")
         
 
         chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
             println(data)
             if let data = data as? Dictionary<String, AnyObject> {
-                if let testVal = data["test"] as? String, testArray = data["test_array"] as? [Int] {
+                if let testVal = data["test"] as? String {
                     println(testVal)
-                    println(testArray)
                 }
             }
         })
