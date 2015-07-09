@@ -2,15 +2,6 @@
 
 [![Build Status](https://travis-ci.org/pusher/pusher-websocket-swift.svg?branch=master)](https://travis-ci.org/pusher/pusher-websocket-swift)
 
-## Communication
-
-- If you **need help**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift). (Tag 'pusherswift').
-- If you still **need help**, visit [Pusher support](https://support.pusher.com).
-- If you'd like to **ask a general question**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift).
-- If you **found a bug**, open an issue.
-- If you **have a feature request**, open an issue.
-- If you **want to contribute**, submit a pull request (preferrably with some tests :) ).
-
 ## Table of Contents
 
 * [Installation](#installation)
@@ -21,6 +12,7 @@
   * [Globally](#global-events)
   * [Per-channel](#per-channel-events)
 * [Testing](#testing)
+* [Communication](#communication)
 * [Credits](#credits)
 * [License](#license)
 
@@ -175,6 +167,16 @@ You can unbind from events at both the global and per channel level. For both ob
 ## Testing
 
 There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode). The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift).
+
+
+## Communication
+
+- If you **need help**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift). (Tag 'pusherswift').
+- If you still **need help**, visit [Pusher support](https://support.pusher.com).
+- If you'd like to **ask a general question**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift).
+- If you **found a bug**, open an issue.
+- If you **have a feature request**, open an issue.
+- If you **want to contribute**, submit a pull request (preferrably with some tests :) ).
 
 
 ## Credits
