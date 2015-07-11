@@ -7,18 +7,18 @@ use_frameworks!
 
 target 'PusherSwift', exclusive: true do
   pod 'PusherSwift', path: './'
-  pod 'Starscream'
-  pod 'CryptoSwift'
-  pod 'ReachabilitySwift'
+  pod 'Starscream', '~> 1.0.0'
+  pod 'CryptoSwift', '~> 0.0.14'
+  pod 'ReachabilitySwift', '~> 2.0'
   xcodeproj 'PusherSwift'
 end
 
 target 'PusherSwiftTests', exclusive: true do
   pod 'PusherSwift', path: './'
-  pod 'Quick', '~> 0.3.0'
-  pod 'Nimble'
-  pod 'Starscream'
-  pod 'CryptoSwift'
-  pod 'ReachabilitySwift'
+  pod 'Quick', git: 'https://github.com/Quick/Quick.git', branch: 'swift-2.0'
+  pod 'Nimble', '2.0.0-rc.3'
+  pod 'Starscream', '~> 1.0.0'
+  pod 'CryptoSwift', '~> 0.0.14'
+  pod 'ReachabilitySwift', '~> 2.0'
   xcodeproj 'PusherSwift'
 end

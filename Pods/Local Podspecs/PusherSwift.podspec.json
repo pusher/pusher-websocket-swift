@@ -1,6 +1,6 @@
 {
   "name": "PusherSwift",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "A Pusher client library in Swift",
   "homepage": "https://github.com/pusher/pusher-websocket-swift",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/pusher/pusher-websocket-swift.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "social_media_url": "https://twitter.com/pusher",
   "requires_arc": true,
@@ -20,13 +20,13 @@
   },
   "dependencies": {
     "Starscream": [
-      "~> 0.9.1"
+      "~> 1.0.0"
     ],
     "CryptoSwift": [
-      "~> 0.0.13"
+      "~> 0.0.14"
     ],
     "ReachabilitySwift": [
-
+      "~> 2.0"
     ]
   }
 }

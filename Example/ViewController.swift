@@ -17,13 +17,13 @@ class ViewController: UIViewController {
         let pusher = Pusher(key: "MY APP KEY", options: ["secret": "MY SECRET"])
         pusher.connect()
         let chan = pusher.subscribe("test-channel")
-        
+
 
         chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
-            println(data)
+            print(data)
             if let data = data as? Dictionary<String, AnyObject> {
                 if let testVal = data["test"] as? String {
-                    println(testVal)
+                    print(testVal)
                 }
             }
         })

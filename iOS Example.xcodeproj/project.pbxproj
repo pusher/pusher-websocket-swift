@@ -124,6 +124,7 @@
 		33831C561A9CEEE900B124F1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Pusher;
 				TargetAttributes = {
