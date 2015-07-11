@@ -110,14 +110,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 33831CFA1A9E1F9B00B124F1 /* Pods.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = F1286EFE6DEE0191F4D262AA;
+			remoteGlobalIDString = 40D5453B54FC41208969FDF7;
 			remoteInfo = "Pods-PusherSwiftTests-Nimble";
 		};
 		33D34BEC1AC034A400CF5F46 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33831CFA1A9E1F9B00B124F1 /* Pods.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 4D74F41FDE3D7F065567CC19;
+			remoteGlobalIDString = 42D9A1A7422DDFE741257557;
 			remoteInfo = "Pods-PusherSwiftTests-Quick";
 		};
 /* End PBXContainerItemProxy section */
@@ -281,6 +281,7 @@
 				33831C871A9CF61600B124F1 /* Resources */,
 				6F7574FF8A84C1E9F630094E /* Embed Pods Frameworks */,
 				ADE58516A2C8AB78F3CCE708 /* Copy Pods Resources */,
+				3358FA6E1B4FD8C000AB0670 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -460,6 +461,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3358FA6E1B4FD8C000AB0670 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
+		};
 		45D017C6911C3E432B5B1065 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

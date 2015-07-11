@@ -181,7 +181,7 @@ There are a set of tests for the library that can be run using the standard meth
 
 ## Credits
 
-PusherSwift is owned and maintained by the [Pusher](https://pusher.com). It was origianlly cretead by [Hamilton Chapman](https://github.com/hamchapman)
+PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was origianlly cretead by [Hamilton Chapman](https://github.com/hamchapman)
 
 ## License
 
