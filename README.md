@@ -46,6 +46,24 @@ Then, run the following command:
 $ pod install
 ```
 
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate PusherSwift into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "pusher/pusher-websocket-swift"
+```
+
+
 ## Configuration
 
 There are a number of configuration parameters which can be set for the Pusher client. They are:
