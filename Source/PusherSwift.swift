@@ -432,9 +432,8 @@ public class PusherConnection: WebSocketDelegate {
             }
         })
 
-        if let task = task {
-            task.resume()
-        }
+
+        task.resume()
     }
 
     private func handleAuthResponse(json: Dictionary<String, AnyObject>, channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) {

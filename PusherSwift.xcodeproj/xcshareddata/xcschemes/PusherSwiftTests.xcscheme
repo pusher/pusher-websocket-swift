@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5D4190B425439C44A3E6DE3"
+               BlueprintIdentifier = "467D39FB9C22266922E3BE0C"
                BuildableName = "CryptoSwift.framework"
                BlueprintName = "Pods-PusherSwift-CryptoSwift"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5705667FBB3E83371465F390"
+               BlueprintIdentifier = "CBEC1F2A189BCDF6D366AD76"
                BuildableName = "ReachabilitySwift.framework"
                BlueprintName = "Pods-PusherSwift-ReachabilitySwift"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "74960117B55C6F11BF815527"
+               BlueprintIdentifier = "63DE6D52AEF95C55DA2156B4"
                BuildableName = "Starscream.framework"
                BlueprintName = "Pods-PusherSwift-Starscream"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -124,7 +124,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E5D4190B425439C44A3E6DE3"
+            BlueprintIdentifier = "467D39FB9C22266922E3BE0C"
             BuildableName = "CryptoSwift.framework"
             BlueprintName = "Pods-PusherSwift-CryptoSwift"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">

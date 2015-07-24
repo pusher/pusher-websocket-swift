@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F32EDE589329FDC190E33E9C"
+               BlueprintIdentifier = "959347E466AD5615AF2A0C4E"
                BuildableName = "PusherSwift.framework"
                BlueprintName = "PusherSwift"
                ReferencedContainer = "container:Pods.xcodeproj">
