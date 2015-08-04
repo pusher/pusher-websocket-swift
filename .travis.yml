@@ -1,4 +1,4 @@
 language: objective-c
 osx_image: xcode6.4
 script:
-  - xcodebuild test -workspace PusherSwift.xcworkspace -scheme PusherSwift -sdk iphonesimulator8.4 ONLY_ACTIVE_ARCH=NO
+  - xcodebuild test -workspace PusherSwift.xcworkspace -scheme PusherSwift -destination OS=8.4,name=iPhone\ 6 -sdk iphonesimulator8.4 ONLY_ACTIVE_ARCH=NO
