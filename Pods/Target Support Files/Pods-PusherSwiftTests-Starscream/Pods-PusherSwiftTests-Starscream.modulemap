@@ -1,6 +1,0 @@
-framework module Starscream {
-  umbrella header "Pods-PusherSwiftTests-Starscream-umbrella.h"
-
-  export *
-  module * { export * }
-}

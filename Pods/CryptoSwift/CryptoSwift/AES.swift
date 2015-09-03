@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class AES {
+final public class AES {
     
     public enum AESVariant:Int {
-        case unknown, aes128, aes192, aes256
+        case aes128 = 1, aes192, aes256
         
         var Nk:Int { // Nk words
             return [4,6,8][self.rawValue - 1]
@@ -38,7 +38,7 @@ public class AES {
         case 256:
             return .aes256
         default:
-            return .unknown
+            preconditionFailure("Unknown AES variant for given key.")
         }
     }
     private let key:[UInt8]
@@ -148,8 +148,7 @@ public class AES {
         if let padding = padding {
             finalBytes = padding.add(bytes, blockSize: AES.blockSize)
         } else if (bytes.count % AES.blockSize != 0) {
-            // 128 bit block exceeded, need padding
-            assert(false, "AES 128-bit block exceeded!");
+            assert(false, "AES block size exceeded!");
             return nil
         }
 
@@ -194,8 +193,7 @@ public class AES {
     
     public func decrypt(bytes:[UInt8], padding:Padding? = PKCS7()) -> [UInt8]? {
         if (bytes.count % AES.blockSize != 0) {
-            // 128 bit block exceeded
-            assert(false,"AES 128-bit block exceeded!")
+            assert(false,"AES block size exceeded!")
             return nil
         }
         

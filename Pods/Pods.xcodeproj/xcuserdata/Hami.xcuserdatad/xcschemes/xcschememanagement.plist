@@ -4,22 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-PusherSwift-CryptoSwift.xcscheme</key>
+		<key>CryptoSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-PusherSwift-PusherSwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-PusherSwift-ReachabilitySwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-PusherSwift-Starscream.xcscheme</key>
+		<key>Nimble.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -29,37 +19,27 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-PusherSwiftTests-CryptoSwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-PusherSwiftTests-Nimble.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-PusherSwiftTests-PusherSwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-PusherSwiftTests-Quick.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-PusherSwiftTests-ReachabilitySwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-PusherSwiftTests-Starscream.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-PusherSwiftTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PusherSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Quick.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ReachabilitySwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Starscream.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -67,122 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>23FAD5E08FBFBC9670A2EBCE</key>
+		<key>07FD4DD896178EAB3A9B3CEE3416AB06</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>40D5453B54FC41208969FDF7</key>
+		<key>0C66C30381F86C3D642FC983CCADEBB6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>42D9A1A7422DDFE741257557</key>
+		<key>424B4CB768A24CF753C56220BA582055</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>467D39FB9C22266922E3BE0C</key>
+		<key>7B5D5F978B27A3C393E5E30B9E75BE51</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>49DFBF2BC929A43068185786</key>
+		<key>B6687BE80596D131ECD80F84F57D064A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4B657340C6A5E8BA4045EBAF</key>
+		<key>C69CEF6846E703AD95E9668E6114FAFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>512AF4C3E6FD979348CE1DEC</key>
+		<key>E46F7A3949A4CB02A0D2EDC3B7CC21AE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>555241AFE60F17C810F6C412</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5897776AC9025E0C8AF32C89</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>59C785842D27D1201EA05C62</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5B899C8BFA9BD407832A65B0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>63DE6D52AEF95C55DA2156B4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>669EE7DFE453A591FC53A46F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6ADEF685FED3893ACCBAEDE9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8D5E0DA396C674A4F8B10D96</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8F1F808BC44EBA17E7BC8966</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>980E13D836B47EB10F92A514</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A1BE4168514A185575DEBE7A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C04444E5B80F4D5B77AF50BB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CBEC1F2A189BCDF6D366AD76</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DCB878ECF15C85E81A5B099D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DCFC318545560E14D2DD526F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EB4D33FCAB550D3F8961D6A5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FCB8B7126665B664C5D26F7B</key>
+		<key>F394983934992BB27C173143B45065D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

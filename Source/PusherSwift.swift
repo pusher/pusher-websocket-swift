@@ -370,7 +370,9 @@ public class PusherConnection: WebSocketDelegate {
             msgBuff += msg.utf8
             
             let hmac = Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff)
-            let signature = NSData.withBytes(hmac!).hexString
+            
+            
+            let signature = NSData.withBytes(hmac!).toHexString()
             let auth = "\(self.key):\(signature)".lowercaseString
             
             if isPrivateChannel(channel.name) {

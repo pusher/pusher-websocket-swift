@@ -1,1 +1,0 @@
-PODS_PUSHERSWIFT_REACHABILITYSWIFT_OTHER_LDFLAGS = -framework "SystemConfiguration"

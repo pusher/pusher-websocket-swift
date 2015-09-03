@@ -1,0 +1,1 @@
+REACHABILITYSWIFT_OTHER_LDFLAGS = -framework "SystemConfiguration"
