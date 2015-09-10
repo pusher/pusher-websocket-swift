@@ -71,8 +71,7 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
     } else {
         url = "wss://ws.pusherapp.com:443/app/\(key)"
     }
-    url += "?client=pusher-swift&version=\(VERSION)&protocol=\(PROTOCOL)"
-    return url
+    return "\(url)?client=pusher-swift&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
 
 public struct PusherClientOptions {
