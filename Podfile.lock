@@ -2,7 +2,7 @@ PODS:
   - CryptoSwift (0.0.13)
   - Nimble (1.0.0)
   - PusherSwift (0.1.0):
-    - CryptoSwift (~> 0.0.10)
+    - CryptoSwift (~> 0.0.13)
     - ReachabilitySwift
     - Starscream (~> 0.9.1)
   - Quick (0.3.1)
@@ -24,7 +24,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CryptoSwift: 33e2ba400d514a054c69e9f9f6c08a992e42f91c
   Nimble: 8bee528e5fcc403653076545db562d2b5db7bb87
-  PusherSwift: 9ca7f8824673a93f5f1f8176f775455fdb73314b
+  PusherSwift: 61929d1945494341039cd5b79469eee548e73452
   Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
   ReachabilitySwift: 1e53abddb01111deac0d229dabdb8bb043567b18
   Starscream: 0ad8f312bb826c3d7610bd842d66528eee34ad81

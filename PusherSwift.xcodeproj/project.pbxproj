@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14F31F427F55AB7E873B78B0 /* Pods_PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B703EE8CF9F07BBA274AA1 /* Pods_PusherSwift.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		330D1BBC1B98A61900462DEA /* Pods_PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33831D081A9E1F9B00B124F1 /* Pods_PusherSwift.framework */; };
 		33831CD21A9CFF8200B124F1 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
 		33831CD41A9CFFD900B124F1 /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
@@ -103,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				330D1BBC1B98A61900462DEA /* Pods_PusherSwift.framework in Frameworks */,
+				14F31F427F55AB7E873B78B0 /* Pods_PusherSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
