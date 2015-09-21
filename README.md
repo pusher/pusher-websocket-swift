@@ -92,9 +92,10 @@ A Websocket connection is established by providing your API key to the construct
 
 ```swift
 let pusher = Pusher(key: "APP_KEY")
+pusher.connect()
 ```
 
-This returns a client object which can then be used to subscribe to channels.
+This returns a client object which can then be used to subscribe to channels and then calling `connect()` triggers the connection process to start.
 
 
 ## Subscribing
