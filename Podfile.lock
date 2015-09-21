@@ -1,32 +1,40 @@
 PODS:
-  - CryptoSwift (0.0.13)
-  - Nimble (1.0.0)
-  - PusherSwift (0.1.0):
-    - CryptoSwift (~> 0.0.13)
-    - ReachabilitySwift
-    - Starscream (~> 0.9.1)
-  - Quick (0.3.1)
-  - ReachabilitySwift (1.1)
-  - Starscream (0.9.4)
+  - CryptoSwift (0.0.14)
+  - Nimble (2.0.0-rc.3)
+  - PusherSwift (0.1.2):
+    - CryptoSwift (~> 0.0.14)
+    - ReachabilitySwift (~> 2.0)
+    - Starscream (~> 1.0.0)
+  - Quick (0.6.0)
+  - ReachabilitySwift (2.0)
+  - Starscream (1.0.0)
 
 DEPENDENCIES:
-  - CryptoSwift
-  - Nimble
+  - CryptoSwift (~> 0.0.14)
+  - Nimble (= 2.0.0-rc.3)
   - PusherSwift (from `./`)
-  - Quick (~> 0.3.0)
-  - ReachabilitySwift
-  - Starscream
+  - Quick (from `https://github.com/Quick/Quick.git`, branch `swift-2.0`)
+  - ReachabilitySwift (~> 2.0)
+  - Starscream (~> 1.0.0)
 
 EXTERNAL SOURCES:
   PusherSwift:
     :path: "./"
+  Quick:
+    :branch: swift-2.0
+    :git: https://github.com/Quick/Quick.git
+
+CHECKOUT OPTIONS:
+  Quick:
+    :commit: 93408cc119d5b8a65a26ef0382f5790dd5d7dc01
+    :git: https://github.com/Quick/Quick.git
 
 SPEC CHECKSUMS:
-  CryptoSwift: 33e2ba400d514a054c69e9f9f6c08a992e42f91c
-  Nimble: 8bee528e5fcc403653076545db562d2b5db7bb87
-  PusherSwift: 61929d1945494341039cd5b79469eee548e73452
-  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
-  ReachabilitySwift: 1e53abddb01111deac0d229dabdb8bb043567b18
-  Starscream: 0ad8f312bb826c3d7610bd842d66528eee34ad81
+  CryptoSwift: 5a6b725e2ad65a789f5f435dd434d38eb2c40b46
+  Nimble: 9dff98ee195ffe7351d3b2fb01d3a1420fd97948
+  PusherSwift: b147bd3e3698738105e054fa1e07cd1419f3fb2d
+  Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
+  ReachabilitySwift: 227b98ae7ec99e1c01148b17fb22357aa91a5675
+  Starscream: 24012f5dc21c634b66e2270b1bb95771b5316d5b
 
 COCOAPODS: 0.38.2
