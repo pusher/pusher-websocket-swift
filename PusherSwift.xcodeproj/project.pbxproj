@@ -12,7 +12,7 @@
 		33831CD21A9CFF8200B124F1 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
 		33831CD41A9CFFD900B124F1 /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
 		33831CD71A9CFFF200B124F1 /* PusherSwiftTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwiftTest.h */; };
-		33831CD81A9D3B3900B124F1 /* Pods_PusherSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453D0A4BB2E30972E26203E2 /* Pods_PusherSwiftTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D7BADE0A0DECC1423F0EB60C /* Pods_PusherSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453D0A4BB2E30972E26203E2 /* Pods_PusherSwiftTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +58,13 @@
 			remoteGlobalIDString = 95D0E26845A10E4410F6F8A75AEC322F;
 			remoteInfo = Starscream;
 		};
+		332F9F5F1BB0682400D0E81A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33831CFA1A9E1F9B00B124F1 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4A6ED7691F7ABDFD3F8A3BF5D2A8478;
+			remoteInfo = "Pods-PusherSwiftTests";
+		};
 		33831C961A9CF61600B124F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33831C4A1A9CEDF800B124F1 /* Project object */;
@@ -71,20 +78,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 02E4EA643F0036B9F13E6B31;
 			remoteInfo = "Pods-PusherSwift";
-		};
-		33D34BEA1AC034A400CF5F46 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33831CFA1A9E1F9B00B124F1 /* Pods.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BA0DF9782EAA1B213207F9B9;
-			remoteInfo = "Pods-PusherSwiftTests-Nimble";
-		};
-		33D34BEC1AC034A400CF5F46 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33831CFA1A9E1F9B00B124F1 /* Pods.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = CD4FCEF5AF66EF172678CB75;
-			remoteInfo = "Pods-PusherSwiftTests-Quick";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -119,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33831CD81A9D3B3900B124F1 /* Pods_PusherSwiftTests.framework in Frameworks */,
+				D7BADE0A0DECC1423F0EB60C /* Pods_PusherSwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +183,7 @@
 				330D1BB11B98A61500462DEA /* CryptoSwift.framework */,
 				330D1BB31B98A61500462DEA /* Nimble.framework */,
 				33831D081A9E1F9B00B124F1 /* Pods_PusherSwift.framework */,
-				33831D121A9E1F9B00B124F1 /* Pods_PusherSwiftTests.framework */,
+				332F9F601BB0682400D0E81A /* Pods_PusherSwiftTests.framework */,
 				330D1BB51B98A61500462DEA /* PusherSwift.framework */,
 				330D1BB71B98A61500462DEA /* Quick.framework */,
 				330D1BB91B98A61500462DEA /* ReachabilitySwift.framework */,
@@ -360,18 +353,18 @@
 			remoteRef = 330D1BBA1B98A61500462DEA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		332F9F601BB0682400D0E81A /* Pods_PusherSwiftTests.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods_PusherSwiftTests.framework;
+			remoteRef = 332F9F5F1BB0682400D0E81A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		33831D081A9E1F9B00B124F1 /* Pods_PusherSwift.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Pods_PusherSwift.framework;
 			remoteRef = 33831D071A9E1F9B00B124F1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		33831D121A9E1F9B00B124F1 /* Pods_PusherSwiftTests.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pods_PusherSwiftTests.framework;
-			remoteRef = 33831D111A9E1F9B00B124F1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
