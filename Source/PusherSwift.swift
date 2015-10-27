@@ -491,18 +491,26 @@ public class PusherConnection: WebSocketDelegate {
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
-        let reachability = Reachability.reachabilityForInternetConnection()
-
-        reachability!.whenReachable = { reachability in
-            if !self.connected {
-                self.socket.connect()
+        do {
+            let reachability = try Reachability.reachabilityForInternetConnection()
+            
+            reachability.whenReachable = { reachability in
+                if !self.connected {
+                    self.socket.connect()
+                }
             }
-        }
-        reachability!.whenUnreachable = { reachability in
+            reachability.whenUnreachable = { reachability in
+                print("Network unreachable")
+            }
+            
+            do {
+                try reachability.startNotifier()
+            } catch {
+                print("Network unreachable")
+            }
+        } catch {
             print("Network unreachable")
         }
-
-        reachability!.startNotifier()
     }
 
     public func websocketDidConnect(ws: WebSocket) {}
