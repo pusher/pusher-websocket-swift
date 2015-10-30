@@ -120,7 +120,7 @@ public struct PusherClientOptions {
         self.userDataFetcher = optionsMergedWithDefaults["userDataFetcher"] as? () -> PusherUserData
         self.attemptToReturnJSONObject = optionsMergedWithDefaults["attemptToReturnJSONObject"] as? Bool
         self.host = optionsMergedWithDefaults["host"] as? String
-        self.port = optionsMergedWithDefaults["host"] as? Int
+        self.port = optionsMergedWithDefaults["port"] as? Int
 
         if let _ = authEndpoint {
             self.authMethod = .Endpoint
