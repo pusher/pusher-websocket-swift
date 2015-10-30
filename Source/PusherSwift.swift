@@ -497,7 +497,7 @@ public class PusherConnection: WebSocketDelegate {
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
-        let reachability = Reachability.reachabilityForInternetConnection()
+        let reachability = try! Reachability.reachabilityForInternetConnection()
 
         reachability!.whenReachable = { reachability in
             if !self.connected {
@@ -508,7 +508,7 @@ public class PusherConnection: WebSocketDelegate {
             print("Network unreachable")
         }
 
-        reachability!.startNotifier()
+        try! reachability.startNotifier()
     }
 
     public func websocketDidConnect(ws: WebSocket) {}

@@ -31,45 +31,97 @@ Just drop the **Reachability.swift** file into your project. That's it!
 
 ## Example - closures
 
-    let reachability = Reachability.reachabilityForInternetConnection()
+````
+    let reachability: Reachability
+    do {
+        reachability = try Reachability.reachabilityForInternetConnection()
+    } catch {
+        print("Unable to create Reachability")
+        return
+    }
+
 
     reachability.whenReachable = { reachability in
-        if reachability.isReachableViaWiFi() {
-            println("Reachable via WiFi")
-        } else {
-            println("Reachable via Cellular")
+        // this is called on a background thread, but UI updates must
+        // be on the main thread, like this:
+        dispatch_async(dispatch_get_main_queue()) {
+            if reachability.isReachableViaWiFi() {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
         }
     }
     reachability.whenUnreachable = { reachability in
-        println("Not reachable")
+        // this is called on a background thread, but UI updates must
+        // be on the main thread, like this:
+        dispatch_async(dispatch_get_main_queue()) {
+            print("Not reachable")
+        }
     }
 
-    reachability.startNotifier()
+    do {
+        try reachability.startNotifier()
+    } catch {
+        print(\"Unable to start notifier")
+    }
+
+````
+
+and for stopping notifications
+
+````
+reachability.stopNotifier()
+````
 
 ## Example - notifications
 
-    let reachability = Reachability.reachabilityForInternetConnection()
+This sample will use `NSNotification`s to notify when the interface has changed. They will be delivered on the **MAIN THREAD**, so you *can* do UI updates from within the function.
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
+````
+    let reachability: Reachability
+    do {
+        reachability = try Reachability.reachabilityForInternetConnection()
+    } catch {
+        print("Unable to create Reachability")
+        return
+    }
+
+    NSNotificationCenter.defaultCenter().addObserver(self, 
+                                                     selector: "reachabilityChanged:", 
+                                                     name: ReachabilityChangedNotification, 
+                                                     object: reachability)
     
     reachability.startNotifier()
+````
 
 and
 
+````
     func reachabilityChanged(note: NSNotification) {
 
         let reachability = note.object as! Reachability
 
         if reachability.isReachable() {
             if reachability.isReachableViaWiFi() {
-                println("Reachable via WiFi")
+                print("Reachable via WiFi")
             } else {
-                println("Reachable via Cellular")
+                print("Reachable via Cellular")
             }
         } else {
-            println("Not reachable")
+            print("Not reachable")
         }
     }
+````
+
+and for stopping notifications
+
+````
+reachability.stopNotifier()
+NSNotificationCenter.defaultCenter().removeObserver(self, 
+                                                    name: ReachabilityChangedNotification, 
+                                                    object: reachability)
+````
 
 ## Want to help?
 
