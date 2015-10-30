@@ -499,12 +499,12 @@ public class PusherConnection: WebSocketDelegate {
         }
         let reachability = try! Reachability.reachabilityForInternetConnection()
 
-        reachability!.whenReachable = { reachability in
+        reachability.whenReachable = { reachability in
             if !self.connected {
                 self.socket.connect()
             }
         }
-        reachability!.whenUnreachable = { reachability in
+        reachability.whenUnreachable = { reachability in
             print("Network unreachable")
         }
 
