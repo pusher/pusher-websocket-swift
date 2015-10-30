@@ -85,7 +85,7 @@ public struct PusherClientOptions {
     public let port: Int?
 
     public init(options: [String:Any]?) {
-        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher"]
+        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host"]
 
         if let options = options {
             for (key, _) in options {
