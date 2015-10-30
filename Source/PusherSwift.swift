@@ -67,9 +67,9 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
     if let encrypted = options.encrypted where !encrypted {
-        url = "ws://ws.pusherapp.com:80/app/\(key)"
+        url = "ws://\(options.host):\(options.port)/app/\(key)"
     } else {
-        url = "wss://ws.pusherapp.com:443/app/\(key)"
+        url = "wss://\(options.host):\(options.port)/app/\(key)"
     }
     return "\(url)?client=pusher-swift&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
@@ -81,6 +81,8 @@ public struct PusherClientOptions {
     public let authMethod: AuthMethod?
     public let attemptToReturnJSONObject: Bool?
     public let encrypted: Bool?
+    public let host: String?
+    public let port: Int?
 
     public init(options: [String:Any]?) {
         let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher"]
@@ -94,6 +96,8 @@ public struct PusherClientOptions {
         }
 
         let defaults: [String:AnyObject?] = [
+            "host": "ws.pusherapp.com",
+            "port": 443,
             "encrypted": true,
             "attemptToReturnJSONObject": true,
             "authEndpoint": nil,
@@ -115,6 +119,8 @@ public struct PusherClientOptions {
         self.secret = optionsMergedWithDefaults["secret"] as? String
         self.userDataFetcher = optionsMergedWithDefaults["userDataFetcher"] as? () -> PusherUserData
         self.attemptToReturnJSONObject = optionsMergedWithDefaults["attemptToReturnJSONObject"] as? Bool
+        self.host = optionsMergedWithDefaults["host"] as? String
+        self.port = optionsMergedWithDefaults["host"] as? Int
 
         if let _ = authEndpoint {
             self.authMethod = .Endpoint
