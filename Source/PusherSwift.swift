@@ -67,9 +67,11 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
     if let encrypted = options.encrypted where !encrypted {
-        url = "ws://\(options.host!):\(options.port!)/app/\(key)"
+        let defaultPort = (options.port ?? 80)
+        url = "ws://\(options.host!):\(defaultPort)/app/\(key)"
     } else {
-        url = "wss://\(options.host!):\(options.port!)/app/\(key)"
+        let defaultPort = (options.port ?? 443)
+        url = "wss://\(options.host!):\(defaultPort)/app/\(key)"
     }
     return "\(url)?client=pusher-swift&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
@@ -97,7 +99,6 @@ public struct PusherClientOptions {
 
         let defaults: [String:AnyObject?] = [
             "host": "ws.pusherapp.com",
-            "port": 443,
             "encrypted": true,
             "attemptToReturnJSONObject": true,
             "authEndpoint": nil,
