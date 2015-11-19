@@ -78,6 +78,7 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
 
 public struct PusherClientOptions {
     public let authEndpoint: String?
+    public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
     public let secret: String?
     public let userDataFetcher: (() -> PusherUserData)?
     public let authMethod: AuthMethod?
@@ -88,7 +89,7 @@ public struct PusherClientOptions {
     public let autoReconnect: Bool?
 
     public init(options: [String:Any]?) {
-        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "autoReconnect"]
+        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "autoReconnect", "authRequestCustomizer"]
 
         if let options = options {
             for (key, _) in options {
@@ -105,7 +106,8 @@ public struct PusherClientOptions {
             "authEndpoint": nil,
             "secret": nil,
             "userDataFetcher": nil,
-            "autoReconnect": true
+            "autoReconnect": true,
+            "authRequestCustomizer": nil
         ]
 
         var optionsMergedWithDefaults: [String:Any] = [:]
@@ -125,6 +127,7 @@ public struct PusherClientOptions {
         self.host = optionsMergedWithDefaults["host"] as? String
         self.port = optionsMergedWithDefaults["port"] as? Int
         self.autoReconnect = optionsMergedWithDefaults["autoReconnect"] as? Bool
+        self.authRequestCustomizer = optionsMergedWithDefaults["authRequestCustomizer"] as? (NSMutableURLRequest -> NSMutableURLRequest)
 
         if let _ = authEndpoint {
             self.authMethod = .Endpoint
@@ -147,13 +150,14 @@ public class PusherConnection: WebSocketDelegate {
     public var socket: WebSocket!
     public var URLSession: NSURLSession
 
-    public init(key: String, socket: WebSocket, url: String, options: PusherClientOptions, URLSession: NSURLSession = NSURLSession.sharedSession()) {
-        self.url = url
-        self.key = key
-        self.options = options
-        self.URLSession = URLSession
-        self.socket = socket
-        self.socket.delegate = self
+    public init(key: String, socket: WebSocket, url: String, options: PusherClientOptions,
+        URLSession: NSURLSession = NSURLSession.sharedSession()) {
+            self.url = url
+            self.key = key
+            self.options = options
+            self.URLSession = URLSession
+            self.socket = socket
+            self.socket.delegate = self
     }
 
     private func subscribe(channelName: String) -> PusherChannel {
@@ -384,15 +388,15 @@ public class PusherConnection: WebSocketDelegate {
             var msgBuff = [UInt8]()
             msgBuff += msg.utf8
 
-            let hmac = try! Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff)
-            
-            let signature = NSData.withBytes(hmac).toHexString()
-            let auth = "\(self.key):\(signature)".lowercaseString
+            if let hmac = try? Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
+                let signature = NSData.withBytes(hmac).toHexString()
+                let auth = "\(self.key):\(signature)".lowercaseString
 
-            if isPrivateChannel(channel.name) {
-                self.handlePrivateChannelAuth(auth, channel: channel, callback: callback)
-            } else {
-                self.handlePresenceChannelAuth(auth, channel: channel, channelData: channelData, callback: callback)
+                if isPrivateChannel(channel.name) {
+                    self.handlePrivateChannelAuth(auth, channel: channel, callback: callback)
+                } else {
+                    self.handlePresenceChannelAuth(auth, channel: channel, channelData: channelData, callback: callback)
+                }
             }
         } else {
             print("Authentication method required for private / presence channels but none provided.")
@@ -428,8 +432,12 @@ public class PusherConnection: WebSocketDelegate {
     }
 
     private func sendAuthorisationRequest(endpoint: String, socket: String, channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(endpoint)?socket_id=\(socket)&channel_name=\(channel.name)")!)
+        var request = NSMutableURLRequest(URL: NSURL(string: "\(endpoint)?socket_id=\(socket)&channel_name=\(channel.name)")!)
         request.HTTPMethod = "POST"
+        
+        if let handler = self.options.authRequestCustomizer {
+            request = handler(request)
+        }
 
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
             do {
@@ -440,7 +448,6 @@ public class PusherConnection: WebSocketDelegate {
                 print("Error authorizng channel")
             }
         })
-
 
         task.resume()
     }
@@ -505,16 +512,20 @@ public class PusherConnection: WebSocketDelegate {
         if let reconnect = self.options.autoReconnect where reconnect {
             let reachability = try! Reachability.reachabilityForInternetConnection()
             
-            reachability.whenReachable = { reachability in
-                if !self.connected {
-                    self.socket.connect()
+            if let reachability = try? Reachability.reachabilityForInternetConnection() {
+
+                reachability.whenReachable = { reachability in
+                    if !self.connected {
+                        self.socket.connect()
+                    }
+                }
+                
+                reachability.whenUnreachable = { reachability in
+                    print("Network unreachable")
                 }
             }
-            reachability.whenUnreachable = { reachability in
-                print("Network unreachable")
-            }
-            
-            try! reachability.startNotifier()
+
+            if let _ = try? reachability.startNotifier() {}
         }
     }
 
