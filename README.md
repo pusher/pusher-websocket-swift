@@ -71,6 +71,7 @@ There are a number of configuration parameters which can be set for the Pusher c
 - `authEndpoint` - the URL that the library will make an authentication request to if attempting to subscribe to a private or presence channel and you have not provided a secret
 - `secret` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
 - `userDataFetcher` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
+- `authRequestCustomizer` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request
 - `attemptToReturnJSONObject` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
 - `encrypted` - whether or not you'd like to use encypted transport or not
 
