@@ -440,12 +440,25 @@ public class PusherConnection: WebSocketDelegate {
         }
 
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
-            do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? Dictionary<String, AnyObject> {
-                    self.handleAuthResponse(json, channel: channel, callback: callback)
+            if error != nil {
+                print("Error authorizing channel [\(channel.name)]: \(error)")
+            }
+            if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
+
+                do {
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? Dictionary<String, AnyObject> {
+                        self.handleAuthResponse(json, channel: channel, callback: callback)
+                    }
+                } catch {
+                    print("Error authorizing channel [\(channel.name)]")
                 }
-            } catch {
-                print("Error authorizng channel")
+
+            } else {
+                if let d = data {
+                    print ("Error authorizing channel [\(channel.name)]: \(String(data: d, encoding: NSUTF8StringEncoding))")
+                } else {
+                    print("Error authorizing channel [\(channel.name)]")
+                }
             }
         })
 
