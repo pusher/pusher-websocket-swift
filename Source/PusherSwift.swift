@@ -85,9 +85,10 @@ public struct PusherClientOptions {
     public let encrypted: Bool?
     public let host: String?
     public let port: Int?
+    public let autoReconnect: Bool?
 
     public init(options: [String:Any]?) {
-        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host"]
+        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "autoReconnect"]
 
         if let options = options {
             for (key, _) in options {
@@ -103,7 +104,8 @@ public struct PusherClientOptions {
             "attemptToReturnJSONObject": true,
             "authEndpoint": nil,
             "secret": nil,
-            "userDataFetcher": nil
+            "userDataFetcher": nil,
+            "autoReconnect": true
         ]
 
         var optionsMergedWithDefaults: [String:Any] = [:]
@@ -122,6 +124,7 @@ public struct PusherClientOptions {
         self.attemptToReturnJSONObject = optionsMergedWithDefaults["attemptToReturnJSONObject"] as? Bool
         self.host = optionsMergedWithDefaults["host"] as? String
         self.port = optionsMergedWithDefaults["port"] as? Int
+        self.autoReconnect = optionsMergedWithDefaults["autoReconnect"] as? Bool
 
         if let _ = authEndpoint {
             self.authMethod = .Endpoint
@@ -381,10 +384,9 @@ public class PusherConnection: WebSocketDelegate {
             var msgBuff = [UInt8]()
             msgBuff += msg.utf8
 
-            let hmac = Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff)
+            let hmac = try! Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff)
             
-            
-            let signature = NSData.withBytes(hmac!).toHexString()
+            let signature = NSData.withBytes(hmac).toHexString()
             let auth = "\(self.key):\(signature)".lowercaseString
 
             if isPrivateChannel(channel.name) {
@@ -494,22 +496,26 @@ public class PusherConnection: WebSocketDelegate {
         if let error = error {
             print("Websocket is disconnected: \(error.localizedDescription)")
         }
+    
         self.connected = false
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
-        let reachability = try! Reachability.reachabilityForInternetConnection()
-
-        reachability.whenReachable = { reachability in
-            if !self.connected {
-                self.socket.connect()
+        
+        if let reconnect = self.options.autoReconnect where reconnect {
+            let reachability = try! Reachability.reachabilityForInternetConnection()
+            
+            reachability.whenReachable = { reachability in
+                if !self.connected {
+                    self.socket.connect()
+                }
             }
+            reachability.whenUnreachable = { reachability in
+                print("Network unreachable")
+            }
+            
+            try! reachability.startNotifier()
         }
-        reachability.whenUnreachable = { reachability in
-            print("Network unreachable")
-        }
-
-        try! reachability.startNotifier()
     }
 
     public func websocketDidConnect(ws: WebSocket) {}

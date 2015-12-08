@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
-
 extension Array {
     
     /** split in chunks with given chunk size */
@@ -24,4 +22,18 @@ extension Array {
         }
         return words
     }
+    
+    /*
+    This helper call is slow, therefore don't use it. It is due to extension, or due to optimization that can be done
+    
+    subscript(index: UInt32) -> Element {
+        get {
+            return self[Int(index)]
+        }
+        set {
+            self[Int(index)] = newValue
+        }
+    }
+    */
 }
+

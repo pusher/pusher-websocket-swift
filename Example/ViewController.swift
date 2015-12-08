@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let pusher = Pusher(key: "MY APP KEY", options: ["secret": "MY SECRET"])
+        let pusher = Pusher(key: "87572504efd5d4f1b353", options: ["secret": "ab53d405ac3c245972ee"])
         pusher.connect()
         let chan = pusher.subscribe("test-channel")
 

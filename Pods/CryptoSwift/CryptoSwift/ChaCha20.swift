@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
-
 final public class ChaCha20 {
     
     enum Error: ErrorType {
@@ -35,14 +33,6 @@ final public class ChaCha20 {
             return nil
         }
     }
-    
-    convenience public init?(key:String, iv:String) {
-        if let kkey = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)?.arrayOfBytes(), let iiv = iv.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)?.arrayOfBytes() {
-            self.init(key: kkey, iv: iiv)
-        }
-        return nil
-    }
-
     
     public func encrypt(bytes:[UInt8]) throws -> [UInt8] {
         guard context != nil else {
@@ -176,16 +166,28 @@ final public class ChaCha20 {
     
     private final func quarterround(inout a:UInt32, inout _ b:UInt32, inout _ c:UInt32, inout _ d:UInt32) {
         a = a &+ b
-        d = rotateLeft((d ^ a), n: 16) //FIXME: WAT? n:
+        d = rotateLeft((d ^ a), 16) //FIXME: WAT? n:
         
         c = c &+ d
-        b = rotateLeft((b ^ c), n: 12);
+        b = rotateLeft((b ^ c), 12);
         
         a = a &+ b
-        d = rotateLeft((d ^ a), n: 8);
+        d = rotateLeft((d ^ a), 8);
 
         c = c &+ d
-        b = rotateLeft((b ^ c), n: 7);
+        b = rotateLeft((b ^ c), 7);
+    }
+}
+
+// MARK: - Cipher
+
+extension ChaCha20: Cipher {
+    public func cipherEncrypt(bytes:[UInt8]) throws -> [UInt8] {
+        return try self.encrypt(bytes)
+    }
+    
+    public func cipherDecrypt(bytes: [UInt8]) throws -> [UInt8] {
+        return try self.decrypt(bytes)
     }
 }
 

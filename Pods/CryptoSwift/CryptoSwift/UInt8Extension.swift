@@ -6,7 +6,17 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
+import Darwin
+
+public protocol _UInt8Type { }
+extension UInt8: _UInt8Type {}
+
+extension _UInt8Type {
+    static func Zero() -> Self {
+        return 0 as! Self
+    }
+}
+
 
 /** casting */
 extension UInt8 {

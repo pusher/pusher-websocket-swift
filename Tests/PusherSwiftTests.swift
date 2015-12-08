@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import Quick
 import Nimble
-import PusherSwift
 import Starscream
+import PusherSwift
 
 // Setup mock objects that we will need
 public class MockWebSocket: WebSocket {
@@ -40,8 +40,8 @@ public class MockWebSocket: WebSocket {
             }
         )
     }
-
-    override public func disconnect() {
+    
+    override public func disconnect(forceTimeout: Int = 0) {
         stubber.stub(
             "disconnect",
             args: nil,
@@ -298,7 +298,7 @@ class PusherTopLevelApiSpec: QuickSpec {
 
         beforeEach({
             key = "testKey123"
-            pusher = Pusher(key: key)
+            pusher = Pusher(key: key, options: ["autoReconnect": false])
             socket = MockWebSocket()
             socket.delegate = pusher.connection
             pusher.connection.socket = socket

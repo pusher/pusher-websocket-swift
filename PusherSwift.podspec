@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
 
-  s.dependency 'Starscream', '~> 1.0.0'
-  s.dependency 'CryptoSwift', '~> 0.0.14'
-  s.dependency 'ReachabilitySwift', '~> 2.0'
+  s.dependency 'Starscream', '~> 1.0.2'
+  s.dependency 'CryptoSwift', '~> 0.1.1'
+  s.dependency 'ReachabilitySwift', '~> 2.3'
 end

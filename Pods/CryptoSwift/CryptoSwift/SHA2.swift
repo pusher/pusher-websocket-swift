@@ -6,16 +6,15 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
-
+import simd
 
 final class SHA2 : HashProtocol {
     var size:Int { return variant.rawValue }
     let variant:SHA2.Variant
     
-    let message: NSData
+    let message: [UInt8]
     
-    init(_ message:NSData, variant: SHA2.Variant) {
+    init(_ message:[UInt8], variant: SHA2.Variant) {
         self.variant = variant
         self.message = message
     }
@@ -102,25 +101,22 @@ final class SHA2 : HashProtocol {
             }
         }
         
-        private func resultingArray<T>(hh:[T]) -> [T] {
-            var finalHH:[T] = hh;
+        private func resultingArray<T>(hh:[T]) -> ArraySlice<T> {
             switch (self) {
             case .sha224:
-                finalHH = Array(hh[0..<7])
-                break;
+                return hh[0..<7]
             case .sha384:
-                finalHH = Array(hh[0..<6])
-                break;
+                return hh[0..<6]
             default:
                 break;
             }
-            return finalHH
+            return ArraySlice(hh)
         }
     }
     
     //FIXME: I can't do Generic func out of calculate32 and calculate64 (UInt32 vs UInt64), but if you can - please do pull request.
-    func calculate32() -> NSData {
-        let tmpMessage = self.prepare(64)
+    func calculate32() -> [UInt8] {
+        var tmpMessage = self.prepare(64)
         
         // hash values
         var hh = [UInt32]()
@@ -129,19 +125,20 @@ final class SHA2 : HashProtocol {
         }
 		
         // append message length, in a 64-bit big-endian integer. So now the message length is a multiple of 512 bits.
-        tmpMessage.appendBytes((message.length * 8).bytes(64 / 8));
+        tmpMessage += (message.count * 8).bytes(64 / 8)
         
         // Process the message in successive 512-bit chunks:
         let chunkSizeBytes = 512 / 8 // 64
-        for chunk in NSDataSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
+        for chunk in BytesSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
             // break chunk into sixteen 32-bit words M[j], 0 ≤ j ≤ 15, big-endian
             // Extend the sixteen 32-bit words into sixty-four 32-bit words:
             var M:[UInt32] = [UInt32](count: variant.k.count, repeatedValue: 0)
             for x in 0..<M.count {
                 switch (x) {
                 case 0...15:
-                    var le:UInt32 = 0
-                    chunk.getBytes(&le, range:NSRange(location:x * sizeofValue(le), length: sizeofValue(le)));
+                    let start = chunk.startIndex + (x * sizeofValue(M[x]))
+                    let end = start + sizeofValue(M[x])
+                    let le = toUInt32Array(chunk[start..<end])[0]
                     M[x] = le.bigEndian
                     break
                 default:
@@ -191,17 +188,17 @@ final class SHA2 : HashProtocol {
         }
         
         // Produce the final hash value (big-endian) as a 160 bit number:
-        let buf: NSMutableData = NSMutableData();
-        variant.resultingArray(hh).forEach{ (item) -> () in
-            var i:UInt32 = UInt32(item.bigEndian)
-            buf.appendBytes(&i, length: sizeofValue(i))
+        var result = [UInt8]()
+        result.reserveCapacity(hh.count / 4)
+        variant.resultingArray(hh).forEach {
+            let item = $0.bigEndian
+            result += [UInt8(item & 0xff), UInt8((item >> 8) & 0xff), UInt8((item >> 16) & 0xff), UInt8((item >> 24) & 0xff)]
         }
-		
-        return buf.copy() as! NSData;
+        return result
     }
     
-    func calculate64() -> NSData {
-        let tmpMessage = self.prepare(128)
+    func calculate64() -> [UInt8] {
+        var tmpMessage = self.prepare(128)
         
         // hash values
         var hh = [UInt64]()
@@ -211,21 +208,20 @@ final class SHA2 : HashProtocol {
 		
   
         // append message length, in a 64-bit big-endian integer. So now the message length is a multiple of 512 bits.
-        tmpMessage.appendBytes((message.length * 8).bytes(64 / 8));
+        tmpMessage += (message.count * 8).bytes(64 / 8)
         
         // Process the message in successive 1024-bit chunks:
         let chunkSizeBytes = 1024 / 8 // 128
-        var leftMessageBytes = tmpMessage.length
-        for var i = 0; i < tmpMessage.length; i = i + chunkSizeBytes, leftMessageBytes -= chunkSizeBytes {
-            let chunk = tmpMessage.subdataWithRange(NSRange(location: i, length: min(chunkSizeBytes,leftMessageBytes)))
+        for chunk in BytesSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
             // break chunk into sixteen 64-bit words M[j], 0 ≤ j ≤ 15, big-endian
             // Extend the sixteen 64-bit words into eighty 64-bit words:
             var M = [UInt64](count: variant.k.count, repeatedValue: 0)
             for x in 0..<M.count {
                 switch (x) {
                 case 0...15:
-                    var le:UInt64 = 0
-                    chunk.getBytes(&le, range:NSRange(location:x * sizeofValue(le), length: sizeofValue(le)));
+                    let start = chunk.startIndex + (x * sizeofValue(M[x]))
+                    let end = start + sizeofValue(M[x])
+                    let le = toUInt64Array(chunk[start..<end])[0]
                     M[x] = le.bigEndian
                     break
                 default:
@@ -275,13 +271,13 @@ final class SHA2 : HashProtocol {
         }
         
         // Produce the final hash value (big-endian)
-        let buf: NSMutableData = NSMutableData();
-        
-        variant.resultingArray(hh).forEach({ (item) -> () in
-            var i = item.bigEndian
-            buf.appendBytes(&i, length: sizeofValue(i))
-        })
-        
-        return buf.copy() as! NSData;
+        var result = [UInt8]()
+        result.reserveCapacity(hh.count / 4)
+        variant.resultingArray(hh).forEach {
+            let item = $0.bigEndian
+            result += [UInt8(item & 0xff), UInt8((item >> 8) & 0xff), UInt8((item >> 16) & 0xff), UInt8((item >> 24) & 0xff),
+                       UInt8((item >> 32) & 0xff),UInt8((item >> 40) & 0xff), UInt8((item >> 48) & 0xff), UInt8((item >> 56) & 0xff)]
+        }
+        return result
     }
 }

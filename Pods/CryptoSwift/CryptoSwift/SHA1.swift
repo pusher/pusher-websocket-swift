@@ -6,42 +6,41 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
-
 final class SHA1 : HashProtocol {
-    var size:Int = 20 // 160 / 8
-    let message: NSData
+    static let size:Int = 20 // 160 / 8
+    let message: [UInt8]
     
-    init(_ message: NSData) {
+    init(_ message: [UInt8]) {
         self.message = message
     }
     
     private let h:[UInt32] = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]
         
-    func calculate() -> NSData {
-        let tmpMessage = self.prepare(64)
+    func calculate() -> [UInt8] {
+        var tmpMessage = self.prepare(64)
         
         // hash values
         var hh = h
         
         // append message length, in a 64-bit big-endian integer. So now the message length is a multiple of 512 bits.
-        tmpMessage.appendBytes((self.message.length * 8).bytes(64 / 8));
+        tmpMessage += (self.message.count * 8).bytes(64 / 8)
         
         // Process the message in successive 512-bit chunks:
         let chunkSizeBytes = 512 / 8 // 64
-        for chunk in NSDataSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
+        for chunk in BytesSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
             // break chunk into sixteen 32-bit words M[j], 0 ≤ j ≤ 15, big-endian
             // Extend the sixteen 32-bit words into eighty 32-bit words:
             var M:[UInt32] = [UInt32](count: 80, repeatedValue: 0)
             for x in 0..<M.count {
                 switch (x) {
                 case 0...15:
-                    var le:UInt32 = 0
-                    chunk.getBytes(&le, range:NSRange(location:x * sizeofValue(M[x]), length: sizeofValue(M[x])));
+                    let start = chunk.startIndex + (x * sizeofValue(M[x]))
+                    let end = start + sizeofValue(M[x])
+                    let le = toUInt32Array(chunk[start..<end])[0]
                     M[x] = le.bigEndian
                     break
                 default:
-                    M[x] = rotateLeft(M[x-3] ^ M[x-8] ^ M[x-14] ^ M[x-16], n: 1) //FIXME: n:
+                    M[x] = rotateLeft(M[x-3] ^ M[x-8] ^ M[x-14] ^ M[x-16], 1) //FIXME: n:
                     break
                 }
             }
@@ -78,10 +77,10 @@ final class SHA1 : HashProtocol {
                     break
                 }
                 
-                let temp = (rotateLeft(A,n: 5) &+ f &+ E &+ M[j] &+ k) & 0xffffffff
+                let temp = (rotateLeft(A,5) &+ f &+ E &+ M[j] &+ k) & 0xffffffff
                 E = D
                 D = C
-                C = rotateLeft(B, n: 30)
+                C = rotateLeft(B, 30)
                 B = A
                 A = temp
             }
@@ -94,12 +93,12 @@ final class SHA1 : HashProtocol {
         }
         
         // Produce the final hash value (big-endian) as a 160 bit number:
-        let buf: NSMutableData = NSMutableData();
-        for item in hh {
-            var i:UInt32 = item.bigEndian
-            buf.appendBytes(&i, length: sizeofValue(i))
+        var result = [UInt8]()
+        result.reserveCapacity(hh.count / 4)
+        hh.forEach {
+            let item = $0.bigEndian
+            result += [UInt8(item & 0xff), UInt8((item >> 8) & 0xff), UInt8((item >> 16) & 0xff), UInt8((item >> 24) & 0xff)]
         }
-        
-        return buf.copy() as! NSData;
-    }    
+        return result
+    }
 }

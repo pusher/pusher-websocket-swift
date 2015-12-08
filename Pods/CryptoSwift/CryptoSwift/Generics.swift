@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
-
 /** Protocol and extensions for integerFromBitsArray. Bit hakish for me, but I can't do it in any other way */
 protocol Initiable  {
     init(_ v: Int)
@@ -46,11 +44,11 @@ func integerWithBytes<T: IntegerType where T:ByteConvertible, T: BitshiftOperati
     }
     
     if sizeof(T) == 1 {
-        return T(truncatingBitPattern: UInt64(bytes[0]))
+        return T(truncatingBitPattern: UInt64(bytes.first!))
     }
     
     var result: T = 0
-    for byte in Array(bytes.reverse()) { //FIXME: Array??
+    for byte in bytes.reverse() {
         result = result << 8 | T(byte)
     }
     return result

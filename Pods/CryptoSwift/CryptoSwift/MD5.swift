@@ -6,13 +6,11 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
-
 final class MD5 : HashProtocol  {
-    var size:Int = 16 // 128 / 8
-    let message: NSData
+    static let size:Int = 16 // 128 / 8
+    let message: Array<UInt8>
     
-    init (_ message: NSData) {
+    init (_ message: Array<UInt8>) {
         self.message = message
     }
 
@@ -42,24 +40,24 @@ final class MD5 : HashProtocol  {
     
     private let h:[UInt32] = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476]
     
-    func calculate() -> NSData {
-        let tmpMessage = prepare(64)
+    func calculate() -> [UInt8] {
+        var tmpMessage = prepare(64)
+        tmpMessage.reserveCapacity(tmpMessage.count + 4)
 
-        // hash values
+        // initialize hh with hash values
         var hh = h
         
         // Step 2. Append Length a 64-bit representation of lengthInBits
-        let lengthInBits = (message.length * 8)
+        let lengthInBits = (message.count * 8)
         let lengthBytes = lengthInBits.bytes(64 / 8)
-        tmpMessage.appendBytes(Array(lengthBytes.reverse())); //FIXME: Array?
+        tmpMessage += lengthBytes.reverse()
 
         // Process the message in successive 512-bit chunks:
         let chunkSizeBytes = 512 / 8 // 64
-        for chunk in NSDataSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
+        for chunk in BytesSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
             // break chunk into sixteen 32-bit words M[j], 0 ≤ j ≤ 15
-            var M = [UInt32](count: 16, repeatedValue: 0)
-            let range = NSRange(location:0, length: M.count * sizeof(UInt32))
-            chunk.getBytes(UnsafeMutablePointer<Void>(M), range: range)
+            var M = toUInt32Array(chunk)
+            assert(M.count == 16, "Invalid array")
             
             // Initialize hash value for this chunk:
             var A:UInt32 = hh[0]
@@ -97,7 +95,7 @@ final class MD5 : HashProtocol  {
                 dTemp = D
                 D = C
                 C = B
-                B = B &+ rotateLeft((A &+ F &+ k[j] &+ M[g]), n: s[j])
+                B = B &+ rotateLeft((A &+ F &+ k[j] &+ M[g]), s[j])
                 A = dTemp    
             }
             
@@ -107,13 +105,14 @@ final class MD5 : HashProtocol  {
             hh[3] = hh[3] &+ D
         }
 
-        let buf: NSMutableData = NSMutableData();
-        hh.forEach({ (item) -> () in
-            var i:UInt32 = item.littleEndian
-            buf.appendBytes(&i, length: sizeofValue(i))
-        })
+        var result = [UInt8]()
+        result.reserveCapacity(hh.count / 4)
         
-        return buf.copy() as! NSData
+        hh.forEach {
+            let itemLE = $0.littleEndian
+            result += [UInt8(itemLE & 0xff), UInt8((itemLE >> 8) & 0xff), UInt8((itemLE >> 16) & 0xff), UInt8((itemLE >> 24) & 0xff)]
+        }
+        return result
     }
 }
 

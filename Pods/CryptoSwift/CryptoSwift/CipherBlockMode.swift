@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-import Foundation
-
 // I have no better name for that
 typealias CipherOperationOnBlock = (block: [UInt8]) -> [UInt8]?
 
@@ -85,7 +83,7 @@ private struct CBCMode: BlockMode {
         }
         
         var out:[UInt8] = [UInt8]()
-        out.reserveCapacity(blocks.count * blocks[0].count)
+        out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         var prevCiphertext = iv // for the first time prevCiphertext = iv
         for plaintext in blocks {
             if let encrypted = cipherOperation(block: xor(prevCiphertext, b: plaintext)) {
@@ -103,7 +101,7 @@ private struct CBCMode: BlockMode {
         }
 
         var out:[UInt8] = [UInt8]()
-        out.reserveCapacity(blocks.count * blocks[0].count)
+        out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         var prevCiphertext = iv // for the first time prevCiphertext = iv
         for ciphertext in blocks {
             if let decrypted = cipherOperation(block: ciphertext) { // decrypt
@@ -128,12 +126,12 @@ private struct CFBMode: BlockMode {
         }
         
         var out:[UInt8] = [UInt8]()
-        out.reserveCapacity(blocks.count * blocks[0].count)
+        out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
 
         var lastCiphertext = iv
         for plaintext in blocks {
-            if let encrypted = cipherOperation(block: lastCiphertext) {
-                lastCiphertext = xor(plaintext,b: encrypted)
+            if let ciphertext = cipherOperation(block: lastCiphertext) {
+                lastCiphertext = xor(plaintext,b: ciphertext)
                 out.appendContentsOf(lastCiphertext)
             }
         }
@@ -141,7 +139,22 @@ private struct CFBMode: BlockMode {
     }
     
     func decryptBlocks(blocks:[[UInt8]], iv:[UInt8]?, cipherOperation:CipherOperationOnBlock) throws -> [UInt8] {
-        return try encryptBlocks(blocks, iv: iv, cipherOperation: cipherOperation)
+        guard let iv = iv else {
+            throw BlockError.MissingInitializationVector
+        }
+        
+        var out:[UInt8] = [UInt8]()
+        out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
+
+        var lastCiphertext = iv
+        for ciphertext in blocks {
+            if let decrypted = cipherOperation(block: lastCiphertext) {
+                out.appendContentsOf(xor(decrypted, b: ciphertext))
+            }
+            lastCiphertext = ciphertext
+        }
+        
+        return out
     }
 }
 
@@ -154,7 +167,7 @@ private struct ECBMode: BlockMode {
     
     func encryptBlocks(blocks:[[UInt8]], iv:[UInt8]?, cipherOperation:CipherOperationOnBlock) -> [UInt8] {
         var out:[UInt8] = [UInt8]()
-        out.reserveCapacity(blocks.count * blocks[0].count)
+        out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         for plaintext in blocks {
             if let encrypted = cipherOperation(block: plaintext) {
                 out.appendContentsOf(encrypted)
@@ -193,7 +206,7 @@ private struct CTRMode: BlockMode {
 
         var counter:UInt = 0
         var out:[UInt8] = [UInt8]()
-        out.reserveCapacity(blocks.count * blocks[0].count)
+        out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         for plaintext in blocks {
             let nonce = buildNonce(iv, counter: counter++)
             if let encrypted = cipherOperation(block: nonce) {
@@ -210,7 +223,7 @@ private struct CTRMode: BlockMode {
         
         var counter:UInt = 0
         var out:[UInt8] = [UInt8]()
-        out.reserveCapacity(blocks.count * blocks[0].count)
+        out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         for plaintext in blocks {
             let nonce = buildNonce(iv, counter: counter++)
             if let encrypted = cipherOperation(block: nonce) {

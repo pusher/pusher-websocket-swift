@@ -4,7 +4,7 @@ Starscream is a conforming WebSocket ([RFC 6455](http://tools.ietf.org/html/rfc6
 
 It's Objective-C counter part can be found here: [Jetfire](https://github.com/acmacalister/jetfire)
 
-This is written Swift 2.0 (the latest). If you need older legecy support checkout the Swift-1.2 branch [here](https://github.com/daltoniam/Starscream/tree/swift-1.2).
+This is written Swift 2. (the latest). If you need older legecy support checkout the Swift-1.2 branch [here](https://github.com/daltoniam/Starscream/tree/swift-1.2).
 
 ## Features
 
@@ -193,8 +193,8 @@ SSL Pinning is also supported in Starscream.
 ```swift
 var socket = WebSocket(url: NSURL(string: "ws://localhost:8080/")!, protocols: ["chat","superchat"])
 let data = ... //load your certificate from disk
-socket.security = Security(certs: [SSLCert(data: data)], usePublicKeys: true)
-//socket.security = Security() //uses the .cer files in your app's bundle
+socket.security = SSLSecurity(certs: [SSLCert(data: data)], usePublicKeys: true)
+//socket.security = SSLSecurity() //uses the .cer files in your app's bundle
 ```
 You load either a `NSData` blob of your certificate or you can use a `SecKeyRef` if you have a public key you want to use. The `usePublicKeys` bool is whether to use the certificates for validation or the public keys. The public keys will be extracted from the certificates automatically if `usePublicKeys` is choosen.
 
@@ -214,7 +214,7 @@ Check out the SimpleTest project in the examples directory to see how to setup a
 
 ## Requirements
 
-Starscream works with iOS 7/OSX 10.9 or above. It is recommended to use iOS 8/10.10 or above for Cocoapods/framework support.
+Starscream works with iOS 7/OSX 10.9 or above. It is recommended to use iOS 8/10.10 or above for Cocoapods/framework support. To use Starscream with a project targeting iOS 7, you must include all Swift files directly in your project.
 
 ## Installation
 
@@ -278,7 +278,6 @@ If you are running this in an OSX app or on a physical iOS device you will need 
 ## TODOs
 
 - [ ] WatchOS
-- [ ] TVOS?
 - [ ] Add Unit Tests
 
 ## License
