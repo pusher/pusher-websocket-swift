@@ -15,7 +15,7 @@ public typealias PusherUserInfoObject = Dictionary<String, AnyObject>
 public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7
-let VERSION = "0.0.1"
+let VERSION = "0.1.3"
 
 public class Pusher {
     public let connection: PusherConnection
