@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreFoundation
+import Security
 
 public protocol WebSocketDelegate: class {
     func websocketDidConnect(socket: WebSocket)
@@ -94,6 +95,7 @@ public class WebSocket : NSObject, NSStreamDelegate {
     public var voipEnabled = false
     public var selfSignedSSL = false
     public var security: SSLSecurity?
+    public var enabledSSLCipherSuites: [SSLCipherSuite]?
     public var isConnected :Bool {
         return connected
     }
@@ -238,6 +240,23 @@ public class WebSocket : NSObject, NSStreamDelegate {
             inStream.setProperty(settings, forKey: kCFStreamPropertySSLSettings as String)
             outStream.setProperty(settings, forKey: kCFStreamPropertySSLSettings as String)
         }
+        if let cipherSuites = self.enabledSSLCipherSuites {
+            if let sslContextIn = CFReadStreamCopyProperty(inputStream, kCFStreamPropertySSLContext) as! SSLContextRef?,
+                   sslContextOut = CFWriteStreamCopyProperty(outputStream, kCFStreamPropertySSLContext) as! SSLContextRef? {
+                let resIn = SSLSetEnabledCiphers(sslContextIn, cipherSuites, cipherSuites.count)
+                let resOut = SSLSetEnabledCiphers(sslContextOut, cipherSuites, cipherSuites.count)
+                if (resIn != errSecSuccess) {
+                    let error = self.errorWithDetail("Error setting ingoing cypher suites", code: UInt16(resIn))
+                    disconnectStream(error)
+                    return
+                }
+                if (resOut != errSecSuccess) {
+                    let error = self.errorWithDetail("Error setting outgoing cypher suites", code: UInt16(resOut))
+                    disconnectStream(error)
+                    return
+                }
+            }
+        }
         isRunLoop = true
         inStream.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
         outStream.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
@@ -300,9 +319,12 @@ public class WebSocket : NSObject, NSStreamDelegate {
         let length = inputStream!.read(buffer, maxLength: BUFFER_MAX)
         if length > 0 {
             if !connected {
-                let status = processHTTP(buffer, bufferLen: length)
-                if !status {
-                    doDisconnect(errorWithDetail("Invalid HTTP upgrade", code: 1))
+                connected = processHTTP(buffer, bufferLen: length)
+                if !connected {
+                    let response = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, false).takeRetainedValue()
+                    CFHTTPMessageAppendBytes(response, buffer, length)
+                    let code = CFHTTPMessageGetResponseStatusCode(response)
+                    doDisconnect(errorWithDetail("Invalid HTTP upgrade", code: UInt16(code)))
                 }
             } else {
                 var process = false
@@ -353,7 +375,6 @@ public class WebSocket : NSObject, NSStreamDelegate {
             if validateResponse(buffer, bufferLen: totalSize) {
                 dispatch_async(queue,{ [weak self] in
                     guard let s = self else { return }
-                    s.connected = true
                     if let connectBlock = s.onConnect {
                         connectBlock()
                     }

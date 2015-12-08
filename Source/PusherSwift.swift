@@ -67,9 +67,11 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
     if let encrypted = options.encrypted where !encrypted {
-        url = "ws://ws.pusherapp.com:80/app/\(key)"
+        let defaultPort = (options.port ?? 80)
+        url = "ws://\(options.host!):\(defaultPort)/app/\(key)"
     } else {
-        url = "wss://ws.pusherapp.com:443/app/\(key)"
+        let defaultPort = (options.port ?? 443)
+        url = "wss://\(options.host!):\(defaultPort)/app/\(key)"
     }
     return "\(url)?client=pusher-swift&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
@@ -81,9 +83,11 @@ public struct PusherClientOptions {
     public let authMethod: AuthMethod?
     public let attemptToReturnJSONObject: Bool?
     public let encrypted: Bool?
+    public let host: String?
+    public let port: Int?
 
     public init(options: [String:Any]?) {
-        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher"]
+        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host"]
 
         if let options = options {
             for (key, _) in options {
@@ -94,6 +98,7 @@ public struct PusherClientOptions {
         }
 
         let defaults: [String:AnyObject?] = [
+            "host": "ws.pusherapp.com",
             "encrypted": true,
             "attemptToReturnJSONObject": true,
             "authEndpoint": nil,
@@ -115,6 +120,8 @@ public struct PusherClientOptions {
         self.secret = optionsMergedWithDefaults["secret"] as? String
         self.userDataFetcher = optionsMergedWithDefaults["userDataFetcher"] as? () -> PusherUserData
         self.attemptToReturnJSONObject = optionsMergedWithDefaults["attemptToReturnJSONObject"] as? Bool
+        self.host = optionsMergedWithDefaults["host"] as? String
+        self.port = optionsMergedWithDefaults["port"] as? Int
 
         if let _ = authEndpoint {
             self.authMethod = .Endpoint
@@ -491,18 +498,18 @@ public class PusherConnection: WebSocketDelegate {
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
-        let reachability = Reachability.reachabilityForInternetConnection()
+        let reachability = try! Reachability.reachabilityForInternetConnection()
 
-        reachability!.whenReachable = { reachability in
+        reachability.whenReachable = { reachability in
             if !self.connected {
                 self.socket.connect()
             }
         }
-        reachability!.whenUnreachable = { reachability in
+        reachability.whenUnreachable = { reachability in
             print("Network unreachable")
         }
 
-        reachability!.startNotifier()
+        try! reachability.startNotifier()
     }
 
     public func websocketDidConnect(ws: WebSocket) {}

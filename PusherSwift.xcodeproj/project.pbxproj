@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		14F31F427F55AB7E873B78B0 /* Pods_PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B703EE8CF9F07BBA274AA1 /* Pods_PusherSwift.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		14F31F427F55AB7E873B78B0 /* Pods_PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B703EE8CF9F07BBA274AA1 /* Pods_PusherSwift.framework */; };
 		330D1BBC1B98A61900462DEA /* Pods_PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33831D081A9E1F9B00B124F1 /* Pods_PusherSwift.framework */; };
 		33831CD21A9CFF8200B124F1 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
 		33831CD41A9CFFD900B124F1 /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
 		33831CD71A9CFFF200B124F1 /* PusherSwiftTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwiftTest.h */; };
-		D7BADE0A0DECC1423F0EB60C /* Pods_PusherSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453D0A4BB2E30972E26203E2 /* Pods_PusherSwiftTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D7BADE0A0DECC1423F0EB60C /* Pods_PusherSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453D0A4BB2E30972E26203E2 /* Pods_PusherSwiftTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -235,7 +235,6 @@
 				33831C851A9CF61600B124F1 /* Frameworks */,
 				33831C861A9CF61600B124F1 /* Headers */,
 				33831C871A9CF61600B124F1 /* Resources */,
-				6F7574FF8A84C1E9F630094E /* Embed Pods Frameworks */,
 				ADE58516A2C8AB78F3CCE708 /* Copy Pods Resources */,
 				3358FA6E1B4FD8C000AB0670 /* ShellScript */,
 			);
@@ -413,21 +412,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6F7574FF8A84C1E9F630094E /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PusherSwift/Pods-PusherSwift-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ADE58516A2C8AB78F3CCE708 /* Copy Pods Resources */ = {
