@@ -223,7 +223,7 @@ class PusherClientInitializationSpec: QuickSpec {
 
             context("with default config") {
                 it("has the correct conection url") {
-                    expect(pusher.connection.url).to(equal("wss://ws.pusherapp.com:443/app/testKey123?client=pusher-swift&version=0.1.3&protocol=7"))
+                    expect(pusher.connection.url).to(equal("wss://ws.pusherapp.com:443/app/testKey123?client=pusher-swift&version=0.1.4&protocol=7"))
                 }
 
                 it("has auth endpoint as nil") {
@@ -255,7 +255,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("unencrypted") {
                     it("has the correct conection url") {
                         pusher = Pusher(key: key, options: ["encrypted": false])
-                        expect(pusher.connection.url).to(equal("ws://ws.pusherapp.com:80/app/testKey123?client=pusher-swift&version=0.1.3&protocol=7"))
+                        expect(pusher.connection.url).to(equal("ws://ws.pusherapp.com:80/app/testKey123?client=pusher-swift&version=0.1.4&protocol=7"))
                     }
                 }
 
