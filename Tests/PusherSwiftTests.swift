@@ -245,6 +245,10 @@ class PusherClientInitializationSpec: QuickSpec {
                 it("has auth method of none") {
                     expect(pusher.connection.options.authMethod).to(equal(AuthMethod.NoMethod))
                 }
+                
+                it("has authRequestCustomizer as nil") {
+                    expect(pusher.connection.options.authRequestCustomizer).to(beNil())
+                }
             }
 
             context("passing in configuration options") {
@@ -283,6 +287,16 @@ class PusherClientInitializationSpec: QuickSpec {
                     it("is false") {
                         pusher = Pusher(key: key, options: ["attemptToReturnJSONObject": false])
                         expect(pusher.connection.options.attemptToReturnJSONObject).to(beFalsy())
+                    }
+                }
+                
+                context("an authRequestCustomizer") {
+                    it("has one set") {
+                        func customizer(request: NSMutableURLRequest) -> NSMutableURLRequest {
+                            return request
+                        }
+                        pusher = Pusher(key: key, options: ["authRequestCustomizer": customizer])
+                        expect(pusher.connection.options.authRequestCustomizer).toNot(beNil())
                     }
                 }
             }

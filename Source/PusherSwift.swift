@@ -78,7 +78,6 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
 
 public struct PusherClientOptions {
     public let authEndpoint: String?
-    public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
     public let secret: String?
     public let userDataFetcher: (() -> PusherUserData)?
     public let authMethod: AuthMethod?
@@ -87,6 +86,7 @@ public struct PusherClientOptions {
     public let host: String?
     public let port: Int?
     public let autoReconnect: Bool?
+    public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
 
     public init(options: [String:Any]?) {
         let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "autoReconnect", "authRequestCustomizer"]
@@ -150,14 +150,13 @@ public class PusherConnection: WebSocketDelegate {
     public var socket: WebSocket!
     public var URLSession: NSURLSession
 
-    public init(key: String, socket: WebSocket, url: String, options: PusherClientOptions,
-        URLSession: NSURLSession = NSURLSession.sharedSession()) {
-            self.url = url
-            self.key = key
-            self.options = options
-            self.URLSession = URLSession
-            self.socket = socket
-            self.socket.delegate = self
+    public init(key: String, socket: WebSocket, url: String, options: PusherClientOptions, URLSession: NSURLSession = NSURLSession.sharedSession()) {
+        self.url = url
+        self.key = key
+        self.options = options
+        self.URLSession = URLSession
+        self.socket = socket
+        self.socket.delegate = self
     }
 
     private func subscribe(channelName: String) -> PusherChannel {
