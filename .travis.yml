@@ -2,12 +2,11 @@ language: objective-c
 osx_image: xcode7.1
 xcode_workspace: PusherSwift.xcworkspace
 xcode_scheme: PusherSwift
-xcode_sdk: iphonesimulator9.1
 before_install:
   - brew update
   - brew install carthage
 script:
-  - xcodebuild test -workspace PusherSwift.xcworkspace -scheme PusherSwiftTests -destination OS=9.0,name=iPhone\ 6 -sdk iphonesimulator9.0 ONLY_ACTIVE_ARCH=NO
+  - xcodebuild test -workspace PusherSwift.xcworkspace -scheme PusherSwiftTests -destination OS=9.2,name=iPhone\ 6 -sdk iphonesimulator9.2 ONLY_ACTIVE_ARCH=NO
 before_deploy:
   - carthage build --no-skip-current --verbose
   - carthage archive PusherSwift
