@@ -16,6 +16,7 @@ public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7
 let VERSION = "0.1.4"
+let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
     public let connection: PusherConnection
@@ -73,7 +74,7 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
         let defaultPort = (options.port ?? 443)
         url = "wss://\(options.host!):\(defaultPort)/app/\(key)"
     }
-    return "\(url)?client=pusher-swift&version=\(VERSION)&protocol=\(PROTOCOL)"
+    return "\(url)?client=\(CLIENT_NAME)&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
 
 public struct PusherClientOptions {
