@@ -101,14 +101,15 @@ public struct PusherClientOptions {
         }
 
         let defaults: [String:AnyObject?] = [
-            "host": "ws.pusherapp.com",
             "encrypted": true,
             "attemptToReturnJSONObject": true,
             "authEndpoint": nil,
             "secret": nil,
             "userDataFetcher": nil,
             "autoReconnect": true,
-            "authRequestCustomizer": nil
+            "authRequestCustomizer": nil,
+            "host": "ws.pusherapp.com",
+            "port": nil
         ]
 
         var optionsMergedWithDefaults: [String:Any] = [:]

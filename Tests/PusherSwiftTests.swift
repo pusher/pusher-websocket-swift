@@ -40,7 +40,7 @@ public class MockWebSocket: WebSocket {
             }
         )
     }
-    
+
     override public func disconnect(forceTimeout: Int = 0) {
         stubber.stub(
             "disconnect",
@@ -223,7 +223,7 @@ class PusherClientInitializationSpec: QuickSpec {
 
             context("with default config") {
                 it("has the correct conection url") {
-                    expect(pusher.connection.url).to(equal("wss://ws.pusherapp.com:443/app/testKey123?client=pusher-swift&version=0.1.4&protocol=7"))
+                    expect(pusher.connection.url).to(equal("wss://ws.pusherapp.com:443/app/testKey123?client=pusher-websocket-swift&version=0.1.4&protocol=7"))
                 }
 
                 it("has auth endpoint as nil") {
@@ -245,9 +245,17 @@ class PusherClientInitializationSpec: QuickSpec {
                 it("has auth method of none") {
                     expect(pusher.connection.options.authMethod).to(equal(AuthMethod.NoMethod))
                 }
-                
+
                 it("has authRequestCustomizer as nil") {
                     expect(pusher.connection.options.authRequestCustomizer).to(beNil())
+                }
+
+                it("has the host set correctly") {
+                    expect(pusher.connection.options.host).to(equal("ws.pusherapp.com"))
+                }
+
+                it("has the port set as nil") {
+                    expect(pusher.connection.options.port).to(beNil())
                 }
             }
 
@@ -255,7 +263,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("unencrypted") {
                     it("has the correct conection url") {
                         pusher = Pusher(key: key, options: ["encrypted": false])
-                        expect(pusher.connection.url).to(equal("ws://ws.pusherapp.com:80/app/testKey123?client=pusher-swift&version=0.1.4&protocol=7"))
+                        expect(pusher.connection.url).to(equal("ws://ws.pusherapp.com:80/app/testKey123?client=pusher-websocket-swift&version=0.1.4&protocol=7"))
                     }
                 }
 
@@ -289,7 +297,7 @@ class PusherClientInitializationSpec: QuickSpec {
                         expect(pusher.connection.options.attemptToReturnJSONObject).to(beFalsy())
                     }
                 }
-                
+
                 context("an authRequestCustomizer") {
                     it("has one set") {
                         func customizer(request: NSMutableURLRequest) -> NSMutableURLRequest {
@@ -297,6 +305,20 @@ class PusherClientInitializationSpec: QuickSpec {
                         }
                         pusher = Pusher(key: key, options: ["authRequestCustomizer": customizer])
                         expect(pusher.connection.options.authRequestCustomizer).toNot(beNil())
+                    }
+                }
+
+                context("a host") {
+                    it("has one set") {
+                        pusher = Pusher(key: key, options: ["host": "test.test.test"])
+                        expect(pusher.connection.options.host).to(equal("test.test.test"))
+                    }
+                }
+
+                context("a port") {
+                    it("sets the URL with it") {
+                        pusher = Pusher(key: key, options: ["port": 123])
+                        expect(pusher.connection.options.port).to(equal(123))
                     }
                 }
             }
@@ -682,7 +704,7 @@ class MockSession: NSURLSession {
     override class func sharedSession() -> NSURLSession {
         return MockSession()
     }
-        
+
     override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
         self.completionHandler = completionHandler
         return MockTask(response: MockSession.mockResponse, completionHandler: completionHandler)
