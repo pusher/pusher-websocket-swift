@@ -68,12 +68,15 @@ github "pusher/pusher-websocket-swift"
 
 There are a number of configuration parameters which can be set for the Pusher client. They are:
 
-- `authEndpoint` - the URL that the library will make an authentication request to if attempting to subscribe to a private or presence channel and you have not provided a secret
-- `secret` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
-- `userDataFetcher` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
-- `authRequestCustomizer` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request
-- `attemptToReturnJSONObject` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
-- `encrypted` - whether or not you'd like to use encypted transport or not
+- `authEndpoint (String)` - the URL that the library will make an authentication request to if attempting to subscribe to a private or presence channel and you have not provided a secret
+- `secret (String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
+- `userDataFetcher (() -> PusherUserData)` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
+- `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
+- `encrypted (Bool)` - whether or not you'd like to use encypted transport or not
+- `authRequestCustomizer (NSMutableURLRequest -> NSMutableURLRequest)` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request
+- `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
+- `host (String)` - set a custom value for the host you'd like to connect to
+- `port (Int)` - set a custom value for the port that you'd lilke to connect to
 
 All of these configuration options can be set when instantiating the Pusher object, for example:
 
