@@ -108,7 +108,6 @@ This returns a client object which can then be used to subscribe to channels and
 
 The default method for subscribing to a channel involves invoking the `subscribe` method of your client object:
 
-
 ```swift
 let myChannel = pusher.subscribe('my-channel')
 ```
@@ -133,6 +132,8 @@ let myPresenceChannel = pusher.subscribe('presence-my-channel')
 
 Note that both private and presence channels require the user to be authenticated in order to subscribe to the channel. This authentication can either happen inside the library, if you configured your Pusher object with your app's secret, or an authentication request is made to an authentication endpoint that you provide, again when instantiaing your Pusher object.
 
+Note that we recommend that you use an authentication endpoint over including your app's secret in your app in the vast majority of use cases. If you are completely certain that there's no risk to you including your app's secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.
+
 ## Binding to events
 
 Events can be bound to at 2 levels; globally and per channel. When binding to an event you can choose to save the return value, which is a unique identifier for the event handler that gets created. The only reason to save this is if you're going to want to unbind from the event at a later point in time. There is an example of this below.
@@ -148,7 +149,7 @@ pusher.subscribe("my-channel")
 pusher.bind("new-comment", callback: { (data: AnyObject?) -> Void in
     if let data = data as? Dictionary<String, AnyObject> {
         if let commenter = data["commenter"] as? String, message = data["message"] as? String {
-            println("\(commenter) wrote \(message)")
+            print("\(commenter) wrote \(message)")
         }
     }
 })
@@ -165,7 +166,7 @@ let myChannel = pusher.subscribe("my-channel")
 myChannel.bind("new-price", callback: { (data: AnyObject?) -> Void in
     if let data = data as? Dictionary<String, AnyObject> {
         if let price = data["price"] as? String, company = data["company"] as? String {
-            println("\(company) is now priced at \(price)")
+            print("\(company) is now priced at \(price)")
         }
     }
 })
@@ -195,12 +196,12 @@ There are a set of tests for the library that can be run using the standard meth
 
 ## Communication
 
-- If you **need help**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift). (Tag 'pusherswift').
-- If you still **need help**, visit [Pusher support](https://support.pusher.com).
-- If you'd like to **ask a general question**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift).
-- If you **found a bug**, open an issue.
-- If you **have a feature request**, open an issue.
-- If you **want to contribute**, submit a pull request (preferrably with some tests :) ).
+- If you need help, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift). (Tag 'pusherswift').
+- If you still need help, visit [Pusher support](https://support.pusher.com).
+- If you would like to ask a general question, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift).
+- If you have found a bug, open an issue.
+- If you have a feature request, open an issue.
+- If you want to contribute, submit a pull request (preferrably with some tests :) ).
 
 
 ## Credits
