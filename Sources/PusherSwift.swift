@@ -15,7 +15,7 @@ public typealias PusherUserInfoObject = Dictionary<String, AnyObject>
 public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7
-let VERSION = "0.1.4"
+let VERSION = "0.1.6"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
@@ -435,7 +435,7 @@ public class PusherConnection: WebSocketDelegate {
     private func sendAuthorisationRequest(endpoint: String, socket: String, channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) {
         var request = NSMutableURLRequest(URL: NSURL(string: "\(endpoint)?socket_id=\(socket)&channel_name=\(channel.name)")!)
         request.HTTPMethod = "POST"
-        
+
         if let handler = self.options.authRequestCustomizer {
             request = handler(request)
         }
@@ -517,15 +517,15 @@ public class PusherConnection: WebSocketDelegate {
         if let error = error {
             print("Websocket is disconnected: \(error.localizedDescription)")
         }
-    
+
         self.connected = false
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
-        
+
         if let reconnect = self.options.autoReconnect where reconnect {
             let reachability = try! Reachability.reachabilityForInternetConnection()
-            
+
             if let reachability = try? Reachability.reachabilityForInternetConnection() {
 
                 reachability.whenReachable = { reachability in
@@ -533,7 +533,7 @@ public class PusherConnection: WebSocketDelegate {
                         self.socket.connect()
                     }
                 }
-                
+
                 reachability.whenUnreachable = { reachability in
                     print("Network unreachable")
                 }
