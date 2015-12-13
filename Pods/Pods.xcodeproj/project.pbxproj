@@ -671,7 +671,7 @@
 			children = (
 				F924AAA9D830545D63548E624DB51E33 /* PusherSwift.swift */,
 			);
-			path = Source;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		AAB6FB9B36E429A5136707B5CC0FE78C /* Starscream */ = {

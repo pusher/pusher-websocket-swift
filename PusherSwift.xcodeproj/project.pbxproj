@@ -85,12 +85,12 @@
 		25C98B5CC81AEFA07DF8C2CE /* Pods-PusherSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwiftTests/Pods-PusherSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		27054583FECFAED530EE4D45 /* Pods-PusherSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwift/Pods-PusherSwift.release.xcconfig"; sourceTree = "<group>"; };
 		33831C891A9CF61600B124F1 /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		33831C8D1A9CF61600B124F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Source/Info.plist; sourceTree = "<group>"; };
+		33831C8D1A9CF61600B124F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831CCF1A9CFF7900B124F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 		33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwiftTests.swift; path = Tests/PusherSwiftTests.swift; sourceTree = SOURCE_ROOT; };
-		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = Source/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
-		33831CD61A9CFFF200B124F1 /* PusherSwiftTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwiftTest.h; path = Source/PusherSwiftTest.h; sourceTree = SOURCE_ROOT; };
+		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = Sources/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
+		33831CD61A9CFFF200B124F1 /* PusherSwiftTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwiftTest.h; path = Sources/PusherSwiftTest.h; sourceTree = SOURCE_ROOT; };
 		33831CFA1A9E1F9B00B124F1 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		453D0A4BB2E30972E26203E2 /* Pods_PusherSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PusherSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		53165978FEB474A77EB98CDB /* Pods-PusherSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwift/Pods-PusherSwift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		33831C491A9CEDF800B124F1 = {
 			isa = PBXGroup;
 			children = (
-				33831C8B1A9CF61600B124F1 /* Source */,
+				33831C8B1A9CF61600B124F1 /* Sources */,
 				33831C981A9CF61600B124F1 /* Tests */,
 				33831C8A1A9CF61600B124F1 /* Products */,
 				C8BC0305BB40AE4768D8A016 /* Pods */,
@@ -140,15 +140,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		33831C8B1A9CF61600B124F1 /* Source */ = {
+		33831C8B1A9CF61600B124F1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				33831CD31A9CFFD900B124F1 /* PusherSwift.swift */,
 				33831CD61A9CFFF200B124F1 /* PusherSwiftTest.h */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
 			);
-			name = Source;
-			path = PusherSwift;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		33831C8C1A9CF61600B124F1 /* Supporting Files */ = {
@@ -563,7 +562,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -615,7 +614,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
