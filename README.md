@@ -3,8 +3,9 @@
 [![Build Status](https://travis-ci.org/pusher-community/pusher-websocket-swift.svg?branch=master)](https://travis-ci.org/pusher-community/pusher-websocket-swift)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/PusherSwift.svg)](https://img.shields.io/cocoapods/v/PusherSwift.svg)
 [![Platform](https://img.shields.io/cocoapods/p/PusherSwift.svg?style=flat)](http://cocoadocs.org/docsets/PusherSwift)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
+[![License MIT](https://go-shields.herokuapp.com/license-MIT-blue.png)](https://opensource.org/licenses/MIT)
 
 
 ## Table of Contents
