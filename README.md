@@ -65,7 +65,7 @@ $ brew install carthage
 To integrate PusherSwift into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "pusher/pusher-websocket-swift"
+github "pusher-community/pusher-websocket-swift"
 ```
 
 
@@ -196,7 +196,7 @@ You can unbind from events at both the global and per channel level. For both ob
 
 ## Testing
 
-There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode). The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift).
+There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode). The tests also get run on [Travis-CI](https://travis-ci.org/pusher-community/pusher-websocket-swift).
 
 
 ## Communication
@@ -215,4 +215,4 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 
 ## License
 
-PusherSwift is released under the MIT license. See [LICENSE](https://github.com/pusher/pusher-websocket-swift/blob/master/LICENSE) for details.
+PusherSwift is released under the MIT license. See [LICENSE](https://github.com/pusher-community/pusher-websocket-swift/blob/master/LICENSE.md) for details.
