@@ -2,11 +2,19 @@ language: objective-c
 osx_image: xcode7.2
 xcode_workspace: PusherSwift.xcworkspace
 xcode_scheme: PusherSwift
+env:
+  matrix:
+    - DESTINATION="OS=9.2,name=iPad 2"
+    - DESTINATION="OS=9.2,name=iPad Air"
+    - DESTINATION="OS=9.2,name=iPhone 5"
+    - DESTINATION="OS=9.2,name=iPhone 6s"
+    - DESTINATION="OS=8.4,name=iPhone 6"
+    - DESTINATION="OS=8.4,name=iPad Air"
 before_install:
   - brew update
   - brew install carthage
 script:
-  - xcodebuild test -workspace PusherSwift.xcworkspace -scheme PusherSwiftTests -destination OS=9.2,name=iPhone\ 6 -sdk iphonesimulator9.2 ONLY_ACTIVE_ARCH=NO
+  - xcodebuild test -workspace PusherSwift.xcworkspace -scheme PusherSwiftTests -destination "$DESTINATION" -sdk iphonesimulator test -enableCodeCoverage YES | xcpretty -tc
 before_deploy:
   - carthage build --no-skip-current --verbose
   - carthage archive PusherSwift
