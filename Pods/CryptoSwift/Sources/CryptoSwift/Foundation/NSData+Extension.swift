@@ -23,7 +23,7 @@ extension NSData {
     public func checksum() -> UInt16 {
         var s:UInt32 = 0
         var bytesArray = self.arrayOfBytes()
-        for (var i = 0; i < bytesArray.count; i++) {
+        for i in 0..<bytesArray.count {
             s = s + UInt32(bytesArray[i])
         }
         s = s % 65536
@@ -60,13 +60,13 @@ extension NSData {
         return NSData.withBytes(result)
     }
 
-    public func crc32() -> NSData? {
-        let result = Hash.crc32(self.arrayOfBytes()).calculate()
+    public func crc32(seed: UInt32? = nil) -> NSData? {
+        let result = Hash.crc32(self.arrayOfBytes(), seed: seed).calculate()
         return NSData.withBytes(result)
     }
 
-    public func crc16() -> NSData? {
-        let result = Hash.crc16(self.arrayOfBytes()).calculate()
+    public func crc16(seed: UInt16? = nil) -> NSData? {
+        let result = Hash.crc16(self.arrayOfBytes(), seed: seed).calculate()
         return NSData.withBytes(result)
     }
 

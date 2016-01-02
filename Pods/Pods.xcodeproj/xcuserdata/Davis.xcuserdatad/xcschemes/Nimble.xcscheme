@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7395036F7FF94491D89141A9'
-               BlueprintName = 'PusherSwift'
+               BlueprintIdentifier = '3FAB04DE6E1AADD7B9B6653D'
+               BlueprintName = 'Nimble'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'PusherSwift.framework'>
+               BuildableName = 'Nimble.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

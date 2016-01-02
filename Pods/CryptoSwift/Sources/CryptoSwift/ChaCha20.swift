@@ -8,7 +8,7 @@
 
 final public class ChaCha20 {
     
-    enum Error: ErrorType {
+    public enum Error: ErrorType {
         case MissingContext
     }
     
@@ -20,7 +20,7 @@ final public class ChaCha20 {
         var input:[UInt32] = [UInt32](count: 16, repeatedValue: 0)
         
         deinit {
-            for (var i = 0; i < input.count; i++) {
+            for i in 0..<input.count {
                 input[i] = 0x00;
             }
         }
@@ -52,9 +52,8 @@ final public class ChaCha20 {
         }
         
         var x = input
-        
-        var i = 10
-        while (i  > 0) {
+
+        for _ in 0..<10 {
             quarterround(&x[0], &x[4], &x[8], &x[12])
             quarterround(&x[1], &x[5], &x[9],  &x[13])
             quarterround(&x[2], &x[6], &x[10], &x[14])
@@ -63,18 +62,14 @@ final public class ChaCha20 {
             quarterround(&x[1], &x[6], &x[11], &x[12])
             quarterround(&x[2], &x[7], &x[8],  &x[13])
             quarterround(&x[3], &x[4], &x[9],  &x[14])
-            i -= 2
         }
 
         var output = [UInt8]()
         output.reserveCapacity(16)
 
         for i in 0..<16 {
-            x[i] = x[i] &+ input[i]            
-            output.appendContentsOf([UInt8((x[i] & 0xFFFFFFFF) >> 24),
-                       UInt8((x[i] & 0xFFFFFF) >> 16),
-                       UInt8((x[i] & 0xFFFF) >> 8),
-                       UInt8((x[i] & 0xFF) >> 0)])
+            x[i] = x[i] &+ input[i]
+            output.appendContentsOf(x[i].bytes().reverse())
         }
 
         return output;
@@ -89,7 +84,7 @@ final public class ChaCha20 {
         }
         
         // 4 - 8
-        for (var i = 0; i < 4; i++) {
+        for i in 0..<4 {
             let start = i * 4
             ctx.input[i + 4] = wordNumber(key[start..<(start + 4)])
         }
@@ -113,7 +108,7 @@ final public class ChaCha20 {
         }
         
         // 8 - 11
-        for (var i = 0; i < 4; i++) {
+        for i in 0..<4 {
             let start = addPos + (i*4)
             
             let bytes = key[start..<(start + 4)]
@@ -149,12 +144,12 @@ final public class ChaCha20 {
                     /* stopping at 2^70 bytes per nonce is user's responsibility */
                 }
                 if (bytes <= ChaCha20.blockSize) {
-                    for (var i = 0; i < bytes; i++) {
+                    for i in 0..<bytes {
                         c[i + cPos] = message[i + mPos] ^ output[i]
                     }
                     return c
                 }
-                for (var i = 0; i < ChaCha20.blockSize; i++) {
+                for i in 0..<ChaCha20.blockSize {
                     c[i + cPos] = message[i + mPos] ^ output[i]
                 }
                 bytes -= ChaCha20.blockSize
@@ -196,9 +191,10 @@ extension ChaCha20: Cipher {
 /// Change array to number. It's here because arrayOfBytes is too slow
 private func wordNumber(bytes:ArraySlice<UInt8>) -> UInt32 {
     var value:UInt32 = 0
-    for (var i:UInt32 = 0, j = bytes.startIndex; i < 4; i++, j++) {
+    for i:UInt32 in 0..<4 {
+        let j = bytes.startIndex + Int(i)
         value = value | UInt32(bytes[j]) << (8 * i)
     }
-    return value
-}
+
+    return value}
 
