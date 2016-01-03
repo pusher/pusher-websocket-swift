@@ -20,6 +20,7 @@ Good mood
 
 - Easy to use
 - Convenient extensions for String and NSData
+- iOS, OSX, AppleTV, watchOS, Linux support
 
 ##What implemented?
 
@@ -30,12 +31,13 @@ Good mood
 - [SHA256](http://tools.ietf.org/html/rfc6234)
 - [SHA384](http://tools.ietf.org/html/rfc6234)
 - [SHA512](http://tools.ietf.org/html/rfc6234)
-- [CRC32](http://en.wikipedia.org/wiki/Cyclic_redundancy_check) (well, kind of hash)
-- [CRC16](http://en.wikipedia.org/wiki/Cyclic_redundancy_check) (well, kind of hash)
+- [CRC32](http://en.wikipedia.org/wiki/Cyclic_redundancy_check) (not hash)
+- [CRC16](http://en.wikipedia.org/wiki/Cyclic_redundancy_check) (not hash)
 
 #####Cipher
 - [AES-128, AES-192, AES-256](http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf)
 - [ChaCha20](http://cr.yp.to/chacha/chacha-20080128.pdf)
+- [Rabbit](https://tools.ietf.org/html/rfc4503)
 
 #####Message authenticators
 - [Poly1305](http://cr.yp.to/mac/poly1305-20050329.pdf)
@@ -69,14 +71,19 @@ To install CryptoSwift, add it as a submodule to your project (on the top level 
 
 ####Embedded Framework
 
-Embedded frameworks require a minimum deployment target of iOS 8 or OS X Mavericks (10.9). Drag the `CryptoSwift.xcodeproj` file into your Xcode project, and add appropriate framework as a dependency to your target. Now select your App and choose the General tab for the app target. Drag framework to *Embedded Binaries*
+Embedded frameworks require a minimum deployment target of iOS 8 or OS X Mavericks (10.9). Drag the `CryptoSwift.xcodeproj` file into your Xcode project, and add appropriate framework as a dependency to your target. Now select your App and choose the General tab for the app target. Find *Embedded Binaries* and press "+", then select `CryptoSwift.framework` (iOS, OS X, watchOS or tvOS)
 
-#####iOS, OSX, watchOS
+![](https://cloud.githubusercontent.com/assets/758033/10834511/25a26852-7e9a-11e5-8c01-6cc8f1838459.png)
+
+
+
+#####iOS, OSX, watchOS, tvOS
 
 In the project, you'll find three targets, configured for each supported SDK:
 - CryptoSwift iOS
 - CryptoSwift OSX
 - CryptoSwift watchOS
+- CryptoSwift tvOS
 
 You may need to choose the one you need to build `CryptoSwift.framework` for your application.
 
@@ -113,6 +120,13 @@ github "krzyzanowskim/CryptoSwift"
 ```
 
 Run carthage to build the framework and drag the built CryptoSwift.framework into your Xcode project. Follow [build instructions](https://github.com/Carthage/Carthage#getting-started)
+
+####Swift Package Manager
+
+You can use [Swift Package Manager](https://swift.org/package-manager/) and specify dependency in `Package.swift` by adding this:
+```
+.Package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", majorVersion: 0)
+```
  
 ##Usage
 
@@ -169,6 +183,13 @@ ChaCha20
 ```swift
 let encrypted: [UInt8] = ChaCha20(key: key, iv: iv).encrypt(message)
 let decrypted: [UInt8] = ChaCha20(key: key, iv: iv).decrypt(encrypted)
+```
+
+Rabbit
+
+```swift
+let encrypted = Rabbit(key: key, iv: iv)?.encrypt(plaintext)
+let decrypted = Rabbit(key: key, iv: iv)?.decrypt(encrypted!)
 ```
 
 AES
@@ -269,4 +290,4 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 ##Changelog
 
-see CHANGELOG file
+See [CHANGELOG](./CHANGELOG) file.
