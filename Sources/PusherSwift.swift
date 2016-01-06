@@ -433,8 +433,9 @@ public class PusherConnection: WebSocketDelegate {
     }
 
     private func sendAuthorisationRequest(endpoint: String, socket: String, channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) {
-        var request = NSMutableURLRequest(URL: NSURL(string: "\(endpoint)?socket_id=\(socket)&channel_name=\(channel.name)")!)
+        var request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
         request.HTTPMethod = "POST"
+        request.HTTPBody = "socket_id=\(socket)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
 
         if let handler = self.options.authRequestCustomizer {
             request = handler(request)
