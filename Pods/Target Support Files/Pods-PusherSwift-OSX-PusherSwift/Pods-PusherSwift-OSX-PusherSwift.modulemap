@@ -1,0 +1,6 @@
+framework module PusherSwift {
+  umbrella header "Pods-PusherSwift-OSX-PusherSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}

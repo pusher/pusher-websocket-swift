@@ -1,0 +1,6 @@
+framework module CryptoSwift {
+  umbrella header "Pods-PusherSwiftTests-OSX-CryptoSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}

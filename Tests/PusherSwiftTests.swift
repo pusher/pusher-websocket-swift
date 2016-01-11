@@ -7,11 +7,12 @@
 //
 
 import Foundation
-import UIKit
 import Quick
 import Nimble
 import Starscream
 import PusherSwift
+
+let VERSION = "0.1.7"
 
 // Setup mock objects that we will need
 public class MockWebSocket: WebSocket {
@@ -223,7 +224,7 @@ class PusherClientInitializationSpec: QuickSpec {
 
             context("with default config") {
                 it("has the correct conection url") {
-                    expect(pusher.connection.url).to(equal("wss://ws.pusherapp.com:443/app/testKey123?client=pusher-websocket-swift&version=0.1.6&protocol=7"))
+                    expect(pusher.connection.url).to(equal("wss://ws.pusherapp.com:443/app/testKey123?client=pusher-websocket-swift&version=\(VERSION)&protocol=7"))
                 }
 
                 it("has auth endpoint as nil") {
@@ -263,7 +264,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("unencrypted") {
                     it("has the correct conection url") {
                         pusher = Pusher(key: key, options: ["encrypted": false])
-                        expect(pusher.connection.url).to(equal("ws://ws.pusherapp.com:80/app/testKey123?client=pusher-websocket-swift&version=0.1.6&protocol=7"))
+                        expect(pusher.connection.url).to(equal("ws://ws.pusherapp.com:80/app/testKey123?client=pusher-websocket-swift&version=\(VERSION)&protocol=7"))
                     }
                 }
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PusherSwift'
-  s.version          = '0.1.6'
+  s.version          = '0.1.7'
   s.summary          = 'A Pusher client library in Swift'
   s.homepage         = 'https://github.com/pusher-community/pusher-websocket-swift'
   s.license          = 'MIT'
@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
 
   s.dependency 'Starscream', '~> 1.0.2'
   s.dependency 'CryptoSwift', '~> 0.2.2'
-  s.dependency 'ReachabilitySwift', '~> 2.3'
+  s.dependency 'ReachabilitySwift', '~> 2.3.3'
 end
