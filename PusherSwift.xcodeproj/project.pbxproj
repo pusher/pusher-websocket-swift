@@ -22,7 +22,7 @@
 		33999D381C4020A300AFED30 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		880A672D74CCC1EAE32C7233 /* Pods_PusherSwift_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9BA07EA25D94B5EDC04F1B /* Pods_PusherSwift_OSX.framework */; };
-		9AF0AE2899725CA479C40F3C /* Pods_PusherSwiftTests_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9187A66014F4DC5126D41AF6 /* Pods_PusherSwiftTests_OSX.framework */; };
+		9AF0AE2899725CA479C40F3C /* Pods_PusherSwiftTests_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9187A66014F4DC5126D41AF6 /* Pods_PusherSwiftTests_OSX.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		9CE54E77A997EE52C43A1B7C /* Pods_PusherSwiftTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2A475E76EC1FC9DB5346A5 /* Pods_PusherSwiftTests_iOS.framework */; };
 		BA99BA04D960338935F74F1F /* Pods_PusherSwiftTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3270921573904AE304CEF671 /* Pods_PusherSwiftTests_tvOS.framework */; };
 /* End PBXBuildFile section */
@@ -60,6 +60,7 @@
 		2A9C7920F58BA607C041C808 /* Pods-PusherSwift-OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwift-OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwift-OSX/Pods-PusherSwift-OSX.release.xcconfig"; sourceTree = "<group>"; };
 		2D9668EEC8907A968E3B84C0 /* Pods_Builds_PusherSwift_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Builds_PusherSwift_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3270921573904AE304CEF671 /* Pods_PusherSwiftTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PusherSwiftTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33188D1A1C45236E00AC2E25 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = "Pods/../build/Debug/Pods-PusherSwiftTests-OSX/CryptoSwift.framework"; sourceTree = "<group>"; };
 		337C9EE01C38B708006CC757 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		337C9F0D1C38BE2E006CC757 /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		337C9F0F1C38C51A006CC757 /* Pods_PusherSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_PusherSwift.framework; path = "Pods/../build/Debug-iphoneos/Pods_PusherSwift.framework"; sourceTree = "<group>"; };
@@ -216,6 +217,7 @@
 		42D29A655054030A9B238900 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				33188D1A1C45236E00AC2E25 /* CryptoSwift.framework */,
 				337C9F0F1C38C51A006CC757 /* Pods_PusherSwift.framework */,
 				337C9EE01C38B708006CC757 /* UIKit.framework */,
 				B8B703EE8CF9F07BBA274AA1 /* Pods_PusherSwift.framework */,
@@ -1007,6 +1009,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1068,6 +1071,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1444,8 +1448,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug/Pods-PusherSwiftTests-OSX",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1498,9 +1506,13 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug/Pods-PusherSwiftTests-OSX",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

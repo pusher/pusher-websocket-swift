@@ -19,7 +19,6 @@ env:
     - DESTINATION="OS=8.4,name=iPhone 6"       SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
     - DESTINATION="OS=8.4,name=iPad Air"       SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
     - DESTINATION="OS=9.1,name=Apple TV 1080p" SDK="$TVOS_SDK"  SCHEME="$TVOS_SCHEME"
-    - DESTINATION="OS=9.1,name=Apple TV 1080p" SDK="$TVOS_SDK"  SCHEME="$TVOS_SCHEME"
     - DESTINATION="platform=OS X"              SDK="$MACOS_SDK" SCHEME="$MACOS_SCHEME"
 before_install:
   - brew update
