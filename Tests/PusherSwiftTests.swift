@@ -207,6 +207,18 @@ public class FunctionCall {
     }
 }
 
+func convertStringToDictionary(text: String) -> [String:AnyObject]? {
+    if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
+        do {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String:AnyObject]
+            return json
+        } catch {
+            print("Something went wrong")
+        }
+    }
+    return nil
+}
+
 class PusherClientInitializationSpec: QuickSpec {
     override func spec() {
         describe("creating the connection") {
@@ -385,7 +397,10 @@ class PusherTopLevelApiSpec: QuickSpec {
                 it("sends subscribe to Pusher over the Websocket") {
                     _ = pusher.subscribe("test-channel")
                     expect(socket.stubber.calls.last?.name).to(equal("writeString"))
-                    expect(socket.stubber.calls.last?.args!.first as? String).to(equal("{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}"))
+                    let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
+                    let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"]
+                    let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                    expect(parsedEqualsExpected).to(beTrue())
                 }
 
                 it("subscribes to a public channel") {
@@ -486,7 +501,10 @@ class PusherTopLevelApiSpec: QuickSpec {
                 pusher.subscribe("test-channel")
                 pusher.unsubscribe("test-channel")
                 expect(socket.stubber.calls.last?.name).to(equal("writeString"))
-                expect(socket.stubber.calls.last?.args!.first as? String).to(equal("{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:unsubscribe\"}"))
+                let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
+                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                expect(parsedEqualsExpected).to(beTrue())
             }
         }
 
@@ -604,7 +622,10 @@ class PusherChannelSpec: QuickSpec {
                 let chan = PusherChannel(name: "private-channel", connection: connection)
                 chan.subscribed = true
                 chan.trigger("client-test-event", data: ["data": "testing client events"])
-                expect(socket.stubber.calls.first?.args?.first as? String).to(equal("{\"data\":{\"data\":\"testing client events\"},\"event\":\"client-test-event\",\"channel\":\"private-channel\"}"))
+                let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.first?.args!.first as! String)
+                let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                expect(parsedEqualsExpected).to(beTrue())
             }
 
             it("should send any client events that were triggered before subscription was successful") {
@@ -615,7 +636,10 @@ class PusherChannelSpec: QuickSpec {
                 expect(chan.unsentEvents.keys).to(contain("client-test-event"))
                 expect(socket.stubber.calls).to(beEmpty())
                 connection.connect()
-                expect(socket.stubber.calls.last?.args?.first as? String).to(equal("{\"data\":{\"data\":\"testing client events\"},\"event\":\"client-test-event\",\"channel\":\"private-channel\"}"))
+                let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
+                let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                expect(parsedEqualsExpected).to(beTrue())
             }
         }
     }
