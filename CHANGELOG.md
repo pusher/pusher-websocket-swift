@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.7
+
+###### Misc
+
+* Add support for tvOS as platform (@goose2460)
+* Update CryptoSwift to 0.2.2 (@goose2460)
+* Update ReachabilitySwift to 2.3.3 (@goose2460)
+* Rename `Sources` back to `Source`
+
 ## 0.1.6
 
 ###### Misc
