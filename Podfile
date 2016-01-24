@@ -7,7 +7,7 @@ use_frameworks!
 
 def import_pods
   pod 'PusherSwift', path: './'
-  pod 'Starscream', '~> 1.0.2'
+  pod 'Starscream', '~> 1.1.1'
   pod 'CryptoSwift', '~> 0.2.2'
   pod 'ReachabilitySwift', '~> 2.3.3'
 end

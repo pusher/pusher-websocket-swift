@@ -42,7 +42,7 @@ public class MockWebSocket: WebSocket {
         )
     }
 
-    override public func disconnect(forceTimeout: Int = 0) {
+    override public func disconnect(forceTimeout forceTimeout: NSTimeInterval? = nil) {
         stubber.stub(
             "disconnect",
             args: nil,
