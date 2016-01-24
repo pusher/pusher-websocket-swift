@@ -1,6 +1,0 @@
-framework module ReachabilitySwift {
-  umbrella header "Pods-PusherSwift-iOS-ReachabilitySwift-umbrella.h"
-
-  export *
-  module * { export * }
-}

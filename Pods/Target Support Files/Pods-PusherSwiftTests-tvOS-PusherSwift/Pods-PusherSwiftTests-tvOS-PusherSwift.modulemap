@@ -1,6 +1,0 @@
-framework module PusherSwift {
-  umbrella header "Pods-PusherSwiftTests-tvOS-PusherSwift-umbrella.h"
-
-  export *
-  module * { export * }
-}
