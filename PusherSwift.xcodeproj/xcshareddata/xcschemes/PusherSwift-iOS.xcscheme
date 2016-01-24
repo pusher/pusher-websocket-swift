@@ -14,48 +14,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9898E0B07A3118C79CD2CECB5BDB65A8"
-               BuildableName = "CryptoSwift.framework"
-               BlueprintName = "Pods-PusherSwift-CryptoSwift"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1B11F1B11EF528CE1B79FCB0EF3AA2AC"
-               BuildableName = "ReachabilitySwift.framework"
-               BlueprintName = "Pods-PusherSwift-ReachabilitySwift"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BB0B15F7D71400C81514BB15C2BFAB28"
-               BuildableName = "Starscream.framework"
-               BlueprintName = "Pods-PusherSwift-Starscream"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "33831C881A9CF61600B124F1"
                BuildableName = "PusherSwift.framework"
                BlueprintName = "PusherSwift-iOS"
