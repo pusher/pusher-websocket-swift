@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0
+
+* Add platform-specific builds for iOS, tvOS, OSX
+* Add build and test schemes for platform-specific builds
+* Update Starscream to 1.1.1
+* POST auth parameter with HTTP Body (@ngs)
+
 ## 0.1.7
 
 ###### Misc
