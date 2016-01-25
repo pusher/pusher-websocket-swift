@@ -23,6 +23,9 @@ env:
 before_install:
   - brew update
   - brew install carthage
+  - gem install cocoapods -v 1.0.0.beta.2
+install:
+  - pod _1.0.0.beta.2_ install
 script:
   - set -o pipefail
   - xcodebuild -version
