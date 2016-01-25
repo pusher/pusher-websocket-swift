@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+* Remove Pods directory from repo
+* Change iOS deployment target to 8.0
+* Use cocoapods version 1.0.0.beta.2 to make builds work on Travis
+
 ## 0.2.0
 
 * Add platform-specific builds for iOS, tvOS, OSX

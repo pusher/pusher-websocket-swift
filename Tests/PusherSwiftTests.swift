@@ -12,7 +12,7 @@ import Nimble
 import Starscream
 import PusherSwift
 
-let VERSION = "0.2.0"
+let VERSION = "0.2.1"
 
 // Setup mock objects that we will need
 public class MockWebSocket: WebSocket {
