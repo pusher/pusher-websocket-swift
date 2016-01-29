@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2
+
+* Fix building for Carthage
+* Update `TARGETED_DEVICE_FAMILY` for tvOS target to be correct (`3`)
+
 ## 0.2.1
 
 * Remove Pods directory from repo
