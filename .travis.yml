@@ -37,7 +37,7 @@ script:
 before_script:
   - carthage bootstrap
 before_deploy:
-  - carthage build --no-skip-current --verbose
+  - carthage build --no-skip-current
   - carthage archive PusherSwift
 deploy:
   provider: releases
