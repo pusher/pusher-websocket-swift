@@ -2,10 +2,10 @@ Pod::Spec.new do |s|
   s.name             = 'PusherSwift'
   s.version          = '0.2.2'
   s.summary          = 'A Pusher client library in Swift'
-  s.homepage         = 'https://github.com/pusher-community/pusher-websocket-swift'
+  s.homepage         = 'https://github.com/pusher/pusher-websocket-swift'
   s.license          = 'MIT'
   s.author           = { "Hamilton Chapman" => "hamchapman@gmail.com" }
-  s.source           = { git: "https://github.com/pusher-community/pusher-websocket-swift.git", tag: s.version.to_s }
+  s.source           = { git: "https://github.com/pusher/pusher-websocket-swift.git", tag: s.version.to_s }
   s.social_media_url = 'https://twitter.com/pusher'
 
   s.requires_arc = true

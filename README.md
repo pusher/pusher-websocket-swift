@@ -1,11 +1,11 @@
 # PusherSwift (pusher-websocket-swift)
 
-[![Build Status](https://travis-ci.org/pusher-community/pusher-websocket-swift.svg?branch=master)](https://travis-ci.org/pusher-community/pusher-websocket-swift)
+[![Build Status](https://travis-ci.org/pusher/pusher-websocket-swift.svg?branch=master)](https://travis-ci.org/pusher/pusher-websocket-swift)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/PusherSwift.svg)](https://img.shields.io/cocoapods/v/PusherSwift.svg)
 [![Platform](https://img.shields.io/cocoapods/p/PusherSwift.svg?style=flat)](http://cocoadocs.org/docsets/PusherSwift)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
-[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher-community/pusher-websocket-swift/master/LICENSE.md)
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
 
 
 ## Table of Contents
@@ -65,7 +65,7 @@ $ brew install carthage
 To integrate PusherSwift into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "pusher-community/pusher-websocket-swift"
+github "pusher/pusher-websocket-swift"
 ```
 
 
@@ -196,7 +196,7 @@ You can unbind from events at both the global and per channel level. For both ob
 
 ## Testing
 
-There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode). The tests also get run on [Travis-CI](https://travis-ci.org/pusher-community/pusher-websocket-swift).
+There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode). The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift).
 
 
 ## Communication
@@ -215,4 +215,4 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 
 ## License
 
-PusherSwift is released under the MIT license. See [LICENSE](https://github.com/pusher-community/pusher-websocket-swift/blob/master/LICENSE.md) for details.
+PusherSwift is released under the MIT license. See [LICENSE](https://github.com/pusher/pusher-websocket-swift/blob/master/LICENSE.md) for details.

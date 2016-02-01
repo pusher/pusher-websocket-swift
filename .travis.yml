@@ -46,5 +46,5 @@ deploy:
   file: PusherSwift.framework.zip
   skip_cleanup: true
   on:
-    repo: pusher-community/pusher-websocket-swift
+    repo: pusher/pusher-websocket-swift
     tags: true
