@@ -24,6 +24,7 @@ before_install:
   - brew update
   - if brew list | grep -q carthage; then
       echo Carthage installed. Proceed without installing
+      carthage version
     else
       echo Carthage not installed. Installing using homebrew
       brew install carthage
