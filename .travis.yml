@@ -23,11 +23,11 @@ env:
 before_install:
   - brew update
   - if brew list | grep -q carthage; then
-      echo Carthage installed. Proceed without installing
-      carthage version
+      echo Carthage installed. Proceed without installing;
+      carthage version;
     else
-      echo Carthage not installed. Installing using homebrew
-      brew install carthage
+      echo Carthage not installed. Installing using homebrew;
+      brew install carthage;
     fi
   - gem install cocoapods -v 1.0.0.beta.2
 install:
