@@ -255,9 +255,10 @@ public class PusherConnection: WebSocketDelegate {
                     }
                 }
             }
-            for (eventName, data) in chan.unsentEvents {
-                chan.unsentEvents.removeValueForKey(channelName)
-                chan.trigger(eventName, data: data)
+            while chan.unsentEvents.count > 0 {
+                if let pusherEvent = chan.unsentEvents.popLast() {
+                    chan.trigger(pusherEvent.name, data: pusherEvent.data)
+                }
             }
         }
     }
@@ -558,7 +559,7 @@ public class PusherChannel {
     public var subscribed = false
     public let name: String
     public let connection: PusherConnection
-    public var unsentEvents = [String: AnyObject]()
+    public var unsentEvents = [PusherEvent]()
 
     public init(name: String, connection: PusherConnection) {
         self.name = name
@@ -608,9 +609,14 @@ public class PusherChannel {
         if subscribed {
             self.connection.sendEvent(eventName, data: data, channelName: self.name)
         } else {
-            unsentEvents[eventName] = data
+            unsentEvents.insert(PusherEvent(name: eventName, data: data), atIndex: 0)
         }
     }
+}
+
+public struct PusherEvent {
+    public let name: String
+    public let data: AnyObject
 }
 
 public class PresencePusherChannel: PusherChannel {

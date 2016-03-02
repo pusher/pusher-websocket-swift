@@ -633,11 +633,27 @@ class PusherChannelSpec: QuickSpec {
                 connection.channels.channels["private-channel"] = chan
                 expect(chan.unsentEvents).to(beEmpty())
                 chan.trigger("client-test-event", data: ["data": "testing client events"])
-                expect(chan.unsentEvents.keys).to(contain("client-test-event"))
+                expect(chan.unsentEvents.last!.name).to(equal("client-test-event"))
                 expect(socket.stubber.calls).to(beEmpty())
                 connection.connect()
                 let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
                 let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                expect(parsedEqualsExpected).to(beTrue())
+            }
+            
+            it("should send multipe client events with the same event name that were triggered before subscription was successful") {
+                let chan = PusherChannel(name: "private-channel", connection: connection)
+                connection.channels.channels["private-channel"] = chan
+                expect(chan.unsentEvents).to(beEmpty())
+                chan.trigger("client-test-event", data: ["data": "testing client events"])
+                chan.trigger("client-test-event", data: ["data": "more testing client events"])
+                expect(chan.unsentEvents.last!.name).to(equal("client-test-event"))
+                expect(chan.unsentEvents.count).to(equal(2))
+                expect(socket.stubber.calls).to(beEmpty())
+                connection.connect()
+                let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
+                let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"]
                 let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
                 expect(parsedEqualsExpected).to(beTrue())
             }
