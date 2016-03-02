@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+* Make `unsentEvents` an array instead of a dictionary (fixes #29)
+
 ## 0.2.2
 
 * Fix building for Carthage

@@ -12,7 +12,7 @@ import Nimble
 import Starscream
 import PusherSwift
 
-let VERSION = "0.2.2"
+let VERSION = "0.2.3"
 
 // Setup mock objects that we will need
 public class MockWebSocket: WebSocket {
@@ -641,7 +641,7 @@ class PusherChannelSpec: QuickSpec {
                 let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
                 expect(parsedEqualsExpected).to(beTrue())
             }
-            
+
             it("should send multipe client events with the same event name that were triggered before subscription was successful") {
                 let chan = PusherChannel(name: "private-channel", connection: connection)
                 connection.channels.channels["private-channel"] = chan
