@@ -1,14 +1,14 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 workspace 'PusherSwift'
-xcodeproj 'PusherSwift'
+project 'PusherSwift'
 
 use_frameworks!
 
 def import_pods
   pod 'PusherSwift', path: './'
-  pod 'Starscream', '~> 1.1.1'
-  pod 'CryptoSwift', '~> 0.2.2'
+  pod 'Starscream', '~> 1.1.2'
+  pod 'CryptoSwift', '~> 0.2.3'
   pod 'ReachabilitySwift', '~> 2.3.3'
 end
 

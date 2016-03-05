@@ -1,34 +1,34 @@
 PODS:
-  - CryptoSwift (0.2.2)
+  - CryptoSwift (0.2.3)
   - Nimble (3.0.0)
   - PusherSwift (0.2.3):
-    - CryptoSwift (~> 0.2.2)
+    - CryptoSwift (~> 0.2.3)
     - ReachabilitySwift (~> 2.3.3)
-    - Starscream (~> 1.1.1)
+    - Starscream (~> 1.1.2)
   - Quick (0.8.0)
   - ReachabilitySwift (2.3.3)
-  - Starscream (1.1.1)
+  - Starscream (1.1.2)
 
 DEPENDENCIES:
-  - CryptoSwift (~> 0.2.2)
+  - CryptoSwift (~> 0.2.3)
   - Nimble (= 3.0.0)
   - PusherSwift (from `./`)
   - Quick (= 0.8.0)
   - ReachabilitySwift (~> 2.3.3)
-  - Starscream (~> 1.1.1)
+  - Starscream (~> 1.1.2)
 
 EXTERNAL SOURCES:
   PusherSwift:
     :path: "./"
 
 SPEC CHECKSUMS:
-  CryptoSwift: d382228d6301c09474132417878a741c2a2e68cd
+  CryptoSwift: b2bf37b8e7cc6d682ef3365cb966bc5ae5174aa5
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
-  PusherSwift: 088a8bde5f9fa8c24efe710915d49f2b67c9edc4
+  PusherSwift: d1b4206cbda4b4ad13f377189984a2fc917f8f71
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
-  Starscream: d74dd8d122a6abd244d8d5e51f32891c796d0827
+  Starscream: 58a12fd35a3cb6aaa105716c2d42765f7c1c732f
 
-PODFILE CHECKSUM: c411cf7b7192d6bc3d661fdf190384c171149eb6
+PODFILE CHECKSUM: f573834fd6ab3b029d84eda5e04be4ad773b3ddc
 
-COCOAPODS: 1.0.0.beta.2
+COCOAPODS: 1.0.0.beta.4
