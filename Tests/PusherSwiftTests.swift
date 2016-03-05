@@ -334,6 +334,22 @@ class PusherClientInitializationSpec: QuickSpec {
                         expect(pusher.connection.options.port).to(equal(123))
                     }
                 }
+
+                context("a cluster") {
+                    context("and no host") {
+                        it("sets the host correctly") {
+                            pusher = Pusher(key: key, options: ["cluster": "eu"])
+                            expect(pusher.connection.options.host).to(equal("ws-eu.pusher.com"))
+                        }
+                    }
+
+                    context("and a host") {
+                        it("sets the host correctly") {
+                            pusher = Pusher(key: key, options: ["cluster": "eu", "host": "test.test.test"])
+                            expect(pusher.connection.options.host).to(equal("test.test.test"))
+                        }
+                    }
+                }
             }
         }
     }
