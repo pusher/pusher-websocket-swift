@@ -90,16 +90,7 @@ public struct PusherClientOptions {
     public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
 
     public init(options: [String:Any]?) {
-        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "autoReconnect", "authRequestCustomizer"]
-
-        if let options = options {
-            for (key, _) in options {
-                if !validKeys.contains(key) {
-                    print("Invalid key in options: \(key)")
-                }
-            }
-        }
-
+        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "cluster", "autoReconnect", "authRequestCustomizer"]
         let defaults: [String:AnyObject?] = [
             "encrypted": true,
             "attemptToReturnJSONObject": true,
@@ -111,10 +102,29 @@ public struct PusherClientOptions {
             "host": "ws.pusherapp.com",
             "port": nil
         ]
+        
+        var mutableOptions = options
+        
+        if let options = options {
+            for (key, _) in options {
+                if !validKeys.contains(key) {
+                    print("Invalid key in options: \(key)")
+                }
+            }
+            
+            if let cluster = options["cluster"] {
+                if let host = options["host"] {
+                    print("Both host (\(host)) and cluster (\(cluster)) passed as options - host takes precedence")
+                } else {
+                    mutableOptions!["host"] = "ws-\(cluster).pusher.com"
+                }
+            }
+        }
+        
+        var optionsMergedWithDefaults: [String:Any?] = [:]
 
-        var optionsMergedWithDefaults: [String:Any] = [:]
         for (key, value) in defaults {
-            if let options = options, optionsValue = options[key] {
+            if let mutableOptions = mutableOptions, optionsValue = mutableOptions[key] {
                 optionsMergedWithDefaults[key] = optionsValue
             } else {
                 optionsMergedWithDefaults[key] = value
