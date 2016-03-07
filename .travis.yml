@@ -31,7 +31,7 @@ before_install:
     fi
   - gem install cocoapods -v 1.0.0.beta.2
 install:
-  - pod _1.0.0.beta.2_ install
+  - pod _1.0.0.beta.4_ install
 script:
   - set -o pipefail
   - xcodebuild -version
