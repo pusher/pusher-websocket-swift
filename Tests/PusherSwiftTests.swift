@@ -424,6 +424,31 @@ class PusherTopLevelApiSpec: QuickSpec {
                     let testChannel = pusher.connection.channels.channels["test-channel"]
                     expect(testChannel?.subscribed).to(beTruthy())
                 }
+                
+                it("subscription succeeded event sent to global channel") {
+                    let callback = { (data: AnyObject?) -> Void in
+                        if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
+                            socket.appendToCallbackCheckString("globalCallbackCalled")
+                        }
+                    }
+                    pusher.bind(callback)
+                    expect(socket.callbackCheckString).to(equal(""))
+                    pusher.subscribe("test-channel")
+                    expect(socket.callbackCheckString).to(equal("globalCallbackCalled"))
+                }
+                
+                it("subscription succeeded event sent to private channel") {
+                    let callback = { (data: AnyObject?) -> Void in
+                        if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
+                            socket.appendToCallbackCheckString("channelCallbackCalled")
+                        }
+                    }
+                    pusher.bind(callback)
+                    expect(socket.callbackCheckString).to(equal(""))
+                    let chan = pusher.subscribe("test-channel")
+                    chan.bind("pusher:subscription_succeeded", callback: callback)
+                    expect(socket.callbackCheckString).to(equal("channelCallbackCalled"))
+                }
 
                 it("sets up the channel correctly") {
                     let chan = pusher.subscribe("test-channel")

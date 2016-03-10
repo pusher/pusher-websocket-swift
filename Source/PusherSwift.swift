@@ -256,6 +256,10 @@ public class PusherConnection: WebSocketDelegate {
     private func handleSubscriptionSucceededEvent(json: PusherEventJSON) {
         if let channelName = json["channel"] as? String, chan = self.channels.find(channelName) {
             chan.subscribed = true
+            if let eData = json["data"] as? String {
+                callGlobalCallbacks("pusher:subscription_succeeded", jsonObject: json)
+                chan.handleEvent("pusher:subscription_succeeded", eventData: eData)
+            }
             if isPresenceChannel(channelName) {
                 if let presChan = self.channels.find(channelName) as? PresencePusherChannel {
                     if let data = json["data"] as? String, dataJSON = getPusherEventJSONFromString(data) {
@@ -367,9 +371,9 @@ public class PusherConnection: WebSocketDelegate {
     }
 
     private func callGlobalCallbacks(eventName: String, jsonObject: Dictionary<String,AnyObject>) {
-        if let channelName = jsonObject["channel"] as? String, eName = jsonObject["event"] as? String, eData =  jsonObject["data"] as? String {
+        if let channelName = jsonObject["channel"] as? String, eData =  jsonObject["data"] as? String {
             if let globalChannel = self.globalChannel {
-                globalChannel.handleEvent(channelName, eventName: eName, eventData: eData)
+                globalChannel.handleEvent(channelName, eventName: eventName, eventData: eData)
             }
         }
     }
