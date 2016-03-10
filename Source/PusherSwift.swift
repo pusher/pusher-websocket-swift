@@ -161,6 +161,19 @@ public class PusherConnection: WebSocketDelegate {
     public var channels = PusherChannels()
     public var socket: WebSocket!
     public var URLSession: NSURLSession
+    
+    public lazy var reachability: Reachability? = {
+        let reachability = try? Reachability.reachabilityForInternetConnection()
+        reachability?.whenReachable = { [unowned self] reachability in
+            if !self.connected {
+                self.socket.connect()
+            }
+        }
+        reachability?.whenUnreachable = { [unowned self] reachability in
+            print("Network unreachable")
+        }
+        return reachability
+    }()
 
     public init(key: String, socket: WebSocket, url: String, options: PusherClientOptions, URLSession: NSURLSession = NSURLSession.sharedSession()) {
         self.url = url
@@ -225,15 +238,19 @@ public class PusherConnection: WebSocketDelegate {
 
     public func disconnect() {
         if self.connected {
+            self.reachability?.stopNotifier()
             self.socket.disconnect()
         }
     }
-
+    
     public func connect() {
         if self.connected {
             return
         } else {
             self.socket.connect()
+            if let reconnect = self.options.autoReconnect where reconnect {
+                _ = try? reachability?.startNotifier()
+            }
         }
     }
 
@@ -529,29 +546,10 @@ public class PusherConnection: WebSocketDelegate {
         if let error = error {
             print("Websocket is disconnected: \(error.localizedDescription)")
         }
-
+        
         self.connected = false
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
-        }
-
-        if let reconnect = self.options.autoReconnect where reconnect {
-            let reachability = try! Reachability.reachabilityForInternetConnection()
-
-            if let reachability = try? Reachability.reachabilityForInternetConnection() {
-
-                reachability.whenReachable = { reachability in
-                    if !self.connected {
-                        self.socket.connect()
-                    }
-                }
-
-                reachability.whenUnreachable = { reachability in
-                    print("Network unreachable")
-                }
-            }
-
-            if let _ = try? reachability.startNotifier() {}
         }
     }
 
