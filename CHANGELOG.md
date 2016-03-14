@@ -6,8 +6,8 @@
 * Update CryptoSwift to 0.2.3
 * Update Starscream to 0.1.2
 * Add `cluster` option to client initialiser options dictionary
-* Fix autoreconnect bugs (@bdolman)
-* Make `pusher:subscription_succeeded` event accessible (@bdolman)
+* Fix autoreconnect bugs ([@bdolman](https://github.com/bdolman))
+* Make `pusher:subscription_succeeded` event accessible ([@bdolman](https://github.com/bdolman))
 
 ## 0.2.3
 
@@ -29,15 +29,15 @@
 * Add platform-specific builds for iOS, tvOS, OSX
 * Add build and test schemes for platform-specific builds
 * Update Starscream to 1.1.1
-* POST auth parameter with HTTP Body (@ngs)
+* POST auth parameter with HTTP Body ([@ngs](https://github.com/ngs))
 
 ## 0.1.7
 
 ###### Misc
 
-* Add support for tvOS as platform (@goose2460)
-* Update CryptoSwift to 0.2.2 (@goose2460)
-* Update ReachabilitySwift to 2.3.3 (@goose2460)
+* Add support for tvOS as platform ([@goose2460](https://github.com/goose2460))
+* Update CryptoSwift to 0.2.2 ([@goose2460](https://github.com/goose2460))
+* Update ReachabilitySwift to 2.3.3 ([@goose2460](https://github.com/goose2460))
 * Rename `Sources` back to `Source`
 
 ## 0.1.6
