@@ -15,7 +15,7 @@ public typealias PusherUserInfoObject = Dictionary<String, AnyObject>
 public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7
-let VERSION = "0.2.3"
+let VERSION = "0.2.4"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
@@ -102,16 +102,16 @@ public struct PusherClientOptions {
             "host": "ws.pusherapp.com",
             "port": nil
         ]
-        
+
         var mutableOptions = options
-        
+
         if let options = options {
             for (key, _) in options {
                 if !validKeys.contains(key) {
                     print("Invalid key in options: \(key)")
                 }
             }
-            
+
             if let cluster = options["cluster"] {
                 if let host = options["host"] {
                     print("Both host (\(host)) and cluster (\(cluster)) passed as options - host takes precedence")
@@ -120,7 +120,7 @@ public struct PusherClientOptions {
                 }
             }
         }
-        
+
         var optionsMergedWithDefaults: [String:Any?] = [:]
 
         for (key, value) in defaults {
@@ -161,7 +161,7 @@ public class PusherConnection: WebSocketDelegate {
     public var channels = PusherChannels()
     public var socket: WebSocket!
     public var URLSession: NSURLSession
-    
+
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
@@ -242,7 +242,7 @@ public class PusherConnection: WebSocketDelegate {
             self.socket.disconnect()
         }
     }
-    
+
     public func connect() {
         if self.connected {
             return
@@ -550,7 +550,7 @@ public class PusherConnection: WebSocketDelegate {
         if let error = error {
             print("Websocket is disconnected: \(error.localizedDescription)")
         }
-        
+
         self.connected = false
         for (_, channel) in self.channels.channels {
             channel.subscribed = false

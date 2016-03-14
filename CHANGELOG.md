@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.4
+
+* Use cocoapods version 1.0.0.beta.5 to make builds work on Travis
+* Update CryptoSwift to 0.2.3
+* Update Starscream to 0.1.2
+* Add `cluster` option to client initialiser options dictionary
+* Fix autoreconnect bugs (@bdolman)
+* Make `pusher:subscription_succeeded` event accessible (@bdolman)
+
 ## 0.2.3
 
 * Make `unsentEvents` an array instead of a dictionary (fixes #29)

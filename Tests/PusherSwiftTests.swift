@@ -12,7 +12,7 @@ import Nimble
 import Starscream
 import PusherSwift
 
-let VERSION = "0.2.3"
+let VERSION = "0.2.4"
 
 // Setup mock objects that we will need
 public class MockWebSocket: WebSocket {
@@ -424,7 +424,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                     let testChannel = pusher.connection.channels.channels["test-channel"]
                     expect(testChannel?.subscribed).to(beTruthy())
                 }
-                
+
                 it("subscription succeeded event sent to global channel") {
                     let callback = { (data: AnyObject?) -> Void in
                         if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
@@ -436,7 +436,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                     pusher.subscribe("test-channel")
                     expect(socket.callbackCheckString).to(equal("globalCallbackCalled"))
                 }
-                
+
                 it("subscription succeeded event sent to private channel") {
                     let callback = { (data: AnyObject?) -> Void in
                         if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
