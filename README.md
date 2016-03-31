@@ -107,6 +107,28 @@ pusher.connect()
 
 This returns a client object which can then be used to subscribe to channels and then calling `connect()` triggers the connection process to start.
 
+### Connection state changes
+
+There is a connection state change delegate that you can implement if you want to get updated when the connection state changes.
+
+You use it like this:
+
+```swift
+class ViewController: UIViewController, ConnectionStateChangeDelegate {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let pusher = Pusher(key: "APP_KEY")
+        pusher.connection.stateChangeDelegate = self
+        pusher.connect()
+        // ...
+    }
+
+    func connectionChange(old: ConnectionState, new: ConnectionState) {
+        print("old: \(old) -> new: \(new)")
+    }
+}
+```
 
 ## Subscribing
 
