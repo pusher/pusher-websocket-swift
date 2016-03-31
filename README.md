@@ -82,6 +82,7 @@ There are a number of configuration parameters which can be set for the Pusher c
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (String)` - set a custom value for the host you'd like to connect to
 - `port (Int)` - set a custom value for the port that you'd lilke to connect to
+- `cluster (String)` - specify the cluster that you'd like to connect to, e.g. `eu`
 
 All of these configuration options can be set when instantiating the Pusher object, for example:
 
