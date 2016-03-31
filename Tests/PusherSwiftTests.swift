@@ -377,7 +377,7 @@ class PusherTopLevelApiSpec: QuickSpec {
 
             it("connected is set to true when connection connects") {
                 pusher.connect()
-                expect(pusher.connection.connected).to(beTruthy())
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
             }
         }
 
@@ -390,9 +390,9 @@ class PusherTopLevelApiSpec: QuickSpec {
 
             it("connected is set to false when connection is disconnected") {
                 pusher.connect()
-                expect(pusher.connection.connected).to(beTruthy())
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
                 pusher.disconnect()
-                expect(pusher.connection.connected).to(beFalsy())
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))
             }
 
             it("sets the subscribed property of channels to false") {
