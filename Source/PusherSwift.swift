@@ -151,21 +151,29 @@ public struct PusherClientOptions {
     }
 }
 
+public enum ConnectionState {
+    case Connecting
+    case Connected
+    case Disconnecting
+    case Disconnected
+}
+
 public class PusherConnection: WebSocketDelegate {
     public let url: String
     public let key: String
     public var options: PusherClientOptions
     public var globalChannel: GlobalChannel!
     public var socketId: String?
-    public var connected = false
+    public var connectionState = ConnectionState.Disconnected
     public var channels = PusherChannels()
     public var socket: WebSocket!
     public var URLSession: NSURLSession
+    public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
 
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
-            if !self.connected {
+            if self.connectionState == .Disconnected {
                 self.socket.connect()
             }
         }
@@ -186,7 +194,7 @@ public class PusherConnection: WebSocketDelegate {
 
     private func subscribe(channelName: String) -> PusherChannel {
         let newChannel = channels.add(channelName, connection: self)
-        if self.connected {
+        if self.connectionState == .Connected {
             if !self.authorize(newChannel) {
                 print("Unable to subscribe to channel: \(newChannel.name)")
             }
@@ -237,16 +245,18 @@ public class PusherConnection: WebSocketDelegate {
     }
 
     public func disconnect() {
-        if self.connected {
+        if self.connectionState == .Connected {
             self.reachability?.stopNotifier()
+            updateConnectionState(.Disconnecting)
             self.socket.disconnect()
         }
     }
 
     public func connect() {
-        if self.connected {
+        if self.connectionState == .Connected {
             return
         } else {
+            updateConnectionState(.Connecting)
             self.socket.connect()
             if let reconnect = self.options.autoReconnect where reconnect {
                 _ = try? reachability?.startNotifier()
@@ -268,6 +278,11 @@ public class PusherConnection: WebSocketDelegate {
 
     private func removeAllCallbacksFromGlobalChannel() {
         globalChannel.unbindAll()
+    }
+    
+    private func updateConnectionState(newState: ConnectionState) {
+        self.stateChangeDelegate?.connectionChange(self.connectionState, new: newState)
+        self.connectionState = newState
     }
 
     private func handleSubscriptionSucceededEvent(json: PusherEventJSON) {
@@ -297,7 +312,7 @@ public class PusherConnection: WebSocketDelegate {
     private func handleConnectionEstablishedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
             if let connectionData = getPusherEventJSONFromString(data), socketId = connectionData["socket_id"] as? String {
-                self.connected = true
+                updateConnectionState(.Connected)
                 self.socketId = socketId
 
                 for (_, channel) in self.channels.channels {
@@ -551,7 +566,7 @@ public class PusherConnection: WebSocketDelegate {
             print("Websocket is disconnected: \(error.localizedDescription)")
         }
 
-        self.connected = false
+        updateConnectionState(.Disconnected)
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
@@ -559,6 +574,10 @@ public class PusherConnection: WebSocketDelegate {
 
     public func websocketDidConnect(ws: WebSocket) {}
     public func websocketDidReceiveData(ws: WebSocket, data: NSData) {}
+}
+
+public protocol ConnectionStateChangeDelegate: class {
+    func connectionChange(old: ConnectionState, new: ConnectionState)
 }
 
 public struct EventHandler {
