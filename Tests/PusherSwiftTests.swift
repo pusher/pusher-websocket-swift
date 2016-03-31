@@ -51,8 +51,7 @@ public class MockWebSocket: WebSocket {
             }
         )
     }
-
-    override public func writeString(str: String) {
+    override public func writeString(str: String, completion: (() -> ())? = nil) {
         if str == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || str == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             stubber.stub(
                 "writeString",
