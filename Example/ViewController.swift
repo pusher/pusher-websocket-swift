@@ -9,12 +9,13 @@
 import UIKit
 import PusherSwift
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let pusher = Pusher(key: "87572504efd5d4f1b353", options: ["secret": "ab53d405ac3c245972ee"])
+        pusher.connection.stateChangeDelegate = self
         pusher.connect()
         let chan = pusher.subscribe("test-channel")
 
@@ -32,6 +33,12 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    func connectionChange(old: ConnectionState, new: ConnectionState) {
+        print("old: \(old) -> new: \(new)")
     }
 
 
