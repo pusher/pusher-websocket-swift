@@ -1,10 +1,17 @@
 # Changelog
 
+## 0.3.0
+
+* Use cocoapods version 1.0.0.beta.6 to make builds work on Travis
+* Use Xcode 7.3 image and updated simulators on Travis
+* Update CryptoSwift to 0.3.1 and Starscream to 1.1.3 (largely for Swift 2.2 compatibility)
+* Add ConnectionStateChangeDelegate and associated docs & tests
+
 ## 0.2.4
 
 * Use cocoapods version 1.0.0.beta.5 to make builds work on Travis
 * Update CryptoSwift to 0.2.3
-* Update Starscream to 0.1.2
+* Update Starscream to 1.1.2
 * Add `cluster` option to client initialiser options dictionary
 * Fix autoreconnect bugs ([@bdolman](https://github.com/bdolman))
 * Make `pusher:subscription_succeeded` event accessible ([@bdolman](https://github.com/bdolman))

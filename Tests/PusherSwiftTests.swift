@@ -12,7 +12,7 @@ import Nimble
 import Starscream
 import PusherSwift
 
-let VERSION = "0.2.4"
+let VERSION = "0.3.0"
 
 // Setup mock objects that we will need
 public class MockWebSocket: WebSocket {
@@ -178,7 +178,7 @@ public class MockPusherChannel: PusherChannel {
 
 public class TestConnectionStateChangeDelegate: ConnectionStateChangeDelegate {
     let stubber = StubberForMocks()
-    
+
     public func connectionChange(old: ConnectionState, new: ConnectionState) {
         stubber.stub(
             "connectionChange",
@@ -925,7 +925,7 @@ class ConnectionStateChangeDelegateSpec: QuickSpec {
         var pusher: Pusher!
         var socket: MockWebSocket!
         var stateChangeDelegate: TestConnectionStateChangeDelegate!
-        
+
         beforeEach({
             pusher = Pusher(key: "key", options: ["autoReconnect": false])
             socket = MockWebSocket()
@@ -934,7 +934,7 @@ class ConnectionStateChangeDelegateSpec: QuickSpec {
             pusher.connection.socket = socket
             pusher.connection.stateChangeDelegate = stateChangeDelegate
         })
-        
+
         describe("the delegate gets called") {
             it("twice going from disconnected -> connecting -> connected") {
                 expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))

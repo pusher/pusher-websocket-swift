@@ -15,7 +15,7 @@ public typealias PusherUserInfoObject = Dictionary<String, AnyObject>
 public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7
-let VERSION = "0.2.4"
+let VERSION = "0.3.0"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
@@ -279,7 +279,7 @@ public class PusherConnection: WebSocketDelegate {
     private func removeAllCallbacksFromGlobalChannel() {
         globalChannel.unbindAll()
     }
-    
+
     private func updateConnectionState(newState: ConnectionState) {
         self.stateChangeDelegate?.connectionChange(self.connectionState, new: newState)
         self.connectionState = newState
