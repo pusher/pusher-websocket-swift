@@ -9,13 +9,34 @@
 /* Begin PBXBuildFile section */
 		0511FFC35D30B356ED34A6D8 /* Pods_PusherSwift_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A8B723C93D8968F14AC5AC /* Pods_PusherSwift_iOS.framework */; };
 		2992ED0516A64D007108A966 /* Pods_PusherSwift_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D6E4BED63ADFF4A4948F1E /* Pods_PusherSwift_tvOS.framework */; };
-		335BCA0C1C38ABE900B47A66 /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
+		330D7A681CAEDA6A0032FF2C /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
+		330D7A691CAEDA6B0032FF2C /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
+		330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
+		330D7A6B1CAEDA730032FF2C /* PusherChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3384C1B81CAECD9C00F10796 /* PusherChannel.swift */; };
+		330D7A6C1CAEDA740032FF2C /* PusherChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3384C1B81CAECD9C00F10796 /* PusherChannel.swift */; };
+		330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3384C1B81CAECD9C00F10796 /* PusherChannel.swift */; };
 		335BCA0D1C38ABF000B47A66 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		337C9F021C38BE2E006CC757 /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
 		337C9F061C38BE2E006CC757 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		337C9F161C394197006CC757 /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
 		337C9F1A1C394197006CC757 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33831CD21A9CFF8200B124F1 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
+		3389F5661CAEDD5F00563F49 /* PusherConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5651CAEDD5F00563F49 /* PusherConnection.swift */; };
+		3389F5671CAEDD5F00563F49 /* PusherConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5651CAEDD5F00563F49 /* PusherConnection.swift */; };
+		3389F5681CAEDD5F00563F49 /* PusherConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5651CAEDD5F00563F49 /* PusherConnection.swift */; };
+		3389F56A1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */; };
+		3389F56B1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */; };
+		3389F56C1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */; };
+		3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */; };
+		3389F56F1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */; };
+		3389F5701CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */; };
+		3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5711CAEDDF300563F49 /* PusherChannels.swift */; };
+		3389F5731CAEDDF300563F49 /* PusherChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5711CAEDDF300563F49 /* PusherChannels.swift */; };
+		3389F5741CAEDDF300563F49 /* PusherChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5711CAEDDF300563F49 /* PusherChannels.swift */; };
+		3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */; };
+		3389F5771CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */; };
+		3389F5781CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */; };
+		3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
+		3389F57B1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
+		3389F57C1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
 		33999D241C401F9600AFED30 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
 		33999D261C401F9600AFED30 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33999D361C4020A300AFED30 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
@@ -78,6 +99,13 @@
 		33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwiftTests.swift; path = Tests/PusherSwiftTests.swift; sourceTree = SOURCE_ROOT; };
 		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = Source/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
 		33831CD61A9CFFF200B124F1 /* PusherSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwift.h; path = Source/PusherSwift.h; sourceTree = SOURCE_ROOT; };
+		3384C1B81CAECD9C00F10796 /* PusherChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherChannel.swift; path = Source/PusherChannel.swift; sourceTree = SOURCE_ROOT; };
+		3389F5651CAEDD5F00563F49 /* PusherConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherConnection.swift; sourceTree = "<group>"; };
+		3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherWebsocketDelegate.swift; sourceTree = "<group>"; };
+		3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherPresenceChannel.swift; sourceTree = "<group>"; };
+		3389F5711CAEDDF300563F49 /* PusherChannels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherChannels.swift; sourceTree = "<group>"; };
+		3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherGlobalChannel.swift; sourceTree = "<group>"; };
+		3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherClientOptions.swift; sourceTree = "<group>"; };
 		33999D2D1C401F9600AFED30 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33999D3F1C4020A300AFED30 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A2F88A174BAE49C1A78CAD /* Pods_Builds_PusherSwift_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Builds_PusherSwift_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				33831C8B1A9CF61600B124F1 /* Source */,
-				33831C981A9CF61600B124F1 /* Tests */,
 				33831C8A1A9CF61600B124F1 /* Products */,
 				C8BC0305BB40AE4768D8A016 /* Pods */,
 				42D29A655054030A9B238900 /* Frameworks */,
@@ -188,6 +215,14 @@
 			isa = PBXGroup;
 			children = (
 				33831CD31A9CFFD900B124F1 /* PusherSwift.swift */,
+				3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */,
+				3389F5651CAEDD5F00563F49 /* PusherConnection.swift */,
+				3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */,
+				3384C1B81CAECD9C00F10796 /* PusherChannel.swift */,
+				3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */,
+				3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */,
+				3389F5711CAEDDF300563F49 /* PusherChannels.swift */,
+				33831C981A9CF61600B124F1 /* Tests */,
 				33831CD61A9CFFF200B124F1 /* PusherSwift.h */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
 			);
@@ -209,7 +244,7 @@
 				33831C991A9CF61600B124F1 /* Supporting Files */,
 			);
 			name = Tests;
-			path = PusherSwiftTests;
+			path = ../PusherSwiftTests;
 			sourceTree = "<group>";
 		};
 		33831C991A9CF61600B124F1 /* Supporting Files */ = {
@@ -361,7 +396,7 @@
 				337C9F171C394197006CC757 /* Frameworks */,
 				337C9F191C394197006CC757 /* Headers */,
 				337C9F1B1C394197006CC757 /* Resources */,
-				337C9F1D1C394197006CC757 /* ShellScript */,
+				337C9F1D1C394197006CC757 /* Run Script */,
 				977F09EDA01A32BD84344D2A /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
@@ -619,13 +654,14 @@
 			shellPath = /bin/sh;
 			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
 		};
-		337C9F1D1C394197006CC757 /* ShellScript */ = {
+		337C9F1D1C394197006CC757 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -819,7 +855,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				337C9F021C38BE2E006CC757 /* PusherSwift.swift in Sources */,
+				3389F5671CAEDD5F00563F49 /* PusherConnection.swift in Sources */,
+				3389F56B1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
+				330D7A6C1CAEDA740032FF2C /* PusherChannel.swift in Sources */,
+				3389F5731CAEDDF300563F49 /* PusherChannels.swift in Sources */,
+				3389F5771CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
+				3389F57B1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
+				3389F56F1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
+				330D7A691CAEDA6B0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -827,7 +870,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				337C9F161C394197006CC757 /* PusherSwift.swift in Sources */,
+				3389F5681CAEDD5F00563F49 /* PusherConnection.swift in Sources */,
+				3389F56C1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
+				330D7A6B1CAEDA730032FF2C /* PusherChannel.swift in Sources */,
+				3389F5741CAEDDF300563F49 /* PusherChannels.swift in Sources */,
+				3389F5781CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
+				3389F57C1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
+				3389F5701CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
+				330D7A681CAEDA6A0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,7 +885,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335BCA0C1C38ABE900B47A66 /* PusherSwift.swift in Sources */,
+				3389F5661CAEDD5F00563F49 /* PusherConnection.swift in Sources */,
+				3389F56A1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
+				330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */,
+				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
+				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
+				3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
+				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
+				330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
