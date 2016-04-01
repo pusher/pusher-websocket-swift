@@ -42,8 +42,6 @@ script:
     else
       xcodebuild -workspace PusherSwift.xcworkspace -scheme "$SCHEME" -destination "$DESTINATION" -sdk "$SDK" test -enableCodeCoverage YES | xcpretty -tc;
     fi
-before_script:
-  - carthage bootstrap
 before_deploy:
   - carthage build --no-skip-current
   - carthage archive PusherSwift
