@@ -224,15 +224,12 @@ There are a set of tests for the library that can be run using the standard meth
 
 ## Communication
 
-- If you need help, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift). (Tag 'pusherswift').
-- If you still need help, visit [Pusher support](https://support.pusher.com).
-- If you would like to ask a general question, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pusherswift).
 - If you have found a bug, open an issue.
 - If you have a feature request, open an issue.
 - If you want to contribute, submit a pull request (preferrably with some tests :) ).
 
 
-## Credits
+## Maintainers
 
 PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was originally created by [Hamilton Chapman](https://github.com/hamchapman)
 
