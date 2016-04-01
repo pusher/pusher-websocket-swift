@@ -13,8 +13,10 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        let pusher = Pusher(key: "87572504efd5d4f1b353", options: ["secret": "ab53d405ac3c245972ee"])
+
+        // Only use your secret here for testing or if you're sure that there's
+        // no security risk
+        let pusher = Pusher(key: "YOUR_APP_KEY", options: ["secret": "YOUR_APP_SECRET"])
         pusher.connection.stateChangeDelegate = self
         pusher.connect()
         let chan = pusher.subscribe("test-channel")
@@ -34,13 +36,9 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
+
     func connectionChange(old: ConnectionState, new: ConnectionState) {
         print("old: \(old) -> new: \(new)")
     }
-
-
 }
 
