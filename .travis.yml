@@ -1,4 +1,5 @@
 language: objective-c
+cache: cocoapods
 osx_image: xcode7.2
 sudo: false
 xcode_workspace: PusherSwift.xcworkspace
@@ -31,6 +32,7 @@ before_install:
     fi
   - gem install cocoapods -v 1.0.0.beta.6
 install:
+  - pod _1.0.0.beta.6_ update
   - pod _1.0.0.beta.6_ install
 script:
   - set -o pipefail
