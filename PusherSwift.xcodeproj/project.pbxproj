@@ -37,6 +37,9 @@
 		3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
 		3389F57B1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
 		3389F57C1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
+		339838061CB29E65002C4FD5 /* CryptoSwift-HMAC-sha265.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5821CB2790700563F49 /* CryptoSwift-HMAC-sha265.swift */; };
+		339838071CB29E66002C4FD5 /* CryptoSwift-HMAC-sha265.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5821CB2790700563F49 /* CryptoSwift-HMAC-sha265.swift */; };
+		339838081CB29E67002C4FD5 /* CryptoSwift-HMAC-sha265.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5821CB2790700563F49 /* CryptoSwift-HMAC-sha265.swift */; };
 		33999D241C401F9600AFED30 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
 		33999D261C401F9600AFED30 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33999D361C4020A300AFED30 /* PusherSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD11A9CFF8200B124F1 /* PusherSwiftTests.swift */; };
@@ -106,6 +109,7 @@
 		3389F5711CAEDDF300563F49 /* PusherChannels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherChannels.swift; sourceTree = "<group>"; };
 		3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherGlobalChannel.swift; sourceTree = "<group>"; };
 		3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherClientOptions.swift; sourceTree = "<group>"; };
+		3389F5821CB2790700563F49 /* CryptoSwift-HMAC-sha265.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CryptoSwift-HMAC-sha265.swift"; sourceTree = "<group>"; };
 		33999D2D1C401F9600AFED30 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33999D3F1C4020A300AFED30 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A2F88A174BAE49C1A78CAD /* Pods_Builds_PusherSwift_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Builds_PusherSwift_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,6 +226,7 @@
 				3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */,
 				3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */,
 				3389F5711CAEDDF300563F49 /* PusherChannels.swift */,
+				3389F5821CB2790700563F49 /* CryptoSwift-HMAC-sha265.swift */,
 				33831C981A9CF61600B124F1 /* Tests */,
 				33831CD61A9CFFF200B124F1 /* PusherSwift.h */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
@@ -858,6 +863,7 @@
 				3389F5671CAEDD5F00563F49 /* PusherConnection.swift in Sources */,
 				3389F56B1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
 				330D7A6C1CAEDA740032FF2C /* PusherChannel.swift in Sources */,
+				339838071CB29E66002C4FD5 /* CryptoSwift-HMAC-sha265.swift in Sources */,
 				3389F5731CAEDDF300563F49 /* PusherChannels.swift in Sources */,
 				3389F5771CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57B1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
@@ -873,6 +879,7 @@
 				3389F5681CAEDD5F00563F49 /* PusherConnection.swift in Sources */,
 				3389F56C1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
 				330D7A6B1CAEDA730032FF2C /* PusherChannel.swift in Sources */,
+				339838081CB29E67002C4FD5 /* CryptoSwift-HMAC-sha265.swift in Sources */,
 				3389F5741CAEDDF300563F49 /* PusherChannels.swift in Sources */,
 				3389F5781CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57C1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
@@ -888,6 +895,7 @@
 				3389F5661CAEDD5F00563F49 /* PusherConnection.swift in Sources */,
 				3389F56A1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
 				330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */,
+				339838061CB29E65002C4FD5 /* CryptoSwift-HMAC-sha265.swift in Sources */,
 				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
 				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
