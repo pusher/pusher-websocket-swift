@@ -8,7 +8,6 @@
 
 import Starscream
 import ReachabilitySwift
-import CryptoSwift
 
 public class PusherConnection {
     public let url: String
