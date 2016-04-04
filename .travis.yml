@@ -36,6 +36,8 @@ before_install:
 install:
   - pod _1.0.0.beta.6_ update
   - pod _1.0.0.beta.6_ install
+before_script:
+  - carthage bootstrap
 script:
   - set -o pipefail
   - xcodebuild -version
