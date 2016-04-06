@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Starscream
-import ReachabilitySwift
 
 public typealias PusherEventJSON = Dictionary<String, AnyObject>
 public typealias PusherUserInfoObject = Dictionary<String, AnyObject>

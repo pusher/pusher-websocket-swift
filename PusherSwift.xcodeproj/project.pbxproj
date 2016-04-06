@@ -44,6 +44,12 @@
 		33C0D2D51CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
 		33C0D2D61CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
 		33C0D2D71CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
+		33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2DA1CB5C364003FE13E /* Starscream.swift */; };
+		33C0D2DC1CB5C364003FE13E /* Starscream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2DA1CB5C364003FE13E /* Starscream.swift */; };
+		33C0D2DD1CB5C364003FE13E /* Starscream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2DA1CB5C364003FE13E /* Starscream.swift */; };
+		33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2E31CB5C539003FE13E /* Reachability.swift */; };
+		33C0D2E51CB5C539003FE13E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2E31CB5C539003FE13E /* Reachability.swift */; };
+		33C0D2E61CB5C539003FE13E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2E31CB5C539003FE13E /* Reachability.swift */; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		880A672D74CCC1EAE32C7233 /* Pods_PusherSwift_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9BA07EA25D94B5EDC04F1B /* Pods_PusherSwift_OSX.framework */; };
 		9AF0AE2899725CA479C40F3C /* Pods_PusherSwiftTests_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9187A66014F4DC5126D41AF6 /* Pods_PusherSwiftTests_OSX.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -112,6 +118,8 @@
 		33999D2D1C401F9600AFED30 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33999D3F1C4020A300AFED30 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoSwiftHMACModule.swift; sourceTree = "<group>"; };
+		33C0D2DA1CB5C364003FE13E /* Starscream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starscream.swift; sourceTree = "<group>"; };
+		33C0D2E31CB5C539003FE13E /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		36A2F88A174BAE49C1A78CAD /* Pods_Builds_PusherSwift_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Builds_PusherSwift_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D194D886863B00A69F18B93 /* Pods-PusherSwiftTests-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwiftTests-tvOS/Pods-PusherSwiftTests-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		453D0A4BB2E30972E26203E2 /* Pods_PusherSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PusherSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,9 +234,9 @@
 				3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */,
 				3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */,
 				3389F5711CAEDDF300563F49 /* PusherChannels.swift */,
-				33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */,
-				33831C981A9CF61600B124F1 /* Tests */,
+				33C0D2E71CB5C54C003FE13E /* Dependencies */,
 				33831CD61A9CFFF200B124F1 /* PusherSwift.h */,
+				33831C981A9CF61600B124F1 /* Tests */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
 			);
 			path = Source;
@@ -258,6 +266,16 @@
 				33831CCF1A9CFF7900B124F1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		33C0D2E71CB5C54C003FE13E /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */,
+				33C0D2DA1CB5C364003FE13E /* Starscream.swift */,
+				33C0D2E31CB5C539003FE13E /* Reachability.swift */,
+			);
+			name = Dependencies;
 			sourceTree = "<group>";
 		};
 		42D29A655054030A9B238900 /* Frameworks */ = {
@@ -867,7 +885,9 @@
 				3389F5771CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57B1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
 				3389F56F1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
+				33C0D2E51CB5C539003FE13E /* Reachability.swift in Sources */,
 				33C0D2D61CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */,
+				33C0D2DC1CB5C364003FE13E /* Starscream.swift in Sources */,
 				330D7A691CAEDA6B0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -883,7 +903,9 @@
 				3389F5781CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57C1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
 				3389F5701CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
+				33C0D2E61CB5C539003FE13E /* Reachability.swift in Sources */,
 				33C0D2D71CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */,
+				33C0D2DD1CB5C364003FE13E /* Starscream.swift in Sources */,
 				330D7A681CAEDA6A0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -899,7 +921,9 @@
 				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
+				33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */,
 				33C0D2D51CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */,
+				33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */,
 				330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,8 +6,6 @@
 //
 //
 
-import Starscream
-
 extension PusherConnection: WebSocketDelegate {
     // MARK: WebSocketDelegate Implementation
     

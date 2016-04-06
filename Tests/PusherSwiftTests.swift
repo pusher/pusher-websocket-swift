@@ -9,7 +9,6 @@
 import Foundation
 import Quick
 import Nimble
-import Starscream
 import PusherSwift
 
 let VERSION = "0.3.0"

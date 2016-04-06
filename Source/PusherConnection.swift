@@ -6,9 +6,6 @@
 //
 //
 
-import Starscream
-import ReachabilitySwift
-
 public class PusherConnection {
     public let url: String
     public let key: String
