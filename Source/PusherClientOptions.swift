@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PusherClientOptions.swift
 //  PusherSwift
 //
 //  Created by Hamilton Chapman on 01/04/2016.
@@ -17,7 +17,14 @@ public struct PusherClientOptions {
     public let port: Int?
     public let autoReconnect: Bool?
     public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
-    
+
+    /**
+        Initializes a new PusherClientOptions instance, optionally with a provided options dictionary
+
+        - parameter options: An optional dictionary of client options
+
+        - returns: A new PusherClientOptions instance
+    */
     public init(options: [String:Any]?) {
         let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "cluster", "autoReconnect", "authRequestCustomizer"]
         let defaults: [String:AnyObject?] = [
@@ -31,16 +38,16 @@ public struct PusherClientOptions {
             "host": "ws.pusherapp.com",
             "port": nil
         ]
-        
+
         var mutableOptions = options
-        
+
         if let options = options {
             for (key, _) in options {
                 if !validKeys.contains(key) {
                     print("Invalid key in options: \(key)")
                 }
             }
-            
+
             if let cluster = options["cluster"] {
                 if let host = options["host"] {
                     print("Both host (\(host)) and cluster (\(cluster)) passed as options - host takes precedence")
@@ -49,9 +56,9 @@ public struct PusherClientOptions {
                 }
             }
         }
-        
+
         var optionsMergedWithDefaults: [String:Any?] = [:]
-        
+
         for (key, value) in defaults {
             if let mutableOptions = mutableOptions, optionsValue = mutableOptions[key] {
                 optionsMergedWithDefaults[key] = optionsValue
@@ -59,7 +66,7 @@ public struct PusherClientOptions {
                 optionsMergedWithDefaults[key] = value
             }
         }
-        
+
         self.encrypted = optionsMergedWithDefaults["encrypted"] as? Bool
         self.authEndpoint = optionsMergedWithDefaults["authEndpoint"] as? String
         self.secret = optionsMergedWithDefaults["secret"] as? String
@@ -69,7 +76,7 @@ public struct PusherClientOptions {
         self.port = optionsMergedWithDefaults["port"] as? Int
         self.autoReconnect = optionsMergedWithDefaults["autoReconnect"] as? Bool
         self.authRequestCustomizer = optionsMergedWithDefaults["authRequestCustomizer"] as? (NSMutableURLRequest -> NSMutableURLRequest)
-        
+
         if let _ = authEndpoint {
             self.authMethod = .Endpoint
         } else if let _ = secret {
