@@ -107,9 +107,9 @@
 			isa = PBXGroup;
 			children = (
 				33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */,
+				33831CC11A9CFCDB00B124F1 /* ViewController.swift */,
 				33831CBF1A9CFCDB00B124F1 /* Images.xcassets */,
 				33831CC01A9CFCDB00B124F1 /* Main.storyboard */,
-				33831CC11A9CFCDB00B124F1 /* ViewController.swift */,
 				33831C611A9CEEE900B124F1 /* Supporting Files */,
 			);
 			name = Example;
@@ -447,12 +447,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};

@@ -37,12 +37,16 @@ public class Pusher {
     /**
         Subscribes the client to a new channel
 
-        - parameter channelName: The name of the channel to subscribe to
+        - parameter channelName:     The name of the channel to subscribe to
+        - parameter onMemberAdded:   A function that will be called with information about the
+                                     member who has just joined the presence channel
+        - parameter onMemberRemoved: A function that will be called with information about the
+                                     member who has just left the presence channel
 
         - returns: A new PusherChannel instance
      */
-    public func subscribe(channelName: String) -> PusherChannel {
-        return self.connection.subscribe(channelName)
+    public func subscribe(channelName: String, onMemberAdded: ((PresenceChannelMember) -> ())? = nil, onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
+        return self.connection.subscribe(channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     /**

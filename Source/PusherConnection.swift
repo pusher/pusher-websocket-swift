@@ -56,12 +56,16 @@ public class PusherConnection {
     /**
         Initializes a new PusherChannel with a given name
 
-        - parameter channelName: The name of the channel
+        - parameter channelName:     The name of the channel
+        - parameter onMemberAdded:   A function that will be called with information about the
+                                     member who has just joined the presence channel
+        - parameter onMemberRemoved: A function that will be called with information about the
+                                     member who has just left the presence channel
 
         - returns: A new PusherChannel instance
     */
-    internal func subscribe(channelName: String) -> PusherChannel {
-        let newChannel = channels.add(channelName, connection: self)
+    internal func subscribe(channelName: String, onMemberAdded: ((PresenceChannelMember) -> ())? = nil, onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
+        let newChannel = channels.add(channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
         if self.connectionState == .Connected {
             if !self.authorize(newChannel) {
                 print("Unable to subscribe to channel: \(newChannel.name)")

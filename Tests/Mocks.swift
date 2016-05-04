@@ -13,19 +13,19 @@ public class MockWebSocket: WebSocket {
     let stubber = StubberForMocks()
     var callbackCheckString: String = ""
     var objectGivenToCallback: AnyObject? = nil
-    
+
     init() {
         super.init(url: NSURL(string: "test")!)
     }
-    
+
     public func appendToCallbackCheckString(str: String) {
         self.callbackCheckString += str
     }
-    
+
     public func storeDataObjectGivenToCallback(data: AnyObject) {
         self.objectGivenToCallback = data
     }
-    
+
     override public func connect() {
         stubber.stub(
             "connect",
@@ -35,7 +35,7 @@ public class MockWebSocket: WebSocket {
             }
         )
     }
-    
+
     override public func disconnect(forceTimeout forceTimeout: NSTimeInterval? = nil) {
         stubber.stub(
             "disconnect",
@@ -133,18 +133,18 @@ public func stringContainsElements(str: String, elements: [String]) -> Bool {
             allElementsPresent = false
         }
     }
-    
+
     return allElementsPresent
 }
 
 public class MockPusherConnection: PusherConnection {
     let stubber = StubberForMocks()
-    
+
     init(options: Dictionary<String, Any>? = nil) {
         let pusherClientOptions = PusherClientOptions(options: options)
         super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: pusherClientOptions)
     }
-    
+
     override public func handleEvent(eventName: String, jsonObject: Dictionary<String,AnyObject>) {
         stubber.stub(
             "handleEvent",
@@ -156,11 +156,11 @@ public class MockPusherConnection: PusherConnection {
 
 public class MockPusherChannel: PusherChannel {
     let stubber = StubberForMocks()
-    
+
     init(name: String, connection: MockPusherConnection) {
         super.init(name: name, connection: connection)
     }
-    
+
     override public func handleEvent(eventName: String, eventData: String) {
         stubber.stub(
             "handleEvent",
@@ -172,7 +172,7 @@ public class MockPusherChannel: PusherChannel {
 
 public class TestConnectionStateChangeDelegate: ConnectionStateChangeDelegate {
     let stubber = StubberForMocks()
-    
+
     public func connectionChange(old: ConnectionState, new: ConnectionState) {
         stubber.stub(
             "connectionChange",
@@ -185,12 +185,12 @@ public class TestConnectionStateChangeDelegate: ConnectionStateChangeDelegate {
 public class StubberForMocks {
     public var calls:[FunctionCall]
     public var responses:[String:AnyObject]
-    
+
     init() {
         self.calls = []
         self.responses = [:]
     }
-    
+
     public func stub(functionName:String, args:[Any]?, functionToCall: (() -> Any?)?) -> AnyObject? {
         calls.append(FunctionCall(name: functionName, args: args))
         if let response: AnyObject = responses[functionName] {
@@ -205,7 +205,7 @@ public class StubberForMocks {
 public class FunctionCall {
     public let name:String
     public let args:[Any]?
-    
+
     init(name:String, args:[Any]?) {
         self.name = name
         self.args = args
@@ -214,23 +214,23 @@ public class FunctionCall {
 
 class MockSession: NSURLSession {
     var completionHandler: ((NSData!, NSURLResponse!, NSError!) -> Void)?
-    
+
     static var mockResponse: (data: NSData?, urlResponse: NSURLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
-    
+
     override class func sharedSession() -> NSURLSession {
         return MockSession()
     }
-    
+
     override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
         self.completionHandler = completionHandler
         return MockTask(response: MockSession.mockResponse, completionHandler: completionHandler)
     }
-    
+
     class MockTask: NSURLSessionDataTask {
         typealias Response = (data: NSData?, urlResponse: NSURLResponse?, error: NSError?)
         var mockResponse: Response
         let completionHandler: ((NSData!, NSURLResponse!, NSError!) -> Void)?
-        
+
         init(response: Response, completionHandler: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
             self.mockResponse = response
             self.completionHandler = completionHandler

@@ -15,7 +15,7 @@ class ConnectionStateChangeDelegateSpec: QuickSpec {
         var pusher: Pusher!
         var socket: MockWebSocket!
         var stateChangeDelegate: TestConnectionStateChangeDelegate!
-        
+
         beforeEach({
             pusher = Pusher(key: "key", options: ["autoReconnect": false])
             socket = MockWebSocket()
@@ -24,7 +24,7 @@ class ConnectionStateChangeDelegateSpec: QuickSpec {
             pusher.connection.socket = socket
             pusher.connection.stateChangeDelegate = stateChangeDelegate
         })
-        
+
         describe("the delegate gets called") {
             it("twice going from disconnected -> connecting -> connected") {
                 expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))
@@ -37,7 +37,7 @@ class ConnectionStateChangeDelegateSpec: QuickSpec {
                 expect(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState).to(equal(ConnectionState.Connecting))
                 expect(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState).to(equal(ConnectionState.Connected))
             }
-            
+
             it("four times going from disconnected -> connecting -> connected -> disconnecting -> disconnected") {
                 expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))
                 pusher.connect()
