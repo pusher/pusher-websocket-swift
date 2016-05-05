@@ -96,6 +96,27 @@ let pusher = Pusher(
 )
 ```
 
+Authenticated channel example:  
+
+```swift 
+
+let request = {(urlRequest:NSMutableURLRequest) -> NSMutableURLRequest in
+    urlRequest.setValue("token", forHTTPHeaderField: "Authorization")
+    return urlRequest
+}
+        
+let pusher = Pusher( 
+  key: "APP_KEY",
+  options: [
+    "authEndpoint": "http://localhost:9292/pusher/",
+    "authRequestCustomizer": request,
+    "encrypted": true
+  ]
+)
+```
+
+Where `"Authorization"` and `"token"` are the field and value your server is expecting in the headers of the request.
+
 ## Connection
 
 A Websocket connection is established by providing your API key to the constructor function:
