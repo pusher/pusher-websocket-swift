@@ -9,27 +9,8 @@ def import_pods
 end
 
 def import_test_pods
-  import_pods
   pod 'Quick', '0.9.2'
   pod 'Nimble', '4.0.1'
-end
-
-target 'PusherSwift-iOS' do
-  project 'PusherSwift'
-  platform :ios, '9.0'
-  import_pods
-end
-
-target 'PusherSwift-tvOS' do
-  project 'PusherSwift'
-  platform :tvos, '9.0'
-  import_pods
-end
-
-target 'PusherSwift-OSX' do
-  project 'PusherSwift'
-  platform :osx, '10.11'
-  import_pods
 end
 
 target 'PusherSwiftTests-iOS' do
