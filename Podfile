@@ -10,8 +10,8 @@ end
 
 def import_test_pods
   import_pods
-  pod 'Quick', '0.9.1'
-  pod 'Nimble', '3.2.0'
+  pod 'Quick', '0.9.2'
+  pod 'Nimble', '4.0.1'
 end
 
 target 'PusherSwift-iOS' do
