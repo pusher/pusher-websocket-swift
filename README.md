@@ -8,6 +8,32 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
 
 
+## I just want to copy and paste some code to get me started
+
+```swift
+// Only use your secret here for testing or if you're sure that there's no security risk
+let pusher = Pusher(key: "YOUR_APP_KEY", options: ["secret": "YOUR_APP_SECRET"])
+
+// It doesn't matter (within reason) where this goes but you have to call it at some point
+pusher.connect()
+
+let onMemberAdded = { (member: PresenceChannelMember) in
+    print(member)
+}
+let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
+
+chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
+    print(data)
+    if let data = data as? Dictionary<String, AnyObject> {
+        if let testVal = data["test"] as? String {
+            print(testVal)
+        }
+    }
+})
+
+chan.trigger("client-test", data: ["test": "some value"])
+```
+
 ## Table of Contents
 
 * [Installation](#installation)
@@ -17,6 +43,7 @@
 * [Binding to events](#binding-to-events)
   * [Globally](#global-events)
   * [Per-channel](#per-channel-events)
+* [Presence channel specifics](#presence-channel-specifics)
 * [Testing](#testing)
 * [Communication](#communication)
 * [Credits](#credits)
@@ -77,8 +104,8 @@ There are a number of configuration parameters which can be set for the Pusher c
 - `secret (String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
 - `userDataFetcher (() -> PusherUserData)` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
 - `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
-- `encrypted (Bool)` - whether or not you'd like to use encypted transport or not
-- `authRequestCustomizer (NSMutableURLRequest -> NSMutableURLRequest)` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request
+- `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
+- `authRequestCustomizer (NSMutableURLRequest -> NSMutableURLRequest)` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request (see below for example)
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (String)` - set a custom value for the host you'd like to connect to
 - `port (Int)` - set a custom value for the port that you'd lilke to connect to
@@ -96,16 +123,16 @@ let pusher = Pusher(
 )
 ```
 
-Authenticated channel example:  
+Authenticated channel example:
 
-```swift 
+```swift
 
 let request = {(urlRequest:NSMutableURLRequest) -> NSMutableURLRequest in
     urlRequest.setValue("token", forHTTPHeaderField: "Authorization")
     return urlRequest
 }
-        
-let pusher = Pusher( 
+
+let pusher = Pusher(
   key: "APP_KEY",
   options: [
     "authEndpoint": "http://localhost:9292/pusher/",
@@ -179,9 +206,18 @@ Presence channels are created in exactly the same way as private channels, excep
 let myPresenceChannel = pusher.subscribe('presence-my-channel')
 ```
 
+You can also provide functions that will be called when members are either added to or removed from the channel.
+
+```swift
+let onMemberChange = { (member: PresenceChannelMember) in
+    print(member)
+}
+let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberChange, onMemberRemoved: onMemberChange)
+```
+
 Note that both private and presence channels require the user to be authenticated in order to subscribe to the channel. This authentication can either happen inside the library, if you configured your Pusher object with your app's secret, or an authentication request is made to an authentication endpoint that you provide, again when instantiaing your Pusher object.
 
-Note that we recommend that you use an authentication endpoint over including your app's secret in your app in the vast majority of use cases. If you are completely certain that there's no risk to you including your app's secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.
+We recommend that you use an authentication endpoint over including your app's secret in your app in the vast majority of use cases. If you are completely certain that there's no risk to you including your app's secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.
 
 ## Binding to events
 
@@ -235,7 +271,37 @@ let eventHandlerId = myChannel.bind("new-price", callback: { (data: AnyObject?) 
 
 myChannel.unbind(eventName: "new-price", callbackId: eventHandlerId)
 ```
+
 You can unbind from events at both the global and per channel level. For both objects you also have the option of calling `unbindAll`, which, as you can guess, will unbind all eventHandlers on the object.
+
+
+## Presence channel specifics
+
+Presence channels have some extra properties and functions available to them. In particular you can access the members who are subscribed to the channel by calling `members` on the channel object, as below.
+
+```swift
+let chan = pusher.subscribe("presence-channel")
+
+print(chan.members)
+```
+
+You can also search for specific members in the channel by calling `findMember` and providing it with a user id string.
+
+```swift
+let chan = pusher.subscribe("presence-channel")
+let member = chan.findMember("12345")
+
+print(member)
+```
+
+As a special case of `findMember` you can call `me` on the channel to get the member object of the subscribed client.
+
+```swift
+let chan = pusher.subscribe("presence-channel")
+let me = chan.me()
+
+print(me)
+```
 
 
 ## Testing
