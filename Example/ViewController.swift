@@ -17,10 +17,14 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
         // Only use your secret here for testing or if you're sure that there's
         // no security risk
         let pusher = Pusher(key: "YOUR_APP_KEY", options: ["secret": "YOUR_APP_SECRET"])
+
         pusher.connection.stateChangeDelegate = self
         pusher.connect()
-        let chan = pusher.subscribe("test-channel")
 
+        let onMemberAdded = { (member: PresenceChannelMember) in
+            print(member)
+        }
+        let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
         chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
             print(data)
@@ -30,11 +34,8 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
                 }
             }
         })
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        chan.trigger("client-test", data: ["test": "some value"])
     }
 
     func connectionChange(old: ConnectionState, new: ConnectionState) {

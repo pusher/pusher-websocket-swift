@@ -6,10 +6,13 @@
 //
 //
 
+public typealias PusherUserInfoObject = Dictionary<String, AnyObject>
+
 public class PresencePusherChannel: PusherChannel {
     public var members: [PresenceChannelMember]
     public var onMemberAdded: ((PresenceChannelMember) -> ())?
     public var onMemberRemoved: ((PresenceChannelMember) -> ())?
+    public var myId: String? = nil
 
     /**
         Initializes a new PresencePusherChannel with a given name, conenction, and optional
@@ -33,30 +36,35 @@ public class PresencePusherChannel: PusherChannel {
 
     /**
         Add information about the member that has just joined to the members object
-        for the presence channel
+        for the presence channel and call onMemberAdded function, if provided
 
         - parameter memberJSON: A dictionary representing the member that has joined
                                 the presence channel
     */
     internal func addMember(memberJSON: Dictionary<String, AnyObject>) {
+        let member: PresenceChannelMember
+
         if let userId = memberJSON["user_id"] as? String {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                members.append(PresenceChannelMember(userId: userId, userInfo: userInfo))
+                member = PresenceChannelMember(userId: userId, userInfo: userInfo)
+
             } else {
-                members.append(PresenceChannelMember(userId: userId))
+                member = PresenceChannelMember(userId: userId)
             }
-        } else if let userId = memberJSON["user_id"] as? Int {
+        } else {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                members.append(PresenceChannelMember(userId: String(userId), userInfo: userInfo))
+                member = PresenceChannelMember(userId: String(memberJSON["user_id"]), userInfo: userInfo)
             } else {
-                members.append(PresenceChannelMember(userId: String(userId)))
+                member = PresenceChannelMember(userId: String(memberJSON["user_id"]))
             }
         }
+        members.append(member)
+        self.onMemberAdded?(member)
     }
 
     /**
         Add information about the members that are already subscribed to the presence channel to
-        the members object of the presence channel and call onMemberAdded function, if provided
+        the members object of the presence channel
 
         - parameter memberHash: A dictionary representing the members that were already
                                 subscribed to the presence channel
@@ -70,7 +78,6 @@ public class PresencePusherChannel: PusherChannel {
                 member = PresenceChannelMember(userId: userId)
             }
             self.members.append(member)
-            self.onMemberAdded?(member)
         }
     }
 
@@ -94,6 +101,67 @@ public class PresencePusherChannel: PusherChannel {
             let member = self.members[index]
             self.members.removeAtIndex(index)
             self.onMemberRemoved?(member)
+        }
+    }
+
+    /**
+        Set the value of myId to the value of the user_id returned as part of the authorization
+        of the subscription to the channel
+
+        - parameter channelData: The channel data obtained from authorization of the subscription
+                                to the channel
+    */
+    internal func setMyId(channelData: String) {
+        if let channelDataObject = parseChannelData(channelData), userId = channelDataObject["user_id"] {
+            self.myId = String(userId)
+        }
+    }
+
+    /**
+        Parse a string to extract the channel data object from it
+
+        - parameter string: The channel data string received as part of authorization
+
+        - returns: A dictionary of channel data
+    */
+    private func parseChannelData(channelData: String) -> Dictionary<String, AnyObject>? {
+        let data = (channelData as NSString).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+
+        do {
+            if let jsonData = data, jsonObject = try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? Dictionary<String, AnyObject> {
+                return jsonObject
+            } else {
+                print("Unable to parse string: \(channelData)")
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+
+
+    /**
+        Returns the PresenceChannelMember object for the given user id
+
+        - parameter string: The user id of the PresenceChannelMember for whom you want
+                            the PresenceChannelMember object
+
+        - returns: The PresenceChannelMember object for the given user id
+    */
+    public func findMember(userId: String) -> PresenceChannelMember? {
+        return self.members.filter({ $0.userId == userId }).first
+    }
+
+    /**
+        Returns the connected user's PresenceChannelMember object
+
+        - returns: The connected user's PresenceChannelMember object
+    */
+    public func me() -> PresenceChannelMember? {
+        if let id = self.myId {
+            return findMember(id)
+        } else {
+            return nil
         }
     }
 }

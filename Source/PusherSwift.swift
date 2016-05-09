@@ -8,7 +8,6 @@
 import Foundation
 
 public typealias PusherEventJSON = Dictionary<String, AnyObject>
-public typealias PusherUserInfoObject = Dictionary<String, AnyObject>
 public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7

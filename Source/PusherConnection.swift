@@ -548,6 +548,8 @@ public class PusherConnection {
         - parameter callback:    An optional callback to be called with auth and channelData, if provided
     */
     private func handlePresenceChannelAuth(auth: String, channel: PusherChannel, channelData: String, callback: ((Dictionary<String, String>?) -> Void)? = nil) {
+        (channel as? PresencePusherChannel)?.setMyId(channelData)
+
         if let cBack = callback {
             cBack(["auth": auth, "channel_data": channelData])
         } else {

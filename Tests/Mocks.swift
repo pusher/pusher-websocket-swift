@@ -45,6 +45,7 @@ public class MockWebSocket: WebSocket {
             }
         )
     }
+
     override public func writeString(str: String, completion: (() -> ())? = nil) {
         if str == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || str == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             stubber.stub(
@@ -122,6 +123,16 @@ public class MockWebSocket: WebSocket {
                     self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{}}}}\",\"channel\":\"presence-channel\"}")
                 }
             )
+        } else if stringContainsElements(str, elements: ["pusher:subscribe", "key:80cfefb0ef08fb55353dbbc0480e6160059fac14fce862e9ed1f0121ae8a440f", "presence-channel", "friends", "0", "user_id", "123"]) {
+            stubber.stub(
+                "writeString",
+                args: [str],
+                functionToCall: {
+                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{\\\"friends\\\":0}}}}\",\"channel\":\"presence-channel\"}")
+                }
+            )
+        } else {
+            print("No match in writeString mock for string: \(str)")
         }
     }
 }

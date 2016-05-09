@@ -50,13 +50,54 @@ class PusherPresenceChannelSpec: QuickSpec {
                     "userDataFetcher": { () -> PusherUserData in
                         return PusherUserData(userId: "123", userInfo: ["twitter": "hamchapman"])
                     }
-                    ])
+                ])
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
                 pusher.connect()
                 let chan = pusher.subscribe("presence-test") as? PresencePusherChannel
                 expect(chan?.members).toNot(beEmpty())
                 expect(chan?.members.first!.userInfo as? Dictionary<String, String>).to(equal(["twitter": "hamchapman"]))
+            }
+        }
+
+        describe("finding members") {
+            it("returns the PresenceChannelMember object for a given subscribed user id") {
+                pusher = Pusher(key: "key", options: [
+                    "secret": "secret",
+                    "userDataFetcher": { () -> PusherUserData in
+                        return PusherUserData(userId: "123")
+                    }
+                ])
+                socket.delegate = pusher.connection
+                pusher.connection.socket = socket
+                pusher.connect()
+
+                let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
+                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}"])
+                let member = chan!.findMember("100")
+
+                expect(member!.userId).to(equal("100"))
+                expect(member!.userInfo as? Dictionary<String, String>).to(equal(["twitter": "hamchapman"]))
+            }
+
+            it("returns the PresenceChannelMember object for the subscribed user (me)") {
+                pusher = Pusher(key: "key", options: [
+                    "secret": "secret",
+                    "userDataFetcher": { () -> PusherUserData in
+                        return PusherUserData(userId: "123", userInfo: ["friends": 0])
+                    }
+                ])
+                socket.delegate = pusher.connection
+                pusher.connection.socket = socket
+                pusher.connect()
+
+                let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
+                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}"])
+
+                let me = chan!.me()
+
+                expect(me!.userId).to(equal("123"))
+                expect(me!.userInfo as? Dictionary<String, Int>).to(equal(["friends": 0]))
             }
         }
 
@@ -69,7 +110,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("calls the onMemberAdded function, if provided") {
                 pusher = Pusher(key: "key", options: [
-                    "secret": "secret",
+                    "secret": "secretsecretsecretsecret",
                     "userDataFetcher": { () -> PusherUserData in
                         return PusherUserData(userId: "123")
                     }
@@ -79,9 +120,10 @@ class PusherPresenceChannelSpec: QuickSpec {
                 pusher.connect()
                 let memberAddedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberAdded", args: [member], functionToCall: nil) }
                 pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PresencePusherChannel
+                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\"}"])
 
                 expect(stubber.calls.first?.name).to(equal("onMemberAdded"))
-                expect((stubber.calls.first?.args?.first as? PresenceChannelMember)?.userId).to(equal("123"))
+                expect((stubber.calls.first?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
             }
 
             it("calls the onMemberRemoved function, if provided") {
