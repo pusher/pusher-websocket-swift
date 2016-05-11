@@ -32,12 +32,10 @@ before_install:
       echo Carthage not installed. Installing using homebrew;
       brew install carthage;
     fi
-  - gem install cocoapods -v 1.0.0.rc.2
+  - gem install cocoapods
 install:
-  - pod _1.0.0.rc.2_ update
-  - pod _1.0.0.rc.2_ install
-before_script:
-  - carthage bootstrap
+  - pod update
+  - pod install
 script:
   - set -o pipefail
   - xcodebuild -version

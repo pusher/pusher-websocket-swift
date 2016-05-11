@@ -5,7 +5,7 @@
 * Add `onMemberAdded`, `onMemberRemoved`, `findMember`, and `me` functions to PresencePusherChannel class
 * Bring CryptoSwift, Starscream and Reachability dependencies inside the PusherSwift library
 * Update Quick and Nimble dependencies to remove warnings for Swift 2.2 and 3.0 compatibility
-* Use cocoapods version 1.0.0.rc.2 on Travis
+* Use cocoapods version 1.0.0 on Travis
 * Split up `PusherSwift.swift` and `PusherSwiftTests.swift` into components
 * Add inline documentation throughout codebase
 
