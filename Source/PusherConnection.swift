@@ -302,6 +302,24 @@ public class PusherConnection {
     }
 
     /**
+        Handle failure of our auth endpoint
+
+        - parameter data: The error returned by the auth endpoint
+    */
+    private func handleAuthorizationErrorEvent(channel: String, data: String?) {
+        let eventName = "pusher:subscription_error"
+        let json = [
+            "event": eventName,
+            "channel": channel,
+            "data": data ?? ""
+        ]
+        callGlobalCallbacks(eventName, jsonObject: json)
+        if let eData = json["data"], channelName = json["channel"], chan = self.channels.find(channelName) {
+            chan.handleEvent(eventName, eventData: eData)
+        }
+    }
+
+    /**
         Parse a string to extract Pusher event information from it
 
         - parameter string: The string received over the websocket connection containing
@@ -497,8 +515,9 @@ public class PusherConnection {
         }
 
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
-            if error != nil {
+            if let error = error {
                 print("Error authorizing channel [\(channel.name)]: \(error)")
+                self.handleAuthorizationErrorEvent(channel.name, data: error.domain)
             }
             if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
 
@@ -508,13 +527,17 @@ public class PusherConnection {
                     }
                 } catch {
                     print("Error authorizing channel [\(channel.name)]")
+                    self.handleAuthorizationErrorEvent(channel.name, data: nil)
                 }
 
             } else {
                 if let d = data {
-                    print ("Error authorizing channel [\(channel.name)]: \(String(data: d, encoding: NSUTF8StringEncoding))")
+                    let dataString = String(data: d, encoding: NSUTF8StringEncoding)
+                    print ("Error authorizing channel [\(channel.name)]: \(dataString)")
+                    self.handleAuthorizationErrorEvent(channel.name, data: dataString)
                 } else {
                     print("Error authorizing channel [\(channel.name)]")
+                    self.handleAuthorizationErrorEvent(channel.name, data: nil)
                 }
             }
         })
