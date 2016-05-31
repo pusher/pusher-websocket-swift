@@ -56,6 +56,27 @@ class AuthenticationSpec: QuickSpec {
                 pusher.connect()
                 expect(chan.subscribed).to(beFalsy())
             }
+
+            it("should handle authorization errors by locally handling a pusher:subscription_error event") {
+                let stubber = StubberForMocks()
+
+                let urlResponse = NSHTTPURLResponse(URL: NSURL(string: "\(pusher.connection.options.authEndpoint!)?channel_name=private-test-channel&socket_id=45481.3166671")!, statusCode: 500, HTTPVersion: nil, headerFields: nil)
+                MockSession.mockResponse = (nil, urlResponse: urlResponse, error: nil)
+                pusher.connection.URLSession = MockSession.sharedSession()
+
+                let chan = pusher.subscribe("private-test-channel")
+                expect(chan.subscribed).to(beFalsy())
+
+                pusher.bind({ (data: AnyObject?) -> Void in
+                    if let data = data as? [String: AnyObject], eventName = data["event"] as? String where eventName == "pusher:subscription_error" {
+                        stubber.stub("subscriptionErrorCallback", args: [eventName], functionToCall: nil)
+                    }
+                })
+
+                pusher.connect()
+                expect(stubber.calls.last?.name).to(equal("subscriptionErrorCallback"))
+                expect(stubber.calls.last?.args?.last as? String).to(equal("pusher:subscription_error"))
+            }
         }
     }
 }

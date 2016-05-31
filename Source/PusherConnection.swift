@@ -303,20 +303,18 @@ public class PusherConnection {
 
     /**
         Handle failure of our auth endpoint
-
-        - parameter data: The error returned by the auth endpoint
+        
+        - parameter channelName: The name of channel for which authorization failed
+        - parameter data:        The error returned by the auth endpoint
     */
-    private func handleAuthorizationErrorEvent(channel: String, data: String?) {
+    private func handleAuthorizationErrorEvent(channelName: String, data: String?) {
         let eventName = "pusher:subscription_error"
         let json = [
             "event": eventName,
-            "channel": channel,
+            "channel": channelName,
             "data": data ?? ""
         ]
-        callGlobalCallbacks(eventName, jsonObject: json)
-        if let eData = json["data"], channelName = json["channel"], chan = self.channels.find(channelName) {
-            chan.handleEvent(eventName, eventData: eData)
-        }
+        handleEvent(eventName, jsonObject: json)
     }
 
     /**
