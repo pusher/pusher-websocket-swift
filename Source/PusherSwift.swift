@@ -16,6 +16,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
     public let connection: PusherConnection
+    public let pushNotificationRegistration: PushNotificationRegistration? = nil
 
     /**
         Initializes the Pusher client with an app key and any appropriate options.
@@ -97,7 +98,54 @@ public class Pusher {
     public func connect() {
         self.connection.connect()
     }
+
+    /**
+        Registers the application with Pusher for native notifications
+    */
+    public func registerForPushNotifications(deviceToken : NSData, withInterests : [String] = [], callback : (PushNotificationRegistration, ErrorType?) -> Void)  {
+        if (self.pushNotificationRegistration != nil) {
+            callback(self.pushNotificationRegistration!, nil)
+            return
+        }
+
+        PushNotificationRegistration.register(deviceToken)
+    }
 }
+
+public struct PushNotificationRegistration {
+    let id: Int64
+    private static let platformType = "apns"
+    private static let URLSession = NSURLSession.sharedSession();
+
+    private static func register(deviceToken : NSData, withInterests : [String] = []) {
+        let endpoint = "https://yolo.ngrok.io/client_api/v1/apps/3/clients"
+        var request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
+        request.HTTPMethod = "POST"
+
+        let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
+
+        let deviceTokenString: String = ( deviceToken.description as NSString )
+            .stringByTrimmingCharactersInSet( characterSet )
+            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+
+
+        let params: [String: AnyObject] = [
+            "platform_type": platformType,
+            "token": deviceTokenString,
+            "interests": withInterests
+        ]
+
+
+        do {
+            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
+        } catch _ {
+        }
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let task = URLSession.dataTaskWithRequest(request)
+        task.resume()
+    }
+}
+
 
 public enum AuthMethod {
     case Endpoint
