@@ -7,16 +7,47 @@
 //
 
 import UIKit
+import PusherSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let pusher = Pusher(key: "c57c9cefe298dc06e801")
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        pusher.connect()
+
+        let channel = pusher.subscribe("test-channel")
+        channel.bind("yolo", callback: { (data : AnyObject?) -> Void in
+            print(data)
+        })
+
+
+        // Override point for customization after application launch.
+        let notificationTypes : UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        application.registerUserNotificationSettings(pushNotificationSettings)
+        application.registerForRemoteNotifications()
+
         return true
+    }
+
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : NSData) {
+        print(deviceToken)
+
+        pusher.registerForPushNotifications(deviceToken, callback: {(reg, err)-> Void in
+        })
+    }
+
+    func application(application : UIApplication, didFailToRegisterForRemoteNotificationsWithError error : NSError) {
+        print(error)
+    }
+
+    func application(application : UIApplication, didReceiveRemoteNotification userInfo : [NSObject : AnyObject]) {
+        print(userInfo)
     }
 
     func applicationWillResignActive(application: UIApplication) {
