@@ -13,7 +13,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
     public let connection: PusherConnection
-    public let pushNotificationRegistration: PushNotificationRegistration? = nil
+    private let key: String
 
     /**
         Initializes the Pusher client with an app key and any appropriate options.
@@ -24,6 +24,7 @@ public class Pusher {
         - returns: A new Pusher client instance
     */
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
+        self.key = key
         let urlString = constructUrl(key, options: options)
         let ws = WebSocket(url: NSURL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
@@ -101,48 +102,143 @@ public class Pusher {
     /**
         Registers the application with Pusher for native notifications
     */
-    public func registerForPushNotifications(deviceToken : NSData, withInterests : [String] = [], callback : (PushNotificationRegistration, ErrorType?) -> Void)  {
-        if (self.pushNotificationRegistration != nil) {
-            callback(self.pushNotificationRegistration!, nil)
-            return
-        }
+    public func registerForPushNotifications(deviceToken : NSData)  {
+        PusherPushNotificationRegistration.register(deviceToken)
+    }
 
-        PushNotificationRegistration.register(deviceToken)
+    /**
+     Registers an interest with Pusher's Push Notification Service
+     */
+    public func registerPushNotificationInterest(name: String) {
+        PusherPushNotificationRegistration.sharedInstance.addInterest(key, name: name)
+    }
+
+}
+
+private class PusherPushNotificationRegistration {
+    public static let sharedInstance = PusherPushNotificationRegistration()
+
+    private static let PLATFORM_TYPE = "apns"
+    private static let URLSession = NSURLSession.sharedSession()
+    private static let CLIENT_API_ENDPOINT = "https://yolo.ngrok.io/client_api/v1/clients"
+
+
+    private static func register(deviceToken : NSData) {
+        let request = NSMutableURLRequest(URL: NSURL(string: CLIENT_API_ENDPOINT)!)
+        request.HTTPMethod = "POST"
+        let deviceTokenString = deviceTokenToString(deviceToken)
+
+        let params: [String: AnyObject] = [
+            "platform_type": PusherPushNotificationRegistration.PLATFORM_TYPE,
+            "token": deviceTokenString
+        ]
+
+        try! request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
+            if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
+                print(httpResponse.statusCode)
+                if let json = try!NSJSONSerialization.JSONObjectWithData(data!, options: []) as? Dictionary<String, AnyObject>
+                {
+                    if let clientId = json["id"] {
+                        self.sharedInstance.activate(clientId as! String)
+                        print(self.sharedInstance)
+                    }
+                } else {
+                    // TODO: handle error
+                }
+            } else {
+                // TODO: handle error
+            }
+        })
+
+        task.resume()
+    }
+
+
+    var clientId: String?
+    var pendingInterests: Set<Interest>
+
+    private init() {
+        clientId = nil
+        pendingInterests = []
+    }
+
+    public func addInterest(appKey: String, name: String) {
+        let interest = Interest(name: name, appKey: appKey)
+        if (isActive()) {
+            registerInterestWithClientId(interest)
+        } else {
+            pendingInterests.insert(interest)
+        }
+    }
+
+    private func activate(clientId : String) {
+        self.clientId = clientId
+        flushPendingInterests()
+    }
+
+    private func flushPendingInterests() {
+        for interest in pendingInterests {
+            registerInterestWithClientId(interest)
+        }
+    }
+
+    private func registerInterestWithClientId(interest: Interest) {
+        interest.register(clientId!, callback: { Void in
+            self.pendingInterests.remove(interest)
+        })
+    }
+
+    private func isActive() -> Bool {
+        if let clientId = self.clientId {
+            return true
+        }
+        return false
+    }
+
+
+}
+
+private struct Interest : Hashable, Equatable {
+    private static let URLSession = NSURLSession.sharedSession()
+
+    let name: String
+    let appKey: String
+
+    var hashValue: Int {
+        get {
+            return "\(name)-\(appKey)".hash
+        }
+    }
+
+    private func register(clientId: String, callback: (Void)->(Void)) {
+        let url = "\(PusherPushNotificationRegistration.CLIENT_API_ENDPOINT)/\(clientId)/interests/\(name)"
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = "POST"
+
+        let params: [String: AnyObject] = [
+            "app_key": appKey,
+            ]
+
+        try! request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let task = Interest.URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
+            guard let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) else {
+                // TODO: handle error
+                return
+            }
+            callback()
+        })
+
+        task.resume()
     }
 }
 
-public struct PushNotificationRegistration {
-    let id: Int64
-    private static let platformType = "apns"
-    private static let URLSession = NSURLSession.sharedSession();
-
-    private static func register(deviceToken : NSData, withInterests : [String] = []) {
-        let endpoint = "https://yolo.ngrok.io/client_api/v1/apps/3/clients"
-        var request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
-        request.HTTPMethod = "POST"
-
-        let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
-
-        let deviceTokenString: String = ( deviceToken.description as NSString )
-            .stringByTrimmingCharactersInSet( characterSet )
-            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
-
-
-        let params: [String: AnyObject] = [
-            "platform_type": platformType,
-            "token": deviceTokenString,
-            "interests": withInterests
-        ]
-
-
-        do {
-            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
-        } catch _ {
-        }
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let task = URLSession.dataTaskWithRequest(request)
-        task.resume()
-    }
+private func ==(lhs: Interest, rhs: Interest) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }
 
 /**
@@ -162,4 +258,16 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
         url = "ws://\(options.host):\(options.port)/app/\(key)"
     }
     return "\(url)?client=\(CLIENT_NAME)&version=\(VERSION)&protocol=\(PROTOCOL)"
+}
+
+/**
+    Makes device token presentable to server
+*/
+internal func deviceTokenToString(deviceToken: NSData) -> String {
+    let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
+
+    let deviceTokenString: String = ( deviceToken.description as NSString )
+        .stringByTrimmingCharactersInSet( characterSet )
+        .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+    return deviceTokenString
 }
