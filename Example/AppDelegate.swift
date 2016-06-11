@@ -36,10 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : NSData) {
-        print(deviceToken)
-
-        pusher.registerForPushNotifications(deviceToken, callback: {(reg, err)-> Void in
-        })
+        pusher.registerForPushNotifications(deviceToken)
+        pusher.registerPushNotificationInterest("waddup")
     }
 
     func application(application : UIApplication, didFailToRegisterForRemoteNotificationsWithError error : NSError) {
