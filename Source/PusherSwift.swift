@@ -166,7 +166,7 @@ internal class PusherPushNotificationRegistration {
         pendingInterests = []
     }
 
-    private func addInterest(appKey: String, name: String) {
+    internal func addInterest(appKey: String, name: String) {
         let interest = Interest(name: name, appKey: appKey)
         if (isActive()) {
             registerInterestWithClientId(interest)
@@ -199,7 +199,7 @@ internal class PusherPushNotificationRegistration {
 
 }
 
-private struct Interest : Hashable, Equatable {
+internal struct Interest : Hashable, Equatable {
     private static let URLSession = NSURLSession.sharedSession()
 
     let name: String
@@ -236,7 +236,7 @@ private struct Interest : Hashable, Equatable {
 }
 
 
-private func ==(lhs: Interest, rhs: Interest) -> Bool {
+internal func ==(lhs: Interest, rhs: Interest) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
