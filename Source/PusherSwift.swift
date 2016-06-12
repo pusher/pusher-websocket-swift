@@ -115,8 +115,8 @@ public class Pusher {
 
 }
 
-private class PusherPushNotificationRegistration {
-    public static let sharedInstance = PusherPushNotificationRegistration()
+internal class PusherPushNotificationRegistration {
+    private static let sharedInstance = PusherPushNotificationRegistration()
 
     private static let PLATFORM_TYPE = "apns"
     private static let URLSession = NSURLSession.sharedSession()
@@ -157,15 +157,15 @@ private class PusherPushNotificationRegistration {
     }
 
 
-    var clientId: String?
-    var pendingInterests: Set<Interest>
+    private var clientId: String?
+    private var pendingInterests: Set<Interest>
 
     private init() {
         clientId = nil
         pendingInterests = []
     }
 
-    public func addInterest(appKey: String, name: String) {
+    private func addInterest(appKey: String, name: String) {
         let interest = Interest(name: name, appKey: appKey)
         if (isActive()) {
             registerInterestWithClientId(interest)
@@ -186,16 +186,13 @@ private class PusherPushNotificationRegistration {
     }
 
     private func registerInterestWithClientId(interest: Interest) {
-        interest.register(clientId!, callback: { Void in
+        interest.register(clientId!) {
             self.pendingInterests.remove(interest)
-        })
+        }
     }
 
     private func isActive() -> Bool {
-        if let clientId = self.clientId {
-            return true
-        }
-        return false
+        return clientId == nil ? false : true
     }
 
 
