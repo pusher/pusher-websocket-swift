@@ -3,6 +3,7 @@ cache: cocoapods
 osx_image: xcode7.3
 sudo: false
 xcode_workspace: PusherSwift.xcworkspace
+xcode_project: PusherSwift.xcodeproj
 env:
   global:
     - IOS_SDK=iphonesimulator9.3
@@ -50,7 +51,6 @@ deploy:
 script:
   - set -o pipefail
   - xcodebuild -version
-  - carthage build --no-skip-current --verbose
   - if [ "$SCHEME" == "PusherSwiftTests-OSX" ]; then
       xcodebuild -workspace PusherSwift.xcworkspace -scheme "$SCHEME" -destination "$DESTINATION" -sdk "$SDK" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO test -enableCodeCoverage YES | xcpretty -tc;
     else
