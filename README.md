@@ -110,6 +110,7 @@ There are a number of configuration parameters which can be set for the Pusher c
 - `host (String)` - set a custom value for the host you'd like to connect to
 - `port (Int)` - set a custom value for the port that you'd lilke to connect to
 - `cluster (String)` - specify the cluster that you'd like to connect to, e.g. `eu`
+- `debugLogger ((String) -> ())` - provide a logger function that will be passed a string when a message is either sent of received over the websocket connection
 
 All of these configuration options can be set when instantiating the Pusher object, for example:
 
