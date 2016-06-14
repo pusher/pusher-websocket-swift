@@ -522,7 +522,7 @@ public class PusherConnection {
         request.HTTPBody = "socket_id=\(socket)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
 
         if let handler = self.options.authRequestCustomizer {
-            request = handler(request)
+            request = handler(endpoint: endpoint, socket: socket, channel: channel)
         }
 
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in

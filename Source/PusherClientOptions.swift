@@ -16,7 +16,7 @@ public struct PusherClientOptions {
     public let host: String?
     public let port: Int?
     public let autoReconnect: Bool?
-    public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
+    public let authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
     public let debugLogger: ((String) -> ())?
 
     /**
@@ -89,7 +89,7 @@ public struct PusherClientOptions {
         self.host = optionsMergedWithDefaults["host"] as? String
         self.port = optionsMergedWithDefaults["port"] as? Int
         self.autoReconnect = optionsMergedWithDefaults["autoReconnect"] as? Bool
-        self.authRequestCustomizer = optionsMergedWithDefaults["authRequestCustomizer"] as? (NSMutableURLRequest -> NSMutableURLRequest)
+        self.authRequestCustomizer = optionsMergedWithDefaults["authRequestCustomizer"] as? ((String, String, PusherChannel) -> NSMutableURLRequest)
         self.debugLogger = optionsMergedWithDefaults["debugLogger"] as? (String) -> ()
 
         if let _ = authEndpoint {
