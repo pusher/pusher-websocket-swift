@@ -347,7 +347,7 @@ print(me)
 
 ## Testing
 
-There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode). The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift).
+There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode) when you have one the `PusherSwiftTests-*` schemes active in Xcode. The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift).
 
 
 ## Communication
