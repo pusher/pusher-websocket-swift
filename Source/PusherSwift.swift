@@ -25,11 +25,10 @@ public class Pusher {
 
         - returns: A new Pusher client instance
     */
-    public init(key: String, options: Dictionary<String, Any>? = nil) {
-        let pusherClientOptions = PusherClientOptions(options: options)
-        let urlString = constructUrl(key, options: pusherClientOptions)
+    public init(key: String, options: PusherClientOptions = .defaultOptions) {
+        let urlString = constructUrl(key, options: options)
         let ws = WebSocket(url: NSURL(string: urlString)!)
-        connection = PusherConnection(key: key, socket: ws, url: urlString, options: pusherClientOptions)
+        connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
     }
 
@@ -103,6 +102,16 @@ public enum AuthMethod {
     case Endpoint
     case Internal
     case NoMethod
+    
+    public init(endpoint: String?, secret: String?) {
+        if let _ = endpoint {
+            self = .Endpoint
+        } else if let _ = secret {
+            self = .Internal
+        } else {
+            self = .NoMethod
+        }
+    }
 }
 
 /**
@@ -116,12 +125,12 @@ public enum AuthMethod {
 func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
-    if let encrypted = options.encrypted where !encrypted {
-        let defaultPort = (options.port ?? 80)
-        url = "ws://\(options.host!):\(defaultPort)/app/\(key)"
-    } else {
+    if options.encrypted {
         let defaultPort = (options.port ?? 443)
         url = "wss://\(options.host!):\(defaultPort)/app/\(key)"
+    } else {
+        let defaultPort = (options.port ?? 80)
+        url = "ws://\(options.host!):\(defaultPort)/app/\(key)"
     }
     return "\(url)?client=\(CLIENT_NAME)&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
