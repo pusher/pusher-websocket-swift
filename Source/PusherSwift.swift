@@ -126,11 +126,9 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
     if options.encrypted {
-        let defaultPort = (options.port ?? 443)
-        url = "wss://\(options.host):\(defaultPort)/app/\(key)"
+        url = "wss://\(options.host):\(options.port)/app/\(key)"
     } else {
-        let defaultPort = (options.port ?? 80)
-        url = "ws://\(options.host):\(defaultPort)/app/\(key)"
+        url = "ws://\(options.host):\(options.port)/app/\(key)"
     }
     return "\(url)?client=\(CLIENT_NAME)&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
