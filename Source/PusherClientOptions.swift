@@ -14,7 +14,7 @@ public struct PusherClientOptions {
     public let attemptToReturnJSONObject: Bool
     public let encrypted: Bool
     public let host: String
-    public let port: Int?
+    public let port: Int
     public let autoReconnect: Bool
     public let authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
     public let debugLogger: ((String) -> ())?
@@ -52,7 +52,7 @@ public struct PusherClientOptions {
         self.attemptToReturnJSONObject = attemptToReturnJSONObject
         self.encrypted = encrypted
         self.host = host
-        self.port = port
+        self.port = encrypted ? 443 : 80
         self.autoReconnect = autoReconnect
         self.authRequestCustomizer =  authRequestCustomizer
         self.debugLogger = debugLogger
