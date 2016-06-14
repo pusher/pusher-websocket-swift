@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0
+
+* Add `onMemberAdded`, `onMemberRemoved`, `findMember`, and `me` functions to PresencePusherChannel class
+* Bring CryptoSwift, Starscream and Reachability dependencies inside the PusherSwift library
+* Update Quick and Nimble dependencies to remove warnings for Swift compatibility
+* Use cocoapods version 1.0.0 on Travis
+* Split up `PusherSwift.swift` and `PusherSwiftTests.swift` into components
+* Add inline documentation throughout codebase
+* Added `debugLogger` option to client
+* Handling of `pusher:error` messages now works as it should have done all along
+* Building with Carthage now now longer requires a `pod install` to make it work
+* Fix bug in `ConnectionStateChangeDelegate`
+* Pass authorization errors to client ([@psycotica0](https://github.com/psycotica0))
+
 ## 0.3.0
 
 * Use cocoapods version 1.0.0.beta.6 to make builds work on Travis

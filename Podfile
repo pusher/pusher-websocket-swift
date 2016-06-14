@@ -4,35 +4,9 @@ workspace 'PusherSwift'
 
 use_frameworks!
 
-def import_pods
-  pod 'PusherSwift', path: './'
-  pod 'Starscream', '~> 1.1.3'
-  pod 'CryptoSwift', '~> 0.3.1'
-  pod 'ReachabilitySwift', '~> 2.3.3'
-end
-
 def import_test_pods
-  import_pods
-  pod 'Quick', '0.9.1'
-  pod 'Nimble', '3.2.0'
-end
-
-target 'PusherSwift-iOS' do
-  project 'PusherSwift'
-  platform :ios, '9.0'
-  import_pods
-end
-
-target 'PusherSwift-tvOS' do
-  project 'PusherSwift'
-  platform :tvos, '9.0'
-  import_pods
-end
-
-target 'PusherSwift-OSX' do
-  project 'PusherSwift'
-  platform :osx, '10.11'
-  import_pods
+  pod 'Quick', '0.9.2'
+  pod 'Nimble', '4.0.1'
 end
 
 target 'PusherSwiftTests-iOS' do
@@ -51,10 +25,4 @@ target 'PusherSwiftTests-OSX' do
   project 'PusherSwift'
   platform :osx, '10.11'
   import_test_pods
-end
-
-target 'iOS Example' do
-  project 'iOS Example'
-  platform :ios, '9.0'
-  import_pods
 end

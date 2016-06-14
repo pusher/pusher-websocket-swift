@@ -32,12 +32,22 @@ before_install:
       echo Carthage not installed. Installing using homebrew;
       brew install carthage;
     fi
-  - gem install cocoapods -v 1.0.0.beta.6
+  - gem install cocoapods
 install:
-  - pod _1.0.0.beta.6_ update
-  - pod _1.0.0.beta.6_ install
-before_script:
-  - carthage bootstrap
+  - pod update
+  - pod install
+before_deploy:
+  - carthage build --no-skip-current
+  - carthage archive PusherSwift
+deploy:
+  provider: releases
+  api_key:
+    secure: cjodA0I5fTEU60M+W1NNCj18EpL7yt3uxLN1aeexN33HfRoo153oi4jV/FWlPtQ4QC5FhFF+Nbc69V2paOSrI4iht+UB2Hb0jYTuHWv8ecYa33GFksl7zD9BCf8D3RZqIagTzJC7Vf0FqKKlspZMwIMAL02Z5uwsp5h4Zjrq8lo=
+  file: PusherSwift.framework.zip
+  skip_cleanup: true
+  on:
+    repo: pusher/pusher-websocket-swift
+    tags: true
 script:
   - set -o pipefail
   - xcodebuild -version
@@ -46,3 +56,5 @@ script:
     else
       xcodebuild -workspace PusherSwift.xcworkspace -scheme "$SCHEME" -destination "$DESTINATION" -sdk "$SDK" test -enableCodeCoverage YES | xcpretty -tc;
     fi
+after_success:
+  - sleep 5
