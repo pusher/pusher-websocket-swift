@@ -427,44 +427,51 @@ public class PusherConnection {
     private func authorize(channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) -> Bool {
         if !isPresenceChannel(channel.name) && !isPrivateChannel(channel.name) {
             subscribeToNormalChannel(channel)
-        } else if let endpoint = self.options.authEndpoint where self.options.authMethod == .Endpoint {
-            if let socket = self.socketId {
-                sendAuthorisationRequest(endpoint, socket: socket, channel: channel, callback: callback)
-            } else {
-                print("socketId value not found. You may not be connected.")
-                return false
-            }
-        } else if let secret = self.options.secret where self.options.authMethod == .Internal {
-            var msg = ""
-            var channelData = ""
-            if isPresenceChannel(channel.name) {
-                channelData = getUserDataJSON()
-                msg = "\(self.socketId!):\(channel.name):\(channelData)"
-            } else {
-                msg = "\(self.socketId!):\(channel.name)"
-            }
-
-            var secretBuff = [UInt8]()
-            secretBuff += secret.utf8
-
-            var msgBuff = [UInt8]()
-            msgBuff += msg.utf8
-
-            if let hmac = try? Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
-                let signature = NSData.withBytes(hmac).toHexString()
-                let auth = "\(self.key):\(signature)".lowercaseString
-
-                if isPrivateChannel(channel.name) {
-                    self.handlePrivateChannelAuth(auth, channel: channel, callback: callback)
-                } else {
-                    self.handlePresenceChannelAuth(auth, channel: channel, channelData: channelData, callback: callback)
-                }
-            }
+            
+            return true
         } else {
-            print("Authentication method required for private / presence channels but none provided.")
-            return false
+            switch self.options.authMethod {
+                case .NoMethod:
+                    print("Authentication method required for private / presence channels but none provided.")
+                    return false
+                case .Endpoint(authEndpoint: let authEndpoint):
+                    if let socket = self.socketId {
+                        sendAuthorisationRequest(authEndpoint, socket: socket, channel: channel, callback: callback)
+                        return true
+                    } else {
+                        print("socketId value not found. You may not be connected.")
+                        return false
+                    }
+                case .Internal(secret: let secret):
+                    var msg = ""
+                    var channelData = ""
+                    if isPresenceChannel(channel.name) {
+                        channelData = getUserDataJSON()
+                        msg = "\(self.socketId!):\(channel.name):\(channelData)"
+                    } else {
+                        msg = "\(self.socketId!):\(channel.name)"
+                    }
+                    
+                    var secretBuff = [UInt8]()
+                    secretBuff += secret.utf8
+                    
+                    var msgBuff = [UInt8]()
+                    msgBuff += msg.utf8
+                    
+                    if let hmac = try? Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
+                        let signature = NSData.withBytes(hmac).toHexString()
+                        let auth = "\(self.key):\(signature)".lowercaseString
+                        
+                        if isPrivateChannel(channel.name) {
+                            self.handlePrivateChannelAuth(auth, channel: channel, callback: callback)
+                        } else {
+                            self.handlePresenceChannelAuth(auth, channel: channel, channelData: channelData, callback: callback)
+                        }
+                    }
+                
+                    return true
+            }
         }
-        return true
     }
 
     /**

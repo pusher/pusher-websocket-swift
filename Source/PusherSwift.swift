@@ -99,19 +99,9 @@ public class Pusher {
 }
 
 public enum AuthMethod {
-    case Endpoint
-    case Internal
+    case Endpoint(authEndpoint: String)
+    case Internal(secret: String)
     case NoMethod
-    
-    public init(endpoint: String?, secret: String?) {
-        if let _ = endpoint {
-            self = .Endpoint
-        } else if let _ = secret {
-            self = .Internal
-        } else {
-            self = .NoMethod
-        }
-    }
 }
 
 /**
