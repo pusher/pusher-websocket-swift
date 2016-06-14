@@ -11,7 +11,7 @@ public typealias PusherEventJSON = Dictionary<String, AnyObject>
 public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7
-let VERSION = "0.3.0"
+let VERSION = "1.0.0"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
