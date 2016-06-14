@@ -44,3 +44,5 @@ script:
     else
       xcodebuild -workspace PusherSwift.xcworkspace -scheme "$SCHEME" -destination "$DESTINATION" -sdk "$SDK" test -enableCodeCoverage YES | xcpretty -tc;
     fi
+after_success:
+  - sleep 5
