@@ -168,7 +168,7 @@ public class PusherConnection {
         } else {
             updateConnectionState(.Connecting)
             self.socket.connect()
-            if let reconnect = self.options.autoReconnect where reconnect {
+            if self.options.autoReconnect {
                 _ = try? reachability?.startNotifier()
             }
         }
