@@ -51,6 +51,7 @@ deploy:
 script:
   - set -o pipefail
   - xcodebuild -version
+  - xcodebuild -workspace PusherSwift.xcworkspace -list
   - if [ "$SCHEME" == "PusherSwiftTests-OSX" ]; then
       xcodebuild -workspace PusherSwift.xcworkspace -scheme "$SCHEME" -destination "$DESTINATION" -sdk "$SDK" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO test -enableCodeCoverage YES | xcpretty -tc;
     else
