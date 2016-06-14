@@ -13,7 +13,7 @@ public struct PusherClientOptions {
     public let authMethod: AuthMethod
     public let attemptToReturnJSONObject: Bool
     public let encrypted: Bool
-    public let host: String?
+    public let host: String
     public let port: Int?
     public let autoReconnect: Bool
     public let authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
