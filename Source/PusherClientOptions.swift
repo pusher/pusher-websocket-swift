@@ -17,6 +17,7 @@ public struct PusherClientOptions {
     public let port: Int?
     public let autoReconnect: Bool?
     public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
+    public let debugLogger: ((String) -> ())?
 
     /**
         Initializes a new PusherClientOptions instance, optionally with a provided options dictionary
@@ -26,7 +27,19 @@ public struct PusherClientOptions {
         - returns: A new PusherClientOptions instance
     */
     public init(options: [String:Any]?) {
-        let validKeys = ["encrypted", "attemptToReturnJSONObject", "authEndpoint", "secret", "userDataFetcher", "port", "host", "cluster", "autoReconnect", "authRequestCustomizer"]
+        let validKeys = [
+            "encrypted",
+            "attemptToReturnJSONObject",
+            "authEndpoint",
+            "secret",
+            "userDataFetcher",
+            "port",
+            "host",
+            "cluster",
+            "autoReconnect",
+            "authRequestCustomizer",
+            "debugLogger"
+        ]
         let defaults: [String:AnyObject?] = [
             "encrypted": true,
             "attemptToReturnJSONObject": true,
@@ -36,7 +49,8 @@ public struct PusherClientOptions {
             "autoReconnect": true,
             "authRequestCustomizer": nil,
             "host": "ws.pusherapp.com",
-            "port": nil
+            "port": nil,
+            "debugLogger": nil
         ]
 
         var mutableOptions = options
@@ -76,6 +90,7 @@ public struct PusherClientOptions {
         self.port = optionsMergedWithDefaults["port"] as? Int
         self.autoReconnect = optionsMergedWithDefaults["autoReconnect"] as? Bool
         self.authRequestCustomizer = optionsMergedWithDefaults["authRequestCustomizer"] as? (NSMutableURLRequest -> NSMutableURLRequest)
+        self.debugLogger = optionsMergedWithDefaults["debugLogger"] as? (String) -> ()
 
         if let _ = authEndpoint {
             self.authMethod = .Endpoint

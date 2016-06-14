@@ -82,6 +82,15 @@ class HandlingIncomingEventsSpec: QuickSpec {
                 pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
                 expect(socket.objectGivenToCallback as? String).to(equal("{\"test\":\"test string\",\"and\":\"another\"}"))
             }
+
+            it("should pass incoming messages to the debugLogger if one is set") {
+                let debugLogger = { (text: String) in socket.appendToCallbackCheckString(text) }
+                pusher = Pusher(key: key, options: ["debugLogger": debugLogger])
+                socket.delegate = pusher.connection
+                pusher.connection.socket = socket
+                pusher.connect()
+                expect(socket.callbackCheckString).to(equal("[PUSHER DEBUG] websocketDidReceiveMessage {\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"))
+            }
         }
     }
 }

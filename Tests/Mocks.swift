@@ -27,11 +27,12 @@ public class MockWebSocket: WebSocket {
     }
 
     override public func connect() {
+        let connectionEstablishedString = "{\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"
         stubber.stub(
             "connect",
             args: nil,
             functionToCall: {
-                self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}")
+                self.delegate?.websocketDidReceiveMessage(self, text: connectionEstablishedString)
             }
         )
     }

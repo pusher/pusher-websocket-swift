@@ -103,7 +103,11 @@ public class PusherConnection {
         if event.componentsSeparatedByString("-")[0] == "client" {
             sendClientEvent(event, data: data, channelName: channelName)
         } else {
-            self.socket.writeString(JSONStringify(["event": event, "data": data]))
+            let dataString = JSONStringify(["event": event, "data": data])
+            if let debugLogger = self.options.debugLogger {
+                debugLogger("[PUSHER DEBUG] sendEvent \(dataString)")
+            }
+            self.socket.writeString(dataString)
         }
     }
 
@@ -117,7 +121,11 @@ public class PusherConnection {
     private func sendClientEvent(event: String, data: AnyObject, channelName: String?) {
         if let cName = channelName {
             if isPresenceChannel(cName) || isPrivateChannel(cName) {
-                self.socket.writeString(JSONStringify(["event": event, "data": data, "channel": cName]))
+                let dataString = JSONStringify(["event": event, "data": data, "channel": cName])
+                if let debugLogger = self.options.debugLogger {
+                    debugLogger("[PUSHER DEBUG] sendClientEvent \(dataString)")
+                }
+                self.socket.writeString(dataString)
             } else {
                 print("You must be subscribed to a private or presence channel to send client events")
             }

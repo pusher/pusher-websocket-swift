@@ -64,6 +64,10 @@ class PusherClientInitializationSpec: QuickSpec {
                 it("has the port set as nil") {
                     expect(pusher.connection.options.port).to(beNil())
                 }
+
+                it("has debugLogger set as nil") {
+                    expect(pusher.connection.options.debugLogger).to(beNil())
+                }
             }
 
             context("passing in configuration options") {
@@ -126,6 +130,14 @@ class PusherClientInitializationSpec: QuickSpec {
                     it("sets the URL with it") {
                         pusher = Pusher(key: key, options: ["port": 123])
                         expect(pusher.connection.options.port).to(equal(123))
+                    }
+                }
+
+                context("a debugLogger") {
+                    it("sets the debugLogger with it") {
+                        let debugLogger = { (text: String) in }
+                        pusher = Pusher(key: key, options: ["debugLogger": debugLogger])
+                        expect(pusher.connection.options.debugLogger).toNot(beNil())
                     }
                 }
 
