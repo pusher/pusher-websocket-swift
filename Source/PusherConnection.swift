@@ -314,7 +314,9 @@ public class PusherConnection {
             "channel": channelName,
             "data": data ?? ""
         ]
-        handleEvent(eventName, jsonObject: json)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.handleEvent(eventName, jsonObject: json)
+        }
     }
 
     /**

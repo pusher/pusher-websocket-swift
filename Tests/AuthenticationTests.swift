@@ -69,13 +69,14 @@ class AuthenticationSpec: QuickSpec {
 
                 pusher.bind({ (data: AnyObject?) -> Void in
                     if let data = data as? [String: AnyObject], eventName = data["event"] as? String where eventName == "pusher:subscription_error" {
+                        expect(NSThread.isMainThread()).to(equal(true))
                         stubber.stub("subscriptionErrorCallback", args: [eventName], functionToCall: nil)
                     }
                 })
 
                 pusher.connect()
-                expect(stubber.calls.last?.name).to(equal("subscriptionErrorCallback"))
-                expect(stubber.calls.last?.args?.last as? String).to(equal("pusher:subscription_error"))
+                expect(stubber.calls.last?.name).toEventually(equal("subscriptionErrorCallback"))
+                expect(stubber.calls.last?.args?.last as? String).toEventually(equal("pusher:subscription_error"))
             }
         }
     }
