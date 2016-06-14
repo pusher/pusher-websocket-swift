@@ -83,6 +83,25 @@ class HandlingIncomingEventsSpec: QuickSpec {
                 expect(socket.objectGivenToCallback as? String).to(equal("{\"test\":\"test string\",\"and\":\"another\"}"))
             }
 
+            it("should handle receiving an error where the data part of the message isn't double encoded") {
+                pusher = Pusher(key: key)
+                socket.delegate = pusher.connection
+                pusher.connection.socket = socket
+                pusher.bind({ (message: AnyObject?) in
+                    if let message = message as? [String: AnyObject], eventName = message["event"] as? String where eventName == "pusher:error" {
+                        if let data = message["data"] as? [String: AnyObject], errorMessage = data["message"] as? String {
+                            socket.appendToCallbackCheckString(errorMessage)
+                        }
+                    }
+                })
+
+                // pretend that we tried to subscribe to my-channel twice and got this error
+                // back from Pusher
+                pusher.connection.handleEvent("pusher:error", jsonObject: ["event": "pusher:error", "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"]])
+
+                expect(socket.callbackCheckString).to(equal("Existing subscription to channel my-channel"))
+            }
+
             it("should pass incoming messages to the debugLogger if one is set") {
                 let debugLogger = { (text: String) in socket.appendToCallbackCheckString(text) }
                 pusher = Pusher(key: key, options: ["debugLogger": debugLogger])

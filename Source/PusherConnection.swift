@@ -104,9 +104,7 @@ public class PusherConnection {
             sendClientEvent(event, data: data, channelName: channelName)
         } else {
             let dataString = JSONStringify(["event": event, "data": data])
-            if let debugLogger = self.options.debugLogger {
-                debugLogger("[PUSHER DEBUG] sendEvent \(dataString)")
-            }
+            self.options.debugLogger?("[PUSHER DEBUG] sendEvent \(dataString)")
             self.socket.writeString(dataString)
         }
     }
@@ -122,9 +120,7 @@ public class PusherConnection {
         if let cName = channelName {
             if isPresenceChannel(cName) || isPrivateChannel(cName) {
                 let dataString = JSONStringify(["event": event, "data": data, "channel": cName])
-                if let debugLogger = self.options.debugLogger {
-                    debugLogger("[PUSHER DEBUG] sendClientEvent \(dataString)")
-                }
+                self.options.debugLogger?("[PUSHER DEBUG] sendClientEvent \(dataString)")
                 self.socket.writeString(dataString)
             } else {
                 print("You must be subscribed to a private or presence channel to send client events")
@@ -347,7 +343,7 @@ public class PusherConnection {
                 print("Unable to parse string from WebSocket: \(string)")
             }
         } catch let error as NSError {
-            print(error.localizedDescription)
+            print("Error: \(error.localizedDescription)")
         }
         return nil
     }
@@ -408,11 +404,14 @@ public class PusherConnection {
         - parameter jsonObject: The event-specific data related to the incoming event
     */
     private func callGlobalCallbacks(eventName: String, jsonObject: Dictionary<String,AnyObject>) {
-        if let channelName = jsonObject["channel"] as? String, eData =  jsonObject["data"] as? String {
-            if let globalChannel = self.globalChannel {
+        if let globalChannel = self.globalChannel {
+            if let eData =  jsonObject["data"] as? String {
+                let channelName = jsonObject["channel"] as! String?
                 globalChannel.handleEvent(channelName, eventName: eventName, eventData: eData)
+            } else if let eData =  jsonObject["data"] as? [String: AnyObject] {
+                globalChannel.handleErrorEvent(eventName, eventData: eData)
             }
-        }
+    }
     }
 
     /**
