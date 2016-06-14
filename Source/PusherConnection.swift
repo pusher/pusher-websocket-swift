@@ -210,8 +210,9 @@ public class PusherConnection {
         - parameter newState: The new ConnectionState value
     */
     internal func updateConnectionState(newState: ConnectionState) {
-        self.stateChangeDelegate?.connectionChange(self.connectionState, new: newState)
+        let oldState = self.connectionState
         self.connectionState = newState
+        self.stateChangeDelegate?.connectionChange(oldState, new: newState)
     }
 
     /**
