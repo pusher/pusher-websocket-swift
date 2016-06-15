@@ -104,10 +104,14 @@
 
 /* Begin PBXFileReference section */
 		0116EB8D2E71B5C71CD7D20C /* Pods_Builds_PusherSwift_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Builds_PusherSwift_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D2ABC9250D03432629A5E93 /* Pods-PusherSwiftTests-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-tvOS.release.xcconfig"; path = "../Pods/Target Support Files/Pods-PusherSwiftTests-tvOS/Pods-PusherSwiftTests-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		1D2A475E76EC1FC9DB5346A5 /* Pods_PusherSwiftTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PusherSwiftTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		21DB343DBA62EB6A555917FA /* Pods-PusherSwiftTests-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-tvOS.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-PusherSwiftTests-tvOS/Pods-PusherSwiftTests-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		24C8B963C33DF52247933C0D /* Pods-PusherSwiftTests-OSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-OSX.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX.debug.xcconfig"; sourceTree = "<group>"; };
 		25C98B5CC81AEFA07DF8C2CE /* Pods-PusherSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwiftTests/Pods-PusherSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		27263F18C92BB9756AA2DB7E /* Pods-PusherSwiftTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwiftTests-iOS/Pods-PusherSwiftTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		2D9668EEC8907A968E3B84C0 /* Pods_Builds_PusherSwift_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Builds_PusherSwift_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30F50CD5BA53D5471EF13082 /* Pods-PusherSwiftTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-iOS.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-PusherSwiftTests-iOS/Pods-PusherSwiftTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3270921573904AE304CEF671 /* Pods_PusherSwiftTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PusherSwiftTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		331172051D1165920067AA75 /* AuthenticationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
 		331172061D1165920067AA75 /* ConnectionStateChangeDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStateChangeDelegateTests.swift; sourceTree = "<group>"; };
@@ -166,9 +170,11 @@
 		AD177836AC5E78D5D8D70812 /* Pods-PusherSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwiftTests/Pods-PusherSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B8B703EE8CF9F07BBA274AA1 /* Pods_PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C24E11791E87B625F115BEAA /* Pods-PusherSwiftTests-OSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-OSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX.debug.xcconfig"; sourceTree = "<group>"; };
+		C7DB82208E354A0FA9E519F1 /* Pods-PusherSwiftTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-iOS.release.xcconfig"; path = "../Pods/Target Support Files/Pods-PusherSwiftTests-iOS/Pods-PusherSwiftTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		CD14AEB3AB7E98B3386CFF06 /* Pods_Tests_PusherSwiftTests_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests_PusherSwiftTests_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3ADB71F4691FE076D2FCF60 /* Pods-Builds-PusherSwift-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Builds-PusherSwift-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Builds-PusherSwift-iOS/Pods-Builds-PusherSwift-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		DA9BA263FA4AB6FF157F8326 /* Pods-PusherSwiftTests-OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX.release.xcconfig"; sourceTree = "<group>"; };
+		E6E76AE11189BA785726EA4B /* Pods-PusherSwiftTests-OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PusherSwiftTests-OSX.release.xcconfig"; path = "../Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -354,6 +360,12 @@
 				27263F18C92BB9756AA2DB7E /* Pods-PusherSwiftTests-iOS.release.xcconfig */,
 				AAAB0B39160BBE14508BE784 /* Pods-PusherSwiftTests-tvOS.debug.xcconfig */,
 				3D194D886863B00A69F18B93 /* Pods-PusherSwiftTests-tvOS.release.xcconfig */,
+				24C8B963C33DF52247933C0D /* Pods-PusherSwiftTests-OSX.debug.xcconfig */,
+				E6E76AE11189BA785726EA4B /* Pods-PusherSwiftTests-OSX.release.xcconfig */,
+				30F50CD5BA53D5471EF13082 /* Pods-PusherSwiftTests-iOS.debug.xcconfig */,
+				C7DB82208E354A0FA9E519F1 /* Pods-PusherSwiftTests-iOS.release.xcconfig */,
+				21DB343DBA62EB6A555917FA /* Pods-PusherSwiftTests-tvOS.debug.xcconfig */,
+				0D2ABC9250D03432629A5E93 /* Pods-PusherSwiftTests-tvOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -650,7 +662,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PusherSwiftTests-iOS/Pods-PusherSwiftTests-iOS-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PusherSwiftTests-iOS/Pods-PusherSwiftTests-iOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3358FA6E1B4FD8C000AB0670 /* ShellScript */ = {
@@ -705,7 +717,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PusherSwiftTests-tvOS/Pods-PusherSwiftTests-tvOS-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PusherSwiftTests-tvOS/Pods-PusherSwiftTests-tvOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4ED84449C57D3C392A4E5617 /* [CP] Copy Pods Resources */ = {
@@ -720,7 +732,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PusherSwiftTests-iOS/Pods-PusherSwiftTests-iOS-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PusherSwiftTests-iOS/Pods-PusherSwiftTests-iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8B1C3BE8C26C3ADE46059E2B /* [CP] Copy Pods Resources */ = {
@@ -735,7 +747,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BC40E3C73E693376F95A7518 /* [CP] Copy Pods Resources */ = {
@@ -750,7 +762,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PusherSwiftTests-tvOS/Pods-PusherSwiftTests-tvOS-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PusherSwiftTests-tvOS/Pods-PusherSwiftTests-tvOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C41AD32A2236CDF49D84FEA5 /* [CP] Embed Pods Frameworks */ = {
@@ -765,7 +777,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PusherSwiftTests-OSX/Pods-PusherSwiftTests-OSX-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D9BF8BA3396091A2F109F62C /* [CP] Check Pods Manifest.lock */ = {
@@ -1293,7 +1305,7 @@
 		};
 		33831CA11A9CF61600B124F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 90483DDFF5D618DE717D7FB4 /* Pods-PusherSwiftTests-iOS.debug.xcconfig */;
+			baseConfigurationReference = 30F50CD5BA53D5471EF13082 /* Pods-PusherSwiftTests-iOS.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1344,7 +1356,7 @@
 		};
 		33831CA21A9CF61600B124F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27263F18C92BB9756AA2DB7E /* Pods-PusherSwiftTests-iOS.release.xcconfig */;
+			baseConfigurationReference = C7DB82208E354A0FA9E519F1 /* Pods-PusherSwiftTests-iOS.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1388,7 +1400,7 @@
 		};
 		33999D2B1C401F9600AFED30 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AAAB0B39160BBE14508BE784 /* Pods-PusherSwiftTests-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 21DB343DBA62EB6A555917FA /* Pods-PusherSwiftTests-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1439,7 +1451,7 @@
 		};
 		33999D2C1C401F9600AFED30 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D194D886863B00A69F18B93 /* Pods-PusherSwiftTests-tvOS.release.xcconfig */;
+			baseConfigurationReference = 0D2ABC9250D03432629A5E93 /* Pods-PusherSwiftTests-tvOS.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1483,7 +1495,7 @@
 		};
 		33999D3D1C4020A300AFED30 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C24E11791E87B625F115BEAA /* Pods-PusherSwiftTests-OSX.debug.xcconfig */;
+			baseConfigurationReference = 24C8B963C33DF52247933C0D /* Pods-PusherSwiftTests-OSX.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1542,7 +1554,7 @@
 		};
 		33999D3E1C4020A300AFED30 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DA9BA263FA4AB6FF157F8326 /* Pods-PusherSwiftTests-OSX.release.xcconfig */;
+			baseConfigurationReference = E6E76AE11189BA785726EA4B /* Pods-PusherSwiftTests-OSX.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

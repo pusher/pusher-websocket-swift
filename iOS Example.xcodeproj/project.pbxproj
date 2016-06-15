@@ -13,6 +13,51 @@
 		33831CC51A9CFCDB00B124F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CC11A9CFCDB00B124F1 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		331172311D116C010067AA75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33831CC61A9CFDD000B124F1 /* PusherSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33831C891A9CF61600B124F1;
+			remoteInfo = "PusherSwift-iOS";
+		};
+		331172331D116C010067AA75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33831CC61A9CFDD000B124F1 /* PusherSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33831C941A9CF61600B124F1;
+			remoteInfo = "PusherSwiftTests-iOS";
+		};
+		331172351D116C010067AA75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33831CC61A9CFDD000B124F1 /* PusherSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 337C9F0D1C38BE2E006CC757;
+			remoteInfo = "PusherSwift-tvOS";
+		};
+		331172371D116C010067AA75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33831CC61A9CFDD000B124F1 /* PusherSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33999D2D1C401F9600AFED30;
+			remoteInfo = "PusherSwiftTests-tvOS";
+		};
+		331172391D116C010067AA75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33831CC61A9CFDD000B124F1 /* PusherSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 337C9F211C394197006CC757;
+			remoteInfo = "PusherSwift-OSX";
+		};
+		3311723B1D116C010067AA75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33831CC61A9CFDD000B124F1 /* PusherSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 33999D3F1C4020A300AFED30;
+			remoteInfo = "PusherSwiftTests-OSX";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		21AFCABFD6461F6288FAA7A5 /* Pods_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB04428B64860E705E7675C /* Pods-iOS Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS Example/Pods-iOS Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -37,6 +82,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		331172291D116C010067AA75 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				331172321D116C010067AA75 /* PusherSwift.framework */,
+				331172341D116C010067AA75 /* PusherSwiftTests.xctest */,
+				331172361D116C010067AA75 /* PusherSwift.framework */,
+				331172381D116C010067AA75 /* PusherSwiftTests.xctest */,
+				3311723A1D116C010067AA75 /* PusherSwift.framework */,
+				3311723C1D116C010067AA75 /* PusherSwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		33831C551A9CEEE900B124F1 = {
 			isa = PBXGroup;
 			children = (
@@ -141,12 +199,63 @@
 			mainGroup = 33831C551A9CEEE900B124F1;
 			productRefGroup = 33831C5F1A9CEEE900B124F1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 331172291D116C010067AA75 /* Products */;
+					ProjectRef = 33831CC61A9CFDD000B124F1 /* PusherSwift.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				33831C5D1A9CEEE900B124F1 /* iOS Example */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		331172321D116C010067AA75 /* PusherSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PusherSwift.framework;
+			remoteRef = 331172311D116C010067AA75 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		331172341D116C010067AA75 /* PusherSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PusherSwiftTests.xctest;
+			remoteRef = 331172331D116C010067AA75 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		331172361D116C010067AA75 /* PusherSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PusherSwift.framework;
+			remoteRef = 331172351D116C010067AA75 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		331172381D116C010067AA75 /* PusherSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PusherSwiftTests.xctest;
+			remoteRef = 331172371D116C010067AA75 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3311723A1D116C010067AA75 /* PusherSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PusherSwift.framework;
+			remoteRef = 331172391D116C010067AA75 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3311723C1D116C010067AA75 /* PusherSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PusherSwiftTests.xctest;
+			remoteRef = 3311723B1D116C010067AA75 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		33831C5C1A9CEEE900B124F1 /* Resources */ = {
