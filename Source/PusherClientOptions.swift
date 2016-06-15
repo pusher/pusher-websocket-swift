@@ -25,16 +25,14 @@ public struct PusherClientOptions {
     public let host: String
     public let port: Int
     public let autoReconnect: Bool
-    public let debugLogger: ((String) -> ())?
 
     public init(authMethod: AuthMethod = .NoMethod, attemptToReturnJSONObject: Bool = true, encrypted: Bool = true,
-                host: PusherHost = .Host("ws.pusherapp.com"), port: Int? = nil, autoReconnect: Bool = true, debugLogger: ((String) -> ())? = nil) {
+                host: PusherHost = .Host("ws.pusherapp.com"), port: Int? = nil, autoReconnect: Bool = true) {
         self.authMethod = authMethod
         self.attemptToReturnJSONObject = attemptToReturnJSONObject
         self.encrypted = encrypted
         self.host = host.stringValue
         self.port = encrypted ? 443 : 80
         self.autoReconnect = autoReconnect
-        self.debugLogger = debugLogger
     }
 }

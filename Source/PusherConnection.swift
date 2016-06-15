@@ -18,6 +18,7 @@ public class PusherConnection {
     public var URLSession: NSURLSession
     public var authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
     public var userDataFetcher: (() -> PusherUserData)?
+    public var debugLogger: ((String) -> ())?
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
 
     public lazy var reachability: Reachability? = {
@@ -106,7 +107,7 @@ public class PusherConnection {
             sendClientEvent(event, data: data, channel: channel)
         } else {
             let dataString = JSONStringify(["event": event, "data": data])
-            self.options.debugLogger?("[PUSHER DEBUG] sendEvent \(dataString)")
+            self.debugLogger?("[PUSHER DEBUG] sendEvent \(dataString)")
             self.socket.writeString(dataString)
         }
     }
@@ -122,7 +123,7 @@ public class PusherConnection {
         if let channel = channel {
             if channel.type == .Presence || channel.type == .Private {
                 let dataString = JSONStringify(["event": event, "data": data, "channel": channel.name])
-                self.options.debugLogger?("[PUSHER DEBUG] sendClientEvent \(dataString)")
+                self.debugLogger?("[PUSHER DEBUG] sendClientEvent \(dataString)")
                 self.socket.writeString(dataString)
             } else {
                 print("You must be subscribed to a private or presence channel to send client events")
