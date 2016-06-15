@@ -37,7 +37,7 @@ install:
   - pod update
   - pod install
 before_deploy:
-  - carthage build --no-skip-current --verbose
+  - carthage build --no-skip-current --project-directory PusherSwift --verbose
   - carthage archive PusherSwift
 deploy:
   provider: releases
