@@ -26,13 +26,11 @@ public struct PusherClientOptions {
     public let host: String
     public let port: Int
     public let autoReconnect: Bool
-    public let authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
     public let debugLogger: ((String) -> ())?
 
     public init(userDataFetcher: (() -> PusherUserData)? = nil, authMethod: AuthMethod = .NoMethod,
                 attemptToReturnJSONObject: Bool = true, encrypted: Bool = true, host: PusherHost = .Host("ws.pusherapp.com"),
-                port: Int? = nil, autoReconnect: Bool = true, authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)? = nil,
-                debugLogger: ((String) -> ())? = nil) {
+                port: Int? = nil, autoReconnect: Bool = true, debugLogger: ((String) -> ())? = nil) {
         self.userDataFetcher = userDataFetcher
         self.authMethod = authMethod
         self.attemptToReturnJSONObject = attemptToReturnJSONObject
@@ -40,7 +38,6 @@ public struct PusherClientOptions {
         self.host = host.stringValue
         self.port = encrypted ? 443 : 80
         self.autoReconnect = autoReconnect
-        self.authRequestCustomizer =  authRequestCustomizer
         self.debugLogger = debugLogger
     }
 }
