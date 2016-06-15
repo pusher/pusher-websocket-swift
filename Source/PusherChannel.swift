@@ -6,12 +6,37 @@
 //
 //
 
+public enum PusherChannelType {
+    case Private
+    case Presence
+    case Normal
+    
+    public init(name: String) {
+        self = self.dynamicType.typeForName(name)
+    }
+    
+    public static func typeForName(name: String) -> PusherChannelType {
+        if (name.componentsSeparatedByString("-")[0] == "presence") {
+            return .Presence
+        } else if (name.componentsSeparatedByString("-")[0] == "private") {
+            return .Private
+        } else {
+            return .Normal
+        }
+    }
+    
+    public static func isPresenceChannel(name name: String) -> Bool {
+        return PusherChannelType(name: name) == .Presence
+    }
+}
+
 public class PusherChannel {
     public var eventHandlers: [String: [EventHandler]] = [:]
     public var subscribed = false
     public let name: String
     public let connection: PusherConnection
     public var unsentEvents = [PusherEvent]()
+    public let type: PusherChannelType
 
     /**
         Initializes a new PusherChannel with a given name and conenction
@@ -24,6 +49,7 @@ public class PusherChannel {
     public init(name: String, connection: PusherConnection) {
         self.name = name
         self.connection = connection
+        self.type = PusherChannelType(name: name)
     }
 
     /**
@@ -105,7 +131,7 @@ public class PusherChannel {
     */
     public func trigger(eventName: String, data: AnyObject) {
         if subscribed {
-            self.connection.sendEvent(eventName, data: data, channelName: self.name)
+            self.connection.sendEvent(eventName, data: data, channel: self)
         } else {
             unsentEvents.insert(PusherEvent(name: eventName, data: data), atIndex: 0)
         }
