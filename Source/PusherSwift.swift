@@ -25,7 +25,7 @@ public class Pusher {
 
         - returns: A new Pusher client instance
     */
-    public init(key: String, options: PusherClientOptions = .defaultOptions) {
+    public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
         let urlString = constructUrl(key, options: options)
         let ws = WebSocket(url: NSURL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
