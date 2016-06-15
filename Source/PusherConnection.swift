@@ -17,6 +17,7 @@ public class PusherConnection {
     public var socket: WebSocket!
     public var URLSession: NSURLSession
     public var authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
+    public var userDataFetcher: (() -> PusherUserData)?
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
     internal var reconnectOperation: NSOperation?
 
@@ -482,7 +483,7 @@ public class PusherConnection {
         - returns: A JSON stringified user data object
     */
     private func getUserDataJSON() -> String {
-        if let userDataFetcher = self.options.userDataFetcher {
+        if let userDataFetcher = self.userDataFetcher {
             let userData = userDataFetcher()
             if let userInfo: AnyObject = userData.userInfo {
                 return JSONStringify(["user_id": userData.userId, "user_info": userInfo])

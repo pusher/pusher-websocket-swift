@@ -19,7 +19,6 @@ public enum PusherHost {
 }
 
 public struct PusherClientOptions {
-    public let userDataFetcher: (() -> PusherUserData)?
     public let authMethod: AuthMethod
     public let attemptToReturnJSONObject: Bool
     public let encrypted: Bool
@@ -28,10 +27,8 @@ public struct PusherClientOptions {
     public let autoReconnect: Bool
     public let debugLogger: ((String) -> ())?
 
-    public init(userDataFetcher: (() -> PusherUserData)? = nil, authMethod: AuthMethod = .NoMethod,
-                attemptToReturnJSONObject: Bool = true, encrypted: Bool = true, host: PusherHost = .Host("ws.pusherapp.com"),
-                port: Int? = nil, autoReconnect: Bool = true, debugLogger: ((String) -> ())? = nil) {
-        self.userDataFetcher = userDataFetcher
+    public init(authMethod: AuthMethod = .NoMethod, attemptToReturnJSONObject: Bool = true, encrypted: Bool = true,
+                host: PusherHost = .Host("ws.pusherapp.com"), port: Int? = nil, autoReconnect: Bool = true, debugLogger: ((String) -> ())? = nil) {
         self.authMethod = authMethod
         self.attemptToReturnJSONObject = attemptToReturnJSONObject
         self.encrypted = encrypted
