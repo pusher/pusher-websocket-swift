@@ -102,9 +102,9 @@ public class PusherConnection {
         - parameter data:        The data to be stringified and sent
         - parameter channelName: The name of the channel
     */
-    public func sendEvent(event: String, data: AnyObject, channelName: String? = nil) {
+    public func sendEvent(event: String, data: AnyObject, channel: PusherChannel? = nil) {
         if event.componentsSeparatedByString("-")[0] == "client" {
-            sendClientEvent(event, data: data, channelName: channelName)
+            sendClientEvent(event, data: data, channel: channel)
         } else {
             let dataString = JSONStringify(["event": event, "data": data])
             self.options.debugLogger?("[PUSHER DEBUG] sendEvent \(dataString)")
@@ -119,10 +119,10 @@ public class PusherConnection {
         - parameter data:        The data to be stringified and sent
         - parameter channelName: The name of the channel
     */
-    private func sendClientEvent(event: String, data: AnyObject, channelName: String?) {
-        if let cName = channelName {
-            if isPresenceChannel(cName) || isPrivateChannel(cName) {
-                let dataString = JSONStringify(["event": event, "data": data, "channel": cName])
+    private func sendClientEvent(event: String, data: AnyObject, channel: PusherChannel?) {
+        if let channel = channel {
+            if channel.type == .Presence || channel.type == .Private {
+                let dataString = JSONStringify(["event": event, "data": data, "channel": channel.name])
                 self.options.debugLogger?("[PUSHER DEBUG] sendClientEvent \(dataString)")
                 self.socket.writeString(dataString)
             } else {
@@ -235,7 +235,7 @@ public class PusherConnection {
                 callGlobalCallbacks("pusher:subscription_succeeded", jsonObject: json)
                 chan.handleEvent("pusher:subscription_succeeded", eventData: eData)
             }
-            if isPresenceChannel(channelName) {
+            if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(channelName) as? PresencePusherChannel {
                     if let data = json["data"] as? String, dataJSON = getPusherEventJSONFromString(data) {
                         if let presenceData = dataJSON["presence"] as? Dictionary<String, AnyObject>, presenceHash = presenceData["hash"] as? Dictionary<String, AnyObject> {
@@ -428,7 +428,7 @@ public class PusherConnection {
                    successfully
     */
     private func authorize(channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) -> Bool {
-        if !isPresenceChannel(channel.name) && !isPrivateChannel(channel.name) {
+        if channel.type != .Presence && channel.type != .Private {
             subscribeToNormalChannel(channel)
             
             return true
@@ -448,24 +448,21 @@ public class PusherConnection {
                 case .Internal(secret: let secret):
                     var msg = ""
                     var channelData = ""
-                    if isPresenceChannel(channel.name) {
+                    if channel.type == .Presence {
                         channelData = getUserDataJSON()
                         msg = "\(self.socketId!):\(channel.name):\(channelData)"
                     } else {
                         msg = "\(self.socketId!):\(channel.name)"
                     }
                     
-                    var secretBuff = [UInt8]()
-                    secretBuff += secret.utf8
-                    
-                    var msgBuff = [UInt8]()
-                    msgBuff += msg.utf8
+                    let secretBuff: [UInt8] = Array(secret.utf8)
+                    let msgBuff: [UInt8] = Array(msg.utf8)
                     
                     if let hmac = try? Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
                         let signature = NSData.withBytes(hmac).toHexString()
                         let auth = "\(self.key):\(signature)".lowercaseString
                         
-                        if isPrivateChannel(channel.name) {
+                        if channel.type == .Private {
                             self.handlePrivateChannelAuth(auth, channel: channel, callback: callback)
                         } else {
                             self.handlePresenceChannelAuth(auth, channel: channel, channelData: channelData, callback: callback)

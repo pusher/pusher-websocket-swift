@@ -122,21 +122,3 @@ func constructUrl(key: String, options: PusherClientOptions) -> String {
     }
     return "\(url)?client=\(CLIENT_NAME)&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
-
-/**
-    Determines whether or not a given channel name is a valid name for a presence channel
-
-    - parameter channelName: The name of the channel to check
-*/
-internal func isPresenceChannel(channelName: String) -> Bool {
-    return (channelName.componentsSeparatedByString("-")[0] == "presence") ? true : false
-}
-
-/**
-    Determines whether or not a given channel name is a valid name for a private channel
-
-    - parameter channelName: The name of the channel to check
-*/
-internal func isPrivateChannel(channelName: String) -> Bool {
-    return (channelName.componentsSeparatedByString("-")[0] == "private") ? true : false
-}
