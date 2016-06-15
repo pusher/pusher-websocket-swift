@@ -16,6 +16,7 @@ public class PusherConnection {
     public var channels = PusherChannels()
     public var socket: WebSocket!
     public var URLSession: NSURLSession
+    public var authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
     internal var reconnectOperation: NSOperation?
 
@@ -525,7 +526,7 @@ public class PusherConnection {
         request.HTTPMethod = "POST"
         request.HTTPBody = "socket_id=\(socket)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
 
-        if let handler = self.options.authRequestCustomizer {
+        if let handler = self.authRequestCustomizer {
             request = handler(endpoint: endpoint, socket: socket, channel: channel)
         }
 
