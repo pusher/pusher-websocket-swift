@@ -6,6 +6,18 @@
 //
 //
 
+public enum PusherHost {
+    case Host(String)
+    case Cluster(String)
+    
+    public var stringValue: String {
+        switch self {
+            case .Host(let host): return host
+            case .Cluster(let cluster): return "ws-\(cluster).pusher.com"
+        }
+    }
+}
+
 public struct PusherClientOptions {
     public let userDataFetcher: (() -> PusherUserData)?
     public let authMethod: AuthMethod
@@ -17,31 +29,18 @@ public struct PusherClientOptions {
     public let authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
     public let debugLogger: ((String) -> ())?
 
-    static var defaultOptions: PusherClientOptions = {
-        return PusherClientOptions()
-    }()
-    
     public init(userDataFetcher: (() -> PusherUserData)? = nil, authMethod: AuthMethod = .NoMethod,
-                attemptToReturnJSONObject: Bool = true, encrypted: Bool = true, host: String = "ws.pusherapp.com",
+                attemptToReturnJSONObject: Bool = true, encrypted: Bool = true, host: PusherHost = .Host("ws.pusherapp.com"),
                 port: Int? = nil, autoReconnect: Bool = true, authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)? = nil,
                 debugLogger: ((String) -> ())? = nil) {
         self.userDataFetcher = userDataFetcher
         self.authMethod = authMethod
         self.attemptToReturnJSONObject = attemptToReturnJSONObject
         self.encrypted = encrypted
-        self.host = host
+        self.host = host.stringValue
         self.port = encrypted ? 443 : 80
         self.autoReconnect = autoReconnect
         self.authRequestCustomizer =  authRequestCustomizer
         self.debugLogger = debugLogger
-    }
-    
-    public init(userDataFetcher: (() -> PusherUserData)? = nil, authMethod: AuthMethod = .NoMethod,
-                attemptToReturnJSONObject: Bool = true, encrypted: Bool = true, cluster: String, port: Int? = nil,
-                autoReconnect: Bool = true, authRequestCustomizer: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)? = nil,
-                debugLogger: ((String) -> ())? = nil) {
-        self.init(userDataFetcher: userDataFetcher, authMethod: authMethod, attemptToReturnJSONObject: attemptToReturnJSONObject,
-                  encrypted: encrypted, host: "ws-\(cluster).pusher.com", port: port, autoReconnect: autoReconnect,
-                  authRequestCustomizer: authRequestCustomizer, debugLogger: debugLogger)
     }
 }
