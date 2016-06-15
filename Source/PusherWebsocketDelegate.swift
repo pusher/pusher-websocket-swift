@@ -16,7 +16,7 @@ extension PusherConnection: WebSocketDelegate {
         - parameter text: The message received over the websocket
     */
     public func websocketDidReceiveMessage(ws: WebSocket, text: String) {
-        self.options.debugLogger?("[PUSHER DEBUG] websocketDidReceiveMessage \(text)")
+        self.debugLogger?("[PUSHER DEBUG] websocketDidReceiveMessage \(text)")
         if let pusherPayloadObject = getPusherEventJSONFromString(text), eventName = pusherPayloadObject["event"] as? String {
             self.handleEvent(eventName, jsonObject: pusherPayloadObject)
         } else {
