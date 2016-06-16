@@ -111,8 +111,8 @@ class PusherClientInitializationSpec: QuickSpec {
 
                 context("an authRequestCustomizer") {
                     it("has one set") {
-                        func customizer(request: NSMutableURLRequest) -> NSMutableURLRequest {
-                            return request
+                        func customizer(endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest {
+                            return NSMutableURLRequest()
                         }
                         pusher = Pusher(key: key, options: ["authRequestCustomizer": customizer])
                         expect(pusher.connection.options.authRequestCustomizer).toNot(beNil())
