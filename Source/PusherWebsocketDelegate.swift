@@ -39,6 +39,17 @@ extension PusherConnection: WebSocketDelegate {
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
+
+        let operation = NSBlockOperation {
+            self.socket.connect()
+        }
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC)), dispatch_get_main_queue()) {
+            NSOperationQueue.mainQueue().addOperation(operation)
+        }
+
+        self.reconnectOperation?.cancel()
+        self.reconnectOperation = operation
     }
 
     public func websocketDidConnect(ws: WebSocket) {}
