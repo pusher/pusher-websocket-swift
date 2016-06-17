@@ -120,11 +120,11 @@ internal class PusherPushNotificationRegistration {
 
     private static let PLATFORM_TYPE = "apns"
     private static let URLSession = NSURLSession.sharedSession()
-    private static let CLIENT_API_ENDPOINT = "https://yolo.ngrok.io/client_api/v1/clients"
+    private static let CLIENT_API_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
 
 
     private static func register(deviceToken : NSData) {
-        let request = NSMutableURLRequest(URL: NSURL(string: CLIENT_API_ENDPOINT)!)
+        let request = NSMutableURLRequest(URL: NSURL(string: CLIENT_API_ENDPOINT + "/clients")!)
         request.HTTPMethod = "POST"
         let deviceTokenString = deviceTokenToString(deviceToken)
 
@@ -211,7 +211,7 @@ internal struct Interest : Hashable, Equatable {
     }
 
     private func register(clientId: String, callback: (Void)->(Void)) {
-        let url = "\(PusherPushNotificationRegistration.CLIENT_API_ENDPOINT)/\(clientId)/interests/\(name)"
+        let url = "\(PusherPushNotificationRegistration.CLIENT_API_ENDPOINT)/clients/\(clientId)/interests/\(name)"
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
 
