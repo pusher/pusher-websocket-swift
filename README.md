@@ -420,27 +420,28 @@ For your Swift app to receive push notifications, it must first register with AP
 
 Next, APNs will respond with a device token identifying your app instance. Your app should then register with Pusher, passing along its device token.
 
-```
+Your app can now subscribe to interests. The following registers and subscribes the app to the interest "donuts":
+
+```swift
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : NSData) {
-        pusher.registerForPushNotifications(deviceToken)
-        // ...
-```
-
-Your app can now subscribe to interests. The following subscribes the app to the interest "donuts":
-
-```
-        // ...
-        pusher.registerPushNotificationInterest("donuts")
+        pusher.nativePush().register(deviceToken)
+        pusher.nativePush().subscribe("donuts")
     }
 ```
 
 When your server publishes a notification to the interest "donuts", it will get passed to your app. This happens as a call in your `AppDelegate` which you should listen to:
 
-```
+```swift
     func application(application : UIApplication, didReceiveRemoteNotification notification : [NSObject : AnyObject]) {
         print(notification)
     }
 }
+```
+
+If at a later point you wish to unsubscribe from an interest, this works in the same way:
+
+```swift
+        pusher.nativePush().unsubscribe("donuts")
 ```
 
 For a complete example of a working app, see the `Example/` directory in this repository.
