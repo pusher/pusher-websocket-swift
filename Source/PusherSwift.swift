@@ -25,11 +25,10 @@ public class Pusher {
 
         - returns: A new Pusher client instance
     */
-    public init(key: String, options: Dictionary<String, Any>? = nil) {
-        let pusherClientOptions = PusherClientOptions(options: options)
-        let urlString = constructUrl(key, options: pusherClientOptions)
+    public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
+        let urlString = constructUrl(key, options: options)
         let ws = WebSocket(url: NSURL(string: urlString)!)
-        connection = PusherConnection(key: key, socket: ws, url: urlString, options: pusherClientOptions)
+        connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
     }
 
@@ -100,8 +99,8 @@ public class Pusher {
 }
 
 public enum AuthMethod {
-    case Endpoint
-    case Internal
+    case Endpoint(authEndpoint: String)
+    case Internal(secret: String)
     case NoMethod
 }
 
@@ -116,30 +115,10 @@ public enum AuthMethod {
 func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
-    if let encrypted = options.encrypted where !encrypted {
-        let defaultPort = (options.port ?? 80)
-        url = "ws://\(options.host!):\(defaultPort)/app/\(key)"
+    if options.encrypted {
+        url = "wss://\(options.host):\(options.port)/app/\(key)"
     } else {
-        let defaultPort = (options.port ?? 443)
-        url = "wss://\(options.host!):\(defaultPort)/app/\(key)"
+        url = "ws://\(options.host):\(options.port)/app/\(key)"
     }
     return "\(url)?client=\(CLIENT_NAME)&version=\(VERSION)&protocol=\(PROTOCOL)"
-}
-
-/**
-    Determines whether or not a given channel name is a valid name for a presence channel
-
-    - parameter channelName: The name of the channel to check
-*/
-internal func isPresenceChannel(channelName: String) -> Bool {
-    return (channelName.componentsSeparatedByString("-")[0] == "presence") ? true : false
-}
-
-/**
-    Determines whether or not a given channel name is a valid name for a private channel
-
-    - parameter channelName: The name of the channel to check
-*/
-internal func isPrivateChannel(channelName: String) -> Bool {
-    return (channelName.componentsSeparatedByString("-")[0] == "private") ? true : false
 }

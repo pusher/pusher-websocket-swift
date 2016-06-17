@@ -27,7 +27,7 @@ public class PusherChannels {
             return channel
         } else {
             var newChannel: PusherChannel
-            if isPresenceChannel(channelName) {
+            if PusherChannelType.isPresenceChannel(name: channelName) {
                 newChannel = PresencePusherChannel(name: channelName, connection: connection, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
             } else {
                 newChannel = PusherChannel(name: channelName, connection: connection)
