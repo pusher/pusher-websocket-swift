@@ -45,6 +45,7 @@ chan.trigger("client-test", data: ["test": "some value"])
   * [Per-channel](#per-channel-events)
   * [Receiving errors](#receiving-errors)
 * [Presence channel specifics](#presence-channel-specifics)
+* [Push notifications](#push-notifications)
 * [Testing](#testing)
 * [Communication](#communication)
 * [Credits](#credits)
@@ -389,6 +390,60 @@ let me = chan.me()
 
 print(me)
 ```
+
+
+## Push notifications
+
+Pusher also supports push notifications.  Instances of your Swift application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your Swift application as push notifications.
+
+You should set up your app for push notifications in your `AppDelegate`. Start off your app in the usual way:
+
+```swift
+import PusherSwift
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    let pusher = Pusher(key: "YOUR_APP_KEY")
+```
+
+For your Swift app to receive push notifications, it must first register with APNs. You should do this when the application finishes launching. Your app should register for all types of notification, like so:
+
+```swift
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        let notificationTypes : UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        application.registerUserNotificationSettings(pushNotificationSettings)
+        application.registerForRemoteNotifications()
+
+        return true
+    }
+```
+
+Next, APNs will respond with a device token identifying your app instance. Your app should then register with Pusher, passing along its device token.
+
+```
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : NSData) {
+        pusher.registerForPushNotifications(deviceToken)
+        // ...
+```
+
+Your app can now subscribe to interests. The following subscribes the app to the interest "donuts":
+
+```
+        // ...
+        pusher.registerPushNotificationInterest("donuts")
+    }
+```
+
+When your server publishes a notification to the interest "donuts", it will get passed to your app. This happens as a call in your `AppDelegate` which you should listen to:
+
+```
+    func application(application : UIApplication, didReceiveRemoteNotification notification : [NSObject : AnyObject]) {
+        print(notification)
+    }
+}
+```
+
+For a complete example of a working app, see the `Example/` directory in this repository.
 
 
 ## Testing
