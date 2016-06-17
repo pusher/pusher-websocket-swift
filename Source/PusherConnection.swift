@@ -514,12 +514,18 @@ public class PusherConnection {
         - parameter callback: An optional callback to be passed along to relevant auth handlers
     */
     private func sendAuthorisationRequest(endpoint: String, socket: String, channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) {
-        var request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = "socket_id=\(socket)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
+        var request: NSMutableURLRequest
 
-        if let handler = self.options.authRequestCustomizer {
-            request = handler(request)
+        if let requestBuilder = self.options.authRequestBuilder {
+            request = requestBuilder(endpoint: endpoint, socket: socket, channelName: channel.name)
+        } else {
+            request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
+            request.HTTPMethod = "POST"
+            request.HTTPBody = "socket_id=\(socket)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
+
+            if let requestCustomizer = self.options.authRequestCustomizer {
+                request = requestCustomizer(request)
+            }
         }
 
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in

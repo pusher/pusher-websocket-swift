@@ -57,6 +57,10 @@ class PusherClientInitializationSpec: QuickSpec {
                     expect(pusher.connection.options.authRequestCustomizer).to(beNil())
                 }
 
+                it("has authRequestBuilder as nil") {
+                    expect(pusher.connection.options.authRequestBuilder).to(beNil())
+                }
+
                 it("has the host set correctly") {
                     expect(pusher.connection.options.host).to(equal("ws.pusherapp.com"))
                 }
@@ -116,6 +120,16 @@ class PusherClientInitializationSpec: QuickSpec {
                         }
                         pusher = Pusher(key: key, options: ["authRequestCustomizer": customizer])
                         expect(pusher.connection.options.authRequestCustomizer).toNot(beNil())
+                    }
+                }
+
+                context("an authRequestBuilder") {
+                    it("has one set") {
+                        func builder(endpoint: String, socket: String, channelName: String) -> NSMutableURLRequest {
+                            return NSMutableURLRequest(URL: NSURL(string: "http://test.com")!)
+                        }
+                        pusher = Pusher(key: key, options: ["authRequestBuilder": builder])
+                        expect(pusher.connection.options.authRequestBuilder).toNot(beNil())
                     }
                 }
 

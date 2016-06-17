@@ -16,7 +16,8 @@ public struct PusherClientOptions {
     public let host: String?
     public let port: Int?
     public let autoReconnect: Bool?
-    public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)?
+    public let authRequestCustomizer: (NSMutableURLRequest -> NSMutableURLRequest)? // DEPRECATED: Use authRequestBuilder instead
+    public let authRequestBuilder: ((endpoint: String, socket: String, channelName: String) -> NSMutableURLRequest)?
     public let debugLogger: ((String) -> ())?
 
     /**
@@ -37,7 +38,8 @@ public struct PusherClientOptions {
             "host",
             "cluster",
             "autoReconnect",
-            "authRequestCustomizer",
+            "authRequestCustomizer", // DEPRECATED: Use authRequestBuilder instead
+            "authRequestBuilder",
             "debugLogger"
         ]
         let defaults: [String:AnyObject?] = [
@@ -47,7 +49,8 @@ public struct PusherClientOptions {
             "secret": nil,
             "userDataFetcher": nil,
             "autoReconnect": true,
-            "authRequestCustomizer": nil,
+            "authRequestCustomizer": nil, // DEPRECATED: Use authRequestBuilder instead
+            "authRequestBuilder": nil,
             "host": "ws.pusherapp.com",
             "port": nil,
             "debugLogger": nil
@@ -89,8 +92,14 @@ public struct PusherClientOptions {
         self.host = optionsMergedWithDefaults["host"] as? String
         self.port = optionsMergedWithDefaults["port"] as? Int
         self.autoReconnect = optionsMergedWithDefaults["autoReconnect"] as? Bool
-        self.authRequestCustomizer = optionsMergedWithDefaults["authRequestCustomizer"] as? (NSMutableURLRequest -> NSMutableURLRequest)
+        self.authRequestBuilder = optionsMergedWithDefaults["authRequestBuilder"] as? ((endpoint: String, socket: String, channelName: String) -> NSMutableURLRequest)
         self.debugLogger = optionsMergedWithDefaults["debugLogger"] as? (String) -> ()
+        self.authRequestCustomizer = optionsMergedWithDefaults["authRequestCustomizer"] as? (NSMutableURLRequest -> NSMutableURLRequest)
+
+        // Print deprecation warnings for client options
+        if optionsMergedWithDefaults["authRequestCustomizer"] as? (NSMutableURLRequest -> NSMutableURLRequest) != nil {
+            print("authRequestCustomizer is deprecated. Use authRequestBuilder instea")
+        }
 
         if let _ = authEndpoint {
             self.authMethod = .Endpoint
