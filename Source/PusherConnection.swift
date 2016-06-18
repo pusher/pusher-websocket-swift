@@ -16,7 +16,6 @@ public class PusherConnection {
     public var channels = PusherChannels()
     public var socket: WebSocket!
     public var URLSession: NSURLSession
-    public var authRequestBuilder: ((endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest)?
     public var userDataFetcher: (() -> PusherUserData)?
     public var debugLogger: ((String) -> ())?
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
