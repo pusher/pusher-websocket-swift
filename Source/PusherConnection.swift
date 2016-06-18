@@ -438,8 +438,20 @@ public class PusherConnection {
                     print("Authentication method required for private / presence channels but none provided.")
                     return false
                 case .Endpoint(authEndpoint: let authEndpoint):
-                    if let socket = self.socketId {
-                        sendAuthorisationRequest(authEndpoint, socket: socket, channel: channel, callback: callback)
+                    if let socketID = self.socketId {
+                        let request = requestForAuthEndpoint(authEndpoint, socketID: socketID, channel: channel)
+                        
+                        sendAuthorisationRequest(request, channel: channel, callback: callback)
+                        return true
+                    } else {
+                        print("socketId value not found. You may not be connected.")
+                        return false
+                    }
+                case .AuthRequestBuilder(authRequestBuilder: let builder):
+                    if let socketID = self.socketId {
+                        let request = builder.requestFor(socketID, channel: channel)
+                        
+                        sendAuthorisationRequest(request, channel: channel, callback: callback)
                         return true
                     } else {
                         print("socketId value not found. You may not be connected.")
@@ -513,29 +525,34 @@ public class PusherConnection {
     }
 
     /**
+     Creates an authentication request for the given authEndpoint
+     
+     - parameter endpoint: The authEndpoint to which the request will be made
+     - parameter socketID:   The socketId of the connection's websocket
+     - parameter channel:  The PusherChannel to authenticate subsciption for
+     */
+    private func requestForAuthEndpoint(endpoint: String, socketID: String, channel: PusherChannel) -> NSURLRequest {
+        let request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = "socket_id=\(socketID)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        return request
+    }
+    
+    /**
         Send authentication request to the authEndpoint specified
 
-        - parameter endpoint: The authEndpoint to which the request will be made
-        - parameter socket:   The socketId of the connection's websocket
+        - parameter request: The request to send
         - parameter channel:  The PusherChannel to authenticate subsciption for
         - parameter callback: An optional callback to be passed along to relevant auth handlers
     */
-    private func sendAuthorisationRequest(endpoint: String, socket: String, channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) {
-        var request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = "socket_id=\(socket)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
-
-        if let handler = self.authRequestBuilder {
-            request = handler(endpoint: endpoint, socket: socket, channel: channel)
-        }
-
+    private func sendAuthorisationRequest(request: NSURLRequest, channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) {
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
             if let error = error {
                 print("Error authorizing channel [\(channel.name)]: \(error)")
                 self.handleAuthorizationErrorEvent(channel.name, data: error.domain)
             }
             if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
-
                 do {
                     if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? Dictionary<String, AnyObject> {
                         self.handleAuthResponse(json, channel: channel, callback: callback)
@@ -544,7 +561,6 @@ public class PusherConnection {
                     print("Error authorizing channel [\(channel.name)]")
                     self.handleAuthorizationErrorEvent(channel.name, data: nil)
                 }
-
             } else {
                 if let d = data {
                     let dataString = String(data: d, encoding: NSUTF8StringEncoding)
@@ -556,7 +572,7 @@ public class PusherConnection {
                 }
             }
         })
-
+        
         task.resume()
     }
 
