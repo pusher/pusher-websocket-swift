@@ -80,6 +80,7 @@ public class PusherConnection {
         onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
             let newChannel = channels.add(channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
             if self.connectionState == .Connected {
+                print("WELL WE ARE CONNECTED")
                 if !self.authorize(newChannel) {
                     print("Unable to subscribe to channel: \(newChannel.name)")
                 }
@@ -270,12 +271,14 @@ public class PusherConnection {
         - parameter json: The PusherEventJSON containing connection established data
     */
     private func handleConnectionEstablishedEvent(json: PusherEventJSON) {
+        print("HELLLOOO")
         if let data = json["data"] as? String {
             if let connectionData = getPusherEventJSONFromString(data), socketId = connectionData["socket_id"] as? String {
                 updateConnectionState(.Connected)
                 self.socketId = socketId
 
                 for (_, channel) in self.channels.channels {
+                    print("ABOUT TO CHECK IF CHANNEL: \(channel) is subscribed")
                     if !channel.subscribed {
                         if !self.authorize(channel) {
                             print("Unable to subscribe to channel: \(channel.name)")
@@ -322,7 +325,7 @@ public class PusherConnection {
 
     /**
         Handle failure of our auth endpoint
-        
+
         - parameter channelName: The name of channel for which authorization failed
         - parameter data:        The error returned by the auth endpoint
     */
@@ -438,49 +441,61 @@ public class PusherConnection {
         - returns: A Bool indicating whether or not the authentication request was made
                    successfully
     */
-    private func authorize(channel: PusherChannel, callback: (([String : String]?) -> Void)? = nil) -> Bool {
+    private func authorize(channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) -> Bool {
         if channel.type != .Presence && channel.type != .Private {
             subscribeToNormalChannel(channel)
-            
             return true
         } else {
-            switch self.options.authMethod {
-                case .NoMethod:
-                    print("Authentication method required for private / presence channels but none provided.")
-                    return false
-                case .Endpoint(authEndpoint: let authEndpoint):
-                    if let socket = self.socketId {
-                        sendAuthorisationRequest(authEndpoint, socket: socket, channel: channel, callback: callback)
-                        return true
-                    } else {
-                        print("socketId value not found. You may not be connected.")
+            print("IN THE ELSE")
+            if let socketID = self.socketId {
+                print("HAVE A SOCKET ID")
+                switch self.options.authMethod {
+                    case .NoMethod:
+                        print("HAVE THE 2nCORRECT AUTH METHOD")
+                        print("Authentication method required for private / presence channels but none provided.")
                         return false
-                    }
-                case .Internal(secret: let secret):
-                    var msg = ""
-                    var channelData = ""
-                    if channel.type == .Presence {
-                        channelData = getUserDataJSON()
-                        msg = "\(self.socketId!):\(channel.name):\(channelData)"
-                    } else {
-                        msg = "\(self.socketId!):\(channel.name)"
-                    }
-                    
-                    let secretBuff: [UInt8] = Array(secret.utf8)
-                    let msgBuff: [UInt8] = Array(msg.utf8)
-                    
-                    if let hmac = try? Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
-                        let signature = NSData.withBytes(hmac).toHexString()
-                        let auth = "\(self.key):\(signature)".lowercaseString
-                        
-                        if channel.type == .Private {
-                            self.handlePrivateChannelAuth(auth, channel: channel, callback: callback)
+                    case .Endpoint(authEndpoint: let authEndpoint):
+                        print("HAVE THE 1nCORRECT AUTH METHOD")
+                        let request = requestForAuthEndpoint(authEndpoint, socketID: socketID, channel: channel)
+                        sendAuthorisationRequest(request, channel: channel, callback: callback)
+                        return true
+                    case .AuthRequestBuilder(authRequestBuilder: let builder):
+                        print("HAVE THE CORRECT AUTH METHOD")
+                        let request = builder.requestFor(socketID, channel: channel)
+                        print("****************************************************************")
+                        print(request)
+                        sendAuthorisationRequest(request, channel: channel, callback: callback)
+                        return true
+                    case .Internal(secret: let secret):
+                        print("HAVE THE 3nCORRECT AUTH METHOD")
+                        var msg = ""
+                        var channelData = ""
+                        if channel.type == .Presence {
+                            channelData = getUserDataJSON()
+                            msg = "\(self.socketId!):\(channel.name):\(channelData)"
                         } else {
-                            self.handlePresenceChannelAuth(auth, channel: channel, channelData: channelData, callback: callback)
+                            msg = "\(self.socketId!):\(channel.name)"
                         }
-                    }
-                
-                    return true
+
+                        let secretBuff: [UInt8] = Array(secret.utf8)
+                        let msgBuff: [UInt8] = Array(msg.utf8)
+
+                        if let hmac = try? Authenticator.HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
+                            let signature = NSData.withBytes(hmac).toHexString()
+                            let auth = "\(self.key):\(signature)".lowercaseString
+
+                            if channel.type == .Private {
+                                self.handlePrivateChannelAuth(auth, channel: channel, callback: callback)
+                            } else {
+                                self.handlePresenceChannelAuth(auth, channel: channel, channelData: channelData, callback: callback)
+                            }
+                        }
+
+                        return true
+                }
+            } else {
+                print("socketId value not found. You may not be connected.")
+                return false
             }
         }
     }
@@ -524,55 +539,58 @@ public class PusherConnection {
     }
 
     /**
-        Send authentication request to the authEndpoint specified
+     Creates an authentication request for the given authEndpoint
 
         - parameter endpoint: The authEndpoint to which the request will be made
-        - parameter socket:   The socketId of the connection's websocket
+        - parameter socketID: The socketId of the connection's websocket
+        - parameter channel:  The PusherChannel to authenticate subsciption for
+     
+        - returns: NSURLRequest object to be used by the function making the auth request
+    */
+    private func requestForAuthEndpoint(endpoint: String, socketID: String, channel: PusherChannel) -> NSURLRequest {
+        let request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = "socket_id=\(socketID)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
+
+        return request
+    }
+
+    /**
+        Send authentication request to the authEndpoint specified
+
+        - parameter request:  The request to send
         - parameter channel:  The PusherChannel to authenticate subsciption for
         - parameter callback: An optional callback to be passed along to relevant auth handlers
     */
-    private func sendAuthorisationRequest(
-        endpoint: String,
-        socket: String,
-        channel: PusherChannel,
-        callback: (([String : String]?) -> Void)? = nil) {
-            var request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
-            request.HTTPMethod = "POST"
-            request.HTTPBody = "socket_id=\(socket)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
-
-            if let handler = self.authRequestBuilder {
-                request = handler(endpoint: endpoint, socket: socket, channel: channel)
+    private func sendAuthorisationRequest(request: NSURLRequest, channel: PusherChannel, callback: (([String : String]?) -> Void)? = nil) {
+        let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
+            if let error = error {
+                print("Error authorizing channel [\(channel.name)]: \(error)")
+                self.handleAuthorizationErrorEvent(channel.name, data: error.domain)
             }
-
-            let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
-                if let error = error {
-                    print("Error authorizing channel [\(channel.name)]: \(error)")
-                    self.handleAuthorizationErrorEvent(channel.name, data: error.domain)
-                }
-                if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
-
-                    do {
-                        if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String : AnyObject] {
-                            self.handleAuthResponse(json, channel: channel, callback: callback)
-                        }
-                    } catch {
-                        print("Error authorizing channel [\(channel.name)]")
-                        self.handleAuthorizationErrorEvent(channel.name, data: nil)
+            if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
+                do {
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String : AnyObject] {
+                        print("HANDLE AUTH RESPINSE")
+                        self.handleAuthResponse(json, channel: channel, callback: callback)
                     }
-
+                } catch {
+                    print("Error authorizing channel [\(channel.name)]")
+                    self.handleAuthorizationErrorEvent(channel.name, data: nil)
+                }
+            } else {
+                if let d = data {
+                    let dataString = String(data: d, encoding: NSUTF8StringEncoding)
+                    print ("Error authorizing channel [\(channel.name)]: \(dataString)")
+                    self.handleAuthorizationErrorEvent(channel.name, data: dataString)
                 } else {
-                    if let d = data {
-                        let dataString = String(data: d, encoding: NSUTF8StringEncoding)
-                        print ("Error authorizing channel [\(channel.name)]: \(dataString)")
-                        self.handleAuthorizationErrorEvent(channel.name, data: dataString)
-                    } else {
-                        print("Error authorizing channel [\(channel.name)]")
-                        self.handleAuthorizationErrorEvent(channel.name, data: nil)
-                    }
+                    print("Error authorizing channel [\(channel.name)]")
+                    self.handleAuthorizationErrorEvent(channel.name, data: nil)
                 }
-            })
+            }
+        })
 
-            task.resume()
+        task.resume()
     }
 
     /**
