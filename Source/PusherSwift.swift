@@ -16,7 +16,10 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
     public let connection: PusherConnection
-
+    private let key: String
+    
+    private class var sharedNativePusher : NativePusher?
+    
     /**
         Initializes the Pusher client with an app key and any appropriate options.
 
@@ -26,11 +29,14 @@ public class Pusher {
         - returns: A new Pusher client instance
     */
     public init(key: String, options: Dictionary<String, Any>? = nil) {
+        self.key = key
         let pusherClientOptions = PusherClientOptions(options: options)
         let urlString = constructUrl(key, options: pusherClientOptions)
         let ws = WebSocket(url: NSURL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: pusherClientOptions)
         connection.createGlobalChannel()
+        
+        sharedNativePusher = NativePusher(key)
     }
 
     /**
@@ -97,6 +103,10 @@ public class Pusher {
     public func connect() {
         self.connection.connect()
     }
+
+    public func nativePusher() {
+        return sharedNativePusher
+    }
 }
 
 public enum AuthMethod {
@@ -142,4 +152,16 @@ internal func isPresenceChannel(channelName: String) -> Bool {
 */
 internal func isPrivateChannel(channelName: String) -> Bool {
     return (channelName.componentsSeparatedByString("-")[0] == "private") ? true : false
+}
+
+/*
+ Makes device token presentable to server
+*/
+internal func deviceTokenToString(deviceToken: NSData) -> String {
+    let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
+
+    let deviceTokenString: String = ( deviceToken.description as NSString )
+        .stringByTrimmingCharactersInSet( characterSet )
+        .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+    return deviceTokenString
 }
