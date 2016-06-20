@@ -119,7 +119,7 @@ public class NativePusher {
     private func tryFlushOutbox() {
         switch (self.pusherAppKey, self.clientId) {
         case (.Some(let pusherAppKey), .Some(let clientId)):
-            if (self.pusherAppKey != nil && self.clientId != nil && 0 < outbox.count) {
+            if (0 < outbox.count) {
                 let (interest,change) = outbox.removeAtIndex(0)
                 modifySubscription(pusherAppKey, clientId: clientId, interest: interest, change: change) {
                     self.tryFlushOutbox()
