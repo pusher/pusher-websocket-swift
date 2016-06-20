@@ -19,7 +19,7 @@ public class NativePusher {
     
     // Identifies a Pusher app.
     // This app should have push notifications enabled.
-    private var pusherAppKey: String?
+    private var pusherAppKey: String? = nil
     
     public func setPusherAppKey(pusherAppKey: String) {
         self.pusherAppKey = pusherAppKey
@@ -29,15 +29,13 @@ public class NativePusher {
     // The id issued to this app instance by Pusher.
     // We get it upon registration.
     // We use it to identify ourselves when subscribing/unsubscribing.
-    private var clientId: String?
+    private var clientId: String? = nil
     
     // Queued actions to perform when the client is registered.
-    private var outbox: Array<(String, SubscriptionChange)>
+    private var outbox: Array<(String, SubscriptionChange)> = []
     
     // Normal clients should access the shared instance via Pusher.nativePusher().
     public init() {
-        clientId = nil
-        outbox = []
     }
     
     /**
