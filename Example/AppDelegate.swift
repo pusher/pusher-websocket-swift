@@ -36,8 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : NSData) {
-        pusher.registerForPushNotifications(deviceToken)
-        pusher.registerPushNotificationInterest("waddup")
+        pusher.nativePusher().register(deviceToken)
+        pusher.nativePusher().subscribe("donuts")
     }
 
     func application(application : UIApplication, didFailToRegisterForRemoteNotificationsWithError error : NSError) {
