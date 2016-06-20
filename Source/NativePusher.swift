@@ -10,6 +10,8 @@ import Foundation
  Use the Pusher.nativePusher() method to get access to it.
  */
 public class NativePusher {
+    static let sharedInstance = NativePusher()
+    
     private static let PLATFORM_TYPE = "apns"
     private let CLIENT_API_V1_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
     
@@ -17,7 +19,12 @@ public class NativePusher {
     
     // Identifies a Pusher app.
     // This app should have push notifications enabled.
-    private let pusherAppKey: String
+    private var pusherAppKey: String?
+    
+    public func setPusherAppKey(pusherAppKey: String) {
+        self.pusherAppKey = pusherAppKey
+        tryFlushOutbox()
+    }
     
     // The id issued to this app instance by Pusher.
     // We get it upon registration.
@@ -27,10 +34,8 @@ public class NativePusher {
     // Queued actions to perform when the client is registered.
     private var outbox: Array<(String, SubscriptionChange)>
     
-    // Expected to be initialized by instances of Pusher.
     // Normal clients should access the shared instance via Pusher.nativePusher().
-    public init(pusherAppKey: String) {
-        self.pusherAppKey = pusherAppKey
+    public init() {
         clientId = nil
         outbox = []
     }
@@ -114,15 +119,19 @@ public class NativePusher {
     }
     
     private func tryFlushOutbox() {
-        if (self.clientId != nil && 0 < outbox.count) {
-            let (interest,change) = outbox.removeAtIndex(0)
-            modifySubscription(interest, change: change) {
-                self.tryFlushOutbox()
+        switch (self.pusherAppKey, self.clientId) {
+        case (.Some(let pusherAppKey), .Some(let clientId)):
+            if (self.pusherAppKey != nil && self.clientId != nil && 0 < outbox.count) {
+                let (interest,change) = outbox.removeAtIndex(0)
+                modifySubscription(pusherAppKey, clientId: clientId, interest: interest, change: change) {
+                    self.tryFlushOutbox()
+                }
             }
+        case _: break
         }
     }
     
-    private func modifySubscription(interest: String, change: SubscriptionChange, callback: (Void)->(Void)) {
+    private func modifySubscription(pusherAppKey:String, clientId: String, interest: String, change: SubscriptionChange, callback: (Void)->(Void)) {
         let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/\(interest)"
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         switch (change) {
@@ -133,7 +142,7 @@ public class NativePusher {
         }
         
         let params: [String: AnyObject] = [
-            "app_key": self.pusherAppKey,
+            "app_key": pusherAppKey,
             ]
         
         try! request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
