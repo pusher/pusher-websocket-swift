@@ -13,7 +13,7 @@ import PusherSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let pusher = Pusher(key: "c57c9cefe298dc06e801")
+    let pusher = Pusher(key: "YOUR_PUSHER_APP_KEY")
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
