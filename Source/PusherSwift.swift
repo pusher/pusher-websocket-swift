@@ -15,6 +15,8 @@ public class Pusher {
     public let connection: PusherConnection
     private let key: String
 
+    private class var sharedNativePusher : NativePusher?
+
     /**
         Initializes the Pusher client with an app key and any appropriate options.
 
@@ -29,6 +31,8 @@ public class Pusher {
         let ws = WebSocket(url: NSURL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
+
+        sharedNativePusher = NativePusher(key)
     }
 
     /**
@@ -99,29 +103,16 @@ public class Pusher {
         self.connection.connect()
     }
 
-    /**
-        Registers the application with Pusher for native notifications
-    */
-    public func registerForPushNotifications(deviceToken : NSData)  {
-        PusherPushNotificationRegistration.register(deviceToken)
+    public func nativePusher() {
+        return sharedNativePusher
     }
-
-    /**
-     Registers an interest with Pusher's Push Notification Service
-     */
-    public func registerPushNotificationInterest(name: String) {
-        PusherPushNotificationRegistration.sharedInstance.addInterest(key, name: name)
-    }
-
 }
 
 internal class PusherPushNotificationRegistration {
     private static let sharedInstance = PusherPushNotificationRegistration()
-
     private static let PLATFORM_TYPE = "apns"
     private static let URLSession = NSURLSession.sharedSession()
     private static let CLIENT_API_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
-
 
     private static func register(deviceToken : NSData) {
         let request = NSMutableURLRequest(URL: NSURL(string: CLIENT_API_ENDPOINT + "/clients")!)
