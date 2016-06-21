@@ -6,7 +6,7 @@
 //
 //
 
-public typealias PusherUserInfoObject = Dictionary<String, AnyObject>
+public typealias PusherUserInfoObject = [String : AnyObject]
 
 public class PresencePusherChannel: PusherChannel {
     public var members: [PresenceChannelMember]
@@ -27,11 +27,15 @@ public class PresencePusherChannel: PusherChannel {
 
         - returns: A new PresencePusherChannel instance
     */
-    init(name: String, connection: PusherConnection, onMemberAdded: ((PresenceChannelMember) -> ())? = nil, onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) {
-        self.members = []
-        self.onMemberAdded = onMemberAdded
-        self.onMemberRemoved = onMemberRemoved
-        super.init(name: name, connection: connection)
+    init(
+        name: String,
+        connection: PusherConnection,
+        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) {
+            self.members = []
+            self.onMemberAdded = onMemberAdded
+            self.onMemberRemoved = onMemberRemoved
+            super.init(name: name, connection: connection)
     }
 
     /**
@@ -41,7 +45,7 @@ public class PresencePusherChannel: PusherChannel {
         - parameter memberJSON: A dictionary representing the member that has joined
                                 the presence channel
     */
-    internal func addMember(memberJSON: Dictionary<String, AnyObject>) {
+    internal func addMember(memberJSON: [String : AnyObject]) {
         let member: PresenceChannelMember
 
         if let userId = memberJSON["user_id"] as? String {
@@ -69,7 +73,7 @@ public class PresencePusherChannel: PusherChannel {
         - parameter memberHash: A dictionary representing the members that were already
                                 subscribed to the presence channel
     */
-    internal func addExistingMembers(memberHash: Dictionary<String, AnyObject>) {
+    internal func addExistingMembers(memberHash: [String : AnyObject]) {
         for (userId, userInfo) in memberHash {
             let member: PresenceChannelMember
             if let userInfo = userInfo as? PusherUserInfoObject {
@@ -88,7 +92,7 @@ public class PresencePusherChannel: PusherChannel {
         - parameter memberJSON: A dictionary representing the member that has left the
                                 presence channel
     */
-    internal func removeMember(memberJSON: Dictionary<String, AnyObject>) {
+    internal func removeMember(memberJSON: [String : AnyObject]) {
         let id: String
 
         if let userId = memberJSON["user_id"] as? String {
@@ -124,11 +128,11 @@ public class PresencePusherChannel: PusherChannel {
 
         - returns: A dictionary of channel data
     */
-    private func parseChannelData(channelData: String) -> Dictionary<String, AnyObject>? {
+    private func parseChannelData(channelData: String) -> [String : AnyObject]? {
         let data = (channelData as NSString).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
 
         do {
-            if let jsonData = data, jsonObject = try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? Dictionary<String, AnyObject> {
+            if let jsonData = data, jsonObject = try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String : AnyObject] {
                 return jsonObject
             } else {
                 print("Unable to parse string: \(channelData)")

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public typealias PusherEventJSON = Dictionary<String, AnyObject>
+public typealias PusherEventJSON = [String : AnyObject]
 public typealias PusherUserData = PresenceChannelMember
 
 let PROTOCOL = 7
@@ -43,8 +43,11 @@ public class Pusher {
 
         - returns: A new PusherChannel instance
      */
-    public func subscribe(channelName: String, onMemberAdded: ((PresenceChannelMember) -> ())? = nil, onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
-        return self.connection.subscribe(channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+    public func subscribe(
+        channelName: String,
+        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
+            return self.connection.subscribe(channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     /**
@@ -96,12 +99,6 @@ public class Pusher {
     public func connect() {
         self.connection.connect()
     }
-}
-
-public enum AuthMethod {
-    case Endpoint(authEndpoint: String)
-    case Internal(secret: String)
-    case NoMethod
 }
 
 /**
