@@ -20,9 +20,12 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         // Only use your secret here for testing or if you're sure that there's
         // no security risk
-        let pusher = Pusher(key: "YOUR_APP_KEY", options: ["secret": "YOUR_APP_SECRET", "debugLogger": debugLogger])
+        let pusherClientOptions = PusherClientOptions(authMethod: .Internal(secret: "YOUR_APP_SECRET"))
+        let pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
 
+        pusher.connection.debugLogger = debugLogger
         pusher.connection.stateChangeDelegate = self
+
         pusher.connect()
 
         pusher.bind({ (message: AnyObject?) in
