@@ -152,12 +152,11 @@ public func stringContainsElements(str: String, elements: [String]) -> Bool {
 public class MockPusherConnection: PusherConnection {
     let stubber = StubberForMocks()
 
-    init(options: Dictionary<String, Any>? = nil) {
-        let pusherClientOptions = PusherClientOptions(options: options)
-        super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: pusherClientOptions)
+    init(options: PusherClientOptions = PusherClientOptions()) {
+        super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: options)
     }
 
-    override public func handleEvent(eventName: String, jsonObject: Dictionary<String,AnyObject>) {
+    override public func handleEvent(eventName: String, jsonObject: [String : AnyObject]) {
         stubber.stub(
             "handleEvent",
             args: [eventName, jsonObject],
@@ -233,9 +232,11 @@ class MockSession: NSURLSession {
         return MockSession()
     }
 
-    override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-        self.completionHandler = completionHandler
-        return MockTask(response: MockSession.mockResponse, completionHandler: completionHandler)
+    override func dataTaskWithRequest(
+        request: NSURLRequest,
+        completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+            self.completionHandler = completionHandler
+            return MockTask(response: MockSession.mockResponse, completionHandler: completionHandler)
     }
 
     class MockTask: NSURLSessionDataTask {
