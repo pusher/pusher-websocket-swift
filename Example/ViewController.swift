@@ -14,16 +14,16 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // remove the debugLogger from the client options if you want to remove the
-        // debug logging, or just change the function below
-        let debugLogger = { (text: String) in debugPrint(text) }
-
         // Only use your secret here for testing or if you're sure that there's
         // no security risk
         let pusherClientOptions = PusherClientOptions(authMethod: .Internal(secret: "YOUR_APP_SECRET"))
         let pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
 
+        // remove the debugLogger from the client options if you want to remove the
+        // debug logging, or just change the function below
+        let debugLogger = { (text: String) in debugPrint(text) }
         pusher.connection.debugLogger = debugLogger
+
         pusher.connection.stateChangeDelegate = self
 
         pusher.connect()
