@@ -19,8 +19,6 @@ class PusherTopLevelApiSpec: QuickSpec {
         beforeEach({
             key = "testKey123"
             let options = PusherClientOptions(
-                authMethod: .NoMethod,
-                attemptToReturnJSONObject: true,
                 autoReconnect: false
             )
             pusher = Pusher(key: key, options: options)

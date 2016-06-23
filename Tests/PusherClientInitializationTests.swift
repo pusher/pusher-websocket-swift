@@ -54,12 +54,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("unencrypted") {
                     it("has the correct conection url") {
                         let options = PusherClientOptions(
-                            authMethod: .NoMethod,
-                            host: PusherHost.Cluster("mt1"),
-                            attemptToReturnJSONObject: true,
-                            autoReconnect: true,
-                            encrypted: false,
-                            port: nil
+                            encrypted: false
                         )
                         pusher = Pusher(key: key, options: options)
                         expect(pusher.connection.url).to(equal("ws://ws.pusherapp.com:80/app/testKey123?client=pusher-websocket-swift&version=\(VERSION)&protocol=7"))
@@ -89,7 +84,6 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("attemptToReturnJSONObject as false") {
                     it("is false") {
                         let options = PusherClientOptions(
-                            authMethod: .NoMethod,
                             attemptToReturnJSONObject: false
                         )
                         pusher = Pusher(key: key, options: options)
@@ -100,9 +94,6 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("a host") {
                     it("has one set") {
                         let options = PusherClientOptions(
-                            authMethod: .NoMethod,
-                            attemptToReturnJSONObject: true,
-                            autoReconnect: true,
                             host: PusherHost.Host("test.test.test")
                         )
                         pusher = Pusher(key: key, options: options)
@@ -113,9 +104,6 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("a port") {
                     it("sets the URL with it") {
                         let options = PusherClientOptions(
-                            authMethod: .NoMethod,
-                            attemptToReturnJSONObject: true,
-                            autoReconnect: true,
                             port: 123
                         )
                         pusher = Pusher(key: key, options: options)
@@ -126,10 +114,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("a cluster as host") {
                     it("sets the host correctly") {
                         let options = PusherClientOptions(
-                            authMethod: .NoMethod,
-                            host: PusherHost.Cluster("eu"),
-                            attemptToReturnJSONObject: true,
-                            autoReconnect: true
+                            host: PusherHost.Cluster("eu")
                         )
                         pusher = Pusher(key: key, options: options)
                         expect(pusher.connection.options.host).to(equal("ws-eu.pusher.com"))

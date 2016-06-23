@@ -72,7 +72,7 @@ class HandlingIncomingEventsSpec: QuickSpec {
             }
 
             it("should return a JSON string to the callbacks if the string can be parsed but the user doesn't want to get a JSON object") {
-                let options = PusherClientOptions(authMethod: .NoMethod, attemptToReturnJSONObject: false)
+                let options = PusherClientOptions(attemptToReturnJSONObject: false)
                 pusher = Pusher(key: key, options: options)
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket

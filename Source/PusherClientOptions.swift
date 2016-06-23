@@ -27,10 +27,10 @@ public enum AuthMethod {
 public struct PusherClientOptions {
     public let authMethod: AuthMethod
     public let attemptToReturnJSONObject: Bool
-    public let encrypted: Bool
+    public let autoReconnect: Bool
     public let host: String
     public let port: Int
-    public let autoReconnect: Bool
+    public let encrypted: Bool
 
     public init(
         authMethod: AuthMethod = .NoMethod,
@@ -43,7 +43,7 @@ public struct PusherClientOptions {
             self.attemptToReturnJSONObject = attemptToReturnJSONObject
             self.autoReconnect = autoReconnect
             self.host = host.stringValue
-            self.port = encrypted ? 443 : 80
+            self.port = port ?? (encrypted ? 443 : 80)
             self.encrypted = encrypted
     }
 }
