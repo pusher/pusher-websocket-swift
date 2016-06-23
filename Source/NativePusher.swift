@@ -35,7 +35,7 @@ public class NativePusher {
     private var outbox: Array<(String, SubscriptionChange)> = []
     
     // Normal clients should access the shared instance via Pusher.nativePusher().
-    public init() {
+    private init() {
     }
     
     /**
