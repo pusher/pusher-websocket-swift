@@ -7,44 +7,64 @@
 //
 
 import Foundation
+import Quick
+import Nimble
+import PusherSwift
 
+class PusherConnectionSpec: QuickSpec {
+    override func spec() {
+        describe("creating the connection") {
+            var key: String!
+            var pusher: Pusher!
 
-//                it("has userDataFetcher as nil") {
-//                    expect(pusher.connection.options.userDataFetcher).to(beNil())
-//                }
-//
-//                it("has authRequestCustomizer as nil") {
-//                    expect(pusher.connection.options.authRequestCustomizer).to(beNil())
-//                }
-//
-//                it("has debugLogger set as nil") {
-//                    expect(pusher.connection.options.debugLogger).to(beNil())
-//                }
-//
-//                context("an authRequestCustomizer") {
-//                    it("has one set") {
-//                        func customizer(request: NSMutableURLRequest) -> NSMutableURLRequest {
-//                            return request
-//                        }
-//                        pusher = Pusher(key: key, options: ["authRequestCustomizer": customizer])
-//                        expect(pusher.connection.options.authRequestCustomizer).toNot(beNil())
-//                    }
-//                }
-//
-//                context("a debugLogger") {
-//                    it("sets the debugLogger with it") {
-//                        let debugLogger = { (text: String) in }
-//                        pusher = Pusher(key: key, options: ["debugLogger": debugLogger])
-//                        expect(pusher.connection.options.debugLogger).toNot(beNil())
-//                    }
-//                }
-//
-//                context("a userDataFetcher function") {
-//                    it("has one function set") {
-//                        func fetchFunc() -> PusherUserData {
-//                            return PusherUserData(userId: "1")
-//                        }
-//                        pusher = Pusher(key: key, options: ["userDataFetcher": fetchFunc])
-//                        expect(pusher.connection.options.userDataFetcher).toNot(beNil())
-//                    }
-//                }
+            beforeEach({
+                key = "testKey123"
+                pusher = Pusher(key: key)
+            })
+
+            context("setting no properties") {
+                it("has userDataFetcher as nil") {
+                    expect(pusher.connection.userDataFetcher).to(beNil())
+                }
+
+                it("has authRequestCustomizer as nil") {
+                    expect(pusher.connection.authRequestBuilder).to(beNil())
+                }
+
+                it("has debugLogger set as nil") {
+                    expect(pusher.connection.debugLogger).to(beNil())
+                }
+            }
+
+            context("providing option") {
+                context("authRequestBuilder") {
+                    it("has a closure set") {
+                        func builder(endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest {
+                            return NSMutableURLRequest()
+                        }
+                        pusher.connection.authRequestBuilder = builder
+                        expect(pusher.connection.authRequestBuilder).toNot(beNil())
+                    }
+                }
+
+                context("debugLogger") {
+                    it("has a closure set") {
+                        let debugLogger = { (text: String) in }
+                        pusher.connection.debugLogger = debugLogger
+                        expect(pusher.connection.debugLogger).toNot(beNil())
+                    }
+                }
+
+                context("userDataFetcher") {
+                    it("has a closure set") {
+                        func fetchFunc() -> PusherUserData {
+                            return PusherUserData(userId: "1")
+                        }
+                        pusher.connection.userDataFetcher = fetchFunc
+                        expect(pusher.connection.userDataFetcher).toNot(beNil())
+                    }
+                }
+            }
+        }
+    }
+}
