@@ -18,8 +18,13 @@ public enum PusherHost {
     }
 }
 
+public protocol AuthRequestBuilderProtocol {
+    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest
+}
+
 public enum AuthMethod {
     case Endpoint(authEndpoint: String)
+    case AuthRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
     case Internal(secret: String)
     case NoMethod
 }
