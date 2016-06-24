@@ -106,7 +106,8 @@ There are a number of configuration parameters which can be set for the Pusher c
 - `userDataFetcher (() -> PusherUserData)` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
 - `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
 - `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
-- `authRequestCustomizer (NSMutableURLRequest -> NSMutableURLRequest)` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request (see below for example)
+- `(DEPRECATED) authRequestCustomizer ((NSMutableURLRequest) -> NSMutableURLRequest)` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request (see below for example); `authRequestCustomizer` is deprecated, use `authRequestBuilder` instead
+- `authRequestBuilder ((endpoint: String, socket: String, channelName: String) -> NSMutableURLRequest)` - if you are subscribing to an authenticated channel and wish to provide a function to build the authorization request (see below for example)
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (String)` - set a custom value for the host you'd like to connect to
 - `port (Int)` - set a custom value for the port that you'd lilke to connect to
@@ -128,17 +129,19 @@ let pusher = Pusher(
 Authenticated channel example:
 
 ```swift
-
-let request = {(urlRequest:NSMutableURLRequest) -> NSMutableURLRequest in
-    urlRequest.setValue("token", forHTTPHeaderField: "Authorization")
-    return urlRequest
+let requestBuilder = { (endpoint: String, socket: String, channelName: String) -> NSMutableURLRequest in
+    let request = NSMutableURLRequest(URL: NSURL(string: endpoint)!)
+    request.HTTPMethod = "POST"
+    request.HTTPBody = "socket_id=\(socket)&channel_name=\(channelName)".dataUsingEncoding(NSUTF8StringEncoding)
+    request.setValue("token", forHTTPHeaderField: "Authorization")
+    return request
 }
 
 let pusher = Pusher(
   key: "APP_KEY",
   options: [
     "authEndpoint": "http://localhost:9292/pusher/",
-    "authRequestCustomizer": request,
+    "authRequestBuilder": requestBuilder,
     "encrypted": true
   ]
 )
