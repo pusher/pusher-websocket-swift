@@ -80,7 +80,6 @@ public class PusherConnection {
         onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
             let newChannel = channels.add(channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
             if self.connectionState == .Connected {
-                print("WELL WE ARE CONNECTED")
                 if !self.authorize(newChannel) {
                     print("Unable to subscribe to channel: \(newChannel.name)")
                 }
@@ -271,14 +270,12 @@ public class PusherConnection {
         - parameter json: The PusherEventJSON containing connection established data
     */
     private func handleConnectionEstablishedEvent(json: PusherEventJSON) {
-        print("HELLLOOO")
         if let data = json["data"] as? String {
             if let connectionData = getPusherEventJSONFromString(data), socketId = connectionData["socket_id"] as? String {
                 updateConnectionState(.Connected)
                 self.socketId = socketId
 
                 for (_, channel) in self.channels.channels {
-                    print("ABOUT TO CHECK IF CHANNEL: \(channel) is subscribed")
                     if !channel.subscribed {
                         if !self.authorize(channel) {
                             print("Unable to subscribe to channel: \(channel.name)")
@@ -446,28 +443,20 @@ public class PusherConnection {
             subscribeToNormalChannel(channel)
             return true
         } else {
-            print("IN THE ELSE")
             if let socketID = self.socketId {
-                print("HAVE A SOCKET ID")
                 switch self.options.authMethod {
                     case .NoMethod:
-                        print("HAVE THE 2nCORRECT AUTH METHOD")
                         print("Authentication method required for private / presence channels but none provided.")
                         return false
                     case .Endpoint(authEndpoint: let authEndpoint):
-                        print("HAVE THE 1nCORRECT AUTH METHOD")
                         let request = requestForAuthEndpoint(authEndpoint, socketID: socketID, channel: channel)
                         sendAuthorisationRequest(request, channel: channel, callback: callback)
                         return true
                     case .AuthRequestBuilder(authRequestBuilder: let builder):
-                        print("HAVE THE CORRECT AUTH METHOD")
                         let request = builder.requestFor(socketID, channel: channel)
-                        print("****************************************************************")
-                        print(request)
                         sendAuthorisationRequest(request, channel: channel, callback: callback)
                         return true
                     case .Internal(secret: let secret):
-                        print("HAVE THE 3nCORRECT AUTH METHOD")
                         var msg = ""
                         var channelData = ""
                         if channel.type == .Presence {
@@ -544,7 +533,7 @@ public class PusherConnection {
         - parameter endpoint: The authEndpoint to which the request will be made
         - parameter socketID: The socketId of the connection's websocket
         - parameter channel:  The PusherChannel to authenticate subsciption for
-     
+
         - returns: NSURLRequest object to be used by the function making the auth request
     */
     private func requestForAuthEndpoint(endpoint: String, socketID: String, channel: PusherChannel) -> NSURLRequest {
@@ -571,7 +560,6 @@ public class PusherConnection {
             if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
                 do {
                     if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String : AnyObject] {
-                        print("HANDLE AUTH RESPINSE")
                         self.handleAuthResponse(json, channel: channel, callback: callback)
                     }
                 } catch {

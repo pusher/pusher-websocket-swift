@@ -88,6 +88,35 @@ class AuthenticationSpec: QuickSpec {
                 expect(stubber.calls.last?.name).toEventually(equal("subscriptionErrorCallback"))
                 expect(stubber.calls.last?.args?.last as? String).toEventually(equal("pusher:subscription_error"))
             }
+
+            it("should make the request created by something conforming to the AuthRequestBuilderProtocol") {
+                struct AuthRequestBuilder: AuthRequestBuilderProtocol {
+                    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest {
+                        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:9292/builder")!)
+                        request.HTTPMethod = "POST"
+                        request.HTTPBody = "socket_id=\(socketID)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
+                        request.addValue("myToken", forHTTPHeaderField: "Authorization")
+                        return request
+                    }
+                }
+
+                let options = PusherClientOptions(
+                    authMethod: AuthMethod.AuthRequestBuilder(authRequestBuilder: AuthRequestBuilder())
+                )
+                pusher = Pusher(key: "testKey123", options: options)
+                socket.delegate = pusher.connection
+                pusher.connection.socket = socket
+
+                let jsonData = "{\"auth\":\"testKey123:12345678gfder78ikjbg\"}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+                let urlResponse = NSHTTPURLResponse(URL: NSURL(string: "http://localhost:9292/builder?channel_name=private-test-channel&socket_id=45481.3166671")!, statusCode: 200, HTTPVersion: nil, headerFields: nil)
+                MockSession.mockResponse = (jsonData, urlResponse: urlResponse, error: nil)
+                pusher.connection.URLSession = MockSession.sharedSession()
+
+                let chan = pusher.subscribe("private-test-channel")
+                expect(chan.subscribed).to(beFalsy())
+                pusher.connect()
+                expect(chan.subscribed).toEventually(beTruthy())
+            }
         }
     }
 }
