@@ -32,7 +32,12 @@ public class MockWebSocket: WebSocket {
             "connect",
             args: nil,
             functionToCall: {
-                self.delegate?.websocketDidReceiveMessage(self, text: connectionEstablishedString)
+                if let delegate = self.delegate {
+                    delegate.websocketDidReceiveMessage(self, text: connectionEstablishedString)
+                } else {
+                    print("Your socket delegate is nil")
+                }
+                return ""
             }
         )
     }
