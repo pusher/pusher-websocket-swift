@@ -17,15 +17,18 @@ public class PusherConnection {
     public var socket: WebSocket!
     public var URLSession: NSURLSession
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
+    internal var reconnectOperation: NSOperation?
 
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
+            self.reconnectOperation?.cancel()
             if self.connectionState == .Disconnected {
                 self.socket.connect()
             }
         }
         reachability?.whenUnreachable = { [unowned self] reachability in
+            self.reconnectOperation?.cancel()
             print("Network unreachable")
         }
         return reachability
