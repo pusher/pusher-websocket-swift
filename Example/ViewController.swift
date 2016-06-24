@@ -46,7 +46,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
             print(data)
             pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
-            if let data = data as? Dictionary<String, AnyObject> {
+            if let data = data as? [String : AnyObject] {
                 if let testVal = data["test"] as? String {
                     print(testVal)
                 }

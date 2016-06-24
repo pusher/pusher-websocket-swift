@@ -248,6 +248,7 @@ class MockSession: NSURLSession {
             self.mockResponse = response
             self.completionHandler = completionHandler
         }
+
         override func resume() {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 self.completionHandler!(self.mockResponse.data, self.mockResponse.urlResponse, self.mockResponse.error)

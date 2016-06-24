@@ -24,7 +24,7 @@ let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
 chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
     print(data)
-    if let data = data as? Dictionary<String, AnyObject> {
+    if let data = data as? [String : AnyObject] {
         if let testVal = data["test"] as? String {
             print(testVal)
         }
@@ -234,7 +234,7 @@ let pusher = Pusher(key: "MY_KEY")
 pusher.subscribe("my-channel")
 
 pusher.bind("new-comment", callback: { (data: AnyObject?) -> Void in
-    if let data = data as? Dictionary<String, AnyObject> {
+    if let data = data as? [String : AnyObject] {
         if let commenter = data["commenter"] as? String, message = data["message"] as? String {
             print("\(commenter) wrote \(message)")
         }
@@ -251,7 +251,7 @@ let pusher = Pusher(key: "MY_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
 myChannel.bind("new-price", callback: { (data: AnyObject?) -> Void in
-    if let data = data as? Dictionary<String, AnyObject> {
+    if let data = data as? [String : AnyObject] {
         if let price = data["price"] as? String, company = data["company"] as? String {
             print("\(company) is now priced at \(price)")
         }

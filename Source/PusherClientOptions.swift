@@ -9,7 +9,7 @@
 public enum PusherHost {
     case Host(String)
     case Cluster(String)
-    
+
     public var stringValue: String {
         switch self {
             case .Host(let host): return host
