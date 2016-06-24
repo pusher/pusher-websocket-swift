@@ -27,26 +27,12 @@ class PusherConnectionSpec: QuickSpec {
                     expect(pusher.connection.userDataFetcher).to(beNil())
                 }
 
-                it("has authRequestCustomizer as nil") {
-                    expect(pusher.connection.authRequestBuilder).to(beNil())
-                }
-
                 it("has debugLogger set as nil") {
                     expect(pusher.connection.debugLogger).to(beNil())
                 }
             }
 
             context("providing option") {
-                context("authRequestBuilder") {
-                    it("has a closure set") {
-                        func builder(endpoint: String, socket: String, channel: PusherChannel) -> NSMutableURLRequest {
-                            return NSMutableURLRequest()
-                        }
-                        pusher.connection.authRequestBuilder = builder
-                        expect(pusher.connection.authRequestBuilder).toNot(beNil())
-                    }
-                }
-
                 context("debugLogger") {
                     it("has a closure set") {
                         let debugLogger = { (text: String) in }
