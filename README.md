@@ -101,50 +101,78 @@ github "pusher/pusher-websocket-swift"
 
 There are a number of configuration parameters which can be set for the Pusher client. They are:
 
-- `authEndpoint (String)` - the URL that the library will make an authentication request to if attempting to subscribe to a private or presence channel and you have not provided a secret
-- `secret (String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
-- `userDataFetcher (() -> PusherUserData)` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
+- `authMethod (AuthMethod)` - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)
 - `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
 - `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
-- `authRequestCustomizer (NSMutableURLRequest -> NSMutableURLRequest)` - if you are subscribing to an authenticated channel and wish to provide a function to customize the authorization request (see below for example)
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
-- `host (String)` - set a custom value for the host you'd like to connect to
+- `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.Host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd lilke to connect to
-- `cluster (String)` - specify the cluster that you'd like to connect to, e.g. `eu`
-- `debugLogger ((String) -> ())` - provide a logger function that will be passed a string when a message is either sent of received over the websocket connection
 
-All of these configuration options can be set when instantiating the Pusher object, for example:
+The `authMethod` parameter must be of the type `AuthMethod`. This is an enum defined as:
 
 ```swift
-let pusher = Pusher(
-  key: "APP_KEY",
-  options: [
-    "authEndpoint": "http://localhost:9292/pusher/",
-    "encrypted": true
-  ]
+public enum AuthMethod {
+    case Endpoint(authEndpoint: String)
+    case AuthRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
+    case Internal(secret: String)
+    case NoMethod
+}
+```
+
+- `Endpoint(authEndpoint: String)` - the client will make a `POST` request to the endpoint you specify with the socket ID of the client and the channel name attempting to be subscribed to
+- `AuthRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)` - you specify an object that conforms to the `AuthRequestBuilderProtocol` (defined below), which must generate an `NSURLRequest` object that will be used to make the auth request
+- `Internal(secret: String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
+- `NoMethod` - if you are only using public channels then you do not need to set an `authMethod` (this is the default value)
+
+This is the `AuthRequestBuilderProtocol` definition:
+
+```swift
+public protocol AuthRequestBuilderProtocol {
+    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest
+}
+```
+
+Note that if you want to specify the cluster to which you want to connect then you use the `host` property as follows:
+
+```swift
+let options = PusherClientOptions(
+    host: .Cluster("eu")
 )
+```
+
+All of these configuration options need to be passed to a `PusherClientOptions` object, which in turn needs to be passed to the Pusher object, when instantiating it, for example:
+
+```swift
+let options = PusherClientOptions(
+    authMethod: .Endpoint(authEndpoint: "http://localhost:9292/pusher/auth")
+)
+
+let pusher = Pusher(key: "APP_KEY", options: options)
 ```
 
 Authenticated channel example:
 
 ```swift
-
-let request = {(urlRequest:NSMutableURLRequest) -> NSMutableURLRequest in
-    urlRequest.setValue("token", forHTTPHeaderField: "Authorization")
-    return urlRequest
+struct AuthRequestBuilder: AuthRequestBuilderProtocol {
+    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest {
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:9292/builder")!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = "socket_id=\(socketID)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
+        request.addValue("myToken", forHTTPHeaderField: "Authorization")
+        return request
+    }
 }
 
+let options = PusherClientOptions(
+    authMethod: AuthMethod.AuthRequestBuilder(authRequestBuilder: AuthRequestBuilder())
+)
 let pusher = Pusher(
   key: "APP_KEY",
-  options: [
-    "authEndpoint": "http://localhost:9292/pusher/",
-    "authRequestCustomizer": request,
-    "encrypted": true
-  ]
+  options: options
 )
 ```
 
-Where `"Authorization"` and `"token"` are the field and value your server is expecting in the headers of the request.
+Where `"Authorization"` and `"myToken"` are the field and value your server is expecting in the headers of the request.
 
 ## Connection
 
@@ -156,6 +184,24 @@ pusher.connect()
 ```
 
 This returns a client object which can then be used to subscribe to channels and then calling `connect()` triggers the connection process to start.
+
+You can also set some useful properties on the connection object. These are the following:
+
+- `debugLogger ((String) -> ())` - provide a logger function that will be passed a string when a message is either sent of received over the websocket connection
+- `userDataFetcher (() -> PusherUserData)` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
+
+As you'd expect, you set these like this:
+
+```swift
+let pusher = Pusher(key: "APP_KEY")
+pusher.connection.debugLogger = { (str: String) in
+    print(str)
+}
+pusher.connection.userDataFetcher = { () -> PusherUserData in
+    return PusherUserData(userId: "123", userInfo: ["twitter": "hamchapman"])
+}
+```
+
 
 ### Connection state changes
 
