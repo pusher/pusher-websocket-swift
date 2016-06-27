@@ -393,14 +393,16 @@ print(me)
 
 ## Testing
 
-There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode) when you have one the `PusherSwiftTests-*` schemes active in Xcode. The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift).
+There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode) when you have one the `PusherSwiftTests-*` schemes active in Xcode.
+
+The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift). See [.travis.yml](https://github.com/pusher/pusher-websocket-swift/blob/master/.travis.yml) for details on how the Travis tests are run.
 
 
 ## Communication
 
-- If you have found a bug, open an issue.
-- If you have a feature request, open an issue.
-- If you want to contribute, submit a pull request (preferrably with some tests :) ).
+- If you have found a bug, please open an issue.
+- If you have a feature request, please open an issue.
+- If you want to contribute, please submit a pull request (preferrably with some tests :) ).
 
 
 ## Maintainers
