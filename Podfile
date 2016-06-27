@@ -10,19 +10,19 @@ def import_test_pods
 end
 
 target 'PusherSwiftTests-iOS' do
-  project 'PusherSwift'
+  project 'PusherSwift/PusherSwift'
   platform :ios, '9.0'
   import_test_pods
 end
 
 target 'PusherSwiftTests-tvOS' do
-  project 'PusherSwift'
+  project 'PusherSwift/PusherSwift'
   platform :tvos, '9.0'
   import_test_pods
 end
 
 target 'PusherSwiftTests-OSX' do
-  project 'PusherSwift'
+  project 'PusherSwift/PusherSwift'
   platform :osx, '10.11'
   import_test_pods
 end
