@@ -841,16 +841,13 @@ public class WebSocket : NSObject, NSStreamDelegate {
                 return
             }
             if receivedOpcode == .ConnectionClose {
-                var error: CloseCode?
-
+                var code = CloseCode.Normal.rawValue
                 if payloadLen == 1 {
-                    error = .ProtocolError
+                    code = CloseCode.ProtocolError.rawValue
                 } else if payloadLen > 1 {
-                    let code = WebSocket.readUint16(buffer, offset: offset)
+                    code = WebSocket.readUint16(buffer, offset: offset)
                     if code < 1000 || (code > 1003 && code < 1007) || (code > 1011 && code < 3000) {
-                        error = .ProtocolError
-                    } else {
-                        error = CloseCode(rawValue: code)
+                        code = CloseCode.ProtocolError.rawValue
                     }
                     offset += 2
                 }
@@ -860,15 +857,12 @@ public class WebSocket : NSObject, NSStreamDelegate {
                         let bytes = UnsafePointer<UInt8>((buffer+offset))
                         let str: NSString? = NSString(data: NSData(bytes: bytes, length: len), encoding: NSUTF8StringEncoding)
                         if str == nil {
-                            error = .ProtocolError
+                            code = CloseCode.ProtocolError.rawValue
                         }
                     }
                 }
-                
-                if let code = error?.rawValue where error != .Normal {
-                    doDisconnect(errorWithDetail("connection closed by server", code: code))
-                    writeError(code)
-                }
+                doDisconnect(errorWithDetail("connection closed by server", code: code))
+                writeError(code)
                 return
             }
             if isControlFrame && payloadLen > 125 {

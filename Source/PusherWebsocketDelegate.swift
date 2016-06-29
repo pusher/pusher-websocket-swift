@@ -38,7 +38,7 @@ extension PusherConnection: WebSocketDelegate {
         }
         
         // Handle error (if any)
-        guard let error = error else {
+        guard let error = error where error.code != Int(WebSocket.CloseCode.Normal.rawValue) else {
             return
         }
         
