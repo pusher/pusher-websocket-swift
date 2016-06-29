@@ -31,15 +31,20 @@ extension PusherConnection: WebSocketDelegate {
         - parameter error: The error, if one exists, when disconnected
     */
     public func websocketDidDisconnect(ws: WebSocket, error: NSError?) {
-        if let error = error {
-            print("Websocket is disconnected: \(error.localizedDescription)")
-        }
 
         updateConnectionState(.Disconnected)
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
-
+        
+        // Handle error (if any)
+        guard let error = error else {
+            return
+        }
+        
+        print("Websocket is disconnected. Error: \(error.localizedDescription)")
+        
+        // Reconnect if possible
         if let reconnect = self.options.autoReconnect where reconnect {
             if let reachability = self.reachability where reachability.isReachable() {
                 let operation = NSBlockOperation {
