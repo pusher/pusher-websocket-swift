@@ -33,6 +33,7 @@ before_install:
       brew install carthage;
     fi
   - gem install cocoapods
+  - gem install xcpretty
 install:
   - pod update
   - pod install
