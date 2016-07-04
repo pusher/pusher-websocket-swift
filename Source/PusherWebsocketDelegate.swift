@@ -7,7 +7,6 @@
 //
 
 extension PusherConnection: WebSocketDelegate {
-    // MARK: WebSocketDelegate Implementation
 
     /**
         Delegate method called when a message is received over a websocket
@@ -31,7 +30,6 @@ extension PusherConnection: WebSocketDelegate {
         - parameter error: The error, if one exists, when disconnected
     */
     public func websocketDidDisconnect(ws: WebSocket, error: NSError?) {
-
         updateConnectionState(.Disconnected)
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
@@ -45,7 +43,7 @@ extension PusherConnection: WebSocketDelegate {
         print("Websocket is disconnected. Error: \(error.localizedDescription)")
 
         // Reconnect if possible
-        if self.options.autoReconnect {
+        if self.options.autoReconnect && reconnectAttempts == 0 {
             if let reachability = self.reachability where reachability.isReachable() {
                 let operation = NSBlockOperation {
                     self.socket.connect()
@@ -58,6 +56,8 @@ extension PusherConnection: WebSocketDelegate {
                 self.reconnectOperation?.cancel()
                 self.reconnectOperation = operation
             }
+
+            attemptReconnect()
         }
     }
 

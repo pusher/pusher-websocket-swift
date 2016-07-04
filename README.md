@@ -17,6 +17,8 @@ What else would you want? Head over to the example app [ViewController.swift](ht
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Connection](#connection)
+  * [Connection state changes](#connection-state-changes)
+  * [Reconnection](#reconnection)
 * [Subscribing to channels](#subscribing)
 * [Binding to events](#binding-to-events)
   * [Globally](#global-events)
@@ -203,6 +205,23 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
     }
 }
 ```
+
+### Reconnection
+
+There are three main ways in which a disconnection can occur:
+
+  * The client explicitly calls disconnect and a close frame is sent over the websocket connection
+  * The client experiences some form of network degradation which leads to a heartbeat (ping/pong) message being missed and thus the client disconnects
+  * The Pusher server closes the websocket connection; typically this will only occur during a restart of the Pusher socket servers and an almost immediate reconnection should occur
+
+In the case of the first type of disconnection the library will (as you'd hope) not attempt a reconnection.
+
+If there is network degradation that leads to a disconnection then the library has the [Reachability](https://github.com/ashleymills/Reachability.swift) library embedded and will be able to automatically determine when to attempt a reconnect based on the changing network conditions.
+
+If the Pusher servers close the websocket then the library will attempt to reconnect (by default) a maximum of 6 times, with an exponential backoff. The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish.
+
+All of this is the case if you have the client option of `autoReconnect` set as `true`, which it is by default. If the reconnection strategies are not suitable for your use case then you can set `autoReconnect` to `false` and implement your own reconnection strategy based on the connection state changes.
+
 
 ## Subscribing
 

@@ -22,6 +22,9 @@ public class PusherConnection {
     public var userDataFetcher: (() -> PusherUserData)?
     public var debugLogger: ((String) -> ())?
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
+    public var reconnectAttemptsMax: Int = 6
+    public var reconnectAttempts: Int = 0
+    private var reconnectTimer: NSTimer? = nil
     internal var reconnectOperation: NSOperation?
 
     public lazy var reachability: Reachability? = {
@@ -185,6 +188,7 @@ public class PusherConnection {
             updateConnectionState(.Connecting)
             self.socket.connect()
             if self.options.autoReconnect {
+                // can call this multiple times and only one notifier will be started
                 _ = try? reachability?.startNotifier()
             }
         }
@@ -278,6 +282,11 @@ public class PusherConnection {
                 updateConnectionState(.Connected)
                 self.socketId = socketId
 
+                // cancel any other outstanding reconnect attempts
+                self.reconnectOperation?.cancel()
+                self.reconnectAttempts = 0
+                self.reconnectTimer?.invalidate()
+
                 for (_, channel) in self.channels.channels {
                     if !channel.subscribed {
                         if !self.authorize(channel) {
@@ -356,7 +365,6 @@ public class PusherConnection {
             if let jsonData = data, jsonObject = try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String : AnyObject] {
                 return jsonObject
             } else {
-                // TODO: Move below
                 print("Unable to parse string from WebSocket: \(string)")
             }
         } catch let error as NSError {
@@ -655,6 +663,24 @@ public class PusherConnection {
                     ]
                 )
             }
+    }
+
+    /**
+        Attempt to reconnect triggered by a disconnection
+    */
+    @objc internal func attemptReconnect() {
+        if reconnectAttempts < reconnectAttemptsMax && connectionState != .Connected {
+            connect()
+            reconnectAttempts += 1
+            let timeInterval = Double(reconnectAttempts * reconnectAttempts) * 2.0
+            reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
+                timeInterval,
+                target: self,
+                selector: #selector(attemptReconnect),
+                userInfo: nil,
+                repeats: false
+            )
+        }
     }
 }
 
