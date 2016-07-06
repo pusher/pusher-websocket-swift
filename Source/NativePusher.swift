@@ -1,14 +1,14 @@
 import Foundation
 
 /**
- An interface to Pusher's native push notification service.
- The service is a pub-sub system for push notifications.
- Notifications are published to "interests".
- Clients (such as this app instance) subscribe to those interests.
- 
- A per-app singleton of NativePusher is available via an instance of Pusher.
- Use the Pusher.nativePusher() method to get access to it.
- */
+    An interface to Pusher's native push notification service.
+    The service is a pub-sub system for push notifications.
+    Notifications are published to "interests".
+    Clients (such as this app instance) subscribe to those interests.
+
+    A per-app singleton of NativePusher is available via an instance of Pusher.
+    Use the Pusher.nativePusher() method to get access to it.
+*/
 public class NativePusher {
     static let sharedInstance = NativePusher()
     
@@ -39,10 +39,10 @@ public class NativePusher {
     }
     
     /**
-     Registers this app instance with Pusher for push notifications.
-     This must be done before we can subscribe to interests.
-     Registration happens asynchronously; any errors are reported by print statements.
-     */
+        Registers this app instance with Pusher for push notifications.
+        This must be done before we can subscribe to interests.
+        Registration happens asynchronously; any errors are reported by print statements.
+    */
     public func register(deviceToken : NSData) {
         let request = NSMutableURLRequest(URL: NSURL(string: CLIENT_API_V1_ENDPOINT + "/clients")!)
         request.HTTPMethod = "POST"
@@ -101,16 +101,16 @@ public class NativePusher {
     }
     
     /**
-     Subscribe to an interest with Pusher's Push Notification Service
-     */
+        Subscribe to an interest with Pusher's Push Notification Service
+    */
     public func subscribe(interestName: String) {
         outbox.append(interestName, SubscriptionChange.Subscribe)
         tryFlushOutbox()
     }
 
     /**
-     Unsubscribe from an interest with Pusher's Push Notification Service
-     */
+        Unsubscribe from an interest with Pusher's Push Notification Service
+    */
     public func unsubscribe(interestName: String) {
         outbox.append(interestName, SubscriptionChange.Unsubscribe)
         tryFlushOutbox()
