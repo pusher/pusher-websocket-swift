@@ -57,9 +57,9 @@ public class PresencePusherChannel: PusherChannel {
             }
         } else {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PresenceChannelMember(userId: String(memberJSON["user_id"]), userInfo: userInfo)
+                member = PresenceChannelMember(userId: String(memberJSON["user_id"]!), userInfo: userInfo)
             } else {
-                member = PresenceChannelMember(userId: String(memberJSON["user_id"]))
+                member = PresenceChannelMember(userId: String(memberJSON["user_id"]!))
             }
         }
         members.append(member)
