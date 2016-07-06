@@ -22,8 +22,9 @@ public class PusherConnection {
     public var userDataFetcher: (() -> PusherUserData)?
     public var debugLogger: ((String) -> ())?
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
-    public var reconnectAttemptsMax: Int = 6
+    public var reconnectAttemptsMax: Int? = 6
     public var reconnectAttempts: Int = 0
+    public var maxReconnectGapInSeconds: Int? = nil
     private var reconnectTimer: NSTimer? = nil
     internal var reconnectOperation: NSOperation?
 
@@ -669,17 +670,21 @@ public class PusherConnection {
         Attempt to reconnect triggered by a disconnection
     */
     @objc internal func attemptReconnect() {
-        if reconnectAttempts < reconnectAttemptsMax && connectionState != .Connected {
-            connect()
-            reconnectAttempts += 1
-            let timeInterval = Double(reconnectAttempts * reconnectAttempts) * 2.0
-            reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
-                timeInterval,
-                target: self,
-                selector: #selector(attemptReconnect),
-                userInfo: nil,
-                repeats: false
-            )
+        if connectionState != .Connected {
+            if (reconnectAttemptsMax == nil || (reconnectAttemptsMax != nil && reconnectAttempts < reconnectAttemptsMax)) {
+                connect()
+                reconnectAttempts += 1
+                let reconnectInterval = Double(reconnectAttempts * reconnectAttempts) * 2.0
+                let timeInterval = maxReconnectGapInSeconds != nil ? max(reconnectInterval, Double(maxReconnectGapInSeconds!))
+                                                                   : reconnectInterval
+                reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
+                    timeInterval,
+                    target: self,
+                    selector: #selector(attemptReconnect),
+                    userInfo: nil,
+                    repeats: false
+                )
+            }
         }
     }
 }
