@@ -17,7 +17,8 @@ class ConnectionStateChangeDelegateSpec: QuickSpec {
         var stateChangeDelegate: TestConnectionStateChangeDelegate!
 
         beforeEach({
-            pusher = Pusher(key: "key", options: ["autoReconnect": false])
+            let options = PusherClientOptions(autoReconnect: false)
+            pusher = Pusher(key: "key", options: options)
             socket = MockWebSocket()
             stateChangeDelegate = TestConnectionStateChangeDelegate()
             socket.delegate = pusher.connection

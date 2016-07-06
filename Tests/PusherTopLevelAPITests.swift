@@ -18,7 +18,10 @@ class PusherTopLevelApiSpec: QuickSpec {
 
         beforeEach({
             key = "testKey123"
-            pusher = Pusher(key: key, options: ["autoReconnect": false])
+            let options = PusherClientOptions(
+                autoReconnect: false
+            )
+            pusher = Pusher(key: key, options: options)
             socket = MockWebSocket()
             socket.delegate = pusher.connection
             pusher.connection.socket = socket
@@ -113,7 +116,10 @@ class PusherTopLevelApiSpec: QuickSpec {
 
                 describe("that require authentication") {
                     beforeEach({
-                        pusher = Pusher(key: "key", options: ["secret": "secret"])
+                        let options = PusherClientOptions(
+                            authMethod: AuthMethod.Internal(secret: "secret")
+                        )
+                        pusher = Pusher(key: "key", options: options)
                         socket.delegate = pusher.connection
                         pusher.connection.socket = socket
                         pusher.connect()
@@ -155,7 +161,10 @@ class PusherTopLevelApiSpec: QuickSpec {
 
                 describe("that require authentication") {
                     beforeEach({
-                        pusher = Pusher(key: "key", options: ["secret": "secret"])
+                        let options = PusherClientOptions(
+                            authMethod: AuthMethod.Internal(secret: "secret")
+                        )
+                        pusher = Pusher(key: "key", options: options)
                         socket.delegate = pusher.connection
                         pusher.connection.socket = socket
                     })

@@ -14,15 +14,18 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Only use your secret here for testing or if you're sure that there's
+        // no security risk
+        let pusherClientOptions = PusherClientOptions(authMethod: .Internal(secret: "YOUR_APP_SECRET"))
+        let pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
+
         // remove the debugLogger from the client options if you want to remove the
         // debug logging, or just change the function below
         let debugLogger = { (text: String) in debugPrint(text) }
-
-        // Only use your secret here for testing or if you're sure that there's
-        // no security risk
-        let pusher = Pusher(key: "YOUR_APP_KEY", options: ["secret": "YOUR_APP_SECRET", "debugLogger": debugLogger])
+        pusher.connection.debugLogger = debugLogger
 
         pusher.connection.stateChangeDelegate = self
+
         pusher.connect()
 
         pusher.bind({ (message: AnyObject?) in
@@ -43,7 +46,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
             print(data)
             pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
-            if let data = data as? Dictionary<String, AnyObject> {
+            if let data = data as? [String : AnyObject] {
                 if let testVal = data["test"] as? String {
                     print(testVal)
                 }

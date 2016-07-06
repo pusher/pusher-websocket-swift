@@ -59,7 +59,7 @@ class HandlingIncomingEventsSpec: QuickSpec {
                 chan.bind("test-event", callback: callback)
                 expect(socket.objectGivenToCallback).to(beNil())
                 pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
-                expect(socket.objectGivenToCallback as? Dictionary<String, String>).to(equal(["test": "test string", "and": "another"]))
+                expect(socket.objectGivenToCallback as? [String : String]).to(equal(["test": "test string", "and": "another"]))
             }
 
             it("should return a JSON string to the callbacks if the string cannot be parsed and the user wanted to get a JSON object") {
@@ -72,7 +72,8 @@ class HandlingIncomingEventsSpec: QuickSpec {
             }
 
             it("should return a JSON string to the callbacks if the string can be parsed but the user doesn't want to get a JSON object") {
-                pusher = Pusher(key: key, options: ["attemptToReturnJSONObject": "false"])
+                let options = PusherClientOptions(attemptToReturnJSONObject: false)
+                pusher = Pusher(key: key, options: options)
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
                 let callback = { (data: AnyObject?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
@@ -104,7 +105,8 @@ class HandlingIncomingEventsSpec: QuickSpec {
 
             it("should pass incoming messages to the debugLogger if one is set") {
                 let debugLogger = { (text: String) in socket.appendToCallbackCheckString(text) }
-                pusher = Pusher(key: key, options: ["debugLogger": debugLogger])
+                pusher = Pusher(key: key)
+                pusher.connection.debugLogger = debugLogger
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
                 pusher.connect()

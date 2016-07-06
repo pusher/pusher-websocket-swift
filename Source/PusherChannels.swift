@@ -22,19 +22,28 @@ public class PusherChannels {
 
         - returns: A new PusherChannel instance
     */
-    internal func add(channelName: String, connection: PusherConnection, onMemberAdded: ((PresenceChannelMember) -> ())? = nil, onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
-        if let channel = self.channels[channelName] {
-            return channel
-        } else {
-            var newChannel: PusherChannel
-            if isPresenceChannel(channelName) {
-                newChannel = PresencePusherChannel(name: channelName, connection: connection, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+    internal func add(
+        channelName: String,
+        connection: PusherConnection,
+        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
+            if let channel = self.channels[channelName] {
+                return channel
             } else {
-                newChannel = PusherChannel(name: channelName, connection: connection)
+                var newChannel: PusherChannel
+                if PusherChannelType.isPresenceChannel(name: channelName) {
+                    newChannel = PresencePusherChannel(
+                        name: channelName,
+                        connection: connection,
+                        onMemberAdded: onMemberAdded,
+                        onMemberRemoved: onMemberRemoved
+                    )
+                } else {
+                    newChannel = PusherChannel(name: channelName, connection: connection)
+                }
+                self.channels[channelName] = newChannel
+                return newChannel
             }
-            self.channels[channelName] = newChannel
-            return newChannel
-        }
     }
 
     /**

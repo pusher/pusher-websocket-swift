@@ -16,7 +16,7 @@ extension PusherConnection: WebSocketDelegate {
         - parameter text: The message received over the websocket
     */
     public func websocketDidReceiveMessage(ws: WebSocket, text: String) {
-        self.options.debugLogger?("[PUSHER DEBUG] websocketDidReceiveMessage \(text)")
+        self.debugLogger?("[PUSHER DEBUG] websocketDidReceiveMessage \(text)")
         if let pusherPayloadObject = getPusherEventJSONFromString(text), eventName = pusherPayloadObject["event"] as? String {
             self.handleEvent(eventName, jsonObject: pusherPayloadObject)
         } else {
@@ -36,16 +36,16 @@ extension PusherConnection: WebSocketDelegate {
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
-        
+
         // Handle error (if any)
         guard let error = error where error.code != Int(WebSocket.CloseCode.Normal.rawValue) else {
             return
         }
-        
+
         print("Websocket is disconnected. Error: \(error.localizedDescription)")
-        
+
         // Reconnect if possible
-        if let reconnect = self.options.autoReconnect where reconnect {
+        if self.options.autoReconnect {
             if let reachability = self.reachability where reachability.isReachable() {
                 let operation = NSBlockOperation {
                     self.socket.connect()
@@ -64,4 +64,3 @@ extension PusherConnection: WebSocketDelegate {
     public func websocketDidConnect(ws: WebSocket) {}
     public func websocketDidReceiveData(ws: WebSocket, data: NSData) {}
 }
-
