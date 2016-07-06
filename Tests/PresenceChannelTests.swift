@@ -155,6 +155,26 @@ class PusherPresenceChannelSpec: QuickSpec {
                 expect((stubber.calls.last?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
             }
 
+            it("calls the onMemberRemoved function, if provided, and the userId of the member when they were addded was not a string") {
+                let options = PusherClientOptions(
+                    authMethod: .Internal(secret: "secret")
+                )
+                pusher = Pusher(key: "key", options: options)
+                socket.delegate = pusher.connection
+                pusher.connection.socket = socket
+                pusher.connection.userDataFetcher = { () -> PusherUserData in
+                    return PusherUserData(userId: "123")
+                }
+                pusher.connect()
+                let memberRemovedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberRemoved", args: [member], functionToCall: nil) }
+                pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PresencePusherChannel
+                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":100}"])
+                pusher.connection.handleEvent("pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed", "channel": "presence-channel", "data": "{\"user_id\":100}"])
+
+                expect(stubber.calls.last?.name).to(equal("onMemberRemoved"))
+                expect((stubber.calls.last?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
+            }
+
         }
     }
 }

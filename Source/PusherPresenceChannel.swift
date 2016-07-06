@@ -98,7 +98,7 @@ public class PresencePusherChannel: PusherChannel {
         if let userId = memberJSON["user_id"] as? String {
             id = userId
         } else {
-            id = String(memberJSON["user_id"])
+            id = String(memberJSON["user_id"]!)
         }
 
         if let index = self.members.indexOf({ $0.userId == id }) {
