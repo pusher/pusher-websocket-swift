@@ -24,7 +24,7 @@ public class PusherConnection {
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
     public var reconnectAttemptsMax: Int? = 6
     public var reconnectAttempts: Int = 0
-    public var maxReconnectGapInSeconds: Int? = nil
+    public var maxReconnectGapInSeconds: Double? = nil
     private var reconnectTimer: NSTimer? = nil
     internal var reconnectOperation: NSOperation?
 
@@ -671,11 +671,11 @@ public class PusherConnection {
     */
     @objc internal func attemptReconnect() {
         if connectionState != .Connected {
-            if (reconnectAttemptsMax == nil || (reconnectAttemptsMax != nil && reconnectAttempts < reconnectAttemptsMax)) {
+            if (reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax) {
                 connect()
                 reconnectAttempts += 1
                 let reconnectInterval = Double(reconnectAttempts * reconnectAttempts) * 2.0
-                let timeInterval = maxReconnectGapInSeconds != nil ? max(reconnectInterval, Double(maxReconnectGapInSeconds!))
+                let timeInterval = maxReconnectGapInSeconds != nil ? max(reconnectInterval, maxReconnectGapInSeconds!)
                                                                    : reconnectInterval
                 reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
                     timeInterval,
