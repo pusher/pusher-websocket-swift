@@ -10,29 +10,7 @@
 
 ## I just want to copy and paste some code to get me started
 
-```swift
-// Only use your secret here for testing or if you're sure that there's no security risk
-let pusher = Pusher(key: "YOUR_APP_KEY", options: ["secret": "YOUR_APP_SECRET"])
-
-// It doesn't matter (within reason) where this goes but you have to call it at some point
-pusher.connect()
-
-let onMemberAdded = { (member: PresenceChannelMember) in
-    print(member)
-}
-let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
-
-chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
-    print(data)
-    if let data = data as? [String : AnyObject] {
-        if let testVal = data["test"] as? String {
-            print(testVal)
-        }
-    }
-})
-
-chan.trigger("client-test", data: ["test": "some value"])
-```
+What else would you want? Head over to the example app [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/Example/ViewController.swift) to get some code you can drop in to get started.
 
 ## Table of Contents
 
