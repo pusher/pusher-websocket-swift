@@ -13,6 +13,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 public class Pusher {
     public let connection: PusherConnection
+    private let key: String
 
     /**
         Initializes the Pusher client with an app key and any appropriate options.
@@ -22,11 +23,13 @@ public class Pusher {
 
         - returns: A new Pusher client instance
     */
-    public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
+    public init(key: String, options: PusherClientOptions = PusherClientOptions(), nativePusher: NativePusher = NativePusher.sharedInstance) {
+        self.key = key
         let urlString = constructUrl(key, options: options)
         let ws = WebSocket(url: NSURL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
+        nativePusher.setPusherAppKey(key)
     }
 
     /**
@@ -95,6 +98,15 @@ public class Pusher {
     */
     public func connect() {
         self.connection.connect()
+    }
+
+    /**
+        Returns the NativePusher singletion
+     
+        - returns: The NativePusher singleton
+    */
+    public func nativePusher() -> NativePusher {
+        return NativePusher.sharedInstance
     }
 }
 
