@@ -422,28 +422,30 @@ print(me)
 
 ## Push notifications
 
-Pusher also supports push notifications.  Instances of your Swift application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your Swift application as push notifications.
+Pusher also supports push notifications. Instances of your Swift application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your Swift application as push notifications.
 
 You should set up your app for push notifications in your `AppDelegate`. Start off your app in the usual way:
 
 ```swift
 import PusherSwift
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let pusher = Pusher(key: "YOUR_APP_KEY")
+    ...
 ```
 
 For your Swift app to receive push notifications, it must first register with APNs. You should do this when the application finishes launching. Your app should register for all types of notification, like so:
 
 ```swift
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let notificationTypes : UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
-        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-        application.registerUserNotificationSettings(pushNotificationSettings)
-        application.registerForRemoteNotifications()
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+    let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+    let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+    application.registerUserNotificationSettings(pushNotificationSettings)
+    application.registerForRemoteNotifications()
 
-        return true
-    }
+    return true
+}
 ```
 
 Next, APNs will respond with a device token identifying your app instance. Your app should then register with Pusher, passing along its device token.
@@ -451,28 +453,27 @@ Next, APNs will respond with a device token identifying your app instance. Your 
 Your app can now subscribe to interests. The following registers and subscribes the app to the interest "donuts":
 
 ```swift
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : NSData) {
-        pusher.nativePush().register(deviceToken)
-        pusher.nativePush().subscribe("donuts")
-    }
+func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    pusher.nativePusher().register(deviceToken)
+    pusher.nativePusher().subscribe("donuts")
+}
 ```
 
 When your server publishes a notification to the interest "donuts", it will get passed to your app. This happens as a call in your `AppDelegate` which you should listen to:
 
 ```swift
-    func application(application : UIApplication, didReceiveRemoteNotification notification : [NSObject : AnyObject]) {
-        print(notification)
-    }
+func application(application: UIApplication, didReceiveRemoteNotification notification: [NSObject : AnyObject]) {
+    print(notification)
 }
 ```
 
 If at a later point you wish to unsubscribe from an interest, this works in the same way:
 
 ```swift
-        pusher.nativePush().unsubscribe("donuts")
+pusher.nativePusher().unsubscribe("donuts")
 ```
 
-For a complete example of a working app, see the `Example/` directory in this repository.
+For a complete example of a working app, see the [Example/](https://github.com/pusher/pusher-websocket-swift/tree/master/Example) directory in this repository. Specifically for push notifications code, see the [Example/AppDelegate.swift file](https://github.com/pusher/pusher-websocket-swift/blob/master/Example/AppDelegate.swift).
 
 
 ## Testing
