@@ -6,6 +6,9 @@
 //
 //
 
+public typealias PusherEventJSON = [String : AnyObject]
+public typealias PusherUserData = PresenceChannelMember
+
 public class PusherConnection {
     public let url: String
     public let key: String
