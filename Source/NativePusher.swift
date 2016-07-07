@@ -55,11 +55,11 @@ public class NativePusher {
         - returns: the deviceToken formatted as a String
     */
     private func deviceTokenToString(deviceToken: NSData) -> String {
-        let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
+        let characterSet: NSCharacterSet = NSCharacterSet(charactersInString: "<>")
 
-        let deviceTokenString: String = ( deviceToken.description as NSString )
-            .stringByTrimmingCharactersInSet( characterSet )
-            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+        let deviceTokenString: String = (deviceToken.description as NSString)
+            .stringByTrimmingCharactersInSet(characterSet)
+            .stringByReplacingOccurrencesOfString(" ", withString: "") as String
         return deviceTokenString
     }
 
