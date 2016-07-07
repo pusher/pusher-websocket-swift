@@ -458,7 +458,7 @@ If at a later point you wish to unsubscribe from an interest, this works in the 
 pusher.nativePusher().unsubscribe("donuts")
 ```
 
-For a complete example of a working app, see the [Example/](https://github.com/pusher/pusher-websocket-swift/tree/master/Example) directory in this repository. Specifically for push notifications code, see the [Example/AppDelegate.swift file](https://github.com/pusher/pusher-websocket-swift/blob/master/Example/AppDelegate.swift).
+For a complete example of a working app, see the [Example/](https://github.com/pusher/pusher-websocket-swift/tree/push-notifications/Example) directory in this repository. Specifically for push notifications code, see the [Example/AppDelegate.swift](https://github.com/pusher/pusher-websocket-swift/blob/push-notifications/Example/AppDelegate.swift) file.
 
 
 ## Testing
