@@ -23,7 +23,12 @@ public class NativePusher {
     */
     private var pusherAppKey: String? = nil
 
+    /**
+        Sets the pusherAppKey property and then attempts to flush
+        the outbox of any pending requests
 
+        - parameter pusherAppKey: The Pusher app key
+    */
     public func setPusherAppKey(pusherAppKey: String) {
         self.pusherAppKey = pusherAppKey
         tryFlushOutbox()
