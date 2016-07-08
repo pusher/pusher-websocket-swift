@@ -104,7 +104,11 @@ class HandlingIncomingEventsSpec: QuickSpec {
             }
 
             it("should pass incoming messages to the debugLogger if one is set") {
-                let debugLogger = { (text: String) in socket.appendToCallbackCheckString(text) }
+                let debugLogger = { (text: String) in
+                    if text.rangeOfString("websocketDidReceiveMessage") != nil {
+                        socket.appendToCallbackCheckString(text)
+                    }
+                }
                 pusher = Pusher(key: key)
                 pusher.connection.debugLogger = debugLogger
                 socket.delegate = pusher.connection
