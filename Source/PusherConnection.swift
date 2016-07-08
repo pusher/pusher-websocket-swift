@@ -25,19 +25,17 @@ public class PusherConnection {
     public var reconnectAttemptsMax: Int? = 6
     public var reconnectAttempts: Int = 0
     public var maxReconnectGapInSeconds: Double? = nil
-    private var reconnectTimer: NSTimer? = nil
-    internal var reconnectOperation: NSOperation?
+    internal var reconnectTimer: NSTimer? = nil
 
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
-            self.reconnectOperation?.cancel()
+            self.debugLogger?("[PUSHER DEBUG] WE ARE REACHABLE AGAIN")
             if self.connectionState == .Disconnected {
-                self.socket.connect()
+                self.attemptReconnect()
             }
         }
         reachability?.whenUnreachable = { [unowned self] reachability in
-            self.reconnectOperation?.cancel()
             print("Network unreachable")
         }
         return reachability
@@ -182,7 +180,7 @@ public class PusherConnection {
     /**
         Establish a websocket connection
     */
-    public func connect() {
+    @objc public func connect() {
         if self.connectionState == .Connected {
             return
         } else {
@@ -283,13 +281,13 @@ public class PusherConnection {
                 updateConnectionState(.Connected)
                 self.socketId = socketId
 
-                // cancel any other outstanding reconnect attempts
-                self.reconnectOperation?.cancel()
                 self.reconnectAttempts = 0
                 self.reconnectTimer?.invalidate()
 
                 for (_, channel) in self.channels.channels {
+                    print("Here's my channel \(channel.name)")
                     if !channel.subscribed {
+                        print("And we aren't subbed")
                         if !self.authorize(channel) {
                             print("Unable to subscribe to channel: \(channel.name)")
                         }
@@ -665,28 +663,6 @@ public class PusherConnection {
                 )
             }
     }
-
-    /**
-        Attempt to reconnect triggered by a disconnection
-    */
-    @objc internal func attemptReconnect() {
-        if connectionState != .Connected {
-            if (reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax) {
-                connect()
-                reconnectAttempts += 1
-                let reconnectInterval = Double(reconnectAttempts * reconnectAttempts) * 2.0
-                let timeInterval = maxReconnectGapInSeconds != nil ? max(reconnectInterval, maxReconnectGapInSeconds!)
-                                                                   : reconnectInterval
-                reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
-                    timeInterval,
-                    target: self,
-                    selector: #selector(attemptReconnect),
-                    userInfo: nil,
-                    repeats: false
-                )
-            }
-        }
-    }
 }
 
 public enum ConnectionState {
@@ -694,6 +670,7 @@ public enum ConnectionState {
     case Connected
     case Disconnecting
     case Disconnected
+    case Reconnecting
 }
 
 public protocol ConnectionStateChangeDelegate: class {
