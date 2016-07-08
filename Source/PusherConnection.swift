@@ -30,13 +30,13 @@ public class PusherConnection {
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
-            self.debugLogger?("[PUSHER DEBUG] WE ARE REACHABLE AGAIN")
+            self.debugLogger?("[PUSHER DEBUG] Network reachable")
             if self.connectionState == .Disconnected {
                 self.attemptReconnect()
             }
         }
         reachability?.whenUnreachable = { [unowned self] reachability in
-            print("Network unreachable")
+            self.debugLogger?("[PUSHER DEBUG] Network unreachable")
         }
         return reachability
     }()
@@ -285,9 +285,7 @@ public class PusherConnection {
                 self.reconnectTimer?.invalidate()
 
                 for (_, channel) in self.channels.channels {
-                    print("Here's my channel \(channel.name)")
                     if !channel.subscribed {
-                        print("And we aren't subbed")
                         if !self.authorize(channel) {
                             print("Unable to subscribe to channel: \(channel.name)")
                         }

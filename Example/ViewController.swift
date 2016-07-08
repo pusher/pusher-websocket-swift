@@ -10,6 +10,15 @@ import UIKit
 import PusherSwift
 
 class ViewController: UIViewController, ConnectionStateChangeDelegate {
+    var pusher: Pusher! = nil
+
+    @IBAction func connectButton(sender: AnyObject) {
+        pusher.connect()
+    }
+
+    @IBAction func disconnectButton(sender: AnyObject) {
+        pusher.disconnect()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +53,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
             print(data)
-            pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
+            self.pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
             if let data = data as? [String : AnyObject] {
                 if let testVal = data["test"] as? String {
