@@ -73,25 +73,29 @@ extension PusherConnection: WebSocketDelegate {
         Attempt to reconnect triggered by a disconnection
     */
     internal func attemptReconnect() {
-        if connectionState != .Connected {
-            if (reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax!) {
-                let reconnectInterval = Double(reconnectAttempts * reconnectAttempts)
-
-                let timeInterval = maxReconnectGapInSeconds != nil ? min(reconnectInterval, maxReconnectGapInSeconds!)
-                                                                   : reconnectInterval
-
-                self.debugLogger?("[PUSHER DEBUG] Waiting \(timeInterval) seconds before attempting to reconnect (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax))")
-
-                reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
-                    timeInterval,
-                    target: self,
-                    selector: #selector(connect),
-                    userInfo: nil,
-                    repeats: false
-                )
-                reconnectAttempts += 1
-            }
+        guard connectionState != .Connected else {
+            return
         }
+
+        guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
+            return
+        }
+
+        let reconnectInterval = Double(reconnectAttempts * reconnectAttempts)
+
+        let timeInterval = maxReconnectGapInSeconds != nil ? min(reconnectInterval, maxReconnectGapInSeconds!)
+                                                           : reconnectInterval
+
+        self.debugLogger?("[PUSHER DEBUG] Waiting \(timeInterval) seconds before attempting to reconnect (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax))")
+
+        reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
+            timeInterval,
+            target: self,
+            selector: #selector(connect),
+            userInfo: nil,
+            repeats: false
+        )
+        reconnectAttempts += 1
     }
 
 
