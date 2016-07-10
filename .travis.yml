@@ -32,8 +32,8 @@ before_install:
       echo Carthage not installed. Installing using homebrew;
       brew install carthage;
     fi
-  - gem install cocoapods
-  - gem install xcpretty
+  - gem install cocoapods --no-document
+  - gem install xcpretty --no-document
 install:
   - pod update
   - pod install
