@@ -22,6 +22,8 @@ public class NativePusher {
     private let CLIENT_API_V1_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
 
     private let URLSession = NSURLSession.sharedSession()
+    private var failedNativeServiceRequests: Int = 0
+    private let maxFailedRequestAttempts: Int = 6
 
     /**
         Identifies a Pusher app.
@@ -201,11 +203,29 @@ public class NativePusher {
             request,
             completionHandler: { data, response, error in
                 guard let httpResponse = response as? NSHTTPURLResponse
-                    where (200 <= httpResponse.statusCode && httpResponse.statusCode < 300)
+                    where (200 <= httpResponse.statusCode && httpResponse.statusCode < 300) ||
+                    error == nil
                 else {
-                    print("Bad response from server when trying to modify subscription to interest " + interest)
+                    self.outbox.insert((interest, change), atIndex: 0)
+
+                    if error != nil {
+                        print("Error when trying to modify subscription to interest: \(error?.localizedDescription)")
+                    } else {
+                        print("Bad response from server when trying to modify subscription to interest " + interest)
+                    }
+                    self.failedNativeServiceRequests += 1
+
+                    if (self.failedNativeServiceRequests < self.maxFailedRequestAttempts) {
+                        callback()
+                    } else {
+                        print("Max number of failed native service requests reached")
+                    }
                     return
                 }
+
+                // Reset number of failed requests to 0 upon success
+                self.failedNativeServiceRequests = 0
+
                 callback()
             }
         )
