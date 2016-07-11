@@ -1,4 +1,10 @@
-import Foundation
+//
+//  NativePusher.swift
+//  PusherSwift
+//
+//  Created by James Fisher on 09/06/2016.
+//
+//
 
 /**
     An interface to Pusher's native push notification service.
