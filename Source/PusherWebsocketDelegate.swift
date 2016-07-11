@@ -86,7 +86,7 @@ extension PusherConnection: WebSocketDelegate {
         let timeInterval = maxReconnectGapInSeconds != nil ? min(reconnectInterval, maxReconnectGapInSeconds!)
                                                            : reconnectInterval
 
-        self.debugLogger?("[PUSHER DEBUG] Waiting \(timeInterval) seconds before attempting to reconnect (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax))")
+        self.debugLogger?("[PUSHER DEBUG] Waiting \(timeInterval) seconds before attempting to reconnect (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))")
 
         reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
             timeInterval,
