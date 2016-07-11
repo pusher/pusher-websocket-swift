@@ -15,6 +15,7 @@ public class Pusher {
     public let connection: PusherConnection
     private let key: String
 
+#if os(iOS)
     /**
         Initializes the Pusher client with an app key and any appropriate options.
 
@@ -31,6 +32,25 @@ public class Pusher {
         connection.createGlobalChannel()
         nativePusher.setPusherAppKey(key)
     }
+#endif
+
+#if os(OSX) || os(tvOS)
+    /**
+     Initializes the Pusher client with an app key and any appropriate options.
+
+     - parameter key:     The Pusher app key
+     - parameter options: An optional collection of options
+
+     - returns: A new Pusher client instance
+     */
+    public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
+        self.key = key
+        let urlString = constructUrl(key, options: options)
+        let ws = WebSocket(url: NSURL(string: urlString)!)
+        connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
+        connection.createGlobalChannel()
+    }
+#endif
 
     /**
         Subscribes the client to a new channel
@@ -100,6 +120,7 @@ public class Pusher {
         self.connection.connect()
     }
 
+#if os(iOS)
     /**
         Returns the NativePusher singletion
      
@@ -108,6 +129,7 @@ public class Pusher {
     public func nativePusher() -> NativePusher {
         return NativePusher.sharedInstance
     }
+#endif
 }
 
 /**
