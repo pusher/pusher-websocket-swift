@@ -36,8 +36,6 @@
 		3389F57C1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
 		33999D261C401F9600AFED30 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33999D381C4020A300AFED30 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		339A49191D2DA70F00399699 /* NativePusher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7424A81D1459B700CED79C /* NativePusher.swift */; };
-		339A491A1D2DA71000399699 /* NativePusher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7424A81D1459B700CED79C /* NativePusher.swift */; };
 		33BB99731D21230100B25C2A /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995D1D21226C00B25C2A /* AuthenticationTests.swift */; };
 		33BB99741D21230100B25C2A /* ConnectionStateChangeDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995E1D21226C00B25C2A /* ConnectionStateChangeDelegateTests.swift */; };
 		33BB99751D21230100B25C2A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995F1D21226C00B25C2A /* Helpers.swift */; };
@@ -801,7 +799,6 @@
 				3389F5771CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57B1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
 				3389F56F1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
-				339A49191D2DA70F00399699 /* NativePusher.swift in Sources */,
 				33C0D2E51CB5C539003FE13E /* Reachability.swift in Sources */,
 				33C0D2D61CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */,
 				33C0D2DC1CB5C364003FE13E /* Starscream.swift in Sources */,
@@ -820,7 +817,6 @@
 				3389F5781CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57C1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
 				3389F5701CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
-				339A491A1D2DA71000399699 /* NativePusher.swift in Sources */,
 				33C0D2E61CB5C539003FE13E /* Reachability.swift in Sources */,
 				33C0D2D71CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */,
 				33C0D2DD1CB5C364003FE13E /* Starscream.swift in Sources */,
