@@ -31,7 +31,7 @@ public class PusherConnection {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
             self.debugLogger?("[PUSHER DEBUG] Network reachable")
-            if self.connectionState == .Disconnected {
+            if self.connectionState == .Disconnected || self.connectionState == .ReconnectingWhenNetworkBecomesReachable {
                 self.attemptReconnect()
             }
         }
@@ -669,6 +669,7 @@ public enum ConnectionState {
     case Disconnecting
     case Disconnected
     case Reconnecting
+    case ReconnectingWhenNetworkBecomesReachable
 }
 
 public protocol ConnectionStateChangeDelegate: class {

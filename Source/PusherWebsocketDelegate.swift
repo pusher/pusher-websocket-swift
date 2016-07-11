@@ -58,7 +58,7 @@ extension PusherConnection: WebSocketDelegate {
 
         guard let reachability = self.reachability where reachability.isReachable() else {
             self.debugLogger?("[PUSHER DEBUG] Network unreachable so waiting to attempt reconnect")
-            return updateConnectionState(.Disconnected)
+            return updateConnectionState(.ReconnectingWhenNetworkBecomesReachable)
         }
 
         if connectionState != .Reconnecting {
