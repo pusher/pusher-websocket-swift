@@ -51,7 +51,7 @@ extension PusherConnection: WebSocketDelegate {
             return updateConnectionState(.Disconnected)
         }
 
-        guard reconnectAttemptsMax != nil && reconnectAttempts < reconnectAttemptsMax! else {
+        guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
             self.debugLogger?("[PUSHER DEBUG] Max reconnect attempts reached")
             return updateConnectionState(.Disconnected)
         }
