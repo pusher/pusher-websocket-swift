@@ -7,7 +7,6 @@
 //
 
 extension PusherConnection: WebSocketDelegate {
-    // MARK: WebSocketDelegate Implementation
 
     /**
         Delegate method called when a message is received over a websocket
@@ -31,35 +30,74 @@ extension PusherConnection: WebSocketDelegate {
         - parameter error: The error, if one exists, when disconnected
     */
     public func websocketDidDisconnect(ws: WebSocket, error: NSError?) {
-
-        updateConnectionState(.Disconnected)
-        for (_, channel) in self.channels.channels {
-            channel.subscribed = false
+        // Handles setting channel subscriptions to unsubscribed wheter disconnection
+        // is intentional or not
+        if connectionState == .Disconnecting || connectionState == .Connected {
+            for (_, channel) in self.channels.channels {
+                channel.subscribed = false
+            }
         }
 
         // Handle error (if any)
         guard let error = error where error.code != Int(WebSocket.CloseCode.Normal.rawValue) else {
-            return
+            self.debugLogger?("[PUSHER DEBUG] Deliberate disconnection - skipping reconnect attempts")
+            return updateConnectionState(.Disconnected)
         }
 
         print("Websocket is disconnected. Error: \(error.localizedDescription)")
+        // Attempt reconnect if possible
 
-        // Reconnect if possible
-        if self.options.autoReconnect {
-            if let reachability = self.reachability where reachability.isReachable() {
-                let operation = NSBlockOperation {
-                    self.socket.connect()
-                }
-
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC)), dispatch_get_main_queue()) {
-                    NSOperationQueue.mainQueue().addOperation(operation)
-                }
-
-                self.reconnectOperation?.cancel()
-                self.reconnectOperation = operation
-            }
+        guard self.options.autoReconnect else {
+            return updateConnectionState(.Disconnected)
         }
+
+        guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
+            self.debugLogger?("[PUSHER DEBUG] Max reconnect attempts reached")
+            return updateConnectionState(.Disconnected)
+        }
+
+        guard let reachability = self.reachability where reachability.isReachable() else {
+            self.debugLogger?("[PUSHER DEBUG] Network unreachable so waiting to attempt reconnect")
+            return updateConnectionState(.ReconnectingWhenNetworkBecomesReachable)
+        }
+
+        if connectionState != .Reconnecting {
+            updateConnectionState(.Reconnecting)
+        }
+        self.debugLogger?("[PUSHER DEBUG] Network reachable so will setup reconnect attempt")
+
+        attemptReconnect()
     }
+
+    /**
+        Attempt to reconnect triggered by a disconnection
+    */
+    internal func attemptReconnect() {
+        guard connectionState != .Connected else {
+            return
+        }
+
+        guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
+            return
+        }
+
+        let reconnectInterval = Double(reconnectAttempts * reconnectAttempts)
+
+        let timeInterval = maxReconnectGapInSeconds != nil ? min(reconnectInterval, maxReconnectGapInSeconds!)
+                                                           : reconnectInterval
+
+        self.debugLogger?("[PUSHER DEBUG] Waiting \(timeInterval) seconds before attempting to reconnect (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))")
+
+        reconnectTimer = NSTimer.scheduledTimerWithTimeInterval(
+            timeInterval,
+            target: self,
+            selector: #selector(connect),
+            userInfo: nil,
+            repeats: false
+        )
+        reconnectAttempts += 1
+    }
+
 
     public func websocketDidConnect(ws: WebSocket) {}
     public func websocketDidReceiveData(ws: WebSocket, data: NSData) {}

@@ -22,19 +22,21 @@ public class PusherConnection {
     public var userDataFetcher: (() -> PusherUserData)?
     public var debugLogger: ((String) -> ())?
     public weak var stateChangeDelegate: ConnectionStateChangeDelegate?
-    internal var reconnectOperation: NSOperation?
+    public var reconnectAttemptsMax: Int? = 6
+    public var reconnectAttempts: Int = 0
+    public var maxReconnectGapInSeconds: Double? = nil
+    internal var reconnectTimer: NSTimer? = nil
 
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
-            self.reconnectOperation?.cancel()
-            if self.connectionState == .Disconnected {
-                self.socket.connect()
+            self.debugLogger?("[PUSHER DEBUG] Network reachable")
+            if self.connectionState == .Disconnected || self.connectionState == .ReconnectingWhenNetworkBecomesReachable {
+                self.attemptReconnect()
             }
         }
         reachability?.whenUnreachable = { [unowned self] reachability in
-            self.reconnectOperation?.cancel()
-            print("Network unreachable")
+            self.debugLogger?("[PUSHER DEBUG] Network unreachable")
         }
         return reachability
     }()
@@ -178,13 +180,14 @@ public class PusherConnection {
     /**
         Establish a websocket connection
     */
-    public func connect() {
+    @objc public func connect() {
         if self.connectionState == .Connected {
             return
         } else {
             updateConnectionState(.Connecting)
             self.socket.connect()
             if self.options.autoReconnect {
+                // can call this multiple times and only one notifier will be started
                 _ = try? reachability?.startNotifier()
             }
         }
@@ -278,6 +281,9 @@ public class PusherConnection {
                 updateConnectionState(.Connected)
                 self.socketId = socketId
 
+                self.reconnectAttempts = 0
+                self.reconnectTimer?.invalidate()
+
                 for (_, channel) in self.channels.channels {
                     if !channel.subscribed {
                         if !self.authorize(channel) {
@@ -356,7 +362,6 @@ public class PusherConnection {
             if let jsonData = data, jsonObject = try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String : AnyObject] {
                 return jsonObject
             } else {
-                // TODO: Move below
                 print("Unable to parse string from WebSocket: \(string)")
             }
         } catch let error as NSError {
@@ -663,6 +668,8 @@ public enum ConnectionState {
     case Connected
     case Disconnecting
     case Disconnected
+    case Reconnecting
+    case ReconnectingWhenNetworkBecomesReachable
 }
 
 public protocol ConnectionStateChangeDelegate: class {

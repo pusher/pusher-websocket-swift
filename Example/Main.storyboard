@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yEm-Wa-8Rj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yEm-Wa-8Rj">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,14 +14,39 @@
                         <viewControllerLayoutGuide type="bottom" id="r12-OR-bkP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="y96-ws-RaM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pak-HB-Rmg">
+                                <rect key="frame" x="122" y="132" width="78" height="30"/>
+                                <state key="normal" title="Disconnect"/>
+                                <connections>
+                                    <action selector="disconnectButton:" destination="yEm-Wa-8Rj" eventType="touchUpInside" id="DIg-Tc-6e2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrh-9X-Fym">
+                                <rect key="frame" x="122" y="38" width="78" height="30"/>
+                                <state key="normal" title="Connect"/>
+                                <connections>
+                                    <action selector="connectButton:" destination="yEm-Wa-8Rj" eventType="touchUpInside" id="Hla-Ru-KoR"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pak-HB-Rmg" firstAttribute="width" secondItem="zrh-9X-Fym" secondAttribute="width" id="4lR-eK-ZIZ"/>
+                            <constraint firstItem="pak-HB-Rmg" firstAttribute="centerX" secondItem="y96-ws-RaM" secondAttribute="centerX" constant="1" id="55L-vA-Tvc"/>
+                            <constraint firstItem="zrh-9X-Fym" firstAttribute="centerX" secondItem="y96-ws-RaM" secondAttribute="centerX" constant="1" id="BgE-CD-tkr"/>
+                            <constraint firstItem="pak-HB-Rmg" firstAttribute="height" secondItem="zrh-9X-Fym" secondAttribute="height" id="VhG-sC-yO0"/>
+                            <constraint firstItem="pak-HB-Rmg" firstAttribute="top" secondItem="fji-4t-sKP" secondAttribute="bottom" constant="112" id="aX3-md-844"/>
+                            <constraint firstItem="zrh-9X-Fym" firstAttribute="top" secondItem="fji-4t-sKP" secondAttribute="bottom" constant="18" id="goe-io-Zww"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="weS-V8-jg5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3746" y="98"/>
+            <point key="canvasLocation" x="3745.5" y="97.5"/>
         </scene>
     </scenes>
 </document>
