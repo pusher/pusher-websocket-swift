@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0
+
+* Made the `Pusher` initializer take an instance of a `PusherClientOptions` struct ([@Noobish1](https://github.com/Noobish1))
+* Authenticating channels can now be achieved by: specifying an auth endpoint, providing an auth request builder (which conforms to the `AuthRequestBuilder` protocol), or by providing your app's secret (not for production) ([@Noobish1](https://github.com/Noobish1))
+* Made the code Swiftier in general, e.g. `PusherChannelType` enum ([@Noobish1](https://github.com/Noobish1))
+* More robust reconnect (#66 - thanks to [@psycotica0](https://github.com/psycotica0) for review)
+* Added two new connection state cases: `Reconnecting` and `ReconnectingWhenNetworkBecomesReachable`
+* Added `reconnectAttemptsMax` and `maxReconnectGapInSeconds` for tweaking specifics of reconnection logic
+* Receiving Pusher-related errors by binding to the event name `pusher:error` on the client now works
+
 ## 1.0.0
 
 * Add `onMemberAdded`, `onMemberRemoved`, `findMember`, and `me` functions to PresencePusherChannel class
