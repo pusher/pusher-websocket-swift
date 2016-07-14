@@ -12,6 +12,11 @@
 
 What else would you want? Head over to the example app [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/Example/ViewController.swift) to get some code you can drop in to get started.
 
+## Looking for the push notifications beta?
+
+Head over to the [push-notifications](https://github.com/pusher/pusher-websocket-swift/tree/push-notifications) branch.
+
+
 ## Table of Contents
 
 * [Installation](#installation)
