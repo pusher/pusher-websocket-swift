@@ -66,12 +66,6 @@
 		33BB998E1D21230300B25C2A /* PusherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99641D21226C00B25C2A /* PusherConnectionTests.swift */; };
 		33BB998F1D21230300B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */; };
 		33BB99901D21230300B25C2A /* PusherTopLevelAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */; };
-		33BB99911D21230A00B25C2A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33BB99671D21226C00B25C2A /* Info.plist */; };
-		33BB99921D21230B00B25C2A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33BB99671D21226C00B25C2A /* Info.plist */; };
-		33BB99931D21230C00B25C2A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33BB99671D21226C00B25C2A /* Info.plist */; };
-		33BB99941D21231300B25C2A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33831C8D1A9CF61600B124F1 /* Info.plist */; };
-		33BB99951D21231400B25C2A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33831C8D1A9CF61600B124F1 /* Info.plist */; };
-		33BB99961D21231400B25C2A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33831C8D1A9CF61600B124F1 /* Info.plist */; };
 		33C0D2D51CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
 		33C0D2D61CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
 		33C0D2D71CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
@@ -528,7 +522,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				TargetAttributes = {
 					33831C881A9CF61600B124F1 = {
 						CreatedOnToolsVersion = 6.3;
@@ -568,7 +562,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33BB99951D21231400B25C2A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,7 +569,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33BB99961D21231400B25C2A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +576,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33BB99941D21231300B25C2A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,7 +583,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33BB99911D21230A00B25C2A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,7 +590,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33BB99921D21230B00B25C2A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,7 +597,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33BB99931D21230C00B25C2A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
