@@ -56,7 +56,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'PusherSwift'
+pod 'PusherSwift', git: 'git@github.com:pusher/PusherSwift.git', branch: 'push-notifications'
+
+# we need to use the release candidate version on GitHub
+# pod 'PusherSwift'
 ```
 
 Then, run the following command:
@@ -89,7 +92,7 @@ $ brew install carthage
 To integrate PusherSwift into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "pusher/pusher-websocket-swift"
+github "pusher/pusher-websocket-swift" "2.1.0rc1"
 ```
 
 
