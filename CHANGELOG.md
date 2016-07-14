@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+* Fix potential forceful unwrapping of a nil in debug logging when reconnecting (thanks to [@psycotica0](https://github.com/psycotica0) for the spot)
+
 ## 2.0.0
 
 * Made the `Pusher` initializer take an instance of a `PusherClientOptions` struct ([@Noobish1](https://github.com/Noobish1))

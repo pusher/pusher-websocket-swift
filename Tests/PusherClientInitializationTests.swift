@@ -11,7 +11,7 @@ import Quick
 import Nimble
 import PusherSwift
 
-let VERSION = "2.0.0"
+let VERSION = "2.0.1"
 
 class PusherClientInitializationSpec: QuickSpec {
     override func spec() {
