@@ -90,6 +90,7 @@ public class NativePusher {
         let deviceTokenString = deviceTokenToString(deviceToken)
 
         let params: [String : AnyObject] = [
+            "app_key": pusherAppKey!,
             "platform_type": NativePusher.PLATFORM_TYPE,
             "token": deviceTokenString
         ]
