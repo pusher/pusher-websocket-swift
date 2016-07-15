@@ -92,7 +92,7 @@ $ brew install carthage
 To integrate PusherSwift into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "pusher/pusher-websocket-swift" "2.1.0rc1"
+github "pusher/pusher-websocket-swift" "2.1.0rc2"
 ```
 
 
