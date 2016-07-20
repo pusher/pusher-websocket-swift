@@ -425,7 +425,7 @@ print(me)
 
 ## Push notifications
 
-Pusher also supports push notifications. Instances of your Swift application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your Swift application as push notifications.
+Pusher also supports push notifications. Instances of your Swift application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your Swift application as push notifications. See [our guide to setting up push notifications for iOS](https://pusher.com/docs/push_notifications/ios) for a friendly introduction.
 
 You should set up your app for push notifications in your `AppDelegate`. Start off your app in the usual way:
 
