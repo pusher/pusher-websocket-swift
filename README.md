@@ -64,6 +64,16 @@ Then, run the following command:
 $ pod install
 ```
 
+If you find that you're having the most recent version installed when you run `pod install` then try running:
+
+```bash
+$ pod cache clean
+$ pod repo update PusherSwift
+$ pod install
+```
+
+Also you'll need to make sure that you've not got the version of PusherSwift locked to an old version in your `Podfile.lock` file.
+
 ### Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
