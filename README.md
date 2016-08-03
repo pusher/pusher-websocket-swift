@@ -56,7 +56,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'PusherSwift', git: 'git@github.com:pusher/PusherSwift.git', branch: 'push-notifications'
+pod 'PusherSwift', git: 'https://github.com/pusher/pusher-websocket-swift.git', branch: 'push-notifications'
 
 # we need to use the release candidate version on GitHub
 # pod 'PusherSwift'
