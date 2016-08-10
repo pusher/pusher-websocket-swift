@@ -461,9 +461,13 @@ public class PusherConnection {
                         sendAuthorisationRequest(request, channel: channel, callback: callback)
                         return true
                     case .AuthRequestBuilder(authRequestBuilder: let builder):
-                        let request = builder.requestFor(socketID, channel: channel)
-                        sendAuthorisationRequest(request, channel: channel, callback: callback)
-                        return true
+                        if let request = builder.requestFor(socketID, channel: channel) {
+                            sendAuthorisationRequest(request, channel: channel, callback: callback)
+                            
+                            return true
+                        } else {
+                            return false
+                        }
                     case .Internal(secret: let secret):
                         var msg = ""
                         var channelData = ""

@@ -91,7 +91,7 @@ class AuthenticationSpec: QuickSpec {
 
             it("should make the request created by something conforming to the AuthRequestBuilderProtocol") {
                 struct AuthRequestBuilder: AuthRequestBuilderProtocol {
-                    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest {
+                    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest? {
                         let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:9292/builder")!)
                         request.HTTPMethod = "POST"
                         request.HTTPBody = "socket_id=\(socketID)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
