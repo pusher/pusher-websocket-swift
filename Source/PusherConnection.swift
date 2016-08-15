@@ -278,8 +278,8 @@ public class PusherConnection {
     private func handleConnectionEstablishedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
             if let connectionData = getPusherEventJSONFromString(data), socketId = connectionData["socket_id"] as? String {
-                updateConnectionState(.Connected)
                 self.socketId = socketId
+                updateConnectionState(.Connected)
 
                 self.reconnectAttempts = 0
                 self.reconnectTimer?.invalidate()
