@@ -145,6 +145,7 @@
 					33831C5D1A9CEEE900B124F1 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = 2YKMTT96X8;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -289,6 +290,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -309,6 +311,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
