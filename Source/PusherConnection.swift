@@ -26,6 +26,8 @@ public class PusherConnection {
     public var reconnectAttempts: Int = 0
     public var maxReconnectGapInSeconds: Double? = nil
     internal var reconnectTimer: NSTimer? = nil
+    public var subscriptionErrorHandler: ((channelName: String, response: NSURLResponse?, data: String?, error: NSError?) -> Void)?
+    public var subscriptionSuccessHandler: ((channelName: String) -> Void)?
 
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
@@ -251,6 +253,9 @@ public class PusherConnection {
                 callGlobalCallbacks("pusher:subscription_succeeded", jsonObject: json)
                 chan.handleEvent("pusher:subscription_succeeded", eventData: eData)
             }
+            
+            subscriptionSuccessHandler?(channelName: channelName)
+            
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(channelName) as? PresencePusherChannel {
                     if let data = json["data"] as? String, dataJSON = getPusherEventJSONFromString(data) {
@@ -335,7 +340,7 @@ public class PusherConnection {
         - parameter channelName: The name of channel for which authorization failed
         - parameter data:        The error returned by the auth endpoint
     */
-    private func handleAuthorizationErrorEvent(channelName: String, data: String?) {
+    private func handleAuthorizationErrorForChannel(channelName: String, response: NSURLResponse?, data: String?, error: NSError?) {
         let eventName = "pusher:subscription_error"
         let json = [
             "event": eventName,
@@ -345,6 +350,8 @@ public class PusherConnection {
         dispatch_async(dispatch_get_main_queue()) {
             self.handleEvent(eventName, jsonObject: json)
         }
+        
+        subscriptionErrorHandler?(channelName: channelName, response: response, data: data, error: error)
     }
 
     /**
@@ -454,7 +461,13 @@ public class PusherConnection {
             if let socketID = self.socketId {
                 switch self.options.authMethod {
                     case .NoMethod:
-                        print("Authentication method required for private / presence channels but none provided.")
+                        let errorMessage = "Authentication method required for private / presence channels but none provided."
+                        let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
+                        
+                        print(errorMessage)
+                        
+                        handleAuthorizationErrorForChannel(channel.name, response: nil, data: nil, error: error)
+                        
                         return false
                     case .Endpoint(authEndpoint: let authEndpoint):
                         let request = requestForAuthEndpoint(authEndpoint, socketID: socketID, channel: channel)
@@ -466,6 +479,11 @@ public class PusherConnection {
                             
                             return true
                         } else {
+                            let errorMessage = "Authentication request could not be built"
+                            let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
+                            
+                            handleAuthorizationErrorForChannel(channel.name, response: nil, data: nil, error: error)
+                            
                             return false
                         }
                     case .Internal(secret: let secret):
@@ -564,10 +582,11 @@ public class PusherConnection {
         - parameter callback: An optional callback to be passed along to relevant auth handlers
     */
     private func sendAuthorisationRequest(request: NSURLRequest, channel: PusherChannel, callback: (([String : String]?) -> Void)? = nil) {
-        let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
-            if let error = error {
+        let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, sessionError in
+            if let error = sessionError {
                 print("Error authorizing channel [\(channel.name)]: \(error)")
-                self.handleAuthorizationErrorEvent(channel.name, data: error.domain)
+                
+                self.handleAuthorizationErrorForChannel(channel.name, response: response, data: nil, error: error)
             }
             if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
                 do {
@@ -576,16 +595,16 @@ public class PusherConnection {
                     }
                 } catch {
                     print("Error authorizing channel [\(channel.name)]")
-                    self.handleAuthorizationErrorEvent(channel.name, data: nil)
+                    self.handleAuthorizationErrorForChannel(channel.name, response: httpResponse, data: nil, error: sessionError)
                 }
             } else {
                 if let d = data {
                     let dataString = String(data: d, encoding: NSUTF8StringEncoding)
                     print ("Error authorizing channel [\(channel.name)]: \(dataString)")
-                    self.handleAuthorizationErrorEvent(channel.name, data: dataString)
+                    self.handleAuthorizationErrorForChannel(channel.name, response: response, data: dataString, error: sessionError)
                 } else {
                     print("Error authorizing channel [\(channel.name)]")
-                    self.handleAuthorizationErrorEvent(channel.name, data: nil)
+                    self.handleAuthorizationErrorForChannel(channel.name, response: response, data: nil, error: sessionError)
                 }
             }
         })
