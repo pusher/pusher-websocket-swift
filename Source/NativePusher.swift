@@ -20,6 +20,7 @@ public class NativePusher {
 
     private static let PLATFORM_TYPE = "apns"
     private let CLIENT_API_V1_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
+    private let LIBRARY_NAME_AND_VERSION = "pusher-websocket-swift " + VERSION
 
     private let URLSession = NSURLSession.sharedSession()
     private var failedNativeServiceRequests: Int = 0
@@ -97,6 +98,7 @@ public class NativePusher {
 
         try! request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library" )
 
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
             if let httpResponse = response as? NSHTTPURLResponse
@@ -199,6 +201,7 @@ public class NativePusher {
 
         try! request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library")
 
         let task = URLSession.dataTaskWithRequest(
             request,
