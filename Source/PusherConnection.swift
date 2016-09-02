@@ -585,28 +585,30 @@ public class PusherConnection {
         let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, sessionError in
             if let error = sessionError {
                 print("Error authorizing channel [\(channel.name)]: \(error)")
-                
                 self.handleAuthorizationErrorForChannel(channel.name, response: response, data: nil, error: error)
+                return
             }
-            if let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
-                do {
-                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String : AnyObject] {
-                        self.handleAuthResponse(json, channel: channel, callback: callback)
-                    }
-                } catch {
-                    print("Error authorizing channel [\(channel.name)]")
-                    self.handleAuthorizationErrorForChannel(channel.name, response: httpResponse, data: nil, error: sessionError)
-                }
-            } else {
-                if let d = data {
-                    let dataString = String(data: d, encoding: NSUTF8StringEncoding)
-                    print ("Error authorizing channel [\(channel.name)]: \(dataString)")
-                    self.handleAuthorizationErrorForChannel(channel.name, response: response, data: dataString, error: sessionError)
-                } else {
-                    print("Error authorizing channel [\(channel.name)]")
-                    self.handleAuthorizationErrorForChannel(channel.name, response: response, data: nil, error: sessionError)
-                }
+            
+            guard let data = data else {
+                print("Error authorizing channel [\(channel.name)]")
+                self.handleAuthorizationErrorForChannel(channel.name, response: response, data: nil, error: nil)
+                return
             }
+            
+            guard let httpResponse = response as? NSHTTPURLResponse where (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) else {
+                let dataString = String(data: data, encoding: NSUTF8StringEncoding)
+                print ("Error authorizing channel [\(channel.name)]: \(dataString)")
+                self.handleAuthorizationErrorForChannel(channel.name, response: response, data: dataString, error: nil)
+                return
+            }
+            
+            guard let jsonObject = try? NSJSONSerialization.JSONObjectWithData(data, options: []), let json = jsonObject as? [String: AnyObject] else {
+                print("Error authorizing channel [\(channel.name)]")
+                self.handleAuthorizationErrorForChannel(channel.name, response: httpResponse, data: nil, error: nil)
+                return
+            }
+            
+            self.handleAuthResponse(json, channel: channel, callback: callback)
         })
 
         task.resume()
