@@ -132,7 +132,10 @@ public class NativePusher {
                             print("Could not parse body as JSON object:" + String(data))
                         }
             } else {
-                print("Bad HTTP response: " + String(response))
+                if data != nil && response != nil {
+                    let responseBody = String(data: data!, encoding: NSUTF8StringEncoding)!
+                    print("Bad HTTP response: \(response!) with body: \(responseBody)")
+                }
             }
         })
 
