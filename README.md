@@ -31,6 +31,7 @@ Head over to the [push-notifications](https://github.com/pusher/pusher-websocket
   * [Receiving errors](#receiving-errors)
 * [Presence channel specifics](#presence-channel-specifics)
 * [Testing](#testing)
+* [Extensions](#extensions)
 * [Communication](#communication)
 * [Credits](#credits)
 * [License](#license)
@@ -424,6 +425,11 @@ print(me)
 There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode) when you have one the `PusherSwiftTests-*` schemes active in Xcode.
 
 The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift). See [.travis.yml](https://github.com/pusher/pusher-websocket-swift/blob/master/.travis.yml) for details on how the Travis tests are run.
+
+
+## Extensions
+
+* [RxPusherSwift](https://github.com/jondwillis/RxPusherSwift)
 
 
 ## Communication
