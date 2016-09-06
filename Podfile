@@ -5,8 +5,8 @@ workspace 'PusherSwift'
 use_frameworks!
 
 def import_test_pods
-  pod 'Quick', '0.9.2'
-  pod 'Nimble', '4.0.1'
+  pod 'Quick', '0.9.3'
+  pod 'Nimble', '4.1.0'
 end
 
 target 'PusherSwiftTests-iOS' do
