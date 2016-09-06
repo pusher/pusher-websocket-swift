@@ -6,8 +6,8 @@
 //
 //
 
-public class PusherChannels {
-    public var channels = [String: PusherChannel]()
+open class PusherChannels {
+    open var channels = [String: PusherChannel]()
 
     /**
         Create a new PusherChannel, which is returned, and add it to the PusherChannels list
@@ -23,7 +23,7 @@ public class PusherChannels {
         - returns: A new PusherChannel instance
     */
     internal func add(
-        channelName: String,
+        _ channelName: String,
         connection: PusherConnection,
         onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
@@ -51,8 +51,8 @@ public class PusherChannels {
 
         - parameter channelName: The name of the channel to remove
     */
-    internal func remove(channelName: String) {
-        self.channels.removeValueForKey(channelName)
+    internal func remove(_ channelName: String) {
+        self.channels.removeValue(forKey: channelName)
     }
 
     /**
@@ -62,7 +62,7 @@ public class PusherChannels {
 
         - returns: A PusherChannel instance, if a channel with the given name existed, otherwise nil
     */
-    internal func find(channelName: String) -> PusherChannel? {
+    internal func find(_ channelName: String) -> PusherChannel? {
         return self.channels[channelName]
     }
 }

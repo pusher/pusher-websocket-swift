@@ -35,7 +35,7 @@ class PusherTopLevelApiSpec: QuickSpec {
 
             it("connected is set to true when connection connects") {
                 pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.connected))
             }
         }
 
@@ -48,9 +48,9 @@ class PusherTopLevelApiSpec: QuickSpec {
 
             it("connected is set to false when connection is disconnected") {
                 pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.connected))
                 pusher.disconnect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.disconnected))
             }
 
             it("sets the subscribed property of channels to false") {
@@ -72,39 +72,39 @@ class PusherTopLevelApiSpec: QuickSpec {
                     _ = pusher.subscribe("test-channel")
                     expect(socket.stubber.calls.last?.name).to(equal("writeString"))
                     let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-                    let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"]
-                    let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                    let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String : Any]
+                    let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
                     expect(parsedEqualsExpected).to(beTrue())
                 }
 
                 it("subscribes to a public channel") {
-                    pusher.subscribe("test-channel")
+                    let _ = pusher.subscribe("test-channel")
                     let testChannel = pusher.connection.channels.channels["test-channel"]
                     expect(testChannel?.subscribed).to(beTruthy())
                 }
 
                 it("subscription succeeded event sent to global channel") {
-                    let callback = { (data: AnyObject?) -> Void in
-                        if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
+                    let callback = { (data: Any?) -> Void in
+                        if let data = data as? [String : Any], let eName = data["event"] as? String, eName == "pusher:subscription_succeeded" {
                             socket.appendToCallbackCheckString("globalCallbackCalled")
                         }
                     }
-                    pusher.bind(callback)
+                    let _ = pusher.bind(callback)
                     expect(socket.callbackCheckString).to(equal(""))
-                    pusher.subscribe("test-channel")
+                    let _ = pusher.subscribe("test-channel")
                     expect(socket.callbackCheckString).to(equal("globalCallbackCalled"))
                 }
 
                 it("subscription succeeded event sent to private channel") {
-                    let callback = { (data: AnyObject?) -> Void in
-                        if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
+                    let callback = { (data: Any?) -> Void in
+                        if let data = data as? [String : Any], let eName = data["event"] as? String, eName == "pusher:subscription_succeeded" {
                             socket.appendToCallbackCheckString("channelCallbackCalled")
                         }
                     }
-                    pusher.bind(callback)
+                    let _ = pusher.bind(callback)
                     expect(socket.callbackCheckString).to(equal(""))
                     let chan = pusher.subscribe("test-channel")
-                    chan.bind("pusher:subscription_succeeded", callback: callback)
+                    let _ = chan.bind("pusher:subscription_succeeded", callback: callback)
                     expect(socket.callbackCheckString).to(equal("channelCallbackCalled"))
                 }
 
@@ -117,7 +117,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                 describe("that require authentication") {
                     beforeEach({
                         let options = PusherClientOptions(
-                            authMethod: AuthMethod.Internal(secret: "secret")
+                            authMethod: AuthMethod.`internal`(secret: "secret")
                         )
                         pusher = Pusher(key: "key", options: options)
                         socket.delegate = pusher.connection
@@ -126,13 +126,13 @@ class PusherTopLevelApiSpec: QuickSpec {
                     })
 
                     it("subscribes to a private channel") {
-                        pusher.subscribe("private-channel")
+                        let _ = pusher.subscribe("private-channel")
                         let privateChannel = pusher.connection.channels.channels["private-channel"]
                         expect(privateChannel?.subscribed).to(beTruthy())
                     }
 
                     it("subscribes to a presence channel") {
-                        pusher.subscribe("presence-channel")
+                        let _ = pusher.subscribe("presence-channel")
                         let presenceChannel = pusher.connection.channels.channels["presence-channel"]
                         expect(presenceChannel?.subscribed).to(beTruthy())
                     }
@@ -147,7 +147,7 @@ class PusherTopLevelApiSpec: QuickSpec {
 
             describe("before connection has been made") {
                 it("subscribes to a public channel") {
-                    pusher.subscribe("test-channel")
+                    let _ = pusher.subscribe("test-channel")
                     let testChannel = pusher.connection.channels.channels["test-channel"]
                     pusher.connect()
                     expect(testChannel?.subscribed).to(beTruthy())
@@ -162,7 +162,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                 describe("that require authentication") {
                     beforeEach({
                         let options = PusherClientOptions(
-                            authMethod: AuthMethod.Internal(secret: "secret")
+                            authMethod: AuthMethod.`internal`(secret: "secret")
                         )
                         pusher = Pusher(key: "key", options: options)
                         socket.delegate = pusher.connection
@@ -170,14 +170,14 @@ class PusherTopLevelApiSpec: QuickSpec {
                     })
 
                     it("subscribes to a private channel") {
-                        pusher.subscribe("private-channel")
+                        let _ = pusher.subscribe("private-channel")
                         let privateChannel = pusher.connection.channels.channels["private-channel"]
                         pusher.connect()
                         expect(privateChannel?.subscribed).to(beTruthy())
                     }
 
                     it("subscribes to a presence channel") {
-                        pusher.subscribe("presence-channel")
+                        let _ = pusher.subscribe("presence-channel")
                         let presenceChannel = pusher.connection.channels.channels["presence-channel"]
                         pusher.connect()
                         expect(presenceChannel?.subscribed).to(beTruthy())
@@ -195,7 +195,7 @@ class PusherTopLevelApiSpec: QuickSpec {
         describe("unsubscribing from a channel") {
             it("removes the channel from the connection's channels property") {
                 pusher.connect()
-                pusher.subscribe("test-channel")
+                let _ = pusher.subscribe("test-channel")
                 expect(pusher.connection.channels.channels["test-channel"]).toNot(beNil())
                 pusher.unsubscribe("test-channel")
                 expect(pusher.connection.channels.channels["test-channel"]).to(beNil())
@@ -203,12 +203,12 @@ class PusherTopLevelApiSpec: QuickSpec {
 
             it("sends unsubscribe to Pusher over the Websocket") {
                 pusher.connect()
-                pusher.subscribe("test-channel")
+                let _ = pusher.subscribe("test-channel")
                 pusher.unsubscribe("test-channel")
                 expect(socket.stubber.calls.last?.name).to(equal("writeString"))
                 let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"] as [String : Any]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
                 expect(parsedEqualsExpected).to(beTrue())
             }
         }
@@ -216,9 +216,9 @@ class PusherTopLevelApiSpec: QuickSpec {
         describe("binding to events globally") {
             it("adds a callback to the globalChannel's list of callbacks") {
                 pusher.connect()
-                let callback = { (data: AnyObject?) -> Void in print(data) }
+                let callback = { (data: Any?) -> Void in print(data) }
                 expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(0))
-                pusher.bind(callback)
+                let _ = pusher.bind(callback)
                 expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(1))
             }
         }
@@ -226,7 +226,7 @@ class PusherTopLevelApiSpec: QuickSpec {
         describe("unbinding a global callback") {
             it("unbinds the callback from the globalChannel's list of callbacks") {
                 pusher.connect()
-                let callback = { (data: AnyObject?) -> Void in print(data) }
+                let callback = { (data: Any?) -> Void in print(data) }
                 let callBackId = pusher.bind(callback)
                 expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(1))
                 pusher.unbind(callBackId)
@@ -237,10 +237,10 @@ class PusherTopLevelApiSpec: QuickSpec {
         describe("unbinding all global callbacks") {
             it("unbinds the callback from the globalChannel's list of callbacks") {
                 pusher.connect()
-                let callback = { (data: AnyObject?) -> Void in print(data) }
-                pusher.bind(callback)
-                let callbackTwo = { (someData: AnyObject?) -> Void in print(someData) }
-                pusher.bind(callbackTwo)
+                let callback = { (data: Any?) -> Void in print(data) }
+                let _ = pusher.bind(callback)
+                let callbackTwo = { (someData: Any?) -> Void in print(someData) }
+                let _ = pusher.bind(callbackTwo)
                 expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(2))
                 pusher.unbindAll()
                 expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(0))

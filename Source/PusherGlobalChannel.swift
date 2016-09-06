@@ -6,8 +6,8 @@
 //
 //
 
-public class GlobalChannel: PusherChannel {
-    public var globalCallbacks: [String: (AnyObject?) -> Void] = [:]
+open class GlobalChannel: PusherChannel {
+    open var globalCallbacks: [String : (Any?) -> Void] = [:]
 
     /**
         Initializes a new GlobalChannel instance
@@ -28,12 +28,12 @@ public class GlobalChannel: PusherChannel {
         - parameter eventName:   The name of the received event
         - parameter eventdata:   The data associated with the received message
     */
-    internal func handleEvent(channelName: String?, eventName: String, eventData: String) {
+    internal func handleEvent(_ channelName: String?, eventName: String, eventData: String) {
         for (_, callback) in self.globalCallbacks {
             if let channelName = channelName {
-                callback(["channel": channelName, "event": eventName, "data": eventData])
+                callback(["channel": channelName, "event": eventName, "data": eventData] as [String : Any])
             } else {
-                callback(["event": eventName, "data": eventData])
+                callback(["event": eventName, "data": eventData] as [String : Any])
             }
         }
     }
@@ -46,7 +46,7 @@ public class GlobalChannel: PusherChannel {
      - parameter eventName:   The name of the received event
      - parameter eventdata:   The data associated with the received message
      */
-    internal func handleErrorEvent(eventName: String, eventData: [String:AnyObject]) {
+    internal func handleErrorEvent(_ eventName: String, eventData: [String:AnyObject]) {
         for (_, callback) in self.globalCallbacks {
             callback(["event": eventName, "data": eventData])
         }
@@ -59,8 +59,8 @@ public class GlobalChannel: PusherChannel {
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
-    internal func bind(callback: (AnyObject?) -> Void) -> String {
-        let randomId = NSUUID().UUIDString
+    internal func bind(_ callback: @escaping (Any?) -> Void) -> String {
+        let randomId = UUID().uuidString
         self.globalCallbacks[randomId] = callback
         return randomId
     }
@@ -70,14 +70,14 @@ public class GlobalChannel: PusherChannel {
 
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
-    internal func unbind(callbackId: String) {
-        globalCallbacks.removeValueForKey(callbackId)
+    internal func unbind(_ callbackId: String) {
+        globalCallbacks.removeValue(forKey: callbackId)
     }
 
     /**
         Unbinds all callbacks from the channel
     */
-    override public func unbindAll() {
+    override open func unbindAll() {
         globalCallbacks = [:]
     }
 }

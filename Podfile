@@ -5,8 +5,8 @@ workspace 'PusherSwift'
 use_frameworks!
 
 def import_test_pods
-  pod 'Quick', '0.9.3'
-  pod 'Nimble', '4.1.0'
+  pod 'Quick', git: 'https://github.com/Quick/Quick.git', branch: 'swift-3.0'
+  pod 'Nimble', git: 'https://github.com/Quick/Nimble.git', branch: 'swift-3.0'
 end
 
 target 'PusherSwiftTests-iOS' do

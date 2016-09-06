@@ -26,48 +26,48 @@ class HandlingIncomingEventsSpec: QuickSpec {
             })
 
             it("should call any callbacks setup on the globalChannel") {
-                let callback = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("testingIWasCalled") }
-                pusher.bind(callback)
+                let callback = { (data: Any?) -> Void in socket.appendToCallbackCheckString("testingIWasCalled") }
+                let _ = pusher.bind(callback)
                 expect(socket.callbackCheckString).to(equal(""))
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "stupid data"])
+                pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
                 expect(socket.callbackCheckString).to(equal("testingIWasCalled"))
             }
 
             it("should call the relevant callback(s) setup on the relevant channel(s)") {
-                let callback = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
+                let callback = { (data: Any?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
                 let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
+                let _ = chan.bind("test-event", callback: callback)
                 expect(socket.callbackCheckString).to(equal(""))
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "stupid data"])
+                pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
                 expect(socket.callbackCheckString).to(equal("channelCallbackCalled"))
             }
 
             it("should call the relevant callback(s) setup on the relevant channel(s) and on the globalChannel") {
-                let callback = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("globalCallbackCalled") }
-                pusher.bind(callback)
+                let callback = { (data: Any?) -> Void in socket.appendToCallbackCheckString("globalCallbackCalled") }
+                let _ = pusher.bind(callback)
                 let chan = pusher.subscribe("my-channel")
-                let callbackForChannel = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
-                chan.bind("test-event", callback: callbackForChannel)
+                let callbackForChannel = { (data: Any?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
+                let _ = chan.bind("test-event", callback: callbackForChannel)
                 expect(socket.callbackCheckString).to(equal(""))
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "stupid data"])
+                pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
                 expect(socket.callbackCheckString).to(equal("globalCallbackCalledchannelCallbackCalled"))
             }
 
             it("should return a JSON object to the callbacks if the string can be parsed and the user wanted to get a JSON object") {
-                let callback = { (data: AnyObject?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
+                let callback = { (data: Any?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
                 let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
+                let _ = chan.bind("test-event", callback: callback)
                 expect(socket.objectGivenToCallback).to(beNil())
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
+                pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
                 expect(socket.objectGivenToCallback as? [String : String]).to(equal(["test": "test string", "and": "another"]))
             }
 
             it("should return a JSON string to the callbacks if the string cannot be parsed and the user wanted to get a JSON object") {
-                let callback = { (data: AnyObject?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
+                let callback = { (data: Any?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
                 let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
+                let _ = chan.bind("test-event", callback: callback)
                 expect(socket.objectGivenToCallback).to(beNil())
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "test"])
+                pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "test" as AnyObject])
                 expect(socket.objectGivenToCallback as? String).to(equal("test"))
             }
 
@@ -76,11 +76,11 @@ class HandlingIncomingEventsSpec: QuickSpec {
                 pusher = Pusher(key: key, options: options)
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
-                let callback = { (data: AnyObject?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
+                let callback = { (data: Any?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
                 let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
+                let _ = chan.bind("test-event", callback: callback)
                 expect(socket.objectGivenToCallback).to(beNil())
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
+                pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
                 expect(socket.objectGivenToCallback as? String).to(equal("{\"test\":\"test string\",\"and\":\"another\"}"))
             }
 
@@ -88,9 +88,9 @@ class HandlingIncomingEventsSpec: QuickSpec {
                 pusher = Pusher(key: key)
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
-                pusher.bind({ (message: AnyObject?) in
-                    if let message = message as? [String: AnyObject], eventName = message["event"] as? String where eventName == "pusher:error" {
-                        if let data = message["data"] as? [String: AnyObject], errorMessage = data["message"] as? String {
+                let _ = pusher.bind({ (message: Any?) in
+                    if let message = message as? [String: AnyObject], let eventName = message["event"] as? String , eventName == "pusher:error" {
+                        if let data = message["data"] as? [String: AnyObject], let errorMessage = data["message"] as? String {
                             socket.appendToCallbackCheckString(errorMessage)
                         }
                     }
@@ -98,14 +98,14 @@ class HandlingIncomingEventsSpec: QuickSpec {
 
                 // pretend that we tried to subscribe to my-channel twice and got this error
                 // back from Pusher
-                pusher.connection.handleEvent("pusher:error", jsonObject: ["event": "pusher:error", "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"]])
+                pusher.connection.handleEvent(eventName: "pusher:error", jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
 
                 expect(socket.callbackCheckString).to(equal("Existing subscription to channel my-channel"))
             }
 
             it("should pass incoming messages to the debugLogger if one is set") {
                 let debugLogger = { (text: String) in
-                    if text.rangeOfString("websocketDidReceiveMessage") != nil {
+                    if text.range(of: "websocketDidReceiveMessage") != nil {
                         socket.appendToCallbackCheckString(text)
                     }
                 }
