@@ -8,11 +8,11 @@
 
 public typealias PusherUserInfoObject = [String : AnyObject]
 
-public class PresencePusherChannel: PusherChannel {
-    public var members: [PresenceChannelMember]
-    public var onMemberAdded: ((PresenceChannelMember) -> ())?
-    public var onMemberRemoved: ((PresenceChannelMember) -> ())?
-    public var myId: String? = nil
+open class PresencePusherChannel: PusherChannel {
+    open var members: [PresenceChannelMember]
+    open var onMemberAdded: ((PresenceChannelMember) -> ())?
+    open var onMemberRemoved: ((PresenceChannelMember) -> ())?
+    open var myId: String? = nil
 
     /**
         Initializes a new PresencePusherChannel with a given name, conenction, and optional
@@ -50,16 +50,16 @@ public class PresencePusherChannel: PusherChannel {
 
         if let userId = memberJSON["user_id"] as? String {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PresenceChannelMember(userId: userId, userInfo: userInfo)
+                member = PresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
 
             } else {
                 member = PresenceChannelMember(userId: userId)
             }
         } else {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PresenceChannelMember(userId: String(memberJSON["user_id"]!), userInfo: userInfo)
+                member = PresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!), userInfo: userInfo as AnyObject?)
             } else {
-                member = PresenceChannelMember(userId: String(memberJSON["user_id"]!))
+                member = PresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!))
             }
         }
         members.append(member)
@@ -77,7 +77,7 @@ public class PresencePusherChannel: PusherChannel {
         for (userId, userInfo) in memberHash {
             let member: PresenceChannelMember
             if let userInfo = userInfo as? PusherUserInfoObject {
-                member = PresenceChannelMember(userId: userId, userInfo: userInfo)
+                member = PresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
             } else {
                 member = PresenceChannelMember(userId: userId)
             }
@@ -98,12 +98,12 @@ public class PresencePusherChannel: PusherChannel {
         if let userId = memberJSON["user_id"] as? String {
             id = userId
         } else {
-            id = String(memberJSON["user_id"]!)
+            id = String.init(describing: memberJSON["user_id"]!)
         }
 
-        if let index = self.members.indexOf({ $0.userId == id }) {
+        if let index = self.members.index(where: { $0.userId == id }) {
             let member = self.members[index]
-            self.members.removeAtIndex(index)
+            self.members.remove(at: index)
             self.onMemberRemoved?(member)
         }
     }
@@ -113,26 +113,26 @@ public class PresencePusherChannel: PusherChannel {
         of the subscription to the channel
 
         - parameter channelData: The channel data obtained from authorization of the subscription
-                                to the channel
+                                 to the channel
     */
     internal func setMyId(channelData: String) {
-        if let channelDataObject = parseChannelData(channelData), userId = channelDataObject["user_id"] {
-            self.myId = String(userId)
+        if let channelDataObject = parse(channelData: channelData), let userId = channelDataObject["user_id"] {
+            self.myId = String.init(describing: userId)
         }
     }
 
     /**
         Parse a string to extract the channel data object from it
 
-        - parameter string: The channel data string received as part of authorization
+        - parameter channelData: The channel data string received as part of authorization
 
         - returns: A dictionary of channel data
     */
-    private func parseChannelData(channelData: String) -> [String : AnyObject]? {
-        let data = (channelData as NSString).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+    fileprivate func parse(channelData: String) -> [String : AnyObject]? {
+        let data = (channelData as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
-            if let jsonData = data, jsonObject = try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String : AnyObject] {
+            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : AnyObject] {
                 return jsonObject
             } else {
                 print("Unable to parse string: \(channelData)")
@@ -147,12 +147,12 @@ public class PresencePusherChannel: PusherChannel {
     /**
         Returns the PresenceChannelMember object for the given user id
 
-        - parameter string: The user id of the PresenceChannelMember for whom you want
+        - parameter userId: The user id of the PresenceChannelMember for whom you want
                             the PresenceChannelMember object
 
         - returns: The PresenceChannelMember object for the given user id
     */
-    public func findMember(userId: String) -> PresenceChannelMember? {
+    open func findMember(userId: String) -> PresenceChannelMember? {
         return self.members.filter({ $0.userId == userId }).first
     }
 
@@ -161,9 +161,9 @@ public class PresencePusherChannel: PusherChannel {
 
         - returns: The connected user's PresenceChannelMember object
     */
-    public func me() -> PresenceChannelMember? {
+    open func me() -> PresenceChannelMember? {
         if let id = self.myId {
-            return findMember(id)
+            return findMember(userId: id)
         } else {
             return nil
         }
@@ -172,9 +172,9 @@ public class PresencePusherChannel: PusherChannel {
 
 public struct PresenceChannelMember {
     public let userId: String
-    public let userInfo: AnyObject?
+    public let userInfo: Any?
 
-    public init(userId: String, userInfo: AnyObject? = nil) {
+    public init(userId: String, userInfo: Any? = nil) {
         self.userId = userId
         self.userInfo = userInfo
     }

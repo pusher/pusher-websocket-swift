@@ -28,29 +28,29 @@ class ConnectionStateChangeDelegateSpec: QuickSpec {
 
         describe("the delegate gets called") {
             it("twice going from disconnected -> connecting -> connected") {
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.disconnected))
                 pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.connected))
                 expect(stateChangeDelegate.stubber.calls.first?.name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls.first?.args?.first as? ConnectionState).to(equal(ConnectionState.Disconnected))
-                expect(stateChangeDelegate.stubber.calls.first?.args?.last as? ConnectionState).to(equal(ConnectionState.Connecting))
+                expect(stateChangeDelegate.stubber.calls.first?.args?.first as? ConnectionState).to(equal(ConnectionState.disconnected))
+                expect(stateChangeDelegate.stubber.calls.first?.args?.last as? ConnectionState).to(equal(ConnectionState.connecting))
                 expect(stateChangeDelegate.stubber.calls.last?.name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState).to(equal(ConnectionState.Connecting))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState).to(equal(ConnectionState.Connected))
+                expect(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState).to(equal(ConnectionState.connecting))
+                expect(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState).to(equal(ConnectionState.connected))
             }
 
             it("four times going from disconnected -> connecting -> connected -> disconnecting -> disconnected") {
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.disconnected))
                 pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
+                expect(pusher.connection.connectionState).to(equal(ConnectionState.connected))
                 pusher.disconnect()
                 expect(stateChangeDelegate.stubber.calls.count).to(equal(4))
                 expect(stateChangeDelegate.stubber.calls[2].name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls[2].args?.first as? ConnectionState).to(equal(ConnectionState.Connected))
-                expect(stateChangeDelegate.stubber.calls[2].args?.last as? ConnectionState).to(equal(ConnectionState.Disconnecting))
+                expect(stateChangeDelegate.stubber.calls[2].args?.first as? ConnectionState).to(equal(ConnectionState.connected))
+                expect(stateChangeDelegate.stubber.calls[2].args?.last as? ConnectionState).to(equal(ConnectionState.disconnecting))
                 expect(stateChangeDelegate.stubber.calls.last?.name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState).to(equal(ConnectionState.Disconnecting))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState).to(equal(ConnectionState.Disconnected))
+                expect(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState).to(equal(ConnectionState.disconnecting))
+                expect(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState).to(equal(ConnectionState.disconnected))
             }
         }
     }

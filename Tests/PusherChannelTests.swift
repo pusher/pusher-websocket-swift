@@ -24,7 +24,7 @@ class PusherChannelSpec: QuickSpec {
             it("adds an eventName, callback pair to a channel's callbacks") {
                 let chan = PusherChannel(name: "test-channel", connection: MockPusherConnection())
                 expect(chan.eventHandlers["test-event"]).to(beNil())
-                chan.bind("test-event", callback: { (data: AnyObject?) -> Void in print(data) })
+                let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in print(data) })
                 expect(chan.eventHandlers["test-event"]).toNot(beNil())
             }
         }
@@ -33,10 +33,10 @@ class PusherChannelSpec: QuickSpec {
             it("should remove the eventHandler for the given eventName and eventHandler id") {
                 let chan = PusherChannel(name: "test-channel", connection: MockPusherConnection())
                 expect(chan.eventHandlers["test-event"]).to(beNil())
-                let idOne = chan.bind("test-event", callback: { (data: AnyObject?) -> Void in print(data) })
-                chan.bind("test-event", callback: { (data: AnyObject?) -> Void in print(data) })
+                let idOne = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in print(data) })
+                let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in print(data) })
                 expect(chan.eventHandlers["test-event"]?.count).to(equal(2))
-                chan.unbind("test-event", callbackId: idOne)
+                chan.unbind(eventName: "test-event", callbackId: idOne)
                 expect(chan.eventHandlers["test-event"]?.count).to(equal(1))
             }
         }
@@ -45,10 +45,10 @@ class PusherChannelSpec: QuickSpec {
             it("should remove the eventHandlers for the given eventName") {
                 let chan = PusherChannel(name: "test-channel", connection: MockPusherConnection())
                 expect(chan.eventHandlers["test-event"]).to(beNil())
-                chan.bind("test-event", callback: { (data: AnyObject?) -> Void in print(data) })
-                chan.bind("test-event", callback: { (data: AnyObject?) -> Void in print(data) })
+                let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in print(data) })
+                let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in print(data) })
                 expect(chan.eventHandlers["test-event"]?.count).to(equal(2))
-                chan.unbindAllForEventName("test-event")
+                chan.unbindAll(forEventName: "test-event")
                 expect(chan.eventHandlers["test-event"]?.count).to(equal(0))
             }
         }
@@ -57,9 +57,9 @@ class PusherChannelSpec: QuickSpec {
             it("should remove the eventHandler for the given eventName and eventHandler id") {
                 let chan = PusherChannel(name: "test-channel", connection: MockPusherConnection())
                 expect(chan.eventHandlers["test-event"]).to(beNil())
-                chan.bind("test-event", callback: { (data: AnyObject?) -> Void in print(data) })
-                chan.bind("test-event", callback: { (data: AnyObject?) -> Void in print(data) })
-                chan.bind("another-test-event", callback: { (data: AnyObject?) -> Void in print(data) })
+                let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in print(data) })
+                let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in print(data) })
+                let _ = chan.bind(eventName: "another-test-event", callback: { (data: Any?) -> Void in print(data) })
                 expect(chan.eventHandlers.count).to(equal(2))
                 chan.unbindAll()
                 expect(chan.eventHandlers.count).to(equal(0))
@@ -72,7 +72,7 @@ class PusherChannelSpec: QuickSpec {
 
             beforeEach({
                 socket = MockWebSocket()
-                connection = MockPusherConnection(options: PusherClientOptions(authMethod: .Internal(secret: "superSecretSecret")))
+                connection = MockPusherConnection(options: PusherClientOptions(authMethod: .inline(secret: "superSecretSecret")))
                 socket.delegate = connection
                 connection.socket = socket
             })
@@ -80,17 +80,17 @@ class PusherChannelSpec: QuickSpec {
             it("should not result in the socket writing a string if the channel isn't a private or presence channel") {
                 let chan = PusherChannel(name: "test-channel", connection: connection)
                 chan.subscribed = true
-                chan.trigger("client-test-event", data: ["data": "testing client events"])
+                chan.trigger(eventName: "client-test-event", data: ["data": "testing client events"])
                 expect(socket.stubber.calls).to(beEmpty())
             }
 
             it("should result in the socket writing a string if the channel is a private or presence channel") {
                 let chan = PusherChannel(name: "private-channel", connection: connection)
                 chan.subscribed = true
-                chan.trigger("client-test-event", data: ["data": "testing client events"])
+                chan.trigger(eventName: "client-test-event", data: ["data": "testing client events"])
                 let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.first?.args!.first as! String)
-                let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String : Any]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
                 expect(parsedEqualsExpected).to(beTrue())
             }
 
@@ -98,13 +98,13 @@ class PusherChannelSpec: QuickSpec {
                 let chan = PusherChannel(name: "private-channel", connection: connection)
                 connection.channels.channels["private-channel"] = chan
                 expect(chan.unsentEvents).to(beEmpty())
-                chan.trigger("client-test-event", data: ["data": "testing client events"])
+                chan.trigger(eventName: "client-test-event", data: ["data": "testing client events"])
                 expect(chan.unsentEvents.last!.name).to(equal("client-test-event"))
                 expect(socket.stubber.calls).to(beEmpty())
                 connection.connect()
                 let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-                let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String : Any]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
                 expect(parsedEqualsExpected).to(beTrue())
             }
 
@@ -112,15 +112,15 @@ class PusherChannelSpec: QuickSpec {
                 let chan = PusherChannel(name: "private-channel", connection: connection)
                 connection.channels.channels["private-channel"] = chan
                 expect(chan.unsentEvents).to(beEmpty())
-                chan.trigger("client-test-event", data: ["data": "testing client events"])
-                chan.trigger("client-test-event", data: ["data": "more testing client events"])
+                chan.trigger(eventName: "client-test-event", data: ["data": "testing client events"])
+                chan.trigger(eventName: "client-test-event", data: ["data": "more testing client events"])
                 expect(chan.unsentEvents.last!.name).to(equal("client-test-event"))
                 expect(chan.unsentEvents.count).to(equal(2))
                 expect(socket.stubber.calls).to(beEmpty())
                 connection.connect()
                 let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-                let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+                let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String : Any]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
                 expect(parsedEqualsExpected).to(beTrue())
             }
         }

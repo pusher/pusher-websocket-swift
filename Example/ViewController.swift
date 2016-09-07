@@ -12,11 +12,11 @@ import PusherSwift
 class ViewController: UIViewController, ConnectionStateChangeDelegate {
     var pusher: Pusher! = nil
 
-    @IBAction func connectButton(sender: AnyObject) {
+    @IBAction func connectButton(_ sender: AnyObject) {
         pusher.connect()
     }
 
-    @IBAction func disconnectButton(sender: AnyObject) {
+    @IBAction func disconnectButton(_ sender: AnyObject) {
         pusher.disconnect()
     }
 
@@ -25,7 +25,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         // Only use your secret here for testing or if you're sure that there's
         // no security risk
-        let pusherClientOptions = PusherClientOptions(authMethod: .Internal(secret: "YOUR_APP_SECRET"))
+        let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "YOUR_APP_SECRET"))
         pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
 
         // remove the debugLogger from the client options if you want to remove the
@@ -37,9 +37,9 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         pusher.connect()
 
-        pusher.bind({ (message: AnyObject?) in
-            if let message = message as? [String: AnyObject], eventName = message["event"] as? String where eventName == "pusher:error" {
-                if let data = message["data"] as? [String: AnyObject], errorMessage = data["message"] as? String {
+        pusher.bind({ (message: Any?) in
+            if let message = message as? [String: AnyObject], let eventName = message["event"] as? String, eventName == "pusher:error" {
+                if let data = message["data"] as? [String: AnyObject], let errorMessage = data["message"] as? String {
                     print("Error message: \(errorMessage)")
                 }
             }
@@ -51,7 +51,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
-        chan.bind("test-event", callback: { (data: AnyObject?) -> Void in
+        chan.bind("test-event", callback: { (data: Any?) -> Void in
             print(data)
             self.pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
@@ -66,7 +66,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
         chan.trigger("client-test", data: ["test": "some value"])
     }
 
-    func connectionChange(old: ConnectionState, new: ConnectionState) {
+    func connectionChange(_ old: ConnectionState, new: ConnectionState) {
         // print the old and new connection states
         print("old: \(old) -> new: \(new)")
     }

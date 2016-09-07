@@ -22,7 +22,7 @@ class PusherPresenceChannelSpec: QuickSpec {
         describe("the members object") {
             it("stores the userId if a userDataFetcher is provided") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -37,7 +37,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("stores the socketId if no userDataFetcher is provided") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 socket.delegate = pusher.connection
@@ -50,16 +50,17 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("stores userId and userInfo if a userDataFetcher that returns both is provided") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "testKey123", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123", userInfo: ["twitter": "hamchapman"])
+                    return PusherUserData(userId: "123", userInfo: ["twitter": "hamchapman"] as Any?)
                 }
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
                 pusher.connect()
                 let chan = pusher.subscribe("presence-test") as? PresencePusherChannel
+
                 expect(chan?.members).toNot(beEmpty())
                 expect(chan?.members.first!.userInfo as? [String : String]).to(equal(["twitter": "hamchapman"]))
             }
@@ -68,7 +69,7 @@ class PusherPresenceChannelSpec: QuickSpec {
         describe("finding members") {
             it("returns the PresenceChannelMember object for a given subscribed user id") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -79,8 +80,8 @@ class PusherPresenceChannelSpec: QuickSpec {
                 pusher.connect()
 
                 let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}"])
-                let member = chan!.findMember("100")
+                pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
+                let member = chan!.findMember(userId: "100")
 
                 expect(member!.userId).to(equal("100"))
                 expect(member!.userInfo as? [String : String]).to(equal(["twitter": "hamchapman"]))
@@ -88,7 +89,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("returns the PresenceChannelMember object for the subscribed user (me)") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -99,7 +100,7 @@ class PusherPresenceChannelSpec: QuickSpec {
                 pusher.connect()
 
                 let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}"])
+                pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
 
                 let me = chan!.me()
 
@@ -117,7 +118,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("calls the onMemberAdded function, if provided") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secretsecretsecretsecret")
+                    authMethod: .inline(secret: "secretsecretsecretsecret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -126,9 +127,11 @@ class PusherPresenceChannelSpec: QuickSpec {
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
                 pusher.connect()
-                let memberAddedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberAdded", args: [member], functionToCall: nil) }
-                pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\"}"])
+                let memberAddedFunction = { (member: PresenceChannelMember) -> Void in
+                    let _ = stubber.stub("onMemberAdded", args: [member], functionToCall: nil)
+                }
+                let _ = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PresencePusherChannel
+                pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
 
                 expect(stubber.calls.first?.name).to(equal("onMemberAdded"))
                 expect((stubber.calls.first?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
@@ -136,7 +139,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("calls the onMemberRemoved function, if provided") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -145,11 +148,13 @@ class PusherPresenceChannelSpec: QuickSpec {
                 socket.delegate = pusher.connection
                 pusher.connection.socket = socket
                 pusher.connect()
-                let memberRemovedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberRemoved", args: [member], functionToCall: nil) }
+                let memberRemovedFunction = { (member: PresenceChannelMember) -> Void in
+                    let _ = stubber.stub("onMemberRemoved", args: [member], functionToCall: nil)
+                }
                 let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved:  memberRemovedFunction) as? PresencePusherChannel
 
                 chan?.members.append(PresenceChannelMember(userId: "100"))
-                pusher.connection.handleEvent("pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed", "channel": "presence-channel", "data": "{\"user_id\":\"100\"}"])
+                pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
 
                 expect(stubber.calls.last?.name).to(equal("onMemberRemoved"))
                 expect((stubber.calls.last?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
@@ -157,7 +162,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("calls the onMemberRemoved function, if provided, and the userId of the member when they were addded was not a string") {
                 let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 socket.delegate = pusher.connection
@@ -166,10 +171,12 @@ class PusherPresenceChannelSpec: QuickSpec {
                     return PusherUserData(userId: "123")
                 }
                 pusher.connect()
-                let memberRemovedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberRemoved", args: [member], functionToCall: nil) }
-                pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":100}"])
-                pusher.connection.handleEvent("pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed", "channel": "presence-channel", "data": "{\"user_id\":100}"])
+                let memberRemovedFunction = { (member: PresenceChannelMember) -> Void in
+                    let _ = stubber.stub("onMemberRemoved", args: [member], functionToCall: nil)
+                }
+                let _ = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PresencePusherChannel
+                pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+                pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
 
                 expect(stubber.calls.last?.name).to(equal("onMemberRemoved"))
                 expect((stubber.calls.last?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))

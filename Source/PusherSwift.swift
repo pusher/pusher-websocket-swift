@@ -11,8 +11,8 @@ let PROTOCOL = 7
 let VERSION = "2.0.1"
 let CLIENT_NAME = "pusher-websocket-swift"
 
-public class Pusher {
-    public let connection: PusherConnection
+open class Pusher {
+    open let connection: PusherConnection
 
     /**
         Initializes the Pusher client with an app key and any appropriate options.
@@ -23,8 +23,8 @@ public class Pusher {
         - returns: A new Pusher client instance
     */
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
-        let urlString = constructUrl(key, options: options)
-        let ws = WebSocket(url: NSURL(string: urlString)!)
+        let urlString = constructUrl(key: key, options: options)
+        let ws = WebSocket(url: URL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
     }
@@ -40,11 +40,11 @@ public class Pusher {
 
         - returns: A new PusherChannel instance
      */
-    public func subscribe(
-        channelName: String,
+    open func subscribe(
+        _ channelName: String,
         onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            return self.connection.subscribe(channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+            return self.connection.subscribe(channelName: channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     /**
@@ -52,8 +52,8 @@ public class Pusher {
 
         - parameter channelName: The name of the channel to unsubscribe from
     */
-    public func unsubscribe(channelName: String) {
-        self.connection.unsubscribe(channelName)
+    open func unsubscribe(_ channelName: String) {
+        self.connection.unsubscribe(channelName: channelName)
     }
 
     /**
@@ -63,7 +63,7 @@ public class Pusher {
 
         - returns: A unique string that can be used to unbind the callback from the client
     */
-    public func bind(callback: (AnyObject?) -> Void) -> String {
+    open func bind(_ callback: @escaping (Any?) -> Void) -> String {
         return self.connection.addCallbackToGlobalChannel(callback)
     }
 
@@ -72,28 +72,28 @@ public class Pusher {
 
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
-    public func unbind(callbackId: String) {
-        self.connection.removeCallbackFromGlobalChannel(callbackId)
+    open func unbind(callbackId: String) {
+        self.connection.removeCallbackFromGlobalChannel(callbackId: callbackId)
     }
 
     /**
         Unbinds the client from all global callbacks
     */
-    public func unbindAll() {
+    open func unbindAll() {
         self.connection.removeAllCallbacksFromGlobalChannel()
     }
 
     /**
         Disconnects the client's connection
     */
-    public func disconnect() {
+    open func disconnect() {
         self.connection.disconnect()
     }
 
     /**
         Initiates a connection attempt using the client's existing connection details
     */
-    public func connect() {
+    open func connect() {
         self.connection.connect()
     }
 }

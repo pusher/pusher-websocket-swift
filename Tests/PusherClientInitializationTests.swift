@@ -34,7 +34,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 }
 
                 it("has auth method as .NoMethod") {
-                    expect(pusher.connection.options.authMethod).to(equal(AuthMethod.NoMethod))
+                    expect(pusher.connection.options.authMethod).to(equal(AuthMethod.noMethod))
                 }
 
                 it("has attemptToReturnJSONObject as true") {
@@ -64,20 +64,20 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("an auth endpoint") {
                     it("has one set") {
                         let options = PusherClientOptions(
-                            authMethod: .Endpoint(authEndpoint: "http://myapp.com/auth-endpoint")
+                            authMethod: .endpoint(authEndpoint: "http://myapp.com/auth-endpoint")
                         )
                         pusher = Pusher(key: key, options: options)
-                        expect(pusher.connection.options.authMethod).to(equal(AuthMethod.Endpoint(authEndpoint: "http://myapp.com/auth-endpoint")))
+                        expect(pusher.connection.options.authMethod).to(equal(AuthMethod.endpoint(authEndpoint: "http://myapp.com/auth-endpoint")))
                     }
                 }
 
                 context("a secret") {
                     it("has one set") {
                         let options = PusherClientOptions(
-                            authMethod: .Internal(secret: "superSecret")
+                            authMethod: .inline(secret: "superSecret")
                         )
                         pusher = Pusher(key: key, options: options)
-                        expect(pusher.connection.options.authMethod).to(equal(AuthMethod.Internal(secret: "superSecret")))
+                        expect(pusher.connection.options.authMethod).to(equal(AuthMethod.inline(secret: "superSecret")))
                     }
                 }
 
@@ -94,7 +94,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("a host") {
                     it("has one set") {
                         let options = PusherClientOptions(
-                            host: PusherHost.Host("test.test.test")
+                            host: PusherHost.host("test.test.test")
                         )
                         pusher = Pusher(key: key, options: options)
                         expect(pusher.connection.options.host).to(equal("test.test.test"))
@@ -114,7 +114,7 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("a cluster as host") {
                     it("sets the host correctly") {
                         let options = PusherClientOptions(
-                            host: PusherHost.Cluster("eu")
+                            host: PusherHost.cluster("eu")
                         )
                         pusher = Pusher(key: key, options: options)
                         expect(pusher.connection.options.host).to(equal("ws-eu.pusher.com"))
