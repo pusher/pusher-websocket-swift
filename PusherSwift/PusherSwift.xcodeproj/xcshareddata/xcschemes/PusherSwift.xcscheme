@@ -9,14 +9,14 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "33999D2F1C4020A300AFED30"
-               BuildableName = "PusherSwiftTests.xctest"
-               BlueprintName = "PusherSwiftTests-OSX"
+               BlueprintIdentifier = "33831C881A9CF61600B124F1"
+               BuildableName = "PusherSwift.framework"
+               BlueprintName = "PusherSwift"
                ReferencedContainer = "container:PusherSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,15 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "33999D2F1C4020A300AFED30"
+               BlueprintIdentifier = "33831C931A9CF61600B124F1"
                BuildableName = "PusherSwiftTests.xctest"
-               BlueprintName = "PusherSwiftTests-OSX"
+               BlueprintName = "PusherSwiftTests"
                ReferencedContainer = "container:PusherSwift.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33999D2F1C4020A300AFED30"
-            BuildableName = "PusherSwiftTests.xctest"
-            BlueprintName = "PusherSwiftTests-OSX"
+            BlueprintIdentifier = "33831C881A9CF61600B124F1"
+            BuildableName = "PusherSwift.framework"
+            BlueprintName = "PusherSwift"
             ReferencedContainer = "container:PusherSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +65,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33999D2F1C4020A300AFED30"
-            BuildableName = "PusherSwiftTests.xctest"
-            BlueprintName = "PusherSwiftTests-OSX"
+            BlueprintIdentifier = "33831C881A9CF61600B124F1"
+            BuildableName = "PusherSwift.framework"
+            BlueprintName = "PusherSwift"
             ReferencedContainer = "container:PusherSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +83,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33999D2F1C4020A300AFED30"
-            BuildableName = "PusherSwiftTests.xctest"
-            BlueprintName = "PusherSwiftTests-OSX"
+            BlueprintIdentifier = "33831C881A9CF61600B124F1"
+            BuildableName = "PusherSwift.framework"
+            BlueprintName = "PusherSwift"
             ReferencedContainer = "container:PusherSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
