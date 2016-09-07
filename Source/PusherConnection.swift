@@ -484,7 +484,7 @@ open class PusherConnection {
                             
                             return false
                         }
-                    case .`internal`(secret: let secret):
+                    case .inline(secret: let secret):
                         var msg = ""
                         var channelData = ""
                         if channel.type == .presence {

@@ -72,7 +72,7 @@ class PusherChannelSpec: QuickSpec {
 
             beforeEach({
                 socket = MockWebSocket()
-                connection = MockPusherConnection(options: PusherClientOptions(authMethod: .`internal`(secret: "superSecretSecret")))
+                connection = MockPusherConnection(options: PusherClientOptions(authMethod: .inline(secret: "superSecretSecret")))
                 socket.delegate = connection
                 connection.socket = socket
             })

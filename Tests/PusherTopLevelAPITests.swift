@@ -117,7 +117,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                 describe("that require authentication") {
                     beforeEach({
                         let options = PusherClientOptions(
-                            authMethod: AuthMethod.`internal`(secret: "secret")
+                            authMethod: AuthMethod.inline(secret: "secret")
                         )
                         pusher = Pusher(key: "key", options: options)
                         socket.delegate = pusher.connection
@@ -162,7 +162,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                 describe("that require authentication") {
                     beforeEach({
                         let options = PusherClientOptions(
-                            authMethod: AuthMethod.`internal`(secret: "secret")
+                            authMethod: AuthMethod.inline(secret: "secret")
                         )
                         pusher = Pusher(key: "key", options: options)
                         socket.delegate = pusher.connection

@@ -29,7 +29,7 @@ public func ==(lhs: AuthMethod, rhs: AuthMethod) -> Bool {
     case (let .endpoint(authEndpoint1) , let .endpoint(authEndpoint2)):
         return authEndpoint1 == authEndpoint2
 
-    case (let .`internal`(secret1), let .`internal`(secret2)):
+    case (let .inline(secret1), let .inline(secret2)):
         return secret1 == secret2
 
     case (.noMethod, .noMethod):

@@ -25,7 +25,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         // Only use your secret here for testing or if you're sure that there's
         // no security risk
-        let pusherClientOptions = PusherClientOptions(authMethod: .`internal`(secret: "YOUR_APP_SECRET"))
+        let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "YOUR_APP_SECRET"))
         pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
 
         // remove the debugLogger from the client options if you want to remove the

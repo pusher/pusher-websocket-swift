@@ -22,7 +22,7 @@ class PusherPresenceChannelSpec: QuickSpec {
         describe("the members object") {
             it("stores the userId if a userDataFetcher is provided") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -37,7 +37,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("stores the socketId if no userDataFetcher is provided") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 socket.delegate = pusher.connection
@@ -50,7 +50,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("stores userId and userInfo if a userDataFetcher that returns both is provided") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "testKey123", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -69,7 +69,7 @@ class PusherPresenceChannelSpec: QuickSpec {
         describe("finding members") {
             it("returns the PresenceChannelMember object for a given subscribed user id") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -89,7 +89,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("returns the PresenceChannelMember object for the subscribed user (me)") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -118,7 +118,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("calls the onMemberAdded function, if provided") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secretsecretsecretsecret")
+                    authMethod: .inline(secret: "secretsecretsecretsecret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -139,7 +139,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("calls the onMemberRemoved function, if provided") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 pusher.connection.userDataFetcher = { () -> PusherUserData in
@@ -162,7 +162,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
             it("calls the onMemberRemoved function, if provided, and the userId of the member when they were addded was not a string") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 socket.delegate = pusher.connection

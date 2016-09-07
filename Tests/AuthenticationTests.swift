@@ -42,7 +42,7 @@ class AuthenticationSpec: QuickSpec {
 
             it("should create the auth signature internally") {
                 let options = PusherClientOptions(
-                    authMethod: .`internal`(secret: "secret")
+                    authMethod: .inline(secret: "secret")
                 )
                 pusher = Pusher(key: "key", options: options)
                 socket.delegate = pusher.connection

@@ -74,10 +74,10 @@ class PusherClientInitializationSpec: QuickSpec {
                 context("a secret") {
                     it("has one set") {
                         let options = PusherClientOptions(
-                            authMethod: .`internal`(secret: "superSecret")
+                            authMethod: .inline(secret: "superSecret")
                         )
                         pusher = Pusher(key: key, options: options)
-                        expect(pusher.connection.options.authMethod).to(equal(AuthMethod.`internal`(secret: "superSecret")))
+                        expect(pusher.connection.options.authMethod).to(equal(AuthMethod.inline(secret: "superSecret")))
                     }
                 }
 
