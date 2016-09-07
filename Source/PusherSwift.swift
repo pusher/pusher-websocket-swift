@@ -23,7 +23,7 @@ open class Pusher {
         - returns: A new Pusher client instance
     */
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
-        let urlString = constructUrl(key, options: options)
+        let urlString = constructUrl(key: key, options: options)
         let ws = WebSocket(url: URL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
@@ -72,7 +72,7 @@ open class Pusher {
 
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
-    open func unbind(_ callbackId: String) {
+    open func unbind(callbackId: String) {
         self.connection.removeCallbackFromGlobalChannel(callbackId: callbackId)
     }
 
@@ -106,7 +106,7 @@ open class Pusher {
 
     - returns: The constructed URL ready to use in a connection attempt
 */
-func constructUrl(_ key: String, options: PusherClientOptions) -> String {
+func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
     if options.encrypted {

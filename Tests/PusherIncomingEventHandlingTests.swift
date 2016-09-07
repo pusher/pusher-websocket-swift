@@ -36,7 +36,7 @@ class HandlingIncomingEventsSpec: QuickSpec {
             it("should call the relevant callback(s) setup on the relevant channel(s)") {
                 let callback = { (data: Any?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
                 let chan = pusher.subscribe("my-channel")
-                let _ = chan.bind("test-event", callback: callback)
+                let _ = chan.bind(eventName: "test-event", callback: callback)
                 expect(socket.callbackCheckString).to(equal(""))
                 pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
                 expect(socket.callbackCheckString).to(equal("channelCallbackCalled"))
@@ -47,7 +47,7 @@ class HandlingIncomingEventsSpec: QuickSpec {
                 let _ = pusher.bind(callback)
                 let chan = pusher.subscribe("my-channel")
                 let callbackForChannel = { (data: Any?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
-                let _ = chan.bind("test-event", callback: callbackForChannel)
+                let _ = chan.bind(eventName: "test-event", callback: callbackForChannel)
                 expect(socket.callbackCheckString).to(equal(""))
                 pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
                 expect(socket.callbackCheckString).to(equal("globalCallbackCalledchannelCallbackCalled"))
@@ -56,7 +56,7 @@ class HandlingIncomingEventsSpec: QuickSpec {
             it("should return a JSON object to the callbacks if the string can be parsed and the user wanted to get a JSON object") {
                 let callback = { (data: Any?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
                 let chan = pusher.subscribe("my-channel")
-                let _ = chan.bind("test-event", callback: callback)
+                let _ = chan.bind(eventName: "test-event", callback: callback)
                 expect(socket.objectGivenToCallback).to(beNil())
                 pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
                 expect(socket.objectGivenToCallback as? [String : String]).to(equal(["test": "test string", "and": "another"]))
@@ -65,7 +65,7 @@ class HandlingIncomingEventsSpec: QuickSpec {
             it("should return a JSON string to the callbacks if the string cannot be parsed and the user wanted to get a JSON object") {
                 let callback = { (data: Any?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
                 let chan = pusher.subscribe("my-channel")
-                let _ = chan.bind("test-event", callback: callback)
+                let _ = chan.bind(eventName: "test-event", callback: callback)
                 expect(socket.objectGivenToCallback).to(beNil())
                 pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "test" as AnyObject])
                 expect(socket.objectGivenToCallback as? String).to(equal("test"))
@@ -78,7 +78,7 @@ class HandlingIncomingEventsSpec: QuickSpec {
                 pusher.connection.socket = socket
                 let callback = { (data: Any?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
                 let chan = pusher.subscribe("my-channel")
-                let _ = chan.bind("test-event", callback: callback)
+                let _ = chan.bind(eventName: "test-event", callback: callback)
                 expect(socket.objectGivenToCallback).to(beNil())
                 pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
                 expect(socket.objectGivenToCallback as? String).to(equal("{\"test\":\"test string\",\"and\":\"another\"}"))

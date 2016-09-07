@@ -85,7 +85,7 @@ open class PusherConnection {
         channelName: String,
         onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            let newChannel = channels.add(channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+            let newChannel = channels.add(name: channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
             if self.connectionState == .connected {
                 if !self.authorize(newChannel) {
                     print("Unable to subscribe to channel: \(newChannel.name)")
@@ -100,13 +100,13 @@ open class PusherConnection {
         - parameter channelName: The name of the channel
     */
     internal func unsubscribe(channelName: String) {
-        if let chan = self.channels.find(channelName) , chan.subscribed {
+        if let chan = self.channels.find(name: channelName) , chan.subscribed {
             self.sendEvent(event: "pusher:unsubscribe",
                 data: [
                     "channel": channelName
                 ] as [String : Any]
             )
-            self.channels.remove(channelName)
+            self.channels.remove(name: channelName)
         }
     }
 
@@ -219,7 +219,7 @@ open class PusherConnection {
         - parameter callbackId: The unique string representing the callback to be removed
     */
     internal func removeCallbackFromGlobalChannel(callbackId: String) {
-        globalChannel.unbind(callbackId)
+        globalChannel.unbind(callbackId: callbackId)
     }
 
     /**
@@ -247,28 +247,28 @@ open class PusherConnection {
         - parameter json: The PusherEventJSON containing successful subscription data
     */
     fileprivate func handleSubscriptionSucceededEvent(json: PusherEventJSON) {
-        if let channelName = json["channel"] as? String, let chan = self.channels.find(channelName) {
+        if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) {
             chan.subscribed = true
             if let eData = json["data"] as? String {
-                callGlobalCallbacks("pusher:subscription_succeeded", jsonObject: json)
-                chan.handleEvent("pusher:subscription_succeeded", eventData: eData)
+                callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
+                chan.handleEvent(name: "pusher:subscription_succeeded", data: eData)
             }
             
             subscriptionSuccessHandler?(channelName)
             
             if PusherChannelType.isPresenceChannel(name: channelName) {
-                if let presChan = self.channels.find(channelName) as? PresencePusherChannel {
+                if let presChan = self.channels.find(name: channelName) as? PresencePusherChannel {
                     if let data = json["data"] as? String, let dataJSON = getPusherEventJSON(from: data) {
                         if let presenceData = dataJSON["presence"] as? [String : AnyObject],
                                let presenceHash = presenceData["hash"] as? [String : AnyObject] {
-                                    presChan.addExistingMembers(presenceHash)
+                                    presChan.addExistingMembers(memberHash: presenceHash)
                         }
                     }
                 }
             }
             while chan.unsentEvents.count > 0 {
                 if let pusherEvent = chan.unsentEvents.popLast() {
-                    chan.trigger(pusherEvent.name, data: pusherEvent.data)
+                    chan.trigger(eventName: pusherEvent.name, data: pusherEvent.data)
                 }
             }
         }
@@ -307,9 +307,9 @@ open class PusherConnection {
     */
     fileprivate func handleMemberAddedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(channelName) as? PresencePusherChannel {
+            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PresencePusherChannel {
                 if let memberJSON = getPusherEventJSON(from: data) {
-                    chan.addMember(memberJSON)
+                    chan.addMember(memberJSON: memberJSON)
                 } else {
                     print("Unable to add member")
                 }
@@ -324,9 +324,9 @@ open class PusherConnection {
     */
     fileprivate func handleMemberRemovedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(channelName) as? PresencePusherChannel {
+            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PresencePusherChannel {
                 if let memberJSON = getPusherEventJSON(from: data) {
-                    chan.removeMember(memberJSON)
+                    chan.removeMember(memberJSON: memberJSON)
                 } else {
                     print("Unable to remove member")
                 }
@@ -340,7 +340,7 @@ open class PusherConnection {
         - parameter channelName: The name of channel for which authorization failed
         - parameter data:        The error returned by the auth endpoint
     */
-    fileprivate func handleAuthorizationError(`for` channelName: String, response: URLResponse?, data: String?, error: NSError?) {
+    fileprivate func handleAuthorizationError(forChannel channelName: String, response: URLResponse?, data: String?, error: NSError?) {
         let eventName = "pusher:subscription_error"
         let json = [
             "event": eventName,
@@ -414,10 +414,10 @@ open class PusherConnection {
         case "pusher_internal:member_removed":
             handleMemberRemovedEvent(json: jsonObject)
         default:
-            callGlobalCallbacks(eventName, jsonObject: jsonObject)
-            if let channelName = jsonObject["channel"] as? String, let internalChannel = self.channels.find(channelName) {
+            callGlobalCallbacks(forEvent: eventName, jsonObject: jsonObject)
+            if let channelName = jsonObject["channel"] as? String, let internalChannel = self.channels.find(name: channelName) {
                 if let eName = jsonObject["event"] as? String, let eData = jsonObject["data"] as? String {
-                    internalChannel.handleEvent(eName, eventData: eData)
+                    internalChannel.handleEvent(name: eName, data: eData)
                 }
             }
         }
@@ -429,13 +429,13 @@ open class PusherConnection {
         - parameter eventName:  The name of the incoming event
         - parameter jsonObject: The event-specific data related to the incoming event
     */
-    fileprivate func callGlobalCallbacks(_ eventName: String, jsonObject: [String : AnyObject]) {
+    fileprivate func callGlobalCallbacks(forEvent eventName: String, jsonObject: [String : AnyObject]) {
         if let globalChannel = self.globalChannel {
             if let eData =  jsonObject["data"] as? String {
                 let channelName = jsonObject["channel"] as! String?
-                globalChannel.handleEvent(channelName, eventName: eventName, eventData: eData)
+                globalChannel.handleEvent(name: eventName, data: eData, channelName: channelName)
             } else if let eData =  jsonObject["data"] as? [String: AnyObject] {
-                globalChannel.handleErrorEvent(eventName, eventData: eData)
+                globalChannel.handleErrorEvent(name: eventName, data: eData)
             }
     }
     }
@@ -463,7 +463,7 @@ open class PusherConnection {
                         
                         print(errorMessage)
                         
-                        handleAuthorizationError(for: channel.name, response: nil, data: nil, error: error)
+                        handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
 
                         return false
                     case .endpoint(authEndpoint: let authEndpoint):
@@ -472,7 +472,7 @@ open class PusherConnection {
                         return true
 
                     case .authRequestBuilder(authRequestBuilder: let builder):
-                        if let request = builder.requestFor(socketID, channel: channel) {
+                        if let request = builder.requestFor(socketID: socketID, channel: channel) {
                             sendAuthorisationRequest(request: request as URLRequest, channel: channel, callback: callback)
                             
                             return true
@@ -480,7 +480,7 @@ open class PusherConnection {
                             let errorMessage = "Authentication request could not be built"
                             let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
                             
-                            handleAuthorizationError(for: channel.name, response: nil, data: nil, error: error)
+                            handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
                             
                             return false
                         }
@@ -583,26 +583,26 @@ open class PusherConnection {
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, sessionError in
             if let error = sessionError {
                 print("Error authorizing channel [\(channel.name)]: \(error)")
-                self.handleAuthorizationError(for: channel.name, response: response, data: nil, error: error as NSError?)
+                self.handleAuthorizationError(forChannel: channel.name, response: response, data: nil, error: error as NSError?)
                 return
             }
             
             guard let data = data else {
                 print("Error authorizing channel [\(channel.name)]")
-                self.handleAuthorizationError(for: channel.name, response: response, data: nil, error: nil)
+                self.handleAuthorizationError(forChannel: channel.name, response: response, data: nil, error: nil)
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse, (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) else {
                 let dataString = String(data: data, encoding: String.Encoding.utf8)
                 print ("Error authorizing channel [\(channel.name)]: \(dataString)")
-                self.handleAuthorizationError(for: channel.name, response: response, data: dataString, error: nil)
+                self.handleAuthorizationError(forChannel: channel.name, response: response, data: dataString, error: nil)
                 return
             }
             
             guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []), let json = jsonObject as? [String: AnyObject] else {
                 print("Error authorizing channel [\(channel.name)]")
-                self.handleAuthorizationError(for: channel.name, response: httpResponse, data: nil, error: nil)
+                self.handleAuthorizationError(forChannel: channel.name, response: httpResponse, data: nil, error: nil)
                 return
             }
             
@@ -645,7 +645,7 @@ open class PusherConnection {
         channel: PusherChannel,
         channelData: String,
         callback: (([String : String]?) -> Void)? = nil) {
-            (channel as? PresencePusherChannel)?.setMyId(channelData)
+            (channel as? PresencePusherChannel)?.setMyId(channelData: channelData)
 
             if let cBack = callback {
                 cBack(["auth": authValue, "channel_data": channelData])

@@ -176,11 +176,11 @@ open class MockPusherChannel: PusherChannel {
         super.init(name: name, connection: connection)
     }
 
-    override open func handleEvent(_ eventName: String, eventData: String) {
+    override open func handleEvent(name: String, data: String) {
         let _ = stubber.stub(
             "handleEvent",
-            args: [eventName, eventData],
-            functionToCall: { super.handleEvent(eventName, eventData: eventData) }
+            args: [name, data],
+            functionToCall: { super.handleEvent(name: name, data: data) }
         )
     }
 }

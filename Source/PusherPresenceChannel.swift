@@ -45,7 +45,7 @@ open class PresencePusherChannel: PusherChannel {
         - parameter memberJSON: A dictionary representing the member that has joined
                                 the presence channel
     */
-    internal func addMember(_ memberJSON: [String : AnyObject]) {
+    internal func addMember(memberJSON: [String : AnyObject]) {
         let member: PresenceChannelMember
 
         if let userId = memberJSON["user_id"] as? String {
@@ -73,7 +73,7 @@ open class PresencePusherChannel: PusherChannel {
         - parameter memberHash: A dictionary representing the members that were already
                                 subscribed to the presence channel
     */
-    internal func addExistingMembers(_ memberHash: [String : AnyObject]) {
+    internal func addExistingMembers(memberHash: [String : AnyObject]) {
         for (userId, userInfo) in memberHash {
             let member: PresenceChannelMember
             if let userInfo = userInfo as? PusherUserInfoObject {
@@ -92,7 +92,7 @@ open class PresencePusherChannel: PusherChannel {
         - parameter memberJSON: A dictionary representing the member that has left the
                                 presence channel
     */
-    internal func removeMember(_ memberJSON: [String : AnyObject]) {
+    internal func removeMember(memberJSON: [String : AnyObject]) {
         let id: String
 
         if let userId = memberJSON["user_id"] as? String {
@@ -113,10 +113,10 @@ open class PresencePusherChannel: PusherChannel {
         of the subscription to the channel
 
         - parameter channelData: The channel data obtained from authorization of the subscription
-                                to the channel
+                                 to the channel
     */
-    internal func setMyId(_ channelData: String) {
-        if let channelDataObject = parseChannelData(channelData), let userId = channelDataObject["user_id"] {
+    internal func setMyId(channelData: String) {
+        if let channelDataObject = parse(channelData: channelData), let userId = channelDataObject["user_id"] {
             self.myId = String.init(describing: userId)
         }
     }
@@ -124,11 +124,11 @@ open class PresencePusherChannel: PusherChannel {
     /**
         Parse a string to extract the channel data object from it
 
-        - parameter string: The channel data string received as part of authorization
+        - parameter channelData: The channel data string received as part of authorization
 
         - returns: A dictionary of channel data
     */
-    fileprivate func parseChannelData(_ channelData: String) -> [String : AnyObject]? {
+    fileprivate func parse(channelData: String) -> [String : AnyObject]? {
         let data = (channelData as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
@@ -147,12 +147,12 @@ open class PresencePusherChannel: PusherChannel {
     /**
         Returns the PresenceChannelMember object for the given user id
 
-        - parameter string: The user id of the PresenceChannelMember for whom you want
+        - parameter userId: The user id of the PresenceChannelMember for whom you want
                             the PresenceChannelMember object
 
         - returns: The PresenceChannelMember object for the given user id
     */
-    open func findMember(_ userId: String) -> PresenceChannelMember? {
+    open func findMember(userId: String) -> PresenceChannelMember? {
         return self.members.filter({ $0.userId == userId }).first
     }
 
@@ -163,7 +163,7 @@ open class PresencePusherChannel: PusherChannel {
     */
     open func me() -> PresenceChannelMember? {
         if let id = self.myId {
-            return findMember(id)
+            return findMember(userId: id)
         } else {
             return nil
         }

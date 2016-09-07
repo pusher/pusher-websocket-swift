@@ -12,10 +12,10 @@ public enum PusherChannelType {
     case normal
     
     public init(name: String) {
-        self = type(of: self).typeForName(name)
+        self = type(of: self).type(forName: name)
     }
     
-    public static func typeForName(_ name: String) -> PusherChannelType {
+    public static func type(forName name: String) -> PusherChannelType {
         if (name.components(separatedBy: "-")[0] == "presence") {
             return .presence
         } else if (name.components(separatedBy: "-")[0] == "private") {
@@ -62,7 +62,7 @@ open class PusherChannel {
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
-    open func bind(_ eventName: String, callback: @escaping (Any?) -> Void) -> String {
+    open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         let randomId = UUID().uuidString
         let eventHandler = EventHandler(id: randomId, callback: callback)
         if self.eventHandlers[eventName] != nil {
@@ -80,7 +80,7 @@ open class PusherChannel {
         - parameter eventName:  The name of the event from which to unbind
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
-    open func unbind(_ eventName: String, callbackId: String) {
+    open func unbind(eventName: String, callbackId: String) {
         if let eventSpecificHandlers = self.eventHandlers[eventName] {
             self.eventHandlers[eventName] = eventSpecificHandlers.filter({ $0.id != callbackId })
         }
@@ -98,22 +98,22 @@ open class PusherChannel {
 
         - parameter eventName:  The name of the event from which to unbind
     */
-    open func unbindAllForEventName(_ eventName: String) {
+    open func unbindAll(forEventName eventName: String) {
         self.eventHandlers[eventName] = []
     }
 
     /**
         Calls the appropriate callbacks for the given eventName in the scope of the acted upon channel
 
-        - parameter eventName: The name of the received event
-        - parameter eventdata: The data associated with the received message
+        - parameter name: The name of the received event
+        - parameter data: The data associated with the received message
     */
-    open func handleEvent(_ eventName: String, eventData: String) {
-        if let eventHandlerArray = self.eventHandlers[eventName] {
+    open func handleEvent(name: String, data: String) {
+        if let eventHandlerArray = self.eventHandlers[name] {
             let jsonize = connection.options.attemptToReturnJSONObject
 
             for eventHandler in eventHandlerArray {
-                eventHandler.callback(jsonize ? connection.getEventDataJSON(from: eventData) : eventData)
+                eventHandler.callback(jsonize ? connection.getEventDataJSON(from: data) : data)
             }
         }
     }
@@ -125,7 +125,7 @@ open class PusherChannel {
         - parameter eventName: The name of the event to trigger
         - parameter data:      The data to be sent as the message payload
     */
-    open func trigger(_ eventName: String, data: Any) {
+    open func trigger(eventName: String, data: Any) {
         if subscribed {
             self.connection.sendEvent(event: eventName, data: data, channel: self)
         } else {

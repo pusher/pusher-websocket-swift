@@ -81,7 +81,7 @@ class PusherPresenceChannelSpec: QuickSpec {
 
                 let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
                 pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
-                let member = chan!.findMember("100")
+                let member = chan!.findMember(userId: "100")
 
                 expect(member!.userId).to(equal("100"))
                 expect(member!.userInfo as? [String : String]).to(equal(["twitter": "hamchapman"]))

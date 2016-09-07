@@ -21,34 +21,32 @@ open class GlobalChannel: PusherChannel {
     }
 
     /**
-        Calls the appropriate callbacks for the given eventName in the scope of the global channel
+        Calls the appropriate callbacks for the given event name in the scope of the global channel
 
+        - parameter name:        The name of the received event
+        - parameter data:        The data associated with the received message
         - parameter channelName: The name of the channel that the received message was triggered
                                  to, if relevant
-        - parameter eventName:   The name of the received event
-        - parameter eventdata:   The data associated with the received message
     */
-    internal func handleEvent(_ channelName: String?, eventName: String, eventData: String) {
+    internal func handleEvent(name: String, data: String, channelName: String?) {
         for (_, callback) in self.globalCallbacks {
             if let channelName = channelName {
-                callback(["channel": channelName, "event": eventName, "data": eventData] as [String : Any])
+                callback(["channel": channelName, "event": name, "data": data] as [String : Any])
             } else {
-                callback(["event": eventName, "data": eventData] as [String : Any])
+                callback(["event": name, "data": data] as [String : Any])
             }
         }
     }
 
     /**
-     Calls the appropriate callbacks for the given eventName in the scope of the global channel
+        Calls the appropriate callbacks for the given event name in the scope of the global channel
 
-     - parameter channelName: The name of the channel that the received message was triggered
-     to, if relevant
-     - parameter eventName:   The name of the received event
-     - parameter eventdata:   The data associated with the received message
+        - parameter name:        The name of the received event
+        - parameter data:        The data associated with the received message
      */
-    internal func handleErrorEvent(_ eventName: String, eventData: [String:AnyObject]) {
+    internal func handleErrorEvent(name: String, data: [String:AnyObject]) {
         for (_, callback) in self.globalCallbacks {
-            callback(["event": eventName, "data": eventData])
+            callback(["event": name, "data": data])
         }
     }
 
@@ -70,7 +68,7 @@ open class GlobalChannel: PusherChannel {
 
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
-    internal func unbind(_ callbackId: String) {
+    internal func unbind(callbackId: String) {
         globalCallbacks.removeValue(forKey: callbackId)
     }
 

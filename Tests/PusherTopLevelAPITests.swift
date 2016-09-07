@@ -104,7 +104,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                     let _ = pusher.bind(callback)
                     expect(socket.callbackCheckString).to(equal(""))
                     let chan = pusher.subscribe("test-channel")
-                    let _ = chan.bind("pusher:subscription_succeeded", callback: callback)
+                    let _ = chan.bind(eventName: "pusher:subscription_succeeded", callback: callback)
                     expect(socket.callbackCheckString).to(equal("channelCallbackCalled"))
                 }
 
@@ -229,7 +229,7 @@ class PusherTopLevelApiSpec: QuickSpec {
                 let callback = { (data: Any?) -> Void in print(data) }
                 let callBackId = pusher.bind(callback)
                 expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(1))
-                pusher.unbind(callBackId)
+                pusher.unbind(callbackId: callBackId)
                 expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(0))
             }
         }
