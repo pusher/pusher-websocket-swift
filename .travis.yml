@@ -32,6 +32,6 @@ script:
   - xcodebuild -version
   - xcodebuild -workspace PusherSwift.xcworkspace -list
   - if [ -n "$UUID" ]; then xcrun instruments -w "$UUID" || true; sleep 15; fi
-  - set -o pipefail && xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION  | xcpretty -tc;
+  - set -o pipefail && xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION  | xcpretty -tc;
 after_success:
   - sleep 5

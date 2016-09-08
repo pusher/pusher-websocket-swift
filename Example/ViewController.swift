@@ -37,7 +37,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         pusher.connect()
 
-        pusher.bind({ (message: Any?) in
+        let _ = pusher.bind({ (message: Any?) in
             if let message = message as? [String: AnyObject], let eventName = message["event"] as? String, eventName == "pusher:error" {
                 if let data = message["data"] as? [String: AnyObject], let errorMessage = data["message"] as? String {
                     print("Error message: \(errorMessage)")
@@ -51,9 +51,9 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
         let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
-        chan.bind("test-event", callback: { (data: Any?) -> Void in
+        let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in
             print(data)
-            self.pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
+            let _ = self.pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
             if let data = data as? [String : AnyObject] {
                 if let testVal = data["test"] as? String {
@@ -63,10 +63,10 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
         })
 
         // triggers a client event
-        chan.trigger("client-test", data: ["test": "some value"])
+        chan.trigger(eventName: "client-test", data: ["test": "some value"])
     }
 
-    func connectionChange(_ old: ConnectionState, new: ConnectionState) {
+    func connectionChange(old: ConnectionState, new: ConnectionState) {
         // print the old and new connection states
         print("old: \(old) -> new: \(new)")
     }
