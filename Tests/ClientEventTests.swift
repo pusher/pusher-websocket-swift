@@ -13,14 +13,14 @@ class ClientEventTests: XCTestCase {
     var connection: MockPusherConnection!
     var socket: MockWebSocket!
 
-  override func setUp() {
-      super.setUp()
+    override func setUp() {
+        super.setUp()
 
-      socket = MockWebSocket()
-      connection = MockPusherConnection(options: PusherClientOptions(authMethod: .inline(secret: "superSecretSecret")))
-      socket.delegate = connection
-      connection.socket = socket
-  }
+        socket = MockWebSocket()
+        connection = MockPusherConnection(options: PusherClientOptions(authMethod: .inline(secret: "superSecretSecret")))
+        socket.delegate = connection
+        connection.socket = socket
+    }
 
     func testTriggeringClientEventsDoesNotWriteToTheSocketForPublicChannels() {
         let chan = PusherChannel(name: "test-channel", connection: connection)
@@ -34,8 +34,8 @@ class ClientEventTests: XCTestCase {
         chan.subscribed = true
         chan.trigger(eventName: "client-test-event", data: ["data": "testing client events"])
         let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.first?.args!.first as! String)
-        let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String : Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+        let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
         XCTAssertTrue(parsedEqualsExpected)
     }
 
@@ -48,8 +48,8 @@ class ClientEventTests: XCTestCase {
         XCTAssertEqual(socket.stubber.calls.count, 0, "no events should have been sent yet")
         connection.connect()
         let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-        let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String : Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+        let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
         XCTAssertTrue(parsedEqualsExpected)
     }
 
@@ -64,8 +64,8 @@ class ClientEventTests: XCTestCase {
         XCTAssertEqual(socket.stubber.calls.count, 0, "no events should have been sent yet")
         connection.connect()
         let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-        let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String : Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+        let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
         XCTAssertTrue(parsedEqualsExpected)
     }
 }

@@ -25,7 +25,7 @@ open class MockWebSocket: WebSocket {
         self.objectGivenToCallback = data
     }
 
-    override open func connect() {
+    open override func connect() {
         let connectionEstablishedString = "{\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"
         let _ = stubber.stub(
             functionName: "connect",
@@ -40,7 +40,7 @@ open class MockWebSocket: WebSocket {
         )
     }
 
-    override open func disconnect(forceTimeout: TimeInterval? = nil) {
+    open override func disconnect(forceTimeout: TimeInterval? = nil) {
         let _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
@@ -50,7 +50,7 @@ open class MockWebSocket: WebSocket {
         )
     }
 
-    override open func write(string: String, completion: (() -> ())? = nil) {
+    open override func write(string: String, completion: (() -> ())? = nil) {
         if string == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             let _ = stubber.stub(
                 functionName: "writeString",
@@ -167,7 +167,7 @@ open class MockPusherConnection: PusherConnection {
         super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: options)
     }
 
-    override open func handleEvent(eventName: String, jsonObject: [String : AnyObject]) {
+    open override func handleEvent(eventName: String, jsonObject: [String: AnyObject]) {
         let _ = stubber.stub(
             functionName: "handleEvent",
             args: [eventName, jsonObject],
@@ -183,7 +183,7 @@ open class MockPusherChannel: PusherChannel {
         super.init(name: name, connection: connection)
     }
 
-    override open func handleEvent(name: String, data: String) {
+    open override func handleEvent(name: String, data: String) {
         let _ = stubber.stub(
             functionName: "handleEvent",
             args: [name, data],
@@ -206,14 +206,14 @@ open class TestConnectionStateChangeDelegate: ConnectionStateChangeDelegate {
 
 open class StubberForMocks {
     open var calls: [FunctionCall]
-    open var responses: [String:AnyObject]
+    open var responses: [String: AnyObject]
 
     init() {
         self.calls = []
         self.responses = [:]
     }
 
-    open func stub(functionName: String, args:[Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
+    open func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
         calls.append(FunctionCall(name: functionName, args: args))
         if let response: AnyObject = responses[functionName] {
             return response
@@ -225,10 +225,10 @@ open class StubberForMocks {
 }
 
 open class FunctionCall {
-    open let name:String
-    open let args:[Any]?
+    open let name: String
+    open let args: [Any]?
 
-    init(name:String, args:[Any]?) {
+    init(name: String, args: [Any]?) {
         self.name = name
         self.args = args
     }
@@ -244,7 +244,7 @@ class MockSession: URLSession {
         }
     }
 
-    override func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+    override func dataTask(with: URLRequest, completionHandler: @escaping(Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         self.completionHandler = completionHandler
         return MockTask(response: MockSession.mockResponse, completionHandler: completionHandler)
     }

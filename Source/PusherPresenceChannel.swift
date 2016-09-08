@@ -129,10 +129,11 @@ open class PresencePusherChannel: PusherChannel {
         - returns: A dictionary of channel data
     */
     fileprivate func parse(channelData: String) -> [String : AnyObject]? {
+    fileprivate func parse(channelData: String) -> [String: AnyObject]? {
         let data = (channelData as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
-            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : AnyObject] {
+            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
                 print("Unable to parse string: \(channelData)")

@@ -13,12 +13,12 @@ class PusherConnectionTests: XCTestCase {
     var key: String!
     var pusher: Pusher!
 
-  override func setUp() {
-      super.setUp()
+    override func setUp() {
+        super.setUp()
 
-      key = "testKey123"
-      pusher = Pusher(key: key)
-  }
+        key = "testKey123"
+        pusher = Pusher(key: key)
+    }
 
     func testUserDataFetcherIsNilByDefault() {
         XCTAssertNil(pusher.connection.userDataFetcher, "userDataFetcher should be nil")
@@ -35,6 +35,7 @@ class PusherConnectionTests: XCTestCase {
     }
 
     func testSettingAUserDataFetcher() {
+
         func fetchFunc() -> PusherUserData {
             return PusherUserData(userId: "1")
         }
@@ -45,26 +46,26 @@ class PusherConnectionTests: XCTestCase {
     // TODO: test that subscriptionSuccessHandler gets called
     //       plus same for error
 
-//    func testSubscriptionSucceededEventSentToPrivateChannel() {
-//        let ex = expectation(description: "the channel should be subscribed to successfully")
-//
-//        pusher.connection.subscriptionSuccessHandler = { str in
-//            XCTAssertEqual(self.socket.callbackCheckString, "channelCallbackCalled")
-//            ex.fulfill()
-//        }
-//
-//        let callback = { (data: Any?) -> Void in
-//            if let eName = data?["event"], eName == "pusher:subscription_succeeded" {
-//                self.socket.appendToCallbackCheckString("channelCallbackCalled")
-//            }
-//        }
-//
-//
-//        XCTAssertEqual(socket.callbackCheckString, "")
-//        let chan = pusher.subscribe("private-channel")
-//        let _ = chan.bind(eventName: "pusher:subscription_succeeded", callback: callback)
-//        pusher.connect()
-//
-//        waitForExpectations(timeout: 0.5)
-//    }
+    //    func testSubscriptionSucceededEventSentToPrivateChannel() {
+    //        let ex = expectation(description: "the channel should be subscribed to successfully")
+    //
+    //        pusher.connection.subscriptionSuccessHandler = { str in
+    //            XCTAssertEqual(self.socket.callbackCheckString, "channelCallbackCalled")
+    //            ex.fulfill()
+    //        }
+    //
+    //        let callback = { (data: Any?) -> Void in
+    //            if let eName = data?["event"], eName == "pusher:subscription_succeeded" {
+    //                self.socket.appendToCallbackCheckString("channelCallbackCalled")
+    //            }
+    //        }
+    //
+    //
+    //        XCTAssertEqual(socket.callbackCheckString, "")
+    //        let chan = pusher.subscribe("private-channel")
+    //        let _ = chan.bind(eventName: "pusher:subscription_succeeded", callback: callback)
+    //        pusher.connect()
+    //
+    //        waitForExpectations(timeout: 0.5)
+    //    }
 }

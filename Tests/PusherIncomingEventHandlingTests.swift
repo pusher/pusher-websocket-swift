@@ -14,15 +14,15 @@ class HandlingIncomingEventsTests: XCTestCase {
     var pusher: Pusher!
     var socket: MockWebSocket!
 
-  override func setUp() {
-      super.setUp()
+    override func setUp() {
+        super.setUp()
 
-      key = "testKey123"
-      pusher = Pusher(key: key)
-      socket = MockWebSocket()
-      socket.delegate = pusher.connection
-      pusher.connection.socket = socket
-  }
+        key = "testKey123"
+        pusher = Pusher(key: key)
+        socket = MockWebSocket()
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+    }
 
     func testCallbacksOnGlobalChannelShouldBeCalled() {
         let callback = { (data: Any?) -> Void in self.socket.appendToCallbackCheckString("testingIWasCalled") }
@@ -62,7 +62,7 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertNil(socket.objectGivenToCallback)
         pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
-        XCTAssertEqual(socket.objectGivenToCallback as! [String : String], ["test": "test string", "and": "another"])
+        XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["test": "test string", "and": "another"])
     }
 
     func testReturningAJSONStringToCallbacksIfTheStringCannotBeParsed() {
@@ -91,7 +91,7 @@ class HandlingIncomingEventsTests: XCTestCase {
 
     func testReceivingAnErrorWhereTheDataPartOfTheMessageIsNotDoubleEncoded() {
         let _ = pusher.bind({ (message: Any?) in
-            if let message = message as? [String: AnyObject], let eventName = message["event"] as? String , eventName == "pusher:error" {
+            if let message = message as? [String: AnyObject], let eventName = message["event"] as? String, eventName == "pusher:error" {
                 if let data = message["data"] as? [String: AnyObject], let errorMessage = data["message"] as? String {
                     self.socket.appendToCallbackCheckString(errorMessage)
                 }
@@ -122,4 +122,3 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(socket.callbackCheckString, "[PUSHER DEBUG] websocketDidReceiveMessage {\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}")
     }
 }
-

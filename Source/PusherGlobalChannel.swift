@@ -31,9 +31,9 @@ open class GlobalChannel: PusherChannel {
     internal func handleEvent(name: String, data: String, channelName: String?) {
         for (_, callback) in self.globalCallbacks {
             if let channelName = channelName {
-                callback(["channel": channelName, "event": name, "data": data] as [String : Any])
+                callback(["channel": channelName, "event": name, "data": data] as [String: Any])
             } else {
-                callback(["event": name, "data": data] as [String : Any])
+                callback(["event": name, "data": data] as [String: Any])
             }
         }
     }
@@ -45,6 +45,7 @@ open class GlobalChannel: PusherChannel {
         - parameter data:        The data associated with the received message
      */
     internal func handleErrorEvent(name: String, data: [String:AnyObject]) {
+    internal func handleErrorEvent(name: String, data: [String: AnyObject]) {
         for (_, callback) in self.globalCallbacks {
             callback(["event": name, "data": data])
         }

@@ -1,15 +1,15 @@
- //
- //  PresenceChannelTests.swift
- //  PusherSwift
- //
- //  Created by Hamilton Chapman on 07/04/2016.
- //
- //
+//
+//  PresenceChannelTests.swift
+//  PusherSwift
+//
+//  Created by Hamilton Chapman on 07/04/2016.
+//
+//
 
- import PusherSwift
- import XCTest
+import PusherSwift
+import XCTest
 
- class PusherPresenceChannelTests: XCTestCase {
+class PusherPresenceChannelTests: XCTestCase {
     var pusher: Pusher!
     var socket: MockWebSocket!
     var options: PusherClientOptions!
@@ -29,13 +29,13 @@
     }
 
     func testMembersObjectStoresUserIdIfAUserDataFetcherIsProvided() {
-         pusher.connection.userDataFetcher = { () -> PusherUserData in
-             return PusherUserData(userId: "123")
-         }
+        pusher.connection.userDataFetcher = { () -> PusherUserData in
+            return PusherUserData(userId: "123")
+        }
 
-         pusher.connect()
-         let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
-         XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
+        pusher.connect()
+        let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
+        XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
     }
 
     func testMembersObjectStoresSocketIdIfNoUserDataFetcherIsProvided() {
@@ -55,7 +55,7 @@
         let chan = pusher.subscribe("presence-test") as? PresencePusherChannel
 
         XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
-        XCTAssertEqual(chan?.members.first!.userInfo as! [String : String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+        XCTAssertEqual(chan?.members.first!.userInfo as! [String: String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
     }
 
     func testFindingPresenceChannelMemberByUserId() {
@@ -66,7 +66,7 @@
         let member = chan!.findMember(userId: "100")
 
         XCTAssertEqual(member!.userId, "100", "the userId should be 100")
-        XCTAssertEqual(member!.userInfo as! [String : String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+        XCTAssertEqual(member!.userInfo as! [String: String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
     }
 
     func testFindingTheClientsMemberObject() {
@@ -80,7 +80,7 @@
         let me = chan!.me()
 
         XCTAssertEqual(me!.userId, "123", "the userId should be 123")
-        XCTAssertEqual(me!.userInfo as! [String : Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
+        XCTAssertEqual(me!.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
     }
 
     func testOnMemberAddedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
@@ -142,4 +142,3 @@
         XCTAssertEqual((stubber.calls.last?.args?.first as? PresenceChannelMember)?.userId, "100", "the userId should be 100")
     }
 }
-

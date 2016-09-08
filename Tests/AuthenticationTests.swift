@@ -10,22 +10,22 @@ import PusherSwift
 import XCTest
 
 class AuthenticationTests: XCTestCase {
-   var pusher: Pusher!
-   var socket: MockWebSocket!
+    var pusher: Pusher!
+    var socket: MockWebSocket!
 
     override func setUp() {
         super.setUp()
 
-       let options = PusherClientOptions(
-           authMethod: AuthMethod.endpoint(authEndpoint: "http://localhost:9292/pusher/auth")
-       )
-       pusher = Pusher(key: "testKey123", options: options)
-       socket = MockWebSocket()
-       socket.delegate = pusher.connection
-       pusher.connection.socket = socket
-   }
+        let options = PusherClientOptions(
+            authMethod: AuthMethod.endpoint(authEndpoint: "http://localhost:9292/pusher/auth")
+        )
+        pusher = Pusher(key: "testKey123", options: options)
+        socket = MockWebSocket()
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+    }
 
-   func testSubscringToAPrivateChannelShouldMakeARequestToTheAuthEndpoint() {
+    func testSubscringToAPrivateChannelShouldMakeARequestToTheAuthEndpoint() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
 
         if case .endpoint(authEndpoint: let authEndpoint) = pusher.connection.options.authMethod {
@@ -44,7 +44,7 @@ class AuthenticationTests: XCTestCase {
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
-   }
+    }
 
     func testSubscringToAPrivateChannelShouldCreateAuthSignatureInternally() {
         let options = PusherClientOptions(
@@ -84,7 +84,7 @@ class AuthenticationTests: XCTestCase {
         XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
 
         let _ = pusher.bind({ (data: Any?) -> Void in
-            if let data = data as? [String : AnyObject], let eventName = data["event"] as? String, eventName == "pusher:subscription_error" {
+            if let data = data as? [String: AnyObject], let eventName = data["event"] as? String, eventName == "pusher:subscription_error" {
                 XCTAssertTrue(Thread.isMainThread)
                 ex.fulfill()
             }
@@ -96,7 +96,9 @@ class AuthenticationTests: XCTestCase {
     }
 
     func testAuthorizationUsingSomethingConformingToTheAuthRequestBuilderProtocol() {
+
         struct AuthRequestBuilder: AuthRequestBuilderProtocol {
+
             func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest? {
                 let request = NSMutableURLRequest(url: URL(string: "http://localhost:9292/builder")!)
                 request.httpMethod = "POST"

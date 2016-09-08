@@ -14,20 +14,20 @@ class PusherTopLevelApiTests: XCTestCase {
     var pusher: Pusher!
     var socket: MockWebSocket!
 
-  override func setUp() {
-      super.setUp()
+    override func setUp() {
+        super.setUp()
 
-      key = "testKey123"
-      let options = PusherClientOptions(
-        authMethod: AuthMethod.inline(secret: "secret"),
-        autoReconnect: false
-      )
+        key = "testKey123"
+        let options = PusherClientOptions(
+            authMethod: AuthMethod.inline(secret: "secret"),
+            autoReconnect: false
+        )
 
-      pusher = Pusher(key: key, options: options)
-      socket = MockWebSocket()
-      socket.delegate = pusher.connection
-      pusher.connection.socket = socket
-  }
+        pusher = Pusher(key: key, options: options)
+        socket = MockWebSocket()
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+    }
 
     func testCallingConnectCallsConnectOnTheSocket() {
         pusher.connect()
@@ -77,8 +77,8 @@ class PusherTopLevelApiTests: XCTestCase {
 
         XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "the write function should have been called")
         let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-        let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String : Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+        let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
         XCTAssertTrue(parsedEqualsExpected)
     }
 
@@ -92,7 +92,7 @@ class PusherTopLevelApiTests: XCTestCase {
     func testSubscriptionSucceededEventSentToGlobalChannel() {
         pusher.connect()
         let callback = { (data: Any?) -> Void in
-            if let data = data as? [String : Any], let eName = data["event"] as? String, eName == "pusher:subscription_succeeded" {
+            if let data = data as? [String: Any], let eName = data["event"] as? String, eName == "pusher:subscription_succeeded" {
                 self.socket.appendToCallbackCheckString("globalCallbackCalled")
             }
         }
@@ -207,8 +207,8 @@ class PusherTopLevelApiTests: XCTestCase {
         XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "write function should have been called")
 
         let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-        let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"] as [String : Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
+        let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
 
         XCTAssertTrue(parsedEqualsExpected)
     }
@@ -245,5 +245,4 @@ class PusherTopLevelApiTests: XCTestCase {
         pusher.unbindAll()
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
     }
-
 }

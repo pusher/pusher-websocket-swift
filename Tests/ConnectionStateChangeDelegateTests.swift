@@ -1,15 +1,15 @@
- //
- //  ConnectionStateChangeDelegateTests.swift
- //  PusherSwift
- //
- //  Created by Hamilton Chapman on 07/04/2016.
- //
- //
+//
+//  ConnectionStateChangeDelegateTests.swift
+//  PusherSwift
+//
+//  Created by Hamilton Chapman on 07/04/2016.
+//
+//
 
- import PusherSwift
- import XCTest
+import PusherSwift
+import XCTest
 
- class ConnectionStateChangeDelegateTests: XCTestCase {
+class ConnectionStateChangeDelegateTests: XCTestCase {
     var pusher: Pusher!
     var socket: MockWebSocket!
     var stateChangeDelegate: TestConnectionStateChangeDelegate!

@@ -39,7 +39,7 @@ extension PusherConnection: WebSocketDelegate {
         }
 
         // Handle error (if any)
-        guard let error = error , error.code != Int(WebSocket.CloseCode.normal.rawValue) else {
+        guard let error = error, error.code != Int(WebSocket.CloseCode.normal.rawValue) else {
             self.debugLogger?("[PUSHER DEBUG] Deliberate disconnection - skipping reconnect attempts")
             return updateConnectionState(to: .disconnected)
         }

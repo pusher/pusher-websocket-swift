@@ -8,10 +8,10 @@
 
 import PusherSwift
 
-func convertStringToDictionary(_ text: String) -> [String:AnyObject]? {
+func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {
     if let data = text.data(using: String.Encoding.utf8) {
         do {
-            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
+            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject]
             return json
         } catch {
             print("Something went wrong")
@@ -25,7 +25,7 @@ extension AuthMethod: Equatable {
 
 public func ==(lhs: AuthMethod, rhs: AuthMethod) -> Bool {
     switch (lhs, rhs) {
-    case (let .endpoint(authEndpoint1) , let .endpoint(authEndpoint2)):
+    case (let .endpoint(authEndpoint1), let .endpoint(authEndpoint2)):
         return authEndpoint1 == authEndpoint2
 
     case (let .inline(secret1), let .inline(secret2)):
