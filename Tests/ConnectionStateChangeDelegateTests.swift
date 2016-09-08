@@ -1,57 +1,54 @@
-//
-//  ConnectionStateChangeDelegateTests.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 07/04/2016.
-//
-//
+ //
+ //  ConnectionStateChangeDelegateTests.swift
+ //  PusherSwift
+ //
+ //  Created by Hamilton Chapman on 07/04/2016.
+ //
+ //
 
-import Quick
-import Nimble
-import PusherSwift
+ import PusherSwift
+ import XCTest
 
-class ConnectionStateChangeDelegateSpec: QuickSpec {
-    override func spec() {
-        var pusher: Pusher!
-        var socket: MockWebSocket!
-        var stateChangeDelegate: TestConnectionStateChangeDelegate!
+ class ConnectionStateChangeDelegateTests: XCTestCase {
+    var pusher: Pusher!
+    var socket: MockWebSocket!
+    var stateChangeDelegate: TestConnectionStateChangeDelegate!
 
-        beforeEach({
-            let options = PusherClientOptions(autoReconnect: false)
-            pusher = Pusher(key: "key", options: options)
-            socket = MockWebSocket()
-            stateChangeDelegate = TestConnectionStateChangeDelegate()
-            socket.delegate = pusher.connection
-            pusher.connection.socket = socket
-            pusher.connection.stateChangeDelegate = stateChangeDelegate
-        })
+    override func setUp() {
+        super.setUp()
 
-        describe("the delegate gets called") {
-            it("twice going from disconnected -> connecting -> connected") {
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.disconnected))
-                pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.connected))
-                expect(stateChangeDelegate.stubber.calls.first?.name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls.first?.args?.first as? ConnectionState).to(equal(ConnectionState.disconnected))
-                expect(stateChangeDelegate.stubber.calls.first?.args?.last as? ConnectionState).to(equal(ConnectionState.connecting))
-                expect(stateChangeDelegate.stubber.calls.last?.name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState).to(equal(ConnectionState.connecting))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState).to(equal(ConnectionState.connected))
-            }
+        let options = PusherClientOptions(autoReconnect: false)
+        pusher = Pusher(key: "key", options: options)
+        socket = MockWebSocket()
+        stateChangeDelegate = TestConnectionStateChangeDelegate()
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        pusher.connection.stateChangeDelegate = stateChangeDelegate
+    }
 
-            it("four times going from disconnected -> connecting -> connected -> disconnecting -> disconnected") {
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.disconnected))
-                pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.connected))
-                pusher.disconnect()
-                expect(stateChangeDelegate.stubber.calls.count).to(equal(4))
-                expect(stateChangeDelegate.stubber.calls[2].name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls[2].args?.first as? ConnectionState).to(equal(ConnectionState.connected))
-                expect(stateChangeDelegate.stubber.calls[2].args?.last as? ConnectionState).to(equal(ConnectionState.disconnecting))
-                expect(stateChangeDelegate.stubber.calls.last?.name).to(equal("connectionChange"))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState).to(equal(ConnectionState.disconnecting))
-                expect(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState).to(equal(ConnectionState.disconnected))
-            }
-        }
+    func testDelegateGetsCalledTwiceGoingFromDisconnectedToConnectingToConnected() {
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)
+        pusher.connect()
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.connected)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.first?.name, "connectionChange")
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.first?.args?.first as? ConnectionState, ConnectionState.disconnected)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.first?.args?.last as? ConnectionState, ConnectionState.connecting)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.last?.name, "connectionChange")
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState, ConnectionState.connecting)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState, ConnectionState.connected)
+    }
+
+    func testDelegateGetsCalledFourTimesGoingFromDisconnectedToConnectingToConnectedToDisconnectingToDisconnected() {
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)
+        pusher.connect()
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.connected)
+        pusher.disconnect()
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.count, 4)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls[2].name, "connectionChange")
+        XCTAssertEqual(stateChangeDelegate.stubber.calls[2].args?.first as? ConnectionState, ConnectionState.connected)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls[2].args?.last as? ConnectionState, ConnectionState.disconnecting)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.last?.name, "connectionChange")
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.last?.args?.first as? ConnectionState, ConnectionState.disconnecting)
+        XCTAssertEqual(stateChangeDelegate.stubber.calls.last?.args?.last as? ConnectionState, ConnectionState.disconnected)
     }
 }

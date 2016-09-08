@@ -6,7 +6,6 @@
 //
 //
 
-import Foundation
 import PusherSwift
 
 func convertStringToDictionary(_ text: String) -> [String:AnyObject]? {

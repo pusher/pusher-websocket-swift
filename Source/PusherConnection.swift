@@ -348,6 +348,7 @@ open class PusherConnection {
             "data": data ?? ""
         ]
         DispatchQueue.main.async {
+            // TODO: Consider removing in favour of exclusively using handlers
             self.handleEvent(eventName: eventName, jsonObject: json as [String : AnyObject])
         }
         
@@ -586,7 +587,7 @@ open class PusherConnection {
                 self.handleAuthorizationError(forChannel: channel.name, response: response, data: nil, error: error as NSError?)
                 return
             }
-            
+
             guard let data = data else {
                 print("Error authorizing channel [\(channel.name)]")
                 self.handleAuthorizationError(forChannel: channel.name, response: response, data: nil, error: nil)
