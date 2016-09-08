@@ -1,8 +1,6 @@
 language: objective-c
 osx_image: xcode8
 sudo: false
-xcode_workspace: PusherSwift.xcworkspace
-xcode_project: PusherSwift.xcodeproj
 env:
   - iOS= DST='platform=iOS Simulator,name=iPhone 6S' UUID='64DF30D4-4118-480F-9ADD-DCC32194B63D' ACTION=test
   - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' UUID='273D776F-196E-4F2A-AEF2-E1E3EAE99B47' ACTION=test
@@ -34,6 +32,6 @@ script:
   - xcodebuild -version
   - xcodebuild -workspace PusherSwift.xcworkspace -list
   - if [ -n "$UUID" ]; then xcrun instruments -w "$UUID" || true; sleep 15; fi
-  - set -o pipefail && xcodebuild -scheme PusherSwift -destination "$DST" $ACTION | -enableCodeCoverage YES | xcpretty -tc;
+  - set -o pipefail && xcodebuild -scheme PusherSwift -destination "$DST" -workspace PusherSwift.xcworkspace -project PusherSwift.xcodeproj $ACTION | -enableCodeCoverage YES | xcpretty -tc;
 after_success:
   - sleep 5
