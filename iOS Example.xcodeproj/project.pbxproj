@@ -55,7 +55,6 @@
 		33831C551A9CEEE900B124F1 = {
 			isa = PBXGroup;
 			children = (
-				337642911D81BAA60078EEFB /* iOS Example.entitlements */,
 				33831C601A9CEEE900B124F1 /* Example */,
 				33831C5F1A9CEEE900B124F1 /* Products */,
 				E0B29E04C3C064CEE6120CF2 /* Frameworks */,
@@ -87,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				33831CBC1A9CFCD000B124F1 /* Info.plist */,
+				337642911D81BAA60078EEFB /* iOS Example.entitlements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
