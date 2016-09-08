@@ -4,9 +4,9 @@ sudo: false
 xcode_workspace: PusherSwift.xcworkspace
 xcode_project: PusherSwift.xcodeproj
 env:
-  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' UUID='64DF30D4-4118-480F-9ADD-DCC32194B63D' ACTION=test PLATFORM=iOS
-  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' UUID='273D776F-196E-4F2A-AEF2-E1E3EAE99B47' ACTION=test PLATFORM=tvOS
-  - macOS= DST='platform=OS X' ACTION=test PLATFORM=Mac
+  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' UUID='64DF30D4-4118-480F-9ADD-DCC32194B63D' ACTION=test
+  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' UUID='273D776F-196E-4F2A-AEF2-E1E3EAE99B47' ACTION=test
+  - macOS= DST='platform=OS X' ACTION=test
 before_install:
   - brew update
   - if brew list | grep -q carthage; then
@@ -17,8 +17,6 @@ before_install:
       brew install carthage;
     fi
   - gem install xcpretty --no-document
-install:
-  - carthage bootstrap --platform $PLATFORM
 before_deploy:
   - carthage build --no-skip-current --project-directory PusherSwift
   - carthage archive PusherSwift --project-directory PusherSwift
