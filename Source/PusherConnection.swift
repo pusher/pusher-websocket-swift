@@ -159,8 +159,9 @@ open class PusherConnection {
         if JSONSerialization.isValidJSONObject(value) {
             do {
                 let data = try JSONSerialization.data(withJSONObject: value, options: [])
-                if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                    return string as String
+                let string = String(data: data, encoding: .utf8)
+                if string != nil {
+                    return string!
                 }
             } catch _ {
             }
@@ -566,11 +567,11 @@ open class PusherConnection {
         - returns: NSURLRequest object to be used by the function making the auth request
     */
     fileprivate func requestForAuthValue(from endpoint: String, socketID: String, channel: PusherChannel) -> URLRequest {
-        let request = NSMutableURLRequest(url: URL(string: endpoint)!)
+        var request = URLRequest(url: URL(string: endpoint)!)
         request.httpMethod = "POST"
         request.httpBody = "socket_id=\(socketID)&channel_name=\(channel.name)".data(using: String.Encoding.utf8)
 
-        return request as URLRequest
+        return request
     }
 
     /**

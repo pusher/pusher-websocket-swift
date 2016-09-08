@@ -13,6 +13,30 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 open class Pusher {
     open let connection: PusherConnection
+    private let key: String
+
+#if os(iOS)
+
+    /**
+        Initializes the Pusher client with an app key and any appropriate options.
+
+        - parameter key:     The Pusher app key
+        - parameter options: An optional collection of options
+
+        - returns: A new Pusher client instance
+    */
+    public init(key: String, options: PusherClientOptions = PusherClientOptions(), nativePusher: NativePusher = NativePusher.sharedInstance) {
+        self.key = key
+        let urlString = constructUrl(key: key, options: options)
+        let ws = WebSocket(url: URL(string: urlString)!)
+        connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
+        connection.createGlobalChannel()
+        nativePusher.setPusherAppKey(pusherAppKey: key)
+    }
+
+#endif
+
+#if os(OSX) || os(tvOS)
 
     /**
         Initializes the Pusher client with an app key and any appropriate options.
@@ -23,11 +47,14 @@ open class Pusher {
         - returns: A new Pusher client instance
     */
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
+        self.key = key
         let urlString = constructUrl(key: key, options: options)
         let ws = WebSocket(url: URL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
     }
+
+#endif
 
     /**
         Subscribes the client to a new channel
@@ -96,6 +123,20 @@ open class Pusher {
     open func connect() {
         self.connection.connect()
     }
+
+#if os(iOS)
+
+    /**
+        Returns the NativePusher singletion
+
+        - returns: The NativePusher singleton
+    */
+    open func nativePusher() -> NativePusher {
+        return NativePusher.sharedInstance
+    }
+
+#endif
+
 }
 
 /**

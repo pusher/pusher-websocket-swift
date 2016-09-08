@@ -44,7 +44,6 @@ open class GlobalChannel: PusherChannel {
         - parameter name:        The name of the received event
         - parameter data:        The data associated with the received message
      */
-    internal func handleErrorEvent(name: String, data: [String:AnyObject]) {
     internal func handleErrorEvent(name: String, data: [String: AnyObject]) {
         for (_, callback) in self.globalCallbacks {
             callback(["event": name, "data": data])

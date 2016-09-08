@@ -6,6 +6,8 @@
 //
 //
 
+#if os(iOS)
+
 /**
     An interface to Pusher's native push notification service.
     The service is a pub-sub system for push notifications.
@@ -22,7 +24,7 @@ open class NativePusher {
     private let CLIENT_API_V1_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
     private let LIBRARY_NAME_AND_VERSION = "pusher-websocket-swift " + VERSION
 
-    private let URLSession = URLSession.shared
+    private let URLSession = Foundation.URLSession.shared
     private var failedNativeServiceRequests: Int = 0
     private let maxFailedRequestAttempts: Int = 6
 
@@ -69,11 +71,10 @@ open class NativePusher {
         - returns: the deviceToken formatted as a String
     */
     private func deviceTokenToString(deviceToken: Data) -> String {
-        let characterSet: CharacterSet = CharacterSet(charactersInString: "<>")
-
-        let deviceTokenString: String = (deviceToken.description as NSString)
-            .stringByTrimmingCharactersInSet(characterSet)
-            .stringByReplacingOccurrencesOfString(" ", withString: "") as String
+        var deviceTokenString: String = ""
+        for i in 0..<deviceToken.count {
+            deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
+        }
         return deviceTokenString
     }
 
@@ -86,22 +87,24 @@ open class NativePusher {
                                  to receive push notifications, as NSData
     */
     open func register(deviceToken: Data) {
-        let request = MutableURLRequest(URL: NSURL(string: CLIENT_API_V1_ENDPOINT + "/clients")!)
+        var request = URLRequest(url: URL(string: CLIENT_API_V1_ENDPOINT + "/clients")!)
         request.httpMethod = "POST"
-        let deviceTokenString = deviceTokenToString(deviceToken)
+        let deviceTokenString = deviceTokenToString(deviceToken: deviceToken)
 
-        let params: [String : AnyObject] = [
+        let params: [String: Any] = [
             "app_key": pusherAppKey!,
             "platform_type": NativePusher.PLATFORM_TYPE,
             "token": deviceTokenString
         ]
 
-        try! request.httpBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
+        try! request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library" )
 
-        let task = URLSession.dataTaskWithRequest(request, completionHandler: { data, response, error in
-            if let httpResponse = response as? httpUrlResponse,
+
+
+        let task = URLSession.dataTask(with: request, completionHandler: { data, response, error in
+            if let httpResponse = response as? HTTPURLResponse,
                    (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
                         /**
                             We expect to get a JSON response in the form:
@@ -116,24 +119,24 @@ open class NativePusher {
                             Currently, we only care about the "id" value, which is our new client id.
                             We store our id so that we can use it to subscribe/unsubscribe.
                         */
-                        if let json = try!JSONSerialization.JSONObjectWithData(data!, options: [])
+                        if let json = try! JSONSerialization.jsonObject(with: data!, options: [])
                                       as? [String: AnyObject] {
                             if let clientIdJson = json["id"] {
                                 if let clientId = clientIdJson as? String {
                                     self.clientId = clientId
                                     self.tryFlushOutbox()
                                 } else {
-                                    print("Value at \"id\" key in JSON response was not a string: " + String(json))
+                                    print("Value at \"id\" key in JSON response was not a string: \(json)")
                                 }
                             } else {
-                                print("No \"id\" key in JSON response: " + String(json))
+                                print("No \"id\" key in JSON response: \(json)")
                             }
                         } else {
-                            print("Could not parse body as JSON object:" + String(data))
+                            print("Could not parse body as JSON object: \(data)")
                         }
             } else {
                 if data != nil && response != nil {
-                    let responseBody = String(data: data!, encoding: UTF8StringEncoding)!
+                    let responseBody = String(data: data!, encoding: .utf8)
                     print("Bad HTTP response: \(response!) with body: \(responseBody)")
                 }
             }
@@ -148,7 +151,7 @@ open class NativePusher {
         - parameter interestName: the name of the interest you want to subscribe to
     */
     open func subscribe(interestName: String) {
-        outbox.append(interestName, SubscriptionChange.Subscribe)
+        outbox.append(interestName, SubscriptionChange.subscribe)
         tryFlushOutbox()
     }
 
@@ -159,7 +162,7 @@ open class NativePusher {
                                   from
     */
     open func unsubscribe(interestName: String) {
-        outbox.append(interestName, SubscriptionChange.Unsubscribe)
+        outbox.append(interestName, SubscriptionChange.unsubscribe)
         tryFlushOutbox()
     }
 
@@ -169,10 +172,10 @@ open class NativePusher {
     */
     private func tryFlushOutbox() {
         switch (self.pusherAppKey, self.clientId) {
-        case (.Some(let pusherAppKey), .Some(let clientId)):
+        case (.some(let pusherAppKey), .some(let clientId)):
             if (0 < outbox.count) {
-                let (interest, change) = outbox.removeAtIndex(0)
-                modifySubscription(pusherAppKey, clientId: clientId, interest: interest, change: change) {
+                let (interest, change) = outbox.remove(at: 0)
+                modifySubscription(pusherAppKey: pusherAppKey, clientId: clientId, interest: interest, change: change) {
                     self.tryFlushOutbox()
                 }
             }
@@ -190,30 +193,30 @@ open class NativePusher {
         - parameter change:       Whether to subscribe or unsubscribe
         - parameter callback:     Callback to be called upon success
     */
-    private func modifySubscription(pusherAppKey: String, clientId: String, interest: String, change: SubscriptionChange, callback: (Void) -> (Void)) {
+    private func modifySubscription(pusherAppKey: String, clientId: String, interest: String, change: SubscriptionChange, callback: @escaping (Void) -> (Void)) {
         let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/\(interest)"
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        var request = URLRequest(url: URL(string: url)!)
         switch (change) {
-        case .Subscribe:
-            request.HTTPMethod = "POST"
-        case .Unsubscribe:
-            request.HTTPMethod = "DELETE"
+        case .subscribe:
+            request.httpMethod = "POST"
+        case .unsubscribe:
+            request.httpMethod = "DELETE"
         }
 
-        let params: [String: AnyObject] = ["app_key": pusherAppKey]
+        let params: [String: Any] = ["app_key": pusherAppKey]
 
-        try! request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: [])
+        try! request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library")
 
-        let task = URLSession.dataTaskWithRequest(
-            request,
+        let task = URLSession.dataTask(
+            with: request,
             completionHandler: { data, response, error in
-                guard let httpResponse = response as? NSHTTPURLResponse,
+                guard let httpResponse = response as? HTTPURLResponse,
                           (200 <= httpResponse.statusCode && httpResponse.statusCode < 300) ||
                           error == nil
                 else {
-                    self.outbox.insert((interest, change), atIndex: 0)
+                    self.outbox.insert((interest, change), at: 0)
 
                     if error != nil {
                         print("Error when trying to modify subscription to interest: \(error?.localizedDescription)")
@@ -242,6 +245,8 @@ open class NativePusher {
 }
 
 private enum SubscriptionChange {
-    case Subscribe
-    case Unsubscribe
+    case subscribe
+    case unsubscribe
 }
+
+#endif

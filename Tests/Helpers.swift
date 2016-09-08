@@ -9,7 +9,7 @@
 import PusherSwift
 
 func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {
-    if let data = text.data(using: String.Encoding.utf8) {
+    if let data = text.data(using: .utf8) {
         do {
             let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject]
             return json
