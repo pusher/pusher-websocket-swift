@@ -17,7 +17,7 @@
     A per-app singleton of NativePusher is available via an instance of Pusher.
     Use the Pusher.nativePusher() method to get access to it.
 */
-open class NativePusher {
+@objc open class NativePusher: NSObject {
     static let sharedInstance = NativePusher()
 
     private static let PLATFORM_TYPE = "apns"
@@ -60,7 +60,7 @@ open class NativePusher {
     /**
         Normal clients should access the shared instance via Pusher.nativePusher().
     */
-    private init() {}
+    private override init() {}
 
     /**
         Makes device token presentable to server

@@ -31,6 +31,7 @@
 		33C0D2D51CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
 		33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2DA1CB5C364003FE13E /* Starscream.swift */; };
 		33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2E31CB5C539003FE13E /* Reachability.swift */; };
+		33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoSwiftHMACModule.swift; sourceTree = "<group>"; };
 		33C0D2DA1CB5C364003FE13E /* Starscream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starscream.swift; sourceTree = "<group>"; };
 		33C0D2E31CB5C539003FE13E /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectiveC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */,
 				3389F5711CAEDDF300563F49 /* PusherChannels.swift */,
 				3341A3391D819FBC007191AD /* NativePusher.swift */,
+				33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */,
 				33C0D2E71CB5C54C003FE13E /* Dependencies */,
 				33831CD61A9CFFF200B124F1 /* PusherSwift.h */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
@@ -324,6 +327,7 @@
 				33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */,
 				33C0D2D51CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */,
 				33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */,
+				33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */,
 				330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -18,7 +18,7 @@ public enum PusherHost {
     }
 }
 
-public protocol AuthRequestBuilderProtocol {
+@objc public protocol AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
 }
 
@@ -29,8 +29,8 @@ public enum AuthMethod {
     case noMethod
 }
 
-public struct PusherClientOptions {
-    public let authMethod: AuthMethod
+@objc public class PusherClientOptions: NSObject {
+    public var authMethod: AuthMethod
     public let attemptToReturnJSONObject: Bool
     public let autoReconnect: Bool
     public let host: String

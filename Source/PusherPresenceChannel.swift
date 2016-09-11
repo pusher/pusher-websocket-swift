@@ -8,14 +8,14 @@
 
 public typealias PusherUserInfoObject = [String : AnyObject]
 
-open class PresencePusherChannel: PusherChannel {
+open class PusherPresenceChannel: PusherChannel {
     open var members: [PresenceChannelMember]
     open var onMemberAdded: ((PresenceChannelMember) -> ())?
     open var onMemberRemoved: ((PresenceChannelMember) -> ())?
     open var myId: String? = nil
 
     /**
-        Initializes a new PresencePusherChannel with a given name, conenction, and optional
+        Initializes a new PusherPresenceChannel with a given name, conenction, and optional
         member added and member removed handler functions
 
         - parameter name:            The name of the channel
@@ -25,7 +25,7 @@ open class PresencePusherChannel: PusherChannel {
         - parameter onMemberRemoved: A function that will be called with information about the
                                      member who has just left the presence channel
 
-        - returns: A new PresencePusherChannel instance
+        - returns: A new PusherPresenceChannel instance
     */
     init(
         name: String,
@@ -115,7 +115,7 @@ open class PresencePusherChannel: PusherChannel {
         - parameter channelData: The channel data obtained from authorization of the subscription
                                  to the channel
     */
-    internal func setMyId(channelData: String) {
+    internal func setMyUserId(channelData: String) {
         if let channelDataObject = parse(channelData: channelData), let userId = channelDataObject["user_id"] {
             self.myId = String.init(describing: userId)
         }
@@ -170,7 +170,7 @@ open class PresencePusherChannel: PusherChannel {
     }
 }
 
-public struct PresenceChannelMember {
+public class PresenceChannelMember: NSObject {
     public let userId: String
     public let userInfo: Any?
 

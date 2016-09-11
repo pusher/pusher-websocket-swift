@@ -30,7 +30,7 @@ public enum PusherChannelType {
     }
 }
 
-open class PusherChannel {
+open class PusherChannel: NSObject {
     open var eventHandlers: [String: [EventHandler]] = [:]
     open var subscribed = false
     open let name: String

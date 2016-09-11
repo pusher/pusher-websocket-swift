@@ -176,22 +176,6 @@ open class MockPusherConnection: PusherConnection {
     }
 }
 
-open class MockPusherChannel: PusherChannel {
-    let stubber = StubberForMocks()
-
-    init(name: String, connection: MockPusherConnection) {
-        super.init(name: name, connection: connection)
-    }
-
-    open override func handleEvent(name: String, data: String) {
-        let _ = stubber.stub(
-            functionName: "handleEvent",
-            args: [name, data],
-            functionToCall: { super.handleEvent(name: name, data: data) }
-        )
-    }
-}
-
 open class TestConnectionStateChangeDelegate: ConnectionStateChangeDelegate {
     let stubber = StubberForMocks()
 

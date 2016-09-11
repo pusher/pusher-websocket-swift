@@ -11,7 +11,7 @@ let PROTOCOL = 7
 let VERSION = "2.0.1"
 let CLIENT_NAME = "pusher-websocket-swift"
 
-open class Pusher {
+@objc open class Pusher: NSObject {
     open let connection: PusherConnection
     private let key: String
 
@@ -72,6 +72,26 @@ open class Pusher {
         onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
             return self.connection.subscribe(channelName: channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+    }
+
+    /**
+        Subscribes the client to a new presence channel. Use this instead of the subscribe
+        function when you want a presence channel object to be returned instead of just a
+        generic channel object (which you can then cast)
+
+        - parameter channelName:     The name of the channel to subscribe to
+        - parameter onMemberAdded:   A function that will be called with information about the
+        member who has just joined the presence channel
+        - parameter onMemberRemoved: A function that will be called with information about the
+        member who has just left the presence channel
+
+        - returns: A new PusherPresenceChannel instance
+    */
+    open func subscribeToPresenceChannel(
+        channelName: String,
+        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+        return self.connection.subscribeToPresenceChannel(channelName: channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     /**

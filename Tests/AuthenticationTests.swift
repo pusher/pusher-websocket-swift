@@ -97,8 +97,7 @@ class AuthenticationTests: XCTestCase {
 
     func testAuthorizationUsingSomethingConformingToTheAuthRequestBuilderProtocol() {
 
-        struct AuthRequestBuilder: AuthRequestBuilderProtocol {
-
+        class AuthRequestBuilder: AuthRequestBuilderProtocol {
             func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest? {
                 let request = NSMutableURLRequest(url: URL(string: "http://localhost:9292/builder")!)
                 request.httpMethod = "POST"

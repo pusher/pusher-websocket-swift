@@ -6,7 +6,7 @@
 //
 //
 
-open class PusherChannels {
+open class PusherChannels: NSObject {
     open var channels = [String: PusherChannel]()
 
     /**
@@ -32,7 +32,7 @@ open class PusherChannels {
             } else {
                 var newChannel: PusherChannel
                 if PusherChannelType.isPresenceChannel(name: name) {
-                    newChannel = PresencePusherChannel(
+                    newChannel = PusherPresenceChannel(
                         name: name,
                         connection: connection,
                         onMemberAdded: onMemberAdded,
@@ -44,6 +44,38 @@ open class PusherChannels {
                 self.channels[name] = newChannel
                 return newChannel
             }
+    }
+
+    /**
+        Create a new PresencPusherChannel, which is returned, and add it to the PusherChannels
+        list of channels
+
+        - parameter channelName:     The name of the channel to create
+        - parameter connection:      The connection associated with the channel being created
+        - parameter onMemberAdded:   A function that will be called with information about the
+                                     member who has just joined the presence channel
+        - parameter onMemberRemoved: A function that will be called with information about the
+                                     member who has just left the presence channel
+
+        - returns: A new PusherPresenceChannel instance
+    */
+    internal func addPresence(
+        channelName: String,
+        connection: PusherConnection,
+        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+        if let channel = self.channels[channelName] as? PusherPresenceChannel {
+            return channel
+        } else {
+            let newChannel = PusherPresenceChannel(
+                name: channelName,
+                connection: connection,
+                onMemberAdded: onMemberAdded,
+                onMemberRemoved: onMemberRemoved
+            )
+            self.channels[channelName] = newChannel
+            return newChannel
+        }
     }
 
     /**
@@ -62,7 +94,7 @@ open class PusherChannels {
 
         - returns: A PusherChannel instance, if a channel with the given name existed, otherwise nil
     */
-    internal func find(name: String) -> PusherChannel? {
+    public func find(name: String) -> PusherChannel? {
         return self.channels[name]
     }
 }

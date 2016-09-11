@@ -9,7 +9,7 @@
 public typealias PusherEventJSON = [String : AnyObject]
 public typealias PusherUserData = PresenceChannelMember
 
-open class PusherConnection {
+open class PusherConnection: NSObject {
     open let url: String
     open let key: String
     open var options: PusherClientOptions
@@ -67,6 +67,7 @@ open class PusherConnection {
             self.options = options
             self.URLSession = URLSession
             self.socket = socket
+            super.init()
             self.socket.delegate = self
     }
 
@@ -92,6 +93,30 @@ open class PusherConnection {
                 }
             }
             return newChannel
+    }
+
+    /**
+        Initializes a new PusherChannel with a given name
+
+        - parameter channelName:     The name of the channel
+        - parameter onMemberAdded:   A function that will be called with information about the
+        member who has just joined the presence channel
+        - parameter onMemberRemoved: A function that will be called with information about the
+        member who has just left the presence channel
+
+        - returns: A new PusherChannel instance
+    */
+    internal func subscribeToPresenceChannel(
+        channelName: String,
+        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+        let newChannel = channels.addPresence(channelName: channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        if self.connectionState == .connected {
+            if !self.authorize(newChannel) {
+                print("Unable to subscribe to channel: \(newChannel.name)")
+            }
+        }
+        return newChannel
     }
 
     /**
@@ -254,11 +279,9 @@ open class PusherConnection {
                 callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
                 chan.handleEvent(name: "pusher:subscription_succeeded", data: eData)
             }
-            
-            subscriptionSuccessHandler?(channelName)
-            
+
             if PusherChannelType.isPresenceChannel(name: channelName) {
-                if let presChan = self.channels.find(name: channelName) as? PresencePusherChannel {
+                if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
                     if let data = json["data"] as? String, let dataJSON = getPusherEventJSON(from: data) {
                         if let presenceData = dataJSON["presence"] as? [String : AnyObject],
                                let presenceHash = presenceData["hash"] as? [String : AnyObject] {
@@ -267,6 +290,9 @@ open class PusherConnection {
                     }
                 }
             }
+
+            subscriptionSuccessHandler?(channelName)
+
             while chan.unsentEvents.count > 0 {
                 if let pusherEvent = chan.unsentEvents.popLast() {
                     chan.trigger(eventName: pusherEvent.name, data: pusherEvent.data)
@@ -308,7 +334,7 @@ open class PusherConnection {
     */
     fileprivate func handleMemberAddedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PresencePusherChannel {
+            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
                 if let memberJSON = getPusherEventJSON(from: data) {
                     chan.addMember(memberJSON: memberJSON)
                 } else {
@@ -325,7 +351,7 @@ open class PusherConnection {
     */
     fileprivate func handleMemberRemovedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PresencePusherChannel {
+            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
                 if let memberJSON = getPusherEventJSON(from: data) {
                     chan.removeMember(memberJSON: memberJSON)
                 } else {
@@ -352,7 +378,7 @@ open class PusherConnection {
             // TODO: Consider removing in favour of exclusively using handlers
             self.handleEvent(eventName: eventName, jsonObject: json as [String : AnyObject])
         }
-        
+
         subscriptionErrorHandler?(channelName, response, data, error)
     }
 
@@ -462,9 +488,9 @@ open class PusherConnection {
                     case .noMethod:
                         let errorMessage = "Authentication method required for private / presence channels but none provided."
                         let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
-                        
+
                         print(errorMessage)
-                        
+
                         handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
 
                         return false
@@ -476,14 +502,14 @@ open class PusherConnection {
                     case .authRequestBuilder(authRequestBuilder: let builder):
                         if let request = builder.requestFor(socketID: socketID, channel: channel) {
                             sendAuthorisationRequest(request: request as URLRequest, channel: channel, callback: callback)
-                            
+
                             return true
                         } else {
                             let errorMessage = "Authentication request could not be built"
                             let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
-                            
+
                             handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
-                            
+
                             return false
                         }
                     case .inline(secret: let secret):
@@ -594,20 +620,20 @@ open class PusherConnection {
                 self.handleAuthorizationError(forChannel: channel.name, response: response, data: nil, error: nil)
                 return
             }
-            
+
             guard let httpResponse = response as? HTTPURLResponse, (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) else {
                 let dataString = String(data: data, encoding: String.Encoding.utf8)
                 print ("Error authorizing channel [\(channel.name)]: \(dataString)")
                 self.handleAuthorizationError(forChannel: channel.name, response: response, data: dataString, error: nil)
                 return
             }
-            
+
             guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []), let json = jsonObject as? [String: AnyObject] else {
                 print("Error authorizing channel [\(channel.name)]")
                 self.handleAuthorizationError(forChannel: channel.name, response: httpResponse, data: nil, error: nil)
                 return
             }
-            
+
             self.handleAuthResponse(json: json, channel: channel, callback: callback)
         })
 
@@ -647,7 +673,7 @@ open class PusherConnection {
         channel: PusherChannel,
         channelData: String,
         callback: (([String : String]?) -> Void)? = nil) {
-            (channel as? PresencePusherChannel)?.setMyId(channelData: channelData)
+            (channel as? PusherPresenceChannel)?.setMyUserId(channelData: channelData)
 
             if let cBack = callback {
                 cBack(["auth": authValue, "channel_data": channelData])
@@ -688,7 +714,7 @@ open class PusherConnection {
     }
 }
 
-public enum ConnectionState {
+@objc public enum ConnectionState: Int {
     case connecting
     case connected
     case disconnecting
@@ -697,6 +723,6 @@ public enum ConnectionState {
     case reconnectingWhenNetworkBecomesReachable
 }
 
-public protocol ConnectionStateChangeDelegate: class {
+@objc public protocol ConnectionStateChangeDelegate: class {
     func connectionChange(old: ConnectionState, new: ConnectionState)
 }
