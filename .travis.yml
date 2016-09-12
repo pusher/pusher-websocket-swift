@@ -2,8 +2,8 @@ language: objective-c
 osx_image: xcode8
 sudo: false
 env:
-  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' UUID='64DF30D4-4118-480F-9ADD-DCC32194B63D' ACTION=test
-  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' UUID='273D776F-196E-4F2A-AEF2-E1E3EAE99B47' ACTION=test
+  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' UUID='64DF30D4-4118-480F-9ADD-DCC32194B63D' ACTION=test DEVICE='iPhone 6s (10.0)'
+  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' UUID='273D776F-196E-4F2A-AEF2-E1E3EAE99B47' ACTION=test DEVICE='Apple TV 1080p (10.0)'
   - macOS= DST='platform=OS X' ACTION=test
 before_install:
   - brew update
@@ -15,7 +15,8 @@ before_install:
       brew install carthage;
     fi
   - gem install xcpretty --no-document
-  - SIMULATOR_ID=$(xcrun instruments -s | grep -o "iPhone 6 (9.1) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
+  - SIMULATOR_ID=$(xcrun instruments -s | grep -o "$DEVICE \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
+  - echo "$SIMULATOR_ID"
 before_deploy:
   - carthage build --no-skip-current --project-directory PusherSwift
   - carthage archive PusherSwift --project-directory PusherSwift
@@ -32,8 +33,11 @@ script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -workspace PusherSwift.xcworkspace -list
-  - open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
-  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj clean build  | xcpretty -tc;
+  - if [ "$DST" != "platform=OS X" ]; then
+      echo "$SIMULARTOR_ID";
+      open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
+    fi
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj clean build | xcpretty -tc;
   - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION | xcpretty -tc;
 after_success:
   - sleep 5
