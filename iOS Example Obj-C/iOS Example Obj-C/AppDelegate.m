@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+@import UserNotifications;
 
 @interface AppDelegate ()
 
@@ -16,8 +17,32 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.pusher = [[Pusher alloc] initWithKey:@"e5cf3bca5e35fa22fbd6"];
+
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionAlert | UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        // Enable or disable features based on authorization.
+    }];
+
+    [application registerForRemoteNotifications];
     return YES;
+}
+
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"Registered for remote notifications; received device token");
+    [[[self pusher] nativePusher] registerWithDeviceToken:deviceToken];
+    [[[self pusher] nativePusher] subscribeWithInterestName:@"donuts"];
+}
+
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to register for remote notifications with error: %@", error);
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Received remote notification: %@", userInfo);
 }
 
 

@@ -43,6 +43,7 @@
 		331F373A1D82CAB900AE2852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		331F373C1D82CAB900AE2852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		331F37421D82E01F00AE2852 /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3330F8821D86A58900D8DC88 /* iOS Example Obj-C.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS Example Obj-C.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				331F372C1D82CAB900AE2852 /* main.m */,
+				3330F8821D86A58900D8DC88 /* iOS Example Obj-C.entitlements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -140,6 +142,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = H7FL434D9W;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -300,6 +307,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iOS Example Obj-C/iOS Example Obj-C.entitlements";
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = "iOS Example Obj-C/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -313,6 +321,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iOS Example Obj-C/iOS Example Obj-C.entitlements";
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = "iOS Example Obj-C/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -340,6 +349,7 @@
 				331F37411D82CAB900AE2852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
