@@ -12,10 +12,6 @@
 
 What else would you want? Head over to the example app [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/Example/ViewController.swift) to get some code you can drop in to get started.
 
-## Looking for the push notifications beta?
-
-Head over to the [push-notifications](https://github.com/pusher/pusher-websocket-swift/tree/push-notifications) branch.
-
 
 ## Table of Contents
 
@@ -53,7 +49,7 @@ To integrate PusherSwift into your Xcode project using CocoaPods, specify it in 
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '10.0'
 use_frameworks!
 
 pod 'PusherSwift'
@@ -65,7 +61,7 @@ Then, run the following command:
 $ pod install
 ```
 
-If you find that you're having the most recent version installed when you run `pod install` then try running:
+If you find that you're not having the most recent version installed when you run `pod install` then try running:
 
 ```bash
 $ pod cache clean
@@ -108,23 +104,23 @@ The `authMethod` parameter must be of the type `AuthMethod`. This is an enum def
 
 ```swift
 public enum AuthMethod {
-    case Endpoint(authEndpoint: String)
-    case AuthRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
-    case Internal(secret: String)
-    case NoMethod
+    case endpoint(authEndpoint: String)
+    case authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
+    case inline(secret: String)
+    case noMethod
 }
 ```
 
-- `Endpoint(authEndpoint: String)` - the client will make a `POST` request to the endpoint you specify with the socket ID of the client and the channel name attempting to be subscribed to
-- `AuthRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)` - you specify an object that conforms to the `AuthRequestBuilderProtocol` (defined below), which must generate an `NSURLRequest` object that will be used to make the auth request
-- `Internal(secret: String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
-- `NoMethod` - if you are only using public channels then you do not need to set an `authMethod` (this is the default value)
+- `endpoint(authEndpoint: String)` - the client will make a `POST` request to the endpoint you specify with the socket ID of the client and the channel name attempting to be subscribed to
+- `authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)` - you specify an object that conforms to the `AuthRequestBuilderProtocol` (defined below), which must generate an `NSURLRequest` object that will be used to make the auth request
+- `inline(secret: String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
+- `noMethod` - if you are only using public channels then you do not need to set an `authMethod` (this is the default value)
 
 This is the `AuthRequestBuilderProtocol` definition:
 
 ```swift
 public protocol AuthRequestBuilderProtocol {
-    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest
+    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
 }
 ```
 
@@ -132,7 +128,7 @@ Note that if you want to specify the cluster to which you want to connect then y
 
 ```swift
 let options = PusherClientOptions(
-    host: .Cluster("eu")
+    host: .cluster("eu")
 )
 ```
 
@@ -140,7 +136,7 @@ All of these configuration options need to be passed to a `PusherClientOptions` 
 
 ```swift
 let options = PusherClientOptions(
-    authMethod: .Endpoint(authEndpoint: "http://localhost:9292/pusher/auth")
+    authMethod: .endpoint(authEndpoint: "http://localhost:9292/pusher/auth")
 )
 
 let pusher = Pusher(key: "APP_KEY", options: options)
@@ -150,17 +146,17 @@ Authenticated channel example:
 
 ```swift
 struct AuthRequestBuilder: AuthRequestBuilderProtocol {
-    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest {
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:9292/builder")!)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = "socket_id=\(socketID)&channel_name=\(channel.name)".dataUsingEncoding(NSUTF8StringEncoding)
+    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest? {
+        let request = NSMutableURLRequest(url: URL(string: "http://localhost:9292/builder")!)
+        request.httpMethod = "POST"
+        request.httpBody = "socket_id=\(socketID)&channel_name=\(channel.name)".data(using: String.Encoding.utf8)
         request.addValue("myToken", forHTTPHeaderField: "Authorization")
         return request
     }
 }
 
 let options = PusherClientOptions(
-    authMethod: AuthMethod.AuthRequestBuilder(authRequestBuilder: AuthRequestBuilder())
+    authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder())
 )
 let pusher = Pusher(
   key: "APP_KEY",
@@ -224,12 +220,12 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
 
 The different states that the connection can be in are:
 
-* `Connecting` - the connection is about to attempt to be made
-* `Connected` - the connection has been successfully made
-* `Disconnecting` - the connection has been instructed to disconnect and it is just about to do so
-* `Disconnected` - the connection has disconnected and no attempt will be made to reconnect automatically
-* `Reconnecting` - an attempt is going to be made to try and re-establish the connection
-* `ReconnectingWhenNetworkBecomesReachable` - when the network becomes reachable an attempt will be made to reconnect
+* `connecting` - the connection is about to attempt to be made
+* `connected` - the connection has been successfully made
+* `disconnecting` - the connection has been instructed to disconnect and it is just about to do so
+* `disconnected` - the connection has disconnected and no attempt will be made to reconnect automatically
+* `reconnecting` - an attempt is going to be made to try and re-establish the connection
+* `reconnectingWhenNetworkBecomesReachable` - when the network becomes reachable an attempt will be made to reconnect
 
 
 ### Reconnection
@@ -250,7 +246,7 @@ All of this is the case if you have the client option of `autoReconnect` set as 
 
 There are a couple of properties on the connection (`PusherConnection`) that you can set that affect how the reconnection behaviour works. These are:
 
-* `public var reconnectAttemptsMax: Int? = 6` - if you set this to `nil` then there is no maximum number of reconnect attempts and so attempts will continue to be made with an exponential backoff (based on number of attempts), otherwise only as many attempts as this property's value will be made before the connection's state moves to `.Disconnected`
+* `public var reconnectAttemptsMax: Int? = 6` - if you set this to `nil` then there is no maximum number of reconnect attempts and so attempts will continue to be made with an exponential backoff (based on number of attempts), otherwise only as many attempts as this property's value will be made before the connection's state moves to `.disconnected`
 * `public var maxReconnectGapInSeconds: Double? = nil` - if you want to set a maximum length of time (in seconds) between reconnect attempts then set this property appropriately
 
 Note that the number of reconnect attempts gets reset to 0 as soon as a successful connection is made.
@@ -325,7 +321,7 @@ These are bound to a specific channel, and mean that you can reuse event names i
 let pusher = Pusher(key: "MY_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
-myChannel.bind("new-price", callback: { (data: AnyObject?) -> Void in
+myChannel.bind(eventName: "new-price", callback: { (data: AnyObject?) -> Void in
     if let data = data as? [String : AnyObject] {
         if let price = data["price"] as? String, company = data["company"] as? String {
             print("\(company) is now priced at \(price)")
@@ -381,7 +377,7 @@ You can remove previously-bound handlers from an object by using the `unbind` fu
 let pusher = Pusher(key: "MY_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
-let eventHandlerId = myChannel.bind("new-price", callback: { (data: AnyObject?) -> Void in
+let eventHandlerId = myChannel.bind(eventName: "new-price", callback: { (data: AnyObject?) -> Void in
   ...
 })
 
@@ -405,7 +401,7 @@ You can also search for specific members in the channel by calling `findMember` 
 
 ```swift
 let chan = pusher.subscribe("presence-channel")
-let member = chan.findMember("12345")
+let member = chan.findMember(userId: "12345")
 
 print(member)
 ```
@@ -427,6 +423,7 @@ You should set up your app for push notifications in your `AppDelegate`. Start o
 
 ```swift
 import PusherSwift
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -437,10 +434,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 For your Swift app to receive push notifications, it must first register with APNs. You should do this when the application finishes launching. Your app should register for all types of notification, like so:
 
 ```swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-    let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
-    let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-    application.registerUserNotificationSettings(pushNotificationSettings)
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    let center = UNUserNotificationCenter.current()
+    center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+        // Enable or disable features based on authorization.
+    }
     application.registerForRemoteNotifications()
 
     return true
@@ -452,24 +450,24 @@ Next, APNs will respond with a device token identifying your app instance. Your 
 Your app can now subscribe to interests. The following registers and subscribes the app to the interest "donuts":
 
 ```swift
-func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-    pusher.nativePusher().register(deviceToken)
-    pusher.nativePusher().subscribe("donuts")
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    pusher.nativePusher().register(deviceToken: deviceToken)
+    pusher.nativePusher().subscribe(interestName: "donuts")
 }
 ```
 
 When your server publishes a notification to the interest "donuts", it will get passed to your app. This happens as a call in your `AppDelegate` which you should listen to:
 
 ```swift
-func application(application: UIApplication, didReceiveRemoteNotification notification: [NSObject : AnyObject]) {
-    print(notification)
+func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    print(userInfo)
 }
 ```
 
 If at a later point you wish to unsubscribe from an interest, this works in the same way:
 
 ```swift
-pusher.nativePusher().unsubscribe("donuts")
+pusher.nativePusher().unsubscribe(interestName: "donuts")
 ```
 
 For a complete example of a working app, see the [Example/](https://github.com/pusher/pusher-websocket-swift/tree/push-notifications/Example) directory in this repository. Specifically for push notifications code, see the [Example/AppDelegate.swift](https://github.com/pusher/pusher-websocket-swift/blob/push-notifications/Example/AppDelegate.swift) file.
@@ -477,7 +475,7 @@ For a complete example of a working app, see the [Example/](https://github.com/p
 
 ## Testing
 
-There are a set of tests for the library that can be run using the standard methods (Command-U in Xcode) when you have one the `PusherSwiftTests-*` schemes active in Xcode.
+There are a set of tests for the library that can be run using the standard method (Command-U in Xcode).
 
 The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift). See [.travis.yml](https://github.com/pusher/pusher-websocket-swift/blob/master/.travis.yml) for details on how the Travis tests are run.
 
@@ -492,6 +490,7 @@ The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websoc
 ## Maintainers
 
 PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was originally created by [Hamilton Chapman](https://github.com/hamchapman)
+
 
 ## License
 
