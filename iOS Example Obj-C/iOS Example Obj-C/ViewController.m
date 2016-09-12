@@ -20,7 +20,7 @@
     OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"YOUR_APP_SECRET"];
     PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
 
-    self.client = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY" options:options];
+    self.client = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
 
     self.client.connection.stateChangeDelegate = self;
 

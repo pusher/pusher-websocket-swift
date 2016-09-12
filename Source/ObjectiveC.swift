@@ -15,7 +15,7 @@ public extension Pusher {
         return self.subscribeToPresenceChannel(channelName: channelName, onMemberAdded: nil, onMemberRemoved: nil)
     }
 
-    @objc public convenience init(withKey key: String, options: PusherClientOptions) {
+    @objc public convenience init(withAppKey key: String, options: PusherClientOptions) {
         self.init(key: key, options: options)
     }
 
