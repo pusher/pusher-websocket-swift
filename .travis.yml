@@ -33,7 +33,7 @@ script:
   - xcodebuild -version
   - xcodebuild -workspace PusherSwift.xcworkspace -list
   - open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
-  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj YES clean build  | xcpretty -tc;
-  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION  | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj clean build  | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION | xcpretty -tc;
 after_success:
   - sleep 5
