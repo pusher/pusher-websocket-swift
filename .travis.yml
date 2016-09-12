@@ -15,6 +15,7 @@ before_install:
       brew install carthage;
     fi
   - gem install xcpretty --no-document
+  - SIMULATOR_ID=$(xcrun instruments -s | grep -o "iPhone 6 (9.1) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
 before_deploy:
   - carthage build --no-skip-current --project-directory PusherSwift
   - carthage archive PusherSwift --project-directory PusherSwift
@@ -31,7 +32,8 @@ script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -workspace PusherSwift.xcworkspace -list
-  - if [ -n "$UUID" ]; then xcrun instruments -w "$UUID" || true; sleep 15; fi
-  - set -o pipefail && xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION  | xcpretty -tc;
+  - open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj YES clean build  | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION  | xcpretty -tc;
 after_success:
   - sleep 5
