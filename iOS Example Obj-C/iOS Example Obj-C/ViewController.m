@@ -17,10 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"5f95d93939f25eca664c"];
+    OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"YOUR_APP_SECRET"];
     PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
 
-    self.client = [[Pusher alloc] initWithKey:@"e5cf3bca5e35fa22fbd6" options:options];
+    self.client = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY" options:options];
 
     self.client.connection.stateChangeDelegate = self;
 

@@ -5,7 +5,7 @@
       location = "group:PusherSwift/PusherSwift.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:iOS Example.xcodeproj">
+      location = "group:iOS Example Swift/iOS Example Swift.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:iOS Example Obj-C/iOS Example Obj-C.xcodeproj">
