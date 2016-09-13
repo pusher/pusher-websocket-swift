@@ -56,9 +56,9 @@ public extension PusherHost {
     func toObjc() -> OCPusherHost {
         switch self {
         case let .host(host):
-            return OCPusherHost(type: 0, host: host)
+            return OCPusherHost(host: host)
         case let .cluster(cluster):
-            return OCPusherHost(type: 1, host: "ws-\(cluster).pusher.com")
+            return OCPusherHost(cluster: "ws-\(cluster).pusher.com")
         }
     }
 
@@ -66,6 +66,7 @@ public extension PusherHost {
         switch (source.type) {
         case 0: return PusherHost.host(source.host!)
         case 1: return PusherHost.cluster(source.cluster!)
+        case 2: return PusherHost.host("ws.pusherapp.com")
         default: return PusherHost.host("ws.pusherapp.com")
         }
     }
@@ -76,13 +77,18 @@ public extension PusherHost {
     var host: String? = nil
     var cluster: String? = nil
 
-    public init(type: Int, host: String) {
-        self.type = type
+//    public init() {
+//        self.type = 2
+//        self.host = "ws.pusherapp.com"
+//    }
+
+    public init(host: String) {
+        self.type = 0
         self.host = host
     }
 
-    public init(type: Int, cluster: String) {
-        self.type = type
+    public init(cluster: String) {
+        self.type = 1
         self.cluster = cluster
     }
 }

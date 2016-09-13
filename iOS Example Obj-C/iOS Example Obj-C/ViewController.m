@@ -17,10 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"YOUR_APP_SECRET"];
+    OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"daef58559fdd0aba8b63"];
     PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
 
-    self.client = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
+    self.client = [[Pusher alloc] initWithAppKey:@"568d5a3851502158a022" options:options];
 
     self.client.connection.stateChangeDelegate = self;
 
@@ -43,6 +43,15 @@
             NSLog(@"%@", [(PusherPresenceChannel *)[weakSelf.client.connection.channels findWithName:@"presence-test"] members]);
         }
     };
+
+    [self.client bind:^void (NSDictionary *data) {
+        NSString *eventName = data[@"event"];
+
+        if ([eventName isEqualToString:@"pusher:error"]) {
+            NSString *errorMessage = data[@"data"][@"message"];
+            NSLog(@"Error message: %@", errorMessage);
+        }
+    }];
 
     [self.client connect];
 
