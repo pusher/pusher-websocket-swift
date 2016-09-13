@@ -29,8 +29,8 @@ class PusherPresenceChannelTests: XCTestCase {
     }
 
     func testMembersObjectStoresUserIdIfAUserDataFetcherIsProvided() {
-        pusher.connection.userDataFetcher = { () -> PusherUserData in
-            return PusherUserData(userId: "123")
+        pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
+            return PusherPresenceChannelMember(userId: "123")
         }
 
         pusher.connect()
@@ -46,8 +46,8 @@ class PusherPresenceChannelTests: XCTestCase {
 
     func testMembersObjectStoresUserIdAndUserInfoIfAUserDataFetcherIsProvidedThatReturnsBoth() {
         pusher = Pusher(key: "testKey123", options: options)
-        pusher.connection.userDataFetcher = { () -> PusherUserData in
-            return PusherUserData(userId: "123", userInfo: ["twitter": "hamchapman"] as Any?)
+        pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
+            return PusherPresenceChannelMember(userId: "123", userInfo: ["twitter": "hamchapman"] as Any?)
         }
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
@@ -70,8 +70,8 @@ class PusherPresenceChannelTests: XCTestCase {
     }
 
     func testFindingTheClientsMemberObject() {
-        pusher.connection.userDataFetcher = { () -> PusherUserData in
-            return PusherUserData(userId: "123", userInfo: ["friends": 0])
+        pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
+            return PusherPresenceChannelMember(userId: "123", userInfo: ["friends": 0])
         }
 
         pusher.connect()
