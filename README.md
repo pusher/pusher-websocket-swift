@@ -279,7 +279,15 @@ Presence channels are created in exactly the same way as private channels, excep
 let myPresenceChannel = pusher.subscribe('presence-my-channel')
 ```
 
-You can also provide functions that will be called when members are either added to or removed from the channel.
+This will give you back a `PusherChannel` object, which will not have access to functions available to `PusherPresenceChannel` objects, such as `members`, `me` etc.
+
+You can of course cast the `PusherChannel` object to a `PusherPresenceChannel` or you can instead use the `subscribeToPresenceChannel` function which will directly return a `PusherPresenceChannel` object. You can do so like this:
+
+```swift
+let myPresenceChannel = pusher.subscribeToPresenceChannel(channelName: 'presence-my-channel')
+```
+
+You can also provide functions that will be called when members are either added to or removed from the channel. These are available as parameters to both `subscribe` and `subscribeToPresenceChannel`.
 
 ```swift
 let onMemberChange = { (member: PresenceChannelMember) in
