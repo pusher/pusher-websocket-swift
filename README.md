@@ -170,13 +170,8 @@ public init(cluster: String)
 ```
 
 ```objc
-
-TODO: FIX AND CHECK ME
-
-OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"YOUR_APP_SECRET"];
-PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
+[[OCPusherHost alloc] initWithCluster:@"YOUR_CLUSTER_SHORTCODE"];
 ```
-
 
 Authenticated channel example:
 
@@ -234,8 +229,6 @@ pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
     return PusherPresenceChannelMember(userId: "123", userInfo: ["twitter": "hamchapman"])
 }
 ```
-
-TODO: FIX AND CHECK BEFORE RELEASE
 
 
 ### Connection state changes
@@ -320,7 +313,7 @@ Note that the number of reconnect attempts gets reset to 0 as soon as a successf
 The default method for subscribing to a channel involves invoking the `subscribe` method of your client object:
 
 ```swift
-let myChannel = pusher.subscribe('my-channel')
+let myChannel = pusher.subscribe("my-channel")
 ```
 
 ```objc
@@ -334,7 +327,7 @@ This returns PusherChannel object, which events can be bound to.
 Private channels are created in exactly the same way as public channels, except that they reside in the 'private-' namespace. This means prefixing the channel name:
 
 ```swift
-let myPrivateChannel = pusher.subscribe('private-my-channel')
+let myPrivateChannel = pusher.subscribe("private-my-channel")
 ```
 
 ```objc
@@ -346,7 +339,7 @@ PusherChannel *myPrivateChannel = [pusher subscribeWithChannelName:@"private-my-
 Presence channels are created in exactly the same way as private channels, except that they reside in the 'presence-' namespace.
 
 ```swift
-let myPresenceChannel = pusher.subscribe('presence-my-channel')
+let myPresenceChannel = pusher.subscribe("presence-my-channel")
 ```
 
 ```objc
@@ -358,7 +351,7 @@ This will give you back a `PusherChannel` object, which will not have access to 
 You can of course cast the `PusherChannel` object to a `PusherPresenceChannel` or you can instead use the `subscribeToPresenceChannel` function which will directly return a `PusherPresenceChannel` object. You can do so like this:
 
 ```swift
-let myPresenceChannel = pusher.subscribeToPresenceChannel(channelName: 'presence-my-channel')
+let myPresenceChannel = pusher.subscribeToPresenceChannel(channelName: "presence-my-channel")
 ```
 
 ```objc
@@ -407,7 +400,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
     NSString *commenter = data[@"commenter"];
     NSString *message = data[@"message"];
 
-    NSLog("%@ wrote %@", commenter, message);
+    NSLog(@"%@ wrote %@", commenter, message);
 }];
 ```
 
@@ -436,7 +429,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
     NSString *price = data[@"price"];
     NSString *company = data[@"company"];
 
-    NSLog("%@ is now priced at %@", company, price);
+    NSLog(@"%@ is now priced at %@", company, price);
 }];
 ```
 
