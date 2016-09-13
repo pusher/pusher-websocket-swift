@@ -37,7 +37,7 @@ public enum AuthMethod {
     public let port: Int
     public let encrypted: Bool
 
-    public init(
+    @nonobjc public init(
         authMethod: AuthMethod = .noMethod,
         attemptToReturnJSONObject: Bool = true,
         autoReconnect: Bool = true,
