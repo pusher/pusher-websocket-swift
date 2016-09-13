@@ -28,6 +28,15 @@
         NSLog(@"%@", text);
     };
 
+    self.client.connection.userDataFetcher = ^PusherPresenceChannelMember* () {
+        NSString *uuid = [[NSUUID UUID] UUIDString];
+        return [[PusherPresenceChannelMember alloc] initWithUserId:uuid userInfo:nil];
+    };
+
+    self.client.connection.subscriptionSuccessHandler = ^void (NSString *channelName) {
+        NSLog(@"Subscribed to %@", channelName);
+    };
+
     __weak typeof(self) weakSelf = self;
     self.client.connection.subscriptionSuccessHandler = ^(NSString *str) {
         if ([str  isEqual: @"presence-test"]) {
@@ -43,11 +52,11 @@
         NSLog(@"And here is the data: %@", data);
     }];
 
-    void (^onMemberAdded)(PresenceChannelMember*) = ^void (PresenceChannelMember *member) {
+    void (^onMemberAdded)(PusherPresenceChannelMember*) = ^void (PusherPresenceChannelMember *member) {
         NSLog(@"member added: %@", member);
     };
 
-    void (^onMemberRemoved)(PresenceChannelMember*) = ^void (PresenceChannelMember *member) {
+    void (^onMemberRemoved)(PusherPresenceChannelMember*) = ^void (PusherPresenceChannelMember *member) {
         NSLog(@"member removed: %@", member);
     };
 

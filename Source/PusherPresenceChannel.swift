@@ -9,9 +9,9 @@
 public typealias PusherUserInfoObject = [String : AnyObject]
 
 open class PusherPresenceChannel: PusherChannel {
-    open var members: [PresenceChannelMember]
-    open var onMemberAdded: ((PresenceChannelMember) -> ())?
-    open var onMemberRemoved: ((PresenceChannelMember) -> ())?
+    open var members: [PusherPresenceChannelMember]
+    open var onMemberAdded: ((PusherPresenceChannelMember) -> ())?
+    open var onMemberRemoved: ((PusherPresenceChannelMember) -> ())?
     open var myId: String? = nil
 
     /**
@@ -30,8 +30,8 @@ open class PusherPresenceChannel: PusherChannel {
     init(
         name: String,
         connection: PusherConnection,
-        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) {
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) {
             self.members = []
             self.onMemberAdded = onMemberAdded
             self.onMemberRemoved = onMemberRemoved
@@ -46,20 +46,20 @@ open class PusherPresenceChannel: PusherChannel {
                                 the presence channel
     */
     internal func addMember(memberJSON: [String : AnyObject]) {
-        let member: PresenceChannelMember
+        let member: PusherPresenceChannelMember
 
         if let userId = memberJSON["user_id"] as? String {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
+                member = PusherPresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
 
             } else {
-                member = PresenceChannelMember(userId: userId)
+                member = PusherPresenceChannelMember(userId: userId)
             }
         } else {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!), userInfo: userInfo as AnyObject?)
+                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!), userInfo: userInfo as AnyObject?)
             } else {
-                member = PresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!))
+                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!))
             }
         }
         members.append(member)
@@ -75,11 +75,11 @@ open class PusherPresenceChannel: PusherChannel {
     */
     internal func addExistingMembers(memberHash: [String : AnyObject]) {
         for (userId, userInfo) in memberHash {
-            let member: PresenceChannelMember
+            let member: PusherPresenceChannelMember
             if let userInfo = userInfo as? PusherUserInfoObject {
-                member = PresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
+                member = PusherPresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
             } else {
-                member = PresenceChannelMember(userId: userId)
+                member = PusherPresenceChannelMember(userId: userId)
             }
             self.members.append(member)
         }
@@ -145,23 +145,23 @@ open class PusherPresenceChannel: PusherChannel {
 
 
     /**
-        Returns the PresenceChannelMember object for the given user id
+        Returns the PusherPresenceChannelMember object for the given user id
 
-        - parameter userId: The user id of the PresenceChannelMember for whom you want
-                            the PresenceChannelMember object
+        - parameter userId: The user id of the PusherPresenceChannelMember for whom you want
+                            the PusherPresenceChannelMember object
 
-        - returns: The PresenceChannelMember object for the given user id
+        - returns: The PusherPresenceChannelMember object for the given user id
     */
-    open func findMember(userId: String) -> PresenceChannelMember? {
+    open func findMember(userId: String) -> PusherPresenceChannelMember? {
         return self.members.filter({ $0.userId == userId }).first
     }
 
     /**
-        Returns the connected user's PresenceChannelMember object
+        Returns the connected user's PusherPresenceChannelMember object
 
-        - returns: The connected user's PresenceChannelMember object
+        - returns: The connected user's PusherPresenceChannelMember object
     */
-    open func me() -> PresenceChannelMember? {
+    open func me() -> PusherPresenceChannelMember? {
         if let id = self.myId {
             return findMember(userId: id)
         } else {
@@ -170,7 +170,7 @@ open class PusherPresenceChannel: PusherChannel {
     }
 }
 
-public class PresenceChannelMember: NSObject {
+public class PusherPresenceChannelMember: NSObject {
     public let userId: String
     public let userInfo: Any?
 

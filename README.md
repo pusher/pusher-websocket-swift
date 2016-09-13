@@ -290,7 +290,7 @@ let myPresenceChannel = pusher.subscribeToPresenceChannel(channelName: 'presence
 You can also provide functions that will be called when members are either added to or removed from the channel. These are available as parameters to both `subscribe` and `subscribeToPresenceChannel`.
 
 ```swift
-let onMemberChange = { (member: PresenceChannelMember) in
+let onMemberChange = { (member: PusherPresenceChannelMember) in
     print(member)
 }
 let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberChange, onMemberRemoved: onMemberChange)

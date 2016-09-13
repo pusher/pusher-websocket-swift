@@ -45,7 +45,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
             }
         })
 
-        let onMemberAdded = { (member: PresenceChannelMember) in
+        let onMemberAdded = { (member: PusherPresenceChannelMember) in
             print(member)
         }
 

@@ -6,8 +6,7 @@
 //
 //
 
-public typealias PusherEventJSON = [String : AnyObject]
-public typealias PusherUserData = PresenceChannelMember
+public typealias PusherEventJSON = [String: AnyObject]
 
 open class PusherConnection: NSObject {
     open let url: String
@@ -19,15 +18,15 @@ open class PusherConnection: NSObject {
     open var channels = PusherChannels()
     open var socket: WebSocket!
     open var URLSession: Foundation.URLSession
-    open var userDataFetcher: (() -> PusherUserData)?
+    open var userDataFetcher: (() -> PusherPresenceChannelMember)?
     open var debugLogger: ((String) -> ())?
     open weak var stateChangeDelegate: ConnectionStateChangeDelegate?
     open var reconnectAttemptsMax: Int? = 6
     open var reconnectAttempts: Int = 0
     open var maxReconnectGapInSeconds: Double? = nil
-    internal var reconnectTimer: Timer? = nil
     open var subscriptionErrorHandler: ((String, URLResponse?, String?, NSError?) -> Void)?
     open var subscriptionSuccessHandler: ((String) -> Void)?
+    internal var reconnectTimer: Timer? = nil
 
     open lazy var reachability: Reachability? = {
         let reachability = Reachability.init()
@@ -84,8 +83,8 @@ open class PusherConnection: NSObject {
     */
     internal func subscribe(
         channelName: String,
-        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
             let newChannel = channels.add(name: channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
             if self.connectionState == .connected {
                 if !self.authorize(newChannel) {
@@ -108,8 +107,8 @@ open class PusherConnection: NSObject {
     */
     internal func subscribeToPresenceChannel(
         channelName: String,
-        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
         let newChannel = channels.addPresence(channelName: channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
         if self.connectionState == .connected {
             if !self.authorize(newChannel) {

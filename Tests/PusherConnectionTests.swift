@@ -36,7 +36,7 @@ class PusherConnectionTests: XCTestCase {
 
     func testSettingAUserDataFetcher() {
 
-        func fetchFunc() -> PusherUserData {
+        func fetchFunc() -> PusherPresenceChannelMember {
             return PusherUserData(userId: "1")
         }
         pusher.connection.userDataFetcher = fetchFunc

@@ -18,7 +18,7 @@ class NotificationService: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
 
-        /*
+        /**
             The Swift code below is based on using a payload like this when sending a push
             notification through Pusher's Push Notifications Service:
 

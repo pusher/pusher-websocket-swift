@@ -25,8 +25,8 @@ open class PusherChannels: NSObject {
     internal func add(
         name: String,
         connection: PusherConnection,
-        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
             if let channel = self.channels[name] {
                 return channel
             } else {
@@ -62,8 +62,8 @@ open class PusherChannels: NSObject {
     internal func addPresence(
         channelName: String,
         connection: PusherConnection,
-        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
         if let channel = self.channels[channelName] as? PusherPresenceChannel {
             return channel
         } else {

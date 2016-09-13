@@ -69,8 +69,8 @@ let CLIENT_NAME = "pusher-websocket-swift"
      */
     open func subscribe(
         _ channelName: String,
-        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherChannel {
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
             return self.connection.subscribe(channelName: channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
@@ -89,8 +89,8 @@ let CLIENT_NAME = "pusher-websocket-swift"
     */
     open func subscribeToPresenceChannel(
         channelName: String,
-        onMemberAdded: ((PresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
         return self.connection.subscribeToPresenceChannel(channelName: channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
