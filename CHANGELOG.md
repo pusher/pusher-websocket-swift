@@ -7,7 +7,7 @@
 * Remove all need for Podfile / Cartfile when building PusherSwift locally
 * Combine different builds into single target
 * Merge in native notification code into main branch (push-notifications branch)
-* Add subscription success / error handlers
+* Consolidate connection-related handlers / callbacks into `PusherConnectionDelegate`
 * Make `requestFor` in `AuthRequestBuilderProtocol` able to fail
 * Rename `PresencePusherChannel` -> `PusherPresenceChannel`
 * Rename `PresenceChannelMember` -> `PusherPresenceChannelMember`
