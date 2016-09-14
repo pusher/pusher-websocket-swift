@@ -8,7 +8,7 @@
 import Foundation
 
 let PROTOCOL = 7
-let VERSION = "2.0.1"
+let VERSION = "3.0.0"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 @objc open class Pusher: NSObject {
