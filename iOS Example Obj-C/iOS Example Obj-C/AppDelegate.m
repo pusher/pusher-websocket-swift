@@ -17,14 +17,14 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    self.pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
-//
-//    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-//    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionAlert | UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
-//        // Enable or disable features based on authorization.
-//    }];
-//
-//    [application registerForRemoteNotifications];
+    self.pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
+
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionAlert | UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        // Enable or disable features based on authorization.
+    }];
+
+    [application registerForRemoteNotifications];
     return YES;
 }
 

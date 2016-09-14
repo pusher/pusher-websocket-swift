@@ -17,10 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"daef58559fdd0aba8b63"];
+    OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"YOUR_APP_SECRET"];
     PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
 
-    self.client = [[Pusher alloc] initWithAppKey:@"568d5a3851502158a022" options:options];
+    self.client = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
     self.client.connection.delegate = self;
 
     self.client.connection.userDataFetcher = ^PusherPresenceChannelMember* () {
@@ -62,20 +62,24 @@
     }];
 }
 
--(void)connectionStateDidChangeFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
+- (void)connectionStateDidChangeFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
     NSLog(@"Old connection: %d, new connection: %d", (int)old, (int)new_);
 }
 
--(void)debugLogWithMessage:(NSString *)message {
+- (void)debugLogWithMessage:(NSString *)message {
     NSLog(@"%@", message);
 }
 
--(void)subscriptionDidSucceedWithChannelName:(NSString *)channelName {
+- (void)subscriptionDidSucceedWithChannelName:(NSString *)channelName {
     NSLog(@"Subscribed to %@", channelName);
 
     if ([channelName isEqual: @"presence-test"]) {
         NSLog(@"%@", [(PusherPresenceChannel *)[self.client.connection.channels findWithName:@"presence-test"] members]);
     }
+}
+
+- (void)subscriptionDidFailWithChannelName:(NSString *)channelName response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error {
+
 }
 
 - (void)didReceiveMemoryWarning {

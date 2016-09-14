@@ -66,7 +66,6 @@ public extension PusherHost {
         switch (source.type) {
         case 0: return PusherHost.host(source.host!)
         case 1: return PusherHost.cluster(source.cluster!)
-        case 2: return PusherHost.host("ws.pusherapp.com")
         default: return PusherHost.host("ws.pusherapp.com")
         }
     }
@@ -77,10 +76,9 @@ public extension PusherHost {
     var host: String? = nil
     var cluster: String? = nil
 
-//    public init() {
-//        self.type = 2
-//        self.host = "ws.pusherapp.com"
-//    }
+    public override init() {
+        self.type = 2
+    }
 
     public init(host: String) {
         self.type = 0
