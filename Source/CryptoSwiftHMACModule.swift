@@ -44,7 +44,7 @@ extension Array {
 }
 
 extension Array where Element: Integer, Element.IntegerLiteralType == UInt8 {
-    public init(hex: String) {
+    internal init(hex: String) {
         self.init()
 
         let utf8 = Array<Element.IntegerLiteralType>(hex.utf8)
@@ -66,7 +66,7 @@ extension Array where Element: Integer, Element.IntegerLiteralType == UInt8 {
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-public protocol Authenticator {
+internal protocol Authenticator {
     /// Generates an authenticator for message using a one-time key and returns the 16-byte result
     func authenticate(_ bytes: Array<UInt8>) throws -> Array<UInt8>
 }
@@ -121,18 +121,18 @@ struct BytesSequence<D: RandomAccessCollection>: Sequence where D.Iterator.Eleme
 //  Copyright © 2015 Marcin Krzyzanowski. All rights reserved.
 //
 
-public protocol CSArrayType: Collection, RangeReplaceableCollection {
+internal protocol CSArrayType: Collection, RangeReplaceableCollection {
     func cs_arrayValue() -> [Iterator.Element]
 }
 
 extension Array: CSArrayType {
-    public func cs_arrayValue() -> [Iterator.Element] {
+    internal func cs_arrayValue() -> [Iterator.Element] {
         return self
     }
 }
 
-public extension CSArrayType where Iterator.Element == UInt8 {
-    public func toHexString() -> String {
+internal extension CSArrayType where Iterator.Element == UInt8 {
+    internal func toHexString() -> String {
         return self.lazy.reduce("") {
             var s = String($1, radix: 16)
             if s.characters.count == 1 {
@@ -143,16 +143,16 @@ public extension CSArrayType where Iterator.Element == UInt8 {
     }
 }
 
-public extension CSArrayType where Iterator.Element == UInt8 {
-    public func sha256() -> [Iterator.Element] {
+internal extension CSArrayType where Iterator.Element == UInt8 {
+    internal func sha256() -> [Iterator.Element] {
         return Digest.sha256(cs_arrayValue())
     }
 
-    public func sha512() -> [Iterator.Element] {
+    internal func sha512() -> [Iterator.Element] {
         return Digest.sha512(cs_arrayValue())
     }
 
-    public func authenticate<A: Authenticator>(with authenticator: A) throws -> [Iterator.Element] {
+    internal func authenticate<A: Authenticator>(with authenticator: A) throws -> [Iterator.Element] {
         return try authenticator.authenticate(cs_arrayValue())
     }
 }
@@ -233,14 +233,14 @@ extension Collection where Self.Iterator.Element == UInt8, Self.Index == Int {
 //
 
 @available(*, deprecated:0.6.0, renamed: "Digest")
-public typealias Hash = Digest
+internal typealias Hash = Digest
 
-public struct Digest {
-    public static func sha256(_ bytes: Array<UInt8>) -> Array<UInt8> {
+internal struct Digest {
+    internal static func sha256(_ bytes: Array<UInt8>) -> Array<UInt8> {
         return SHA2(bytes, variant: .sha256).calculate32()
     }
 
-    public static func sha512(_ bytes: Array<UInt8>) -> Array<UInt8> {
+    internal static func sha512(_ bytes: Array<UInt8>) -> Array<UInt8> {
         return SHA2(bytes, variant: .sha512).calculate64()
     }
 }
@@ -396,13 +396,13 @@ func shiftLeft(_ value: Int64, by count: Int) -> Int64 {
 //  Copyright (c) 2015 Marcin Krzyzanowski. All rights reserved.
 //
 
-final public class HMAC: Authenticator {
+final internal class HMAC: Authenticator {
 
-    public enum Error: Swift.Error {
+    internal enum Error: Swift.Error {
         case authenticateError
     }
 
-    public enum Variant {
+    internal enum Variant {
         case sha256, sha512
 
         var digestSize:Int {
@@ -436,7 +436,7 @@ final public class HMAC: Authenticator {
     var key:Array<UInt8>
     let variant:Variant
 
-    public init (key: Array<UInt8>, variant:HMAC.Variant = .sha256) {
+    internal init (key: Array<UInt8>, variant:HMAC.Variant = .sha256) {
         self.variant = variant
         self.key = key
 
@@ -452,7 +452,7 @@ final public class HMAC: Authenticator {
 
     //MARK: Authenticator
 
-    public func authenticate(_ bytes:Array<UInt8>) throws -> Array<UInt8> {
+    internal func authenticate(_ bytes:Array<UInt8>) throws -> Array<UInt8> {
         var opad = Array<UInt8>(repeating: 0x5c, count: variant.blockSize())
         for idx in key.indices {
             opad[idx] = key[idx] ^ opad[idx]
@@ -651,16 +651,16 @@ func cs_arc4random_uniform(_ upperBound: UInt32) -> UInt32 {
 //  Copyright © 2016 Marcin Krzyzanowski. All rights reserved.
 //
 
-public struct NoPadding: Padding {
-    public init() {
+internal struct NoPadding: Padding {
+    internal init() {
 
     }
 
-    public func add(to data: Array<UInt8>, blockSize:Int) -> Array<UInt8> {
+    internal func add(to data: Array<UInt8>, blockSize:Int) -> Array<UInt8> {
         return data;
     }
 
-    public func remove(from data: Array<UInt8>, blockSize:Int?) -> Array<UInt8> {
+    internal func remove(from data: Array<UInt8>, blockSize:Int?) -> Array<UInt8> {
         return data;
     }
 }
@@ -700,7 +700,7 @@ infix operator &>> : BitwiseShiftPrecedence
 //  Copyright (c) 2015 Marcin Krzyzanowski. All rights reserved.
 //
 
-public protocol Padding {
+internal protocol Padding {
     func add(to: Array<UInt8>, blockSize:Int) -> Array<UInt8>
     func remove(from: Array<UInt8>, blockSize:Int?) -> Array<UInt8>
 }
@@ -979,21 +979,21 @@ final class SHA2: DigestType {
 /** String extension */
 extension String {
 
-    public func sha256() -> String {
+    internal func sha256() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha256().toHexString()
     }
 
-    public func sha512() -> String {
+    internal func sha512() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha512().toHexString()
     }
 
     /// Returns hex string of bytes
-    public func authenticate<A: Authenticator>(with authenticator: A) throws -> String {
+    internal func authenticate<A: Authenticator>(with authenticator: A) throws -> String {
         return try self.utf8.lazy.map({ $0 as UInt8 }).authenticate(with: authenticator).toHexString()
     }
 
     #if !_runtime(_ObjC)
-    public func hasPrefix(_ prefix: String) -> Bool {
+    internal func hasPrefix(_ prefix: String) -> Bool {
         return prefix == String(self.characters.prefix(prefix.characters.count))
     }
     #endif
@@ -1158,7 +1158,7 @@ extension UInt64 {
 #endif
 
 
-public protocol _UInt8Type { }
+internal protocol _UInt8Type { }
 extension UInt8: _UInt8Type {}
 
 /** casting */
@@ -1349,11 +1349,11 @@ func bitPadding(to data: Array<UInt8>, blockSize: Int, allowance: Int = 0) -> Ar
 
 /// All the bytes that are required to be padded are padded with zero.
 /// Zero padding may not be reversible if the original file ends with one or more zero bytes.
-public struct ZeroPadding: Padding {
-    public init() {
+internal struct ZeroPadding: Padding {
+    internal init() {
     }
 
-    public func add(to bytes: Array<UInt8>, blockSize:Int) -> Array<UInt8> {
+    internal func add(to bytes: Array<UInt8>, blockSize:Int) -> Array<UInt8> {
         let paddingCount = blockSize - (bytes.count % blockSize)
         if paddingCount > 0 {
             return bytes + Array<UInt8>(repeating: 0, count: paddingCount)
@@ -1361,7 +1361,7 @@ public struct ZeroPadding: Padding {
         return bytes
     }
 
-    public func remove(from bytes: Array<UInt8>, blockSize:Int?) -> Array<UInt8> {
+    internal func remove(from bytes: Array<UInt8>, blockSize:Int?) -> Array<UInt8> {
         for (idx, value) in bytes.reversed().enumerated() {
             if value != 0 {
                 return Array(bytes[0..<bytes.count - idx])
@@ -1384,7 +1384,7 @@ import Foundation
 extension Data {
 
     /// Two octet checksum as defined in RFC-4880. Sum of all octets, mod 65536
-    public func checksum() -> UInt16 {
+    internal func checksum() -> UInt16 {
         var s:UInt32 = 0
         var bytesArray = self.bytes
         for i in 0..<bytesArray.count {
@@ -1394,17 +1394,17 @@ extension Data {
         return UInt16(s)
     }
 
-    public func sha256() -> Data? {
+    internal func sha256() -> Data? {
         let result = Digest.sha256(self.bytes)
         return Data(bytes: result)
     }
 
-    public func sha512() -> Data? {
+    internal func sha512() -> Data? {
         let result = Digest.sha512(self.bytes)
         return Data(bytes: result)
     }
 
-    public func authenticate(with authenticator: Authenticator) throws -> Data {
+    internal func authenticate(with authenticator: Authenticator) throws -> Data {
         let result = try authenticator.authenticate(self.bytes)
         return Data(bytes: result)
     }
@@ -1412,11 +1412,11 @@ extension Data {
 
 extension Data {
 
-    public var bytes: Array<UInt8> {
+    internal var bytes: Array<UInt8> {
         return Array(self)
     }
 
-    public func toHexString() -> String {
+    internal func toHexString() -> String {
         return self.bytes.toHexString()
     }
 }
