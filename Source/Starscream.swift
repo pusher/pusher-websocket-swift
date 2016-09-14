@@ -7,7 +7,7 @@
 //  The content below is the concatenation of these files
 //  - https://raw.githubusercontent.com/daltoniam/Starscream/swift-23/Source/SSLSecurity.swift
 //  - https://raw.githubusercontent.com/daltoniam/Starscream/swift-23/Source/WebSocket.swift
-//  (with trivial warnings fixed, and trailing spaces removed)
+//  (with trivial warnings fixed, trailing spaces removed, and some access levels changed)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
