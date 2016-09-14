@@ -2,8 +2,8 @@ language: objective-c
 osx_image: xcode8
 sudo: false
 env:
-  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' UUID='64DF30D4-4118-480F-9ADD-DCC32194B63D' ACTION=test DEVICE='iPhone 6s (10.0)'
-  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' UUID='273D776F-196E-4F2A-AEF2-E1E3EAE99B47' ACTION=test DEVICE='Apple TV 1080p (10.0)'
+  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' ACTION=test DEVICE='iPhone 6s (10.0)'
+  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' ACTION=test DEVICE='Apple TV 1080p (10.0)'
   - macOS= DST='platform=OS X' ACTION=test
 before_install:
   - brew update
