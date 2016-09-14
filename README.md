@@ -682,9 +682,17 @@ The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websoc
 - If you want to contribute, please submit a pull request (preferrably with some tests :) ).
 
 
-## Maintainers
+## Credits
 
-PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was originally created by [Hamilton Chapman](https://github.com/hamchapman)
+PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was originally created by [Hamilton Chapman](https://github.com/hamchapman).
+
+It uses code from the following repositories:
+
+* [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift)
+* [Reachability.swift](https://github.com/ashleymills/Reachability.swift)
+* [Starscream](https://github.com/daltoniam/Starscream)
+
+The individual licenses for these libraries are included in the corresponding Swift files.
 
 
 ## License
