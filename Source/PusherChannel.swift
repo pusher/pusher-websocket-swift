@@ -7,36 +7,36 @@
 //
 
 public enum PusherChannelType {
-    case Private
-    case Presence
-    case Normal
+    case `private`
+    case presence
+    case normal
     
     public init(name: String) {
-        self = self.dynamicType.typeForName(name)
+        self = type(of: self).type(forName: name)
     }
     
-    public static func typeForName(name: String) -> PusherChannelType {
-        if (name.componentsSeparatedByString("-")[0] == "presence") {
-            return .Presence
-        } else if (name.componentsSeparatedByString("-")[0] == "private") {
-            return .Private
+    public static func type(forName name: String) -> PusherChannelType {
+        if (name.components(separatedBy: "-")[0] == "presence") {
+            return .presence
+        } else if (name.components(separatedBy: "-")[0] == "private") {
+            return .private
         } else {
-            return .Normal
+            return .normal
         }
     }
     
-    public static func isPresenceChannel(name name: String) -> Bool {
-        return PusherChannelType(name: name) == .Presence
+    public static func isPresenceChannel(name: String) -> Bool {
+        return PusherChannelType(name: name) == .presence
     }
 }
 
-public class PusherChannel {
-    public var eventHandlers: [String: [EventHandler]] = [:]
-    public var subscribed = false
-    public let name: String
-    public let connection: PusherConnection
-    public var unsentEvents = [PusherEvent]()
-    public let type: PusherChannelType
+open class PusherChannel: NSObject {
+    open var eventHandlers: [String: [EventHandler]] = [:]
+    open var subscribed = false
+    open let name: String
+    open let connection: PusherConnection
+    open var unsentEvents = [PusherEvent]()
+    open let type: PusherChannelType
 
     /**
         Initializes a new PusherChannel with a given name and conenction
@@ -62,8 +62,8 @@ public class PusherChannel {
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
-    public func bind(eventName: String, callback: (AnyObject?) -> Void) -> String {
-        let randomId = NSUUID().UUIDString
+    open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
+        let randomId = UUID().uuidString
         let eventHandler = EventHandler(id: randomId, callback: callback)
         if self.eventHandlers[eventName] != nil {
             self.eventHandlers[eventName]?.append(eventHandler)
@@ -80,7 +80,7 @@ public class PusherChannel {
         - parameter eventName:  The name of the event from which to unbind
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
-    public func unbind(eventName: String, callbackId: String) {
+    open func unbind(eventName: String, callbackId: String) {
         if let eventSpecificHandlers = self.eventHandlers[eventName] {
             self.eventHandlers[eventName] = eventSpecificHandlers.filter({ $0.id != callbackId })
         }
@@ -89,7 +89,7 @@ public class PusherChannel {
     /**
         Unbinds all callbacks from the channel
     */
-    public func unbindAll() {
+    open func unbindAll() {
         self.eventHandlers = [:]
     }
 
@@ -98,22 +98,22 @@ public class PusherChannel {
 
         - parameter eventName:  The name of the event from which to unbind
     */
-    public func unbindAllForEventName(eventName: String) {
+    open func unbindAll(forEventName eventName: String) {
         self.eventHandlers[eventName] = []
     }
 
     /**
         Calls the appropriate callbacks for the given eventName in the scope of the acted upon channel
 
-        - parameter eventName: The name of the received event
-        - parameter eventdata: The data associated with the received message
+        - parameter name: The name of the received event
+        - parameter data: The data associated with the received message
     */
-    public func handleEvent(eventName: String, eventData: String) {
-        if let eventHandlerArray = self.eventHandlers[eventName] {
+    open func handleEvent(name: String, data: String) {
+        if let eventHandlerArray = self.eventHandlers[name] {
             let jsonize = connection.options.attemptToReturnJSONObject
 
             for eventHandler in eventHandlerArray {
-                eventHandler.callback(jsonize ? connection.getEventDataJSONFromString(eventData) : eventData)
+                eventHandler.callback(jsonize ? connection.getEventDataJSON(from: data) : data)
             }
         }
     }
@@ -125,21 +125,21 @@ public class PusherChannel {
         - parameter eventName: The name of the event to trigger
         - parameter data:      The data to be sent as the message payload
     */
-    public func trigger(eventName: String, data: AnyObject) {
+    open func trigger(eventName: String, data: Any) {
         if subscribed {
-            self.connection.sendEvent(eventName, data: data, channel: self)
+            self.connection.sendEvent(event: eventName, data: data, channel: self)
         } else {
-            unsentEvents.insert(PusherEvent(name: eventName, data: data), atIndex: 0)
+            unsentEvents.insert(PusherEvent(name: eventName, data: data), at: 0)
         }
     }
 }
 
 public struct EventHandler {
     let id: String
-    let callback: (AnyObject?) -> Void
+    let callback: (Any?) -> Void
 }
 
 public struct PusherEvent {
     public let name: String
-    public let data: AnyObject
+    public let data: Any
 }

@@ -6,175 +6,139 @@
 //
 //
 
-import Quick
-import Nimble
 import PusherSwift
+import XCTest
 
-class PusherPresenceChannelSpec: QuickSpec {
-    override func spec() {
-        var pusher: Pusher!
-        var socket: MockWebSocket!
+class PusherPresenceChannelTests: XCTestCase {
+    var pusher: Pusher!
+    var socket: MockWebSocket!
+    var options: PusherClientOptions!
+    var stubber: StubberForMocks!
 
-        beforeEach({
-            socket = MockWebSocket()
-        })
+    override func setUp() {
+        super.setUp()
 
-        describe("the members object") {
-            it("stores the userId if a userDataFetcher is provided") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
-                )
-                pusher = Pusher(key: "key", options: options)
-                pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123")
-                }
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
-                let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
-                expect(chan?.members.first!.userId).to(equal("123"))
-            }
+        options = PusherClientOptions(
+            authMethod: .inline(secret: "secret")
+        )
+        pusher = Pusher(key: "key", options: options)
+        socket = MockWebSocket()
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        stubber = StubberForMocks()
+    }
 
-            it("stores the socketId if no userDataFetcher is provided") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
-                )
-                pusher = Pusher(key: "key", options: options)
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
-                let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
-                expect(chan?.members).toNot(beEmpty())
-                expect(chan?.members.first!.userId).to(equal("46123.486095"))
-            }
-
-            it("stores userId and userInfo if a userDataFetcher that returns both is provided") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
-                )
-                pusher = Pusher(key: "testKey123", options: options)
-                pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123", userInfo: ["twitter": "hamchapman"])
-                }
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
-                let chan = pusher.subscribe("presence-test") as? PresencePusherChannel
-                expect(chan?.members).toNot(beEmpty())
-                expect(chan?.members.first!.userInfo as? [String : String]).to(equal(["twitter": "hamchapman"]))
-            }
+    func testMembersObjectStoresUserIdIfAUserDataFetcherIsProvided() {
+        pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
+            return PusherPresenceChannelMember(userId: "123")
         }
 
-        describe("finding members") {
-            it("returns the PresenceChannelMember object for a given subscribed user id") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
-                )
-                pusher = Pusher(key: "key", options: options)
-                pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123")
-                }
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
+        pusher.connect()
+        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
+        XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
+    }
 
-                let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}"])
-                let member = chan!.findMember("100")
+    func testMembersObjectStoresSocketIdIfNoUserDataFetcherIsProvided() {
+        pusher.connect()
+        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
+        XCTAssertEqual(chan?.members.first!.userId, "46123.486095", "the userId should be 46123.486095")
+    }
 
-                expect(member!.userId).to(equal("100"))
-                expect(member!.userInfo as? [String : String]).to(equal(["twitter": "hamchapman"]))
-            }
+    func testMembersObjectStoresUserIdAndUserInfoIfAUserDataFetcherIsProvidedThatReturnsBoth() {
+        pusher = Pusher(key: "testKey123", options: options)
+        pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
+            return PusherPresenceChannelMember(userId: "123", userInfo: ["twitter": "hamchapman"] as Any?)
+        }
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        pusher.connect()
+        let chan = pusher.subscribe("presence-test") as? PusherPresenceChannel
 
-            it("returns the PresenceChannelMember object for the subscribed user (me)") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
-                )
-                pusher = Pusher(key: "key", options: options)
-                pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123", userInfo: ["friends": 0])
-                }
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
+        XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
+        XCTAssertEqual(chan?.members.first!.userInfo as! [String: String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+    }
 
-                let chan = pusher.subscribe("presence-channel") as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}"])
+    func testFindingPusherPresenceChannelMemberByUserId() {
+        pusher.connect()
 
-                let me = chan!.me()
+        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
+        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
+        let member = chan!.findMember(userId: "100")
 
-                expect(me!.userId).to(equal("123"))
-                expect(me!.userInfo as? [String : Int]).to(equal(["friends": 0]))
-            }
+        XCTAssertEqual(member!.userId, "100", "the userId should be 100")
+        XCTAssertEqual(member!.userInfo as! [String: String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+    }
+
+    func testFindingTheClientsMemberObject() {
+        pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
+            return PusherPresenceChannelMember(userId: "123", userInfo: ["friends": 0])
         }
 
-        describe("the member added/removed events") {
-            var stubber: StubberForMocks!
+        pusher.connect()
 
-            beforeEach({
-                stubber = StubberForMocks()
-            })
+        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
+        let me = chan!.me()
 
-            it("calls the onMemberAdded function, if provided") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secretsecretsecretsecret")
-                )
-                pusher = Pusher(key: "key", options: options)
-                pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123")
-                }
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
-                let memberAddedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberAdded", args: [member], functionToCall: nil) }
-                pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":\"100\"}"])
+        XCTAssertEqual(me!.userId, "123", "the userId should be 123")
+        XCTAssertEqual(me!.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
+    }
 
-                expect(stubber.calls.first?.name).to(equal("onMemberAdded"))
-                expect((stubber.calls.first?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
-            }
+    func testOnMemberAddedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
+        let options = PusherClientOptions(
+            authMethod: .inline(secret: "secretsecretsecretsecret")
+        )
+        pusher = Pusher(key: "key", options: options)
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        pusher.connect()
 
-            it("calls the onMemberRemoved function, if provided") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
-                )
-                pusher = Pusher(key: "key", options: options)
-                pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123")
-                }
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
-                let memberRemovedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberRemoved", args: [member], functionToCall: nil) }
-                let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved:  memberRemovedFunction) as? PresencePusherChannel
-
-                chan?.members.append(PresenceChannelMember(userId: "100"))
-                pusher.connection.handleEvent("pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed", "channel": "presence-channel", "data": "{\"user_id\":\"100\"}"])
-
-                expect(stubber.calls.last?.name).to(equal("onMemberRemoved"))
-                expect((stubber.calls.last?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
-            }
-
-            it("calls the onMemberRemoved function, if provided, and the userId of the member when they were addded was not a string") {
-                let options = PusherClientOptions(
-                    authMethod: .Internal(secret: "secret")
-                )
-                pusher = Pusher(key: "key", options: options)
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connection.userDataFetcher = { () -> PusherUserData in
-                    return PusherUserData(userId: "123")
-                }
-                pusher.connect()
-                let memberRemovedFunction = { (member: PresenceChannelMember) -> Void in stubber.stub("onMemberRemoved", args: [member], functionToCall: nil) }
-                pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PresencePusherChannel
-                pusher.connection.handleEvent("pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added", "channel": "presence-channel", "data": "{\"user_id\":100}"])
-                pusher.connection.handleEvent("pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed", "channel": "presence-channel", "data": "{\"user_id\":100}"])
-
-                expect(stubber.calls.last?.name).to(equal("onMemberRemoved"))
-                expect((stubber.calls.last?.args?.first as? PresenceChannelMember)?.userId).to(equal("100"))
-            }
-
+        let memberAddedFunction = { (member: PusherPresenceChannelMember) -> Void in
+            let _ = self.stubber.stub(functionName: "onMemberAdded", args: [member], functionToCall: nil)
         }
+        let _ = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
+        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+
+        XCTAssertEqual(stubber.calls.first?.name, "onMemberAdded", "the onMemberAdded function should have been called")
+        XCTAssertEqual((stubber.calls.first?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
+    }
+
+    func testOnMemberRemovedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
+        let options = PusherClientOptions(
+            authMethod: .inline(secret: "secretsecretsecretsecret")
+        )
+        pusher = Pusher(key: "key", options: options)
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        pusher.connect()
+
+        let memberRemovedFunction = { (member: PusherPresenceChannelMember) -> Void in
+            let _ = self.stubber.stub(functionName: "onMemberRemoved", args: [member], functionToCall: nil)
+        }
+        let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
+        chan?.members.append(PusherPresenceChannelMember(userId: "100"))
+
+        pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+
+        XCTAssertEqual(stubber.calls.last?.name, "onMemberRemoved", "the onMemberRemoved function should have been called")
+        XCTAssertEqual((stubber.calls.last?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
+    }
+
+    func testOnMemberRemovedFunctionGetsCalledWhenANewSubscriptionSucceedsIfTheMemberUserIdWasNotAStringOriginally() {
+        let options = PusherClientOptions(
+            authMethod: .inline(secret: "secretsecretsecretsecret")
+        )
+        pusher = Pusher(key: "key", options: options)
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        pusher.connect()
+        let memberRemovedFunction = { (member: PusherPresenceChannelMember) -> Void in
+            let _ = self.stubber.stub(functionName: "onMemberRemoved", args: [member], functionToCall: nil)
+        }
+        let _ = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
+        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+        pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+
+        XCTAssertEqual(stubber.calls.last?.name, "onMemberRemoved", "the onMemberRemoved function should have been called")
+        XCTAssertEqual((stubber.calls.last?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
     }
 }

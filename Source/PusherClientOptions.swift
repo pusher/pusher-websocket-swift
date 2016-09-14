@@ -7,41 +7,41 @@
 //
 
 public enum PusherHost {
-    case Host(String)
-    case Cluster(String)
+    case host(String)
+    case cluster(String)
 
     public var stringValue: String {
         switch self {
-            case .Host(let host): return host
-            case .Cluster(let cluster): return "ws-\(cluster).pusher.com"
+            case .host(let host): return host
+            case .cluster(let cluster): return "ws-\(cluster).pusher.com"
         }
     }
 }
 
-public protocol AuthRequestBuilderProtocol {
-    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest
+@objc public protocol AuthRequestBuilderProtocol {
+    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
 }
 
 public enum AuthMethod {
-    case Endpoint(authEndpoint: String)
-    case AuthRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
-    case Internal(secret: String)
-    case NoMethod
+    case endpoint(authEndpoint: String)
+    case authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
+    case inline(secret: String)
+    case noMethod
 }
 
-public struct PusherClientOptions {
-    public let authMethod: AuthMethod
+@objc public class PusherClientOptions: NSObject {
+    public var authMethod: AuthMethod
     public let attemptToReturnJSONObject: Bool
     public let autoReconnect: Bool
     public let host: String
     public let port: Int
     public let encrypted: Bool
 
-    public init(
-        authMethod: AuthMethod = .NoMethod,
+    @nonobjc public init(
+        authMethod: AuthMethod = .noMethod,
         attemptToReturnJSONObject: Bool = true,
         autoReconnect: Bool = true,
-        host: PusherHost = .Host("ws.pusherapp.com"),
+        host: PusherHost = .host("ws.pusherapp.com"),
         port: Int? = nil,
         encrypted: Bool = true) {
             self.authMethod = authMethod

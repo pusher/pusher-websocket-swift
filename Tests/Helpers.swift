@@ -6,13 +6,12 @@
 //
 //
 
-import Foundation
 import PusherSwift
 
-func convertStringToDictionary(text: String) -> [String:AnyObject]? {
-    if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
+func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {
+    if let data = text.data(using: .utf8) {
         do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String:AnyObject]
+            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject]
             return json
         } catch {
             print("Something went wrong")
@@ -26,13 +25,13 @@ extension AuthMethod: Equatable {
 
 public func ==(lhs: AuthMethod, rhs: AuthMethod) -> Bool {
     switch (lhs, rhs) {
-    case (let .Endpoint(authEndpoint1) , let .Endpoint(authEndpoint2)):
+    case (let .endpoint(authEndpoint1), let .endpoint(authEndpoint2)):
         return authEndpoint1 == authEndpoint2
 
-    case (let .Internal(secret1), let .Internal(secret2)):
+    case (let .inline(secret1), let .inline(secret2)):
         return secret1 == secret2
 
-    case (.NoMethod, .NoMethod):
+    case (.noMethod, .noMethod):
         return true
 
     default:

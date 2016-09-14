@@ -6,51 +6,40 @@
 //
 //
 
-import Foundation
-import Quick
-import Nimble
 import PusherSwift
+import XCTest
 
-class PusherConnectionSpec: QuickSpec {
-    override func spec() {
-        describe("creating the connection") {
-            var key: String!
-            var pusher: Pusher!
+class PusherConnectionTests: XCTestCase {
+    var key: String!
+    var pusher: Pusher!
 
-            beforeEach({
-                key = "testKey123"
-                pusher = Pusher(key: key)
-            })
+    override func setUp() {
+        super.setUp()
 
-            context("setting no properties") {
-                it("has userDataFetcher as nil") {
-                    expect(pusher.connection.userDataFetcher).to(beNil())
-                }
+        key = "testKey123"
+        pusher = Pusher(key: key)
+    }
 
-                it("has debugLogger set as nil") {
-                    expect(pusher.connection.debugLogger).to(beNil())
-                }
-            }
+    func testUserDataFetcherIsNilByDefault() {
+        XCTAssertNil(pusher.connection.userDataFetcher, "userDataFetcher should be nil")
+    }
 
-            context("providing option") {
-                context("debugLogger") {
-                    it("has a closure set") {
-                        let debugLogger = { (text: String) in }
-                        pusher.connection.debugLogger = debugLogger
-                        expect(pusher.connection.debugLogger).toNot(beNil())
-                    }
-                }
+    func testDelegateIsNilByDefault() {
+        XCTAssertNil(pusher.connection.delegate, "delegate should be nil")
+    }
 
-                context("userDataFetcher") {
-                    it("has a closure set") {
-                        func fetchFunc() -> PusherUserData {
-                            return PusherUserData(userId: "1")
-                        }
-                        pusher.connection.userDataFetcher = fetchFunc
-                        expect(pusher.connection.userDataFetcher).toNot(beNil())
-                    }
-                }
-            }
+    func testSettingADelegate() {
+        class DummyDelegate: PusherConnectionDelegate {}
+        let dummyDelegate = DummyDelegate()
+        pusher.connection.delegate = dummyDelegate
+        XCTAssertNotNil(pusher.connection.delegate, "delegate should not be nil")
+    }
+
+    func testSettingAUserDataFetcher() {
+        func fetchFunc() -> PusherPresenceChannelMember {
+            return PusherPresenceChannelMember(userId: "1")
         }
+        pusher.connection.userDataFetcher = fetchFunc
+        XCTAssertNotNil(pusher.connection.userDataFetcher, "userDataFetcher should not be nil")
     }
 }

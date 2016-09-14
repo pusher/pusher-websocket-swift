@@ -1,28 +1,10 @@
 language: objective-c
-cache: cocoapods
-osx_image: xcode7.3
+osx_image: xcode8
 sudo: false
-xcode_workspace: PusherSwift.xcworkspace
-xcode_project: PusherSwift.xcodeproj
 env:
-  global:
-    - IOS_SDK=iphonesimulator9.3
-    - IOS_SCHEME="PusherSwiftTests-iOS"
-    - MACOS_SDK=macosx10.11
-    - MACOS_SCHEME="PusherSwiftTests-OSX"
-    - TVOS_SDK=appletvsimulator9.2
-    - TVOS_SCHEME="PusherSwiftTests-tvOS"
-  matrix:
-    - DESTINATION="OS=9.2,name=iPad 2"         SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
-    - DESTINATION="OS=9.2,name=iPad Air"       SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
-    - DESTINATION="OS=9.2,name=iPhone 5"       SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
-    - DESTINATION="OS=9.2,name=iPhone 6s"      SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
-    - DESTINATION="OS=9.3,name=iPhone 6s"      SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
-    - DESTINATION="OS=8.4,name=iPhone 6"       SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
-    - DESTINATION="OS=8.4,name=iPad Air"       SDK="$IOS_SDK"   SCHEME="$IOS_SCHEME"
-    - DESTINATION="OS=9.1,name=Apple TV 1080p" SDK="$TVOS_SDK"  SCHEME="$TVOS_SCHEME"
-    - DESTINATION="OS=9.2,name=Apple TV 1080p" SDK="$TVOS_SDK"  SCHEME="$TVOS_SCHEME"
-    - DESTINATION="platform=OS X,arch=x86_64"  SDK="$MACOS_SDK" SCHEME="$MACOS_SCHEME"
+  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' ACTION=test DEVICE='iPhone 6s (10.0)'
+  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' ACTION=test DEVICE='Apple TV 1080p (10.0)'
+  - macOS= DST='platform=OS X' ACTION=test
 before_install:
   - brew update
   - if brew list | grep -q carthage; then
@@ -32,11 +14,9 @@ before_install:
       echo Carthage not installed. Installing using homebrew;
       brew install carthage;
     fi
-  - gem install cocoapods --no-document
   - gem install xcpretty --no-document
-install:
-  - pod update
-  - pod install
+  - SIMULATOR_ID=$(xcrun instruments -s | grep -o "$DEVICE \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
+  - echo "$SIMULATOR_ID"
 before_deploy:
   - carthage build --no-skip-current --project-directory PusherSwift
   - carthage archive PusherSwift --project-directory PusherSwift
@@ -53,10 +33,11 @@ script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -workspace PusherSwift.xcworkspace -list
-  - if [ "$SCHEME" == "PusherSwiftTests-OSX" ]; then
-      xcodebuild -workspace PusherSwift.xcworkspace -scheme "$SCHEME" -destination "$DESTINATION" -sdk "$SDK" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO test -enableCodeCoverage YES | xcpretty -tc;
-    else
-      xcodebuild -workspace PusherSwift.xcworkspace -scheme "$SCHEME" -destination "$DESTINATION" -sdk "$SDK" test -enableCodeCoverage YES | xcpretty -tc;
+  - if [ "$DST" != "platform=OS X" ]; then
+      echo "$SIMULARTOR_ID";
+      open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
     fi
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj clean build | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION | xcpretty -tc;
 after_success:
   - sleep 5

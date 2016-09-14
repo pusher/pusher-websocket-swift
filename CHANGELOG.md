@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.0.0
+
+* Update to work with Swift 3
+* Rewrot all tests using XCTest
+* Remove all need for Podfile / Cartfile when building PusherSwift locally
+* Combine different builds into single target
+* Merge in native notification code into main branch (push-notifications branch)
+* Consolidate connection-related handlers / callbacks into `PusherConnectionDelegate`
+* Make `requestFor` in `AuthRequestBuilderProtocol` able to fail
+* Rename `PresencePusherChannel` -> `PusherPresenceChannel`
+* Rename `PresenceChannelMember` -> `PusherPresenceChannelMember`
+* Rename `internal` `authMethod` enum case to `inline`
+* Add Obj-C compatibility
+* Add iOS Obj-C example app
+* Add `subscribeToPresenceChannel` method
+
 ## 2.0.1
 
 * Fix potential forceful unwrapping of a nil in debug logging when reconnecting (thanks to [@psycotica0](https://github.com/psycotica0) for the spot)
@@ -16,7 +32,7 @@
 
 ## 1.0.0
 
-* Add `onMemberAdded`, `onMemberRemoved`, `findMember`, and `me` functions to PresencePusherChannel class
+* Add `onMemberAdded`, `onMemberRemoved`, `findMember`, and `me` functions to PusherPresenceChannel class
 * Bring CryptoSwift, Starscream and Reachability dependencies inside the PusherSwift library
 * Update Quick and Nimble dependencies to remove warnings for Swift compatibility
 * Use cocoapods version 1.0.0 on Travis

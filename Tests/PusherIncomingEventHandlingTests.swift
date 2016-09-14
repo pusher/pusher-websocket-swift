@@ -6,117 +6,104 @@
 //
 //
 
-import Quick
-import Nimble
 import PusherSwift
+import XCTest
 
-class HandlingIncomingEventsSpec: QuickSpec {
-    override func spec() {
-        describe("receiving an event") {
-            var key: String!
-            var pusher: Pusher!
-            var socket: MockWebSocket!
+class HandlingIncomingEventsTests: XCTestCase {
+    var key: String!
+    var pusher: Pusher!
+    var socket: MockWebSocket!
 
-            beforeEach({
-                key = "testKey123"
-                pusher = Pusher(key: key)
-                socket = MockWebSocket()
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-            })
+    override func setUp() {
+        super.setUp()
 
-            it("should call any callbacks setup on the globalChannel") {
-                let callback = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("testingIWasCalled") }
-                pusher.bind(callback)
-                expect(socket.callbackCheckString).to(equal(""))
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "stupid data"])
-                expect(socket.callbackCheckString).to(equal("testingIWasCalled"))
-            }
+        key = "testKey123"
+        pusher = Pusher(key: key)
+        socket = MockWebSocket()
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+    }
 
-            it("should call the relevant callback(s) setup on the relevant channel(s)") {
-                let callback = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
-                let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
-                expect(socket.callbackCheckString).to(equal(""))
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "stupid data"])
-                expect(socket.callbackCheckString).to(equal("channelCallbackCalled"))
-            }
+    func testCallbacksOnGlobalChannelShouldBeCalled() {
+        let callback = { (data: Any?) -> Void in self.socket.appendToCallbackCheckString("testingIWasCalled") }
+        let _ = pusher.bind(callback)
 
-            it("should call the relevant callback(s) setup on the relevant channel(s) and on the globalChannel") {
-                let callback = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("globalCallbackCalled") }
-                pusher.bind(callback)
-                let chan = pusher.subscribe("my-channel")
-                let callbackForChannel = { (data: AnyObject?) -> Void in socket.appendToCallbackCheckString("channelCallbackCalled") }
-                chan.bind("test-event", callback: callbackForChannel)
-                expect(socket.callbackCheckString).to(equal(""))
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "stupid data"])
-                expect(socket.callbackCheckString).to(equal("globalCallbackCalledchannelCallbackCalled"))
-            }
+        XCTAssertEqual(socket.callbackCheckString, "")
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
+        XCTAssertEqual(socket.callbackCheckString, "testingIWasCalled")
+    }
 
-            it("should return a JSON object to the callbacks if the string can be parsed and the user wanted to get a JSON object") {
-                let callback = { (data: AnyObject?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
-                let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
-                expect(socket.objectGivenToCallback).to(beNil())
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
-                expect(socket.objectGivenToCallback as? [String : String]).to(equal(["test": "test string", "and": "another"]))
-            }
+    func testCallbacksOnRelevantChannelsShouldBeCalled() {
+        let callback = { (data: Any?) -> Void in self.socket.appendToCallbackCheckString("channelCallbackCalled") }
+        let chan = pusher.subscribe("my-channel")
+        let _ = chan.bind(eventName: "test-event", callback: callback)
 
-            it("should return a JSON string to the callbacks if the string cannot be parsed and the user wanted to get a JSON object") {
-                let callback = { (data: AnyObject?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
-                let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
-                expect(socket.objectGivenToCallback).to(beNil())
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "test"])
-                expect(socket.objectGivenToCallback as? String).to(equal("test"))
-            }
+        XCTAssertEqual(socket.callbackCheckString, "")
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
+        XCTAssertEqual(socket.callbackCheckString, "channelCallbackCalled")
+    }
 
-            it("should return a JSON string to the callbacks if the string can be parsed but the user doesn't want to get a JSON object") {
-                let options = PusherClientOptions(attemptToReturnJSONObject: false)
-                pusher = Pusher(key: key, options: options)
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                let callback = { (data: AnyObject?) -> Void in socket.storeDataObjectGivenToCallback(data!) }
-                let chan = pusher.subscribe("my-channel")
-                chan.bind("test-event", callback: callback)
-                expect(socket.objectGivenToCallback).to(beNil())
-                pusher.connection.handleEvent("test-event", jsonObject: ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
-                expect(socket.objectGivenToCallback as? String).to(equal("{\"test\":\"test string\",\"and\":\"another\"}"))
-            }
+    func testCallbacksOnRelevantChannelsAndGlobalChannelShouldBeCalled() {
+        let callback = { (data: Any?) -> Void in self.socket.appendToCallbackCheckString("globalCallbackCalled") }
+        let _ = pusher.bind(callback)
+        let chan = pusher.subscribe("my-channel")
+        let callbackForChannel = { (data: Any?) -> Void in self.socket.appendToCallbackCheckString("channelCallbackCalled") }
+        let _ = chan.bind(eventName: "test-event", callback: callbackForChannel)
 
-            it("should handle receiving an error where the data part of the message isn't double encoded") {
-                pusher = Pusher(key: key)
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.bind({ (message: AnyObject?) in
-                    if let message = message as? [String: AnyObject], eventName = message["event"] as? String where eventName == "pusher:error" {
-                        if let data = message["data"] as? [String: AnyObject], errorMessage = data["message"] as? String {
-                            socket.appendToCallbackCheckString(errorMessage)
-                        }
-                    }
-                })
+        XCTAssertEqual(socket.callbackCheckString, "")
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
+        XCTAssertEqual(socket.callbackCheckString, "globalCallbackCalledchannelCallbackCalled")
+    }
 
-                // pretend that we tried to subscribe to my-channel twice and got this error
-                // back from Pusher
-                pusher.connection.handleEvent("pusher:error", jsonObject: ["event": "pusher:error", "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"]])
+    func testReturningAJSONObjectToCallbacksIfTheStringCanBeParsed() {
+        let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
+        let chan = pusher.subscribe("my-channel")
+        let _ = chan.bind(eventName: "test-event", callback: callback)
 
-                expect(socket.callbackCheckString).to(equal("Existing subscription to channel my-channel"))
-            }
+        XCTAssertNil(socket.objectGivenToCallback)
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["test": "test string", "and": "another"])
+    }
 
-            it("should pass incoming messages to the debugLogger if one is set") {
-                let debugLogger = { (text: String) in
-                    if text.rangeOfString("websocketDidReceiveMessage") != nil {
-                        socket.appendToCallbackCheckString(text)
-                    }
+    func testReturningAJSONStringToCallbacksIfTheStringCannotBeParsed() {
+        let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
+        let chan = pusher.subscribe("my-channel")
+        let _ = chan.bind(eventName: "test-event", callback: callback)
+
+        XCTAssertNil(socket.objectGivenToCallback)
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "test" as AnyObject])
+        XCTAssertEqual(socket.objectGivenToCallback as? String, "test")
+    }
+
+    func testReturningAJSONStringToCallbacksIfTheStringCanBeParsedButAttemptToReturnJSONObjectIsFalse() {
+        let options = PusherClientOptions(attemptToReturnJSONObject: false)
+        pusher = Pusher(key: key, options: options)
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
+        let chan = pusher.subscribe("my-channel")
+        let _ = chan.bind(eventName: "test-event", callback: callback)
+
+        XCTAssertNil(socket.objectGivenToCallback)
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        XCTAssertEqual(socket.objectGivenToCallback as? String, "{\"test\":\"test string\",\"and\":\"another\"}")
+    }
+
+    func testReceivingAnErrorWhereTheDataPartOfTheMessageIsNotDoubleEncoded() {
+        let _ = pusher.bind({ (message: Any?) in
+            if let message = message as? [String: AnyObject], let eventName = message["event"] as? String, eventName == "pusher:error" {
+                if let data = message["data"] as? [String: AnyObject], let errorMessage = data["message"] as? String {
+                    self.socket.appendToCallbackCheckString(errorMessage)
                 }
-                pusher = Pusher(key: key)
-                pusher.connection.debugLogger = debugLogger
-                socket.delegate = pusher.connection
-                pusher.connection.socket = socket
-                pusher.connect()
-                expect(socket.callbackCheckString).to(equal("[PUSHER DEBUG] websocketDidReceiveMessage {\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"))
             }
-        }
+        })
+
+        // pretend that we tried to subscribe to my-channel twice and got this error
+        // back from Pusher
+        pusher.connection.handleEvent(eventName: "pusher:error", jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
+
+        XCTAssertNil(socket.objectGivenToCallback)
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "test" as AnyObject])
+        XCTAssertEqual(socket.callbackCheckString, "Existing subscription to channel my-channel")
     }
 }
-

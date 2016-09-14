@@ -6,246 +6,262 @@
 //
 //
 
-import Nimble
-import Quick
 import PusherSwift
+import XCTest
 
-class PusherTopLevelApiSpec: QuickSpec {
-    override func spec() {
-        var key: String!
-        var pusher: Pusher!
-        var socket: MockWebSocket!
+class PusherTopLevelApiTests: XCTestCase {
+    class DummyDelegate: PusherConnectionDelegate {
+        var ex: XCTestExpectation? = nil
+        var testingChannelName: String? = nil
 
-        beforeEach({
-            key = "testKey123"
-            let options = PusherClientOptions(
-                autoReconnect: false
-            )
-            pusher = Pusher(key: key, options: options)
-            socket = MockWebSocket()
-            socket.delegate = pusher.connection
-            pusher.connection.socket = socket
-        })
-
-        describe("creating the connection") {
-            it("calls connect on the socket") {
-                pusher.connect()
-                expect(socket.stubber.calls[0].name).to(equal("connect"))
-            }
-
-            it("connected is set to true when connection connects") {
-                pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
-            }
-        }
-
-        describe("closing the connection") {
-            it("calls disconnect on the socket") {
-                pusher.connect()
-                pusher.disconnect()
-                expect(socket.stubber.calls[1].name).to(equal("disconnect"))
-            }
-
-            it("connected is set to false when connection is disconnected") {
-                pusher.connect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Connected))
-                pusher.disconnect()
-                expect(pusher.connection.connectionState).to(equal(ConnectionState.Disconnected))
-            }
-
-            it("sets the subscribed property of channels to false") {
-                pusher.connect()
-                let chan = pusher.subscribe("test-channel")
-                expect(chan.subscribed).to(beTruthy())
-                pusher.disconnect()
-                expect(chan.subscribed).to(beFalsy())
-            }
-        }
-
-        describe("subscribing to channels") {
-            describe("after connection has been made") {
-                beforeEach({
-                    pusher.connect()
-                })
-
-                it("sends subscribe to Pusher over the Websocket") {
-                    _ = pusher.subscribe("test-channel")
-                    expect(socket.stubber.calls.last?.name).to(equal("writeString"))
-                    let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-                    let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"]
-                    let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
-                    expect(parsedEqualsExpected).to(beTrue())
-                }
-
-                it("subscribes to a public channel") {
-                    pusher.subscribe("test-channel")
-                    let testChannel = pusher.connection.channels.channels["test-channel"]
-                    expect(testChannel?.subscribed).to(beTruthy())
-                }
-
-                it("subscription succeeded event sent to global channel") {
-                    let callback = { (data: AnyObject?) -> Void in
-                        if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
-                            socket.appendToCallbackCheckString("globalCallbackCalled")
-                        }
-                    }
-                    pusher.bind(callback)
-                    expect(socket.callbackCheckString).to(equal(""))
-                    pusher.subscribe("test-channel")
-                    expect(socket.callbackCheckString).to(equal("globalCallbackCalled"))
-                }
-
-                it("subscription succeeded event sent to private channel") {
-                    let callback = { (data: AnyObject?) -> Void in
-                        if let eName = data?["event"] where eName == "pusher:subscription_succeeded" {
-                            socket.appendToCallbackCheckString("channelCallbackCalled")
-                        }
-                    }
-                    pusher.bind(callback)
-                    expect(socket.callbackCheckString).to(equal(""))
-                    let chan = pusher.subscribe("test-channel")
-                    chan.bind("pusher:subscription_succeeded", callback: callback)
-                    expect(socket.callbackCheckString).to(equal("channelCallbackCalled"))
-                }
-
-                it("sets up the channel correctly") {
-                    let chan = pusher.subscribe("test-channel")
-                    expect(chan.name).to(equal("test-channel"))
-                    expect(chan.eventHandlers).to(beEmpty())
-                }
-
-                describe("that require authentication") {
-                    beforeEach({
-                        let options = PusherClientOptions(
-                            authMethod: AuthMethod.Internal(secret: "secret")
-                        )
-                        pusher = Pusher(key: "key", options: options)
-                        socket.delegate = pusher.connection
-                        pusher.connection.socket = socket
-                        pusher.connect()
-                    })
-
-                    it("subscribes to a private channel") {
-                        pusher.subscribe("private-channel")
-                        let privateChannel = pusher.connection.channels.channels["private-channel"]
-                        expect(privateChannel?.subscribed).to(beTruthy())
-                    }
-
-                    it("subscribes to a presence channel") {
-                        pusher.subscribe("presence-channel")
-                        let presenceChannel = pusher.connection.channels.channels["presence-channel"]
-                        expect(presenceChannel?.subscribed).to(beTruthy())
-                    }
-
-                    it("sets up the channel correctly") {
-                        let chan = pusher.subscribe("private-channel")
-                        expect(chan.name).to(equal("private-channel"))
-                        expect(chan.eventHandlers).to(beEmpty())
-                    }
-                }
-            }
-
-            describe("before connection has been made") {
-                it("subscribes to a public channel") {
-                    pusher.subscribe("test-channel")
-                    let testChannel = pusher.connection.channels.channels["test-channel"]
-                    pusher.connect()
-                    expect(testChannel?.subscribed).to(beTruthy())
-                }
-
-                it("sets up the channel correctly") {
-                    let chan = pusher.subscribe("test-channel")
-                    expect(chan.name).to(equal("test-channel"))
-                    expect(chan.eventHandlers).to(beEmpty())
-                }
-
-                describe("that require authentication") {
-                    beforeEach({
-                        let options = PusherClientOptions(
-                            authMethod: AuthMethod.Internal(secret: "secret")
-                        )
-                        pusher = Pusher(key: "key", options: options)
-                        socket.delegate = pusher.connection
-                        pusher.connection.socket = socket
-                    })
-
-                    it("subscribes to a private channel") {
-                        pusher.subscribe("private-channel")
-                        let privateChannel = pusher.connection.channels.channels["private-channel"]
-                        pusher.connect()
-                        expect(privateChannel?.subscribed).to(beTruthy())
-                    }
-
-                    it("subscribes to a presence channel") {
-                        pusher.subscribe("presence-channel")
-                        let presenceChannel = pusher.connection.channels.channels["presence-channel"]
-                        pusher.connect()
-                        expect(presenceChannel?.subscribed).to(beTruthy())
-                    }
-
-                    it("sets up the channel correctly") {
-                        let chan = pusher.subscribe("private-channel")
-                        expect(chan.name).to(equal("private-channel"))
-                        expect(chan.eventHandlers).to(beEmpty())
-                    }
-                }
-            }
-        }
-
-        describe("unsubscribing from a channel") {
-            it("removes the channel from the connection's channels property") {
-                pusher.connect()
-                pusher.subscribe("test-channel")
-                expect(pusher.connection.channels.channels["test-channel"]).toNot(beNil())
-                pusher.unsubscribe("test-channel")
-                expect(pusher.connection.channels.channels["test-channel"]).to(beNil())
-            }
-
-            it("sends unsubscribe to Pusher over the Websocket") {
-                pusher.connect()
-                pusher.subscribe("test-channel")
-                pusher.unsubscribe("test-channel")
-                expect(socket.stubber.calls.last?.name).to(equal("writeString"))
-                let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqualToDictionary(NSDictionary(dictionary: expectedDict) as [NSObject : AnyObject])
-                expect(parsedEqualsExpected).to(beTrue())
-            }
-        }
-
-        describe("binding to events globally") {
-            it("adds a callback to the globalChannel's list of callbacks") {
-                pusher.connect()
-                let callback = { (data: AnyObject?) -> Void in print(data) }
-                expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(0))
-                pusher.bind(callback)
-                expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(1))
-            }
-        }
-
-        describe("unbinding a global callback") {
-            it("unbinds the callback from the globalChannel's list of callbacks") {
-                pusher.connect()
-                let callback = { (data: AnyObject?) -> Void in print(data) }
-                let callBackId = pusher.bind(callback)
-                expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(1))
-                pusher.unbind(callBackId)
-                expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(0))
-            }
-        }
-
-        describe("unbinding all global callbacks") {
-            it("unbinds the callback from the globalChannel's list of callbacks") {
-                pusher.connect()
-                let callback = { (data: AnyObject?) -> Void in print(data) }
-                pusher.bind(callback)
-                let callbackTwo = { (someData: AnyObject?) -> Void in print(someData) }
-                pusher.bind(callbackTwo)
-                expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(2))
-                pusher.unbindAll()
-                expect(pusher.connection.globalChannel?.globalCallbacks.count).to(equal(0))
+        func subscriptionDidSucceed(channelName: String) {
+            if let cName = testingChannelName, cName == channelName {
+                ex!.fulfill()
             }
         }
     }
-}
 
+    var key: String!
+    var pusher: Pusher!
+    var socket: MockWebSocket!
+
+    override func setUp() {
+        super.setUp()
+
+        key = "testKey123"
+        let options = PusherClientOptions(
+            authMethod: AuthMethod.inline(secret: "secret"),
+            autoReconnect: false
+        )
+
+        pusher = Pusher(key: key, options: options)
+        socket = MockWebSocket()
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+    }
+
+    func testCallingConnectCallsConnectOnTheSocket() {
+        pusher.connect()
+        XCTAssertEqual(socket.stubber.calls[0].name, "connect")
+    }
+
+    func testConnectedPropertyIsTrueWhenConnectionConnects() {
+        pusher.connect()
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.connected)
+    }
+
+    func testCallingDisconnectCallsDisconnectOnTheSocket() {
+        pusher.connect()
+        pusher.disconnect()
+        XCTAssertEqual(socket.stubber.calls[1].name, "disconnect")
+    }
+
+    func testConnectedPropertyIsFalseWhenConnectionDisconnects() {
+        pusher.connect()
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.connected)
+        pusher.disconnect()
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)
+    }
+
+    func testCallingDisconnectSetsTheSubscribedPropertyOfChannelsToFalse() {
+        pusher.connect()
+        let chan = pusher.subscribe("test-channel")
+        XCTAssertTrue(chan.subscribed)
+        pusher.disconnect()
+        XCTAssertFalse(chan.subscribed)
+    }
+
+    /* subscribing to channels when already connected */
+
+    /* public channels */
+
+    func testChannelIsSetupCorrectly() {
+        pusher.connect()
+        let chan = pusher.subscribe("test-channel")
+        XCTAssertEqual(chan.name, "test-channel", "the channel name should be test-channel")
+        XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
+    }
+
+    func testCallingSubscribeAfterSuccessfulConnectionSendsSubscribeEventOverSocket() {
+        pusher.connect()
+        let _ = pusher.subscribe("test-channel")
+
+        XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "the write function should have been called")
+        let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
+        let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+        XCTAssertTrue(parsedEqualsExpected)
+    }
+
+    func testSubscribingToAPublicChannel() {
+        pusher.connect()
+        let _ = pusher.subscribe("test-channel")
+        let testChannel = pusher.connection.channels.channels["test-channel"]
+        XCTAssertTrue(testChannel!.subscribed)
+    }
+
+    func testSubscriptionSucceededEventSentToGlobalChannel() {
+        pusher.connect()
+        let callback = { (data: Any?) -> Void in
+            if let data = data as? [String: Any], let eName = data["event"] as? String, eName == "pusher:subscription_succeeded" {
+                self.socket.appendToCallbackCheckString("globalCallbackCalled")
+            }
+        }
+        let _ = pusher.bind(callback)
+        XCTAssertEqual(socket.callbackCheckString, "")
+        let _ = pusher.subscribe("test-channel")
+        XCTAssertEqual(socket.callbackCheckString, "globalCallbackCalled")
+    }
+
+    /* authenticated channels */
+
+    func testAuthenticatedChannelIsSetupCorrectly() {
+        pusher.connect()
+        let chan = pusher.subscribe("private-channel")
+        XCTAssertEqual(chan.name, "private-channel", "the channel name should be private-channel")
+        XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
+    }
+
+    func testSubscribingToAPrivateChannel() {
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "private-channel"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
+
+        pusher.connect()
+        let _ = pusher.subscribe(channelName)
+
+        waitForExpectations(timeout: 0.5)
+    }
+
+    func testSubscribingToAPresenceChannel() {
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "presence-channel"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
+
+        pusher.connect()
+        let _ = pusher.subscribe(channelName)
+
+        waitForExpectations(timeout: 0.5)
+    }
+
+    /* subscribing to channels when starting disconnected */
+
+    func testChannelIsSetupCorrectlyWhenSubscribingStartingDisconnected() {
+        let chan = pusher.subscribe("test-channel")
+        pusher.connect()
+        XCTAssertEqual(chan.name, "test-channel", "the channel name should be test-channel")
+        XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
+    }
+
+    func testSubscribingToAPublicChannelWhenCurrentlyDisconnected() {
+        let _ = pusher.subscribe("test-channel")
+        let testChannel = pusher.connection.channels.channels["test-channel"]
+        pusher.connect()
+        XCTAssertTrue(testChannel!.subscribed)
+    }
+
+    /* authenticated channels */
+
+    func testAuthenticatedChannelIsSetupCorrectlyWhenSubscribingStartingDisconnected() {
+        let chan = pusher.subscribe("private-channel")
+        pusher.connect()
+        XCTAssertEqual(chan.name, "private-channel", "the channel name should be private-channel")
+        XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
+    }
+
+    func testSubscribingToAPrivateChannelWhenStartingDisconnected() {
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "private-channel"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
+
+        let _ = pusher.subscribe(channelName)
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
+    func testSubscribingToAPresenceChannelWhenStartingDisconnected() {
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "presence-channel"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
+
+        let _ = pusher.subscribe(channelName)
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
+    /* unsubscribing */
+
+    func testUnsubscribingFromAChannelRemovesTheChannel() {
+        pusher.connect()
+        let _ = pusher.subscribe("test-channel")
+
+        XCTAssertNotNil(pusher.connection.channels.channels["test-channel"], "test-channel should exist")
+        pusher.unsubscribe("test-channel")
+        XCTAssertNil(pusher.connection.channels.channels["test-channel"], "test-channel should not exist")
+    }
+
+    func testUnsubscribingFromAChannelSendsUnsubscribeEventOverSocket() {
+        pusher.connect()
+        let _ = pusher.subscribe("test-channel")
+        pusher.unsubscribe("test-channel")
+
+        XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "write function should have been called")
+
+        let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
+        let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+
+        XCTAssertTrue(parsedEqualsExpected)
+    }
+
+    /* global channel interactions */
+
+    func testBindingToEventsGloballyAddsACallbackToTheGlobalChannel() {
+        pusher.connect()
+        let callback = { (data: Any?) -> Void in print(data) }
+
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
+        let _ = pusher.bind(callback)
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
+    }
+
+    func testUnbindingAGlobalCallbackRemovesItFromTheGlobalChannelsCallbackList() {
+        pusher.connect()
+        let callback = { (data: Any?) -> Void in print(data) }
+        let callBackId = pusher.bind(callback)
+
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
+        pusher.unbind(callbackId: callBackId)
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
+    }
+
+    func testUnbindingAllGlobalCallbacksShouldRemoveAllCallbacksFromGlobalChannel() {
+        pusher.connect()
+        let callback = { (data: Any?) -> Void in print(data) }
+        let _ = pusher.bind(callback)
+        let callbackTwo = { (someData: Any?) -> Void in print(someData) }
+        let _ = pusher.bind(callbackTwo)
+
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 2, "the global channel should have 2 bound callbacks")
+        pusher.unbindAll()
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
+    }
+}
