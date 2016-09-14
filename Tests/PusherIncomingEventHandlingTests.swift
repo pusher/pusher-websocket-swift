@@ -106,19 +106,4 @@ class HandlingIncomingEventsTests: XCTestCase {
         pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "test" as AnyObject])
         XCTAssertEqual(socket.callbackCheckString, "Existing subscription to channel my-channel")
     }
-
-    func testPassingIncomingMessagesToTheDebugLoggerIfOneIsSet() {
-        let debugLogger = { (text: String) in
-            if text.range(of: "websocketDidReceiveMessage") != nil {
-                self.socket.appendToCallbackCheckString(text)
-            }
-        }
-        pusher = Pusher(key: key)
-        pusher.connection.debugLogger = debugLogger
-        socket.delegate = pusher.connection
-        pusher.connection.socket = socket
-        pusher.connect()
-
-        XCTAssertEqual(socket.callbackCheckString, "[PUSHER DEBUG] websocketDidReceiveMessage {\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}")
-    }
 }

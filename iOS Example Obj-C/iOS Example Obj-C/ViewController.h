@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PusherSwift/PusherSwift-Swift.h"
 
-@interface ViewController : UIViewController <ConnectionStateChangeDelegate>
+@interface ViewController : UIViewController <PusherConnectionDelegate>
 
 @property (nonatomic, strong, readwrite) Pusher *client;
 

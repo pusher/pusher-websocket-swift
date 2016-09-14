@@ -176,18 +176,6 @@ open class MockPusherConnection: PusherConnection {
     }
 }
 
-open class TestConnectionStateChangeDelegate: ConnectionStateChangeDelegate {
-    let stubber = StubberForMocks()
-
-    open func connectionChange(old: ConnectionState, new: ConnectionState) {
-        let _ = stubber.stub(
-            functionName: "connectionChange",
-            args: [old, new],
-            functionToCall: nil
-        )
-    }
-}
-
 open class StubberForMocks {
     open var calls: [FunctionCall]
     open var responses: [String: AnyObject]

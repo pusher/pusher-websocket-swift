@@ -21,27 +21,11 @@
     PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
 
     self.client = [[Pusher alloc] initWithAppKey:@"568d5a3851502158a022" options:options];
-
-    self.client.connection.stateChangeDelegate = self;
-
-    self.client.connection.debugLogger = ^void (NSString *text) {
-        NSLog(@"%@", text);
-    };
+    self.client.connection.delegate = self;
 
     self.client.connection.userDataFetcher = ^PusherPresenceChannelMember* () {
         NSString *uuid = [[NSUUID UUID] UUIDString];
         return [[PusherPresenceChannelMember alloc] initWithUserId:uuid userInfo:nil];
-    };
-
-    self.client.connection.subscriptionSuccessHandler = ^void (NSString *channelName) {
-        NSLog(@"Subscribed to %@", channelName);
-    };
-
-    __weak typeof(self) weakSelf = self;
-    self.client.connection.subscriptionSuccessHandler = ^(NSString *str) {
-        if ([str  isEqual: @"presence-test"]) {
-            NSLog(@"%@", [(PusherPresenceChannel *)[weakSelf.client.connection.channels findWithName:@"presence-test"] members]);
-        }
     };
 
     [self.client bind:^void (NSDictionary *data) {
@@ -78,8 +62,20 @@
     }];
 }
 
--(void)connectionChangeWithOld:(enum ConnectionState)old new:(enum ConnectionState)new_ {
+-(void)connectionStateDidChangeFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
     NSLog(@"Old connection: %d, new connection: %d", (int)old, (int)new_);
+}
+
+-(void)debugLogWithMessage:(NSString *)message {
+    NSLog(@"%@", message);
+}
+
+-(void)subscriptionDidSucceedWithChannelName:(NSString *)channelName {
+    NSLog(@"Subscribed to %@", channelName);
+
+    if ([channelName isEqual: @"presence-test"]) {
+        NSLog(@"%@", [(PusherPresenceChannel *)[self.client.connection.channels findWithName:@"presence-test"] members]);
+    }
 }
 
 - (void)didReceiveMemoryWarning {

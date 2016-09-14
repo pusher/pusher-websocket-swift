@@ -19,25 +19,22 @@ open class PusherConnection: NSObject {
     open var socket: WebSocket!
     open var URLSession: Foundation.URLSession
     open var userDataFetcher: (() -> PusherPresenceChannelMember)?
-    open var debugLogger: ((String) -> ())?
-    open weak var stateChangeDelegate: ConnectionStateChangeDelegate?
     open var reconnectAttemptsMax: Int? = 6
     open var reconnectAttempts: Int = 0
     open var maxReconnectGapInSeconds: Double? = nil
-    open var subscriptionErrorHandler: ((String, URLResponse?, String?, NSError?) -> Void)?
-    open var subscriptionSuccessHandler: ((String) -> Void)?
+    open weak var delegate: PusherConnectionDelegate?
     internal var reconnectTimer: Timer? = nil
 
     open lazy var reachability: Reachability? = {
         let reachability = Reachability.init()
         reachability?.whenReachable = { [unowned self] reachability in
-            self.debugLogger?("[PUSHER DEBUG] Network reachable")
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network reachable")
             if self.connectionState == .disconnected || self.connectionState == .reconnectingWhenNetworkBecomesReachable {
                 self.attemptReconnect()
             }
         }
         reachability?.whenUnreachable = { [unowned self] reachability in
-            self.debugLogger?("[PUSHER DEBUG] Network unreachable")
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable")
         }
         return reachability
     }()
@@ -148,7 +145,7 @@ open class PusherConnection: NSObject {
             sendClientEvent(event: event, data: data, channel: channel)
         } else {
             let dataString = JSONStringify(["event": event, "data": data])
-            self.debugLogger?("[PUSHER DEBUG] sendEvent \(dataString)")
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendEvent \(dataString)")
             self.socket.write(string: dataString)
         }
     }
@@ -164,7 +161,7 @@ open class PusherConnection: NSObject {
         if let channel = channel {
             if channel.type == .presence || channel.type == .private {
                 let dataString = JSONStringify(["event": event, "data": data, "channel": channel.name] as [String : Any])
-                self.debugLogger?("[PUSHER DEBUG] sendClientEvent \(dataString)")
+                self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendClientEvent \(dataString)")
                 self.socket.write(string: dataString)
             } else {
                 print("You must be subscribed to a private or presence channel to send client events")
@@ -262,7 +259,7 @@ open class PusherConnection: NSObject {
     internal func updateConnectionState(to newState: ConnectionState) {
         let oldState = self.connectionState
         self.connectionState = newState
-        self.stateChangeDelegate?.connectionChange(old: oldState, new: newState)
+        self.delegate?.connectionStateDidChange?(from: oldState, to: newState)
     }
 
     /**
@@ -290,7 +287,7 @@ open class PusherConnection: NSObject {
                 }
             }
 
-            subscriptionSuccessHandler?(channelName)
+            self.delegate?.subscriptionDidSucceed?(channelName: channelName)
 
             while chan.unsentEvents.count > 0 {
                 if let pusherEvent = chan.unsentEvents.popLast() {
@@ -374,11 +371,11 @@ open class PusherConnection: NSObject {
             "data": data ?? ""
         ]
         DispatchQueue.main.async {
-            // TODO: Consider removing in favour of exclusively using handlers
+            // TODO: Consider removing in favour of exclusively using delegate
             self.handleEvent(eventName: eventName, jsonObject: json as [String : AnyObject])
         }
 
-        subscriptionErrorHandler?(channelName, response, data, error)
+        self.delegate?.subscriptionDidFail?(channelName: channelName, response: response, data: data, error: error)
     }
 
     /**
@@ -720,8 +717,17 @@ open class PusherConnection: NSObject {
     case disconnected
     case reconnecting
     case reconnectingWhenNetworkBecomesReachable
-}
 
-@objc public protocol ConnectionStateChangeDelegate: class {
-    func connectionChange(old: ConnectionState, new: ConnectionState)
+    static let connectionStates = [
+        connecting: "connecting",
+        connected: "connected",
+        disconnecting: "disconnecting",
+        disconnected: "disconnected",
+        reconnecting: "reconnecting",
+        reconnectingWhenNetworkBecomesReachable: "reconnreconnectingWhenNetworkBecomesReachable",
+    ]
+
+    public func stringValue() -> String {
+        return ConnectionState.connectionStates[self]!
+    }
 }

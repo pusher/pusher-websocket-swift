@@ -9,7 +9,7 @@
 import UIKit
 import PusherSwift
 
-class ViewController: UIViewController, ConnectionStateChangeDelegate {
+class ViewController: UIViewController, PusherConnectionDelegate {
     var pusher: Pusher! = nil
 
     @IBAction func connectButton(_ sender: AnyObject) {
@@ -28,12 +28,7 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
         let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "YOUR_APP_SECRET"))
         pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
 
-        // remove the debugLogger from the client options if you want to remove the
-        // debug logging, or just change the function below
-        let debugLogger = { (text: String) in debugPrint(text) }
-        pusher.connection.debugLogger = debugLogger
-
-        pusher.connection.stateChangeDelegate = self
+        pusher.connection.delegate = self
 
         pusher.connect()
 
@@ -66,9 +61,19 @@ class ViewController: UIViewController, ConnectionStateChangeDelegate {
         chan.trigger(eventName: "client-test", data: ["test": "some value"])
     }
 
-    func connectionChange(old: ConnectionState, new: ConnectionState) {
+    // PusherConnectionDelegate methods
+
+    func connectionStateDidChange(from old: ConnectionState, to new: ConnectionState) {
         // print the old and new connection states
-        print("old: \(old) -> new: \(new)")
+        print("old: \(old.stringValue()) -> new: \(new.stringValue())")
+    }
+
+    func subscriptionDidSucceed(channelName: String) {
+        print("Subscribed to \(channelName)")
+    }
+
+    func debugLog(message: String) {
+        print(message)
     }
 }
 

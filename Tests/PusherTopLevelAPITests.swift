@@ -10,6 +10,17 @@ import PusherSwift
 import XCTest
 
 class PusherTopLevelApiTests: XCTestCase {
+    class DummyDelegate: PusherConnectionDelegate {
+        var ex: XCTestExpectation? = nil
+        var testingChannelName: String? = nil
+
+        func subscriptionDidSucceed(channelName: String) {
+            if let cName = testingChannelName, cName == channelName {
+                ex!.fulfill()
+            }
+        }
+    }
+
     var key: String!
     var pusher: Pusher!
     var socket: MockWebSocket!
@@ -113,26 +124,30 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testSubscribingToAPrivateChannel() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "private-channel"
 
-        pusher.connection.subscriptionSuccessHandler = { str in
-            ex.fulfill()
-        }
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
 
         pusher.connect()
-        let _ = pusher.subscribe("private-channel")
+        let _ = pusher.subscribe(channelName)
 
         waitForExpectations(timeout: 0.5)
     }
 
     func testSubscribingToAPresenceChannel() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "presence-channel"
 
-        pusher.connection.subscriptionSuccessHandler = { str in
-            ex.fulfill()
-        }
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
 
         pusher.connect()
-        let _ = pusher.subscribe("presence-channel")
+        let _ = pusher.subscribe(channelName)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -164,12 +179,14 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testSubscribingToAPrivateChannelWhenStartingDisconnected() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "private-channel"
 
-        pusher.connection.subscriptionSuccessHandler = { str in
-            ex.fulfill()
-        }
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
 
-        let _ = pusher.subscribe("private-channel")
+        let _ = pusher.subscribe(channelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
@@ -177,12 +194,14 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testSubscribingToAPresenceChannelWhenStartingDisconnected() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "presence-channel"
 
-        pusher.connection.subscriptionSuccessHandler = { str in
-            ex.fulfill()
-        }
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.connection.delegate = dummyDelegate
 
-        let _ = pusher.subscribe("presence-channel")
+        let _ = pusher.subscribe(channelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
