@@ -25,14 +25,30 @@
     private let LIBRARY_NAME_AND_VERSION = "pusher-websocket-swift " + VERSION
 
     private let URLSession = Foundation.URLSession.shared
-    private var failedNativeServiceRequests: Int = 0
+    private var failedRequestAttempts: Int = 0
     private let maxFailedRequestAttempts: Int = 6
 
+    internal var socketConnection: PusherConnection? = nil
+
+    private var requestQueue = TaskQueue()
+
     /**
-        Identifies a Pusher app.
-        This app should have push notifications enabled.
+        Identifies a Pusher app, which should have push notifications enabled
+        and a certificate added for the push notifications to work.
     */
     private var pusherAppKey: String? = nil
+
+    /**
+        The id issued to this app instance by Pusher, which is received upon
+        registrations. It's used to identify a client when subscribe /
+        unsubscribe requests are made.
+    */
+    private var clientId: String? = nil
+
+    /**
+        Normal clients should access the shared instance via Pusher.nativePusher().
+    */
+    private override init() {}
 
     /**
         Sets the pusherAppKey property and then attempts to flush
@@ -42,25 +58,9 @@
     */
     open func setPusherAppKey(pusherAppKey: String) {
         self.pusherAppKey = pusherAppKey
-        tryFlushOutbox()
+        requestQueue.run()
     }
 
-    /**
-        The id issued to this app instance by Pusher.
-        We get it upon registration.
-        We use it to identify ourselves when subscribing/unsubscribing.
-    */
-    private var clientId: String? = nil
-
-    /**
-        Queued actions to perform when the client is registered.
-    */
-    private var outbox: [(String, SubscriptionChange)] = []
-
-    /**
-        Normal clients should access the shared instance via Pusher.nativePusher().
-    */
-    private override init() {}
 
     /**
         Makes device token presentable to server
@@ -101,8 +101,6 @@
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library" )
 
-
-
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, error in
             if let httpResponse = response as? HTTPURLResponse,
                    (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
@@ -124,20 +122,21 @@
                             if let clientIdJson = json["id"] {
                                 if let clientId = clientIdJson as? String {
                                     self.clientId = clientId
-                                    self.tryFlushOutbox()
+                                    self.socketConnection?.delegate?.debugLog?(message: "Successfully registered for push notifications and got clientId: \(clientId)")
+                                    self.requestQueue.run()
                                 } else {
-                                    print("Value at \"id\" key in JSON response was not a string: \(json)")
+                                    self.socketConnection?.delegate?.debugLog?(message: "Value at \"id\" key in JSON response was not a string: \(json)")
                                 }
                             } else {
-                                print("No \"id\" key in JSON response: \(json)")
+                                self.socketConnection?.delegate?.debugLog?(message: "No \"id\" key in JSON response: \(json)")
                             }
                         } else {
-                            print("Could not parse body as JSON object: \(data)")
+                            self.socketConnection?.delegate?.debugLog?(message: "Could not parse body as JSON object: \(data)")
                         }
             } else {
                 if data != nil && response != nil {
                     let responseBody = String(data: data!, encoding: .utf8)
-                    print("Bad HTTP response: \(response!) with body: \(responseBody)")
+                    self.socketConnection?.delegate?.debugLog?(message: "Bad HTTP response: \(response!) with body: \(responseBody)")
                 }
             }
         })
@@ -151,8 +150,7 @@
         - parameter interestName: the name of the interest you want to subscribe to
     */
     open func subscribe(interestName: String) {
-        outbox.append(interestName, SubscriptionChange.subscribe)
-        tryFlushOutbox()
+        addSubscriptionChangeToTaskQueue(interestName: interestName, change: .subscribe)
     }
 
     /**
@@ -162,25 +160,27 @@
                                   from
     */
     open func unsubscribe(interestName: String) {
-        outbox.append(interestName, SubscriptionChange.unsubscribe)
-        tryFlushOutbox()
+        addSubscriptionChangeToTaskQueue(interestName: interestName, change: .unsubscribe)
     }
 
     /**
-        Attempts to flush the outbox by making the appropriate requests to either
-        subscribe to or unsubscribe from an interest
+        Adds subscribe / unsubscribe tasts to task queue
+ 
+        - parameter interestName: the name of the interest you want to interact with
+        - parameter change:       specifies whether the change is to subscribe or 
+                                  unsubscribe
+
     */
-    private func tryFlushOutbox() {
-        switch (self.pusherAppKey, self.clientId) {
-        case (.some(let pusherAppKey), .some(let clientId)):
-            if (0 < outbox.count) {
-                let (interest, change) = outbox.remove(at: 0)
-                modifySubscription(pusherAppKey: pusherAppKey, clientId: clientId, interest: interest, change: change) {
-                    self.tryFlushOutbox()
-                }
-            }
-        case _: break
+    private func addSubscriptionChangeToTaskQueue(interestName: String, change: SubscriptionChange) {
+        requestQueue.tasks += { _, next in
+            self.modifySubscription(
+                interest: interestName,
+                change: change,
+                successCallback: next
+            )
         }
+
+        requestQueue.run()
     }
 
     /**
@@ -193,19 +193,21 @@
         - parameter change:       Whether to subscribe or unsubscribe
         - parameter callback:     Callback to be called upon success
     */
-    private func modifySubscription(pusherAppKey: String, clientId: String, interest: String, change: SubscriptionChange, callback: @escaping (Void) -> (Void)) {
-        let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/\(interest)"
-        var request = URLRequest(url: URL(string: url)!)
-        switch (change) {
-        case .subscribe:
-            request.httpMethod = "POST"
-        case .unsubscribe:
-            request.httpMethod = "DELETE"
+    private func modifySubscription(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
+        guard pusherAppKey != nil, clientId != nil else {
+            self.socketConnection?.delegate?.debugLog?(message: "pusherAppKey \(pusherAppKey) or clientId \(clientId) not set - will retry in 1 second")
+            return self.requestQueue.retry(1)
         }
 
-        let params: [String: Any] = ["app_key": pusherAppKey]
+        self.socketConnection?.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
 
+        let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId!)/interests/\(interest)"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = change.httpMethod()
+
+        let params: [String: Any] = ["app_key": pusherAppKey!]
         try! request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library")
 
@@ -213,30 +215,36 @@
             with: request,
             completionHandler: { data, response, error in
                 guard let httpResponse = response as? HTTPURLResponse,
-                          (200 <= httpResponse.statusCode && httpResponse.statusCode < 300) ||
+                          (200 <= httpResponse.statusCode && httpResponse.statusCode < 300) &&
                           error == nil
                 else {
-                    self.outbox.insert((interest, change), at: 0)
+                    self.failedRequestAttempts += 1
 
                     if error != nil {
-                        print("Error when trying to modify subscription to interest: \(error?.localizedDescription)")
+                        self.socketConnection?.delegate?.debugLog?(message: "Error when trying to modify subscription to interest: \(error?.localizedDescription)")
+                    } else if data != nil && response != nil {
+                        let responseBody = String(data: data!, encoding: .utf8)
+                        self.socketConnection?.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(responseBody)")
                     } else {
-                        print("Bad response from server when trying to modify subscription to interest " + interest)
+                        self.socketConnection?.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest: \(interest)")
                     }
-                    self.failedNativeServiceRequests += 1
 
-                    if (self.failedNativeServiceRequests < self.maxFailedRequestAttempts) {
-                        callback()
+                    if self.failedRequestAttempts > self.maxFailedRequestAttempts {
+                        self.socketConnection?.delegate?.debugLog?(message: "Max number of failed native service requests reached")
+
+                        self.requestQueue.paused = true
                     } else {
-                        print("Max number of failed native service requests reached")
+                        self.socketConnection?.delegate?.debugLog?(message: "Retrying subscription modification request for interest: \(interest)")
+                        self.requestQueue.retry(Double(self.failedRequestAttempts * self.failedRequestAttempts))
                     }
+
                     return
                 }
 
-                // Reset number of failed requests to 0 upon success
-                self.failedNativeServiceRequests = 0
+                self.socketConnection?.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interest)")
 
-                callback()
+                self.failedRequestAttempts = 0
+                successCallback(nil)
             }
         )
 
@@ -244,9 +252,27 @@
     }
 }
 
-private enum SubscriptionChange {
+internal enum SubscriptionChange {
     case subscribe
     case unsubscribe
+
+    internal func stringValue() -> String {
+        switch self {
+        case .subscribe:
+            return "subscribe"
+        case .unsubscribe:
+            return "unsubscribe"
+        }
+    }
+
+    internal func httpMethod() -> String {
+        switch self {
+        case .subscribe:
+            return "POST"
+        case .unsubscribe:
+            return "DELETE"
+        }
+    }
 }
 
 #endif

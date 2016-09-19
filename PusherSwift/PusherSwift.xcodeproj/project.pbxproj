@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
 		330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3384C1B81CAECD9C00F10796 /* PusherChannel.swift */; };
+		33160A001D8FE15B002EC524 /* TaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331609FF1D8FE15B002EC524 /* TaskQueue.swift */; };
 		3341A33A1D819FBC007191AD /* NativePusher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3341A3391D819FBC007191AD /* NativePusher.swift */; };
 		3342F3BD1D808AC900C0296E /* ClientEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342F3BB1D808AC500C0296E /* ClientEventTests.swift */; };
 		335BCA0D1C38ABF000B47A66 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		331609FF1D8FE15B002EC524 /* TaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskQueue.swift; sourceTree = "<group>"; };
 		3341A3391D819FBC007191AD /* NativePusher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativePusher.swift; sourceTree = "<group>"; };
 		3342F3BB1D808AC500C0296E /* ClientEventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClientEventTests.swift; path = ../Tests/ClientEventTests.swift; sourceTree = "<group>"; };
 		337C9EE01C38B708006CC757 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -172,6 +174,7 @@
 				33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */,
 				33C0D2DA1CB5C364003FE13E /* Starscream.swift */,
 				33C0D2E31CB5C539003FE13E /* Reachability.swift */,
+				331609FF1D8FE15B002EC524 /* TaskQueue.swift */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
 				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
+				33160A001D8FE15B002EC524 /* TaskQueue.swift in Sources */,
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
 				3341A33A1D819FBC007191AD /* NativePusher.swift in Sources */,
 				33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */,
