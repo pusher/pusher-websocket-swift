@@ -32,15 +32,15 @@
 //  alterations made to better cater for the PusherSwift use case
 //
 
-open class TaskQueue: CustomStringConvertible {
+internal class TaskQueue: CustomStringConvertible {
     public typealias ClosureNoResultNext = () -> Void
     public typealias ClosureWithResultNext = (Any? , @escaping (Any?) -> Void) -> Void
 
-    open var tasks = [ClosureWithResultNext]()
-    open lazy var completions = [ClosureNoResultNext]()
+    internal var tasks = [ClosureWithResultNext]()
+    internal lazy var completions = [ClosureNoResultNext]()
 
     fileprivate(set) var numberOfActiveTasks = 0
-    open var maximumNumberOfActiveTasks = 1 {
+    internal var maximumNumberOfActiveTasks = 1 {
         willSet {
             assert(maximumNumberOfActiveTasks > 0, "Setting less than 1 task at a time is not allowed")
         }
@@ -51,22 +51,22 @@ open class TaskQueue: CustomStringConvertible {
 
     fileprivate(set) var running = false
 
-    open var paused: Bool = false {
+    internal var paused: Bool = false {
         didSet {
             running = !paused
         }
     }
 
     fileprivate var cancelled = false
-    open func cancel() {
+    internal func cancel() {
         cancelled = true
     }
 
     fileprivate var hasCompletions = false
 
-    public init() {}
+    internal init() {}
 
-    open func run(_ completion: ClosureNoResultNext? = nil) {
+    internal func run(_ completion: ClosureNoResultNext? = nil) {
         if completion != nil {
             hasCompletions = true
             completions += [completion!]
@@ -154,21 +154,21 @@ open class TaskQueue: CustomStringConvertible {
         }
     }
 
-    open func skip() {
+    internal func skip() {
         if tasks.count>0 {
             _ = tasks.remove(at: 0)
         }
     }
 
-    open func removeAll() {
+    internal func removeAll() {
         tasks.removeAll(keepingCapacity: false)
     }
 
-    open var count: Int {
+    internal var count: Int {
         return tasks.count
     }
 
-    open func retry(_ delay: Double = 0) {
+    internal func retry(_ delay: Double = 0) {
         assert(maximumNumberOfActiveTasks == 1, "You can only call retry() only on serial queues")
 
         tasks.insert(currentTask!, at: 0)
@@ -180,7 +180,7 @@ open class TaskQueue: CustomStringConvertible {
         }
     }
 
-    open var description: String {
+    internal var description: String {
         let state = running ? "runing " : (paused ? "paused ": "stopped")
         let type = maximumNumberOfActiveTasks == 1 ? "serial": "parallel"
 
@@ -202,14 +202,14 @@ open class TaskQueue: CustomStringConvertible {
 //
 // Add a task closure with result and next params
 //
-public func += (tasks: inout [TaskQueue.ClosureWithResultNext], task: @escaping TaskQueue.ClosureWithResultNext) {
+internal func += (tasks: inout [TaskQueue.ClosureWithResultNext], task: @escaping TaskQueue.ClosureWithResultNext) {
     tasks += [task]
 }
 
 //
 // Add a task closure that doesn't take result/next params
 //
-public func += (tasks: inout [TaskQueue.ClosureWithResultNext], task: @escaping TaskQueue.ClosureNoResultNext) {
+internal func += (tasks: inout [TaskQueue.ClosureWithResultNext], task: @escaping TaskQueue.ClosureNoResultNext) {
     tasks += [{ _, next in
         task()
         next(nil)
