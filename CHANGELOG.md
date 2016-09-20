@@ -10,7 +10,7 @@
 ## 3.0.0
 
 * Update to work with Swift 3
-* Rewrot all tests using XCTest
+* Rewrote all tests using XCTest
 * Remove all need for Podfile / Cartfile when building PusherSwift locally
 * Combine different builds into single target
 * Merge in native notification code into main branch (push-notifications branch)
