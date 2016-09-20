@@ -28,6 +28,7 @@ What else would you want? Head over to the example app [ViewController.swift](ht
   * [Receiving errors](#receiving-errors)
 * [Presence channel specifics](#presence-channel-specifics)
 * [Push notifications](#push-notifications)
+  * [Pusher delegate](#pusher-delegate)
 * [Testing](#testing)
 * [Extensions](#extensions)
 * [Communication](#communication)
@@ -822,6 +823,54 @@ pusher.nativePusher().unsubscribe(interestName: "donuts")
 ```
 
 For a complete example of a working app, see the [Example/](https://github.com/pusher/pusher-websocket-swift/tree/push-notifications/Example) directory in this repository. Specifically for push notifications code, see the [Example/AppDelegate.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Swift/iOS%20Example%20Swift/AppDelegate.swift) file.
+
+
+### Pusher delegate
+
+There is a `PusherDelegate` that you can use to get access to events that occur in relation to push notifications interactions. These are the functions that you can optionally implement when conforming to the `PusherDelegate` protocol:
+
+```swift
+@objc optional func didRegisterForPushNotifications(clientId: String)
+@objc optional func didSubscribeToInterest(named name: String)
+@objc optional func didUnsubscribeFromInterest(named name: String)
+```
+
+Again, the names of the functions largely give away what their purpose is but just for completeness:
+
+- `didRegisterForPushNotifications` - use this if you want to know when a client has successfully registered with the Pusher Push Notifications service, or if you want access to the `clientId` that is returned upon successful registration
+- `didSubscribeToInterest` - use this if you want keep track of interests that are successfully subscribed to
+- `didUnsubscribeFromInterest` - use this if you want keep track of interests that are successfully unsubscribed from
+
+Setting up a delegate looks like this:
+
+#### Swift
+```swift
+class ViewController: UIViewController, PusherDelegate {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let pusher = Pusher(key: "APP_KEY")
+        pusher.delegate = self
+        // ...
+    }
+}
+```
+
+#### Objective-C
+```objc
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.client = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+
+    self.client.delegate = self;
+    // ...
+}
+```
+
+The process is identical to that of setting up a `PusherConnectionDelegate`. At some point in the future the `PusherDelegate` and `PusherConnectionDelegate` will likely be merged into the `PusherDelegate` in order to provide one unified delegate that can be used to get notified of Pusher-related events.
 
 
 ## Testing

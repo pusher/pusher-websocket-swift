@@ -13,6 +13,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 @objc open class Pusher: NSObject {
     open let connection: PusherConnection
+    open weak var delegate: PusherDelegate? = nil
     private let key: String
 
 #if os(iOS)
@@ -32,6 +33,9 @@ let CLIENT_NAME = "pusher-websocket-swift"
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
         nativePusher.setPusherAppKey(pusherAppKey: key)
+        nativePusher.socketConnection = connection
+        super.init()
+        nativePusher.pusher = self
     }
 
 #endif
