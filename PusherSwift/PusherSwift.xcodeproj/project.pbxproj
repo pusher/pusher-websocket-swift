@@ -21,6 +21,8 @@
 		3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
 		33A962741D88A9C900DA421E /* PusherConnectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A962731D88A9C800DA421E /* PusherConnectionDelegate.swift */; };
 		33A962771D89483600DA421E /* PusherConnectionDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A962751D8943CA00DA421E /* PusherConnectionDelegateTests.swift */; };
+		33BA541E1D90351B00CD853B /* NativePusherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BA541D1D90351B00CD853B /* NativePusherTests.swift */; };
+		33BA54201D9035BD00CD853B /* PusherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BA541F1D9035BD00CD853B /* PusherDelegate.swift */; };
 		33BB99731D21230100B25C2A /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995D1D21226C00B25C2A /* AuthenticationTests.swift */; };
 		33BB99751D21230100B25C2A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995F1D21226C00B25C2A /* Helpers.swift */; };
 		33BB99761D21230100B25C2A /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99601D21226C00B25C2A /* Mocks.swift */; };
@@ -66,6 +68,8 @@
 		3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherClientOptions.swift; sourceTree = "<group>"; };
 		33A962731D88A9C800DA421E /* PusherConnectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherConnectionDelegate.swift; sourceTree = "<group>"; };
 		33A962751D8943CA00DA421E /* PusherConnectionDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherConnectionDelegateTests.swift; path = ../Tests/PusherConnectionDelegateTests.swift; sourceTree = "<group>"; };
+		33BA541D1D90351B00CD853B /* NativePusherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NativePusherTests.swift; path = ../Tests/NativePusherTests.swift; sourceTree = "<group>"; };
+		33BA541F1D9035BD00CD853B /* PusherDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherDelegate.swift; sourceTree = "<group>"; };
 		33BB995D1D21226C00B25C2A /* AuthenticationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthenticationTests.swift; path = ../Tests/AuthenticationTests.swift; sourceTree = "<group>"; };
 		33BB995F1D21226C00B25C2A /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Helpers.swift; path = ../Tests/Helpers.swift; sourceTree = "<group>"; };
 		33BB99601D21226C00B25C2A /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mocks.swift; path = ../Tests/Mocks.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 			children = (
 				33831CD31A9CFFD900B124F1 /* PusherSwift.swift */,
 				3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */,
+				33BA541F1D9035BD00CD853B /* PusherDelegate.swift */,
 				3389F5651CAEDD5F00563F49 /* PusherConnection.swift */,
 				33A962731D88A9C800DA421E /* PusherConnectionDelegate.swift */,
 				3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */,
@@ -163,6 +168,7 @@
 				33A962751D8943CA00DA421E /* PusherConnectionDelegateTests.swift */,
 				33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */,
 				33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */,
+				33BA541D1D90351B00CD853B /* NativePusherTests.swift */,
 				33BB99671D21226C00B25C2A /* Info.plist */,
 			);
 			name = Tests;
@@ -323,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3389F5661CAEDD5F00563F49 /* PusherConnection.swift in Sources */,
+				33BA54201D9035BD00CD853B /* PusherDelegate.swift in Sources */,
 				3389F56A1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
 				330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */,
 				33A962741D88A9C900DA421E /* PusherConnectionDelegate.swift in Sources */,
@@ -351,6 +358,7 @@
 				33BB997B1D21230100B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */,
 				3342F3BD1D808AC900C0296E /* ClientEventTests.swift in Sources */,
 				33BB99751D21230100B25C2A /* Helpers.swift in Sources */,
+				33BA541E1D90351B00CD853B /* NativePusherTests.swift in Sources */,
 				33BB99731D21230100B25C2A /* AuthenticationTests.swift in Sources */,
 				33BB99781D21230100B25C2A /* PusherChannelTests.swift in Sources */,
 				33BB99761D21230100B25C2A /* Mocks.swift in Sources */,

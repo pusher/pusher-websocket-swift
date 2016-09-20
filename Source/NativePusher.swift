@@ -24,11 +24,12 @@
     private let CLIENT_API_V1_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
     private let LIBRARY_NAME_AND_VERSION = "pusher-websocket-swift " + VERSION
 
-    private let URLSession = Foundation.URLSession.shared
+    public var URLSession = Foundation.URLSession.shared
     private var failedRequestAttempts: Int = 0
     private let maxFailedRequestAttempts: Int = 6
 
     internal var socketConnection: PusherConnection? = nil
+    internal var pusher: Pusher? = nil
 
     private var requestQueue = TaskQueue()
 
@@ -61,12 +62,11 @@
         requestQueue.run()
     }
 
-
     /**
         Makes device token presentable to server
 
         - parameter deviceToken: the deviceToken received when registering
-                                 to receive push notifications, as NSData
+                                 to receive push notifications, as Data
 
         - returns: the deviceToken formatted as a String
     */
@@ -79,12 +79,11 @@
     }
 
     /**
-        Registers this app instance with Pusher for push notifications.
+        Registers (asynchronously) this app instance with Pusher for push notifications.
         This must be done before we can subscribe to interests.
-        Registration happens asynchronously; any errors are reported by print statements.
 
         - parameter deviceToken: the deviceToken received when registering
-                                 to receive push notifications, as NSData
+                                 to receive push notifications, as Data
     */
     open func register(deviceToken: Data) {
         var request = URLRequest(url: URL(string: CLIENT_API_V1_ENDPOINT + "/clients")!)
@@ -122,6 +121,7 @@
                             if let clientIdJson = json["id"] {
                                 if let clientId = clientIdJson as? String {
                                     self.clientId = clientId
+                                    self.pusher?.delegate?.didRegisterForPushNotifications?(clientId: clientId)
                                     self.socketConnection?.delegate?.debugLog?(message: "Successfully registered for push notifications and got clientId: \(clientId)")
                                     self.requestQueue.run()
                                 } else {
@@ -239,6 +239,13 @@
                     }
 
                     return
+                }
+
+                switch change {
+                case .subscribe:
+                    self.pusher?.delegate?.didSubscribeToInterest?(named: interest)
+                case .unsubscribe:
+                    self.pusher?.delegate?.didUnsubscribeFromInterest?(named: interest)
                 }
 
                 self.socketConnection?.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interest)")

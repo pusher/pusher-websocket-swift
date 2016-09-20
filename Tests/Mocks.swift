@@ -206,32 +206,46 @@ open class FunctionCall {
     }
 }
 
-class MockSession: URLSession {
-    var completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?
+public typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSError?)
 
-    static var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
-    override class var shared: URLSession {
+public class MockSession: URLSession {
+    static public var mockResponses: [String: Response] = [:]
+    static public var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
+
+    override public class var shared: URLSession {
         get {
             return MockSession()
         }
     }
 
-    override func dataTask(with: URLRequest, completionHandler: @escaping(Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-        self.completionHandler = completionHandler
-        return MockTask(response: MockSession.mockResponse, completionHandler: completionHandler)
+    override public func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        var response: Response
+        let mockedMethodAndUrlString = "\(with.httpMethod!)||\((with.url?.absoluteString)!)"
+
+        if let mockedResponse = MockSession.mockResponses[mockedMethodAndUrlString] {
+            response = mockedResponse
+        } else {
+            response = MockSession.mockResponse
+        }
+        return MockTask(response: response, completionHandler: completionHandler)
     }
 
-    class MockTask: URLSessionDataTask {
-        typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSError?)
-        var mockResponse: Response
-        let completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?
+    public class func addMockResponse(for url: URL, httpMethod: String, data: Data?, urlResponse: URLResponse?, error: NSError?) {
+        let response = (data: data, urlResponse: urlResponse, error: error)
+        let mockedResponseString = "\(httpMethod)||\(url.absoluteString)"
+        mockResponses[mockedResponseString] = response
+    }
 
-        init(response: Response, completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?) {
+    public class MockTask: URLSessionDataTask {
+        public var mockResponse: Response
+        public let completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?
+
+        public init(response: Response, completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?) {
             self.mockResponse = response
             self.completionHandler = completionHandler
         }
 
-        override func resume() {
+        override public func resume() {
             DispatchQueue.global(qos: .default).async {
                 self.completionHandler!(self.mockResponse.data, self.mockResponse.urlResponse, self.mockResponse.error)
             }
