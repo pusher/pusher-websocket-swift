@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.0
+
+* Fix bug in NativePusher where subscription modification requests would fail but not call the appropriate branch of the `guard` statement
+* Add `PusherDelegate`, which includes optional functions related to Push Notification-related events
+* Added TaskQueue and refactored how subscribe / unsubscribe events are sent to the Push Notifications service (to make it thread-safe)
+* Added tests for NativePusher-related code paths
+
 ## 3.0.0
 
 * Update to work with Swift 3
@@ -84,16 +91,12 @@
 
 ## 0.1.7
 
-###### Misc
-
 * Add support for tvOS as platform ([@goose2460](https://github.com/goose2460))
 * Update CryptoSwift to 0.2.2 ([@goose2460](https://github.com/goose2460))
 * Update ReachabilitySwift to 2.3.3 ([@goose2460](https://github.com/goose2460))
 * Rename `Sources` back to `Source`
 
 ## 0.1.6
-
-###### Misc
 
 * Fixed build errors with Carthage
 * Rename `Source` to `Sources` in order to work with Swift Package Manager (in principle)
