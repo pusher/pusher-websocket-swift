@@ -91,7 +91,6 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
-
 ## Configuration
 
 There are a number of configuration parameters which can be set for the Pusher client. For Swift usage they are:
@@ -101,11 +100,10 @@ There are a number of configuration parameters which can be set for the Pusher c
 - `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
-- `port (Int)` - set a custom value for the port that you'd lilke to connect to
+- `port (Int)` - set a custom value for the port that you'd like to connect to
 
 The `authMethod` parameter must be of the type `AuthMethod`. This is an enum defined as:
 
-#### Swift
 ```swift
 public enum AuthMethod {
     case endpoint(authEndpoint: String)
@@ -889,7 +887,7 @@ The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websoc
 
 - If you have found a bug, please open an issue.
 - If you have a feature request, please open an issue.
-- If you want to contribute, please submit a pull request (preferrably with some tests :) ).
+- If you want to contribute, please submit a pull request (preferrably with some tests 🙂 ).
 
 
 ## Credits
