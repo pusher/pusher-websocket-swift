@@ -617,7 +617,7 @@ open class PusherConnection: NSObject {
                 return
             }
 
-            guard let httpResponse = response as? HTTPURLResponse, (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) else {
+            guard let httpResponse = response as? HTTPURLResponse, (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) else {
                 let dataString = String(data: data, encoding: String.Encoding.utf8)
                 print ("Error authorizing channel [\(channel.name)]: \(dataString)")
                 self.handleAuthorizationError(forChannel: channel.name, response: response, data: dataString, error: nil)
