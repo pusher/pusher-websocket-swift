@@ -83,6 +83,21 @@ class PusherPresenceChannelTests: XCTestCase {
         XCTAssertEqual(me!.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
     }
 
+    func testFindingAPresenceChannelAsAPusherPresenceChannel() {
+        pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
+            return PusherPresenceChannelMember(userId: "123", userInfo: ["friends": 0])
+        }
+
+        pusher.connect()
+
+        let _ = pusher.subscribe("presence-channel")
+
+        let presChan = pusher.connection.channels.findPresence(name: "presence-channel")
+
+        XCTAssertNotNil(presChan, "the presence channel should be found and returned")
+        XCTAssertEqual(presChan?.me()?.userId, "123", "the userId of the client's member object should be 123")
+    }
+
     func testOnMemberAddedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
         let options = PusherClientOptions(
             authMethod: .inline(secret: "secretsecretsecretsecret")

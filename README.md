@@ -467,21 +467,9 @@ PusherChannel *myPrivateChannel = [pusher subscribeWithChannelName:@"private-my-
 
 ### Presence channels
 
-Presence channels are created in exactly the same way as private channels, except that they reside in the 'presence-' namespace.
+Presence channels are channels whose names are prefixed by `presence-`.
 
-#### Swift
-```swift
-let myPresenceChannel = pusher.subscribe("presence-my-channel")
-```
-
-#### Objective-C
-```objc
-PusherChannel *myPresenceChannel = [pusher subscribeWithChannelName:@"presence-my-channel"];
-```
-
-This will give you back a `PusherChannel` object, which will not have access to functions available to `PusherPresenceChannel` objects, such as `members`, `me` etc.
-
-You can of course cast the `PusherChannel` object to a `PusherPresenceChannel` or you can instead use the `subscribeToPresenceChannel` function which will directly return a `PusherPresenceChannel` object. You can do so like this:
+The recommended way of subscribing to a presence channel is to use the `subscribeToPresenceChannel` function, as opposed to the standard `subscribe` function. Using the `subscribeToPresenceChannel` function means that you get a `PusherPresenceChannel` object returned, as opposed to a standard `PusherChannel`. This `PusherPresenceChannel` object has some extra, presence-channel-specific functions availalbe to it, such as `members`, `me`, and `findMember`.
 
 #### Swift
 ```swift
@@ -493,6 +481,18 @@ let myPresenceChannel = pusher.subscribeToPresenceChannel(channelName: "presence
 PusherPresenceChannel *myPresenceChannel = [pusher subscribeToPresenceChannelWithChannelName:@"presence-my-channel"];
 ```
 
+As alluded to, you can still subscribe to presence channels using the `subscribe` method, but the channel object you get back won't have access to the presence-channel-specific functions, unless you choose to cast the channel object to a `PusherPresenceChannel`.
+
+#### Swift
+```swift
+let myPresenceChannel = pusher.subscribe("presence-my-channel")
+```
+
+#### Objective-C
+```objc
+PusherChannel *myPresenceChannel = [pusher subscribeWithChannelName:@"presence-my-channel"];
+```
+
 You can also provide functions that will be called when members are either added to or removed from the channel. These are available as parameters to both `subscribe` and `subscribeToPresenceChannel`.
 
 #### Swift
@@ -500,12 +500,97 @@ You can also provide functions that will be called when members are either added
 let onMemberChange = { (member: PusherPresenceChannelMember) in
     print(member)
 }
-let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberChange, onMemberRemoved: onMemberChange)
+
+let chan = pusher.subscribeToPresenceChannel("presence-channel", onMemberAdded: onMemberChange, onMemberRemoved: onMemberChange)
+```
+
+#### Objective-C
+```objc
+void (^onMemberChange)(PusherPresenceChannelMember*) = ^void (PusherPresenceChannelMember *member) {
+    NSLog(@"%@", member);
+};
+
+PusherChannel *myPresenceChannel = [pusher subscribeWithChannelName:@"presence-my-channel" onMemberAdded:onMemberChange onMemberRemoved:onMemberChange];
+```
+
+**Note**: The `members` and `myId` properties of `PusherPresenceChannel` objects (and functions that get the value of these properties) will only be set once subscription to the channel has succeeded.
+
+The easiest way to find out when a channel has been successfully susbcribed to is to bind to the event named `pusher:subscription_succeeded` on the channel you're interested in. It would look something like this:
+
+#### Swift
+```swift
+let pusher = Pusher(key: "YOUR_APP_KEY")
+
+let chan = pusher.subscribeToPresenceChannel("presence-channel")
+
+let _ = chan.bind(eventName: "pusher:subscription_succeeded", callback: { data in
+    print("Subscribed!")
+    print("I can now access myId: \(chan.myId)")
+    print("And here are the channel members: \(chan.members)")
+})
+```
+
+#### Objective-C
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherPresenceChannel *chan = [pusher subscribeToPresenceChannelWithChannelName:@"presence-channel"];
+
+[chan bindWithEventName:@"pusher:subscription_succeeded" callback: ^void (NSDictionary *data) {
+    NSLog(@"Subscribed!");
+    NSLog(@"I can now access myId: %@", chan.myId);
+    NSLog(@"And here are my channel members: %@", chan.members);
+}];
+```
+
+You can also be notified of a successfull subscription by using the `subscriptionDidSucceed` delegate method on the `PusherConnection` object.
+
+Here is an example of using the connection delegate:
+
+#### Swift
+```swift
+class DummyDelegate: PusherConnectionDelegate {
+    func subscriptionDidSucceed(channelName: String) {
+        if channelName == "presence-channel" {
+            if let presChan = pusher.connection.channels.findPresence(channelName) {
+                // in here you can now have access to the channel's members and myId properties
+                print(presChan.members)
+                print(presChan.myId)
+            }
+        }
+    }
+}
+
+let pusher = Pusher(key: "YOUR_APP_KEY")
+pusher.connection.delegate = DummyDelegate()
+let chan = pusher.subscribeToPresenceChannel("presence-channel")
+```
+
+#### Objective-C
+```objc
+@implementation DummyDelegate
+
+- (void)subscriptionDidSucceedWithChannelName:(NSString *)channelName {
+    if ([channelName isEqual: @"presence-channel"]) {
+        PusherPresenceChannel *presChan = [self.client.connection.channels findPresenceWithName:@"presence-channel"];
+        NSLog(@"%@", [presChan members]);
+        NSLog(@"%@", [presChan myId]);
+    }
+}
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    // ...
+
+    Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+    pusher.connection.delegate = [[DummyDelegate alloc] init];
+    PusherChannel *chan = [pusher subscribeToPresenceChannelWithChannelName:@"presence-channel"];
 ```
 
 Note that both private and presence channels require the user to be authenticated in order to subscribe to the channel. This authentication can either happen inside the library, if you configured your Pusher object with your app's secret, or an authentication request is made to an authentication endpoint that you provide, again when instantiaing your Pusher object.
 
 We recommend that you use an authentication endpoint over including your app's secret in your app in the vast majority of use cases. If you are completely certain that there's no risk to you including your app's secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.
+
 
 ## Binding to events
 

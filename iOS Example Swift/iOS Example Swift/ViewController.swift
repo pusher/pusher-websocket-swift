@@ -46,7 +46,7 @@ class ViewController: UIViewController, PusherConnectionDelegate {
 
         let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
-        let _ = chan.bind(eventName: "test-event", callback: { (data: Any?) -> Void in
+        let _ = chan.bind(eventName: "test-event", callback: { data in
             print(data)
             let _ = self.pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 

@@ -97,4 +97,16 @@ open class PusherChannels: NSObject {
     public func find(name: String) -> PusherChannel? {
         return self.channels[name]
     }
+
+    /**
+        Return the PusherPresenceChannel with the given channelName from the channels list, if it exists
+
+        - parameter name: The name of the presence channel to return
+
+        - returns: A PusherPresenceChannel instance, if a channel with the given name existed,
+                   otherwise nil
+    */
+    public func findPresence(name: String) -> PusherPresenceChannel? {
+        return self.channels[name] as? PusherPresenceChannel
+    }
 }
