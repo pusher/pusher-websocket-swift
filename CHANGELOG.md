@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0
+
+* Authentication requests that result in any status code other that 200 or 201 are now treated as failures (previously any 2xx status code was treated as a success)
+* Add a `findPresence` function to the `PusherPresenceChannel` class
+* Make docs for working with presence channels much clearer
+
 ## 3.1.0
 
 * Fix bug in NativePusher where subscription modification requests would fail but not call the appropriate branch of the `guard` statement
