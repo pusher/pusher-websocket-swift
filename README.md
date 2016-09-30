@@ -22,11 +22,13 @@ What else would you want? Head over to the example app [ViewController.swift](ht
   * [Connection delegate](#connection-delegate)
   * [Reconnection](#reconnection)
 * [Subscribing to channels](#subscribing)
+  * [Public channels](#public-channels)
+  * [Private channels](#private-channels)
+  * [Presence channels](#presence-channels)
 * [Binding to events](#binding-to-events)
   * [Globally](#global-events)
   * [Per-channel](#per-channel-events)
   * [Receiving errors](#receiving-errors)
-* [Presence channel specifics](#presence-channel-specifics)
 * [Push notifications](#push-notifications)
   * [Pusher delegate](#pusher-delegate)
 * [Testing](#testing)
@@ -465,6 +467,8 @@ let myPrivateChannel = pusher.subscribe("private-my-channel")
 PusherChannel *myPrivateChannel = [pusher subscribeWithChannelName:@"private-my-channel"];
 ```
 
+Subscribing to private channels involves the client being authenticated. See the [Configuration](#configuration) section for the authenticated channel example for more information.
+
 ### Presence channels
 
 Presence channels are channels whose names are prefixed by `presence-`.
@@ -740,59 +744,6 @@ NSString *callbackId = [chan bindWithEventName:@"new-price" callback:^void (NSDi
 ```
 
 You can unbind from events at both the global and per channel level. For both objects you also have the option of calling `unbindAll`, which, as you can guess, will unbind all eventHandlers on the object.
-
-
-## Presence channel specifics
-
-Presence channels have some extra properties and functions available to them. In particular you can access the members who are subscribed to the channel by calling `members` on the channel object, as below.
-
-#### Swift
-```swift
-let chan = pusher.subscribe("presence-channel")
-
-print(chan.members)
-```
-
-#### Objective-C
-```objc
-PusherPresenceChannel *presChanExplicit = [pusher subscribeToPresenceChannelWithChannelName:@"presence-explicit"];
-
-NSArray *members = [presChanExplicit members];
-```
-
-You can also search for specific members in the channel by calling `findMember` and providing it with a user id string.
-
-#### Swift
-```swift
-let chan = pusher.subscribe("presence-channel")
-let member = chan.findMember(userId: "12345")
-
-print(member)
-```
-
-#### Objective-C
-```objc
-PusherPresenceChannel *presChanExplicit = [pusher subscribeToPresenceChannelWithChannelName:@"presence-explicit"];
-
-PusherPresenceChannelMember *me = [presChanExplicit findMemberWithUserId:@"12345"];
-```
-
-As a special case of `findMember` you can call `me` on the channel to get the member object of the subscribed client.
-
-#### Swift
-```swift
-let chan = pusher.subscribeToPresenceChannel(channelName: "presence-channel")
-let me = chan.me()
-
-print(me)
-```
-
-#### Objective-C
-```objc
-PusherPresenceChannel *presChanExplicit = [pusher subscribeToPresenceChannelWithChannelName:@"presence-explicit"];
-
-PusherPresenceChannelMember *me = [presChanExplicit me];
-```
 
 
 ## Push notifications
