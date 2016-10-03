@@ -609,7 +609,7 @@ You can attach behaviour to these events regardless of the channel the event is 
 let pusher = Pusher(key: "YOUR_APP_KEY")
 pusher.subscribe("my-channel")
 
-pusher.bind(callback: { (data: AnyObject?) -> Void in
+pusher.bind(callback: { (data: Any?) -> Void in
     if let data = data as? [String : AnyObject] {
         if let commenter = data["commenter"] as? String, message = data["message"] as? String {
             print("\(commenter) wrote \(message)")
@@ -640,7 +640,7 @@ These are bound to a specific channel, and mean that you can reuse event names i
 let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
-myChannel.bind(eventName: "new-price", callback: { (data: AnyObject?) -> Void in
+myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
     if let data = data as? [String : AnyObject] {
         if let price = data["price"] as? String, company = data["company"] as? String {
             print("\(company) is now priced at \(price)")
@@ -668,7 +668,7 @@ Errors are sent to the client for which they are relevant with an event name of 
 
 #### Swift
 ```swift
-pusher.bind({ (message: AnyObject?) in
+pusher.bind({ (message: Any?) in
     if let message = message as? [String: AnyObject], eventName = message["event"] as? String where eventName == "pusher:error" {
         if let data = message["data"] as? [String: AnyObject], errorMessage = data["message"] as? String {
             print("Error message: \(errorMessage)")
@@ -724,7 +724,7 @@ You can remove previously-bound handlers from an object by using the `unbind` fu
 let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
-let eventHandlerId = myChannel.bind(eventName: "new-price", callback: { (data: AnyObject?) -> Void in
+let eventHandlerId = myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
   ...
 })
 
