@@ -13,18 +13,18 @@
 		331F37361D82CAB900AE2852 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 331F37341D82CAB900AE2852 /* Main.storyboard */; };
 		331F37381D82CAB900AE2852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 331F37371D82CAB900AE2852 /* Assets.xcassets */; };
 		331F373B1D82CAB900AE2852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 331F37391D82CAB900AE2852 /* LaunchScreen.storyboard */; };
-		331F37431D82E01F00AE2852 /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331F37421D82E01F00AE2852 /* PusherSwift.framework */; };
-		331F37441D82E01F00AE2852 /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 331F37421D82E01F00AE2852 /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		339CC9B51DAB8D6C00E7F97B /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 339CC9B41DAB8D6C00E7F97B /* PusherSwift.framework */; };
+		339CC9B61DAB8D6C00E7F97B /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 339CC9B41DAB8D6C00E7F97B /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		331F37451D82E01F00AE2852 /* Embed Frameworks */ = {
+		339CC9B71DAB8D6D00E7F97B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				331F37441D82E01F00AE2852 /* PusherSwift.framework in Embed Frameworks */,
+				339CC9B61DAB8D6C00E7F97B /* PusherSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,8 +42,8 @@
 		331F37371D82CAB900AE2852 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		331F373A1D82CAB900AE2852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		331F373C1D82CAB900AE2852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		331F37421D82E01F00AE2852 /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3330F8821D86A58900D8DC88 /* iOS Example Obj-C.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS Example Obj-C.entitlements"; sourceTree = "<group>"; };
+		339CC9B41DAB8D6C00E7F97B /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				331F37431D82E01F00AE2852 /* PusherSwift.framework in Frameworks */,
+				339CC9B51DAB8D6C00E7F97B /* PusherSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +103,7 @@
 		331F37461D82E02800AE2852 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				331F37421D82E01F00AE2852 /* PusherSwift.framework */,
+				339CC9B41DAB8D6C00E7F97B /* PusherSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -118,7 +118,7 @@
 				331F37241D82CAB900AE2852 /* Sources */,
 				331F37251D82CAB900AE2852 /* Frameworks */,
 				331F37261D82CAB900AE2852 /* Resources */,
-				331F37451D82E01F00AE2852 /* Embed Frameworks */,
+				339CC9B71DAB8D6D00E7F97B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
