@@ -114,7 +114,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
         - returns: A unique string that can be used to unbind the callback from the client
     */
-    open func bind(_ callback: @escaping (Any?) -> Void) -> String {
+    @discardableResult open func bind(_ callback: @escaping (Any?) -> Void) -> String {
         return self.connection.addCallbackToGlobalChannel(callback)
     }
 

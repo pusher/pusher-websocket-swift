@@ -62,7 +62,7 @@ open class PusherChannel: NSObject {
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
-    open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
+    @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         let randomId = UUID().uuidString
         let eventHandler = EventHandler(id: randomId, callback: callback)
         if self.eventHandlers[eventName] != nil {

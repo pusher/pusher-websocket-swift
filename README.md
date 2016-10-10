@@ -527,7 +527,7 @@ let pusher = Pusher(key: "YOUR_APP_KEY")
 
 let chan = pusher.subscribeToPresenceChannel("presence-channel")
 
-let _ = chan.bind(eventName: "pusher:subscription_succeeded", callback: { data in
+chan.bind(eventName: "pusher:subscription_succeeded", callback: { data in
     print("Subscribed!")
     print("I can now access myId: \(chan.myId)")
     print("And here are the channel members: \(chan.members)")
