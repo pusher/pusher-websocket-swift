@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print(userInfo)
+        completionHandler(.newData) // indicates that new data was successfully fetched
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
