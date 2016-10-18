@@ -59,7 +59,10 @@
     */
     open func setPusherAppKey(pusherAppKey: String) {
         self.pusherAppKey = pusherAppKey
-        requestQueue.run()
+
+        if self.clientId != nil {
+            requestQueue.run()
+        }
     }
 
     /**
@@ -195,8 +198,9 @@
     */
     private func modifySubscription(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
         guard pusherAppKey != nil, clientId != nil else {
-            self.socketConnection?.delegate?.debugLog?(message: "pusherAppKey \(pusherAppKey) or clientId \(clientId) not set - will retry in 1 second")
-            return self.requestQueue.retry(1)
+            self.socketConnection?.delegate?.debugLog?(message: "pusherAppKey \(pusherAppKey) or clientId \(clientId) not set - waiting for both to be set")
+            self.requestQueue.pauseAndResetCurrentTask()
+            return
         }
 
         self.socketConnection?.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
@@ -229,7 +233,7 @@
                         self.socketConnection?.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest: \(interest)")
                     }
 
-                    if self.failedRequestAttempts > self.maxFailedRequestAttempts {
+                    if self.failedRequestAttempts >= self.maxFailedRequestAttempts {
                         self.socketConnection?.delegate?.debugLog?(message: "Max number of failed native service requests reached")
 
                         self.requestQueue.paused = true

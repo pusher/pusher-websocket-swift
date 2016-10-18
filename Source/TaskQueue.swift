@@ -168,6 +168,14 @@ internal class TaskQueue: CustomStringConvertible {
         return tasks.count
     }
 
+    internal func pauseAndResetCurrentTask() {
+        paused = true
+
+        tasks.insert(currentTask!, at: 0)
+        currentTask = nil
+        self.numberOfActiveTasks -= 1
+    }
+
     internal func retry(_ delay: Double = 0) {
         assert(maximumNumberOfActiveTasks == 1, "You can only call retry() only on serial queues")
 
