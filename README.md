@@ -8,10 +8,16 @@
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
 
+Supports iOS, macOS, tvOS and watchOS!
+
 
 ## I just want to copy and paste some code to get me started
 
-What else would you want? Head over to the example app [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Swift/iOS%20Example%20Swift/ViewController.swift) to get some code you can drop in to get started. Or if you're using Objective-C, check out [ViewController.m](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Obj-C/iOS%20Example%20Obj-C/ViewController.m).
+What else would you want? Head over to one of our example apps:
+
+* For iOS with Swift, see [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Swift/iOS%20Example%20Swift/ViewController.swift)
+* For iOS with Objective-C, see [ViewController.m](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Obj-C/iOS%20Example%20Obj-C/ViewController.m)
+* For macOS with Swift, see [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/macOS%20Example%20Swift/macOS%20Example%20Swift/ViewController.swift)
 
 
 ## Table of Contents
@@ -527,7 +533,7 @@ let pusher = Pusher(key: "YOUR_APP_KEY")
 
 let chan = pusher.subscribeToPresenceChannel("presence-channel")
 
-chan.bind(eventName: "pusher:subscription_succeeded", callback: { data in
+let _ = chan.bind(eventName: "pusher:subscription_succeeded", callback: { data in
     print("Subscribed!")
     print("I can now access myId: \(chan.myId)")
     print("And here are the channel members: \(chan.members)")
@@ -748,7 +754,7 @@ You can unbind from events at both the global and per channel level. For both ob
 
 ## Push notifications
 
-Pusher also supports push notifications. Instances of your application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your application as push notifications. See [our guide to setting up push notifications for iOS](https://pusher.com/docs/push_notifications/ios) for a friendly introduction.
+Pusher also supports push notifications. Instances of your application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your application as push notifications. See [our guide to setting up APNs push notifications](https://pusher.com/docs/push_notifications/ios) for a friendly introduction.
 
 You should set up your app for push notifications in your `AppDelegate`. Start off your app in the usual way:
 
