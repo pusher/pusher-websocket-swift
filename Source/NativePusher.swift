@@ -6,8 +6,6 @@
 //
 //
 
-#if os(iOS)
-
 /**
     An interface to Pusher's native push notification service.
     The service is a pub-sub system for push notifications.
@@ -164,9 +162,9 @@
 
     /**
         Adds subscribe / unsubscribe tasts to task queue
- 
+
         - parameter interestName: the name of the interest you want to interact with
-        - parameter change:       specifies whether the change is to subscribe or 
+        - parameter change:       specifies whether the change is to subscribe or
                                   unsubscribe
 
     */
@@ -281,5 +279,3 @@ internal enum SubscriptionChange {
         }
     }
 }
-
-#endif
