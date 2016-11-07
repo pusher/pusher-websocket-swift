@@ -36,7 +36,7 @@ class AuthenticationTests: XCTestCase {
         pusher.connection.socket = socket
     }
 
-    func testSubscringToAPrivateChannelShouldMakeARequestToTheAuthEndpoint() {
+    func testSubscribingToAPrivateChannelShouldMakeARequestToTheAuthEndpoint() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
         let channelName = "private-test-channel"
 
@@ -59,7 +59,7 @@ class AuthenticationTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    func testSubscringToAPrivateChannelShouldCreateAuthSignatureInternally() {
+    func testSubscribingToAPrivateChannelShouldCreateAuthSignatureInternally() {
         let options = PusherClientOptions(
             authMethod: .inline(secret: "secret")
         )
@@ -73,7 +73,7 @@ class AuthenticationTests: XCTestCase {
         XCTAssertTrue(chan.subscribed, "the channel should be subscribed")
     }
 
-    func testSubscringToAPrivateChannelShouldFailIfNoAuthMethodIsProvided() {
+    func testSubscribingToAPrivateChannelShouldFailIfNoAuthMethodIsProvided() {
         pusher = Pusher(key: "key")
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
