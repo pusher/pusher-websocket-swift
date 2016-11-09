@@ -6,6 +6,8 @@
 //
 //
 
+#if os(iOS) || os(OSX)
+
 /**
     An interface to Pusher's native push notification service.
     The service is a pub-sub system for push notifications.
@@ -279,3 +281,5 @@ internal enum SubscriptionChange {
         }
     }
 }
+
+#endif

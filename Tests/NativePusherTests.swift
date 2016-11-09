@@ -6,7 +6,7 @@
 //
 //
 
-#if os(iOS)
+#if os(iOS) || os(OSX)
 
 @testable import PusherSwift
 import XCTest

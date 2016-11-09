@@ -16,7 +16,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     open weak var delegate: PusherDelegate? = nil {
         willSet {
             self.connection.delegate = newValue
-#if os(iOS)
+#if os(iOS) || os(OSX)
             self.nativePusher.delegate = newValue
 #endif
         }
