@@ -25,7 +25,6 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 #if os(iOS) || os(OSX)
     public let nativePusher: NativePusher
-#endif
 
     /**
         Initializes the Pusher client with an app key and any appropriate options.
@@ -46,6 +45,26 @@ let CLIENT_NAME = "pusher-websocket-swift"
         self.nativePusher = nativePusher
         nativePusher.setPusherAppKey(pusherAppKey: key)
     }
+#endif
+
+#if os(tvOS)
+    /**
+     Initializes the Pusher client with an app key and any appropriate options.
+
+     - parameter key:          The Pusher app key
+     - parameter options:      An optional collection of options
+
+     - returns: A new Pusher client instance
+     */
+    public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
+        self.key = key
+        let urlString = constructUrl(key: key, options: options)
+        let ws = WebSocket(url: URL(string: urlString)!)
+        connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
+        connection.createGlobalChannel()
+    }
+#endif
+
 
     /**
         Subscribes the client to a new channel
