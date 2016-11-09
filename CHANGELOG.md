@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.0.0
+
+* Made code required for push notifications available on macOS platform (i.e. push notifications work on macOS!)
+* Removed `PusherConnectionDelegate` and moved all delegate functions into unified `PusherDelegate`
+* Renamed most delegate functions:
+  - `didRegisterForPushNotifications(clientId: String)` -> `registeredForPushNotifications(clientId: String)`
+  - `didSubscribeToInterest(named name: String)` -> `subscribedToInterest(name: String)`
+  - `didUnsubscribeFromInterest(named name: String)` -> `unsubscribedFromInterest(name: String)`
+  - `connectionStateDidChange?(from: oldState, to: newState)` -> `changedConnectionState(from old: ConnectionState, to new: ConnectionState)`
+  - `subscriptionDidSucceed?(channelName: channelName)` -> `subscribedToChannel(name: String)`
+  - `subscriptionDidFail?(channelName: channelName, response: response, data: data, error: error)` -> `failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)`
+* Added macOS Example Swift project that contains an example macOS app to demo push notifications (requires setting up with your own Pusher app)
+* Update CryptoSwift and Starscream dependencies
+* Made `NativePusher` not be a singleton anymore
+* Fixed `taskQueue` crash (#96)
+
 ## 3.2.0
 
 * Authentication requests that result in any status code other that 200 or 201 are now treated as failures (previously any 2xx status code was treated as a success)
