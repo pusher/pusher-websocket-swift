@@ -10,13 +10,13 @@ import PusherSwift
 import XCTest
 
 class PusherConnectionDelegateTests: XCTestCase {
-    open class DummyDelegate: PusherConnectionDelegate {
+    open class DummyDelegate: PusherDelegate {
         open let stubber = StubberForMocks()
         open var socket: MockWebSocket? = nil
         open var ex: XCTestExpectation? = nil
         var testingChannelName: String? = nil
 
-        open func connectionStateDidChange(from old: ConnectionState, to new: ConnectionState) {
+        open func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
             let _ = stubber.stub(
                 functionName: "connectionChange",
                 args: [old, new],
@@ -30,14 +30,14 @@ class PusherConnectionDelegateTests: XCTestCase {
             }
         }
 
-        open func subscriptionDidSucceed(channelName: String) {
-            if let cName = testingChannelName, cName == channelName {
+        open func subscribedToChannel(name: String) {
+            if let cName = testingChannelName, cName == name {
                 ex!.fulfill()
             }
         }
 
-        open func subscriptionDidFail(channelName: String, response: URLResponse?, data: String?, error: NSError?) {
-            if let cName = testingChannelName, cName == channelName {
+        open func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
+            if let cName = testingChannelName, cName == name {
                 ex!.fulfill()
             }
         }
@@ -57,7 +57,7 @@ class PusherConnectionDelegateTests: XCTestCase {
         pusher.connection.socket = socket
         dummyDelegate = DummyDelegate()
         dummyDelegate.socket = socket
-        pusher.connection.delegate = dummyDelegate
+        pusher.delegate = dummyDelegate
     }
 
     func testConnectionStateChangeDelegateFunctionGetsCalledTwiceGoingFromDisconnectedToConnectingToConnected() {

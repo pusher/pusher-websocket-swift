@@ -10,12 +10,12 @@ import PusherSwift
 import XCTest
 
 class AuthenticationTests: XCTestCase {
-    class DummyDelegate: PusherConnectionDelegate {
+    class DummyDelegate: PusherDelegate {
         var ex: XCTestExpectation? = nil
         var testingChannelName: String? = nil
 
-        func subscriptionDidSucceed(channelName: String) {
-            if let cName = testingChannelName, cName == channelName {
+        func subscribedToChannel(name: String) {
+            if let cName = testingChannelName, cName == name {
                 ex!.fulfill()
             }
         }
@@ -43,7 +43,7 @@ class AuthenticationTests: XCTestCase {
         let dummyDelegate = DummyDelegate()
         dummyDelegate.ex = ex
         dummyDelegate.testingChannelName = channelName
-        pusher.connection.delegate = dummyDelegate
+        pusher.delegate = dummyDelegate
 
         if case .endpoint(authEndpoint: let authEndpoint) = pusher.connection.options.authMethod {
             let jsonData = "{\"auth\":\"testKey123:12345678gfder78ikjbg\"}".data(using: String.Encoding.utf8, allowLossyConversion: false)!
@@ -131,7 +131,7 @@ class AuthenticationTests: XCTestCase {
             authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder())
         )
         pusher = Pusher(key: "testKey123", options: options)
-        pusher.connection.delegate = dummyDelegate
+        pusher.delegate = dummyDelegate
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
 
