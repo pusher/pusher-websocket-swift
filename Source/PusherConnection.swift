@@ -22,7 +22,7 @@ open class PusherConnection: NSObject {
     open var reconnectAttemptsMax: Int? = 6
     open var reconnectAttempts: Int = 0
     open var maxReconnectGapInSeconds: Double? = nil
-    open weak var delegate: PusherConnectionDelegate?
+    open weak var delegate: PusherDelegate?
     internal var reconnectTimer: Timer? = nil
 
     open lazy var reachability: Reachability? = {
@@ -259,7 +259,7 @@ open class PusherConnection: NSObject {
     internal func updateConnectionState(to newState: ConnectionState) {
         let oldState = self.connectionState
         self.connectionState = newState
-        self.delegate?.connectionStateDidChange?(from: oldState, to: newState)
+        self.delegate?.changedConnectionState?(from: oldState, to: newState)
     }
 
     /**
@@ -287,7 +287,7 @@ open class PusherConnection: NSObject {
                 }
             }
 
-            self.delegate?.subscriptionDidSucceed?(channelName: channelName)
+            self.delegate?.subscribedToChannel?(name: channelName)
 
             while chan.unsentEvents.count > 0 {
                 if let pusherEvent = chan.unsentEvents.popLast() {
@@ -375,7 +375,7 @@ open class PusherConnection: NSObject {
             self.handleEvent(eventName: eventName, jsonObject: json as [String : AnyObject])
         }
 
-        self.delegate?.subscriptionDidFail?(channelName: channelName, response: response, data: data, error: error)
+        self.delegate?.failedToSubscribeToChannel?(name: channelName, response: response, data: data, error: error)
     }
 
     /**
