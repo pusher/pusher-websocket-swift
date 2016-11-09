@@ -62,7 +62,7 @@
     }];
 }
 
-- (void)connectionStateDidChangeFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
+- (void)changedConnectionStateFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
     NSLog(@"Old connection: %d, new connection: %d", (int)old, (int)new_);
 }
 
@@ -70,16 +70,16 @@
     NSLog(@"%@", message);
 }
 
-- (void)subscriptionDidSucceedWithChannelName:(NSString *)channelName {
-    NSLog(@"Subscribed to %@", channelName);
+- (void)subscribedToChannelWithName:(NSString *)name {
+    NSLog(@"Subscribed to channel %@", name);
 
-    if ([channelName isEqual: @"presence-test"]) {
+    if ([name isEqual: @"presence-test"]) {
         NSLog(@"%@", [(PusherPresenceChannel *)[self.client.connection.channels findWithName:@"presence-test"] members]);
     }
 }
 
-- (void)subscriptionDidFailWithChannelName:(NSString *)channelName response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error {
-
+- (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error {
+    NSLog(@"Failed to subscribe to channel %@", name);
 }
 
 - (void)didReceiveMemoryWarning {
