@@ -8,7 +8,7 @@
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
 
-Supports iOS, macOS (OS X), tvOS and watchOS!
+Supports iOS, macOS (OS X) and tvOS! (Hopefully watchOS soon!)
 
 
 ## I just want to copy and paste some code to get me started
@@ -862,8 +862,8 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 #### Swift on macOS
 ```swift
 func application(_ application: NSApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    self.pusher.nativePusher().register(deviceToken: deviceToken)
-    self.pusher.nativePusher().subscribe(interestName: "donuts")
+    self.pusher.nativePusher.register(deviceToken: deviceToken)
+    self.pusher.nativePusher.subscribe(interestName: "donuts")
 }
 ```
 
@@ -888,8 +888,8 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
 
 #### Swift on macOS
 ```swift
-func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
-    print("Received remote notification: " + userInfo.debugDescription)
+func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String: Any]) {
+    print("Received remote notification: \(userInfo.debugDescription)" )
 }
 ```
 
