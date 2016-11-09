@@ -14,12 +14,9 @@
     Notifications are published to "interests".
     Clients (such as this app instance) subscribe to those interests.
 
-    A per-app singleton of NativePusher is available via an instance of Pusher.
-    Use the Pusher.nativePusher() method to get access to it.
+    A per-app instance NativePusher is available via an instance of Pusher.
 */
 @objc open class NativePusher: NSObject {
-    static let sharedInstance = NativePusher()
-
     private static let PLATFORM_TYPE = "apns"
     private let CLIENT_API_V1_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"
     private let LIBRARY_NAME_AND_VERSION = "pusher-websocket-swift " + VERSION
@@ -28,28 +25,27 @@
     private var failedRequestAttempts: Int = 0
     private let maxFailedRequestAttempts: Int = 6
 
-    internal var socketConnection: PusherConnection? = nil
-    internal var pusher: Pusher? = nil
+    internal var delegate: PusherDelegate? = nil
 
-    private var requestQueue = TaskQueue()
+    internal var requestQueue = TaskQueue()
 
     /**
         Identifies a Pusher app, which should have push notifications enabled
-        and a certificate added for the push notifications to work.
+        and a certificate added for the push notifications to work
     */
     private var pusherAppKey: String? = nil
 
     /**
         The id issued to this app instance by Pusher, which is received upon
         registrations. It's used to identify a client when subscribe /
-        unsubscribe requests are made.
+        unsubscribe requests are made
     */
-    private var clientId: String? = nil
+    internal var clientId: String? = nil
 
     /**
-        Normal clients should access the shared instance via Pusher.nativePusher().
+        Normal clients should access the instance via Pusher.nativePusher()
     */
-    private override init() {}
+    internal override init() {}
 
     /**
         Sets the pusherAppKey property and then attempts to flush
@@ -124,22 +120,22 @@
                             if let clientIdJson = json["id"] {
                                 if let clientId = clientIdJson as? String {
                                     self.clientId = clientId
-                                    self.pusher?.delegate?.didRegisterForPushNotifications?(clientId: clientId)
-                                    self.socketConnection?.delegate?.debugLog?(message: "Successfully registered for push notifications and got clientId: \(clientId)")
+                                    self.delegate?.registeredForPushNotifications?(clientId: clientId)
+                                    self.delegate?.debugLog?(message: "Successfully registered for push notifications and got clientId: \(clientId)")
                                     self.requestQueue.run()
                                 } else {
-                                    self.socketConnection?.delegate?.debugLog?(message: "Value at \"id\" key in JSON response was not a string: \(json)")
+                                    self.delegate?.debugLog?(message: "Value at \"id\" key in JSON response was not a string: \(json)")
                                 }
                             } else {
-                                self.socketConnection?.delegate?.debugLog?(message: "No \"id\" key in JSON response: \(json)")
+                                self.delegate?.debugLog?(message: "No \"id\" key in JSON response: \(json)")
                             }
                         } else {
-                            self.socketConnection?.delegate?.debugLog?(message: "Could not parse body as JSON object: \(data)")
+                            self.delegate?.debugLog?(message: "Could not parse body as JSON object: \(data)")
                         }
             } else {
                 if data != nil && response != nil {
                     let responseBody = String(data: data!, encoding: .utf8)
-                    self.socketConnection?.delegate?.debugLog?(message: "Bad HTTP response: \(response!) with body: \(responseBody)")
+                    self.delegate?.debugLog?(message: "Bad HTTP response: \(response!) with body: \(responseBody)")
                 }
             }
         })
@@ -197,13 +193,13 @@
         - parameter callback:     Callback to be called upon success
     */
     private func modifySubscription(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
-        guard pusherAppKey != nil, clientId != nil else {
-            self.socketConnection?.delegate?.debugLog?(message: "pusherAppKey \(pusherAppKey) or clientId \(clientId) not set - waiting for both to be set")
+        guard pusherAppKey != nil && clientId != nil else {
+            self.delegate?.debugLog?(message: "pusherAppKey \(pusherAppKey) or clientId \(clientId) not set - waiting for both to be set")
             self.requestQueue.pauseAndResetCurrentTask()
             return
         }
 
-        self.socketConnection?.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
+        self.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
 
         let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId!)/interests/\(interest)"
         var request = URLRequest(url: URL(string: url)!)
@@ -225,20 +221,20 @@
                     self.failedRequestAttempts += 1
 
                     if error != nil {
-                        self.socketConnection?.delegate?.debugLog?(message: "Error when trying to modify subscription to interest: \(error?.localizedDescription)")
+                        self.delegate?.debugLog?(message: "Error when trying to modify subscription to interest: \(error?.localizedDescription)")
                     } else if data != nil && response != nil {
                         let responseBody = String(data: data!, encoding: .utf8)
-                        self.socketConnection?.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(responseBody)")
+                        self.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(responseBody)")
                     } else {
-                        self.socketConnection?.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest: \(interest)")
+                        self.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest: \(interest)")
                     }
 
                     if self.failedRequestAttempts >= self.maxFailedRequestAttempts {
-                        self.socketConnection?.delegate?.debugLog?(message: "Max number of failed native service requests reached")
+                        self.delegate?.debugLog?(message: "Max number of failed native service requests reached")
 
                         self.requestQueue.paused = true
                     } else {
-                        self.socketConnection?.delegate?.debugLog?(message: "Retrying subscription modification request for interest: \(interest)")
+                        self.delegate?.debugLog?(message: "Retrying subscription modification request for interest: \(interest)")
                         self.requestQueue.retry(Double(self.failedRequestAttempts * self.failedRequestAttempts))
                     }
 
@@ -247,12 +243,12 @@
 
                 switch change {
                 case .subscribe:
-                    self.pusher?.delegate?.didSubscribeToInterest?(named: interest)
+                    self.delegate?.subscribedToInterest?(name: interest)
                 case .unsubscribe:
-                    self.pusher?.delegate?.didUnsubscribeFromInterest?(named: interest)
+                    self.delegate?.unsubscribedFromInterest?(name: interest)
                 }
 
-                self.socketConnection?.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interest)")
+                self.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interest)")
 
                 self.failedRequestAttempts = 0
                 successCallback(nil)
