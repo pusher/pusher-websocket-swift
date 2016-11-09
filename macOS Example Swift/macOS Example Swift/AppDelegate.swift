@@ -4,14 +4,13 @@ import PusherSwift
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
 
-    let pusher = Pusher(key: "YOUR_APP_KEY")
+    let pusher = Pusher(key: "3c8c3054726b2e2ff514")
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         NSApp.registerForRemoteNotifications(matching: [NSRemoteNotificationType.alert, NSRemoteNotificationType.sound, NSRemoteNotificationType.badge]);
 
         self.pusher.delegate = self
-        self.pusher.connect()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -23,8 +22,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
     }
 
     func application(_ application: NSApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        self.pusher.nativePusher().register(deviceToken: deviceToken)
-        self.pusher.nativePusher().subscribe(interestName: "donuts")
+        self.pusher.nativePusher.register(deviceToken: deviceToken)
+        self.pusher.nativePusher.subscribe(interestName: "donuts")
     }
 
     func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
@@ -33,15 +32,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
 
     // MARK: PusherDelegate
 
-    func didRegisterForPushNotifications(clientId: String) {
-        print("Registered with Pusher with client_id: " + clientId)
+    func subscribedToInterest(name: String) {
+        print("Subscribed to interest: \(name)")
     }
 
-    func didSubscribeToInterest(named name: String) {
-        print("Subscribed to interest: " + name)
+    func unsubscribedFromInterest(name: String) {
+        print("Unsubscribed from interest: \(name)")
     }
 
-    func didUnsubscribeFromInterest(named name: String) {
-        print("Unsubscribed from interest: " + name)
+    func registeredForPushNotifications(clientId: String) {
+        print("Registered with Pusher for push notifications with clientId: \(clientId)")
+        
     }
 }

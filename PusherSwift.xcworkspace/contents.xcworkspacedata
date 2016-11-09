@@ -10,4 +10,7 @@
    <FileRef
       location = "group:iOS Example Obj-C/iOS Example Obj-C.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Source/../macOS Example Swift/macOS Example Swift.xcodeproj">
+   </FileRef>
 </Workspace>
