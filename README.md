@@ -300,27 +300,27 @@ pusher.connection.userDataFetcher = ^PusherPresenceChannelMember* () {
 
 ### Connection delegate
 
-There is a `PusherConnectionDelegate` that you can use to get access to connection-related information. These are the functions that you can optionally implement when conforming to the `PusherConnectionDelegate` protocol:
+There is a `PusherDelegate` that you can use to get notified of connection-related information. These are the functions that you can optionally implement when conforming to the `PusherDelegate` protocol:
 
 ```swift
-@objc optional func connectionStateDidChange(from old: ConnectionState, to new: ConnectionState)
+@objc optional func changedConnectionState(from old: ConnectionState, to new: ConnectionState)
+@objc optional func subscribedToChannel(name: String)
+@objc optional func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)
 @objc optional func debugLog(message: String)
-@objc optional func subscriptionDidSucceed(channelName: String)
-@objc optional func subscriptionDidFail(channelName: String, response: URLResponse?, data: String?, error: NSError?)
 ```
 
 The names of the functions largely give away what their purpose is but just for completeness:
 
-- `connectionStateDidChange` - use this if you want to use connection state changes to perform different actions / UI updates
+- `changedConnectionState` - use this if you want to use connection state changes to perform different actions / UI updates
+- `subscribedToChannel` - use this if you want to be informed of when a channel has successfully been subscribed to, which is useful if you want to perform actions that are only relevant after a subscription has succeeded, e.g. logging out the members of a presence channel
+- `failedToSubscribeToChannel` - use this if you want to be informed of a failed subscription attempt, which you could use, for exampple, to then attempt another subscription or make a call to a service you use to track errors
 - `debugLog` - use this if you want to log Pusher-related events, e.g. the underlying websocket receiving a message
-- `subscriptionDidSucceed` - use this if you want to be informed of when a channel has successfully been subscribed to, which is useful if you want to perform actions that are only relevant after a subscription has succeeded, e.g. logging out the members of a presence channel
-- `subscriptionDidFail` - use this if you want to be informed of a failed subscription attempt, which you could use, for exampple, to then attempt another subscription or make a call to a service you use to track errors
 
 Setting up a delegate looks like this:
 
 #### Swift
 ```swift
-class ViewController: UIViewController, PusherConnectionDelegate {
+class ViewController: UIViewController, PusherDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -349,8 +349,8 @@ Here are examples of setting up a class with functions for each of the optional 
 
 #### Swift
 ```swift
-class DummyDelegate: PusherConnectionDelegate {
-    func connectionStateDidChange(from old: ConnectionState, to new: ConnectionState) {
+class DummyDelegate: PusherDelegate {
+    func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
         // ...
     }
 
@@ -358,11 +358,11 @@ class DummyDelegate: PusherConnectionDelegate {
         // ...
     }
 
-    func subscriptionDidSucceed(channelName: String) {
+    func subscribedToChannel(name: String) {
         // ...
     }
 
-    func subscriptionDidFail(channelName: String, response: URLResponse?, data: String?, error: NSError?) {
+    func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
         // ...
     }
 }
@@ -370,18 +370,18 @@ class DummyDelegate: PusherConnectionDelegate {
 
 #### Objective-C
 ```objc
-@interface DummyDelegate : NSObject <PusherConnectionDelegate>
+@interface DummyDelegate : NSObject <PusherDelegate>
 
-- (void)connectionStateDidChangeFrom:(enum ConnectionState)old to:(enum ConnectionState)new_
+- (void)changedConnectionState:(enum ConnectionState)old to:(enum ConnectionState)new_
 - (void)debugLogWithMessage:(NSString *)message
-- (void)subscriptionDidSucceedWithChannelName:(NSString *)channelName
-- (void)subscriptionDidFailWithChannelName:(NSString *)channelName response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error
+- (void)subscribedToChannelWithName:(NSString *)name
+- (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error
 
 @end
 
 @implementation DummyDelegate
 
-- (void)connectionStateDidChangeFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
+- (void)changedConnectionState:(enum ConnectionState)old to:(enum ConnectionState)new_ {
     // ...
 }
 
@@ -389,11 +389,11 @@ class DummyDelegate: PusherConnectionDelegate {
     // ...
 }
 
-- (void)subscriptionDidSucceedWithChannelName:(NSString *)channelName {
+- (void)subscribedToChannelWithName:(NSString *)name {
     // ...
 }
 
-- (void)subscriptionDidFailWithChannelName:(NSString *)channelName response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error {
+- (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error {
     // ...
 }
 
@@ -546,14 +546,14 @@ PusherPresenceChannel *chan = [pusher subscribeToPresenceChannelWithChannelName:
 }];
 ```
 
-You can also be notified of a successfull subscription by using the `subscriptionDidSucceed` delegate method on the `PusherConnection` object.
+You can also be notified of a successfull subscription by using the `subscriptionDidSucceed` delegate method that is part of the `PusherDelegate` protocol.
 
-Here is an example of using the connection delegate:
+Here is an example of using the delegate:
 
 #### Swift
 ```swift
-class DummyDelegate: PusherConnectionDelegate {
-    func subscriptionDidSucceed(channelName: String) {
+class DummyDelegate: PusherDelegate {
+    func subscribedToChannel(name: String) {
         if channelName == "presence-channel" {
             if let presChan = pusher.connection.channels.findPresence(channelName) {
                 // in here you can now have access to the channel's members and myId properties
@@ -573,7 +573,7 @@ let chan = pusher.subscribeToPresenceChannel("presence-channel")
 ```objc
 @implementation DummyDelegate
 
-- (void)subscriptionDidSucceedWithChannelName:(NSString *)channelName {
+- (void)subscribedToChannelWithName:(NSString *)name {
     if ([channelName isEqual: @"presence-channel"]) {
         PusherPresenceChannel *presChan = [self.client.connection.channels findPresenceWithName:@"presence-channel"];
         NSLog(@"%@", [presChan members]);
@@ -813,8 +813,8 @@ Your app can now subscribe to interests. The following registers and subscribes 
 #### Swift
 ```swift
 func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    pusher.nativePusher().register(deviceToken: deviceToken)
-    pusher.nativePusher().subscribe(interestName: "donuts")
+    pusher.nativePusher.register(deviceToken: deviceToken)
+    pusher.nativePusher.subscribe(interestName: "donuts")
 }
 ```
 
@@ -848,7 +848,7 @@ If at a later point you wish to unsubscribe from an interest, this works in the 
 
 #### Swift
 ```swift
-pusher.nativePusher().unsubscribe(interestName: "donuts")
+pusher.nativePusher.unsubscribe(interestName: "donuts")
 ```
 
 #### Objective-C
@@ -861,19 +861,19 @@ For a complete example of a working app, see the [Example/](https://github.com/p
 
 ### Pusher delegate
 
-There is a `PusherDelegate` that you can use to get access to events that occur in relation to push notifications interactions. These are the functions that you can optionally implement when conforming to the `PusherDelegate` protocol:
+You can also implement some of the `PusherDelegate` functions to get access to events that occur in relation to push notifications interactions. These are the functions that you can optionally implement when conforming to the `PusherDelegate` protocol:
 
 ```swift
-@objc optional func didRegisterForPushNotifications(clientId: String)
-@objc optional func didSubscribeToInterest(named name: String)
-@objc optional func didUnsubscribeFromInterest(named name: String)
+@objc optional func registeredForPushNotifications(clientId: String)
+@objc optional func subscribedToInterest(name: String)
+@objc optional func unsubscribedFromInterest(name: String)
 ```
 
 Again, the names of the functions largely give away what their purpose is but just for completeness:
 
-- `didRegisterForPushNotifications` - use this if you want to know when a client has successfully registered with the Pusher Push Notifications service, or if you want access to the `clientId` that is returned upon successful registration
-- `didSubscribeToInterest` - use this if you want keep track of interests that are successfully subscribed to
-- `didUnsubscribeFromInterest` - use this if you want keep track of interests that are successfully unsubscribed from
+- `registeredForPushNotifications` - use this if you want to know when a client has successfully registered with the Pusher Push Notifications service, or if you want access to the `clientId` that is returned upon successful registration
+- `subscribedToInterest` - use this if you want keep track of interests that are successfully subscribed to
+- `unsubscribedFromInterest` - use this if you want keep track of interests that are successfully unsubscribed from
 
 Setting up a delegate looks like this:
 
@@ -904,7 +904,7 @@ class ViewController: UIViewController, PusherDelegate {
 }
 ```
 
-The process is identical to that of setting up a `PusherConnectionDelegate`. At some point in the future the `PusherDelegate` and `PusherConnectionDelegate` will likely be merged into the `PusherDelegate` in order to provide one unified delegate that can be used to get notified of Pusher-related events.
+The process is identical to that of setting up the `PusherDelegate` to receive notifications of connection-based events.
 
 
 ## Testing
