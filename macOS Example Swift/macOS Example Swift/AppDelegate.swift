@@ -1,10 +1,18 @@
+//
+//  AppDelegate.swift
+//  macOS Example Swift
+//
+//  Created by Hamilton Chapman on 09/11/2016.
+//  Copyright © 2016 Pusher. All rights reserved.
+//
+
 import Cocoa
 import PusherSwift
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
 
-    let pusher = Pusher(key: "3c8c3054726b2e2ff514")
+    let pusher = Pusher(key: "YOUR_APP_KEY")
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -42,6 +50,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
 
     func registeredForPushNotifications(clientId: String) {
         print("Registered with Pusher for push notifications with clientId: \(clientId)")
-        
+    }
+
+    func debugLog(message: String) {
+        print(message)
     }
 }
