@@ -8,10 +8,16 @@
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
 
+Supports iOS, macOS (OS X) and tvOS! (Hopefully watchOS soon!)
+
 
 ## I just want to copy and paste some code to get me started
 
-What else would you want? Head over to the example app [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Swift/iOS%20Example%20Swift/ViewController.swift) to get some code you can drop in to get started. Or if you're using Objective-C, check out [ViewController.m](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Obj-C/iOS%20Example%20Obj-C/ViewController.m).
+What else would you want? Head over to one of our example apps:
+
+* For iOS with Swift, see [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Swift/iOS%20Example%20Swift/ViewController.swift)
+* For iOS with Objective-C, see [ViewController.m](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Obj-C/iOS%20Example%20Obj-C/ViewController.m)
+* For macOS with Swift, see [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/macOS%20Example%20Swift/macOS%20Example%20Swift/ViewController.swift)
 
 
 ## Table of Contents
@@ -748,11 +754,13 @@ You can unbind from events at both the global and per channel level. For both ob
 
 ## Push notifications
 
-Pusher also supports push notifications. Instances of your application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your application as push notifications. See [our guide to setting up push notifications for iOS](https://pusher.com/docs/push_notifications/ios) for a friendly introduction.
+Pusher also supports push notifications. Instances of your application can register for push notifications and subscribe to "interests". Your server can then publish to those interests, which will be delivered to your application as push notifications. See [our guide to setting up APNs push notifications](https://pusher.com/docs/push_notifications/ios) for a friendly introduction.
 
-You should set up your app for push notifications in your `AppDelegate`. Start off your app in the usual way:
+### Initializing the Pusher object
 
-#### Swift
+You should set up your app for push notifications in your `AppDelegate`. The setup varies slightly depending on whether you're using Swift or Objective-C, and whether you're using iOS or macOS (OS X):
+
+#### Swift on iOS
 ```swift
 import PusherSwift
 import UserNotifications
@@ -763,7 +771,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ...
 ```
 
-#### Objective-C
+#### Objective-C on iOS
 ```objc
 #import "AppDelegate.h"
 @import UserNotifications;
@@ -776,9 +784,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ...
 ```
 
+#### Swift on macOS
+
+```swift
+import Cocoa
+import PusherSwift
+
+@NSApplicationMain
+class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
+    let pusher = Pusher(key: "YOUR_APP_KEY")
+    // ...
+```
+
+### Registering with APNs
+
 For your app to receive push notifications, it must first register with APNs. You should do this when the application finishes launching. Your app should register for all types of notification, like so:
 
-#### Swift
+#### Swift on iOS
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     let center = UNUserNotificationCenter.current()
@@ -791,7 +813,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-#### Objective-C
+#### Objective-C on iOS
 ```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
@@ -806,11 +828,21 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
+#### Swift on macOS
+
+```swift
+func applicationDidFinishLaunching(_ aNotification: Notification) {
+    NSApp.registerForRemoteNotifications(matching: [NSRemoteNotificationType.alert, NSRemoteNotificationType.sound, NSRemoteNotificationType.badge])
+}
+```
+
+### Receiving your APNs device token and registering with Pusher
+
 Next, APNs will respond with a device token identifying your app instance. Your app should then register with Pusher, passing along its device token.
 
 Your app can now subscribe to interests. The following registers and subscribes the app to the interest "donuts":
 
-#### Swift
+#### Swift on iOS
 ```swift
 func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     pusher.nativePusher.register(deviceToken: deviceToken)
@@ -818,7 +850,7 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 }
 ```
 
-#### Objective-C
+#### Objective-C on iOS
 ```objc
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"Registered for remote notifications; received device token");
@@ -827,22 +859,42 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 }
 ```
 
+#### Swift on macOS
+```swift
+func application(_ application: NSApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    self.pusher.nativePusher.register(deviceToken: deviceToken)
+    self.pusher.nativePusher.subscribe(interestName: "donuts")
+}
+```
+
+
+### Receiving push notifications
 
 When your server publishes a notification to the interest "donuts", it will get passed to your app. This happens as a call in your `AppDelegate` which you should listen to:
 
-#### Swift
+#### Swift on iOS
 ```swift
 func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
     print(userInfo)
 }
 ```
 
-#### Objective-C
+#### Objective-C on iOS
 ```objc
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Received remote notification: %@", userInfo);
 }
 ```
+
+#### Swift on macOS
+```swift
+func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String: Any]) {
+    print("Received remote notification: \(userInfo.debugDescription)" )
+}
+```
+
+
+### Unsubscribing from interests
 
 If at a later point you wish to unsubscribe from an interest, this works in the same way:
 

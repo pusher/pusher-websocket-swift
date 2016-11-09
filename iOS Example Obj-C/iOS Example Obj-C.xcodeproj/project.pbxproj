@@ -85,7 +85,6 @@
 				331F37341D82CAB900AE2852 /* Main.storyboard */,
 				331F37371D82CAB900AE2852 /* Assets.xcassets */,
 				331F37391D82CAB900AE2852 /* LaunchScreen.storyboard */,
-				331F373C1D82CAB900AE2852 /* Info.plist */,
 				331F372B1D82CAB900AE2852 /* Supporting Files */,
 			);
 			path = "iOS Example Obj-C";
@@ -94,6 +93,7 @@
 		331F372B1D82CAB900AE2852 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				331F373C1D82CAB900AE2852 /* Info.plist */,
 				331F372C1D82CAB900AE2852 /* main.m */,
 				3330F8821D86A58900D8DC88 /* iOS Example Obj-C.entitlements */,
 			);

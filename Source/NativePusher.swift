@@ -6,7 +6,7 @@
 //
 //
 
-#if os(iOS)
+#if os(iOS) || os(OSX)
 
 /**
     An interface to Pusher's native push notification service.
@@ -164,9 +164,9 @@
 
     /**
         Adds subscribe / unsubscribe tasts to task queue
- 
+
         - parameter interestName: the name of the interest you want to interact with
-        - parameter change:       specifies whether the change is to subscribe or 
+        - parameter change:       specifies whether the change is to subscribe or
                                   unsubscribe
 
     */
