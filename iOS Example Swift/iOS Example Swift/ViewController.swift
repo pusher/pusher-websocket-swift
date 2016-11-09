@@ -9,7 +9,7 @@
 import UIKit
 import PusherSwift
 
-class ViewController: UIViewController, PusherConnectionDelegate {
+class ViewController: UIViewController, PusherDelegate {
     var pusher: Pusher! = nil
 
     @IBAction func connectButton(_ sender: AnyObject) {
@@ -25,10 +25,10 @@ class ViewController: UIViewController, PusherConnectionDelegate {
 
         // Only use your secret here for testing or if you're sure that there's
         // no security risk
-        let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "YOUR_APP_SECRET"))
-        pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
+        let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "daef58559fdd0aba8b63"))
+        pusher = Pusher(key: "568d5a3851502158a022", options: pusherClientOptions)
 
-        pusher.connection.delegate = self
+        pusher.delegate = self
 
         pusher.connect()
 
@@ -61,15 +61,15 @@ class ViewController: UIViewController, PusherConnectionDelegate {
         chan.trigger(eventName: "client-test", data: ["test": "some value"])
     }
 
-    // PusherConnectionDelegate methods
+    // PusherDelegate methods
 
-    func connectionStateDidChange(from old: ConnectionState, to new: ConnectionState) {
+    func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
         // print the old and new connection states
         print("old: \(old.stringValue()) -> new: \(new.stringValue())")
     }
 
-    func subscriptionDidSucceed(channelName: String) {
-        print("Subscribed to \(channelName)")
+    func subscribedToChannel(name: String) {
+        print("Subscribed to \(name)")
     }
 
     func debugLog(message: String) {
