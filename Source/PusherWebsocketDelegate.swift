@@ -14,7 +14,7 @@ extension PusherConnection: WebSocketDelegate {
         - parameter ws:   The websocket that has received the message
         - parameter text: The message received over the websocket
     */
-    public func websocketDidReceiveMessage(_ ws: WebSocket, text: String) {
+    public func websocketDidReceiveMessage(socket ws: WebSocket, text: String) {
         self.delegate?.debugLog?(message: "[PUSHER DEBUG] websocketDidReceiveMessage \(text)")
         if let pusherPayloadObject = getPusherEventJSON(from: text), let eventName = pusherPayloadObject["event"] as? String {
             self.handleEvent(eventName: eventName, jsonObject: pusherPayloadObject)
@@ -29,7 +29,7 @@ extension PusherConnection: WebSocketDelegate {
         - parameter ws:    The websocket that disconnected
         - parameter error: The error, if one exists, when disconnected
     */
-    public func websocketDidDisconnect(_ ws: WebSocket, error: NSError?) {
+    public func websocketDidDisconnect(socket ws: WebSocket, error: NSError?) {
         // Handles setting channel subscriptions to unsubscribed wheter disconnection
         // is intentional or not
         if connectionState == .disconnecting || connectionState == .connected {
@@ -103,6 +103,6 @@ extension PusherConnection: WebSocketDelegate {
     }
 
 
-    public func websocketDidConnect(_ ws: WebSocket) {}
-    public func websocketDidReceiveData(_ ws: WebSocket, data: Data) {}
+    public func websocketDidConnect(socket ws: WebSocket) {}
+    public func websocketDidReceiveData(socket ws: WebSocket, data: Data) {}
 }

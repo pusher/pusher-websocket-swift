@@ -32,7 +32,7 @@ open class MockWebSocket: WebSocket {
             args: nil,
             functionToCall: {
                 if let delegate = self.delegate {
-                    delegate.websocketDidReceiveMessage(self, text: connectionEstablishedString)
+                    delegate.websocketDidReceiveMessage(socket: self, text: connectionEstablishedString)
                 } else {
                     print("Your socket delegate is nil")
                 }
@@ -40,12 +40,12 @@ open class MockWebSocket: WebSocket {
         )
     }
 
-    open override func disconnect(forceTimeout: TimeInterval? = nil) {
+    open override func disconnect(forceTimeout: TimeInterval? = nil, closeCode: UInt16 = CloseCode.normal.rawValue) {
         let _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
             functionToCall: {
-                self.delegate?.websocketDidDisconnect(self, error: nil)
+                self.delegate?.websocketDidDisconnect(socket: self, error: nil)
             }
         )
     }
@@ -56,7 +56,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"test-channel\",\"data\":\"{}\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"test-channel\",\"data\":\"{}\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["testkey123:6aae8814fabd5285245422096705abbed64ea59614648814ffb0bf2dc5d19168", "private-channel", "pusher:subscribe"]) {
@@ -64,7 +64,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-channel\",\"data\":\"{}\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-channel\",\"data\":\"{}\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["key:5ce61ee2b8594e22b66323913d7c7af9d8e815659365be3627733993f4ce3824", "presence-channel", "user_id", "45481.3166671", "pusher:subscribe"]) {
@@ -72,7 +72,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"46123.486095\\\"],\\\"hash\\\":{\\\"46123.486095\\\":null}}}\",\"channel\":\"presence-channel\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"46123.486095\\\"],\\\"hash\\\":{\\\"46123.486095\\\":null}}}\",\"channel\":\"presence-channel\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["testkey123:5ce61ee2b8594e22b66323913d7c7af9d8e815659365be3627733993f4ce3824", "presence-channel", "user_id", "45481.3166671", "pusher:subscribe"]) {
@@ -80,7 +80,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"46123.486095\\\"],\\\"hash\\\":{\\\"46123.486095\\\":null}}}\",\"channel\":\"presence-channel\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"46123.486095\\\"],\\\"hash\\\":{\\\"46123.486095\\\":null}}}\",\"channel\":\"presence-channel\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["key:e1d0947a10d6ff1a25990798910b2505687bb096e3e8b6c97eef02c6b1abb4c7", "private-channel", "pusher:subscribe"]) {
@@ -88,7 +88,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-channel\",\"data\":\"{}\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-channel\",\"data\":\"{}\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["data", "testing client events", "private-channel", "client-test-event"]) {
@@ -102,7 +102,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-test-channel\",\"data\":\"{}\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-test-channel\",\"data\":\"{}\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["key:0d0d2e7c2cd967246d808180ef0f115dad51979e48cac9ad203928141f9e6a6f", "private-test-channel", "pusher:subscribe"]) {
@@ -110,7 +110,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-test-channel\",\"data\":\"{}\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-test-channel\",\"data\":\"{}\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["test-channel", "pusher:unsubscribe"]) {
@@ -124,7 +124,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{\\\"twitter\\\":\\\"hamchapman\\\"}}}}\",\"channel\":\"presence-test\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{\\\"twitter\\\":\\\"hamchapman\\\"}}}}\",\"channel\":\"presence-test\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["key:c2b53f001321bc088814f210fb63c259b464f590890eee2dde6387ea9b469a30", "presence-channel", "user_id", "123", "pusher:subscribe"]) {
@@ -132,7 +132,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{}}}}\",\"channel\":\"presence-channel\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{}}}}\",\"channel\":\"presence-channel\"}")
                 }
             )
         } else if stringContainsElements(string, elements: ["pusher:subscribe", "key:dd2885ee6dc6f5c964d8e3c720980397db50bf8f528e0630d4208bff80ee23f0", "presence-channel", "friends", "0", "user_id", "123"]) {
@@ -140,7 +140,7 @@ open class MockWebSocket: WebSocket {
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
-                    self.delegate?.websocketDidReceiveMessage(self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{\\\"friends\\\":0}}}}\",\"channel\":\"presence-channel\"}")
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{\\\"friends\\\":0}}}}\",\"channel\":\"presence-channel\"}")
                 }
             )
         } else {

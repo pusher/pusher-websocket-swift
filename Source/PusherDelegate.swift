@@ -7,7 +7,13 @@
 //
 
 @objc public protocol PusherDelegate: class {
-    @objc optional func didRegisterForPushNotifications(clientId: String)
-    @objc optional func didSubscribeToInterest(named name: String)
-    @objc optional func didUnsubscribeFromInterest(named name: String)
+    @objc optional func debugLog(message: String)
+
+    @objc optional func registeredForPushNotifications(clientId: String)
+    @objc optional func subscribedToInterest(name: String)
+    @objc optional func unsubscribedFromInterest(name: String)
+
+    @objc optional func changedConnectionState(from old: ConnectionState, to new: ConnectionState)
+    @objc optional func subscribedToChannel(name: String)
+    @objc optional func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)
 }

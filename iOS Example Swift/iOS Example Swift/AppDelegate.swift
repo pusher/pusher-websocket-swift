@@ -11,7 +11,7 @@ import PusherSwift
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, PusherDelegate {
 
     var window: UIWindow?
     let pusher = Pusher(key: "YOUR_APP_KEY")
@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        pusher.nativePusher().register(deviceToken: deviceToken)
-        pusher.nativePusher().subscribe(interestName: "donuts")
+        pusher.nativePusher.register(deviceToken: deviceToken)
+        pusher.nativePusher.subscribe(interestName: "donuts")
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -60,5 +60,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+
+    // PusherDelegate functions
+
+    func subscribedToInterest(name: String) {
+        print("Subscribed to interest: \(name)")
+    }
+
+    func registeredForPushNotifications(clientId: String) {
+        print("Registered with Pusher for push notifications with clientId: \(clientId)")
+
     }
 }

@@ -29,9 +29,9 @@ class PusherConnectionTests: XCTestCase {
     }
 
     func testSettingADelegate() {
-        class DummyDelegate: PusherConnectionDelegate {}
+        class DummyDelegate: PusherDelegate {}
         let dummyDelegate = DummyDelegate()
-        pusher.connection.delegate = dummyDelegate
+        pusher.delegate = dummyDelegate
         XCTAssertNotNil(pusher.connection.delegate, "delegate should not be nil")
     }
 
