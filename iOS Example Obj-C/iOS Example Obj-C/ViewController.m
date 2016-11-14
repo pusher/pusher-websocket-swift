@@ -8,6 +8,25 @@
 
 #import "ViewController.h"
 
+@interface AuthRequestBuilder : NSObject <AuthRequestBuilderProtocol>
+
+- (NSMutableURLRequest*)requestForSocketID:(NSString *)socketID channel:(PusherChannel *)channel;
+
+@end
+
+@implementation AuthRequestBuilder
+
+- (NSMutableURLRequest*)requestForSocketID:(NSString *)socketID channel:(PusherChannel *)channel {
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: [[NSURL alloc] initWithString:@"http://localhost:9292/pusher/auth"]];
+    NSString *dataStr = [NSString stringWithFormat: @"socket_id=%@&channel_name=%@", socketID, [channel name]];
+    NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = data;
+    request.HTTPMethod = @"POST";
+    return request;
+}
+
+@end
+
 @interface ViewController ()
 
 @end
@@ -19,6 +38,10 @@
 
     OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"YOUR_APP_SECRET"];
     PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
+
+    // Use this if you want to try out your auth Endpoint
+//    OCAuthMethod *endpointAuthMethod = [[OCAuthMethod alloc] initWithAuthRequestBuilder:[[AuthRequestBuilder alloc] init]];
+//    PusherClientOptions *optionsWithEndpoint = [[PusherClientOptions alloc] initWithAuthMethod:endpointAuthMethod];
 
     self.client = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
     self.client.connection.delegate = self;
@@ -88,3 +111,4 @@
 }
 
 @end
+

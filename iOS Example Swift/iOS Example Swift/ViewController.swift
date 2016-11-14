@@ -25,8 +25,14 @@ class ViewController: UIViewController, PusherDelegate {
 
         // Only use your secret here for testing or if you're sure that there's
         // no security risk
-        let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "daef58559fdd0aba8b63"))
-        pusher = Pusher(key: "568d5a3851502158a022", options: pusherClientOptions)
+        let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "YOUR_APP_SECRET"))
+        pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
+
+        // Use this if you want to try out your auth endpoint
+//        let optionsWithEndpoint = PusherClientOptions(
+//            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder())
+//        )
+//        pusher = Pusher(key: "YOUR_APP_KEY", options: optionsWithEndpoint)
 
         pusher.delegate = self
 
@@ -77,3 +83,11 @@ class ViewController: UIViewController, PusherDelegate {
     }
 }
 
+class AuthRequestBuilder: AuthRequestBuilderProtocol {
+    func requestFor(socketID: String, channel: PusherChannel) -> URLRequest? {
+        var request = URLRequest(url: URL(string: "http://localhost:9292/pusher/auth")!)
+        request.httpMethod = "POST"
+        request.httpBody = "socket_id=\(socketID)&channel_name=\(channel.name)".data(using: String.Encoding.utf8)
+        return request
+    }
+}

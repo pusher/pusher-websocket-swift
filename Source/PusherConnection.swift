@@ -524,7 +524,7 @@ open class PusherConnection: NSObject {
 
                     case .authRequestBuilder(authRequestBuilder: let builder):
                         if let request = builder.requestFor(socketID: socketID, channel: channel) {
-                            sendAuthorisationRequest(request: request as URLRequest, channel: channel, callback: callback)
+                            sendAuthorisationRequest(request: request, channel: channel, callback: callback)
 
                             return true
                         } else {
@@ -613,7 +613,7 @@ open class PusherConnection: NSObject {
         - parameter socketID: The socketId of the connection's websocket
         - parameter channel:  The PusherChannel to authenticate subsciption for
 
-        - returns: NSURLRequest object to be used by the function making the auth request
+        - returns: URLRequest object to be used by the function making the auth request
     */
     fileprivate func requestForAuthValue(from endpoint: String, socketID: String, channel: PusherChannel) -> URLRequest {
         var request = URLRequest(url: URL(string: endpoint)!)

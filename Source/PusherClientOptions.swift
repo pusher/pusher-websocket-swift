@@ -19,7 +19,7 @@ public enum PusherHost {
 }
 
 @objc public protocol AuthRequestBuilderProtocol {
-    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
+    func requestFor(socketID: String, channel: PusherChannel) -> URLRequest?
 }
 
 public enum AuthMethod {
