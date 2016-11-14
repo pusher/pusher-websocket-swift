@@ -523,7 +523,11 @@ open class PusherConnection: NSObject {
                         return true
 
                     case .authRequestBuilder(authRequestBuilder: let builder):
-                        if let request = builder.requestFor(socketID: socketID, channel: channel) {
+                        if let request = builder.requestFor?(socketID: socketID, channel: channel) {
+                            sendAuthorisationRequest(request: request as URLRequest, channel: channel, callback: callback)
+
+                            return true
+                        } else if let request = builder.requestFor?(socketID: socketID, channelName: channel.name) {
                             sendAuthorisationRequest(request: request, channel: channel, callback: callback)
 
                             return true
