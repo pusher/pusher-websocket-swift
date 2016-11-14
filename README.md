@@ -130,6 +130,9 @@ This is the `AuthRequestBuilderProtocol` definition:
 
 ```swift
 public protocol AuthRequestBuilderProtocol {
+    func requestFor(socketID: String, channelName: String) -> URLRequest?
+
+    // DEPRECATED
     func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
 }
 ```
@@ -215,8 +218,8 @@ Authenticated channel example:
 #### Swift
 ```swift
 class AuthRequestBuilder: AuthRequestBuilderProtocol {
-    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest? {
-        let request = NSMutableURLRequest(url: URL(string: "http://localhost:9292/builder")!)
+    func requestFor(socketID: String, channelName: String) -> URLRequest? {
+        var request = URLRequest(url: URL(string: "http://localhost:9292/builder")!)
         request.httpMethod = "POST"
         request.httpBody = "socket_id=\(socketID)&channel_name=\(channel.name)".data(using: String.Encoding.utf8)
         request.addValue("myToken", forHTTPHeaderField: "Authorization")
@@ -237,19 +240,24 @@ let pusher = Pusher(
 ```objc
 @interface AuthRequestBuilder : NSObject <AuthRequestBuilderProtocol>
 
-- (NSMutableURLRequest*)requestForSocketID:(NSString *)socketID channel:(PusherChannel *)channel;
+- (NSURLRequest *)requestForSocketID:(NSString *)socketID channelName:(NSString *)channelName;
 
 @end
 
 @implementation AuthRequestBuilder
 
-- (NSMutableURLRequest*)requestForSocketID:(NSString *)socketID channel:(PusherChannel *)channel {
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: [[NSURL alloc] initWithString:@"http://localhost:9292/builder"]];
-    NSString *dataStr = [NSString stringWithFormat: @"socket_id=%@&channel_name=%@", socketID, [channel name]];
+- (NSURLRequest *)requestForSocketID:(NSString *)socketID channelName:(NSString *)channelName {
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:@"http://localhost:9292/pusher/auth"]];
+    NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL: [[NSURL alloc] initWithString:@"http://localhost:9292/pusher/auth"]];
+
+    NSString *dataStr = [NSString stringWithFormat: @"socket_id=%@&channel_name=%@", socketID, channelName];
     NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
-    request.HTTPBody = data;
-    request.HTTPMethod = @"POST";
-    [request addValue:@"myToken" forHTTPHeaderField:@"Authorization"];
+    mutableRequest.HTTPBody = data;
+    mutableRequest.HTTPMethod = @"POST";
+    [mutableRequest addValue:@"myToken" forHTTPHeaderField:@"Authorization"];
+
+    request = [mutableRequest copy];
+
     return request;
 }
 
