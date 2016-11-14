@@ -110,7 +110,7 @@ open class PusherChannel: NSObject {
     */
     open func handleEvent(name: String, data: String) {
         if let eventHandlerArray = self.eventHandlers[name] {
-            let jsonize = connection?.options.attemptToReturnJSONObject ?? false
+            let jsonize = connection?.options.attemptToReturnJSONObject ?? true
 
             for eventHandler in eventHandlerArray {
                 eventHandler.callback(jsonize ? connection?.getEventDataJSON(from: data) : data)
