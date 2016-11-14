@@ -1,8 +1,14 @@
 # Changelog
 
+## 4.0.1
+
+* Fixed memory leak issues with `PusherConnection` and `PusherDelegate` ([@anlaital](https://github.com/anlaital))
+* Deprecated `requestFor` in `AuthRequestBuilderProtocol` that returns `NSMutableURLRequest?`
+* Added `requestFor` in `AuthRequestBuilderProtocol` that takes a `channelName` `String` instead of a `PusherChannel` instance, and returns `URLRequest?` ([@Noobish1](https://github.com/Noobish1))
+
 ## 4.0.0
 
-* Made code required for push notifications available on macOS platform (i.e. push notifications work on macOS!)
+* Made code required for push notifications available on macOS platform (i.e. push notifications work on macOS!) ([@jameshfisher](https://github.com/jameshfisher))
 * Removed `PusherConnectionDelegate` and moved all delegate functions into unified `PusherDelegate`
 * Renamed most delegate functions:
   - `didRegisterForPushNotifications(clientId: String)` -> `registeredForPushNotifications(clientId: String)`
