@@ -105,6 +105,11 @@ extension PusherConnection: WebSocketDelegate {
         reconnectAttempts += 1
     }
 
+    /**
+        Delegate method called when a websocket connected
+
+        - parameter ws:    The websocket that connected
+    */
     public func websocketDidConnect(socket ws: WebSocket) {
         self.socketConnected = true
     }

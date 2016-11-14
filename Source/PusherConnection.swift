@@ -132,7 +132,7 @@ open class PusherConnection: NSObject {
         - parameter channelName: The name of the channel
     */
     internal func unsubscribe(channelName: String) {
-        if let chan = self.channels.find(name: channelName) , chan.subscribed {
+        if let chan = self.channels.find(name: channelName), chan.subscribed {
             self.sendEvent(event: "pusher:unsubscribe",
                 data: [
                     "channel": channelName

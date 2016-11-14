@@ -34,7 +34,7 @@
 
 internal class TaskQueue: CustomStringConvertible {
     public typealias ClosureNoResultNext = () -> Void
-    public typealias ClosureWithResultNext = (Any? , @escaping (Any?) -> Void) -> Void
+    public typealias ClosureWithResultNext = (Any?, @escaping (Any?) -> Void) -> Void
 
     internal var tasks = [ClosureWithResultNext]()
     internal lazy var completions = [ClosureNoResultNext]()

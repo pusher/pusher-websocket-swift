@@ -49,13 +49,13 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
 #if os(tvOS)
     /**
-     Initializes the Pusher client with an app key and any appropriate options.
+        Initializes the Pusher client with an app key and any appropriate options.
 
-     - parameter key:          The Pusher app key
-     - parameter options:      An optional collection of options
+        - parameter key:          The Pusher app key
+        - parameter options:      An optional collection of options
 
-     - returns: A new Pusher client instance
-     */
+        - returns: A new Pusher client instance
+    */
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
         self.key = key
         let urlString = constructUrl(key: key, options: options)
@@ -76,7 +76,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
                                      member who has just left the presence channel
 
         - returns: A new PusherChannel instance
-     */
+    */
     open func subscribe(
         _ channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
