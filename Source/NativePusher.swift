@@ -25,7 +25,7 @@
     private var failedRequestAttempts: Int = 0
     private let maxFailedRequestAttempts: Int = 6
 
-    internal var delegate: PusherDelegate? = nil
+    internal weak var delegate: PusherDelegate? = nil
 
     internal var requestQueue = TaskQueue()
 

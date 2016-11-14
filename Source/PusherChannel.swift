@@ -34,7 +34,7 @@ open class PusherChannel: NSObject {
     open var eventHandlers: [String: [EventHandler]] = [:]
     open var subscribed = false
     open let name: String
-    open let connection: PusherConnection
+    open weak var connection: PusherConnection?
     open var unsentEvents = [PusherEvent]()
     open let type: PusherChannelType
 
@@ -110,10 +110,10 @@ open class PusherChannel: NSObject {
     */
     open func handleEvent(name: String, data: String) {
         if let eventHandlerArray = self.eventHandlers[name] {
-            let jsonize = connection.options.attemptToReturnJSONObject
+            let jsonize = connection?.options.attemptToReturnJSONObject ?? false
 
             for eventHandler in eventHandlerArray {
-                eventHandler.callback(jsonize ? connection.getEventDataJSON(from: data) : data)
+                eventHandler.callback(jsonize ? connection?.getEventDataJSON(from: data) : data)
             }
         }
     }
@@ -127,7 +127,7 @@ open class PusherChannel: NSObject {
     */
     open func trigger(eventName: String, data: Any) {
         if subscribed {
-            self.connection.sendEvent(event: eventName, data: data, channel: self)
+            connection?.sendEvent(event: eventName, data: data, channel: self)
         } else {
             unsentEvents.insert(PusherEvent(name: eventName, data: data), at: 0)
         }
