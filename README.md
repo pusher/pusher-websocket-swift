@@ -17,7 +17,7 @@ What else would you want? Head over to one of our example apps:
 
 * For iOS with Swift, see [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Swift/iOS%20Example%20Swift/ViewController.swift)
 * For iOS with Objective-C, see [ViewController.m](https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Obj-C/iOS%20Example%20Obj-C/ViewController.m)
-* For macOS with Swift, see [ViewController.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/macOS%20Example%20Swift/macOS%20Example%20Swift/ViewController.swift)
+* For macOS with Swift, see [AppDelegate.swift](https://github.com/pusher/pusher-websocket-swift/blob/master/macOS%20Example%20Swift/macOS%20Example%20Swift/AppDelegate.swift)
 
 
 ## Table of Contents
