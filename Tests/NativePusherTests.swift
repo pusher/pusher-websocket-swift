@@ -34,6 +34,7 @@ class NativePusherTests: XCTestCase {
         public var registerEx: XCTestExpectation? = nil
         public var subscribeEx: XCTestExpectation? = nil
         public var unsubscribeEx: XCTestExpectation? = nil
+        public var registerFailEx: XCTestExpectation? = nil
         public var interestName: String? = nil
 
         public func subscribedToInterest(name: String) {
@@ -51,6 +52,10 @@ class NativePusherTests: XCTestCase {
         public func registeredForPushNotifications(clientId: String) {
             XCTAssertEqual(clientId, testClientId)
             registerEx!.fulfill()
+        }
+
+        public func failedToRegisterForPushNotifications(response: URLResponse, responseBody: String?) {
+            registerFailEx!.fulfill()
         }
     }
 
@@ -135,6 +140,20 @@ class NativePusherTests: XCTestCase {
 
         XCTAssertEqual(pusher.nativePusher.requestQueue.count, 1, "the nativePusher request queue should contain the subscribe request")
         XCTAssertEqual(pusher.nativePusher.requestQueue.paused, true, "the nativePusher request queue should be paused")
+    }
+
+    func testFailingToRegisterWithPusherForPushNotificationsCallsTheAppropriateDelegateFunction() {
+        let jsonData = "".data(using: String.Encoding.utf8, allowLossyConversion: false)!
+        let url = URL(string: "https://nativepushclient-cluster1.pusher.com/client_api/v1/clients")!
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
+        MockSession.addMockResponse(for: url, httpMethod: "POST", data: jsonData, urlResponse: urlResponse, error: nil)
+
+        let registerFailEx = expectation(description: "the appropriate delegate should be called when registration fails")
+        dummyDelegate.registerFailEx = registerFailEx
+
+        pusher.nativePusher.register(deviceToken: "SOME_DEVICE_TOKEN".data(using: String.Encoding.utf8)!)
+
+        waitForExpectations(timeout: 0.5)
     }
 }
 

@@ -925,6 +925,7 @@ You can also implement some of the `PusherDelegate` functions to get access to e
 
 ```swift
 @objc optional func registeredForPushNotifications(clientId: String)
+@objc optional func failedToRegisterForPushNotifications(response: URLResponse, responseBody: String?)
 @objc optional func subscribedToInterest(name: String)
 @objc optional func unsubscribedFromInterest(name: String)
 ```
@@ -932,6 +933,7 @@ You can also implement some of the `PusherDelegate` functions to get access to e
 Again, the names of the functions largely give away what their purpose is but just for completeness:
 
 - `registeredForPushNotifications` - use this if you want to know when a client has successfully registered with the Pusher Push Notifications service, or if you want access to the `clientId` that is returned upon successful registration
+- `failedToRegisterForPushNotifications` - use this if you want to know when a client has failed to register with the Pusher Push Notifications service
 - `subscribedToInterest` - use this if you want keep track of interests that are successfully subscribed to
 - `unsubscribedFromInterest` - use this if you want keep track of interests that are successfully unsubscribed from
 
