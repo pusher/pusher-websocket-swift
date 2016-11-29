@@ -181,7 +181,7 @@ PusherClientOptions *options = [[PusherClientOptions alloc]
                                 ocHost:host
                                 port:nil
                                 encrypted:YES];
-pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
+pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY" options:options];
 ```
 
 As you may have noticed, this differs slightly for Objective-C usage. The main changes are that you need to use `OCAuthMethod` and `OCPusherHost` in place of `AuthMethod` and `PusherHost`. The `OCAuthMethod` class has the following functions that you can call in your Objective-C code.
