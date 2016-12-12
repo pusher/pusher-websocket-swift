@@ -38,6 +38,9 @@ extension PusherConnection: WebSocketDelegate {
             }
         }
 
+        self.connectionEstablishedMessageReceived = false
+        self.socketConnected = false
+
         // Handle error (if any)
         guard let error = error where error.code != Int(WebSocket.CloseCode.Normal.rawValue) else {
             self.debugLogger?("[PUSHER DEBUG] Deliberate disconnection - skipping reconnect attempts")
@@ -103,6 +106,9 @@ extension PusherConnection: WebSocketDelegate {
     }
 
 
-    public func websocketDidConnect(ws: WebSocket) {}
+    public func websocketDidConnect(ws: WebSocket) {
+        self.socketConnected = true
+    }
+
     public func websocketDidReceiveData(ws: WebSocket, data: NSData) {}
 }

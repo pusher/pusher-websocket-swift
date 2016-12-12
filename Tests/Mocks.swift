@@ -34,6 +34,7 @@ public class MockWebSocket: WebSocket {
             functionToCall: {
                 if let delegate = self.delegate {
                     delegate.websocketDidReceiveMessage(self, text: connectionEstablishedString)
+                    delegate.websocketDidConnect(self)
                 } else {
                     print("Your socket delegate is nil")
                 }

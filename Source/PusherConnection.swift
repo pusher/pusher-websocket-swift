@@ -27,6 +27,17 @@ public class PusherConnection {
     public var maxReconnectGapInSeconds: Double? = nil
     internal var reconnectTimer: NSTimer? = nil
 
+    public var socketConnected: Bool = false {
+        didSet {
+            updateConnectionStateAndAttemptSubscriptions()
+        }
+    }
+    public var connectionEstablishedMessageReceived: Bool = false {
+        didSet {
+            updateConnectionStateAndAttemptSubscriptions()
+        }
+    }
+
     public lazy var reachability: Reachability? = {
         let reachability = try? Reachability.reachabilityForInternetConnection()
         reachability?.whenReachable = { [unowned self] reachability in
@@ -239,6 +250,16 @@ public class PusherConnection {
     }
 
     /**
+        Update connection state and attempt subscriptions to unsubscribed channels
+    */
+    private func updateConnectionStateAndAttemptSubscriptions() {
+        if self.connectionEstablishedMessageReceived && self.socketConnected && self.connectionState != .Connected {
+            updateConnectionState(.Connected)
+            attemptSubscriptionsToUnsubscribedChannels()
+        }
+    }
+
+    /**
         Handle setting channel state and triggering unsent client events, if applicable,
         upon receiving a successful subscription event
 
@@ -279,17 +300,24 @@ public class PusherConnection {
         if let data = json["data"] as? String {
             if let connectionData = getPusherEventJSONFromString(data), socketId = connectionData["socket_id"] as? String {
                 self.socketId = socketId
-                updateConnectionState(.Connected)
 
                 self.reconnectAttempts = 0
                 self.reconnectTimer?.invalidate()
 
-                for (_, channel) in self.channels.channels {
-                    if !channel.subscribed {
-                        if !self.authorize(channel) {
-                            print("Unable to subscribe to channel: \(channel.name)")
-                        }
-                    }
+                self.connectionEstablishedMessageReceived = true
+            }
+        }
+    }
+
+    /**
+        Attempts to make subscriptions that couldn't be attempted while the
+        connection was not in a connected state
+    */
+    private func attemptSubscriptionsToUnsubscribedChannels() {
+        for (_, channel) in self.channels.channels {
+            if !channel.subscribed {
+                if !self.authorize(channel) {
+                    print("Unable to subscribe to channel: \(channel.name)")
                 }
             }
         }
