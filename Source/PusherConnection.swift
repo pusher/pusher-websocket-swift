@@ -38,14 +38,24 @@ open class PusherConnection: NSObject {
 
     open lazy var reachability: Reachability? = {
         let reachability = Reachability.init()
-        reachability?.whenReachable = { [unowned self] reachability in
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network reachable")
-            if self.connectionState == .disconnected || self.connectionState == .reconnectingWhenNetworkBecomesReachable {
-                self.attemptReconnect()
+        reachability?.whenReachable = { [weak self] reachability in
+            guard self != nil else {
+                print("Your Pusher instance has probably become deallocated. See https://github.com/pusher/pusher-websocket-swift/issues/109 for more information")
+                return
+            }
+
+            self!.delegate?.debugLog?(message: "[PUSHER DEBUG] Network reachable")
+            if self!.connectionState == .disconnected || self!.connectionState == .reconnectingWhenNetworkBecomesReachable {
+                self!.attemptReconnect()
             }
         }
-        reachability?.whenUnreachable = { [unowned self] reachability in
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable")
+        reachability?.whenUnreachable = { [weak self] reachability in
+            guard self != nil else {
+                print("Your Pusher instance has probably become deallocated. See https://github.com/pusher/pusher-websocket-swift/issues/109 for more information")
+                return
+            }
+
+            self!.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable")
         }
         return reachability
     }()
