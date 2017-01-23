@@ -135,6 +135,7 @@
             } else {
                 if data != nil && response != nil {
                     let responseBody = String(data: data!, encoding: .utf8)
+                    self.delegate?.failedToRegisterForPushNotifications?(response: response!, responseBody: responseBody)
                     self.delegate?.debugLog?(message: "Bad HTTP response: \(response!) with body: \(responseBody)")
                 }
             }

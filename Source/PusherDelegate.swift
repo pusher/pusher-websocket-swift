@@ -10,6 +10,7 @@
     @objc optional func debugLog(message: String)
 
     @objc optional func registeredForPushNotifications(clientId: String)
+    @objc optional func failedToRegisterForPushNotifications(response: URLResponse, responseBody: String?)
     @objc optional func subscribedToInterest(name: String)
     @objc optional func unsubscribedFromInterest(name: String)
 
