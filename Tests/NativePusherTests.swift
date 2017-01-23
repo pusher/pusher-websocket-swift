@@ -147,6 +147,7 @@ class NativePusherTests: XCTestCase {
         let url = URL(string: "https://nativepushclient-cluster1.pusher.com/client_api/v1/clients")!
         let urlResponse = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
         MockSession.addMockResponse(for: url, httpMethod: "POST", data: jsonData, urlResponse: urlResponse, error: nil)
+        pusher.nativePusher.URLSession = MockSession.shared
 
         let registerFailEx = expectation(description: "the appropriate delegate should be called when registration fails")
         dummyDelegate.registerFailEx = registerFailEx
