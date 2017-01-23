@@ -59,6 +59,29 @@ class AuthenticationTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
+    func testSubscribingToAPrivateChannelShouldMakeARequestToTheAuthEndpointWithAnEncodedChannelName() {
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "private-reservations-for-venue@venue_id=399edd2d-3f4a-43k9-911c-9e4b6bdf0f16;date=2017-01-13"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.delegate = dummyDelegate
+
+        if case .endpoint(authEndpoint: let authEndpoint) = pusher.connection.options.authMethod {
+            let jsonData = "{\"auth\":\"testKey123:12345678gfder78ikjbg\"}".data(using: String.Encoding.utf8, allowLossyConversion: false)!
+            let urlResponse = HTTPURLResponse(url: URL(string: "\(authEndpoint)?channel_name=private-reservations-for-venue%40venue_id%3D399ccd2d-3f4a-43c9-803c-9e4b6bdf0f16%3Bdate%3D2017-01-13&socket_id=45481.3166671")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+            MockSession.mockResponse = (jsonData, urlResponse: urlResponse, error: nil)
+            pusher.connection.URLSession = MockSession.shared
+        }
+
+        let chan = pusher.subscribe(channelName)
+        XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
     func testSubscribingToAPrivateChannelShouldCreateAuthSignatureInternally() {
         let options = PusherClientOptions(
             authMethod: .inline(secret: "secret")

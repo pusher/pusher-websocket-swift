@@ -488,7 +488,7 @@ open class PusherConnection: NSObject {
             } else if let eData =  jsonObject["data"] as? [String: AnyObject] {
                 globalChannel.handleErrorEvent(name: eventName, data: eData)
             }
-    }
+        }
     }
 
     /**
@@ -506,68 +506,68 @@ open class PusherConnection: NSObject {
             subscribeToNormalChannel(channel)
             return true
         } else {
-            if let socketID = self.socketId {
-                switch self.options.authMethod {
-                    case .noMethod:
-                        let errorMessage = "Authentication method required for private / presence channels but none provided."
-                        let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
-
-                        print(errorMessage)
-
-                        handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
-
-                        return false
-                    case .endpoint(authEndpoint: let authEndpoint):
-                        let request = requestForAuthValue(from: authEndpoint, socketID: socketID, channel: channel)
-                        sendAuthorisationRequest(request: request, channel: channel, callback: callback)
-                        return true
-
-                    case .authRequestBuilder(authRequestBuilder: let builder):
-                        if let request = builder.requestFor?(socketID: socketID, channel: channel) {
-                            sendAuthorisationRequest(request: request as URLRequest, channel: channel, callback: callback)
-
-                            return true
-                        } else if let request = builder.requestFor?(socketID: socketID, channelName: channel.name) {
-                            sendAuthorisationRequest(request: request, channel: channel, callback: callback)
-
-                            return true
-                        } else {
-                            let errorMessage = "Authentication request could not be built"
-                            let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
-
-                            handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
-
-                            return false
-                        }
-                    case .inline(secret: let secret):
-                        var msg = ""
-                        var channelData = ""
-                        if channel.type == .presence {
-                            channelData = getUserDataJSON()
-                            msg = "\(self.socketId!):\(channel.name):\(channelData)"
-                        } else {
-                            msg = "\(self.socketId!):\(channel.name)"
-                        }
-
-                        let secretBuff: [UInt8] = Array(secret.utf8)
-                        let msgBuff: [UInt8] = Array(msg.utf8)
-
-                        if let hmac = try? HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
-                            let signature = Data(bytes: hmac).toHexString()
-                            let auth = "\(self.key):\(signature)".lowercased()
-
-                            if channel.type == .private {
-                                self.handlePrivateChannelAuth(authValue: auth, channel: channel, callback: callback)
-                            } else {
-                                self.handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData, callback: callback)
-                            }
-                        }
-
-                        return true
-                }
-            } else {
+            guard let socketId = self.socketId else {
                 print("socketId value not found. You may not be connected.")
                 return false
+            }
+
+            switch self.options.authMethod {
+            case .noMethod:
+                let errorMessage = "Authentication method required for private / presence channels but none provided."
+                let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
+
+                print(errorMessage)
+
+                handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
+
+                return false
+            case .endpoint(authEndpoint: let authEndpoint):
+                let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
+                sendAuthorisationRequest(request: request, channel: channel, callback: callback)
+                return true
+
+            case .authRequestBuilder(authRequestBuilder: let builder):
+                if let request = builder.requestFor?(socketID: socketId, channel: channel) {
+                    sendAuthorisationRequest(request: request as URLRequest, channel: channel, callback: callback)
+
+                    return true
+                } else if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
+                    sendAuthorisationRequest(request: request, channel: channel, callback: callback)
+
+                    return true
+                } else {
+                    let errorMessage = "Authentication request could not be built"
+                    let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
+
+                    handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
+
+                    return false
+                }
+            case .inline(secret: let secret):
+                var msg = ""
+                var channelData = ""
+                if channel.type == .presence {
+                    channelData = getUserDataJSON()
+                    msg = "\(self.socketId!):\(channel.name):\(channelData)"
+                } else {
+                    msg = "\(self.socketId!):\(channel.name)"
+                }
+
+                let secretBuff: [UInt8] = Array(secret.utf8)
+                let msgBuff: [UInt8] = Array(msg.utf8)
+
+                if let hmac = try? HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
+                    let signature = Data(bytes: hmac).toHexString()
+                    let auth = "\(self.key):\(signature)".lowercased()
+
+                    if channel.type == .private {
+                        self.handlePrivateChannelAuth(authValue: auth, channel: channel, callback: callback)
+                    } else {
+                        self.handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData, callback: callback)
+                    }
+                }
+
+                return true
             }
         }
     }
@@ -614,18 +614,18 @@ open class PusherConnection: NSObject {
      Creates an authentication request for the given authEndpoint
 
         - parameter endpoint: The authEndpoint to which the request will be made
-        - parameter socketID: The socketId of the connection's websocket
+        - parameter socketId: The socketId of the connection's websocket
         - parameter channel:  The PusherChannel to authenticate subsciption for
 
         - returns: URLRequest object to be used by the function making the auth request
     */
-    fileprivate func requestForAuthValue(from endpoint: String, socketID: String, channel: PusherChannel) -> URLRequest {
+    fileprivate func requestForAuthValue(from endpoint: String, socketId: String, channelName: String) -> URLRequest {
         let allowedCharacterSet = CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[] ").inverted
-        let encodedChannelName = channel.name.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)
+        let encodedChannelName = channelName.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? channelName
 
         var request = URLRequest(url: URL(string: endpoint)!)
         request.httpMethod = "POST"
-        request.httpBody = "socket_id=\(socketID)&channel_name=\(encodedChannelName!)".data(using: String.Encoding.utf8)
+        request.httpBody = "socket_id=\(socketId)&channel_name=\(encodedChannelName)".data(using: String.Encoding.utf8)
 
         return request
     }
