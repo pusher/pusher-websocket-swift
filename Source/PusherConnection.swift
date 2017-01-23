@@ -620,9 +620,12 @@ open class PusherConnection: NSObject {
         - returns: URLRequest object to be used by the function making the auth request
     */
     fileprivate func requestForAuthValue(from endpoint: String, socketID: String, channel: PusherChannel) -> URLRequest {
+        let allowedCharacterSet = CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[] ").inverted
+        let encodedChannelName = channel.name.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet)
+
         var request = URLRequest(url: URL(string: endpoint)!)
         request.httpMethod = "POST"
-        request.httpBody = "socket_id=\(socketID)&channel_name=\(channel.name)".data(using: String.Encoding.utf8)
+        request.httpBody = "socket_id=\(socketID)&channel_name=\(encodedChannelName!)".data(using: String.Encoding.utf8)
 
         return request
     }
