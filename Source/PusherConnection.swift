@@ -92,6 +92,8 @@ open class PusherConnection: NSObject {
         Initializes a new PusherChannel with a given name
 
         - parameter channelName:     The name of the channel
+        - parameter auth:            A PusherAuth value if subscription is being made to an
+                                     authenticated channel without using the default auth methods
         - parameter onMemberAdded:   A function that will be called with information about the
                                      member who has just joined the presence channel
         - parameter onMemberRemoved: A function that will be called with information about the
@@ -101,14 +103,23 @@ open class PusherConnection: NSObject {
     */
     internal func subscribe(
         channelName: String,
+        auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            let newChannel = channels.add(name: channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
-            if self.connectionState == .connected {
-                if !self.authorize(newChannel) {
-                    print("Unable to subscribe to channel: \(newChannel.name)")
-                }
+            let newChannel = channels.add(
+                name: channelName,
+                connection: self,
+                auth: auth,
+                onMemberAdded: onMemberAdded,
+                onMemberRemoved: onMemberRemoved
+            )
+
+            guard self.connectionState == .connected else { return newChannel }
+
+            if !self.authorize(newChannel, auth: auth) {
+                print("Unable to subscribe to channel: \(newChannel.name)")
             }
+
             return newChannel
     }
 
@@ -116,6 +127,8 @@ open class PusherConnection: NSObject {
         Initializes a new PusherChannel with a given name
 
         - parameter channelName:     The name of the channel
+        - parameter auth:            A PusherAuth value if subscription is being made to an
+                                     authenticated channel without using the default auth methods
         - parameter onMemberAdded:   A function that will be called with information about the
         member who has just joined the presence channel
         - parameter onMemberRemoved: A function that will be called with information about the
@@ -125,15 +138,24 @@ open class PusherConnection: NSObject {
     */
     internal func subscribeToPresenceChannel(
         channelName: String,
+        auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
-        let newChannel = channels.addPresence(channelName: channelName, connection: self, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
-        if self.connectionState == .connected {
-            if !self.authorize(newChannel) {
+            let newChannel = channels.addPresence(
+                channelName: channelName,
+                connection: self,
+                auth: auth,
+                onMemberAdded: onMemberAdded,
+                onMemberRemoved: onMemberRemoved
+            )
+
+            guard self.connectionState == .connected else { return newChannel }
+
+            if !self.authorize(newChannel, auth: auth) {
                 print("Unable to subscribe to channel: \(newChannel.name)")
             }
-        }
-        return newChannel
+
+            return newChannel
     }
 
     /**
@@ -320,6 +342,8 @@ open class PusherConnection: NSObject {
 
             self.delegate?.subscribedToChannel?(name: channelName)
 
+            chan.auth = nil
+
             while chan.unsentEvents.count > 0 {
                 if let pusherEvent = chan.unsentEvents.popLast() {
                     chan.trigger(eventName: pusherEvent.name, data: pusherEvent.data)
@@ -353,7 +377,7 @@ open class PusherConnection: NSObject {
     fileprivate func attemptSubscriptionsToUnsubscribedChannels() {
         for (_, channel) in self.channels.channels {
             if !channel.subscribed {
-                if !self.authorize(channel) {
+                if !self.authorize(channel, auth: channel.auth) {
                     print("Unable to subscribe to channel: \(channel.name)")
                 }
             }
@@ -505,15 +529,28 @@ open class PusherConnection: NSObject {
         Uses the appropriate authentication method to authenticate subscriptions to private and
         presence channels
 
-        - parameter channel:  The PusherChannel to authenticate
-        - parameter callback: An optional callback to be passed along to relevant auth handlers
+        - parameter channel: The PusherChannel to authenticate
+        - parameter auth:    A PusherAuth value if subscription is being made to an
+                             authenticated channel without using the default auth methods
 
         - returns: A Bool indicating whether or not the authentication request was made
                    successfully
     */
-    fileprivate func authorize(_ channel: PusherChannel, callback: ((Dictionary<String, String>?) -> Void)? = nil) -> Bool {
+    fileprivate func authorize(_ channel: PusherChannel, auth: PusherAuth? = nil) -> Bool {
         if channel.type != .presence && channel.type != .private {
             subscribeToNormalChannel(channel)
+            return true
+        } else if let auth = auth {
+            // Don't go through normal auth flow if auth value provided
+            if channel.type == .private {
+                self.handlePrivateChannelAuth(authValue: auth.auth, channel: channel)
+            } else if let channelData = auth.channelData {
+                self.handlePresenceChannelAuth(authValue: auth.auth, channel: channel, channelData: channelData)
+            } else {
+                self.delegate?.debugLog?(message: "Attempting to subscribe to presence channel but no channelData value provided")
+                return false
+            }
+
             return true
         } else {
             guard let socketId = self.socketId else {
@@ -533,16 +570,16 @@ open class PusherConnection: NSObject {
                 return false
             case .endpoint(authEndpoint: let authEndpoint):
                 let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
-                sendAuthorisationRequest(request: request, channel: channel, callback: callback)
+                sendAuthorisationRequest(request: request, channel: channel)
                 return true
 
             case .authRequestBuilder(authRequestBuilder: let builder):
                 if let request = builder.requestFor?(socketID: socketId, channel: channel) {
-                    sendAuthorisationRequest(request: request as URLRequest, channel: channel, callback: callback)
+                    sendAuthorisationRequest(request: request as URLRequest, channel: channel)
 
                     return true
                 } else if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
-                    sendAuthorisationRequest(request: request, channel: channel, callback: callback)
+                    sendAuthorisationRequest(request: request, channel: channel)
 
                     return true
                 } else {
@@ -571,9 +608,9 @@ open class PusherConnection: NSObject {
                     let auth = "\(self.key):\(signature)".lowercased()
 
                     if channel.type == .private {
-                        self.handlePrivateChannelAuth(authValue: auth, channel: channel, callback: callback)
+                        self.handlePrivateChannelAuth(authValue: auth, channel: channel)
                     } else {
-                        self.handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData, callback: callback)
+                        self.handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData)
                     }
                 }
 
@@ -643,11 +680,10 @@ open class PusherConnection: NSObject {
     /**
         Send authentication request to the authEndpoint specified
 
-        - parameter request:  The request to send
-        - parameter channel:  The PusherChannel to authenticate subsciption for
-        - parameter callback: An optional callback to be passed along to relevant auth handlers
+        - parameter request: The request to send
+        - parameter channel: The PusherChannel to authenticate subsciption for
     */
-    fileprivate func sendAuthorisationRequest(request: URLRequest, channel: PusherChannel, callback: (([String : String]?) -> Void)? = nil) {
+    fileprivate func sendAuthorisationRequest(request: URLRequest, channel: PusherChannel) {
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, sessionError in
             if let error = sessionError {
                 print("Error authorizing channel [\(channel.name)]: \(error)")
@@ -674,7 +710,7 @@ open class PusherConnection: NSObject {
                 return
             }
 
-            self.handleAuthResponse(json: json, channel: channel, callback: callback)
+            self.handleAuthResponse(json: json, channel: channel)
         })
 
         task.resume()
@@ -683,19 +719,17 @@ open class PusherConnection: NSObject {
     /**
         Handle authentication request response and call appropriate handle function
 
-        - parameter json:     The auth response as a dictionary
-        - parameter channel:  The PusherChannel to authenticate subsciption for
-        - parameter callback: An optional callback to be passed along to relevant auth handlers
+        - parameter json:    The auth response as a dictionary
+        - parameter channel: The PusherChannel to authenticate subsciption for
     */
     fileprivate func handleAuthResponse(
         json: [String : AnyObject],
-        channel: PusherChannel,
-        callback: (([String : String]?) -> Void)? = nil) {
+        channel: PusherChannel) {
             if let auth = json["auth"] as? String {
                 if let channelData = json["channel_data"] as? String {
-                    handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData, callback: callback)
+                    handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData)
                 } else {
-                    handlePrivateChannelAuth(authValue: auth, channel: channel, callback: callback)
+                    handlePrivateChannelAuth(authValue: auth, channel: channel)
                 }
             }
     }
@@ -706,51 +740,47 @@ open class PusherConnection: NSObject {
         - parameter auth:        The auth string
         - parameter channel:     The PusherChannel to authenticate subsciption for
         - parameter channelData: The channelData to send along with the auth request
-        - parameter callback:    An optional callback to be called with auth and channelData, if provided
     */
     fileprivate func handlePresenceChannelAuth(
         authValue: String,
         channel: PusherChannel,
-        channelData: String,
-        callback: (([String : String]?) -> Void)? = nil) {
+        channelData: String) {
             (channel as? PusherPresenceChannel)?.setMyUserId(channelData: channelData)
 
-            if let cBack = callback {
-                cBack(["auth": authValue, "channel_data": channelData])
-            } else {
-                self.sendEvent(
-                    event: "pusher:subscribe",
-                    data: [
-                        "channel": channel.name,
-                        "auth": authValue,
-                        "channel_data": channelData
-                    ]
-                )
-            }
+            self.sendEvent(
+                event: "pusher:subscribe",
+                data: [
+                    "channel": channel.name,
+                    "auth": authValue,
+                    "channel_data": channelData
+                ]
+            )
     }
 
     /**
         Handle private channel auth response and send subscribe message to Pusher API
 
-        - parameter auth:        The auth string
-        - parameter channel:     The PusherChannel to authenticate subsciption for
-        - parameter callback:    An optional callback to be called with auth and channelData, if provided
+        - parameter auth:    The auth string
+        - parameter channel: The PusherChannel to authenticate subsciption for
     */
-    fileprivate func handlePrivateChannelAuth(
-        authValue auth: String,
-        channel: PusherChannel,
-        callback: (([String : String]?) -> Void)? = nil) {
-            if let cBack = callback {
-                cBack(["auth": auth])
-            } else {
-                self.sendEvent(
-                    event: "pusher:subscribe",
-                    data: [
-                        "channel": channel.name,
-                        "auth": auth
-                    ]
-                )
-            }
+    fileprivate func handlePrivateChannelAuth(authValue auth: String, channel: PusherChannel) {
+        self.sendEvent(
+            event: "pusher:subscribe",
+            data: [
+                "channel": channel.name,
+                "auth": auth
+            ]
+        )
+    }
+}
+
+@objc public class PusherAuth: NSObject {
+    public let auth: String
+    public let channelData: String?
+
+    public init(auth: String, channelData: String? = nil) {
+        self.auth = auth
+        self.channelData = channelData
     }
 }
 

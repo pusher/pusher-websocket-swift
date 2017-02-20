@@ -15,6 +15,8 @@ open class PusherChannels: NSObject {
 
         - parameter name:            The name of the channel to create
         - parameter connection:      The connection associated with the channel being created
+        - parameter auth:            A PusherAuth value if subscription is being made to an
+                                     authenticated channel without using the default auth methods
         - parameter onMemberAdded:   A function that will be called with information about the
                                      member who has just joined the presence channel
         - parameter onMemberRemoved: A function that will be called with information about the
@@ -25,6 +27,7 @@ open class PusherChannels: NSObject {
     internal func add(
         name: String,
         connection: PusherConnection,
+        auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
             if let channel = self.channels[name] {
@@ -35,11 +38,12 @@ open class PusherChannels: NSObject {
                     newChannel = PusherPresenceChannel(
                         name: name,
                         connection: connection,
+                        auth: auth,
                         onMemberAdded: onMemberAdded,
                         onMemberRemoved: onMemberRemoved
                     )
                 } else {
-                    newChannel = PusherChannel(name: name, connection: connection)
+                    newChannel = PusherChannel(name: name, connection: connection, auth: auth)
                 }
                 self.channels[name] = newChannel
                 return newChannel
@@ -52,6 +56,8 @@ open class PusherChannels: NSObject {
 
         - parameter channelName:     The name of the channel to create
         - parameter connection:      The connection associated with the channel being created
+        - parameter auth:            A PusherAuth value if subscription is being made to an
+                                     authenticated channel without using the default auth methods
         - parameter onMemberAdded:   A function that will be called with information about the
                                      member who has just joined the presence channel
         - parameter onMemberRemoved: A function that will be called with information about the
@@ -62,6 +68,7 @@ open class PusherChannels: NSObject {
     internal func addPresence(
         channelName: String,
         connection: PusherConnection,
+        auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
         if let channel = self.channels[channelName] as? PusherPresenceChannel {
@@ -70,6 +77,7 @@ open class PusherChannels: NSObject {
             let newChannel = PusherPresenceChannel(
                 name: channelName,
                 connection: connection,
+                auth: auth,
                 onMemberAdded: onMemberAdded,
                 onMemberRemoved: onMemberRemoved
             )

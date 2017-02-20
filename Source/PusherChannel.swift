@@ -10,11 +10,11 @@ public enum PusherChannelType {
     case `private`
     case presence
     case normal
-    
+
     public init(name: String) {
         self = type(of: self).type(forName: name)
     }
-    
+
     public static func type(forName name: String) -> PusherChannelType {
         if (name.components(separatedBy: "-")[0] == "presence") {
             return .presence
@@ -24,7 +24,7 @@ public enum PusherChannelType {
             return .normal
         }
     }
-    
+
     public static func isPresenceChannel(name: String) -> Bool {
         return PusherChannelType(name: name) == .presence
     }
@@ -37,18 +37,22 @@ open class PusherChannel: NSObject {
     open weak var connection: PusherConnection?
     open var unsentEvents = [PusherEvent]()
     open let type: PusherChannelType
+    public var auth: PusherAuth?
 
     /**
         Initializes a new PusherChannel with a given name and conenction
 
         - parameter name:       The name of the channel
         - parameter connection: The connection that this channel is relevant to
+        - parameter auth:       A PusherAuth value if subscription is being made to an
+                                authenticated channel without using the default auth methods
 
         - returns: A new PusherChannel instance
     */
-    public init(name: String, connection: PusherConnection) {
+    public init(name: String, connection: PusherConnection, auth: PusherAuth? = nil) {
         self.name = name
         self.connection = connection
+        self.auth = auth
         self.type = PusherChannelType(name: name)
     }
 
