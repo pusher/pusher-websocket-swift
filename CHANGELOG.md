@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.2
+
+* Fixed `members` property not being set before `subscription_succeeded` event callbacks were called for presence channels ([@ichibod](https://github.com/ichibod))
+
 ## 4.0.1
 
 * Fixed memory leak issues with `PusherConnection` and `PusherDelegate` ([@anlaital](https://github.com/anlaital))
