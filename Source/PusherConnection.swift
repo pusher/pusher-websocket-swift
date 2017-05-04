@@ -302,21 +302,26 @@ open class PusherConnection: NSObject {
     fileprivate func handleSubscriptionSucceededEvent(json: PusherEventJSON) {
         if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) {
             chan.subscribed = true
-            if let eData = json["data"] as? String {
-                callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
-                chan.handleEvent(name: "pusher:subscription_succeeded", data: eData)
+
+            guard let eventData = json["data"] as? String else {
+                self.delegate?.debugLog?(message: "Subscription succeeded event received without data key in payload")
+                return
             }
 
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                    if let data = json["data"] as? String, let dataJSON = getPusherEventJSON(from: data) {
+                    if let dataJSON = getPusherEventJSON(from: eventData) {
                         if let presenceData = dataJSON["presence"] as? [String : AnyObject],
-                               let presenceHash = presenceData["hash"] as? [String : AnyObject] {
-                                    presChan.addExistingMembers(memberHash: presenceHash)
+                           let presenceHash = presenceData["hash"] as? [String : AnyObject]
+                        {
+                            presChan.addExistingMembers(memberHash: presenceHash)
                         }
                     }
                 }
             }
+
+            callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
+            chan.handleEvent(name: "pusher:subscription_succeeded", data: eventData)
 
             self.delegate?.subscribedToChannel?(name: channelName)
 
