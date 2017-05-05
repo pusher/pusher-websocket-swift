@@ -106,6 +106,22 @@ open class MockWebSocket: WebSocket {
                     self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-test-channel\",\"data\":\"{}\"}")
                 }
             )
+        } else if stringContainsElements(string, elements: ["pusher:subscribe", "testKey123:12345678gfder78ikjbgmanualauth", "private-manual-auth"]) {
+            let _ = stubber.stub(
+                functionName: "writeString",
+                args: [string],
+                functionToCall: {
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-manual-auth\",\"data\":\"{}\"}")
+                }
+            )
+        } else if stringContainsElements(string, elements: ["pusher:subscribe", "testKey123:12345678gfder78ikjbgmanualauth", "presence-manual-auth"]) {
+            let _ = stubber.stub(
+                functionName: "writeString",
+                args: [string],
+                functionToCall: {
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"presence-manual-auth\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"16\\\"],\\\"hash\\\":{\\\"16\\\":{\\\"twitter\\\":\\\"hamchapman\\\"}}}}\"}")
+                }
+            )
         } else if stringContainsElements(string, elements: ["key:0d0d2e7c2cd967246d808180ef0f115dad51979e48cac9ad203928141f9e6a6f", "private-test-channel", "pusher:subscribe"]) {
             let _ = stubber.stub(
                 functionName: "writeString",

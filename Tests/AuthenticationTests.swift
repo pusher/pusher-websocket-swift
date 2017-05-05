@@ -208,4 +208,42 @@ class AuthenticationTests: XCTestCase {
 
         waitForExpectations(timeout: 0.5)
     }
+
+    func testSubscribingToAPrivateChannelWhenAnAuthValueIsProvidedShouldWork() {
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "private-manual-auth"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.delegate = dummyDelegate
+
+        let chan = pusher.subscribe(channelName, auth: PusherAuth(auth: "testKey123:12345678gfder78ikjbgmanualauth"))
+        XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
+    func testSubscribingToAPresenceChannelWhenAnAuthValueIsProvidedShouldWork() {
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "presence-manual-auth"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+        pusher.delegate = dummyDelegate
+
+        let chan = pusher.subscribe(
+            channelName,
+            auth: PusherAuth(
+                auth: "testKey123:12345678gfder78ikjbgmanualauth",
+                channelData: "{\"user_id\":16,\"user_info\":{\"time\":\"2017-02-20 14:54:36 +0000\"}}"
+            )
+        )
+        XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
 }

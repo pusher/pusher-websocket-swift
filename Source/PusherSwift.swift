@@ -71,6 +71,8 @@ let CLIENT_NAME = "pusher-websocket-swift"
         Subscribes the client to a new channel
 
         - parameter channelName:     The name of the channel to subscribe to
+        - parameter auth:            A PusherAuth value if subscription is being made to an
+                                     authenticated channel without using the default auth methods
         - parameter onMemberAdded:   A function that will be called with information about the
                                      member who has just joined the presence channel
         - parameter onMemberRemoved: A function that will be called with information about the
@@ -80,9 +82,15 @@ let CLIENT_NAME = "pusher-websocket-swift"
     */
     open func subscribe(
         _ channelName: String,
+        auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            return self.connection.subscribe(channelName: channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+            return self.connection.subscribe(
+                channelName: channelName,
+                auth: auth,
+                onMemberAdded: onMemberAdded,
+                onMemberRemoved: onMemberRemoved
+            )
     }
 
     /**
@@ -91,18 +99,26 @@ let CLIENT_NAME = "pusher-websocket-swift"
         generic channel object (which you can then cast)
 
         - parameter channelName:     The name of the channel to subscribe to
+        - parameter auth:            A PusherAuth value if subscription is being made to an
+                                     authenticated channel without using the default auth methods
         - parameter onMemberAdded:   A function that will be called with information about the
-        member who has just joined the presence channel
+                                     member who has just joined the presence channel
         - parameter onMemberRemoved: A function that will be called with information about the
-        member who has just left the presence channel
+                                     member who has just left the presence channel
 
         - returns: A new PusherPresenceChannel instance
     */
     open func subscribeToPresenceChannel(
         channelName: String,
+        auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
-            return self.connection.subscribeToPresenceChannel(channelName: channelName, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+            return self.connection.subscribeToPresenceChannel(
+                channelName: channelName,
+                auth: auth,
+                onMemberAdded: onMemberAdded,
+                onMemberRemoved: onMemberRemoved
+            )
     }
 
     /**

@@ -11,8 +11,22 @@ public extension Pusher {
         return self.subscribe(channelName, onMemberAdded: nil, onMemberRemoved: nil)
     }
 
+    @objc public func subscribe(
+        channelName: String,
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
+            return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+    }
+
     @objc public func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
-        return self.subscribeToPresenceChannel(channelName: channelName, onMemberAdded: nil, onMemberRemoved: nil)
+        return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: nil, onMemberRemoved: nil)
+    }
+
+    @objc public func subscribeToPresenceChannel(
+        channelName: String,
+        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+            return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     @objc public convenience init(withAppKey key: String, options: PusherClientOptions) {
