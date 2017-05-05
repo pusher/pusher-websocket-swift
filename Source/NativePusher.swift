@@ -130,13 +130,13 @@
                                 self.delegate?.debugLog?(message: "No \"id\" key in JSON response: \(json)")
                             }
                         } else {
-                            self.delegate?.debugLog?(message: "Could not parse body as JSON object: \(data)")
+                            self.delegate?.debugLog?(message: "Could not parse body as JSON object: \(String(describing: data))")
                         }
             } else {
                 if data != nil && response != nil {
                     let responseBody = String(data: data!, encoding: .utf8)
                     self.delegate?.failedToRegisterForPushNotifications?(response: response!, responseBody: responseBody)
-                    self.delegate?.debugLog?(message: "Bad HTTP response: \(response!) with body: \(responseBody)")
+                    self.delegate?.debugLog?(message: "Bad HTTP response: \(response!) with body: \(String(describing: responseBody))")
                 }
             }
         })
@@ -195,7 +195,7 @@
     */
     private func modifySubscription(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
         guard pusherAppKey != nil && clientId != nil else {
-            self.delegate?.debugLog?(message: "pusherAppKey \(pusherAppKey) or clientId \(clientId) not set - waiting for both to be set")
+            self.delegate?.debugLog?(message: "pusherAppKey \(String(describing: pusherAppKey)) or clientId \(String(describing: clientId)) not set - waiting for both to be set")
             self.requestQueue.pauseAndResetCurrentTask()
             return
         }
@@ -222,10 +222,10 @@
                     self.failedRequestAttempts += 1
 
                     if error != nil {
-                        self.delegate?.debugLog?(message: "Error when trying to modify subscription to interest: \(error?.localizedDescription)")
+                        self.delegate?.debugLog?(message: "Error when trying to modify subscription to interest: \(String(describing: error?.localizedDescription))")
                     } else if data != nil && response != nil {
                         let responseBody = String(data: data!, encoding: .utf8)
-                        self.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(responseBody)")
+                        self.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(String(describing: responseBody))")
                     } else {
                         self.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest: \(interest)")
                     }
