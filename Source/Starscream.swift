@@ -9,8 +9,7 @@
 //  - https://raw.githubusercontent.com/daltoniam/Starscream/swift-23/Source/WebSocket.swift
 //  (with trivial warnings fixed, trailing spaces removed, and some access levels changed)
 //
-// commit SHA 60b27a438
-
+// commit SHA ee993322c
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -273,6 +272,7 @@ open class SSLSecurity : SSLTrustValidator {
 
 }
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //  Websocket.swift
@@ -436,7 +436,7 @@ open class WebSocket : NSObject, StreamDelegate {
         return canWork
     }
     /// The shared processing queue used for all WebSocket.
-    private static let sharedWorkQueue = DispatchQueue(label: "com.vluxe.starscream.websocket.pusher", attributes: [])
+    private static let sharedWorkQueue = DispatchQueue(label: "com.vluxe.starscream.websocket", attributes: [])
 
     /// Used for setting protocols.
     public init(url: URL, protocols: [String]? = nil) {
@@ -533,7 +533,6 @@ open class WebSocket : NSObject, StreamDelegate {
      Private method that starts the connection.
      */
     private func createHTTPRequest() {
-
         let urlRequest = CFHTTPMessageCreateRequest(kCFAllocatorDefault, "GET" as CFString,
                                                     url as CFURL, kCFHTTPVersion1_1).takeRetainedValue()
 
@@ -607,6 +606,7 @@ open class WebSocket : NSObject, StreamDelegate {
         inStream.delegate = self
         outStream.delegate = self
         if supportedSSLSchemes.contains(url.scheme!) {
+            certValidated = false
             inStream.setProperty(StreamSocketSecurityLevel.negotiatedSSL as AnyObject, forKey: Stream.PropertyKey.socketSecurityLevelKey)
             outStream.setProperty(StreamSocketSecurityLevel.negotiatedSSL as AnyObject, forKey: Stream.PropertyKey.socketSecurityLevelKey)
             if disableSSLCertValidation {
@@ -658,14 +658,29 @@ open class WebSocket : NSObject, StreamDelegate {
                 guard !sOperation.isCancelled else { return }
                 out -= 100
                 if out < 0 {
-                    self?.cleanupStream()
+                    WebSocket.sharedWorkQueue.async {
+                        self?.cleanupStream()
+                    }
                     self?.doDisconnect(self?.errorWithDetail("write wait timed out", code: 2))
                     return
                 } else if outStream.streamError != nil {
                     return // disconnectStream will be called.
                 }
             }
-            guard !sOperation.isCancelled else { return }
+            guard !sOperation.isCancelled, let s = self else { return }
+            // Do the pinning now if needed
+            if let sec = s.security, !s.certValidated {
+                let trust = outStream.property(forKey: kCFStreamPropertySSLPeerTrust as Stream.PropertyKey) as! SecTrust
+                let domain = outStream.property(forKey: kCFStreamSSLPeerName as Stream.PropertyKey) as? String
+                s.certValidated = sec.isValid(trust, domain: domain)
+                if !s.certValidated {
+                    WebSocket.sharedWorkQueue.async {
+                        let error = s.errorWithDetail("Invalid SSL certificate", code: 1)
+                        s.disconnectStream(error)
+                    }
+                    return
+                }
+            }
             outStream.write(bytes, maxLength: data.count)
         }
         writeQueue.addOperation(operation)
@@ -675,17 +690,6 @@ open class WebSocket : NSObject, StreamDelegate {
      Delegate for the stream methods. Processes incoming bytes
      */
     open func stream(_ aStream: Stream, handle eventCode: Stream.Event) {
-        if let sec = security, !certValidated && [.hasBytesAvailable, .hasSpaceAvailable].contains(eventCode) {
-            let trust = aStream.property(forKey: kCFStreamPropertySSLPeerTrust as Stream.PropertyKey) as! SecTrust
-            let domain = aStream.property(forKey: kCFStreamSSLPeerName as Stream.PropertyKey) as? String
-            if sec.isValid(trust, domain: domain) {
-                certValidated = true
-            } else {
-                let error = errorWithDetail("Invalid SSL certificate", code: 1)
-                disconnectStream(error)
-                return
-            }
-        }
         if eventCode == .hasBytesAvailable {
             if aStream == inputStream {
                 processInputStream()
@@ -916,7 +920,8 @@ open class WebSocket : NSObject, StreamDelegate {
             return buffer.fromOffset(bufferLen - extra)
         } else {
             let isFin = (FinMask & baseAddress[0])
-            let receivedOpcode = OpCode(rawValue: (OpCodeMask & baseAddress[0]))
+            let receivedOpcodeRawValue = (OpCodeMask & baseAddress[0])
+            let receivedOpcode = OpCode(rawValue: receivedOpcodeRawValue)
             let isMasked = (MaskMask & baseAddress[1])
             let payloadLen = (PayloadLenMask & baseAddress[1])
             var offset = 2
@@ -930,7 +935,7 @@ open class WebSocket : NSObject, StreamDelegate {
             if !isControlFrame && (receivedOpcode != .binaryFrame && receivedOpcode != .continueFrame &&
                 receivedOpcode != .textFrame && receivedOpcode != .pong) {
                     let errCode = CloseCode.protocolError.rawValue
-                    doDisconnect(errorWithDetail("unknown opcode: \(receivedOpcode)", code: errCode))
+                    doDisconnect(errorWithDetail("unknown opcode: \(receivedOpcodeRawValue)", code: errCode))
                     writeError(errCode)
                     return emptyBuffer
             }
@@ -975,18 +980,13 @@ open class WebSocket : NSObject, StreamDelegate {
             if dataLength > UInt64(bufferLen) {
                 len = UInt64(bufferLen-offset)
             }
-            let data: Data
-            if len < 0 {
-                len = 0
-                data = Data()
-            } else {
-                if receivedOpcode == .connectionClose && len > 0 {
-                    let size = MemoryLayout<UInt16>.size
-                    offset += size
-                    len -= UInt64(size)
-                }
-                data = Data(bytes: baseAddress+offset, count: Int(len))
+            if receivedOpcode == .connectionClose && len > 0 {
+                let size = MemoryLayout<UInt16>.size
+                offset += size
+                len -= UInt64(size)
             }
+            let data = Data(bytes: baseAddress+offset, count: Int(len))
+
             if receivedOpcode == .connectionClose {
                 var closeReason = "connection closed by server"
                 if let customCloseReason = String(data: data, encoding: .utf8) {
@@ -1220,6 +1220,7 @@ open class WebSocket : NSObject, StreamDelegate {
         readyToWrite = false
         mutex.unlock()
         cleanupStream()
+        writeQueue.cancelAllOperations()
     }
 
 }
