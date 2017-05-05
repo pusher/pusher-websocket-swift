@@ -1,6 +1,13 @@
 # Changelog
 
-## 4.0.2
+## 4.1.0
+
+* Reverted change introduced in 4.0.2 that set up a custom callback queue for the underlying websocket
+* Added the ability to provide auth values on channel subscriptions
+* Updated Starscream dependency to latest version (commit SHA ee993322c)
+* Encode channel names to be consistent with other libraries
+
+## 4.0.2 (pulled - upgrade to 4.1.0+)
 
 * Fixed `members` property not being set before `subscription_succeeded` event callbacks were called for presence channels ([@ichibod](https://github.com/ichibod))
 
