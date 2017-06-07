@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 open class PusherChannels: NSObject {
     open var channels = [String: PusherChannel]()
 

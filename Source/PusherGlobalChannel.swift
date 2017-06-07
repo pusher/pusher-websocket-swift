@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 open class GlobalChannel: PusherChannel {
     open var globalCallbacks: [String : (Any?) -> Void] = [:]
 

@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 public typealias PusherUserInfoObject = [String : AnyObject]
 
 open class PusherPresenceChannel: PusherChannel {
