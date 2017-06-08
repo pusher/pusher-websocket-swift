@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 public extension Pusher {
     @objc public func subscribe(channelName: String) -> PusherChannel {
         return self.subscribe(channelName, onMemberAdded: nil, onMemberRemoved: nil)

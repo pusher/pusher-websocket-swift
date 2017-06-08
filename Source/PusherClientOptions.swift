@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 public enum PusherHost {
     case host(String)
     case cluster(String)

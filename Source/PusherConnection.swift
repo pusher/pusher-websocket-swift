@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 public typealias PusherEventJSON = [String: AnyObject]
 
 open class PusherConnection: NSObject {

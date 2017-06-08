@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 #if os(iOS) || os(OSX)
 
 /**

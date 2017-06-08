@@ -6,6 +6,8 @@
 //
 //
 
+import Foundation
+
 extension PusherConnection: WebSocketDelegate {
 
     /**
