@@ -328,6 +328,19 @@ extension UInt32: Initiable {}
 extension UInt64: Initiable {}
 
 /** build bit pattern from array of bits */
+#if swift(>=3.2)
+@_specialize(where T == UInt8)
+func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
+    var bitPattern: T = 0
+    for idx in bits.indices {
+        if bits[idx] == Bit.one {
+            let bit = T(UIntMax(1) << UIntMax(idx))
+            bitPattern = bitPattern | bit
+        }
+    }
+    return bitPattern
+}
+#else
 @_specialize(UInt8)
 func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
     var bitPattern: T = 0
@@ -339,6 +352,7 @@ func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
     }
     return bitPattern
 }
+#endif
 
 /// Array of bytes. Caution: don't use directly because generic is slow.
 ///
@@ -934,7 +948,20 @@ extension String {
 
 /** array of bytes */
 extension UInt16 {
+#if swift(>=3.2)
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
+        self = UInt16(bytes: bytes, fromIndex: bytes.startIndex)
+    }
 
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
+        let val0 = UInt16(bytes[index.advanced(by: 0)]) << 8
+        let val1 = UInt16(bytes[index.advanced(by: 1)])
+
+        self = val0 | val1
+    }
+#else
     @_specialize(ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt16(bytes: bytes, fromIndex: bytes.startIndex)
@@ -947,6 +974,7 @@ extension UInt16 {
 
         self = val0 | val1
     }
+#endif
 
     func bytes(totalBytes: Int = MemoryLayout<UInt16>.size) -> Array<UInt8> {
         return arrayOfBytes(value: self, length: totalBytes)
@@ -971,7 +999,22 @@ extension UInt32: _UInt32Type {}
 
 /** array of bytes */
 extension UInt32 {
+#if swift(>=3.2)
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
+        self = UInt32(bytes: bytes, fromIndex: bytes.startIndex)
+    }
 
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
+        let val0 = UInt32(bytes[index.advanced(by: 0)]) << 24
+        let val1 = UInt32(bytes[index.advanced(by: 1)]) << 16
+        let val2 = UInt32(bytes[index.advanced(by: 2)]) << 8
+        let val3 = UInt32(bytes[index.advanced(by: 3)])
+
+        self = val0 | val1 | val2 | val3
+    }
+#else
     @_specialize(ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt32(bytes: bytes, fromIndex: bytes.startIndex)
@@ -986,7 +1029,7 @@ extension UInt32 {
 
         self = val0 | val1 | val2 | val3
     }
-
+#endif
     func bytes(totalBytes: Int = MemoryLayout<UInt32>.size) -> Array<UInt8> {
         return arrayOfBytes(value: self, length: totalBytes)
     }
@@ -1001,7 +1044,26 @@ extension UInt32 {
 
 /** array of bytes */
 extension UInt64 {
+#if swift(>=3.2)
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
+        self = UInt64(bytes: bytes, fromIndex: bytes.startIndex)
+    }
 
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
+        let val0 = UInt64(bytes[index.advanced(by: 0)]) << 56
+        let val1 = UInt64(bytes[index.advanced(by: 1)]) << 48
+        let val2 = UInt64(bytes[index.advanced(by: 2)]) << 40
+        let val3 = UInt64(bytes[index.advanced(by: 3)]) << 32
+        let val4 = UInt64(bytes[index.advanced(by: 4)]) << 24
+        let val5 = UInt64(bytes[index.advanced(by: 5)]) << 16
+        let val6 = UInt64(bytes[index.advanced(by: 6)]) << 8
+        let val7 = UInt64(bytes[index.advanced(by: 7)])
+
+        self = val0 | val1 | val2 | val3 | val4 | val5 | val6 | val7
+    }
+#else
     @_specialize(ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt64(bytes: bytes, fromIndex: bytes.startIndex)
@@ -1020,7 +1082,7 @@ extension UInt64 {
 
         self = val0 | val1 | val2 | val3 | val4 | val5 | val6 | val7
     }
-
+#endif
     func bytes(totalBytes: Int = MemoryLayout<UInt64>.size) -> Array<UInt8> {
         return arrayOfBytes(value: self, length: totalBytes)
     }
