@@ -58,7 +58,7 @@
 //    OCAuthMethod *endpointAuthMethod = [[OCAuthMethod alloc] initWithAuthRequestBuilder:[[AuthRequestBuilder alloc] init]];
 //    PusherClientOptions *optionsWithEndpoint = [[PusherClientOptions alloc] initWithAuthMethod:endpointAuthMethod];
 
-    self.client = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
+    self.client = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY" options:options];
     self.client.connection.delegate = self;
 
     self.client.connection.userDataFetcher = ^PusherPresenceChannelMember* () {
