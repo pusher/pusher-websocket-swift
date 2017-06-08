@@ -34,7 +34,7 @@ extension Array {
 }
 
 extension Array {
-
+    
     /** split in chunks with given chunk size */
     func chunks(size chunksize: Int) -> Array<Array<Element>> {
         var words = Array<Array<Element>>()
@@ -51,10 +51,10 @@ extension Array {
 }
 
 extension Array where Element: Integer, Element.IntegerLiteralType == UInt8 {
-
+    
     internal init(hex: String) {
         self.init()
-
+        
         let utf8 = Array<Element.IntegerLiteralType>(hex.utf8)
         let skip0x = hex.hasPrefix("0x") ? 2 : 0
         for idx in stride(from: utf8.startIndex.advanced(by: skip0x), to: utf8.endIndex, by: utf8.startIndex.advanced(by: 2)) {
@@ -92,7 +92,7 @@ enum Bit: Int {
 }
 
 extension Bit {
-
+    
     func inverted() -> Bit {
         return self == .zero ? .one : .zero
     }
@@ -128,7 +128,7 @@ extension Bit {
 struct BytesSequence: Sequence {
     let chunkSize: Array<UInt8>.IndexDistance
     let data: Array<UInt8>
-
+    
     func makeIterator() -> AnyIterator<ArraySlice<UInt8>> {
         var offset = data.startIndex
         return AnyIterator {
@@ -155,14 +155,14 @@ internal protocol CSArrayType: Collection, RangeReplaceableCollection {
 }
 
 extension Array: CSArrayType {
-
+    
     internal func cs_arrayValue() -> [Iterator.Element] {
         return self
     }
 }
 
 internal extension CSArrayType where Iterator.Element == UInt8 {
-
+    
     internal func toHexString() -> String {
         return self.lazy.reduce("") {
             var s = String($1, radix: 16)
@@ -175,15 +175,15 @@ internal extension CSArrayType where Iterator.Element == UInt8 {
 }
 
 internal extension CSArrayType where Iterator.Element == UInt8 {
-
+    
     internal func sha256() -> [Iterator.Element] {
         return Digest.sha256(cs_arrayValue())
     }
-
+    
     internal func sha512() -> [Iterator.Element] {
         return Digest.sha512(cs_arrayValue())
     }
-
+    
     internal func authenticate<A: Authenticator>(with authenticator: A) throws -> [Iterator.Element] {
         return try authenticator.authenticate(cs_arrayValue())
     }
@@ -197,7 +197,7 @@ internal extension CSArrayType where Iterator.Element == UInt8 {
 //
 
 extension Collection where Self.Iterator.Element == UInt8, Self.Index == Int {
-
+    
     func toUInt32Array() -> Array<UInt32> {
         var result = Array<UInt32>()
         result.reserveCapacity(16)
@@ -209,10 +209,10 @@ extension Collection where Self.Iterator.Element == UInt8, Self.Index == Int {
             val |= self.count > 0 ? UInt32(self[idx]) : 0
             result.append(val)
         }
-
+        
         return result
     }
-
+    
     func toUInt64Array() -> Array<UInt64> {
         var result = Array<UInt64>()
         result.reserveCapacity(32)
@@ -228,17 +228,17 @@ extension Collection where Self.Iterator.Element == UInt8, Self.Index == Int {
             val |= self.count > 0 ? UInt64(self[idx.advanced(by: 0)]) << 0 : 0
             result.append(val)
         }
-
+        
         return result
     }
-
+    
     /// Initialize integer from array of bytes. Caution: may be slow!
     @available(*, deprecated: 0.6.0, message: "Dont use it. Too generic to be fast")
     func toInteger<T: Integer>() -> T where T: ByteConvertible, T: BitshiftOperationsType {
         if self.count == 0 {
             return 0
         }
-
+        
         let size = MemoryLayout<T>.size
         var bytes = self.reversed() // FIXME: check it this is equivalent of Array(...)
         if bytes.count < size {
@@ -247,11 +247,11 @@ extension Collection where Self.Iterator.Element == UInt8, Self.Index == Int {
                 bytes += Array<UInt8>(repeating: 0, count: paddingCount)
             }
         }
-
+        
         if size == 1 {
             return T(truncatingBitPattern: UInt64(bytes[0]))
         }
-
+        
         var result: T = 0
         for byte in bytes.reversed() {
             result = result << 8 | T(byte)
@@ -272,21 +272,21 @@ internal typealias Hash = Digest
 
 /// Hash functions to calculate Digest.
 internal struct Digest {
-
+    
     /// Calculate SHA2-256 Digest
     /// - parameter bytes: input message
     /// - returns: Digest bytes
     internal static func sha256(_ bytes: Array<UInt8>) -> Array<UInt8> {
         return sha2(bytes, variant: .sha256)
     }
-
+    
     /// Calculate SHA2-512 Digest
     /// - parameter bytes: input message
     /// - returns: Digest bytes
     internal static func sha512(_ bytes: Array<UInt8>) -> Array<UInt8> {
         return sha2(bytes, variant: .sha512)
     }
-
+    
     /// Calculate SHA2 Digest
     /// - parameter bytes: input message
     /// - parameter variant: SHA-2 variant
@@ -328,17 +328,31 @@ extension UInt32: Initiable {}
 extension UInt64: Initiable {}
 
 /** build bit pattern from array of bits */
-@_specialize(UInt8)
-func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
+#if swift(>=3.2)
+    @_specialize(where T == UInt8)
+    func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
+        var bitPattern: T = 0
+        for idx in bits.indices {
+            if bits[idx] == Bit.one {
+                let bit = T(UIntMax(1) << UIntMax(idx))
+                bitPattern = bitPattern | bit
+            }
+        }
+        return bitPattern
+    }
+#else
+    @_specialize(UInt8)
+    func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
     var bitPattern: T = 0
     for idx in bits.indices {
-        if bits[idx] == Bit.one {
-            let bit = T(UIntMax(1) << UIntMax(idx))
-            bitPattern = bitPattern | bit
-        }
+    if bits[idx] == Bit.one {
+    let bit = T(UIntMax(1) << UIntMax(idx))
+    bitPattern = bitPattern | bit
+    }
     }
     return bitPattern
-}
+    }
+#endif
 
 /// Array of bytes. Caution: don't use directly because generic is slow.
 ///
@@ -349,16 +363,16 @@ func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
 func arrayOfBytes<T: Integer>(value: T, length totalBytes: Int = MemoryLayout<T>.size) -> Array<UInt8> {
     let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
     valuePointer.pointee = value
-
+    
     let bytesPointer = UnsafeMutablePointer<UInt8>(OpaquePointer(valuePointer))
     var bytes = Array<UInt8>(repeating: 0, count: totalBytes)
     for j in 0 ..< min(MemoryLayout<T>.size, totalBytes) {
         bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
     }
-
+    
     valuePointer.deinitialize()
     valuePointer.deallocate(capacity: 1)
-
+    
     return bytes
 }
 //
@@ -370,15 +384,15 @@ func arrayOfBytes<T: Integer>(value: T, length totalBytes: Int = MemoryLayout<T>
 //
 
 internal final class HMAC: Authenticator {
-
+    
     internal enum Error: Swift.Error {
         case authenticateError
         case invalidInput
     }
-
+    
     internal enum Variant {
         case sha256, sha512
-
+        
         var digestLength: Int {
             switch (self) {
             case .sha256:
@@ -387,7 +401,7 @@ internal final class HMAC: Authenticator {
                 return SHA2.Variant.sha512.digestLength
             }
         }
-
+        
         func calculateHash(_ bytes: Array<UInt8>) -> Array<UInt8>? {
             switch (self) {
             case .sha256:
@@ -396,7 +410,7 @@ internal final class HMAC: Authenticator {
                 return Digest.sha512(bytes)
             }
         }
-
+        
         func blockSize() -> Int {
             switch self {
             case .sha256:
@@ -406,27 +420,27 @@ internal final class HMAC: Authenticator {
             }
         }
     }
-
+    
     var key: Array<UInt8>
     let variant: Variant
-
+    
     internal init(key: Array<UInt8>, variant: HMAC.Variant = .sha256) {
         self.variant = variant
         self.key = key
-
+        
         if key.count > variant.blockSize() {
             if let hash = variant.calculateHash(key) {
                 self.key = hash
             }
         }
-
+        
         if key.count < variant.blockSize() {
             self.key = ZeroPadding().add(to: key, blockSize: variant.blockSize())
         }
     }
-
+    
     // MARK: Authenticator
-
+    
     internal func authenticate(_ bytes: Array<UInt8>) throws -> Array<UInt8> {
         var opad = Array<UInt8>(repeating: 0x5c, count: variant.blockSize())
         for idx in key.indices {
@@ -436,12 +450,12 @@ internal final class HMAC: Authenticator {
         for idx in key.indices {
             ipad[idx] = key[idx] ^ ipad[idx]
         }
-
+        
         guard let ipadAndMessageHash = variant.calculateHash(ipad + bytes),
             let result = variant.calculateHash(opad + ipadAndMessageHash) else {
-            throw Error.authenticateError
+                throw Error.authenticateError
         }
-
+        
         // return Array(result[0..<10]) // 80 bits
         return result
     }
@@ -470,7 +484,7 @@ internal final class HMAC: Authenticator {
 
 /* array of bits */
 extension Int {
-
+    
     init(bits: [Bit]) {
         self.init(bitPattern: integerFrom(bits) as UInt)
     }
@@ -478,12 +492,12 @@ extension Int {
 
 /* array of bytes */
 extension Int {
-
+    
     /** Int with collection of bytes (little-endian) */
     // init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
     //    self = bytes.toInteger()
     // }
-
+    
     /** Array of bytes with optional padding */
     func bytes(totalBytes: Int = MemoryLayout<Int>.size) -> Array<UInt8> {
         return arrayOfBytes(value: self, length: totalBytes)
@@ -515,7 +529,7 @@ extension Int16: BitshiftOperationsType, ByteConvertible {}
 extension Int32: BitshiftOperationsType, ByteConvertible {}
 
 extension Int64: BitshiftOperationsType, ByteConvertible {
-
+    
     init(truncatingBitPattern value: UInt64) {
         self = Int64(bitPattern: value)
     }
@@ -527,7 +541,7 @@ extension UInt16: BitshiftOperationsType, ByteConvertible {}
 extension UInt32: BitshiftOperationsType, ByteConvertible {}
 
 extension UInt64: BitshiftOperationsType, ByteConvertible {
-
+    
     init(truncatingBitPattern value: UInt64) {
         self = value
     }
@@ -541,14 +555,14 @@ extension UInt64: BitshiftOperationsType, ByteConvertible {
 //
 
 internal struct NoPadding: Padding {
-
+    
     internal init() {
     }
-
+    
     internal func add(to data: Array<UInt8>, blockSize: Int) -> Array<UInt8> {
         return data
     }
-
+    
     internal func remove(from data: Array<UInt8>, blockSize: Int?) -> Array<UInt8> {
         return data
     }
@@ -564,17 +578,17 @@ internal struct NoPadding: Padding {
  Bit shifting with overflow protection using overflow operator "&".
  Approach is consistent with standard overflow operators &+, &-, &*, &/
  and introduce new overflow operators for shifting: &<<, &>>
-
+ 
  Note: Works with unsigned integers values only
-
+ 
  Usage
-
+ 
  var i = 1       // init
  var j = i &<< 2 //shift left
  j &<<= 2        //shift left and assign
-
+ 
  @see: https://medium.com/@krzyzanowskim/swiftly-shift-bits-and-protect-yourself-be33016ce071
-
+ 
  This fuctonality is now implemented as part of Swift 3, SE-0104 https://github.com/apple/swift-evolution/blob/master/proposals/0104-improved-integers.md
  */
 //
@@ -605,19 +619,19 @@ internal final class SHA2: DigestType {
     let blockSize: Int
     let digestLength: Int
     private let k: Array<UInt64>
-
+    
     fileprivate var accumulated = Array<UInt8>()
     fileprivate var processedBytesTotalCount: Int = 0
     fileprivate var accumulatedHash32 = Array<UInt32>()
     fileprivate var accumulatedHash64 = Array<UInt64>()
-
+    
     internal enum Variant: RawRepresentable {
         case sha256, sha512
-
+        
         internal var digestLength: Int {
             return self.rawValue / 8
         }
-
+        
         internal var blockSize: Int {
             switch self {
             case .sha256:
@@ -626,7 +640,7 @@ internal final class SHA2: DigestType {
                 return 128
             }
         }
-
+        
         internal typealias RawValue = Int
         internal var rawValue: RawValue {
             switch self {
@@ -636,7 +650,7 @@ internal final class SHA2: DigestType {
                 return 512
             }
         }
-
+        
         internal init?(rawValue: RawValue) {
             switch (rawValue) {
             case 256:
@@ -649,7 +663,7 @@ internal final class SHA2: DigestType {
                 return nil
             }
         }
-
+        
         fileprivate var h: Array<UInt64> {
             switch self {
             case .sha256:
@@ -658,12 +672,12 @@ internal final class SHA2: DigestType {
                 return [0x6a09e667f3bcc908, 0xbb67ae8584caa73b, 0x3c6ef372fe94f82b, 0xa54ff53a5f1d36f1, 0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179]
             }
         }
-
+        
         fileprivate var finalLength: Int {
             return Int.max
         }
     }
-
+    
     internal init(variant: SHA2.Variant) {
         self.variant = variant
         switch self.variant {
@@ -703,7 +717,7 @@ internal final class SHA2: DigestType {
                       0x431d67c49c100d4c, 0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817]
         }
     }
-
+    
     internal func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
         do {
             return try self.update(withBytes: bytes, isLast: true)
@@ -711,7 +725,7 @@ internal final class SHA2: DigestType {
             return []
         }
     }
-
+    
     fileprivate func process64(block chunk: ArraySlice<UInt8>, currentHash hh: inout Array<UInt64>) {
         // break chunk into sixteen 64-bit words M[j], 0 ≤ j ≤ 15, big-endian
         // Extend the sixteen 64-bit words into eighty 64-bit words:
@@ -729,7 +743,7 @@ internal final class SHA2: DigestType {
                 break
             }
         }
-
+        
         var A = hh[0]
         var B = hh[1]
         var C = hh[2]
@@ -738,7 +752,7 @@ internal final class SHA2: DigestType {
         var F = hh[5]
         var G = hh[6]
         var H = hh[7]
-
+        
         // Main loop
         for j in 0 ..< self.k.count {
             let s0 = rotateRight(A, by: 28) ^ rotateRight(A, by: 34) ^ rotateRight(A, by: 39)
@@ -747,7 +761,7 @@ internal final class SHA2: DigestType {
             let s1 = rotateRight(E, by: 14) ^ rotateRight(E, by: 18) ^ rotateRight(E, by: 41)
             let ch = (E & F) ^ ((~E) & G)
             let t1 = H &+ s1 &+ ch &+ self.k[j] &+ UInt64(M[j])
-
+            
             H = G
             G = F
             F = E
@@ -757,7 +771,7 @@ internal final class SHA2: DigestType {
             B = A
             A = t1 &+ t2
         }
-
+        
         hh[0] = (hh[0] &+ A)
         hh[1] = (hh[1] &+ B)
         hh[2] = (hh[2] &+ C)
@@ -767,7 +781,7 @@ internal final class SHA2: DigestType {
         hh[6] = (hh[6] &+ G)
         hh[7] = (hh[7] &+ H)
     }
-
+    
     // mutating currentHash in place is way faster than returning new result
     fileprivate func process32(block chunk: ArraySlice<UInt8>, currentHash hh: inout Array<UInt32>) {
         // break chunk into sixteen 32-bit words M[j], 0 ≤ j ≤ 15, big-endian
@@ -786,7 +800,7 @@ internal final class SHA2: DigestType {
                 break
             }
         }
-
+        
         var A = hh[0]
         var B = hh[1]
         var C = hh[2]
@@ -795,7 +809,7 @@ internal final class SHA2: DigestType {
         var F = hh[5]
         var G = hh[6]
         var H = hh[7]
-
+        
         // Main loop
         for j in 0 ..< self.k.count {
             let s0 = rotateRight(A, by: 2) ^ rotateRight(A, by: 13) ^ rotateRight(A, by: 22)
@@ -804,7 +818,7 @@ internal final class SHA2: DigestType {
             let s1 = rotateRight(E, by: 6) ^ rotateRight(E, by: 11) ^ rotateRight(E, by: 25)
             let ch = (E & F) ^ ((~E) & G)
             let t1 = H &+ s1 &+ ch &+ UInt32(self.k[j]) &+ M[j]
-
+            
             H = G
             G = F
             F = E
@@ -814,7 +828,7 @@ internal final class SHA2: DigestType {
             B = A
             A = t1 &+ t2
         }
-
+        
         hh[0] = hh[0] &+ A
         hh[1] = hh[1] &+ B
         hh[2] = hh[2] &+ C
@@ -827,21 +841,21 @@ internal final class SHA2: DigestType {
 }
 
 extension SHA2: Updatable {
-
+    
     internal func update<T: Collection>(withBytes bytes: T, isLast: Bool = false) throws -> Array<UInt8> where T.Iterator.Element == UInt8 {
         self.accumulated += bytes
-
+        
         if isLast {
             let lengthInBits = (self.processedBytesTotalCount + self.accumulated.count) * 8
             let lengthBytes = lengthInBits.bytes(totalBytes: self.blockSize / 8) // A 64-bit/128-bit representation of b. blockSize fit by accident.
-
+            
             // Step 1. Append padding
             bitPadding(to: &self.accumulated, blockSize: self.blockSize, allowance: self.blockSize / 8)
-
+            
             // Step 2. Append Length a 64-bit representation of lengthInBits
             self.accumulated += lengthBytes
         }
-
+        
         var processedBytes = 0
         for chunk in BytesSequence(chunkSize: self.blockSize, data: self.accumulated) {
             if (isLast || (self.accumulated.count - processedBytes) >= self.blockSize) {
@@ -856,7 +870,7 @@ extension SHA2: Updatable {
         }
         self.accumulated.removeFirst(processedBytes)
         self.processedBytesTotalCount += processedBytes
-
+        
         // output current hash
         var result = Array<UInt8>(repeating: 0, count: self.variant.digestLength)
         switch self.variant {
@@ -885,7 +899,7 @@ extension SHA2: Updatable {
                 pos += 8
             }
         }
-
+        
         // reset hash value for instance
         if isLast {
             switch self.variant {
@@ -895,7 +909,7 @@ extension SHA2: Updatable {
                 self.accumulatedHash64 = variant.h
             }
         }
-
+        
         return result
     }
 }
@@ -909,15 +923,15 @@ extension SHA2: Updatable {
 
 /** String extension */
 extension String {
-
+    
     internal func sha256() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha256().toHexString()
     }
-
+    
     internal func sha512() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha512().toHexString()
     }
-
+    
     /// - parameter authenticator: Instance of `Authenticator`
     /// - returns: hex string of string
     internal func authenticate<A: Authenticator>(with authenticator: A) throws -> String {
@@ -934,19 +948,33 @@ extension String {
 
 /** array of bytes */
 extension UInt16 {
-
-    @_specialize(ArraySlice<UInt8>)
+    #if swift(>=3.2)
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt16(bytes: bytes, fromIndex: bytes.startIndex)
     }
-
-    @_specialize(ArraySlice<UInt8>)
+    
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
         let val0 = UInt16(bytes[index.advanced(by: 0)]) << 8
         let val1 = UInt16(bytes[index.advanced(by: 1)])
-
+        
         self = val0 | val1
     }
+    #else
+    @_specialize(ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
+    self = UInt16(bytes: bytes, fromIndex: bytes.startIndex)
+    }
+    
+    @_specialize(ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
+    let val0 = UInt16(bytes[index.advanced(by: 0)]) << 8
+    let val1 = UInt16(bytes[index.advanced(by: 1)])
+    
+    self = val0 | val1
+    }
+    #endif
 
     func bytes(totalBytes: Int = MemoryLayout<UInt16>.size) -> Array<UInt8> {
         return arrayOfBytes(value: self, length: totalBytes)
@@ -971,7 +999,22 @@ extension UInt32: _UInt32Type {}
 
 /** array of bytes */
 extension UInt32 {
+#if swift(>=3.2)
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
+        self = UInt32(bytes: bytes, fromIndex: bytes.startIndex)
+    }
 
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
+        let val0 = UInt32(bytes[index.advanced(by: 0)]) << 24
+        let val1 = UInt32(bytes[index.advanced(by: 1)]) << 16
+        let val2 = UInt32(bytes[index.advanced(by: 2)]) << 8
+        let val3 = UInt32(bytes[index.advanced(by: 3)])
+
+        self = val0 | val1 | val2 | val3
+    }
+#else
     @_specialize(ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt32(bytes: bytes, fromIndex: bytes.startIndex)
@@ -986,7 +1029,7 @@ extension UInt32 {
 
         self = val0 | val1 | val2 | val3
     }
-
+#endif
     func bytes(totalBytes: Int = MemoryLayout<UInt32>.size) -> Array<UInt8> {
         return arrayOfBytes(value: self, length: totalBytes)
     }
@@ -1001,7 +1044,26 @@ extension UInt32 {
 
 /** array of bytes */
 extension UInt64 {
+#if swift(>=3.2)
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
+        self = UInt64(bytes: bytes, fromIndex: bytes.startIndex)
+    }
 
+    @_specialize(where T == ArraySlice<UInt8>)
+    init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
+        let val0 = UInt64(bytes[index.advanced(by: 0)]) << 56
+        let val1 = UInt64(bytes[index.advanced(by: 1)]) << 48
+        let val2 = UInt64(bytes[index.advanced(by: 2)]) << 40
+        let val3 = UInt64(bytes[index.advanced(by: 3)]) << 32
+        let val4 = UInt64(bytes[index.advanced(by: 4)]) << 24
+        let val5 = UInt64(bytes[index.advanced(by: 5)]) << 16
+        let val6 = UInt64(bytes[index.advanced(by: 6)]) << 8
+        let val7 = UInt64(bytes[index.advanced(by: 7)])
+
+        self = val0 | val1 | val2 | val3 | val4 | val5 | val6 | val7
+    }
+#else
     @_specialize(ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt64(bytes: bytes, fromIndex: bytes.startIndex)
@@ -1020,7 +1082,7 @@ extension UInt64 {
 
         self = val0 | val1 | val2 | val3 | val4 | val5 | val6 | val7
     }
-
+#endif
     func bytes(totalBytes: Int = MemoryLayout<UInt64>.size) -> Array<UInt8> {
         return arrayOfBytes(value: self, length: totalBytes)
     }
