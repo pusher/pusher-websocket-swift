@@ -328,7 +328,7 @@ extension UInt32: Initiable {}
 extension UInt64: Initiable {}
 
 /** build bit pattern from array of bits */
-@_specialize(UInt8)
+@_specialize(where T == UInt8)
 func integerFrom<T: UnsignedInteger>(_ bits: Array<Bit>) -> T {
     var bitPattern: T = 0
     for idx in bits.indices {
@@ -935,12 +935,12 @@ extension String {
 /** array of bytes */
 extension UInt16 {
 
-    @_specialize(ArraySlice<UInt8>)
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt16(bytes: bytes, fromIndex: bytes.startIndex)
     }
 
-    @_specialize(ArraySlice<UInt8>)
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
         let val0 = UInt16(bytes[index.advanced(by: 0)]) << 8
         let val1 = UInt16(bytes[index.advanced(by: 1)])
@@ -972,12 +972,12 @@ extension UInt32: _UInt32Type {}
 /** array of bytes */
 extension UInt32 {
 
-    @_specialize(ArraySlice<UInt8>)
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt32(bytes: bytes, fromIndex: bytes.startIndex)
     }
 
-    @_specialize(ArraySlice<UInt8>)
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
         let val0 = UInt32(bytes[index.advanced(by: 0)]) << 24
         let val1 = UInt32(bytes[index.advanced(by: 1)]) << 16
@@ -1002,12 +1002,12 @@ extension UInt32 {
 /** array of bytes */
 extension UInt64 {
 
-    @_specialize(ArraySlice<UInt8>)
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
         self = UInt64(bytes: bytes, fromIndex: bytes.startIndex)
     }
 
-    @_specialize(ArraySlice<UInt8>)
+    @_specialize(where T == ArraySlice<UInt8>)
     init<T: Collection>(bytes: T, fromIndex index: T.Index) where T.Iterator.Element == UInt8, T.Index == Int {
         let val0 = UInt64(bytes[index.advanced(by: 0)]) << 56
         let val1 = UInt64(bytes[index.advanced(by: 1)]) << 48
