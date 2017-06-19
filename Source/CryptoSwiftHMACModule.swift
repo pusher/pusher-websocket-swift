@@ -150,7 +150,7 @@ struct BytesSequence: Sequence {
 //  Copyright © 2015 Marcin Krzyzanowski. All rights reserved.
 //
 
-internal protocol CSArrayType: Collection, RangeReplaceableCollection {
+internal protocol CSArrayType: RangeReplaceableCollection {
     func cs_arrayValue() -> [Iterator.Element]
 }
 
