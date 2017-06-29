@@ -117,6 +117,7 @@ public enum AuthMethod {
     case endpoint(authEndpoint: String)
     case authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
     case inline(secret: String)
+    case authorizer(authorizer: Authorizer)
     case noMethod
 }
 ```
@@ -124,6 +125,7 @@ public enum AuthMethod {
 - `endpoint(authEndpoint: String)` - the client will make a `POST` request to the endpoint you specify with the socket ID of the client and the channel name attempting to be subscribed to
 - `authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)` - you specify an object that conforms to the `AuthRequestBuilderProtocol` (defined below), which must generate an `NSURLRequest` object that will be used to make the auth request
 - `inline(secret: String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
+- `authorizer(authorizer: Authorizer)` - you specify an object that conforms to the `Authorizer` protocol which must be able to provide the appropriate auth information
 - `noMethod` - if you are only using public channels then you do not need to set an `authMethod` (this is the default value)
 
 This is the `AuthRequestBuilderProtocol` definition:
@@ -134,6 +136,28 @@ public protocol AuthRequestBuilderProtocol {
 
     // DEPRECATED
     func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
+}
+```
+
+This is the `Authorizer` protocol definition:
+
+```swift
+public protocol Authorizer {
+    func fetchAuthValue(socketID: String, channelName: String, completionHandler: (PusherAuth?) -> ())
+}
+```
+
+where `PusherAuth` is defined as:
+
+```swift
+public class PusherAuth: NSObject {
+    public let auth: String
+    public let channelData: String?
+
+    public init(auth: String, channelData: String? = nil) {
+        self.auth = auth
+        self.channelData = channelData
+    }
 }
 ```
 

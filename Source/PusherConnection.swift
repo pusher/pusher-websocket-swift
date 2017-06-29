@@ -579,7 +579,6 @@ open class PusherConnection: NSObject {
                 let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
                 sendAuthorisationRequest(request: request, channel: channel)
                 return true
-
             case .authRequestBuilder(authRequestBuilder: let builder):
                 if let request = builder.requestFor?(socketID: socketId, channel: channel) {
                     sendAuthorisationRequest(request: request as URLRequest, channel: channel)
@@ -597,6 +596,17 @@ open class PusherConnection: NSObject {
 
                     return false
                 }
+            case .authorizer(authorizer: let authorizer):
+                authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { authInfo in
+                    guard let authInfo = authInfo else {
+                        print("Auth info passed to authorizer completionHandler was nil so channel subscription failed")
+                        return
+                    }
+
+                    handleAuthInfo(authString: authInfo.auth, channelData: authInfo.channelData, channel: channel)
+                }
+
+                return true
             case .inline(secret: let secret):
                 var msg = ""
                 var channelData = ""
@@ -724,28 +734,43 @@ open class PusherConnection: NSObject {
     }
 
     /**
-        Handle authentication request response and call appropriate handle function
+        Handle authorizer request response and call appropriate handle function
 
         - parameter json:    The auth response as a dictionary
-        - parameter channel: The PusherChannel to authenticate subsciption for
+        - parameter channel: The PusherChannel to authorize subsciption for
     */
     fileprivate func handleAuthResponse(
         json: [String : AnyObject],
         channel: PusherChannel) {
             if let auth = json["auth"] as? String {
-                if let channelData = json["channel_data"] as? String {
-                    handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData)
-                } else {
-                    handlePrivateChannelAuth(authValue: auth, channel: channel)
-                }
+                handleAuthInfo(
+                    authString: auth,
+                    channelData: json["channel_data"] as? String,
+                    channel: channel
+                )
             }
+    }
+
+    /**
+        Handle authorizer info and call appropriate handle function
+
+        - parameter authString:  The auth response as a dictionary
+        - parameter channelData: The channelData to send along with the auth request
+        - parameter channel:     The PusherChannel to authorize the subsciption for
+    */
+    fileprivate func handleAuthInfo(authString: String, channelData: String?, channel: PusherChannel) {
+        if let channelData = channelData {
+            handlePresenceChannelAuth(authValue: authString, channel: channel, channelData: channelData)
+        } else {
+            handlePrivateChannelAuth(authValue: authString, channel: channel)
+        }
     }
 
     /**
         Handle presence channel auth response and send subscribe message to Pusher API
 
         - parameter auth:        The auth string
-        - parameter channel:     The PusherChannel to authenticate subsciption for
+        - parameter channel:     The PusherChannel to authorize subsciption for
         - parameter channelData: The channelData to send along with the auth request
     */
     fileprivate func handlePresenceChannelAuth(
