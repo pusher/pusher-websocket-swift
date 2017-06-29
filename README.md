@@ -634,6 +634,24 @@ Note that both private and presence channels require the user to be authenticate
 We recommend that you use an authentication endpoint over including your app's secret in your app in the vast majority of use cases. If you are completely certain that there's no risk to you including your app's secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.
 
 
+### Subscribing with self-provided auth values
+
+It is possible to subscribe to channels that require authentication by providing the auth information at the point of calling `subscribe` or `subscribeToPresenceChannel`. This is done as shown below:
+
+#### Swift
+
+```swift
+let pusherAuth = PusherAuth(auth: yourAuthString, channelData: yourOptionalChannelDataString)
+let chan = self.pusher.subscribe(channelName, auth: pusherAuth)
+```
+
+This PusherAuth object can be initialised with just an auth (String) value if the subscription is to a private channel, or both an `auth (String)` and `channelData (String)` pair of values if the subscription is to a presence channel.
+
+These `auth` and `channelData` values are the values that you received if the json object created by a call to pusher.authenticate(...) in one of our various server libraries.
+
+Keep in mind that in order to generate a valid auth value for a subscription the `socketId` (i.e. the unique identifier for a web socket connection to the Pusher servers) must be present when the auth value is generated. As such, the likely flow for using this is something like this would involve checking for when the connection state becomes `connected` before trying to subscribe to any channels requiring authentication.
+
+
 ## Binding to events
 
 Events can be bound to at 2 levels; globally and per channel. When binding to an event you can choose to save the return value, which is a unique identifier for the event handler that gets created. The only reason to save this is if you're going to want to unbind from the event at a later point in time. There is an example of this below.
