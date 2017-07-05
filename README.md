@@ -161,6 +161,10 @@ public class PusherAuth: NSObject {
 }
 ```
 
+Provided the authorization process succeeds you need to then call the supplied `completionHandler` with a `PusherAuth` object so that the subscription process can complete.
+
+If for whatever reason your authorization process fails then you just need to call the `completionHandler` with `nil` as the only parameter.
+
 Note that if you want to specify the cluster to which you want to connect then you use the `host` property as follows:
 
 #### Swift
