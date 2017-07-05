@@ -117,6 +117,7 @@ public enum AuthMethod {
     case endpoint(authEndpoint: String)
     case authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)
     case inline(secret: String)
+    case authorizer(authorizer: Authorizer)
     case noMethod
 }
 ```
@@ -124,6 +125,7 @@ public enum AuthMethod {
 - `endpoint(authEndpoint: String)` - the client will make a `POST` request to the endpoint you specify with the socket ID of the client and the channel name attempting to be subscribed to
 - `authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)` - you specify an object that conforms to the `AuthRequestBuilderProtocol` (defined below), which must generate an `NSURLRequest` object that will be used to make the auth request
 - `inline(secret: String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
+- `authorizer(authorizer: Authorizer)` - you specify an object that conforms to the `Authorizer` protocol which must be able to provide the appropriate auth information
 - `noMethod` - if you are only using public channels then you do not need to set an `authMethod` (this is the default value)
 
 This is the `AuthRequestBuilderProtocol` definition:
@@ -136,6 +138,32 @@ public protocol AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
 }
 ```
+
+This is the `Authorizer` protocol definition:
+
+```swift
+public protocol Authorizer {
+    func fetchAuthValue(socketID: String, channelName: String, completionHandler: (PusherAuth?) -> ())
+}
+```
+
+where `PusherAuth` is defined as:
+
+```swift
+public class PusherAuth: NSObject {
+    public let auth: String
+    public let channelData: String?
+
+    public init(auth: String, channelData: String? = nil) {
+        self.auth = auth
+        self.channelData = channelData
+    }
+}
+```
+
+Provided the authorization process succeeds you need to then call the supplied `completionHandler` with a `PusherAuth` object so that the subscription process can complete.
+
+If for whatever reason your authorization process fails then you just need to call the `completionHandler` with `nil` as the only parameter.
 
 Note that if you want to specify the cluster to which you want to connect then you use the `host` property as follows:
 
@@ -608,6 +636,24 @@ let chan = pusher.subscribeToPresenceChannel("presence-channel")
 Note that both private and presence channels require the user to be authenticated in order to subscribe to the channel. This authentication can either happen inside the library, if you configured your Pusher object with your app's secret, or an authentication request is made to an authentication endpoint that you provide, again when instantiaing your Pusher object.
 
 We recommend that you use an authentication endpoint over including your app's secret in your app in the vast majority of use cases. If you are completely certain that there's no risk to you including your app's secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.
+
+
+### Subscribing with self-provided auth values
+
+It is possible to subscribe to channels that require authentication by providing the auth information at the point of calling `subscribe` or `subscribeToPresenceChannel`. This is done as shown below:
+
+#### Swift
+
+```swift
+let pusherAuth = PusherAuth(auth: yourAuthString, channelData: yourOptionalChannelDataString)
+let chan = self.pusher.subscribe(channelName, auth: pusherAuth)
+```
+
+This PusherAuth object can be initialised with just an auth (String) value if the subscription is to a private channel, or both an `auth (String)` and `channelData (String)` pair of values if the subscription is to a presence channel.
+
+These `auth` and `channelData` values are the values that you received if the json object created by a call to pusher.authenticate(...) in one of our various server libraries.
+
+Keep in mind that in order to generate a valid auth value for a subscription the `socketId` (i.e. the unique identifier for a web socket connection to the Pusher servers) must be present when the auth value is generated. As such, the likely flow for using this is something like this would involve checking for when the connection state becomes `connected` before trying to subscribe to any channels requiring authentication.
 
 
 ## Binding to events

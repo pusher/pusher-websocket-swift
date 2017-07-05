@@ -246,4 +246,68 @@ class AuthenticationTests: XCTestCase {
 
         waitForExpectations(timeout: 0.5)
     }
+
+    func testAuthorizationUsingSomethingConformingToTheAuthorizerProtocol() {
+
+        class SomeAuthorizer: Authorizer {
+            func fetchAuthValue(socketID: String, channelName: String, completionHandler: (PusherAuth?) -> ()) {
+                completionHandler(PusherAuth(auth: "testKey123:authorizerblah123"))
+            }
+        }
+
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "private-test-channel-authorizer"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+
+        let options = PusherClientOptions(
+            authMethod: AuthMethod.authorizer(authorizer: SomeAuthorizer())
+        )
+        pusher = Pusher(key: "testKey123", options: options)
+        pusher.delegate = dummyDelegate
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+
+        let chan = pusher.subscribe(channelName)
+        XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
+    func testAuthorizationOfPresenceChannelSubscriptionUsingSomethingConformingToTheAuthorizerProtocol() {
+
+        class SomeAuthorizer: Authorizer {
+            func fetchAuthValue(socketID: String, channelName: String, completionHandler: (PusherAuth?) -> ()) {
+                completionHandler(PusherAuth(
+                    auth: "testKey123:authorizerblah1234",
+                    channelData: "{\"user_id\":\"777\", \"user_info\":{\"twitter\":\"hamchapman\"}}"
+                ))
+            }
+        }
+
+        let ex = expectation(description: "the channel should be subscribed to successfully")
+        let channelName = "presence-test-channel-authorizer"
+
+        let dummyDelegate = DummyDelegate()
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+
+        let options = PusherClientOptions(
+            authMethod: AuthMethod.authorizer(authorizer: SomeAuthorizer())
+        )
+        pusher = Pusher(key: "testKey123", options: options)
+        pusher.delegate = dummyDelegate
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+
+        let chan = pusher.subscribe(channelName)
+        XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
 }
