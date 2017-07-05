@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.2.0
+
+* Added `Authorizer` protocol that permits a new authorization method for channels requiring it (private and presence channels).
+
 ## 4.1.0
 
 * Reverted change introduced in 4.0.2 that set up a custom callback queue for the underlying websocket
