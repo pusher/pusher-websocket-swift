@@ -133,7 +133,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
         Unsubscribes the client from all channels
     */
-    open func unsubscribe(_ channelName: String) {
+    open func unsubscribeAll() {
         self.connection.unsubscribeAll()
     }
 
