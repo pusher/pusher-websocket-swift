@@ -181,7 +181,7 @@ open class PusherConnection: NSObject {
     */
     internal func unsubscribeAll() {
         for (_, channel) in channels.channels {
-            pusher.unsubscribe(channel.name)
+            unsubscribe(channel.name)
         }
     }
 
