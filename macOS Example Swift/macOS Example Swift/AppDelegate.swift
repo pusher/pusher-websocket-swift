@@ -16,7 +16,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        NSApp.registerForRemoteNotifications(matching: [NSRemoteNotificationType.alert, NSRemoteNotificationType.sound, NSRemoteNotificationType.badge]);
+        NSApp.registerForRemoteNotifications(
+            matching: [
+                NSApplication.RemoteNotificationType.alert,
+                NSApplication.RemoteNotificationType.sound,
+                NSApplication.RemoteNotificationType.badge
+            ]
+        );
 
         self.pusher.delegate = self
     }

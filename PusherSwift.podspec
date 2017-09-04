@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/pusher'
 
   s.requires_arc = true
-  s.source_files = 'Source/*.swift'
+  s.source_files = 'Sources/*.swift'
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'

@@ -28,6 +28,7 @@ public enum AuthMethod {
     case noMethod
 }
 
+@objcMembers
 @objc public class PusherClientOptions: NSObject {
     public var authMethod: AuthMethod
     public let attemptToReturnJSONObject: Bool

@@ -8,7 +8,8 @@
 
 import Foundation
 
-open class GlobalChannel: PusherChannel {
+@objcMembers
+@objc open class GlobalChannel: PusherChannel {
     open var globalCallbacks: [String : (Any?) -> Void] = [:]
 
     /**

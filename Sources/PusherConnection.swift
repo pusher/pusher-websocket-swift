@@ -10,7 +10,8 @@ import Foundation
 
 public typealias PusherEventJSON = [String: AnyObject]
 
-open class PusherConnection: NSObject {
+@objcMembers
+@objc open class PusherConnection: NSObject {
     open let url: String
     open let key: String
     open var options: PusherClientOptions
