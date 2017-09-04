@@ -4,10 +4,8 @@
 //
 //  Created by Hamilton Chapman on 06/04/2016.
 //
-//  The content below is the concatenation of these files
-//  - https://raw.githubusercontent.com/daltoniam/Starscream/swift-23/Source/SSLSecurity.swift
-//  - https://raw.githubusercontent.com/daltoniam/Starscream/swift-23/Source/WebSocket.swift
-//  (with trivial warnings fixed, trailing spaces removed, and some access levels changed)
+//  The content below is the concatenation of the files in Starscream (https://github.com/daltoniam/Starscream)
+//  with trivial warnings fixed, trailing spaces removed, and some access levels changed.
 //
 // commit SHA ee993322c
 
@@ -394,7 +392,7 @@ open class WebSocket : NSObject, StreamDelegate {
 
     // MARK: - Block based API.
 
-    public var onConnect: ((Void) -> Void)?
+    public var onConnect: (() -> Void)?
     public var onDisconnect: ((NSError?) -> Void)?
     public var onText: ((String) -> Void)?
     public var onData: ((Data) -> Void)?

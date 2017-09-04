@@ -8,9 +8,10 @@
 import Foundation
 
 let PROTOCOL = 7
-let VERSION = "4.2.0"
+let VERSION = "5.0.0rc1"
 let CLIENT_NAME = "pusher-websocket-swift"
 
+@objcMembers
 @objc open class Pusher: NSObject {
     open let connection: PusherConnection
     open weak var delegate: PusherDelegate? = nil {
@@ -36,14 +37,14 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
         - returns: A new Pusher client instance
     */
-    public init(key: String, options: PusherClientOptions = PusherClientOptions(), nativePusher: NativePusher = NativePusher()) {
+    public init(key: String, options: PusherClientOptions = PusherClientOptions(), nativePusher: NativePusher? = nil) {
         self.key = key
         let urlString = constructUrl(key: key, options: options)
         let ws = WebSocket(url: URL(string: urlString)!)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
         connection.createGlobalChannel()
-        self.nativePusher = nativePusher
-        nativePusher.setPusherAppKey(pusherAppKey: key)
+        self.nativePusher = nativePusher ?? NativePusher()
+        self.nativePusher.setPusherAppKey(pusherAppKey: key)
     }
 #endif
 

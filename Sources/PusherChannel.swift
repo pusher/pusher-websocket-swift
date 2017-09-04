@@ -12,7 +12,7 @@ public enum PusherChannelType {
     case normal
 
     public init(name: String) {
-        self = type(of: self).type(forName: name)
+        self = Swift.type(of: self).type(forName: name)
     }
 
     public static func type(forName name: String) -> PusherChannelType {
@@ -30,6 +30,7 @@ public enum PusherChannelType {
     }
 }
 
+@objcMembers
 open class PusherChannel: NSObject {
     open var eventHandlers: [String: [EventHandler]] = [:]
     open var subscribed = false

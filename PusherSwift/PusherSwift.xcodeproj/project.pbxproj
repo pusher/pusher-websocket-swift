@@ -58,9 +58,9 @@
 		33831C891A9CF61600B124F1 /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831C8D1A9CF61600B124F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = ../Source/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
-		33831CD61A9CFFF200B124F1 /* PusherSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwift.h; path = ../Source/PusherSwift.h; sourceTree = SOURCE_ROOT; };
-		3384C1B81CAECD9C00F10796 /* PusherChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherChannel.swift; path = ../Source/PusherChannel.swift; sourceTree = SOURCE_ROOT; };
+		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = ../Sources/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
+		33831CD61A9CFFF200B124F1 /* PusherSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwift.h; path = ../Sources/PusherSwift.h; sourceTree = SOURCE_ROOT; };
+		3384C1B81CAECD9C00F10796 /* PusherChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherChannel.swift; path = ../Sources/PusherChannel.swift; sourceTree = SOURCE_ROOT; };
 		3389F5651CAEDD5F00563F49 /* PusherConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherConnection.swift; sourceTree = "<group>"; };
 		3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherWebsocketDelegate.swift; sourceTree = "<group>"; };
 		3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherPresenceChannel.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		33831C491A9CEDF800B124F1 = {
 			isa = PBXGroup;
 			children = (
-				33831C8B1A9CF61600B124F1 /* Source */,
+				33831C8B1A9CF61600B124F1 /* Sources */,
 				33BB995C1D21225B00B25C2A /* Tests */,
 				33831C8A1A9CF61600B124F1 /* Products */,
 				42D29A655054030A9B238900 /* Frameworks */,
@@ -125,7 +125,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		33831C8B1A9CF61600B124F1 /* Source */ = {
+		33831C8B1A9CF61600B124F1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				33831CD31A9CFFD900B124F1 /* PusherSwift.swift */,
@@ -145,8 +145,8 @@
 				33831CD61A9CFFF200B124F1 /* PusherSwift.h */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
 			);
-			name = Source;
-			path = ../Source;
+			name = Sources;
+			path = ../Sources;
 			sourceTree = "<group>";
 		};
 		33831C8C1A9CF61600B124F1 /* Supporting Files */ = {
@@ -491,7 +491,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../Source/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -548,7 +548,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../Source/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

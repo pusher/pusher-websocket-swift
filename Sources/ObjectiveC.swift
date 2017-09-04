@@ -8,39 +8,39 @@
 
 import Foundation
 
-public extension Pusher {
-    @objc public func subscribe(channelName: String) -> PusherChannel {
+@objc public extension Pusher {
+    public func subscribe(channelName: String) -> PusherChannel {
         return self.subscribe(channelName, onMemberAdded: nil, onMemberRemoved: nil)
     }
 
-    @objc public func subscribe(
+    public func subscribe(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
             return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
-    @objc public func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
+    public func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
         return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: nil, onMemberRemoved: nil)
     }
 
-    @objc public func subscribeToPresenceChannel(
+    public func subscribeToPresenceChannel(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
             return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
-    @objc public convenience init(withAppKey key: String, options: PusherClientOptions) {
+    public convenience init(withAppKey key: String, options: PusherClientOptions) {
         self.init(key: key, options: options)
     }
 
-    @objc public convenience init(withKey key: String) {
+    public convenience init(withKey key: String) {
         self.init(key: key)
     }
 }
 
-public extension PusherClientOptions {
+@objc public extension PusherClientOptions {
     public convenience init(
         ocAuthMethod authMethod: OCAuthMethod,
         attemptToReturnJSONObject: Bool = true,
@@ -87,6 +87,7 @@ public extension PusherHost {
     }
 }
 
+@objcMembers
 @objc public class OCPusherHost: NSObject {
     var type: Int
     var host: String? = nil
@@ -135,6 +136,7 @@ public extension AuthMethod {
     }
 }
 
+@objcMembers
 @objc public class OCAuthMethod: NSObject {
     var type: Int
     var secret: String? = nil

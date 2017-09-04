@@ -18,6 +18,7 @@ import Foundation
 
     A per-app instance NativePusher is available via an instance of Pusher.
 */
+@objcMembers
 @objc open class NativePusher: NSObject {
     private static let PLATFORM_TYPE = "apns"
     private let CLIENT_API_V1_ENDPOINT = "https://nativepushclient-cluster1.pusher.com/client_api/v1"

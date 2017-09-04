@@ -8,7 +8,8 @@
 
 import Foundation
 
-open class PusherChannels: NSObject {
+@objcMembers
+@objc open class PusherChannels: NSObject {
     open var channels = [String: PusherChannel]()
 
     /**
