@@ -1,15 +1,8 @@
+//  The content below is the concatenation of the files in Starscream (https://github.com/daltoniam/Starscream)
+//  with trivial warnings fixed, trailing spaces removed, and some access levels changed.
 //
-//  Starscream.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 06/04/2016.
-//
-//  The content below is the concatenation of these files
-//  - https://raw.githubusercontent.com/daltoniam/Starscream/swift-23/Source/SSLSecurity.swift
-//  - https://raw.githubusercontent.com/daltoniam/Starscream/swift-23/Source/WebSocket.swift
-//  (with trivial warnings fixed, trailing spaces removed, and some access levels changed)
-//
-// commit SHA ee993322c
+// Based on commit SHA 789264eeff101e, but without some docs fixes from ee993322c
+// onwards, and without the compression support.
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -394,7 +387,7 @@ open class WebSocket : NSObject, StreamDelegate {
 
     // MARK: - Block based API.
 
-    public var onConnect: ((Void) -> Void)?
+    public var onConnect: (() -> Void)?
     public var onDisconnect: ((NSError?) -> Void)?
     public var onText: ((String) -> Void)?
     public var onData: ((Data) -> Void)?
@@ -408,7 +401,10 @@ open class WebSocket : NSObject, StreamDelegate {
     public var origin: String?
     public var timeout = 5
     public var isConnected: Bool {
-        return connected
+        connectedMutex.lock()
+        let isConnected = connected
+        connectedMutex.unlock()
+        return isConnected
     }
 
     public var currentURL: URL { return url }
@@ -420,6 +416,7 @@ open class WebSocket : NSObject, StreamDelegate {
     private var outputStream: OutputStream?
     private var connected = false
     private var isConnecting = false
+    private let connectedMutex = NSLock()
     private var writeQueue = OperationQueue()
     private var readStack = [WSResponse]()
     private var inputQueue = [Data]()
@@ -427,12 +424,12 @@ open class WebSocket : NSObject, StreamDelegate {
     private var certValidated = false
     private var didDisconnect = false
     private var readyToWrite = false
-    private let mutex = NSLock()
+    private let readyToWriteMutex = NSLock()
     private let notificationCenter = NotificationCenter.default
     private var canDispatch: Bool {
-        mutex.lock()
+        readyToWriteMutex.lock()
         let canWork = readyToWrite
-        mutex.unlock()
+        readyToWriteMutex.unlock()
         return canWork
     }
     /// The shared processing queue used for all WebSocket.
@@ -484,12 +481,17 @@ open class WebSocket : NSObject, StreamDelegate {
             let milliseconds = Int(seconds * 1_000)
             callbackQueue.asyncAfter(deadline: .now() + .milliseconds(milliseconds)) { [weak self] in
                 self?.disconnectStream(nil)
+                WebSocket.sharedWorkQueue.async {
+                    self?.disconnectStream(nil)
+                }
             }
             fallthrough
         case .none:
             writeError(closeCode)
         default:
-            disconnectStream(nil)
+            WebSocket.sharedWorkQueue.async { [weak self] in
+                self?.disconnectStream(nil)
+            }
             break
         }
     }
@@ -620,13 +622,17 @@ open class WebSocket : NSObject, StreamDelegate {
                     let resIn = SSLSetEnabledCiphers(sslContextIn, cipherSuites, cipherSuites.count)
                     let resOut = SSLSetEnabledCiphers(sslContextOut, cipherSuites, cipherSuites.count)
                     if resIn != errSecSuccess {
-                        let error = self.errorWithDetail("Error setting ingoing cypher suites", code: UInt16(resIn))
-                        disconnectStream(error)
+                        WebSocket.sharedWorkQueue.async { [weak self] in
+                            let error = self?.errorWithDetail("Error setting ingoing cypher suites", code: UInt16(resIn))
+                            self?.disconnectStream(error)
+                        }
                         return
                     }
                     if resOut != errSecSuccess {
-                        let error = self.errorWithDetail("Error setting outgoing cypher suites", code: UInt16(resOut))
-                        disconnectStream(error)
+                        WebSocket.sharedWorkQueue.async { [weak self] in
+                            let error = self?.errorWithDetail("Error setting outgoing cypher suites", code: UInt16(resOut))
+                            self?.disconnectStream(error)
+                        }
                         return
                     }
                 }
@@ -644,9 +650,9 @@ open class WebSocket : NSObject, StreamDelegate {
         inStream.open()
         outStream.open()
 
-        self.mutex.lock()
+        self.readyToWriteMutex.lock()
         self.readyToWrite = true
-        self.mutex.unlock()
+        self.readyToWriteMutex.unlock()
 
         let bytes = UnsafeRawPointer((data as NSData).bytes).assumingMemoryBound(to: UInt8.self)
         var out = timeout * 1_000_000 // wait 5 seconds before giving up
@@ -670,9 +676,12 @@ open class WebSocket : NSObject, StreamDelegate {
             guard !sOperation.isCancelled, let s = self else { return }
             // Do the pinning now if needed
             if let sec = s.security, !s.certValidated {
-                let trust = outStream.property(forKey: kCFStreamPropertySSLPeerTrust as Stream.PropertyKey) as! SecTrust
-                let domain = outStream.property(forKey: kCFStreamSSLPeerName as Stream.PropertyKey) as? String
-                s.certValidated = sec.isValid(trust, domain: domain)
+                if let possibleTrust = outStream.property(forKey: kCFStreamPropertySSLPeerTrust as Stream.PropertyKey) {
+                    let domain = outStream.property(forKey: kCFStreamSSLPeerName as Stream.PropertyKey) as? String
+                    s.certValidated = sec.isValid(possibleTrust as! SecTrust, domain: domain)
+                } else {
+                    s.certValidated = false
+                }
                 if !s.certValidated {
                     WebSocket.sharedWorkQueue.async {
                         let error = s.errorWithDetail("Invalid SSL certificate", code: 1)
@@ -711,7 +720,9 @@ open class WebSocket : NSObject, StreamDelegate {
             writeQueue.cancelAllOperations()
         }
         cleanupStream()
+        connectedMutex.lock()
         connected = false
+        connectedMutex.unlock()
         if runDelegate {
             doDisconnect(error)
         }
@@ -820,7 +831,9 @@ open class WebSocket : NSObject, StreamDelegate {
                 return code
             }
             isConnecting = false
+            connectedMutex.lock()
             connected = true
+            connectedMutex.unlock()
             didDisconnect = false
             if canDispatch {
                 callbackQueue.async { [weak self] in
@@ -1202,7 +1215,9 @@ open class WebSocket : NSObject, StreamDelegate {
         guard !didDisconnect else { return }
         didDisconnect = true
         isConnecting = false
+        connectedMutex.lock()
         connected = false
+        connectedMutex.unlock()
         guard canDispatch else {return}
         callbackQueue.async { [weak self] in
             guard let s = self else { return }
@@ -1216,9 +1231,9 @@ open class WebSocket : NSObject, StreamDelegate {
     // MARK: - Deinit
 
     deinit {
-        mutex.lock()
+        readyToWriteMutex.lock()
         readyToWrite = false
-        mutex.unlock()
+        readyToWriteMutex.unlock()
         cleanupStream()
         writeQueue.cancelAllOperations()
     }
