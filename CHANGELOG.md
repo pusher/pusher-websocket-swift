@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.2.1
+
+* Updated Starscream dependency (commit SHA 789264eef). Fixes #115.
+
 ## 4.2.0
 
 * Added `Authorizer` protocol that permits a new authorization method for channels requiring it (private and presence channels).
