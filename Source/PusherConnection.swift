@@ -175,6 +175,15 @@ open class PusherConnection: NSObject {
             self.channels.remove(name: channelName)
         }
     }
+    
+    /**
+        Unsubscribes from all PusherChannels
+    */
+    internal func unsubscribeAll() {
+        for (_, channel) in channels.channels {
+            unsubscribe(channel.name)
+        }
+    }
 
     /**
         Either writes a string directly to the websocket with the given event name

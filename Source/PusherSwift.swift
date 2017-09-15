@@ -128,6 +128,13 @@ let CLIENT_NAME = "pusher-websocket-swift"
     open func unsubscribe(_ channelName: String) {
         self.connection.unsubscribe(channelName: channelName)
     }
+    
+    /**
+        Unsubscribes the client from all channels
+    */
+    open func unsubscribeAll() {
+        self.connection.unsubscribeAll()
+    }
 
     /**
         Binds the client's global channel to all events
