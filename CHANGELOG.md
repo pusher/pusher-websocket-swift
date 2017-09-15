@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.0
+
+* Swift 3.2 support (requires Xcode 9+).
+
 ## 4.2.1
 
 * Updated Starscream dependency (commit SHA 789264eef). Fixes #115.
