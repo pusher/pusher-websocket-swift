@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.1
+
+* Swift 4 support.
+* Updated CryptoSwift-based code.
+
 ## 5.0.0
 
 * Swift 3.2 support (requires Xcode 9+).
