@@ -5,6 +5,8 @@
 // cat Sources/CryptoSwift/Array+Extension.swift Sources/CryptoSwift/Authenticator.swift Sources/CryptoSwift/BatchedCollection.swift Sources/CryptoSwift/Bit.swift Sources/CryptoSwift/CSArrayType+Extensions.swift Sources/CryptoSwift/Digest.swift Sources/CryptoSwift/DigestType.swift Sources/CryptoSwift/Generics.swift Sources/CryptoSwift/Foundation/CSArrayType+Foundation.swift Sources/CryptoSwift/Foundation/Data+Extension.swift Sources/CryptoSwift/Foundation/HMAC+Foundation.swift Sources/CryptoSwift/Foundation/Utils+Foundation.swift Sources/CryptoSwift/HMAC.swift Sources/CryptoSwift/Int+Extension.swift Sources/CryptoSwift/NoPadding.swift Sources/CryptoSwift/Padding.swift Sources/CryptoSwift/RandomBytesSequence.swift Sources/CryptoSwift/SecureBytes.swift Sources/CryptoSwift/SHA2.swift Sources/CryptoSwift/String+Extension.swift Sources/CryptoSwift/UInt8+Extension.swift Sources/CryptoSwift/UInt16+Extension.swift Sources/CryptoSwift/UInt32+Extension.swift Sources/CryptoSwift/UInt64+Extension.swift Sources/CryptoSwift/Updatable.swift Sources/CryptoSwift/Utils.swift Sources/CryptoSwift/ZeroPadding.swift > HCCrypto.swift
 // in a clone of the CryptoSwift project. Then removing anything not related to sha256 / sha512.
 //
+// Then made otherwise public API internal so as to avoid collisions
+//
 // ---------------------------------------
 //
 //  ArrayExtension.swift
@@ -32,7 +34,7 @@ extension Array {
 extension Array {
 
     /** split in chunks with given chunk size */
-    public func chunks(size chunksize: Int) -> Array<Array<Element>> {
+    internal func chunks(size chunksize: Int) -> Array<Array<Element>> {
         var words = Array<Array<Element>>()
         words.reserveCapacity(self.count / chunksize)
         for idx in stride(from: chunksize, through: self.count, by: chunksize) {
@@ -48,7 +50,7 @@ extension Array {
 
 extension Array where Element == UInt8 {
 
-    public init(hex: String) {
+    internal init(hex: String) {
         self.init(reserveCapacity: hex.unicodeScalars.lazy.underestimatedCount)
         var buffer:UInt8?
         var skip = hex.hasPrefix("0x") ? 2 : 0
@@ -104,7 +106,7 @@ extension Array where Element == UInt8 {
 //
 
 /// Message authentication code.
-public protocol Authenticator {
+internal protocol Authenticator {
     /// Calculate Message Authentication Code (MAC) for message.
     func authenticate(_ bytes: Array<UInt8>) throws -> Array<UInt8>
 }
@@ -184,7 +186,7 @@ extension Collection {
 //  - This notice may not be removed or altered from any source or binary distribution.
 //
 
-public enum Bit: Int {
+internal enum Bit: Int {
     case zero
     case one
 }
@@ -211,20 +213,20 @@ extension Bit {
 //  - This notice may not be removed or altered from any source or binary distribution.
 //
 
-public protocol CSArrayType: RangeReplaceableCollection {
+internal protocol CSArrayType: RangeReplaceableCollection {
     func cs_arrayValue() -> [Iterator.Element]
 }
 
 extension Array: CSArrayType {
 
-    public func cs_arrayValue() -> [Iterator.Element] {
+    internal func cs_arrayValue() -> [Iterator.Element] {
         return self
     }
 }
 
-public extension CSArrayType where Iterator.Element == UInt8 {
+internal extension CSArrayType where Iterator.Element == UInt8 {
 
-    public func toHexString() -> String {
+    internal func toHexString() -> String {
         return self.lazy.reduce("") {
             var s = String($1, radix: 16)
             if s.characters.count == 1 {
@@ -235,20 +237,20 @@ public extension CSArrayType where Iterator.Element == UInt8 {
     }
 }
 
-public extension CSArrayType where Iterator.Element == UInt8 {
-    public func sha256() -> [Iterator.Element] {
+internal extension CSArrayType where Iterator.Element == UInt8 {
+    internal func sha256() -> [Iterator.Element] {
         return Digest.sha256(cs_arrayValue())
     }
 
-    public func sha512() -> [Iterator.Element] {
+    internal func sha512() -> [Iterator.Element] {
         return Digest.sha512(cs_arrayValue())
     }
 
-    public func sha2(_ variant: SHA2.Variant) -> [Iterator.Element] {
+    internal func sha2(_ variant: SHA2.Variant) -> [Iterator.Element] {
         return Digest.sha2(cs_arrayValue(), variant: variant)
     }
 
-    public func authenticate<A: Authenticator>(with authenticator: A) throws -> [Iterator.Element] {
+    internal func authenticate<A: Authenticator>(with authenticator: A) throws -> [Iterator.Element] {
         return try authenticator.authenticate(cs_arrayValue())
     }
 }
@@ -269,21 +271,21 @@ public extension CSArrayType where Iterator.Element == UInt8 {
 //
 
 @available(*, deprecated: 0.6.0, renamed: "Digest")
-public typealias Hash = Digest
+internal typealias Hash = Digest
 
 /// Hash functions to calculate Digest.
-public struct Digest {
+internal struct Digest {
     /// Calculate SHA2-256 Digest
     /// - parameter bytes: input message
     /// - returns: Digest bytes
-    public static func sha256(_ bytes: Array<UInt8>) -> Array<UInt8> {
+    internal static func sha256(_ bytes: Array<UInt8>) -> Array<UInt8> {
         return sha2(bytes, variant: .sha256)
     }
 
     /// Calculate SHA2-512 Digest
     /// - parameter bytes: input message
     /// - returns: Digest bytes
-    public static func sha512(_ bytes: Array<UInt8>) -> Array<UInt8> {
+    internal static func sha512(_ bytes: Array<UInt8>) -> Array<UInt8> {
         return sha2(bytes, variant: .sha512)
     }
 
@@ -291,7 +293,7 @@ public struct Digest {
     /// - parameter bytes: input message
     /// - parameter variant: SHA-2 variant
     /// - returns: Digest bytes
-    public static func sha2(_ bytes: Array<UInt8>, variant: SHA2.Variant) -> Array<UInt8> {
+    internal static func sha2(_ bytes: Array<UInt8>, variant: SHA2.Variant) -> Array<UInt8> {
         return SHA2(variant: variant).calculate(for: bytes)
     }
 }
@@ -386,9 +388,9 @@ func arrayOfBytes<T: FixedWidthInteger>(value: T, length totalBytes: Int = Memor
 
 import Foundation
 
-public extension CSArrayType where Iterator.Element == UInt8 {
+internal extension CSArrayType where Iterator.Element == UInt8 {
 
-    public func toBase64() -> String? {
+    internal func toBase64() -> String? {
         guard let bytesArray = self as? Array<UInt8> else {
             return nil
         }
@@ -396,7 +398,7 @@ public extension CSArrayType where Iterator.Element == UInt8 {
         return Data(bytes: bytesArray).base64EncodedString()
     }
 
-    public init(base64: String) {
+    internal init(base64: String) {
         self.init()
 
         guard let decodedData = Data(base64Encoded: base64) else {
@@ -427,7 +429,7 @@ import Foundation
 extension Data {
 
     /// Two octet checksum as defined in RFC-4880. Sum of all octets, mod 65536
-    public func checksum() -> UInt16 {
+    internal func checksum() -> UInt16 {
         var s: UInt32 = 0
         var bytesArray = self.bytes
         for i in 0 ..< bytesArray.count {
@@ -437,26 +439,26 @@ extension Data {
         return UInt16(s)
     }
 
-    public func sha256() -> Data {
+    internal func sha256() -> Data {
         return Data(bytes: Digest.sha256(self.bytes))
     }
 
-    public func sha512() -> Data {
+    internal func sha512() -> Data {
         return Data(bytes: Digest.sha512(self.bytes))
     }
 
-    public func authenticate(with authenticator: Authenticator) throws -> Data {
+    internal func authenticate(with authenticator: Authenticator) throws -> Data {
         return Data(bytes: try authenticator.authenticate(self.bytes))
     }
 }
 
 extension Data {
 
-    public var bytes: Array<UInt8> {
+    internal var bytes: Array<UInt8> {
         return Array(self)
     }
 
-    public func toHexString() -> String {
+    internal func toHexString() -> String {
         return self.bytes.toHexString()
     }
 }
@@ -480,7 +482,7 @@ import Foundation
 
 extension HMAC {
 
-    public convenience init(key: String, variant: HMAC.Variant = .sha256) throws {
+    internal convenience init(key: String, variant: HMAC.Variant = .sha256) throws {
         guard let kkey = key.data(using: String.Encoding.utf8, allowLossyConversion: false)?.bytes else {
             throw Error.invalidInput
         }
@@ -532,14 +534,14 @@ func perf(_ text: String, closure: () -> Void) {
 //  - This notice may not be removed or altered from any source or binary distribution.
 //
 
-public final class HMAC: Authenticator {
+internal final class HMAC: Authenticator {
 
-    public enum Error: Swift.Error {
+    internal enum Error: Swift.Error {
         case authenticateError
         case invalidInput
     }
 
-    public enum Variant {
+    internal enum Variant {
         case sha256,sha512
 
         var digestLength: Int {
@@ -573,7 +575,7 @@ public final class HMAC: Authenticator {
     var key: Array<UInt8>
     let variant: Variant
 
-    public init(key: Array<UInt8>, variant: HMAC.Variant = .sha256) {
+    internal init(key: Array<UInt8>, variant: HMAC.Variant = .sha256) {
         self.variant = variant
         self.key = key
 
@@ -590,7 +592,7 @@ public final class HMAC: Authenticator {
 
     // MARK: Authenticator
 
-    public func authenticate(_ bytes: Array<UInt8>) throws -> Array<UInt8> {
+    internal func authenticate(_ bytes: Array<UInt8>) throws -> Array<UInt8> {
         var opad = Array<UInt8>(repeating: 0x5c, count: variant.blockSize())
         for idx in key.indices {
             opad[idx] = key[idx] ^ opad[idx]
@@ -669,16 +671,16 @@ extension Int {
 //  - This notice may not be removed or altered from any source or binary distribution.
 //
 
-public struct NoPadding: Padding {
+internal struct NoPadding: Padding {
 
-    public init() {
+    internal init() {
     }
 
-    public func add(to data: Array<UInt8>, blockSize: Int) -> Array<UInt8> {
+    internal func add(to data: Array<UInt8>, blockSize: Int) -> Array<UInt8> {
         return data
     }
 
-    public func remove(from data: Array<UInt8>, blockSize: Int?) -> Array<UInt8> {
+    internal func remove(from data: Array<UInt8>, blockSize: Int?) -> Array<UInt8> {
         return data
     }
 }
@@ -698,7 +700,7 @@ public struct NoPadding: Padding {
 //  - This notice may not be removed or altered from any source or binary distribution.
 //
 
-public protocol Padding {
+internal protocol Padding {
     func add(to: Array<UInt8>, blockSize: Int) -> Array<UInt8>
     func remove(from: Array<UInt8>, blockSize: Int?) -> Array<UInt8>
 }
@@ -825,7 +827,7 @@ extension SecureBytes: Collection {
 }
 
 extension SecureBytes: ExpressibleByArrayLiteral {
-    public convenience init(arrayLiteral elements: UInt8...) {
+    internal convenience init(arrayLiteral elements: UInt8...) {
         self.init(bytes: elements)
     }
 }
@@ -848,7 +850,7 @@ extension SecureBytes: ExpressibleByArrayLiteral {
 //  TODO: generic for process32/64 (UInt32/UInt64)
 //
 
-public final class SHA2: DigestType {
+internal final class SHA2: DigestType {
     let variant: Variant
     let size: Int
     let blockSize: Int
@@ -860,7 +862,7 @@ public final class SHA2: DigestType {
     fileprivate var accumulatedHash32 = Array<UInt32>()
     fileprivate var accumulatedHash64 = Array<UInt64>()
 
-    public enum Variant: RawRepresentable {
+    internal enum Variant: RawRepresentable {
         case sha256, sha512
 
         public var digestLength: Int {
@@ -913,7 +915,7 @@ public final class SHA2: DigestType {
         }
     }
 
-    public init(variant: SHA2.Variant) {
+    internal init(variant: SHA2.Variant) {
         self.variant = variant
         switch self.variant {
         case .sha256:
@@ -953,7 +955,7 @@ public final class SHA2: DigestType {
         }
     }
 
-    public func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
+    internal func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
         do {
             return try self.update(withBytes: bytes, isLast: true)
         } catch {
@@ -1077,7 +1079,7 @@ public final class SHA2: DigestType {
 
 extension SHA2: Updatable {
 
-    public func update<T: Collection>(withBytes bytes: T, isLast: Bool = false) throws -> Array<UInt8> where T.Iterator.Element == UInt8 {
+    internal func update<T: Collection>(withBytes bytes: T, isLast: Bool = false) throws -> Array<UInt8> where T.Iterator.Element == UInt8 {
         self.accumulated += bytes
 
         if isLast {
@@ -1167,17 +1169,17 @@ extension SHA2: Updatable {
 /** String extension */
 extension String {
 
-    public func sha256() -> String {
+    internal func sha256() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha256().toHexString()
     }
 
-    public func sha512() -> String {
+    internal func sha512() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha512().toHexString()
     }
 
     /// - parameter authenticator: Instance of `Authenticator`
     /// - returns: hex string of string
-    public func authenticate<A: Authenticator>(with authenticator: A) throws -> String {
+    internal func authenticate<A: Authenticator>(with authenticator: A) throws -> String {
         return try Array(self.utf8).authenticate(with: authenticator).toHexString()
     }
 
@@ -1235,7 +1237,7 @@ extension UInt8 {
     }
 
     /** array of bits */
-    public func bits() -> [Bit] {
+    internal func bits() -> [Bit] {
         let totalBitsCount = MemoryLayout<UInt8>.size * 8
 
         var bitsArray = [Bit](repeating: Bit.zero, count: totalBitsCount)
@@ -1251,7 +1253,7 @@ extension UInt8 {
         return bitsArray
     }
 
-    public func bits() -> String {
+    internal func bits() -> String {
         var s = String()
         let arr: [Bit] = self.bits()
         for idx in arr.indices {
@@ -1408,7 +1410,7 @@ extension UInt64 {
 
 /// A type that supports incremental updates. For example Digest or Cipher may be updatable
 /// and calculate result incerementally.
-public protocol Updatable {
+internal protocol Updatable {
     /// Update given bytes in chunks.
     ///
     /// - parameter bytes: Bytes to process.
@@ -1439,29 +1441,29 @@ public protocol Updatable {
 
 extension Updatable {
 
-    mutating public func update<T: Collection>(withBytes bytes: T, isLast: Bool = false, output: (_ bytes: Array<UInt8>) -> Void) throws where T.Iterator.Element == UInt8 {
+    mutating internal func update<T: Collection>(withBytes bytes: T, isLast: Bool = false, output: (_ bytes: Array<UInt8>) -> Void) throws where T.Iterator.Element == UInt8 {
         let processed = try self.update(withBytes: bytes, isLast: isLast)
         if (!processed.isEmpty) {
             output(processed)
         }
     }
 
-    mutating public func finish<T: Collection>(withBytes bytes: T) throws -> Array<UInt8> where T.Iterator.Element == UInt8 {
+    mutating internal func finish<T: Collection>(withBytes bytes: T) throws -> Array<UInt8> where T.Iterator.Element == UInt8 {
         return try self.update(withBytes: bytes, isLast: true)
     }
 
-    mutating public func finish() throws -> Array<UInt8> {
+    mutating internal func finish() throws -> Array<UInt8> {
         return try self.update(withBytes: [], isLast: true)
     }
 
-    mutating public func finish<T: Collection>(withBytes bytes: T, output: (_ bytes: Array<UInt8>) -> Void) throws where T.Iterator.Element == UInt8 {
+    mutating internal func finish<T: Collection>(withBytes bytes: T, output: (_ bytes: Array<UInt8>) -> Void) throws where T.Iterator.Element == UInt8 {
         let processed = try self.update(withBytes: bytes, isLast: true)
         if (!processed.isEmpty) {
             output(processed)
         }
     }
 
-    mutating public func finish(output: (Array<UInt8>) -> Void) throws {
+    mutating internal func finish(output: (Array<UInt8>) -> Void) throws {
         try self.finish(withBytes: [], output: output)
     }
 }
@@ -1589,12 +1591,12 @@ func bitPadding(to data: inout Array<UInt8>, blockSize: Int, allowance: Int = 0)
 
 /// All the bytes that are required to be padded are padded with zero.
 /// Zero padding may not be reversible if the original file ends with one or more zero bytes.
-public struct ZeroPadding: Padding {
+internal struct ZeroPadding: Padding {
 
-    public init() {
+    internal init() {
     }
 
-    public func add(to bytes: Array<UInt8>, blockSize: Int) -> Array<UInt8> {
+    internal func add(to bytes: Array<UInt8>, blockSize: Int) -> Array<UInt8> {
         let paddingCount = blockSize - (bytes.count % blockSize)
         if paddingCount > 0 {
             return bytes + Array<UInt8>(repeating: 0, count: paddingCount)
@@ -1602,7 +1604,7 @@ public struct ZeroPadding: Padding {
         return bytes
     }
 
-    public func remove(from bytes: Array<UInt8>, blockSize: Int?) -> Array<UInt8> {
+    internal func remove(from bytes: Array<UInt8>, blockSize: Int?) -> Array<UInt8> {
         for (idx, value) in bytes.reversed().enumerated() {
             if value != 0 {
                 return Array(bytes[0 ..< bytes.count - idx])
