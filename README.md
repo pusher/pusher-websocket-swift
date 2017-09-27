@@ -63,7 +63,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 4.0'
+pod 'PusherSwift', '~> 5.0'
 ```
 
 Then, run the following command:
