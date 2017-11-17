@@ -581,7 +581,7 @@ public typealias PusherEventJSON = [String: AnyObject]
                 sendAuthorisationRequest(request: request, channel: channel)
                 return true
             case .authRequestBuilder(authRequestBuilder: let builder):
-                if let request = builder.requestFor?(socketID: socketId, channel: channel) {
+                if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
                     sendAuthorisationRequest(request: request as URLRequest, channel: channel)
 
                     return true
