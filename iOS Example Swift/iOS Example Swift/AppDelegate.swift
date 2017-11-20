@@ -68,6 +68,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PusherDelegate {
         print("Subscribed to interest: \(name)")
     }
 
+    func subscribedToInterests(interests: Array<String>) {
+        print("Subscribed to interests: \(interests)")
+    }
+
     func registeredForPushNotifications(clientId: String) {
         print("Registered with Pusher for push notifications with clientId: \(clientId)")
 
