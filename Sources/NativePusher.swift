@@ -166,6 +166,14 @@ import Foundation
         addSubscriptionChangeToTaskQueue(interestName: interestName, change: .unsubscribe)
     }
 
+    open func setSubscriptions(interests: Array<String>) {
+        requestQueue.tasks += {_, next in
+            self.modifySubscription(interest: interests, change: .setSubscriptions, successCallback: next)
+        }
+
+        requestQueue.run()
+    }
+
     /**
         Adds subscribe / unsubscribe tasts to task queue
 
@@ -187,29 +195,43 @@ import Foundation
     }
 
     /**
-        Makes either a POST or DELETE request for a given interest
+        Makes either a POST, PUT, or DELETE request for a given interest
 
         - parameter pusherAppKey: The app key for the Pusher app
         - parameter clientId:     The clientId returned by Pusher's server
-        - parameter interest:     The name of the interest to be subscribed to /
+        - parameter interest:     The name(s) of the interest(s) to be subscribed to /
                                   unsunscribed from
         - parameter change:       Whether to subscribe or unsubscribe
         - parameter callback:     Callback to be called upon success
     */
-    private func modifySubscription(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
+    private func modifySubscription(interest: Any, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
         guard pusherAppKey != nil && clientId != nil else {
             self.delegate?.debugLog?(message: "pusherAppKey \(String(describing: pusherAppKey)) or clientId \(String(describing: clientId)) not set - waiting for both to be set")
             self.requestQueue.pauseAndResetCurrentTask()
             return
         }
 
+        var url = ""
+        switch change {
+        case .subscribe, .unsubscribe:
+            url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId!)/interests/\(interest)"
+        case .setSubscriptions:
+            url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId!)/interests/"
+        }
+
         self.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
 
-        let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId!)/interests/\(interest)"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = change.httpMethod()
 
-        let params: [String: Any] = ["app_key": pusherAppKey!]
+        var params: Any
+        switch change {
+            case .subscribe, .unsubscribe:
+                params = ["app_key": pusherAppKey!]
+            case .setSubscriptions:
+                params = ["app_key": pusherAppKey!, "interests": interest]
+        }
+
         try! request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -247,9 +269,11 @@ import Foundation
 
                 switch change {
                 case .subscribe:
-                    self.delegate?.subscribedToInterest?(name: interest)
+                    self.delegate?.subscribedToInterest?(name: interest as! String)
+                case .setSubscriptions:
+                    self.delegate?.subscribedToInterests?(interests: interest as! Array<String>)
                 case .unsubscribe:
-                    self.delegate?.unsubscribedFromInterest?(name: interest)
+                    self.delegate?.unsubscribedFromInterest?(name: interest as! String)
                 }
 
                 self.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interest)")
@@ -265,12 +289,15 @@ import Foundation
 
 internal enum SubscriptionChange {
     case subscribe
+    case setSubscriptions
     case unsubscribe
 
     internal func stringValue() -> String {
         switch self {
         case .subscribe:
             return "subscribe"
+        case .setSubscriptions:
+            return "setSubscriptions"
         case .unsubscribe:
             return "unsubscribe"
         }
@@ -280,6 +307,8 @@ internal enum SubscriptionChange {
         switch self {
         case .subscribe:
             return "POST"
+        case .setSubscriptions:
+            return "PUT"
         case .unsubscribe:
             return "DELETE"
         }
