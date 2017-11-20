@@ -157,6 +157,15 @@ import Foundation
     }
 
     /**
+     Subscribe to interests with Pusher's Push Notification Service
+
+     - parameter interests: the name of the interests you want to subscribe to
+     */
+    open func setSubscriptions(interests: Array<String>) {
+        addSubscriptionChangeToTaskQueue(interests: interests, change: .setSubscriptions)
+    }
+
+    /**
         Unsubscribe from an interest with Pusher's Push Notification Service
 
         - parameter interestName: the name of the interest you want to unsubscribe
@@ -186,91 +195,140 @@ import Foundation
         requestQueue.run()
     }
 
+    private func addSubscriptionChangeToTaskQueue(interests: Array<String>, change: SubscriptionChange) {
+        requestQueue.tasks += { _, next in
+            self.modifySubscription(
+                interests: interests,
+                change: change,
+                successCallback: next
+            )
+        }
+
+        requestQueue.run()
+    }
+
     /**
         Makes either a POST or DELETE request for a given interest
-
-        - parameter pusherAppKey: The app key for the Pusher app
-        - parameter clientId:     The clientId returned by Pusher's server
-        - parameter interest:     The name of the interest to be subscribed to /
-                                  unsunscribed from
+        - parameter interest:     The name of the interest to be subscribed to / unsunscribed from
         - parameter change:       Whether to subscribe or unsubscribe
         - parameter callback:     Callback to be called upon success
     */
     private func modifySubscription(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
-        guard pusherAppKey != nil && clientId != nil else {
-            self.delegate?.debugLog?(message: "pusherAppKey \(String(describing: pusherAppKey)) or clientId \(String(describing: clientId)) not set - waiting for both to be set")
+        guard
+            let clientId = clientId,
+            let pusherAppKey = pusherAppKey
+        else {
+            self.delegate?.debugLog?(message: "pusherAppKey or clientId not set - waiting for both to be set")
             self.requestQueue.pauseAndResetCurrentTask()
             return
         }
 
+        let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/\(interest)"
+        let params: [String: Any] = ["app_key": pusherAppKey]
+        let request = self.setRequest(url: url, params: params, change: change)
+        self.modifySubscription(interests: [interest], request: request, change: change, successCallback: successCallback)
+    }
+
+    /**
+     Makes a PUT request for given interests
+     - parameter interests:    The name of the interests to be subscribed to
+     - parameter change:       Whether to subscribe or unsubscribe
+     - parameter callback:     Callback to be called upon success
+     */
+    private func modifySubscription(interests: Array<String>, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
+        guard
+            let clientId = clientId,
+            let pusherAppKey = pusherAppKey
+        else {
+            self.delegate?.debugLog?(message: "pusherAppKey or clientId not set - waiting for both to be set")
+            self.requestQueue.pauseAndResetCurrentTask()
+            return
+        }
+
+        let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/"
+        let params: [String: Any] = ["app_key": pusherAppKey, "interests": interests]
+        let request = self.setRequest(url: url, params: params, change: change)
+        self.modifySubscription(interests: interests, request: request, change: change, successCallback: successCallback)
+    }
+
+    private func modifySubscription(interests: Array<String>, request: URLRequest, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
         self.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
-
-        let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId!)/interests/\(interest)"
-        var request = URLRequest(url: URL(string: url)!)
-        request.httpMethod = change.httpMethod()
-
-        let params: [String: Any] = ["app_key": pusherAppKey!]
-        try! request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
-
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library")
 
         let task = URLSession.dataTask(
             with: request,
             completionHandler: { data, response, error in
                 guard let httpResponse = response as? HTTPURLResponse,
-                          (200 <= httpResponse.statusCode && httpResponse.statusCode < 300) &&
-                          error == nil
-                else {
-                    self.failedRequestAttempts += 1
+                    (200 <= httpResponse.statusCode && httpResponse.statusCode < 300) &&
+                        error == nil
+                    else {
+                        self.failedRequestAttempts += 1
 
-                    if error != nil {
-                        self.delegate?.debugLog?(message: "Error when trying to modify subscription to interest: \(String(describing: error?.localizedDescription))")
-                    } else if data != nil && response != nil {
-                        let responseBody = String(data: data!, encoding: .utf8)
-                        self.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(String(describing: responseBody))")
-                    } else {
-                        self.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest: \(interest)")
-                    }
+                        if error != nil {
+                            self.delegate?.debugLog?(message: "Error when trying to modify subscription to interest(s): \(String(describing: error?.localizedDescription))")
+                        } else if data != nil && response != nil {
+                            let responseBody = String(data: data!, encoding: .utf8)
+                            self.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(String(describing: responseBody))")
+                        } else {
+                            self.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest(s): \(interests)")
+                        }
 
-                    if self.failedRequestAttempts >= self.maxFailedRequestAttempts {
-                        self.delegate?.debugLog?(message: "Max number of failed native service requests reached")
+                        if self.failedRequestAttempts >= self.maxFailedRequestAttempts {
+                            self.delegate?.debugLog?(message: "Max number of failed native service requests reached")
 
-                        self.requestQueue.paused = true
-                    } else {
-                        self.delegate?.debugLog?(message: "Retrying subscription modification request for interest: \(interest)")
-                        self.requestQueue.retry(Double(self.failedRequestAttempts * self.failedRequestAttempts))
-                    }
+                            self.requestQueue.paused = true
+                        } else {
+                            self.delegate?.debugLog?(message: "Retrying subscription modification request for interest(s): \(interests)")
+                            self.requestQueue.retry(Double(self.failedRequestAttempts * self.failedRequestAttempts))
+                        }
 
-                    return
+                        return
                 }
 
                 switch change {
                 case .subscribe:
+                    guard let interest = interests.first else { return }
                     self.delegate?.subscribedToInterest?(name: interest)
+                case .setSubscriptions:
+                    self.delegate?.subscribedToInterests?(interests: interests)
                 case .unsubscribe:
+                    guard let interest = interests.first else { return }
                     self.delegate?.unsubscribedFromInterest?(name: interest)
                 }
 
-                self.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interest)")
+                self.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interests)")
 
                 self.failedRequestAttempts = 0
                 successCallback(nil)
-            }
+        }
         )
 
         task.resume()
+    }
+
+    private func setRequest(url: String, params: [String: Any], change: SubscriptionChange) -> URLRequest {
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = change.httpMethod()
+
+        try! request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(LIBRARY_NAME_AND_VERSION, forHTTPHeaderField: "X-Pusher-Library")
+
+        return request
     }
 }
 
 internal enum SubscriptionChange {
     case subscribe
+    case setSubscriptions
     case unsubscribe
 
     internal func stringValue() -> String {
         switch self {
         case .subscribe:
             return "subscribe"
+        case .setSubscriptions:
+            return "setSubscriptions"
         case .unsubscribe:
             return "unsubscribe"
         }
@@ -280,6 +338,8 @@ internal enum SubscriptionChange {
         switch self {
         case .subscribe:
             return "POST"
+        case .setSubscriptions:
+            return "PUT"
         case .unsubscribe:
             return "DELETE"
         }
