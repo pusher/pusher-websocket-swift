@@ -195,11 +195,11 @@ import Foundation
     }
 
     /**
-        Makes either a POST or DELETE request for a given interest
+        Makes either a POST, PUT, or DELETE request for a given interest
 
         - parameter pusherAppKey: The app key for the Pusher app
         - parameter clientId:     The clientId returned by Pusher's server
-        - parameter interest:     The name of the interest to be subscribed to /
+        - parameter interest:     The name(s) of the interest(s) to be subscribed to /
                                   unsunscribed from
         - parameter change:       Whether to subscribe or unsubscribe
         - parameter callback:     Callback to be called upon success
