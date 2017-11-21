@@ -199,7 +199,6 @@ import Foundation
         requestQueue.tasks += { _, next in
             self.modifySubscription(
                 interests: interests,
-                change: change,
                 successCallback: next
             )
         }
@@ -235,7 +234,7 @@ import Foundation
      - parameter change:       Whether to subscribe or unsubscribe
      - parameter callback:     Callback to be called upon success
      */
-    private func modifySubscription(interests: Array<String>, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
+    private func modifySubscription(interests: Array<String>, successCallback: @escaping (Any?) -> Void) {
         guard
             let clientId = clientId,
             let pusherAppKey = pusherAppKey
@@ -247,8 +246,8 @@ import Foundation
 
         let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/"
         let params: [String: Any] = ["app_key": pusherAppKey, "interests": interests]
-        let request = self.setRequest(url: url, params: params, change: change)
-        self.modifySubscription(interests: interests, request: request, change: change, successCallback: successCallback)
+        let request = self.setRequest(url: url, params: params, change: .setSubscriptions)
+        self.modifySubscription(interests: interests, request: request, change: .setSubscriptions, successCallback: successCallback)
     }
 
     private func modifySubscription(interests: Array<String>, request: URLRequest, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
