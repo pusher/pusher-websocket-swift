@@ -162,7 +162,14 @@ import Foundation
      - parameter interests: the name of the interests you want to subscribe to
      */
     open func setSubscriptions(interests: Array<String>) {
-        addSubscriptionChangeToTaskQueue(interests: interests, change: .setSubscriptions)
+        requestQueue.tasks += { _, next in
+            self.modifySubscription(
+                interests: interests,
+                successCallback: next
+            )
+        }
+        
+        requestQueue.run()
     }
 
     /**
@@ -188,17 +195,6 @@ import Foundation
             self.modifySubscription(
                 interest: interestName,
                 change: change,
-                successCallback: next
-            )
-        }
-
-        requestQueue.run()
-    }
-
-    private func addSubscriptionChangeToTaskQueue(interests: Array<String>, change: SubscriptionChange) {
-        requestQueue.tasks += { _, next in
-            self.modifySubscription(
-                interests: interests,
                 successCallback: next
             )
         }
