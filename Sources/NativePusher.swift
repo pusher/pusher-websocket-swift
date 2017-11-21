@@ -227,7 +227,6 @@ import Foundation
     /**
      Makes a PUT request for given interests
      - parameter interests:    The name of the interests to be subscribed to
-     - parameter change:       Whether to subscribe or unsubscribe
      - parameter callback:     Callback to be called upon success
      */
     private func modifySubscription(interests: Array<String>, successCallback: @escaping (Any?) -> Void) {
