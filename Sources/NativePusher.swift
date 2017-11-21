@@ -289,7 +289,7 @@ import Foundation
                     self.delegate?.unsubscribedFromInterest?(name: interest)
                 }
 
-                self.delegate?.debugLog?(message: "Success making \(change.stringValue) to \(interests)")
+                self.delegate?.debugLog?(message: "Success making \(change.rawValue) to \(interests)")
 
                 self.failedRequestAttempts = 0
                 successCallback(nil)
@@ -312,21 +312,10 @@ import Foundation
     }
 }
 
-internal enum SubscriptionChange {
+internal enum SubscriptionChange: String {
     case subscribe
     case setSubscriptions
     case unsubscribe
-
-    internal func stringValue() -> String {
-        switch self {
-        case .subscribe:
-            return "subscribe"
-        case .setSubscriptions:
-            return "setSubscriptions"
-        case .unsubscribe:
-            return "unsubscribe"
-        }
-    }
 
     internal func httpMethod() -> String {
         switch self {
