@@ -163,7 +163,7 @@ import Foundation
      */
     open func setSubscriptions(interests: Array<String>) {
         requestQueue.tasks += { _, next in
-            self.modifySubscription(
+            self.replaceSubscriptionSet(
                 interests: interests,
                 successCallback: next
             )
@@ -192,7 +192,7 @@ import Foundation
     */
     private func addSubscriptionChangeToTaskQueue(interestName: String, change: SubscriptionChange) {
         requestQueue.tasks += { _, next in
-            self.modifySubscription(
+            self.subscribeOrUnsubscribeInterest(
                 interest: interestName,
                 change: change,
                 successCallback: next
@@ -208,7 +208,7 @@ import Foundation
         - parameter change:       Whether to subscribe or unsubscribe
         - parameter callback:     Callback to be called upon success
     */
-    private func modifySubscription(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
+    private func subscribeOrUnsubscribeInterest(interest: String, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
         guard
             let clientId = clientId,
             let pusherAppKey = pusherAppKey
@@ -221,7 +221,7 @@ import Foundation
         let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/\(interest)"
         let params: [String: Any] = ["app_key": pusherAppKey]
         let request = self.setRequest(url: url, params: params, change: change)
-        self.modifySubscription(interests: [interest], request: request, change: change, successCallback: successCallback)
+        self.doURLRequest(interests: [interest], request: request, change: change, successCallback: successCallback)
     }
 
     /**
@@ -229,7 +229,7 @@ import Foundation
      - parameter interests:    The name of the interests to be subscribed to
      - parameter callback:     Callback to be called upon success
      */
-    private func modifySubscription(interests: Array<String>, successCallback: @escaping (Any?) -> Void) {
+    private func replaceSubscriptionSet(interests: Array<String>, successCallback: @escaping (Any?) -> Void) {
         guard
             let clientId = clientId,
             let pusherAppKey = pusherAppKey
@@ -242,10 +242,10 @@ import Foundation
         let url = "\(CLIENT_API_V1_ENDPOINT)/clients/\(clientId)/interests/"
         let params: [String: Any] = ["app_key": pusherAppKey, "interests": interests]
         let request = self.setRequest(url: url, params: params, change: .setSubscriptions)
-        self.modifySubscription(interests: interests, request: request, change: .setSubscriptions, successCallback: successCallback)
+        self.doURLRequest(interests: interests, request: request, change: .setSubscriptions, successCallback: successCallback)
     }
 
-    private func modifySubscription(interests: Array<String>, request: URLRequest, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
+    private func doURLRequest(interests: Array<String>, request: URLRequest, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
         self.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
 
         let task = URLSession.dataTask(
