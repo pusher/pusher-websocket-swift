@@ -40,6 +40,26 @@ import Foundation
     }
 }
 
+@objc public extension PusherConnection {
+    public var OCReconnectAttemptsMax: NSNumber? {
+        get {
+            return reconnectAttemptsMax as NSNumber?
+        }
+        set(newValue) {
+            reconnectAttemptsMax = newValue?.intValue
+        }
+    }
+
+    public var OCMaxReconnectGapInSeconds: NSNumber? {
+        get {
+            return maxReconnectGapInSeconds as NSNumber?
+        }
+        set(newValue) {
+            maxReconnectGapInSeconds = newValue?.doubleValue
+        }
+    }
+}
+
 @objc public extension PusherClientOptions {
     public convenience init(
         ocAuthMethod authMethod: OCAuthMethod,
