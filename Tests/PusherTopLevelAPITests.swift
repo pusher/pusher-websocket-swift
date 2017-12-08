@@ -232,6 +232,24 @@ class PusherTopLevelApiTests: XCTestCase {
         XCTAssertTrue(parsedEqualsExpected)
     }
 
+    func testUnsubscribingFromAllChannelsRemovesTheChannels() {
+        pusher.connect()
+        let _ = pusher.subscribe("test-channel")
+        let _ = pusher.subscribe("test-channel2")
+        XCTAssertEqual(pusher.connection.channels.channels.count, 2, "should have 2 channels")
+        XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "write function should have been called")
+        pusher.unsubscribeAll()
+
+        XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "write function should have been called")
+
+        let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
+        let expectedDict = ["data": ["channel": "test-channel2"], "event": "pusher:unsubscribe"] as [String: Any]
+        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+
+        XCTAssertTrue(parsedEqualsExpected)
+        XCTAssertEqual(pusher.connection.channels.channels.count, 0, "should have no channels")
+    }
+
     /* global channel interactions */
 
     func testBindingToEventsGloballyAddsACallbackToTheGlobalChannel() {

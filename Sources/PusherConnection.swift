@@ -182,7 +182,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     */
     internal func unsubscribeAll() {
         for (_, channel) in channels.channels {
-            unsubscribe(channel.name)
+            unsubscribe(channelName: channel.name)
         }
     }
 
