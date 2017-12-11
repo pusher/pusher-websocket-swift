@@ -60,6 +60,14 @@ open class MockWebSocket: WebSocket {
                     self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"test-channel\",\"data\":\"{}\"}")
                 }
             )
+        } else if string == "{\"data\":{\"channel\":\"test-channel2\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel2\"}}" {
+            let _ = stubber.stub(
+                functionName: "writeString",
+                args: [string],
+                functionToCall: {
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"test-channel2\",\"data\":\"{}\"}")
+            }
+            )
         } else if stringContainsElements(string, elements: ["testkey123:6aae8814fabd5285245422096705abbed64ea59614648814ffb0bf2dc5d19168", "private-channel", "pusher:subscribe"]) {
             let _ = stubber.stub(
                 functionName: "writeString",
@@ -139,6 +147,12 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["test-channel", "pusher:unsubscribe"]) {
+            let _ = stubber.stub(
+                functionName: "writeString",
+                args: [string],
+                functionToCall: nil
+            )
+        } else if stringContainsElements(string, elements: ["test-channel2", "pusher:unsubscribe"]) {
             let _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
