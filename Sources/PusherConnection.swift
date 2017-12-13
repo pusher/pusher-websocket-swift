@@ -613,7 +613,7 @@ public typealias PusherEventJSON = [String: AnyObject]
                         return
                     }
 
-                    handleAuthInfo(authString: authInfo.auth, channelData: authInfo.channelData, channel: channel)
+                    self.handleAuthInfo(authString: authInfo.auth, channelData: authInfo.channelData, channel: channel)
                 }
 
                 return true
