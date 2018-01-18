@@ -33,7 +33,7 @@
 		33BB997A1D21230100B25C2A /* PusherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99641D21226C00B25C2A /* PusherConnectionTests.swift */; };
 		33BB997B1D21230100B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */; };
 		33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */; };
-		33C0D2D51CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */; };
+		33C0D2D51CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift */; };
 		33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2DA1CB5C364003FE13E /* Starscream.swift */; };
 		33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2E31CB5C539003FE13E /* Reachability.swift */; };
 		33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
@@ -82,7 +82,7 @@
 		33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherIncomingEventHandlingTests.swift; path = ../Tests/PusherIncomingEventHandlingTests.swift; sourceTree = "<group>"; };
 		33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherTopLevelAPITests.swift; path = ../Tests/PusherTopLevelAPITests.swift; sourceTree = "<group>"; };
 		33BB99671D21226C00B25C2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Tests/Info.plist; sourceTree = "<group>"; };
-		33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoSwiftHMACModule.swift; sourceTree = "<group>"; };
+		33C0D2D41CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoSwiftMicroModule.swift; sourceTree = "<group>"; };
 		33C0D2DA1CB5C364003FE13E /* Starscream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starscream.swift; sourceTree = "<group>"; };
 		33C0D2E31CB5C539003FE13E /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectiveC.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 		33C0D2E71CB5C54C003FE13E /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				33C0D2D41CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift */,
+				33C0D2D41CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift */,
 				33C0D2DA1CB5C364003FE13E /* Starscream.swift */,
 				33C0D2E31CB5C539003FE13E /* Reachability.swift */,
 				331609FF1D8FE15B002EC524 /* TaskQueue.swift */,
@@ -343,7 +343,7 @@
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
 				3341A33A1D819FBC007191AD /* NativePusher.swift in Sources */,
 				33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */,
-				33C0D2D51CB5C1F2003FE13E /* CryptoSwiftHMACModule.swift in Sources */,
+				33C0D2D51CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift in Sources */,
 				33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */,
 				33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */,
 				3390D1E61F054D0400E1944D /* AuthRequestBuilderProtocol.swift in Sources */,
