@@ -4,10 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/5.1.0...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/5.1.1...HEAD)
+
+## [5.1.1](https://github.com/pusher/pusher-websocket-swift/compare/5.1.0...5.1.1) - 2018-01-22
+
+### Changed
+- Updated Starscream and CryptoSwift based code. Starscream is at roughly 3.0.4 and CryptoSwift at roughly 0.8.1.
 
 ## [5.1.0](https://github.com/pusher/pusher-websocket-swift/compare/5.0.1...5.1.0) - 2017-11-23
-## Added
+
+### Added
 - [`setSubscriptions`](https://pusher.com/docs/push_notifications/reference/client_api#put-v1clientsclientidinterests) method.
 
 ## 5.0.1

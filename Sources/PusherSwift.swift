@@ -8,7 +8,7 @@
 import Foundation
 
 let PROTOCOL = 7
-let VERSION = "5.1.0"
+let VERSION = "5.1.1"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 @objcMembers
