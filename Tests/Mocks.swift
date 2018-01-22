@@ -14,7 +14,9 @@ open class MockWebSocket: WebSocket {
     var objectGivenToCallback: Any? = nil
 
     init() {
-        super.init(url: URL(string: "test")!)
+        var request = URLRequest(url: URL(string: "test")!)
+        request.timeoutInterval = 5
+        super.init(request: request, protocols: [])
     }
 
     open func appendToCallbackCheckString(_ str: String) {

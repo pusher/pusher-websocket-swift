@@ -16,7 +16,7 @@ extension PusherConnection: WebSocketDelegate {
         - parameter ws:   The websocket that has received the message
         - parameter text: The message received over the websocket
     */
-    public func websocketDidReceiveMessage(socket ws: WebSocket, text: String) {
+    public func websocketDidReceiveMessage(socket ws: WebSocketClient, text: String) {
         self.delegate?.debugLog?(message: "[PUSHER DEBUG] websocketDidReceiveMessage \(text)")
         if let pusherPayloadObject = getPusherEventJSON(from: text), let eventName = pusherPayloadObject["event"] as? String {
             self.handleEvent(eventName: eventName, jsonObject: pusherPayloadObject)
@@ -31,7 +31,7 @@ extension PusherConnection: WebSocketDelegate {
         - parameter ws:    The websocket that disconnected
         - parameter error: The error, if one exists, when disconnected
     */
-    public func websocketDidDisconnect(socket ws: WebSocket, error: NSError?) {
+    public func websocketDidDisconnect(socket ws: WebSocketClient, error: Error?) {
         // Handles setting channel subscriptions to unsubscribed wheter disconnection
         // is intentional or not
         if connectionState == .disconnecting || connectionState == .connected {
@@ -44,7 +44,7 @@ extension PusherConnection: WebSocketDelegate {
         self.socketConnected = false
 
         // Handle error (if any)
-        guard let error = error, error.code != Int(WebSocket.CloseCode.normal.rawValue) else {
+        guard let error = error, (error as NSError).code != Int(CloseCode.normal.rawValue) else {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Deliberate disconnection - skipping reconnect attempts")
             return updateConnectionState(to: .disconnected)
         }
@@ -112,9 +112,9 @@ extension PusherConnection: WebSocketDelegate {
 
         - parameter ws:    The websocket that connected
     */
-    public func websocketDidConnect(socket ws: WebSocket) {
+    public func websocketDidConnect(socket ws: WebSocketClient) {
         self.socketConnected = true
     }
 
-    public func websocketDidReceiveData(socket ws: WebSocket, data: Data) {}
+    public func websocketDidReceiveData(socket ws: WebSocketClient, data: Data) {}
 }
