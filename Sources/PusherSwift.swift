@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Starscream
 
 let PROTOCOL = 7
 let VERSION = "5.1.1"

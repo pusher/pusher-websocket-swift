@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import Reachability
+import Starscream
+import CryptoSwift
 
 public typealias PusherEventJSON = [String: AnyObject]
 

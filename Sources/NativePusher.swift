@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TaskQueue
 
 #if os(iOS) || os(OSX)
 

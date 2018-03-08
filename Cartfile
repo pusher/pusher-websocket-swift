@@ -1,0 +1,4 @@
+github "daltoniam/Starscream"
+github "krzyzanowskim/CryptoSwift"
+github "ashleymills/Reachability.swift"
+github "hamchapman/TaskQueue" "master"

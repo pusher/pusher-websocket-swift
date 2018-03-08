@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Starscream
 
 extension PusherConnection: WebSocketDelegate {
 
@@ -61,7 +62,7 @@ extension PusherConnection: WebSocketDelegate {
             return updateConnectionState(to: .disconnected)
         }
 
-        guard let reachability = self.reachability, reachability.isReachable else {
+        guard let reachability = self.reachability, reachability.connection != .none else {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable so waiting to attempt reconnect")
             return updateConnectionState(to: .reconnectingWhenNetworkBecomesReachable)
         }

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
 		330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3384C1B81CAECD9C00F10796 /* PusherChannel.swift */; };
-		33160A001D8FE15B002EC524 /* TaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331609FF1D8FE15B002EC524 /* TaskQueue.swift */; };
 		3341A33A1D819FBC007191AD /* NativePusher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3341A3391D819FBC007191AD /* NativePusher.swift */; };
 		3342F3BD1D808AC900C0296E /* ClientEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342F3BB1D808AC500C0296E /* ClientEventTests.swift */; };
 		335BCA0D1C38ABF000B47A66 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -33,9 +32,6 @@
 		33BB997A1D21230100B25C2A /* PusherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99641D21226C00B25C2A /* PusherConnectionTests.swift */; };
 		33BB997B1D21230100B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */; };
 		33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */; };
-		33C0D2D51CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2D41CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift */; };
-		33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2DA1CB5C364003FE13E /* Starscream.swift */; };
-		33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C0D2E31CB5C539003FE13E /* Reachability.swift */; };
 		33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -51,16 +47,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		331609FF1D8FE15B002EC524 /* TaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskQueue.swift; sourceTree = "<group>"; };
+		3301FED22051AB6400AE591A /* Carthage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Carthage.xcconfig; path = ../Carthage.xcconfig; sourceTree = "<group>"; };
 		3341A3391D819FBC007191AD /* NativePusher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativePusher.swift; sourceTree = "<group>"; };
 		3342F3BB1D808AC500C0296E /* ClientEventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClientEventTests.swift; path = ../Tests/ClientEventTests.swift; sourceTree = "<group>"; };
 		337C9EE01C38B708006CC757 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		33831C891A9CF61600B124F1 /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831C8D1A9CF61600B124F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = ../Sources/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
-		33831CD61A9CFFF200B124F1 /* PusherSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwift.h; path = ../Sources/PusherSwift.h; sourceTree = SOURCE_ROOT; };
-		3384C1B81CAECD9C00F10796 /* PusherChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherChannel.swift; path = ../Sources/PusherChannel.swift; sourceTree = SOURCE_ROOT; };
+		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = Sources/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
+		33831CD61A9CFFF200B124F1 /* PusherSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwift.h; path = Sources/PusherSwift.h; sourceTree = SOURCE_ROOT; };
+		3384C1B81CAECD9C00F10796 /* PusherChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherChannel.swift; path = Sources/PusherChannel.swift; sourceTree = SOURCE_ROOT; };
 		3389F5651CAEDD5F00563F49 /* PusherConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherConnection.swift; sourceTree = "<group>"; };
 		3389F5691CAEDD9100563F49 /* PusherWebsocketDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherWebsocketDelegate.swift; sourceTree = "<group>"; };
 		3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherPresenceChannel.swift; sourceTree = "<group>"; };
@@ -82,9 +78,6 @@
 		33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherIncomingEventHandlingTests.swift; path = ../Tests/PusherIncomingEventHandlingTests.swift; sourceTree = "<group>"; };
 		33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherTopLevelAPITests.swift; path = ../Tests/PusherTopLevelAPITests.swift; sourceTree = "<group>"; };
 		33BB99671D21226C00B25C2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Tests/Info.plist; sourceTree = "<group>"; };
-		33C0D2D41CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoSwiftMicroModule.swift; sourceTree = "<group>"; };
-		33C0D2DA1CB5C364003FE13E /* Starscream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starscream.swift; sourceTree = "<group>"; };
-		33C0D2E31CB5C539003FE13E /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectiveC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,18 +134,17 @@
 				3390D1E51F054D0400E1944D /* AuthRequestBuilderProtocol.swift */,
 				3390D1E71F054D1E00E1944D /* Authorizer.swift */,
 				33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */,
-				33C0D2E71CB5C54C003FE13E /* Dependencies */,
 				33831CD61A9CFFF200B124F1 /* PusherSwift.h */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
 			);
-			name = Sources;
-			path = ../Sources;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		33831C8C1A9CF61600B124F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				33831C8D1A9CF61600B124F1 /* Info.plist */,
+				3301FED22051AB6400AE591A /* Carthage.xcconfig */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -174,18 +166,7 @@
 				33BA541D1D90351B00CD853B /* NativePusherTests.swift */,
 				33BB99671D21226C00B25C2A /* Info.plist */,
 			);
-			name = Tests;
-			sourceTree = "<group>";
-		};
-		33C0D2E71CB5C54C003FE13E /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				33C0D2D41CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift */,
-				33C0D2DA1CB5C364003FE13E /* Starscream.swift */,
-				33C0D2E31CB5C539003FE13E /* Reachability.swift */,
-				331609FF1D8FE15B002EC524 /* TaskQueue.swift */,
-			);
-			name = Dependencies;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		42D29A655054030A9B238900 /* Frameworks */ = {
@@ -225,7 +206,6 @@
 				33831C841A9CF61600B124F1 /* Sources */,
 				33831C861A9CF61600B124F1 /* Headers */,
 				33831C871A9CF61600B124F1 /* Resources */,
-				3358FA6E1B4FD8C000AB0670 /* ShellScript */,
 				50355EA8A07B4B8038A4DDF1 /* Frameworks */,
 			);
 			buildRules = (
@@ -245,6 +225,7 @@
 				33831C901A9CF61600B124F1 /* Sources */,
 				33C40CB81C1DFC91008A54E3 /* Headers */,
 				33831C921A9CF61600B124F1 /* Resources */,
+				33A108CA2051B57800D624C9 /* Copy Carthage Frameworks */,
 			);
 			buildRules = (
 			);
@@ -311,18 +292,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3358FA6E1B4FD8C000AB0670 /* ShellScript */ = {
+		33A108CA2051B57800D624C9 /* Copy Carthage Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				Starscream,
+				TaskQueue,
+				CryptoSwift,
+				Reachability,
 			);
+			name = "Copy Carthage Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
+			shellScript = "case \"$PLATFORM_NAME\" in\nmacosx) plat=Mac;;\niphone*) plat=iOS;;\nwatch*) plat=watchOS;;\ntv*) plat=tvOS;;\nappletv*) plat=tvOS;;\n*) echo \"error: Unknown PLATFORM_NAME: $PLATFORM_NAME\"; exit 1;;\nesac\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nframework=$(basename \"${!VAR}\")\nexport SCRIPT_INPUT_FILE_$n=\"$SRCROOT\"/Carthage/Build/$plat/\"$framework\".framework\ndone\n\n/usr/local/bin/carthage copy-frameworks || exit\n\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nsource=${!VAR}.dSYM\ndest=${BUILT_PRODUCTS_DIR}/$(basename \"$source\")\nditto \"$source\" \"$dest\" || exit\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -339,12 +325,8 @@
 				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
 				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
-				33160A001D8FE15B002EC524 /* TaskQueue.swift in Sources */,
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
 				3341A33A1D819FBC007191AD /* NativePusher.swift in Sources */,
-				33C0D2E41CB5C539003FE13E /* Reachability.swift in Sources */,
-				33C0D2D51CB5C1F2003FE13E /* CryptoSwiftMicroModule.swift in Sources */,
-				33C0D2DB1CB5C364003FE13E /* Starscream.swift in Sources */,
 				33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */,
 				3390D1E61F054D0400E1944D /* AuthRequestBuilderProtocol.swift in Sources */,
 				330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */,
@@ -383,6 +365,7 @@
 /* Begin XCBuildConfiguration section */
 		33831C4E1A9CEDF800B124F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3301FED22051AB6400AE591A /* Carthage.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -418,6 +401,7 @@
 		};
 		33831C4F1A9CEDF800B124F1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3301FED22051AB6400AE591A /* Carthage.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -454,6 +438,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -491,7 +476,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -517,6 +502,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_CODE_COVERAGE = NO;
@@ -549,7 +535,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/../Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -607,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = ../Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -655,7 +641,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = ../Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
