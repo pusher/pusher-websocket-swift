@@ -18,8 +18,8 @@ before_install:
   - SIMULATOR_ID=$(xcrun instruments -s | grep -o "$DEVICE \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
   - echo "$SIMULATOR_ID"
 before_deploy:
-  - carthage build --no-skip-current --project-directory PusherSwift
-  - carthage archive PusherSwift --project-directory PusherSwift
+  - carthage build --no-skip-current
+  - carthage archive PusherSwift
 deploy:
   provider: releases
   api_key:
@@ -37,7 +37,7 @@ script:
       echo "$SIMULARTOR_ID";
       open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
     fi
-  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj clean build | xcpretty -tc;
-  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift.xcodeproj clean build | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION | xcpretty -tc;
 after_success:
   - sleep 5
