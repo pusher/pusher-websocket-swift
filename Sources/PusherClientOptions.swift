@@ -1,11 +1,3 @@
-//
-//  PusherClientOptions.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 01/04/2016.
-//
-//
-
 import Foundation
 
 public enum PusherHost {

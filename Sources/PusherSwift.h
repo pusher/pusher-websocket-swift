@@ -1,11 +1,3 @@
-//
-//  PusherSwift.h
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 24/02/2015.
-//
-//
-
 #import <Foundation/Foundation.h>
 
 //! Project version number for PusherSwift.

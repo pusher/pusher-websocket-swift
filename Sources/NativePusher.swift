@@ -1,11 +1,3 @@
-//
-//  NativePusher.swift
-//  PusherSwift
-//
-//  Created by James Fisher on 09/06/2016.
-//
-//
-
 import Foundation
 import TaskQueue
 

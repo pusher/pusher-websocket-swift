@@ -1,10 +1,4 @@
-//
-//  PusherDelegate.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 19/09/2016.
-//
-//
+import Foundation
 
 @objc public protocol PusherDelegate: class {
     @objc optional func debugLog(message: String)

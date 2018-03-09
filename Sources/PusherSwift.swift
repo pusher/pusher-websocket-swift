@@ -1,10 +1,3 @@
-//
-//  PusherSwift.swift
-//
-//  Created by Hamilton Chapman on 19/02/2015.
-//
-//
-
 import Foundation
 import Starscream
 

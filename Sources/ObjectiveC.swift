@@ -1,11 +1,3 @@
-//
-//  ObjectiveC.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 20/08/2016.
-//
-//
-
 import Foundation
 
 @objc public extension Pusher {
