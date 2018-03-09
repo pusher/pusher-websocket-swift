@@ -15,6 +15,7 @@ before_install:
       brew install carthage;
     fi
   - gem install xcpretty --no-document
+  - carthage update --no-use-binaries
   - SIMULATOR_ID=$(xcrun instruments -s | grep -o "$DEVICE \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
   - echo "$SIMULATOR_ID"
 before_deploy:
