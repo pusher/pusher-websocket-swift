@@ -1,4 +1,6 @@
-github "daltoniam/Starscream"
 github "krzyzanowskim/CryptoSwift"
 github "ashleymills/Reachability.swift"
-github "hamchapman/TaskQueue" "master"
+github "icanzilb/TaskQueue"
+
+# github "daltoniam/Starscream"
+github "hamchapman/Starscream" "cleanup-pod-fork"

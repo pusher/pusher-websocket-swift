@@ -1,6 +1,4 @@
 github "ashleymills/Reachability.swift" "v4.1.0"
-github "daltoniam/Starscream" "3.0.4"
-github "daltoniam/common-crypto-spm" "1.1.0"
-github "daltoniam/zlib-spm" "1.1.0"
-github "hamchapman/TaskQueue" "6310f970766e490bb210d14a4700e5f51caecab0"
+github "hamchapman/Starscream" "f28d93cc1b3b012eee5de8e8d99c38a09cf58975"
+github "icanzilb/TaskQueue" "1.1.0"
 github "krzyzanowskim/CryptoSwift" "0.8.3"

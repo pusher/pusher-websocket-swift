@@ -12,10 +12,9 @@ Pod::Spec.new do |s|
   s.source_files = 'Sources/*.swift'
 
   s.dependency 'CryptoSwift', '~> 0.8.3'
-  s.dependency 'Starscream', '~> 3.0.4'
   s.dependency 'Reachability', '~> 4.1.0'
-
-  s.dependency 'TaskQueue', '~> 1.0.3' # TODO: FIXME
+  s.dependency 'TaskQueue', '~> 1.1.0'
+  s.dependency 'StarscreamFork', '~> 3.0.5'
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
