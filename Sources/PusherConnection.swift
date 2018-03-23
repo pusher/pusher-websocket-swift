@@ -24,6 +24,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     internal var reconnectTimer: Timer? = nil
 
     open var socketConnected: Bool = false {
+    open var activityTimeoutInterval: TimeInterval
         didSet {
             updateConnectionStateAndAttemptSubscriptions()
         }
@@ -76,14 +77,18 @@ public typealias PusherEventJSON = [String: AnyObject]
         socket: WebSocket,
         url: String,
         options: PusherClientOptions,
-        URLSession: Foundation.URLSession = Foundation.URLSession.shared) {
-            self.url = url
-            self.key = key
-            self.options = options
-            self.URLSession = URLSession
-            self.socket = socket
-            super.init()
-            self.socket.delegate = self
+        URLSession: Foundation.URLSession = Foundation.URLSession.shared
+    ) {
+        self.url = url
+        self.key = key
+        self.options = options
+        self.URLSession = URLSession
+        self.socket = socket
+        self.activityTimeoutInterval = options.activityTimeout ?? 60
+        super.init()
+        self.socket.delegate = self
+        self.socket.pongDelegate = self
+    }
     }
 
     /**

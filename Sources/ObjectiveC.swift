@@ -61,15 +61,18 @@ import Foundation
         autoReconnect: Bool = true,
         ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
         port: NSNumber? = nil,
-        encrypted: Bool = true) {
-            self.init(
-                authMethod: AuthMethod.fromObjc(source: authMethod),
-                attemptToReturnJSONObject: attemptToReturnJSONObject,
-                autoReconnect: autoReconnect,
-                host: PusherHost.fromObjc(source: host),
-                port: port as? Int,
-                encrypted: encrypted
-            )
+        encrypted: Bool = true,
+        activityTimeout: NSNumber? = nil
+    ) {
+        self.init(
+            authMethod: AuthMethod.fromObjc(source: authMethod),
+            attemptToReturnJSONObject: attemptToReturnJSONObject,
+            autoReconnect: autoReconnect,
+            host: PusherHost.fromObjc(source: host),
+            port: port as? Int,
+            encrypted: encrypted,
+            activityTimeout: activityTimeout as? TimeInterval
+        )
     }
 
     public convenience init(authMethod: OCAuthMethod) {
