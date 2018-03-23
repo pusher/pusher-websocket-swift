@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/5.1.1...HEAD)
 
+### Added
+
+- Client will now send a ping to the server if there has been a period of inactivity on the socket. This should help detect some disconnections that previously weren't being noticed.
+
+### Changed
+
+- All dependencies are now defined to be brought in using the appropriate package manager (Carthage or CocoaPods)
+- Reconnection strategy has been changed to now attempt reconnecting indefinitely, with an exponential backoff but a maximum interval of 120 seconds between reconnection attempts.
+
+### Removed
+
+- Removed the deprecated `AuthRequestBuilderProtocol` function: `func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?`
+- `reconnectingWhenNetworkBecomesReachable` connection state
+
 ## [5.1.1](https://github.com/pusher/pusher-websocket-swift/compare/5.1.0...5.1.1) - 2018-01-22
 
 ### Changed
