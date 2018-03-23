@@ -78,13 +78,14 @@ let CLIENT_NAME = "pusher-websocket-swift"
         _ channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            return self.connection.subscribe(
-                channelName: channelName,
-                auth: auth,
-                onMemberAdded: onMemberAdded,
-                onMemberRemoved: onMemberRemoved
-            )
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherChannel {
+        return self.connection.subscribe(
+            channelName: channelName,
+            auth: auth,
+            onMemberAdded: onMemberAdded,
+            onMemberRemoved: onMemberRemoved
+        )
     }
 
     /**
@@ -106,13 +107,14 @@ let CLIENT_NAME = "pusher-websocket-swift"
         channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
-            return self.connection.subscribeToPresenceChannel(
-                channelName: channelName,
-                auth: auth,
-                onMemberAdded: onMemberAdded,
-                onMemberRemoved: onMemberRemoved
-            )
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherPresenceChannel {
+        return self.connection.subscribeToPresenceChannel(
+            channelName: channelName,
+            auth: auth,
+            onMemberAdded: onMemberAdded,
+            onMemberRemoved: onMemberRemoved
+        )
     }
 
     /**
