@@ -338,7 +338,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             chan.subscribed = true
 
             guard let eventData = json["data"] as? String else {
-                self.delegate?.debugLog?(message: "Subscription succeeded event received without data key in payload")
+                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Subscription succeeded event received without data key in payload")
                 return
             }
 
@@ -564,7 +564,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             } else if let channelData = auth.channelData {
                 self.handlePresenceChannelAuth(authValue: auth.auth, channel: channel, channelData: channelData)
             } else {
-                self.delegate?.debugLog?(message: "Attempting to subscribe to presence channel but no channelData value provided")
+                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Attempting to subscribe to presence channel but no channelData value provided")
                 return false
             }
 
