@@ -35,10 +35,6 @@ class ViewController: UIViewController, PusherDelegate {
 //        pusher = Pusher(key: "YOUR_APP_KEY", options: optionsWithEndpoint)
 
         // Use this if you want to try out your auth endpoint (deprecated method)
-        let optionsWithEndpoint = PusherClientOptions(
-            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilderOld())
-        )
-        pusher = Pusher(key: "YOUR_APP_KEY", options: optionsWithEndpoint)
 
         pusher.delegate = self
 
@@ -89,14 +85,6 @@ class ViewController: UIViewController, PusherDelegate {
     }
 }
 
-class AuthRequestBuilderOld: AuthRequestBuilderProtocol {
-    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest? {
-        let request = NSMutableURLRequest(url: URL(string: "http://localhost:9292/pusher/auth")!)
-        request.httpMethod = "POST"
-        request.httpBody = "socket_id=\(socketID)&channel_name=\(channel.name)".data(using: String.Encoding.utf8)
-        return request
-    }
-}
 
 class AuthRequestBuilder: AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channelName: String) -> URLRequest? {

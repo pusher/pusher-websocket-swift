@@ -1,7 +1,1 @@
-//
-//  Carthage.xcconfig
-//  iOS Example
-//
-//  Created by Hamilton Chapman on 12/03/2018.
-//  Copyright © 2018 Pusher. All rights reserved.
-//
+FRAMEWORK_SEARCH_PATHS[sdk=iphone*] = $(SRCROOT)/../Carthage/Build/iOS/ $(inherited)
