@@ -8,8 +8,9 @@ import Foundation
     public func subscribe(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherChannel {
+        return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     public func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
@@ -19,8 +20,9 @@ import Foundation
     public func subscribeToPresenceChannel(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
-            return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherPresenceChannel {
+        return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     public convenience init(withAppKey key: String, options: PusherClientOptions) {
