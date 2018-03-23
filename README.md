@@ -109,6 +109,7 @@ There are a number of configuration parameters which can be set for the Pusher c
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd like to connect to
+- `activityTimeout (TimeInterval)` - after this time (in seconds) without any messages received from the server, a ping message will be sent to check if the connection is still working; the default value is supplied by the server, low values will result in unnecessary traffic.
 
 The `authMethod` parameter must be of the type `AuthMethod`. This is an enum defined as:
 
@@ -133,9 +134,6 @@ This is the `AuthRequestBuilderProtocol` definition:
 ```swift
 public protocol AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channelName: String) -> URLRequest?
-
-    // DEPRECATED
-    func requestFor(socketID: String, channel: PusherChannel) -> NSMutableURLRequest?
 }
 ```
 
@@ -449,9 +447,8 @@ The different states that the connection can be in are (Objective-C integer enum
 * `disconnecting (2)` - the connection has been instructed to disconnect and it is just about to do so
 * `disconnected (3)` - the connection has disconnected and no attempt will be made to reconnect automatically
 * `reconnecting (4)` - an attempt is going to be made to try and re-establish the connection
-* `reconnectingWhenNetworkBecomesReachable (5)` - when the network becomes reachable an attempt will be made to reconnect
 
-There is a `stringValue` function that you can call on `ConnectionState` objects in order to get a `String` representation of the state, for example `"connecting"`.
+There is a `stringValue()` function that you can call on `ConnectionState` objects in order to get a `String` representation of the state, for example `"connecting"`.
 
 
 ### Reconnection
@@ -464,9 +461,9 @@ There are three main ways in which a disconnection can occur:
 
 In the case of the first type of disconnection the library will (as you'd hope) not attempt a reconnection.
 
-If there is network degradation that leads to a disconnection then the library has the [Reachability](https://github.com/ashleymills/Reachability.swift) library embedded and will be able to automatically determine when to attempt a reconnect based on the changing network conditions.
+The library uses [Reachability](https://github.com/ashleymills/Reachability.swift) to attempt to detect network degradation events that lead to disconnection. If this is detected then the library will attempt to reconnect (by default) with an exponential backoff, indefinitely (the maximum time between reconnect attempts is, by default, capped at 120 seconds). The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish to set a maximum number of reconnect attempts.
 
-If the Pusher servers close the websocket then the library will attempt to reconnect (by default) a maximum of 6 times, with an exponential backoff. The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish.
+If the Pusher servers close the websocket, or if a disconnection happens due to nevtwork events that aren't covered by Reachability, then the library will still attempt to reconnect as described above.
 
 All of this is the case if you have the client option of `autoReconnect` set as `true`, which it is by default. If the reconnection strategies are not suitable for your use case then you can set `autoReconnect` to `false` and implement your own reconnection strategy based on the connection state changes.
 
