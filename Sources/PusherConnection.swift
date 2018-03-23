@@ -17,21 +17,25 @@ public typealias PusherEventJSON = [String: AnyObject]
     open var socket: WebSocket!
     open var URLSession: Foundation.URLSession
     open var userDataFetcher: (() -> PusherPresenceChannelMember)?
-    open var reconnectAttemptsMax: Int? = 6
+    open var reconnectAttemptsMax: Int? = nil
     open var reconnectAttempts: Int = 0
-    open var maxReconnectGapInSeconds: Double? = nil
+    open var maxReconnectGapInSeconds: Double? = 120
     open weak var delegate: PusherDelegate?
-    internal var reconnectTimer: Timer? = nil
-
-    open var socketConnected: Bool = false {
+    open var pongResponseTimeoutInterval: TimeInterval = 30
     open var activityTimeoutInterval: TimeInterval
+    var reconnectTimer: Timer? = nil
+    var pongResponseTimeoutTimer: Timer? = nil
+    var activityTimeoutTimer: Timer? = nil
+    var intentionalDisconnect: Bool = false
+
+    var socketConnected: Bool = false {
         didSet {
-            updateConnectionStateAndAttemptSubscriptions()
+            setConnectionStateToConnectedAndAttemptSubscriptions()
         }
     }
-    open var connectionEstablishedMessageReceived: Bool = false {
+    var connectionEstablishedMessageReceived: Bool = false {
         didSet {
-            updateConnectionStateAndAttemptSubscriptions()
+            setConnectionStateToConnectedAndAttemptSubscriptions()
         }
     }
 
@@ -44,9 +48,14 @@ public typealias PusherEventJSON = [String: AnyObject]
             }
 
             self!.delegate?.debugLog?(message: "[PUSHER DEBUG] Network reachable")
-            if self!.connectionState == .disconnected || self!.connectionState == .reconnectingWhenNetworkBecomesReachable {
-                self!.attemptReconnect()
+            guard self!.connectionState == .disconnected else {
+                self!.delegate?.debugLog?(
+                    message: "[PUSHER DEBUG] Connection state is \(self!.connectionState.stringValue()) so not calling attemptReconnect"
+                )
+                return
             }
+
+            self!.attemptReconnect()
         }
         reachability?.whenUnreachable = { [weak self] reachability in
             guard self != nil else {
@@ -55,6 +64,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             }
 
             self!.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable")
+            self!.setConnectionStateToDisconnectedAndResetChannelSubscribedStates()
         }
         return reachability
     }()
@@ -89,6 +99,11 @@ public typealias PusherEventJSON = [String: AnyObject]
         self.socket.delegate = self
         self.socket.pongDelegate = self
     }
+
+    deinit {
+        self.reconnectTimer?.invalidate()
+        self.activityTimeoutTimer?.invalidate()
+        self.pongResponseTimeoutTimer?.invalidate()
     }
 
     /**
@@ -143,22 +158,23 @@ public typealias PusherEventJSON = [String: AnyObject]
         channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
-            let newChannel = channels.addPresence(
-                channelName: channelName,
-                connection: self,
-                auth: auth,
-                onMemberAdded: onMemberAdded,
-                onMemberRemoved: onMemberRemoved
-            )
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherPresenceChannel {
+        let newChannel = channels.addPresence(
+            channelName: channelName,
+            connection: self,
+            auth: auth,
+            onMemberAdded: onMemberAdded,
+            onMemberRemoved: onMemberRemoved
+        )
 
-            guard self.connectionState == .connected else { return newChannel }
+        guard self.connectionState == .connected else { return newChannel }
 
-            if !self.authorize(newChannel, auth: auth) {
-                print("Unable to subscribe to channel: \(newChannel.name)")
-            }
+        if !self.authorize(newChannel, auth: auth) {
+            print("Unable to subscribe to channel: \(newChannel.name)")
+        }
 
-            return newChannel
+        return newChannel
     }
 
     /**
@@ -250,6 +266,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     */
     open func disconnect() {
         if self.connectionState == .connected {
+            intentionalDisconnect = true
             self.reachability?.stopNotifier()
             updateConnectionState(to: .disconnecting)
             self.socket.disconnect()
@@ -320,11 +337,62 @@ public typealias PusherEventJSON = [String: AnyObject]
     /**
         Update connection state and attempt subscriptions to unsubscribed channels
     */
-    fileprivate func updateConnectionStateAndAttemptSubscriptions() {
-        if self.connectionEstablishedMessageReceived && self.socketConnected && self.connectionState != .connected {
+    fileprivate func setConnectionStateToConnectedAndAttemptSubscriptions() {
+        if self.connectionEstablishedMessageReceived &&
+           self.socketConnected &&
+           self.connectionState != .connected
+        {
             updateConnectionState(to: .connected)
             attemptSubscriptionsToUnsubscribedChannels()
         }
+    }
+
+    fileprivate func setConnectionStateToDisconnectedAndResetChannelSubscribedStates() {
+        updateConnectionState(to: .disconnected)
+        for (_, channel) in self.channels.channels {
+            channel.subscribed = false
+        }
+        attemptReconnect()
+    }
+
+    func resetActivityTimeoutTimer() {
+        activityTimeoutTimer?.invalidate()
+        pongResponseTimeoutTimer?.invalidate()
+        pongResponseTimeoutTimer = nil
+        establishActivityTimeoutTimer()
+    }
+
+    fileprivate func establishActivityTimeoutTimer() {
+        self.activityTimeoutTimer = Timer.scheduledTimer(
+            timeInterval: self.activityTimeoutInterval,
+            target: self,
+            selector: #selector(self.sendPing),
+            userInfo: nil,
+            repeats: false
+        )
+    }
+
+    @objc fileprivate func sendPing() {
+        socket.write(ping: Data()) {
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Ping sent")
+            self.setupPongResponseTimeoutTimer()
+        }
+    }
+
+    fileprivate func setupPongResponseTimeoutTimer() {
+        pongResponseTimeoutTimer = Timer.scheduledTimer(
+            timeInterval: pongResponseTimeoutInterval,
+            target: self,
+            selector: #selector(cleanupAfterNoPongResponse),
+            userInfo: nil,
+            repeats: false
+        )
+    }
+
+    @objc fileprivate func cleanupAfterNoPongResponse() {
+        pongResponseTimeoutTimer?.invalidate()
+        pongResponseTimeoutTimer = nil
+        setConnectionStateToDisconnectedAndResetChannelSubscribedStates()
     }
 
     /**
@@ -377,10 +445,16 @@ public typealias PusherEventJSON = [String: AnyObject]
     */
     fileprivate func handleConnectionEstablishedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
-            if let connectionData = getPusherEventJSON(from: data), let socketId = connectionData["socket_id"] as? String {
+            if let connectionData = getPusherEventJSON(from: data),
+               let socketId = connectionData["socket_id"] as? String
+            {
                 self.socketId = socketId
                 self.reconnectAttempts = 0
                 self.reconnectTimer?.invalidate()
+
+                if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
+                    self.activityTimeoutInterval = activityTimeoutFromServer
+                }
 
                 self.connectionEstablishedMessageReceived = true
             }
@@ -393,10 +467,8 @@ public typealias PusherEventJSON = [String: AnyObject]
     */
     fileprivate func attemptSubscriptionsToUnsubscribedChannels() {
         for (_, channel) in self.channels.channels {
-            if !channel.subscribed {
-                if !self.authorize(channel, auth: channel.auth) {
-                    print("Unable to subscribe to channel: \(channel.name)")
-                }
+            if !self.authorize(channel, auth: channel.auth) {
+                print("Unable to subscribe to channel: \(channel.name)")
             }
         }
     }
@@ -506,6 +578,7 @@ public typealias PusherEventJSON = [String: AnyObject]
         - parameter jsonObject: The event-specific data related to the incoming event
     */
     open func handleEvent(eventName: String, jsonObject: [String : AnyObject]) {
+        resetActivityTimeoutTimer()
         switch eventName {
         case "pusher_internal:subscription_succeeded":
             handleSubscriptionSucceededEvent(json: jsonObject)
@@ -746,15 +819,16 @@ public typealias PusherEventJSON = [String: AnyObject]
         - parameter channel: The PusherChannel to authorize subsciption for
     */
     fileprivate func handleAuthResponse(
-        json: [String : AnyObject],
-        channel: PusherChannel) {
-            if let auth = json["auth"] as? String {
-                handleAuthInfo(
-                    authString: auth,
-                    channelData: json["channel_data"] as? String,
-                    channel: channel
-                )
-            }
+        json: [String: AnyObject],
+        channel: PusherChannel
+    ) {
+        if let auth = json["auth"] as? String {
+            handleAuthInfo(
+                authString: auth,
+                channelData: json["channel_data"] as? String,
+                channel: channel
+            )
+        }
     }
 
     /**
@@ -782,17 +856,18 @@ public typealias PusherEventJSON = [String: AnyObject]
     fileprivate func handlePresenceChannelAuth(
         authValue: String,
         channel: PusherChannel,
-        channelData: String) {
-            (channel as? PusherPresenceChannel)?.setMyUserId(channelData: channelData)
+        channelData: String
+    ) {
+        (channel as? PusherPresenceChannel)?.setMyUserId(channelData: channelData)
 
-            self.sendEvent(
-                event: "pusher:subscribe",
-                data: [
-                    "channel": channel.name,
-                    "auth": authValue,
-                    "channel_data": channelData
-                ]
-            )
+        self.sendEvent(
+            event: "pusher:subscribe",
+            data: [
+                "channel": channel.name,
+                "auth": authValue,
+                "channel_data": channelData
+            ]
+        )
     }
 
     /**
@@ -828,7 +903,6 @@ public typealias PusherEventJSON = [String: AnyObject]
     case disconnecting
     case disconnected
     case reconnecting
-    case reconnectingWhenNetworkBecomesReachable
 
     static let connectionStates = [
         connecting: "connecting",
@@ -836,7 +910,6 @@ public typealias PusherEventJSON = [String: AnyObject]
         disconnecting: "disconnecting",
         disconnected: "disconnected",
         reconnecting: "reconnecting",
-        reconnectingWhenNetworkBecomesReachable: "reconnreconnectingWhenNetworkBecomesReachable",
     ]
 
     public func stringValue() -> String {
