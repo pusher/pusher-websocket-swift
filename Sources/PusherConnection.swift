@@ -123,7 +123,8 @@ public typealias PusherEventJSON = [String: AnyObject]
         channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherChannel {
             let newChannel = channels.add(
                 name: channelName,
                 connection: self,
