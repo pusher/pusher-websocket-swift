@@ -453,6 +453,7 @@ public typealias PusherEventJSON = [String: AnyObject]
                let socketId = connectionData["socket_id"] as? String
             {
                 self.socketId = socketId
+                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
                 self.reconnectAttempts = 0
                 self.reconnectTimer?.invalidate()
 
