@@ -64,7 +64,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             }
 
             self!.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable")
-            self!.setConnectionStateToDisconnectedAndResetChannelSubscribedStates()
+            self!.setConnectionStateToDisconnectedAndReset()
         }
         return reachability
     }()
@@ -347,11 +347,14 @@ public typealias PusherEventJSON = [String: AnyObject]
         }
     }
 
-    fileprivate func setConnectionStateToDisconnectedAndResetChannelSubscribedStates() {
+    fileprivate func setConnectionStateToDisconnectedAndReset() {
         updateConnectionState(to: .disconnected)
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
+        socketConnected = false
+        connectionEstablishedMessageReceived = false
+        socketId = nil
         attemptReconnect()
     }
 
@@ -392,7 +395,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     @objc fileprivate func cleanupAfterNoPongResponse() {
         pongResponseTimeoutTimer?.invalidate()
         pongResponseTimeoutTimer = nil
-        setConnectionStateToDisconnectedAndResetChannelSubscribedStates()
+        setConnectionStateToDisconnectedAndReset()
     }
 
     /**
