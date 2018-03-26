@@ -1,5 +1,5 @@
 import Foundation
-import Starscream
+import StarscreamFork
 
 let PROTOCOL = 7
 let VERSION = "5.1.1"

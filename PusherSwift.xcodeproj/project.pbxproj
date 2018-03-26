@@ -296,7 +296,7 @@
 			files = (
 			);
 			inputPaths = (
-				Starscream,
+				StarscreamFork,
 				TaskQueue,
 				CryptoSwift,
 				Reachability,
