@@ -36,11 +36,11 @@ extension PusherConnection: WebSocketDelegate {
         self.connectionEstablishedMessageReceived = false
         self.socketConnected = false
 
+        updateConnectionState(to: .disconnected)
+
         guard !intentionalDisconnect else {
-            // reset the intentional disconnect state
-            intentionalDisconnect = false
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Deliberate disconnection - skipping reconnect attempts")
-            return updateConnectionState(to: .disconnected)
+            return
         }
 
         // Handle error (if any)
@@ -54,12 +54,12 @@ extension PusherConnection: WebSocketDelegate {
         // Attempt reconnect if possible
 
         guard self.options.autoReconnect else {
-            return updateConnectionState(to: .disconnected)
+            return
         }
 
         guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Max reconnect attempts reached")
-            return updateConnectionState(to: .disconnected)
+            return
         }
 
         if let reachability = self.reachability, reachability.connection == .none {

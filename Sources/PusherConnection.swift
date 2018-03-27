@@ -48,14 +48,27 @@ public typealias PusherEventJSON = [String: AnyObject]
             }
 
             self!.delegate?.debugLog?(message: "[PUSHER DEBUG] Network reachable")
-            guard self!.connectionState == .disconnected else {
+
+            switch self!.connectionState {
+            case .disconnecting, .connecting, .reconnecting:
+                // If in one of these states then part of the connection, reconnection, or explicit
+                // disconnection process is underway, so do nothing
+                return
+            case .disconnected:
+                // If already disconnected then reset connection and try to reconnect, provided the
+                // state isn't disconnected because of an intentional disconnection
+                if !self!.intentionalDisconnect { self!.resetConnectionAndAttemptReconnect() }
+                return
+            case .connected:
+                // If already connected then we assume that there was a missed network event that
+                // led to a bad connection so we move to the disconnected state and then attempt
+                // reconnection
                 self!.delegate?.debugLog?(
-                    message: "[PUSHER DEBUG] Connection state is \(self!.connectionState.stringValue()) so not calling attemptReconnect"
+                    message: "[PUSHER DEBUG] Connection state is \(self!.connectionState.stringValue()) but received network reachability change so going to call attemptReconnect"
                 )
+                self!.resetConnectionAndAttemptReconnect()
                 return
             }
-
-            self!.attemptReconnect()
         }
         reachability?.whenUnreachable = { [weak self] reachability in
             guard self != nil else {
@@ -64,7 +77,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             }
 
             self!.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable")
-            self!.setConnectionStateToDisconnectedAndReset()
+            self!.resetConnectionAndAttemptReconnect()
         }
         return reachability
     }()
@@ -278,6 +291,9 @@ public typealias PusherEventJSON = [String: AnyObject]
         Establish a websocket connection
     */
     @objc open func connect() {
+        // reset the intentional disconnect state
+        intentionalDisconnect = false
+
         if self.connectionState == .connected {
             return
         } else {
@@ -348,24 +364,51 @@ public typealias PusherEventJSON = [String: AnyObject]
         }
     }
 
-    fileprivate func setConnectionStateToDisconnectedAndReset() {
-        updateConnectionState(to: .disconnected)
+    /**
+        Set the connection state to disconnected, mark channels as unsubscribed,
+        reset connection-related state to initial state, and initiate reconnect
+        process
+    */
+    fileprivate func resetConnectionAndAttemptReconnect() {
+        if connectionState != .disconnected {
+            updateConnectionState(to: .disconnected)
+        }
+
         for (_, channel) in self.channels.channels {
             channel.subscribed = false
         }
+
+        cleanUpActivityAndPongResponseTimeoutTimers()
+
         socketConnected = false
         connectionEstablishedMessageReceived = false
         socketId = nil
+
         attemptReconnect()
     }
 
+    /**
+        Reset the activity timeout timer
+    */
     func resetActivityTimeoutTimer() {
-        activityTimeoutTimer?.invalidate()
-        pongResponseTimeoutTimer?.invalidate()
-        pongResponseTimeoutTimer = nil
+        cleanUpActivityAndPongResponseTimeoutTimers()
         establishActivityTimeoutTimer()
     }
 
+    /**
+        Clean up the activity timeout and pong response timers
+    */
+    func cleanUpActivityAndPongResponseTimeoutTimers() {
+        activityTimeoutTimer?.invalidate()
+        activityTimeoutTimer = nil
+        pongResponseTimeoutTimer?.invalidate()
+        pongResponseTimeoutTimer = nil
+    }
+
+    /**
+        Schedule a timer to be fired if no activity occurs over the socket within
+        the activityTimeoutInterval
+    */
     fileprivate func establishActivityTimeoutTimer() {
         self.activityTimeoutTimer = Timer.scheduledTimer(
             timeInterval: self.activityTimeoutInterval,
@@ -376,6 +419,9 @@ public typealias PusherEventJSON = [String: AnyObject]
         )
     }
 
+    /**
+        Send a ping to the server
+    */
     @objc fileprivate func sendPing() {
         socket.write(ping: Data()) {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Ping sent")
@@ -383,6 +429,10 @@ public typealias PusherEventJSON = [String: AnyObject]
         }
     }
 
+    /**
+        Schedule a timer that will fire if no pong response is received within the
+        pongResponseTImeoutInterval
+    */
     fileprivate func setupPongResponseTimeoutTimer() {
         pongResponseTimeoutTimer = Timer.scheduledTimer(
             timeInterval: pongResponseTimeoutInterval,
@@ -393,10 +443,14 @@ public typealias PusherEventJSON = [String: AnyObject]
         )
     }
 
+    /**
+        Invalidate the pongResponseTimeoutTimer and set connection state to disconnected
+        as well as marking channels as unsubscribed
+    */
     @objc fileprivate func cleanupAfterNoPongResponse() {
         pongResponseTimeoutTimer?.invalidate()
         pongResponseTimeoutTimer = nil
-        setConnectionStateToDisconnectedAndReset()
+        resetConnectionAndAttemptReconnect()
     }
 
     /**
