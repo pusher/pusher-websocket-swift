@@ -12,7 +12,6 @@
 		335AD5AA20569C3C000D4D08 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A620569C3B000D4D08 /* CryptoSwift.framework */; };
 		335AD5AB20569C3C000D4D08 /* TaskQueue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A720569C3B000D4D08 /* TaskQueue.framework */; };
 		335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A820569C3B000D4D08 /* Reachability.framework */; };
-		335AD5B020569DC3000D4D08 /* Carthage.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 335AD5AF20569DC3000D4D08 /* Carthage.xcconfig */; };
 		335AD5B220569F14000D4D08 /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3373BF4D2068F201005A61BE /* StarscreamFork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3373BF4C2068F201005A61BE /* StarscreamFork.framework */; };
 		33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */; };
@@ -212,7 +211,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Pusher;
 				TargetAttributes = {
 					3330F8861D86EF1800D8DC88 = {
@@ -266,7 +265,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335AD5B020569DC3000D4D08 /* Carthage.xcconfig in Resources */,
 				33831CC41A9CFCDB00B124F1 /* Main.storyboard in Resources */,
 				33831CC31A9CFCDB00B124F1 /* Images.xcassets in Resources */,
 			);
