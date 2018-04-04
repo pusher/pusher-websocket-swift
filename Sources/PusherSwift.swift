@@ -2,7 +2,7 @@ import Foundation
 import StarscreamFork
 
 let PROTOCOL = 7
-let VERSION = "5.1.1"
+let VERSION = "6.0.0"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 @objcMembers
@@ -125,7 +125,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     open func unsubscribe(_ channelName: String) {
         self.connection.unsubscribe(channelName: channelName)
     }
-    
+
     /**
         Unsubscribes the client from all channels
     */
