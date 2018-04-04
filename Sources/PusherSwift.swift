@@ -1,11 +1,5 @@
-//
-//  PusherSwift.swift
-//
-//  Created by Hamilton Chapman on 19/02/2015.
-//
-//
-
 import Foundation
+import StarscreamFork
 
 let PROTOCOL = 7
 let VERSION = "5.1.1"
@@ -84,13 +78,14 @@ let CLIENT_NAME = "pusher-websocket-swift"
         _ channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            return self.connection.subscribe(
-                channelName: channelName,
-                auth: auth,
-                onMemberAdded: onMemberAdded,
-                onMemberRemoved: onMemberRemoved
-            )
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherChannel {
+        return self.connection.subscribe(
+            channelName: channelName,
+            auth: auth,
+            onMemberAdded: onMemberAdded,
+            onMemberRemoved: onMemberRemoved
+        )
     }
 
     /**
@@ -112,13 +107,14 @@ let CLIENT_NAME = "pusher-websocket-swift"
         channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
-            return self.connection.subscribeToPresenceChannel(
-                channelName: channelName,
-                auth: auth,
-                onMemberAdded: onMemberAdded,
-                onMemberRemoved: onMemberRemoved
-            )
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherPresenceChannel {
+        return self.connection.subscribeToPresenceChannel(
+            channelName: channelName,
+            auth: auth,
+            onMemberAdded: onMemberAdded,
+            onMemberRemoved: onMemberRemoved
+        )
     }
 
     /**

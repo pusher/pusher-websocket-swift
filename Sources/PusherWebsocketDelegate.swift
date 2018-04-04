@@ -1,12 +1,5 @@
-//
-//  PusherWebsocketDelegate.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 01/04/2016.
-//
-//
-
 import Foundation
+import StarscreamFork
 
 extension PusherConnection: WebSocketDelegate {
 
@@ -21,7 +14,7 @@ extension PusherConnection: WebSocketDelegate {
         if let pusherPayloadObject = getPusherEventJSON(from: text), let eventName = pusherPayloadObject["event"] as? String {
             self.handleEvent(eventName: eventName, jsonObject: pusherPayloadObject)
         } else {
-            print("Unable to handle incoming Websocket message \(text)")
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming Websocket message \(text)")
         }
     }
 
@@ -43,33 +36,35 @@ extension PusherConnection: WebSocketDelegate {
         self.connectionEstablishedMessageReceived = false
         self.socketConnected = false
 
-        // Handle error (if any)
-        guard let error = error, (error as NSError).code != Int(CloseCode.normal.rawValue) else {
+        updateConnectionState(to: .disconnected)
+
+        guard !intentionalDisconnect else {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Deliberate disconnection - skipping reconnect attempts")
-            return updateConnectionState(to: .disconnected)
+            return
         }
 
-        print("Websocket is disconnected. Error: \(error.localizedDescription)")
+        // Handle error (if any)
+
+        if let error = error {
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Websocket is disconnected. Error (code: \((error as NSError).code)): \(error.localizedDescription)")
+        } else {
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Websocket is disconnected but no error received")
+        }
+
         // Attempt reconnect if possible
 
         guard self.options.autoReconnect else {
-            return updateConnectionState(to: .disconnected)
+            return
         }
 
         guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Max reconnect attempts reached")
-            return updateConnectionState(to: .disconnected)
+            return
         }
 
-        guard let reachability = self.reachability, reachability.isReachable else {
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable so waiting to attempt reconnect")
-            return updateConnectionState(to: .reconnectingWhenNetworkBecomesReachable)
+        if let reachability = self.reachability, reachability.connection == .none {
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable so reconnect likely to fail")
         }
-
-        if connectionState != .reconnecting {
-            updateConnectionState(to: .reconnecting)
-        }
-        self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network reachable so will setup reconnect attempt")
 
         attemptReconnect()
     }
@@ -84,6 +79,10 @@ extension PusherConnection: WebSocketDelegate {
 
         guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
             return
+        }
+
+        if connectionState != .reconnecting {
+            updateConnectionState(to: .reconnecting)
         }
 
         let reconnectInterval = Double(reconnectAttempts * reconnectAttempts)
@@ -117,4 +116,13 @@ extension PusherConnection: WebSocketDelegate {
     }
 
     public func websocketDidReceiveData(socket ws: WebSocketClient, data: Data) {}
+}
+
+extension PusherConnection: WebSocketPongDelegate {
+
+    public func websocketDidReceivePong(socket: WebSocketClient, data: Data?) {
+        self.delegate?.debugLog?(message: "[PUSHER DEBUG] Websocket received pong")
+        resetActivityTimeoutTimer()
+    }
+
 }

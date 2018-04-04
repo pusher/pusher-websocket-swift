@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PusherSwift/PusherSwift.xcodeproj">
+      location = "group:PusherSwift.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:iOS Example Swift/iOS Example Swift.xcodeproj">

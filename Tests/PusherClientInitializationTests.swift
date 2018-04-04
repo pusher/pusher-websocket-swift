@@ -46,6 +46,10 @@ class ClientInitializationTests: XCTestCase {
         XCTAssertEqual(pusher.connection.options.port, 443, "the port should be set as 443")
     }
 
+    func testDefaultActivityTimeoutOption() {
+        XCTAssertEqual(pusher.connection.activityTimeoutInterval, 60, "the activity timeout interval should be 60")
+    }
+
     func testProvidingEcryptedOptionAsFalse() {
         let options = PusherClientOptions(
             encrypted: false
@@ -100,5 +104,13 @@ class ClientInitializationTests: XCTestCase {
         )
         pusher = Pusher(key: key, options: options)
         XCTAssertEqual(pusher.connection.options.host, "ws-eu.pusher.com", "the host should be \"ws-eu.pusher.com\"")
+    }
+
+    func testProvidingAnActivityTimeoutOption() {
+        let options = PusherClientOptions(
+            activityTimeout: 123
+        )
+        pusher = Pusher(key: key, options: options)
+        XCTAssertEqual(pusher.connection.activityTimeoutInterval, 123, "the activity timeout interval should be 123")
     }
 }

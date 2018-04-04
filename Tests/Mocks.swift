@@ -7,6 +7,7 @@
 //
 
 import PusherSwift
+import StarscreamFork
 
 open class MockWebSocket: WebSocket {
     let stubber = StubberForMocks()

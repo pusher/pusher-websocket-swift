@@ -1,0 +1,1 @@
+FRAMEWORK_SEARCH_PATHS[sdk=iphone*] = $(SRCROOT)/../Carthage/Build/iOS/ $(inherited)

@@ -1,11 +1,3 @@
-//
-//  PusherGlobalChannel.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 01/04/2016.
-//
-//
-
 import Foundation
 
 @objcMembers
@@ -32,25 +24,26 @@ import Foundation
         connection: PusherConnection,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            if let channel = self.channels[name] {
-                return channel
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherChannel {
+        if let channel = self.channels[name] {
+            return channel
+        } else {
+            var newChannel: PusherChannel
+            if PusherChannelType.isPresenceChannel(name: name) {
+                newChannel = PusherPresenceChannel(
+                    name: name,
+                    connection: connection,
+                    auth: auth,
+                    onMemberAdded: onMemberAdded,
+                    onMemberRemoved: onMemberRemoved
+                )
             } else {
-                var newChannel: PusherChannel
-                if PusherChannelType.isPresenceChannel(name: name) {
-                    newChannel = PusherPresenceChannel(
-                        name: name,
-                        connection: connection,
-                        auth: auth,
-                        onMemberAdded: onMemberAdded,
-                        onMemberRemoved: onMemberRemoved
-                    )
-                } else {
-                    newChannel = PusherChannel(name: name, connection: connection, auth: auth)
-                }
-                self.channels[name] = newChannel
-                return newChannel
+                newChannel = PusherChannel(name: name, connection: connection, auth: auth)
             }
+            self.channels[name] = newChannel
+            return newChannel
+        }
     }
 
     /**
@@ -73,7 +66,8 @@ import Foundation
         connection: PusherConnection,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherPresenceChannel {
         if let channel = self.channels[channelName] as? PusherPresenceChannel {
             return channel
         } else {

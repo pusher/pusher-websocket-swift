@@ -1,12 +1,5 @@
-//
-//  NativePusher.swift
-//  PusherSwift
-//
-//  Created by James Fisher on 09/06/2016.
-//
-//
-
 import Foundation
+import TaskQueue
 
 #if os(iOS) || os(OSX)
 
@@ -124,22 +117,22 @@ import Foundation
                                 if let clientId = clientIdJson as? String {
                                     self.clientId = clientId
                                     self.delegate?.registeredForPushNotifications?(clientId: clientId)
-                                    self.delegate?.debugLog?(message: "Successfully registered for push notifications and got clientId: \(clientId)")
+                                    self.delegate?.debugLog?(message: "[PUSHER DEBUG] Successfully registered for push notifications and got clientId: \(clientId)")
                                     self.requestQueue.run()
                                 } else {
-                                    self.delegate?.debugLog?(message: "Value at \"id\" key in JSON response was not a string: \(json)")
+                                    self.delegate?.debugLog?(message: "[PUSHER DEBUG] Value at \"id\" key in JSON response was not a string: \(json)")
                                 }
                             } else {
-                                self.delegate?.debugLog?(message: "No \"id\" key in JSON response: \(json)")
+                                self.delegate?.debugLog?(message: "[PUSHER DEBUG] No \"id\" key in JSON response: \(json)")
                             }
                         } else {
-                            self.delegate?.debugLog?(message: "Could not parse body as JSON object: \(String(describing: data))")
+                            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Could not parse body as JSON object: \(String(describing: data))")
                         }
             } else {
                 if data != nil && response != nil {
                     let responseBody = String(data: data!, encoding: .utf8)
                     self.delegate?.failedToRegisterForPushNotifications?(response: response!, responseBody: responseBody)
-                    self.delegate?.debugLog?(message: "Bad HTTP response: \(response!) with body: \(String(describing: responseBody))")
+                    self.delegate?.debugLog?(message: "[PUSHER DEBUG] Bad HTTP response: \(response!) with body: \(String(describing: responseBody))")
                 }
             }
         })
@@ -213,7 +206,7 @@ import Foundation
             let clientId = clientId,
             let pusherAppKey = pusherAppKey
         else {
-            self.delegate?.debugLog?(message: "pusherAppKey or clientId not set - waiting for both to be set")
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] pusherAppKey or clientId not set - waiting for both to be set")
             self.requestQueue.pauseAndResetCurrentTask()
             return
         }
@@ -234,7 +227,7 @@ import Foundation
             let clientId = clientId,
             let pusherAppKey = pusherAppKey
         else {
-            self.delegate?.debugLog?(message: "pusherAppKey or clientId not set - waiting for both to be set")
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] pusherAppKey or clientId not set - waiting for both to be set")
             self.requestQueue.pauseAndResetCurrentTask()
             return
         }
@@ -246,7 +239,7 @@ import Foundation
     }
 
     private func doURLRequest(interests: Array<String>, request: URLRequest, change: SubscriptionChange, successCallback: @escaping (Any?) -> Void) {
-        self.delegate?.debugLog?(message: "Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
+        self.delegate?.debugLog?(message: "[PUSHER DEBUG] Attempt number: \(self.failedRequestAttempts + 1) of \(maxFailedRequestAttempts)")
 
         let task = URLSession.dataTask(
             with: request,
@@ -258,20 +251,20 @@ import Foundation
                         self.failedRequestAttempts += 1
 
                         if error != nil {
-                            self.delegate?.debugLog?(message: "Error when trying to modify subscription to interest(s): \(String(describing: error?.localizedDescription))")
+                            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Error when trying to modify subscription to interest(s): \(String(describing: error?.localizedDescription))")
                         } else if data != nil && response != nil {
                             let responseBody = String(data: data!, encoding: .utf8)
-                            self.delegate?.debugLog?(message: "Bad response from server: \(response!) with body: \(String(describing: responseBody))")
+                            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Bad response from server: \(response!) with body: \(String(describing: responseBody))")
                         } else {
-                            self.delegate?.debugLog?(message: "Bad response from server when trying to modify subscription to interest(s): \(interests)")
+                            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Bad response from server when trying to modify subscription to interest(s): \(interests)")
                         }
 
                         if self.failedRequestAttempts >= self.maxFailedRequestAttempts {
-                            self.delegate?.debugLog?(message: "Max number of failed native service requests reached")
+                            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Max number of failed native service requests reached")
 
                             self.requestQueue.paused = true
                         } else {
-                            self.delegate?.debugLog?(message: "Retrying subscription modification request for interest(s): \(interests)")
+                            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Retrying subscription modification request for interest(s): \(interests)")
                             self.requestQueue.retry(Double(self.failedRequestAttempts * self.failedRequestAttempts))
                         }
 
@@ -289,7 +282,7 @@ import Foundation
                     self.delegate?.unsubscribedFromInterest?(name: interest)
                 }
 
-                self.delegate?.debugLog?(message: "Success making \(change.rawValue) to \(interests)")
+                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Success making \(change.rawValue) to \(interests)")
 
                 self.failedRequestAttempts = 0
                 successCallback(nil)

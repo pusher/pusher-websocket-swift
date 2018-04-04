@@ -1,9 +1,9 @@
 language: objective-c
-osx_image: xcode9
+osx_image: xcode9.3beta
 sudo: false
 env:
-  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' ACTION=test DEVICE='iPhone 6s (10.0)'
-  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' ACTION=test DEVICE='Apple TV 1080p (10.0)'
+  - iOS= DST='platform=iOS Simulator,name=iPhone X' ACTION=test DEVICE='iPhone X (11.3)'
+  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 4K' ACTION=test DEVICE='Apple TV 4K (11.3)'
   - macOS= DST='platform=OS X' ACTION=test
 before_install:
   - brew update
@@ -15,11 +15,12 @@ before_install:
       brew install carthage;
     fi
   - gem install xcpretty --no-document
+  - carthage update --no-use-binaries
   - SIMULATOR_ID=$(xcrun instruments -s | grep -o "$DEVICE \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
   - echo "$SIMULATOR_ID"
 before_deploy:
-  - carthage build --no-skip-current --project-directory PusherSwift
-  - carthage archive PusherSwift --project-directory PusherSwift
+  - carthage build --no-skip-current
+  - carthage archive PusherSwift
 deploy:
   provider: releases
   api_key:
@@ -37,7 +38,7 @@ script:
       echo "$SIMULARTOR_ID";
       open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
     fi
-  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj clean build | xcpretty -tc;
-  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift/PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift.xcodeproj clean build | xcpretty -tc;
+  - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift.xcodeproj -enableCodeCoverage YES $ACTION | xcpretty -tc;
 after_success:
   - sleep 5

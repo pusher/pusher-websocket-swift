@@ -1,11 +1,3 @@
-//
-//  ObjectiveC.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 20/08/2016.
-//
-//
-
 import Foundation
 
 @objc public extension Pusher {
@@ -16,8 +8,9 @@ import Foundation
     public func subscribe(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherChannel {
-            return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherChannel {
+        return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     public func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
@@ -27,8 +20,9 @@ import Foundation
     public func subscribeToPresenceChannel(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil) -> PusherPresenceChannel {
-            return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+    ) -> PusherPresenceChannel {
+        return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     public convenience init(withAppKey key: String, options: PusherClientOptions) {
@@ -67,15 +61,18 @@ import Foundation
         autoReconnect: Bool = true,
         ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
         port: NSNumber? = nil,
-        encrypted: Bool = true) {
-            self.init(
-                authMethod: AuthMethod.fromObjc(source: authMethod),
-                attemptToReturnJSONObject: attemptToReturnJSONObject,
-                autoReconnect: autoReconnect,
-                host: PusherHost.fromObjc(source: host),
-                port: port as? Int,
-                encrypted: encrypted
-            )
+        encrypted: Bool = true,
+        activityTimeout: NSNumber? = nil
+    ) {
+        self.init(
+            authMethod: AuthMethod.fromObjc(source: authMethod),
+            attemptToReturnJSONObject: attemptToReturnJSONObject,
+            autoReconnect: autoReconnect,
+            host: PusherHost.fromObjc(source: host),
+            port: port as? Int,
+            encrypted: encrypted,
+            activityTimeout: activityTimeout as? TimeInterval
+        )
     }
 
     public convenience init(authMethod: OCAuthMethod) {
