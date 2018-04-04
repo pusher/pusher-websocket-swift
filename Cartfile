@@ -3,4 +3,4 @@ github "ashleymills/Reachability.swift"
 github "icanzilb/TaskQueue"
 
 # github "daltoniam/Starscream"
-github "hamchapman/Starscream" "cleanup-pod-fork"
+github "hamchapman/Starscream"
