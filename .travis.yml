@@ -2,8 +2,8 @@ language: objective-c
 osx_image: xcode9.3beta
 sudo: false
 env:
-  - iOS= DST='platform=iOS Simulator,name=iPhone 6S' ACTION=test DEVICE='iPhone 6s (10.0)'
-  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' ACTION=test DEVICE='Apple TV 1080p (10.0)'
+  - iOS= DST='platform=iOS Simulator,name=iPhone X' ACTION=test DEVICE='iPhone X (11.3)'
+  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 4K' ACTION=test DEVICE='Apple TV 4K (11.3)'
   - macOS= DST='platform=OS X' ACTION=test
 before_install:
   - brew update
