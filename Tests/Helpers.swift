@@ -1,11 +1,3 @@
-//
-//  Helpers.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 07/04/2016.
-//
-//
-
 import PusherSwift
 
 func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {

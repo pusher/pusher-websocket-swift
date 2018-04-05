@@ -1,11 +1,3 @@
-//
-//  PusherSwiftTests.swift
-//  PusherSwiftTests
-//
-//  Created by Hamilton Chapman on 24/02/2015.
-//
-//
-
 import PusherSwift
 import XCTest
 

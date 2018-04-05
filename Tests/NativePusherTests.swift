@@ -1,11 +1,3 @@
-//
-//  NativePusherTests.swift
-//  PusherSwift
-//
-//  Created by Hamilton Chapman on 19/09/2016.
-//
-//
-
 #if os(iOS) || os(OSX)
 
 @testable import PusherSwift
