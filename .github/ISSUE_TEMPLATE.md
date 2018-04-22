@@ -9,7 +9,3 @@
 ### Any improvements you suggest
 
 ...
-
----- 
-
-CC @pusher/mobile
