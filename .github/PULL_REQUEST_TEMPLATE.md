@@ -5,7 +5,3 @@
 #### Why is the change necessary?
 
 ...
-
-----
-
-CC @pusher/mobile 
