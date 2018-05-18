@@ -1,5 +1,5 @@
 import Foundation
-import StarscreamFork
+import Starscream
 
 extension PusherConnection: WebSocketDelegate {
 

@@ -1,6 +1,6 @@
 import Foundation
 import Reachability
-import StarscreamFork
+import Starscream
 import CryptoSwift
 
 public typealias PusherEventJSON = [String: AnyObject]
