@@ -10,55 +10,15 @@ import Cocoa
 import PusherSwift
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, PusherDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
     let pusher = Pusher(key: "YOUR_APP_KEY")
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        NSApp.registerForRemoteNotifications(
-            matching: [
-                NSApplication.RemoteNotificationType.alert,
-                NSApplication.RemoteNotificationType.sound,
-                NSApplication.RemoteNotificationType.badge
-            ]
-        );
-
-        self.pusher.delegate = self
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
-    }
-
-    func application(_ application: NSApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Failed to register for remote notifications: \(error)")
-    }
-
-    func application(_ application: NSApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        self.pusher.nativePusher.register(deviceToken: deviceToken)
-        self.pusher.nativePusher.subscribe(interestName: "donuts")
-    }
-
-    func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
-        print("Received remote notification: " + userInfo.debugDescription)
-    }
-
-    // MARK: PusherDelegate
-
-    func subscribedToInterest(name: String) {
-        print("Subscribed to interest: \(name)")
-    }
-
-    func unsubscribedFromInterest(name: String) {
-        print("Unsubscribed from interest: \(name)")
-    }
-
-    func registeredForPushNotifications(clientId: String) {
-        print("Registered with Pusher for push notifications with clientId: \(clientId)")
-    }
-
-    func debugLog(message: String) {
-        print(message)
     }
 }

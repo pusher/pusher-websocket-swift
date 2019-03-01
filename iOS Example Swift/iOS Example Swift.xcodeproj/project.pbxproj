@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3330F88A1D86EF1800D8DC88 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3330F8891D86EF1800D8DC88 /* NotificationService.swift */; };
-		3330F88E1D86EF1900D8DC88 /* GifDemo.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3330F8871D86EF1800D8DC88 /* GifDemo.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		335AD5AA20569C3C000D4D08 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A620569C3B000D4D08 /* CryptoSwift.framework */; };
 		335AD5AB20569C3C000D4D08 /* TaskQueue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A720569C3B000D4D08 /* TaskQueue.framework */; };
 		335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A820569C3B000D4D08 /* Reachability.framework */; };
@@ -21,16 +19,6 @@
 		33E94E7620766DBE0005399D /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A920569C3B000D4D08 /* Starscream.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3330F88C1D86EF1900D8DC88 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33831C561A9CEEE900B124F1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3330F8861D86EF1800D8DC88;
-			remoteInfo = GifDemo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		3330F8921D86EF1900D8DC88 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -38,7 +26,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				3330F88E1D86EF1900D8DC88 /* GifDemo.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,16 +44,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3330F8871D86EF1800D8DC88 /* GifDemo.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GifDemo.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		3330F8891D86EF1800D8DC88 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		3330F88B1D86EF1800D8DC88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335AD5A620569C3B000D4D08 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = ../Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		335AD5A720569C3B000D4D08 /* TaskQueue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TaskQueue.framework; path = ../Carthage/Build/iOS/TaskQueue.framework; sourceTree = "<group>"; };
 		335AD5A820569C3B000D4D08 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = ../Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		335AD5A920569C3B000D4D08 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = ../Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		335AD5AF20569DC3000D4D08 /* Carthage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Carthage.xcconfig; sourceTree = "<group>"; };
 		3373BF4C2068F201005A61BE /* StarscreamFork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StarscreamFork.framework; path = ../Carthage/Build/iOS/StarscreamFork.framework; sourceTree = "<group>"; };
-		337642911D81BAA60078EEFB /* iOS Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS Example.entitlements"; sourceTree = "<group>"; };
 		33831C5E1A9CEEE900B124F1 /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831CBC1A9CFCD000B124F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "iOS Example Swift/Info.plist"; sourceTree = SOURCE_ROOT; };
 		33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "iOS Example Swift/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
@@ -77,13 +60,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3330F8841D86EF1800D8DC88 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		33831C5B1A9CEEE900B124F1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -99,20 +75,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3330F8881D86EF1800D8DC88 /* GifDemo */ = {
-			isa = PBXGroup;
-			children = (
-				3330F8891D86EF1800D8DC88 /* NotificationService.swift */,
-				3330F88B1D86EF1800D8DC88 /* Info.plist */,
-			);
-			path = GifDemo;
-			sourceTree = "<group>";
-		};
 		33831C551A9CEEE900B124F1 = {
 			isa = PBXGroup;
 			children = (
 				33831C601A9CEEE900B124F1 /* iOS Example Swift */,
-				3330F8881D86EF1800D8DC88 /* GifDemo */,
 				33831C5F1A9CEEE900B124F1 /* Products */,
 				E0B29E04C3C064CEE6120CF2 /* Frameworks */,
 			);
@@ -122,7 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				33831C5E1A9CEEE900B124F1 /* iOS Example.app */,
-				3330F8871D86EF1800D8DC88 /* GifDemo.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -144,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				33831CBC1A9CFCD000B124F1 /* Info.plist */,
-				337642911D81BAA60078EEFB /* iOS Example.entitlements */,
 				335AD5AF20569DC3000D4D08 /* Carthage.xcconfig */,
 			);
 			name = "Supporting Files";
@@ -166,23 +130,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3330F8861D86EF1800D8DC88 /* GifDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3330F88F1D86EF1900D8DC88 /* Build configuration list for PBXNativeTarget "GifDemo" */;
-			buildPhases = (
-				3330F8831D86EF1800D8DC88 /* Sources */,
-				3330F8841D86EF1800D8DC88 /* Frameworks */,
-				3330F8851D86EF1800D8DC88 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = GifDemo;
-			productName = GifDemo;
-			productReference = 3330F8871D86EF1800D8DC88 /* GifDemo.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		33831C5D1A9CEEE900B124F1 /* iOS Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33831C7D1A9CEEEA00B124F1 /* Build configuration list for PBXNativeTarget "iOS Example" */;
@@ -197,7 +144,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				3330F88D1D86EF1900D8DC88 /* PBXTargetDependency */,
 			);
 			name = "iOS Example";
 			productName = "iOS Example";
@@ -214,21 +160,16 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Pusher;
 				TargetAttributes = {
-					3330F8861D86EF1800D8DC88 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = H7FL434D9W;
-						ProvisioningStyle = Automatic;
-					};
 					33831C5D1A9CEEE900B124F1 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = H7FL434D9W;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -248,19 +189,11 @@
 			projectRoot = "";
 			targets = (
 				33831C5D1A9CEEE900B124F1 /* iOS Example */,
-				3330F8861D86EF1800D8DC88 /* GifDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3330F8851D86EF1800D8DC88 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		33831C5C1A9CEEE900B124F1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -294,14 +227,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3330F8831D86EF1800D8DC88 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3330F88A1D86EF1800D8DC88 /* NotificationService.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		33831C5A1A9CEEE900B124F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,55 +238,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		3330F88D1D86EF1900D8DC88 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3330F8861D86EF1800D8DC88 /* GifDemo */;
-			targetProxy = 3330F88C1D86EF1900D8DC88 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		3330F8901D86EF1900D8DC88 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = H7FL434D9W;
-				INFOPLIST_FILE = GifDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C.GifDemo";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		3330F8911D86EF1900D8DC88 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = H7FL434D9W;
-				INFOPLIST_FILE = GifDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C.GifDemo";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
 		33831C7B1A9CEEEA00B124F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 335AD5AF20569DC3000D4D08 /* Carthage.xcconfig */;
@@ -473,10 +350,8 @@
 		33831C7E1A9CEEEA00B124F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "iOS Example Swift/iOS Example.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = H7FL434D9W;
@@ -495,10 +370,8 @@
 		33831C7F1A9CEEEA00B124F1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "iOS Example Swift/iOS Example.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = H7FL434D9W;
@@ -518,15 +391,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3330F88F1D86EF1900D8DC88 /* Build configuration list for PBXNativeTarget "GifDemo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3330F8901D86EF1900D8DC88 /* Debug */,
-				3330F8911D86EF1900D8DC88 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		33831C591A9CEEE900B124F1 /* Build configuration list for PBXProject "iOS Example Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
