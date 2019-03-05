@@ -44,10 +44,21 @@ class PusherPresenceChannelTests: XCTestCase {
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
         pusher.connect()
-        let chan = pusher.subscribe("presence-test") as? PusherPresenceChannel
 
-        XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
-        XCTAssertEqual(chan?.members.first!.userInfo as! [String: String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+        let channelName = "presence-test"
+        guard let chan = pusher.subscribe("presence-test") as? PusherPresenceChannel else {
+            return XCTFail("Couldn't subscribe to channel: \(channelName).")
+        }
+
+        guard let firstUser = chan.members.first else {
+            return XCTFail("User doesn't exist.")
+        }
+
+        let userId = firstUser.userId
+        let userInfo = firstUser.userInfo as! [String: String]
+
+        XCTAssertEqual(userId, "123", "the userId should be 123")
+        XCTAssertEqual(userInfo, ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
     }
 
     func testFindingPusherPresenceChannelMemberByUserId() {
@@ -62,32 +73,49 @@ class PusherPresenceChannelTests: XCTestCase {
     }
 
     func testFindingTheClientsMemberObject() {
+        let userId = "123"
         pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
-            return PusherPresenceChannelMember(userId: "123", userInfo: ["friends": 0])
+            return PusherPresenceChannelMember(userId: userId, userInfo: ["friends": 0])
         }
 
         pusher.connect()
 
-        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        let me = chan!.me()
+        let channelName = "presence-channel"
 
-        XCTAssertEqual(me!.userId, "123", "the userId should be 123")
-        XCTAssertEqual(me!.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
+        guard let presenceChannel = pusher.subscribe(channelName: channelName) as? PusherPresenceChannel else {
+            return XCTFail("Couldn't subscribe to channel: \(channelName).")
+        }
+
+        guard let member = presenceChannel.me() else {
+            return XCTFail("Couldn't find member with id: \(userId).")
+        }
+
+        XCTAssertEqual(member.userId, userId, "the userId should be \(userId)")
+        XCTAssertEqual(member.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
     }
 
     func testFindingAPresenceChannelAsAPusherPresenceChannel() {
+        let userId = "123"
         pusher.connection.userDataFetcher = { () -> PusherPresenceChannelMember in
-            return PusherPresenceChannelMember(userId: "123", userInfo: ["friends": 0])
+            return PusherPresenceChannelMember(userId: userId, userInfo: ["friends": 0])
         }
 
         pusher.connect()
 
-        let _ = pusher.subscribe("presence-channel")
+        let channelName = "presence-channel"
 
-        let presChan = pusher.connection.channels.findPresence(name: "presence-channel")
+        let _ = pusher.subscribe(channelName)
 
-        XCTAssertNotNil(presChan, "the presence channel should be found and returned")
-        XCTAssertEqual(presChan?.me()?.userId, "123", "the userId of the client's member object should be 123")
+        guard let presenceChannel = pusher.connection.channels.findPresence(name: channelName) else {
+            return XCTFail("Presence for channel: \(channelName) not found.")
+        }
+
+        guard let member = presenceChannel.me() else {
+            return XCTFail("Couldn't find member.")
+        }
+
+        XCTAssertNotNil(presenceChannel, "the presence channel should be found and returned")
+        XCTAssertEqual(member.userId, userId, "the userId of the client's member object should be \(userId)")
     }
 
     func testOnMemberAddedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
