@@ -226,19 +226,32 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testUnsubscribingFromAllChannelsRemovesTheChannels() {
         pusher.connect()
-        let _ = pusher.subscribe("test-channel")
-        let _ = pusher.subscribe("test-channel2")
-        XCTAssertEqual(pusher.connection.channels.channels.count, 2, "should have 2 channels")
+        let channels = ["test-channel", "test-channel2"]
+
+        for channel in channels {
+            let _ = pusher.subscribe(channel)
+        }
+
+        XCTAssertEqual(pusher.connection.channels.channels.count, channels.count, "should have \(channels.count) channels")
         XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "write function should have been called")
         pusher.unsubscribeAll()
 
-        XCTAssertEqual(socket.stubber.calls.last?.name, "writeString", "write function should have been called")
+        for channel in channels {
+            let expectedCallArguments = ["data": ["channel": channel], "event": "pusher:unsubscribe"] as [String: Any]
+            let unsubscribedFromChannel = socket.stubber.calls.contains { call in
+                guard
+                    call.name == "writeString",
+                    let firstArg = call.args?.first
+                else {
+                    return false
+                }
 
-        let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-        let expectedDict = ["data": ["channel": "test-channel2"], "event": "pusher:unsubscribe"] as [String: Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+                let parsedCallArgs = convertStringToDictionary(firstArg as! String)
+                return NSDictionary(dictionary: parsedCallArgs!).isEqual(to: NSDictionary(dictionary: expectedCallArguments) as [NSObject: AnyObject])
+            }
+            XCTAssertTrue(unsubscribedFromChannel, "should have unsubscribed from \(channel)")
+        }
 
-        XCTAssertTrue(parsedEqualsExpected)
         XCTAssertEqual(pusher.connection.channels.channels.count, 0, "should have no channels")
     }
 
