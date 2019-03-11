@@ -153,7 +153,8 @@ open class MockWebSocket: WebSocket {
                 args: [string],
                 functionToCall: nil
             )
-        } else if stringContainsElements(string, elements: ["testkey123:736f0b19c2e56f985f3e6faa38db5b69d39305bc8519952c8f9f5595d69fcb3d", "presence-test", "user_id", "123", "pusher:subscribe", "user_info", "twitter", "hamchapman"]) {
+        } else if stringContainsElements(string, elements: ["presence-test", "user_id", "123", "pusher:subscribe", "user_info", "twitter", "hamchapman"]) && (stringContainsElements(string, elements: ["testkey123:736f0b19c2e56f985f3e6faa38db5b69d39305bc8519952c8f9f5595d69fcb3d"]) || stringContainsElements(string, elements: ["testkey123:e5ee520a16348ced21be557e14ae70fcd1ae89f79d32d14d22a19049eaf56881"])) {
+            // We require different auth signatures depending on the ordering of the channel_data JSON/Dictionary
             let _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
@@ -169,7 +170,8 @@ open class MockWebSocket: WebSocket {
                     self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"123\\\"],\\\"hash\\\":{\\\"123\\\":{}}}}\",\"channel\":\"presence-channel\"}")
                 }
             )
-        } else if stringContainsElements(string, elements: ["pusher:subscribe", "key:dd2885ee6dc6f5c964d8e3c720980397db50bf8f528e0630d4208bff80ee23f0", "presence-channel", "friends", "0", "user_id", "123"]) {
+        } else if stringContainsElements(string, elements: ["pusher:subscribe", "presence-channel", "friends", "0", "user_id", "123"]) && (stringContainsElements(string, elements: ["key:dd2885ee6dc6f5c964d8e3c720980397db50bf8f528e0630d4208bff80ee23f0"]) || stringContainsElements(string, elements: ["key:80cfefb0ef08fb55353dbbc0480e6160059fac14fce862e9ed1f0121ae8a440f"])) {
+            // We require different auth signatures depending on the ordering of the channel_data JSON/Dictionary
             let _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
