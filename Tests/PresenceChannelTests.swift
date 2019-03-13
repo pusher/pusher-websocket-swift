@@ -46,7 +46,7 @@ class PusherPresenceChannelTests: XCTestCase {
         pusher.connect()
 
         let channelName = "presence-test"
-        guard let chan = pusher.subscribe("presence-test") as? PusherPresenceChannel else {
+        guard let chan = pusher.subscribe(channelName) as? PusherPresenceChannel else {
             return XCTFail("Couldn't subscribe to channel: \(channelName).")
         }
 
@@ -114,7 +114,6 @@ class PusherPresenceChannelTests: XCTestCase {
             return XCTFail("Couldn't find member.")
         }
 
-        XCTAssertNotNil(presenceChannel, "the presence channel should be found and returned")
         XCTAssertEqual(member.userId, userId, "the userId of the client's member object should be \(userId)")
     }
 
