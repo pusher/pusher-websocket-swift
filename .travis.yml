@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode9.3beta
+osx_image: xcode10.1
 sudo: false
 env:
   - iOS= DST='platform=iOS Simulator,name=iPhone X' ACTION=test DEVICE='iPhone X (11.3)'
