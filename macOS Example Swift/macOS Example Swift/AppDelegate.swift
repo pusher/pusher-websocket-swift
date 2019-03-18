@@ -7,12 +7,9 @@
 //
 
 import Cocoa
-import PusherSwift
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-    let pusher = Pusher(key: "YOUR_APP_KEY")
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application

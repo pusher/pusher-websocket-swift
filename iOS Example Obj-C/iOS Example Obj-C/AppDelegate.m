@@ -16,8 +16,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
-
     return YES;
 }
 

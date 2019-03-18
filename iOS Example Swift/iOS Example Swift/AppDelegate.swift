@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import PusherSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let pusher = Pusher(key: "YOUR_APP_KEY")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
 
