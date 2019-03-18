@@ -241,13 +241,14 @@ class PusherTopLevelApiTests: XCTestCase {
             let unsubscribedFromChannel = socket.stubber.calls.contains { call in
                 guard
                     call.name == "writeString",
-                    let firstArg = call.args?.first
+                    let arguments = call.args,
+                    let firstArg = arguments.first,
+                    let stringFirstArg = firstArg as? String,
+                    let parsedCallArgs = convertStringToDictionary(stringFirstArg)
                 else {
                     return false
                 }
-
-                let parsedCallArgs = convertStringToDictionary(firstArg as! String)
-                return NSDictionary(dictionary: parsedCallArgs!).isEqual(to: NSDictionary(dictionary: expectedCallArguments) as [NSObject: AnyObject])
+                return NSDictionary(dictionary: parsedCallArgs).isEqual(to: NSDictionary(dictionary: expectedCallArguments) as [NSObject: AnyObject])
             }
             XCTAssertTrue(unsubscribedFromChannel, "should have unsubscribed from \(channel)")
         }
