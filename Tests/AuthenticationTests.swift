@@ -20,7 +20,8 @@ class AuthenticationTests: XCTestCase {
         super.setUp()
 
         let options = PusherClientOptions(
-            authMethod: AuthMethod.endpoint(authEndpoint: "http://localhost:9292/pusher/auth")
+            authMethod: AuthMethod.endpoint(authEndpoint: "http://localhost:9292/pusher/auth"),
+            autoReconnect: false
         )
         pusher = Pusher(key: "testKey123", options: options)
         socket = MockWebSocket()
@@ -76,7 +77,8 @@ class AuthenticationTests: XCTestCase {
 
     func testSubscribingToAPrivateChannelShouldCreateAuthSignatureInternally() {
         let options = PusherClientOptions(
-            authMethod: .inline(secret: "secret")
+            authMethod: .inline(secret: "secret"),
+            autoReconnect: false
         )
         pusher = Pusher(key: "key", options: options)
         socket.delegate = pusher.connection
@@ -89,7 +91,10 @@ class AuthenticationTests: XCTestCase {
     }
 
     func testSubscribingToAPrivateChannelShouldFailIfNoAuthMethodIsProvided() {
-        pusher = Pusher(key: "key")
+        let options = PusherClientOptions(
+            autoReconnect: false
+        )
+        pusher = Pusher(key: "key", options: options)
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
 
@@ -143,7 +148,8 @@ class AuthenticationTests: XCTestCase {
         dummyDelegate.testingChannelName = channelName
 
         let options = PusherClientOptions(
-            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder())
+            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()),
+            autoReconnect: false
         )
         pusher = Pusher(key: "testKey123", options: options)
         pusher.delegate = dummyDelegate
@@ -216,7 +222,8 @@ class AuthenticationTests: XCTestCase {
         dummyDelegate.testingChannelName = channelName
 
         let options = PusherClientOptions(
-            authMethod: AuthMethod.authorizer(authorizer: SomeAuthorizer())
+            authMethod: AuthMethod.authorizer(authorizer: SomeAuthorizer()),
+            autoReconnect: false
         )
         pusher = Pusher(key: "testKey123", options: options)
         pusher.delegate = dummyDelegate
@@ -249,7 +256,8 @@ class AuthenticationTests: XCTestCase {
         dummyDelegate.testingChannelName = channelName
 
         let options = PusherClientOptions(
-            authMethod: AuthMethod.authorizer(authorizer: SomeAuthorizer())
+            authMethod: AuthMethod.authorizer(authorizer: SomeAuthorizer()),
+            autoReconnect: false
         )
         pusher = Pusher(key: "testKey123", options: options)
         pusher.delegate = dummyDelegate
