@@ -11,7 +11,8 @@ class PusherPresenceChannelTests: XCTestCase {
         super.setUp()
 
         options = PusherClientOptions(
-            authMethod: .inline(secret: "secret")
+            authMethod: .inline(secret: "secret"),
+            autoReconnect: false
         )
         pusher = Pusher(key: "key", options: options)
         socket = MockWebSocket()
@@ -119,7 +120,8 @@ class PusherPresenceChannelTests: XCTestCase {
 
     func testOnMemberAddedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
         let options = PusherClientOptions(
-            authMethod: .inline(secret: "secretsecretsecretsecret")
+            authMethod: .inline(secret: "secretsecretsecretsecret"),
+            autoReconnect: false
         )
         pusher = Pusher(key: "key", options: options)
         socket.delegate = pusher.connection
@@ -138,7 +140,8 @@ class PusherPresenceChannelTests: XCTestCase {
 
     func testOnMemberRemovedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
         let options = PusherClientOptions(
-            authMethod: .inline(secret: "secretsecretsecretsecret")
+            authMethod: .inline(secret: "secretsecretsecretsecret"),
+            autoReconnect: false
         )
         pusher = Pusher(key: "key", options: options)
         socket.delegate = pusher.connection
@@ -159,7 +162,8 @@ class PusherPresenceChannelTests: XCTestCase {
 
     func testOnMemberRemovedFunctionGetsCalledWhenANewSubscriptionSucceedsIfTheMemberUserIdWasNotAStringOriginally() {
         let options = PusherClientOptions(
-            authMethod: .inline(secret: "secretsecretsecretsecret")
+            authMethod: .inline(secret: "secretsecretsecretsecret"),
+            autoReconnect: false
         )
         pusher = Pusher(key: "key", options: options)
         socket.delegate = pusher.connection

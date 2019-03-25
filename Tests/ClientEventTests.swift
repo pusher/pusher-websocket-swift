@@ -9,7 +9,11 @@ class ClientEventTests: XCTestCase {
         super.setUp()
 
         socket = MockWebSocket()
-        connection = MockPusherConnection(options: PusherClientOptions(authMethod: .inline(secret: "superSecretSecret")))
+        let options = PusherClientOptions(
+            authMethod: .inline(secret: "superSecretSecret"),
+            autoReconnect: false
+        )
+        connection = MockPusherConnection(options: options)
         socket.delegate = connection
         connection.socket = socket
     }
