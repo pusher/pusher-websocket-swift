@@ -28,10 +28,10 @@ public enum PusherChannelType {
 open class PusherChannel: NSObject {
     open var eventHandlers: [String: [EventHandler]] = [:]
     open var subscribed = false
-    open let name: String
+    public let name: String
     open weak var connection: PusherConnection?
     open var unsentEvents = [PusherEvent]()
-    open let type: PusherChannelType
+    public let type: PusherChannelType
     public var auth: PusherAuth?
 
     /**

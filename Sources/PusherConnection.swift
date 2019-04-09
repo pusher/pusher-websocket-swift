@@ -7,8 +7,8 @@ public typealias PusherEventJSON = [String: AnyObject]
 
 @objcMembers
 @objc open class PusherConnection: NSObject {
-    open let url: String
-    open let key: String
+    public let url: String
+    public let key: String
     open var options: PusherClientOptions
     open var globalChannel: GlobalChannel!
     open var socketId: String?
