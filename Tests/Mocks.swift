@@ -249,8 +249,8 @@ open class StubberForMocks {
 }
 
 open class FunctionCall {
-    open let name: String
-    open let args: [Any]?
+    public let name: String
+    public let args: [Any]?
 
     init(name: String, args: [Any]?) {
         self.name = name

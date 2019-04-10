@@ -3,7 +3,7 @@ import XCTest
 
 class PusherConnectionDelegateTests: XCTestCase {
     open class DummyDelegate: PusherDelegate {
-        open let stubber = StubberForMocks()
+        public let stubber = StubberForMocks()
         open var socket: MockWebSocket? = nil
         open var ex: XCTestExpectation? = nil
         var testingChannelName: String? = nil

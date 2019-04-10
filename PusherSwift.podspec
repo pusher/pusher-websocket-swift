@@ -8,8 +8,9 @@ Pod::Spec.new do |s|
   s.source           = { git: "https://github.com/pusher/pusher-websocket-swift.git", tag: s.version.to_s }
   s.social_media_url = 'https://twitter.com/pusher'
 
-  s.requires_arc = true
-  s.source_files = 'Sources/*.swift'
+  s.swift_version = '4.2'
+  s.requires_arc  = true
+  s.source_files  = 'Sources/*.swift'
 
   s.dependency 'CryptoSwift', '~> 0.9'
   s.dependency 'ReachabilitySwift', '4.3.0'
