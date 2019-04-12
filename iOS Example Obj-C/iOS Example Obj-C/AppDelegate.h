@@ -7,12 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PusherSwift/PusherSwift-Swift.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong, readwrite) Pusher *pusher;
-
 
 @end
