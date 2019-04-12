@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		335AD5AA20569C3C000D4D08 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A620569C3B000D4D08 /* CryptoSwift.framework */; };
-		335AD5AB20569C3C000D4D08 /* TaskQueue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A720569C3B000D4D08 /* TaskQueue.framework */; };
 		335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A820569C3B000D4D08 /* Reachability.framework */; };
 		335AD5B220569F14000D4D08 /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */; };
@@ -45,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		335AD5A620569C3B000D4D08 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = ../Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
-		335AD5A720569C3B000D4D08 /* TaskQueue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TaskQueue.framework; path = ../Carthage/Build/iOS/TaskQueue.framework; sourceTree = "<group>"; };
 		335AD5A820569C3B000D4D08 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = ../Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		335AD5A920569C3B000D4D08 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = ../Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		335AD5AF20569DC3000D4D08 /* Carthage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Carthage.xcconfig; sourceTree = "<group>"; };
@@ -66,7 +64,6 @@
 			files = (
 				33E94E7620766DBE0005399D /* Starscream.framework in Frameworks */,
 				335AD5AA20569C3C000D4D08 /* CryptoSwift.framework in Frameworks */,
-				335AD5AB20569C3C000D4D08 /* TaskQueue.framework in Frameworks */,
 				335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */,
 				33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */,
 			);
@@ -101,9 +98,8 @@
 				33831CC01A9CFCDB00B124F1 /* Main.storyboard */,
 				33831C611A9CEEE900B124F1 /* Supporting Files */,
 			);
-			name = "iOS Example Swift";
-			path = "/Users/hami/pusher/pusher-websocket-swift/iOS Example Swift/iOS Example Swift";
-			sourceTree = "<absolute>";
+			path = "iOS Example Swift";
+			sourceTree = "<group>";
 		};
 		33831C611A9CEEE900B124F1 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -121,7 +117,6 @@
 				335AD5A620569C3B000D4D08 /* CryptoSwift.framework */,
 				335AD5A820569C3B000D4D08 /* Reachability.framework */,
 				335AD5A920569C3B000D4D08 /* Starscream.framework */,
-				335AD5A720569C3B000D4D08 /* TaskQueue.framework */,
 				33CC82EA1D7F16A8003B699F /* PusherSwift.framework */,
 			);
 			name = Frameworks;
@@ -180,6 +175,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -213,7 +209,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/TaskQueue.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Reachability.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Starscream.framework",
 			);
@@ -222,7 +217,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
