@@ -4,7 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/6.1.0...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/7.0.0...HEAD)
+
+## [7.0.0](https://github.com/pusher/pusher-websocket-swift/compare/6.1.0...7.0.0) - 2019-04-16
+
+### Changed
+
+- Updated to Swift 4.2.
+- Updated dependencies to newer versions, but pinned dependencies before any Swift 5 versions for compatibility with older versions of Xcode ([@cowgp](https://github.com/cowgp)).
+
+### Removed
+
+- Removed push notifications beta (replaced by [Pusher Beams](https://pusher.com/beams) which has its own libraries).
+- Removed TaskQueue dependency (used by push notifications beta).
+
+### Fixed
+
+- Fixed issues compiling the library with Swift 5/Xcode 10.2.
+- Fixed issue related to the capturing of self in Reachability callbacks ([@PorterHoskins](https://github.com/PorterHoskins)).
+- Fixed unreliable tests.
 
 ## [6.1.0](https://github.com/pusher/pusher-websocket-swift/compare/6.0.0...6.1.0) - 2018-05-18
 
