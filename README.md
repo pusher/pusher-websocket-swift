@@ -1,4 +1,4 @@
-# PusherSwift (pusher-websocket-swift) (also works with Objective-C!)
+# Pusher Channels Swift Client (also works with Objective-C)
 
 [![Build Status](https://travis-ci.org/pusher/pusher-websocket-swift.svg?branch=master)](https://travis-ci.org/pusher/pusher-websocket-swift)
 ![Languages](https://img.shields.io/badge/languages-swift%20%7C%20objc-orange.svg)
@@ -8,7 +8,9 @@
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
 
-Supports iOS, macOS (OS X) and tvOS! (Hopefully watchOS soon!)
+This is the [Pusher Channels](https://pusher.com/channels) websocket client, PusherSwift, which supports iOS, macOS (OS X) and tvOS. It works with Swift and Objective-C.
+
+For tutorials and more in-depth information about Pusher Channels, visit our [official docs](https://pusher.com/docs/channels).
 
 ## I just want to copy and paste some code to get me started
 
