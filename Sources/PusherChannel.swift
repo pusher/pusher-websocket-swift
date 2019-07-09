@@ -30,7 +30,7 @@ open class PusherChannel: NSObject {
     open var subscribed = false
     public let name: String
     open weak var connection: PusherConnection?
-    open var unsentEvents = [PusherEvent]()
+    open var unsentEvents = [QueuedEvent]()
     public let type: PusherChannelType
     public var auth: PusherAuth?
 
@@ -55,15 +55,31 @@ open class PusherChannel: NSObject {
         Binds a callback to a given event name, scoped to the PusherChannel the function is
         called on
 
-        - parameter eventName: The name of the event to bind to
-        - parameter callback:  The function to call when a message is received with the relevant
-                               channel and event names
+        - parameter eventName:      The name of the event to bind to
+        - parameter eventCallback:  The function to call when a message is received with the relevant
+                                    channel and event names
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
     @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
+        return bind(eventName: eventName, eventCallback: { (event: PusherEvent) -> Void in
+           callback(event.data)
+        });
+    }
+
+    /**
+     Binds a callback to a given event name, scoped to the PusherChannel the function is
+     called on
+
+     - parameter eventName: The name of the event to bind to
+     - parameter callbackWithMetadata:  The function to call when a message is received with the relevant
+     channel and event names
+
+     - returns: A unique callbackId that can be used to unbind the callback at a later time
+     */
+    @discardableResult open func bind(eventName: String, eventCallback: @escaping (PusherEvent) -> Void) -> String {
         let randomId = UUID().uuidString
-        let eventHandler = EventHandler(id: randomId, callback: callback)
+        let eventHandler = EventHandler(id: randomId, callback: eventCallback)
         if self.eventHandlers[eventName] != nil {
             self.eventHandlers[eventName]?.append(eventHandler)
         } else {
@@ -107,12 +123,12 @@ open class PusherChannel: NSObject {
         - parameter name: The name of the received event
         - parameter data: The data associated with the received message
     */
-    open func handleEvent(name: String, data: String) {
+    open func handleEvent(name: String, data: String, jsonPayload: [String:Any]) {
         if let eventHandlerArray = self.eventHandlers[name] {
             let jsonize = connection?.options.attemptToReturnJSONObject ?? true
-
+            let event = PusherEvent(payload: jsonPayload, eventName: name, jsonize: jsonize)
             for eventHandler in eventHandlerArray {
-                eventHandler.callback(jsonize ? connection?.getEventDataJSON(from: data) : data)
+                eventHandler.callback(event)
             }
         }
     }
@@ -128,17 +144,18 @@ open class PusherChannel: NSObject {
         if subscribed {
             connection?.sendEvent(event: eventName, data: data, channel: self)
         } else {
-            unsentEvents.insert(PusherEvent(name: eventName, data: data), at: 0)
+            unsentEvents.insert(QueuedEvent(name: eventName, data: data), at: 0)
         }
     }
 }
 
 public struct EventHandler {
     let id: String
-    let callback: (Any?) -> Void
+    let callback: (PusherEvent) -> Void
 }
 
-public struct PusherEvent {
+// TODO: This is public. Is changing this a breaking change?
+public struct QueuedEvent {
     public let name: String
     public let data: Any
 }

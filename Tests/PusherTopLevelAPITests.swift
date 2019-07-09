@@ -105,6 +105,17 @@ class PusherTopLevelApiTests: XCTestCase {
         XCTAssertEqual(socket.callbackCheckString, "globalCallbackCalled")
     }
 
+    func testSubscriptionSucceededEventSentToChannelCallback() {
+        let callback = { (data: Any?) -> Void in
+            self.socket.appendToCallbackCheckString("channelCallbackCalled")
+        }
+        XCTAssertEqual(socket.callbackCheckString, "")
+        let channel = pusher.subscribe("test-channel")
+        let _ = channel.bind(eventName: "pusher:subscription_succeeded", callback: callback)
+        pusher.connect()
+        XCTAssertEqual(socket.callbackCheckString, "channelCallbackCalled")
+    }
+
     /* authenticated channels */
 
     func testAuthenticatedChannelIsSetupCorrectly() {

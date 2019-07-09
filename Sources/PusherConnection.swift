@@ -320,7 +320,7 @@ public typealias PusherEventJSON = [String: AnyObject]
 
         - returns: A callbackId that can be used to remove the callback from the connection
     */
-    internal func addCallbackToGlobalChannel(_ callback: @escaping (Any?) -> Void) -> String {
+    internal func addCallbackToGlobalChannel(_ callback: @escaping (PusherEvent) -> Void) -> String {
         return globalChannel.bind(callback)
     }
 
@@ -470,7 +470,7 @@ public typealias PusherEventJSON = [String: AnyObject]
 
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                    if let dataJSON = getPusherEventJSON(from: eventData) {
+                    if let dataJSON = PusherParser.getPusherEventJSON(from: eventData) {
                         if let presenceData = dataJSON["presence"] as? [String : AnyObject],
                            let presenceHash = presenceData["hash"] as? [String : AnyObject]
                         {
@@ -481,7 +481,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             }
 
             callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
-            chan.handleEvent(name: "pusher:subscription_succeeded", data: eventData)
+            chan.handleEvent(name: "pusher:subscription_succeeded", data: eventData, jsonPayload: json)
 
             self.delegate?.subscribedToChannel?(name: channelName)
 
@@ -503,7 +503,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     */
     fileprivate func handleConnectionEstablishedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
-            if let connectionData = getPusherEventJSON(from: data),
+            if let connectionData = PusherParser.getPusherEventJSON(from: data),
                let socketId = connectionData["socket_id"] as? String
             {
                 self.socketId = socketId
@@ -540,7 +540,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     fileprivate func handleMemberAddedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
             if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                if let memberJSON = getPusherEventJSON(from: data) {
+                if let memberJSON = PusherParser.getPusherEventJSON(from: data) {
                     chan.addMember(memberJSON: memberJSON)
                 } else {
                     print("Unable to add member")
@@ -557,7 +557,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     fileprivate func handleMemberRemovedEvent(json: PusherEventJSON) {
         if let data = json["data"] as? String {
             if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                if let memberJSON = getPusherEventJSON(from: data) {
+                if let memberJSON = PusherParser.getPusherEventJSON(from: data) {
                     chan.removeMember(memberJSON: memberJSON)
                 } else {
                     print("Unable to remove member")
@@ -588,49 +588,6 @@ public typealias PusherEventJSON = [String: AnyObject]
     }
 
     /**
-        Parse a string to extract Pusher event information from it
-
-        - parameter string: The string received over the websocket connection containing
-                            Pusher event information
-
-        - returns: A dictionary of Pusher-relevant event data
-    */
-    open func getPusherEventJSON(from string: String) -> [String : AnyObject]? {
-        let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
-
-        do {
-            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : AnyObject] {
-                return jsonObject
-            } else {
-                print("Unable to parse string from WebSocket: \(string)")
-            }
-        } catch let error as NSError {
-            print("Error: \(error.localizedDescription)")
-        }
-        return nil
-    }
-
-    /**
-        Parse a string to extract Pusher event data from it
-
-        - parameter string: The data string received as part of a Pusher message
-
-        - returns: The object sent as the payload part of the Pusher message
-    */
-    open func getEventDataJSON(from string: String) -> Any {
-        let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
-
-        do {
-            if let jsonData = data, let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) {
-                return jsonObject
-            } else {
-                print("Returning data string instead because unable to parse string as JSON - check that your JSON is valid.")
-            }
-        }
-        return string
-    }
-
-    /**
         Handles incoming events and passes them on to be handled by the appropriate function
 
         - parameter eventName:  The name of the incoming event
@@ -651,7 +608,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             callGlobalCallbacks(forEvent: eventName, jsonObject: jsonObject)
             if let channelName = jsonObject["channel"] as? String, let internalChannel = self.channels.find(name: channelName) {
                 if let eName = jsonObject["event"] as? String, let eData = jsonObject["data"] as? String {
-                    internalChannel.handleEvent(name: eName, data: eData)
+                    internalChannel.handleEvent(name: eName, data: eData, jsonPayload: jsonObject)
                 }
             }
         }

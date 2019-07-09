@@ -2,7 +2,7 @@ import Foundation
 
 @objcMembers
 @objc open class GlobalChannel: PusherChannel {
-    open var globalCallbacks: [String : (Any?) -> Void] = [:]
+    open var globalCallbacks: [String : (PusherEvent) -> Void] = [:]
 
     /**
         Initializes a new GlobalChannel instance
@@ -24,11 +24,17 @@ import Foundation
                                  to, if relevant
     */
     internal func handleEvent(name: String, data: String, channelName: String?) {
+        //TODO: this is duplicated from Pusher channel
+        let jsonize = connection?.options.attemptToReturnJSONObject ?? true
         for (_, callback) in self.globalCallbacks {
             if let channelName = channelName {
-                callback(["channel": channelName, "event": name, "data": data] as [String: Any])
+                let payload = ["channel": channelName, "event": name, "data": data] as [String: Any]
+                let event = PusherEvent(payload: payload, eventName: name, jsonize: jsonize)
+                callback(event)
             } else {
-                callback(["event": name, "data": data] as [String: Any])
+                let payload = ["event": name, "data": data] as [String: Any]
+                let event = PusherEvent(payload: payload, eventName: name, jsonize: jsonize)
+                callback(event)
             }
         }
     }
@@ -41,7 +47,9 @@ import Foundation
     */
     internal func handleErrorEvent(name: String, data: [String: AnyObject]) {
         for (_, callback) in self.globalCallbacks {
-            callback(["event": name, "data": data])
+            let payload = ["event": name, "data": data] as [String: Any]
+            let event = PusherEvent(payload: payload, eventName: name, jsonize: false)
+            callback(event)
         }
     }
 
@@ -52,7 +60,7 @@ import Foundation
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
-    internal func bind(_ callback: @escaping (Any?) -> Void) -> String {
+    internal func bind(_ callback: @escaping (PusherEvent) -> Void) -> String {
         let randomId = UUID().uuidString
         self.globalCallbacks[randomId] = callback
         return randomId
