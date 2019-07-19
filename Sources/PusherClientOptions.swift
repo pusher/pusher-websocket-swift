@@ -27,6 +27,7 @@ public enum AuthMethod {
     public let autoReconnect: Bool
     public let host: String
     public let port: Int
+    public let path: String?
     public let encrypted: Bool
     public let activityTimeout: TimeInterval?
 
@@ -36,6 +37,7 @@ public enum AuthMethod {
         autoReconnect: Bool = true,
         host: PusherHost = .host("ws.pusherapp.com"),
         port: Int? = nil,
+        path: String? = nil,
         encrypted: Bool = true,
         activityTimeout: TimeInterval? = nil
     ) {
@@ -44,6 +46,7 @@ public enum AuthMethod {
         self.autoReconnect = autoReconnect
         self.host = host.stringValue
         self.port = port ?? (encrypted ? 443 : 80)
+        self.path = path
         self.encrypted = encrypted
         self.activityTimeout = activityTimeout
     }
