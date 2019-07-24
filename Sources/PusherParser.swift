@@ -1,10 +1,3 @@
-//
-//  PusherParser.swift
-//  PusherSwift
-//
-//  Created by Tom Kemp on 11/07/2019.
-//
-
 import Foundation
 
 internal class PusherParser: NSObject {
