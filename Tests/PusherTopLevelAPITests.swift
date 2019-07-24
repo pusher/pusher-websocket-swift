@@ -302,10 +302,20 @@ class PusherTopLevelApiTests: XCTestCase {
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
     }
 
-    func testUnbindingAGlobalCallbackRemovesItFromTheGlobalChannelsCallbackList() {
+    func testUnbindingAGlobalDataCallbackRemovesItFromTheGlobalChannelsCallbackList() {
         pusher.connect()
         let callback = { (data: Any?) in }
         let callBackId = pusher.bind(callback)
+
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
+        pusher.unbind(callbackId: callBackId)
+        XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
+    }
+
+    func testUnbindingAGlobalEventCallbackRemovesItFromTheGlobalChannelsCallbackList() {
+        pusher.connect()
+        let callback = { (event: PusherEvent) in }
+        let callBackId = pusher.bind(eventCallback: callback)
 
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
         pusher.unbind(callbackId: callBackId)
