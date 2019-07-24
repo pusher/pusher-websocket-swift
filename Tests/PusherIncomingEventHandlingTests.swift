@@ -47,6 +47,38 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(socket.callbackCheckString, "globalCallbackCalledchannelCallbackCalled")
     }
 
+    func testGlobalCallbackReturnsEventData() {
+        let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
+        let _ = pusher.subscribe("my-channel")
+        let _ = pusher.bind(callback)
+
+        XCTAssertNil(socket.objectGivenToCallback)
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
+    }
+
+    func testGlobalCallbackReturnsErrorData() {
+        let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
+        let _ = pusher.bind(callback)
+
+        XCTAssertNil(socket.objectGivenToCallback)
+        pusher.connection.handleEvent(eventName: "pusher:error", jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
+
+        guard let event = socket.objectGivenToCallback as? [String: AnyObject] else {
+            return XCTFail("Event not received")
+        }
+
+        guard let eventName = event["event"] as? String else {
+            return XCTFail("No event name in event")
+        }
+        XCTAssertEqual(eventName, "pusher:error")
+
+        guard let data = event["data"] as? [String: String] else {
+            return XCTFail("No data in event")
+        }
+        XCTAssertEqual(data, ["code": "<null>", "message": "Existing subscription to channel my-channel"] as [String: String])
+    }
+
     func testReturningAJSONObjectToCallbacksIfTheStringCanBeParsed() {
         let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
         let chan = pusher.subscribe("my-channel")
@@ -89,11 +121,9 @@ class HandlingIncomingEventsTests: XCTestCase {
                 }
             }
         })
-
         // pretend that we tried to subscribe to my-channel twice and got this error
         // back from Pusher
         pusher.connection.handleEvent(eventName: "pusher:error", jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
-
         XCTAssertEqual(socket.callbackCheckString, "Existing subscription to channel my-channel")
     }
 
@@ -105,9 +135,7 @@ class HandlingIncomingEventsTests: XCTestCase {
                 }
             }
         })
-
         pusher.connection.handleEvent(eventName: "pusher:error", jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
-
         XCTAssertEqual(socket.callbackCheckString, "Existing subscription to channel my-channel")
     }
 
@@ -135,6 +163,7 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertNil(event.getKey(key: "random-key"))
     }
+
 
     func testEventObjectReturnedToGlobalCallback() {
         let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
