@@ -92,7 +92,7 @@ class PusherTopLevelApiTests: XCTestCase {
         XCTAssertTrue(testChannel!.subscribed)
     }
 
-    func testSubscriptionSucceededEventSentToGlobalChannel() {
+    func testSubscriptionSucceededEventSentToGlobalChannelViaDataCallback() {
         pusher.connect()
         let callback = { (data: Any?) -> Void in
             if let data = data as? [String: Any], let eName = data["event"] as? String, eName == "pusher:subscription_succeeded" {
@@ -105,13 +105,37 @@ class PusherTopLevelApiTests: XCTestCase {
         XCTAssertEqual(socket.callbackCheckString, "globalCallbackCalled")
     }
 
-    func testSubscriptionSucceededEventSentToChannelCallback() {
+    func testSubscriptionSucceededEventSentToChannelCallbackViaDataCallback() {
         let callback = { (data: Any?) -> Void in
             self.socket.appendToCallbackCheckString("channelCallbackCalled")
         }
         XCTAssertEqual(socket.callbackCheckString, "")
         let channel = pusher.subscribe("test-channel")
         let _ = channel.bind(eventName: "pusher:subscription_succeeded", callback: callback)
+        pusher.connect()
+        XCTAssertEqual(socket.callbackCheckString, "channelCallbackCalled")
+    }
+
+    func testSubscriptionSucceededEventSentToGlobalChannelViaEventCallback() {
+        pusher.connect()
+        let callback = { (event: PusherEvent) -> Void in
+            if event.event == "pusher:subscription_succeeded" {
+                self.socket.appendToCallbackCheckString("globalCallbackCalled")
+            }
+        }
+        let _ = pusher.bind(eventCallback: callback)
+        XCTAssertEqual(socket.callbackCheckString, "")
+        let _ = pusher.subscribe("test-channel")
+        XCTAssertEqual(socket.callbackCheckString, "globalCallbackCalled")
+    }
+
+    func testSubscriptionSucceededEventSentToChannelCallbackViaEventCallback() {
+        let callback = { (event: PusherEvent) -> Void in
+            self.socket.appendToCallbackCheckString("channelCallbackCalled")
+        }
+        XCTAssertEqual(socket.callbackCheckString, "")
+        let channel = pusher.subscribe("test-channel")
+        let _ = channel.bind(eventName: "pusher:subscription_succeeded", eventCallback: callback)
         pusher.connect()
         XCTAssertEqual(socket.callbackCheckString, "channelCallbackCalled")
     }

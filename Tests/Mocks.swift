@@ -5,6 +5,7 @@ open class MockWebSocket: WebSocket {
     let stubber = StubberForMocks()
     var callbackCheckString: String = ""
     var objectGivenToCallback: Any? = nil
+    var eventGivenToCallback: PusherEvent? = nil
 
     init() {
         var request = URLRequest(url: URL(string: "test")!)
@@ -18,6 +19,10 @@ open class MockWebSocket: WebSocket {
 
     open func storeDataObjectGivenToCallback(_ data: Any) {
         self.objectGivenToCallback = data
+    }
+
+    open func storeEventGivenToCallback(_ event: PusherEvent) {
+        self.eventGivenToCallback = event
     }
 
     open override func connect() {
