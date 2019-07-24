@@ -57,6 +57,22 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
     }
 
+    /*
+     The library has specific code for handling events without a channel name. But there is also specific code for handling
+     `pusher:error`s and `connection_established` errors and those are the only events that don't have a channel name. Therefore
+     it doesn't seem like that path will be used. However under Channels protocol, such an event is valid. That path can remain
+     for now and the following test tests that functionality.
+     */
+    func testGlobalCallbackReturnsEventDataWithoutChannelName() {
+        let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
+        let _ = pusher.subscribe("my-channel")
+        let _ = pusher.bind(callback)
+
+        XCTAssertNil(socket.objectGivenToCallback)
+        pusher.connection.handleEvent(eventName: "test-event", jsonObject: ["event": "test-event" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["event": "test-event", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
+    }
+
     func testGlobalCallbackReturnsErrorData() {
         let callback = { (data: Any?) -> Void in self.socket.storeDataObjectGivenToCallback(data!) }
         let _ = pusher.bind(callback)
