@@ -34,6 +34,12 @@ open class PusherChannel: NSObject {
     public let type: PusherChannelType
     public var auth: PusherAuth?
 
+    internal var shouldParseJSON: Bool {
+        get {
+            return connection?.options.attemptToReturnJSONObject ?? true
+        }
+    }
+
     /**
         Initializes a new PusherChannel with a given name and conenction
 
@@ -126,8 +132,7 @@ open class PusherChannel: NSObject {
     */
     open func handleEvent(name: String, data: String, jsonObject: [String:Any]) {
         if let eventHandlerArray = self.eventHandlers[name] {
-            let jsonize = connection?.options.attemptToReturnJSONObject ?? true
-            let event = PusherEvent(eventName: name, payload: jsonObject, jsonize: jsonize)
+            let event = PusherEvent(eventName: name, payload: jsonObject, jsonize: self.shouldParseJSON)
             for eventHandler in eventHandlerArray {
                 eventHandler.callback(event)
             }
@@ -148,6 +153,7 @@ open class PusherChannel: NSObject {
             unsentEvents.insert(QueuedEvent(name: eventName, data: data), at: 0)
         }
     }
+
 }
 
 public struct EventHandler {

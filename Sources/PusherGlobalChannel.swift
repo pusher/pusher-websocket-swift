@@ -24,14 +24,12 @@ import Foundation
                                  to, if relevant
     */
     internal func handleEvent(name: String, data: String, channelName: String?) {
-        //TODO: this is duplicated from Pusher channel
-        let jsonize = connection?.options.attemptToReturnJSONObject ?? true
         for (_, callback) in self.globalCallbacks {
             var payload: [String: Any] = ["event": name, "data": data]
             if let channelName = channelName {
                 payload["channel"] = channelName
             }
-            let event = PusherEvent(eventName: name, payload: payload, jsonize: jsonize)
+            let event = PusherEvent(eventName: name, payload: payload, jsonize: self.shouldParseJSON)
             callback(event)
         }
     }
