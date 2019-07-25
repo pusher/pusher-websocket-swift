@@ -21,7 +21,8 @@ let package = Package(
                 "Starscream",
             ],
             path: "Sources"
-        )
+        ),
+        .testTarget(name: "PusherSwiftTests", dependencies: ["PusherSwift"], path: "Tests")
     ],
     swiftLanguageVersions: [.v4_2, .version("5")]
 )
