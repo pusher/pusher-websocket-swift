@@ -32,8 +32,8 @@ public struct PusherEvent {
             self.data = payload["data"]
         }
 
-        self.channel = payload["channel"] as! String?
-        self.userId = payload["user_id"] as! String?
+        self.channel = payload["channel"] as? String
+        self.userId = payload["user_id"] as? String
         self.event = eventName
 
         // Replace the event name (so pusher_internal:subscription_succeeded can be mapped to pusher:subscription_succeeded)
