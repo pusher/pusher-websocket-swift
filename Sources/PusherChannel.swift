@@ -79,7 +79,7 @@ open class PusherChannel: NSObject {
 
      - parameter eventName:     The name of the event to bind to
      - parameter eventCallback: The function to call when a new event is received. The callback
-                                receives a PusherEvent, containg the event's data payload and
+                                receives a PusherEvent, containing the event's data payload and
                                 other properties.
 
      - returns: A unique callbackId that can be used to unbind the callback at a later time
@@ -129,7 +129,7 @@ open class PusherChannel: NSObject {
 
         - parameter name:           The name of the received event
         - parameter data:           The data associated with the received message
-        - parameter jsonObject:    The JSON payload received from the websocket
+        - parameter jsonObject:     The JSON payload received from the websocket
     */
     open func handleEvent(name: String, data: String, jsonObject: [String:Any]) {
         if let eventHandlerArray = self.eventHandlers[name] {

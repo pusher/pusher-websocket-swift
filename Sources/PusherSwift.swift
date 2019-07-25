@@ -121,7 +121,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
      Binds the client's global channel to all events
 
      - parameter eventCallback: The function to call when a new event is received. The callback
-                                receives a PusherEvent, containg the event's data payload and
+                                receives a PusherEvent, containing the event's data payload and
                                 other properties.
 
      - returns: A unique string that can be used to unbind the callback from the client
