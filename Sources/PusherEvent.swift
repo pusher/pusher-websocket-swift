@@ -6,13 +6,13 @@ public struct PusherEvent {
 
     // According to Channels protocol, there is always an event https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#events
     /// The name of the event
-    public let event: String
-    /// The name of the channel that the event was received on. Not present in `pusher:error` events
+    public let name: String
+    /// The name of the channel that the event is associated with, e.g. "my-channel". Not present in events without an associated channel, e.g. "pusher:error" events relating to the connection
     public let channel: String?
     /// The data payload of the event
     public let data: Any?
 
-    /// The Id of the user who triggered the event. Only present in client events.
+    /// The Id of the user who triggered the event. Only present in client event on presence channels
     public let userId: String?
 
     /**
@@ -20,7 +20,7 @@ public struct PusherEvent {
 
      - parameter eventName: The name of the event. This will override the event name in the payload
      - parameter payload:   The JSON payload received from the websocket
-     - parameter jsonize:   Determines whether an attempt will be made to parse the data parameter to JSON
+     - parameter jsonize:   Determines whether an attempt will be made to parse the data property to JSON
 
      - returns: A new Pusher event
      */
@@ -34,7 +34,7 @@ public struct PusherEvent {
 
         self.channel = payload["channel"] as? String
         self.userId = payload["user_id"] as? String
-        self.event = eventName
+        self.name = eventName
 
         // Replace the event name (so pusher_internal:subscription_succeeded can be mapped to pusher:subscription_succeeded)
         var payloadCopy = payload

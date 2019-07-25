@@ -145,7 +145,7 @@ class HandlingIncomingEventsTests: XCTestCase {
 
     func testReceivingAnErrorWhereTheDataPartOfTheMessageIsNotDoubleEncodedViaEventCallback() {
         let _ = pusher.bind(eventCallback:{ (event: PusherEvent) in
-            if event.event == "pusher:error" {
+            if event.name == "pusher:error" {
                 if let data = event.data as? [String: AnyObject], let errorMessage = data["message"] as? String {
                     self.socket.appendToCallbackCheckString(errorMessage)
                 }
@@ -167,7 +167,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             return XCTFail("Event not received.")
         }
 
-        XCTAssertEqual(event.event, "test-event")
+        XCTAssertEqual(event.name, "test-event")
         XCTAssertEqual(event.channel!, "my-channel")
         XCTAssertEqual(event.data as! [String: String], ["test": "test string", "and": "another"])
 
@@ -193,7 +193,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             return XCTFail("Event not received.")
         }
 
-        XCTAssertEqual(event.event, "test-event")
+        XCTAssertEqual(event.name, "test-event")
         XCTAssertEqual(event.channel!, "my-channel")
         XCTAssertEqual(event.data as! [String: String], ["test": "test string", "and": "another"])
 

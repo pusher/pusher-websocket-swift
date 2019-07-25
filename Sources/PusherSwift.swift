@@ -106,7 +106,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
         Binds the client's global channel to all events
 
-        - parameter callback: The function to call when a new event is received
+        - parameter callback: The function to call when a new event is received. Callback receives the event data
 
         - returns: A unique string that can be used to unbind the callback from the client
     */
@@ -119,7 +119,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
      Binds the client's global channel to all events
 
-     - parameter eventCallback: The function to call when a new event is received
+     - parameter eventCallback: The function to call when a new event is received. Callback receives a PusherEvent
 
      - returns: A unique string that can be used to unbind the callback from the client
      */
