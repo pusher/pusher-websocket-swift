@@ -173,11 +173,11 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertNil(event.userId)
 
-        XCTAssertEqual(event.getKey(key: "event") as! String, "test-event")
-        XCTAssertEqual(event.getKey(key: "channel") as! String, "my-channel")
-        XCTAssertEqual(event.getKey(key: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+        XCTAssertEqual(event.getProperty(name: "event") as! String, "test-event")
+        XCTAssertEqual(event.getProperty(name: "channel") as! String, "my-channel")
+        XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
 
-        XCTAssertNil(event.getKey(key: "random-key"))
+        XCTAssertNil(event.getProperty(name: "random-key"))
     }
 
 
@@ -199,11 +199,11 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertNil(event.userId)
 
-        XCTAssertEqual(event.getKey(key: "event") as! String, "test-event")
-        XCTAssertEqual(event.getKey(key: "channel") as! String, "my-channel")
-        XCTAssertEqual(event.getKey(key: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+        XCTAssertEqual(event.getProperty(name: "event") as! String, "test-event")
+        XCTAssertEqual(event.getProperty(name: "channel") as! String, "my-channel")
+        XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
 
-        XCTAssertNil(event.getKey(key: "random-key"))
+        XCTAssertNil(event.getProperty(name: "random-key"))
     }
 
     func testReturningJSONStringInEventCallbacksIfTheStringCannotBeParsed() {
@@ -219,7 +219,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         }
 
         XCTAssertEqual(event.data as! String, "test")
-        XCTAssertEqual(event.getKey(key: "data") as! String, "test")
+        XCTAssertEqual(event.getProperty(name: "data") as! String, "test")
     }
 
     func testReturningJSONStringInEventCallbacksIfTheStringCanBeParsedButAttemptToReturnJSONObjectIsFalse() {
@@ -239,7 +239,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         }
 
         XCTAssertEqual(event.data as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.getKey(key: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+        XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
     }
 
     func testAccessingANewKeyInTheEventObject(){
@@ -254,7 +254,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             return XCTFail("Event not received.")
         }
 
-        XCTAssertEqual(event.getKey(key: "new-feature") as! String, "This is the value")
+        XCTAssertEqual(event.getProperty(name: "new-feature") as! String, "This is the value")
     }
 
     func testEventObjectContainsUserId(){
@@ -280,6 +280,6 @@ class HandlingIncomingEventsTests: XCTestCase {
         }
 
         XCTAssertEqual(event.userId, "user12345")
-        XCTAssertEqual(event.getKey(key: "user_id") as! String, "user12345")
+        XCTAssertEqual(event.getProperty(name: "user_id") as! String, "user12345")
     }
 }

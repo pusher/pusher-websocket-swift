@@ -55,8 +55,8 @@ open class PusherChannel: NSObject {
         Binds a callback to a given event name, scoped to the PusherChannel the function is
         called on
 
-        - parameter eventName:      The name of the event to bind to
-        - parameter eventCallback:  The function to call when a message is received with the relevant
+        - parameter eventName:  The name of the event to bind to
+        - parameter callback:   The function to call when a message is received with the relevant
                                     channel and event names
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
@@ -71,9 +71,9 @@ open class PusherChannel: NSObject {
      Binds a callback to a given event name, scoped to the PusherChannel the function is
      called on
 
-     - parameter eventName: The name of the event to bind to
-     - parameter callbackWithMetadata:  The function to call when a message is received with the relevant
-     channel and event names
+     - parameter eventName:     The name of the event to bind to
+     - parameter eventCallback: The function to call when a message is received with the relevant
+                                channel and event names
 
      - returns: A unique callbackId that can be used to unbind the callback at a later time
      */
@@ -120,13 +120,14 @@ open class PusherChannel: NSObject {
     /**
         Calls the appropriate callbacks for the given eventName in the scope of the acted upon channel
 
-        - parameter name: The name of the received event
-        - parameter data: The data associated with the received message
+        - parameter name:           The name of the received event
+        - parameter data:           The data associated with the received message
+        - parameter jsonObject:    The JSON payload received from the websocket
     */
-    open func handleEvent(name: String, data: String, jsonPayload: [String:Any]) {
+    open func handleEvent(name: String, data: String, jsonObject: [String:Any]) {
         if let eventHandlerArray = self.eventHandlers[name] {
             let jsonize = connection?.options.attemptToReturnJSONObject ?? true
-            let event = PusherEvent(payload: jsonPayload, eventName: name, jsonize: jsonize)
+            let event = PusherEvent(eventName: name, payload: jsonObject, jsonize: jsonize)
             for eventHandler in eventHandlerArray {
                 eventHandler.callback(event)
             }
@@ -154,7 +155,6 @@ public struct EventHandler {
     let callback: (PusherEvent) -> Void
 }
 
-// TODO: This is public. Is changing this a breaking change?
 public struct QueuedEvent {
     public let name: String
     public let data: Any

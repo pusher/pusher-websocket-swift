@@ -27,11 +27,11 @@ import Foundation
         //TODO: this is duplicated from Pusher channel
         let jsonize = connection?.options.attemptToReturnJSONObject ?? true
         for (_, callback) in self.globalCallbacks {
-            var payload = ["event": name, "data": data] as [String: Any]
+            var payload: [String: Any] = ["event": name, "data": data]
             if let channelName = channelName {
                 payload["channel"] = channelName
             }
-            let event = PusherEvent(payload: payload, eventName: name, jsonize: jsonize)
+            let event = PusherEvent(eventName: name, payload: payload, jsonize: jsonize)
             callback(event)
         }
     }
@@ -45,7 +45,7 @@ import Foundation
     internal func handleErrorEvent(name: String, data: [String: AnyObject]) {
         for (_, callback) in self.globalCallbacks {
             let payload = ["event": name, "data": data] as [String: Any]
-            let event = PusherEvent(payload: payload, eventName: name, jsonize: false)
+            let event = PusherEvent(eventName: name, payload: payload, jsonize: false)
             callback(event)
         }
     }

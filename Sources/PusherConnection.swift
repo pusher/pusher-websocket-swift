@@ -481,7 +481,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             }
 
             callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
-            chan.handleEvent(name: "pusher:subscription_succeeded", data: eventData, jsonPayload: json)
+            chan.handleEvent(name: "pusher:subscription_succeeded", data: eventData, jsonObject: json)
 
             self.delegate?.subscribedToChannel?(name: channelName)
 
@@ -608,7 +608,7 @@ public typealias PusherEventJSON = [String: AnyObject]
             callGlobalCallbacks(forEvent: eventName, jsonObject: jsonObject)
             if let channelName = jsonObject["channel"] as? String, let internalChannel = self.channels.find(name: channelName) {
                 if let eName = jsonObject["event"] as? String, let eData = jsonObject["data"] as? String {
-                    internalChannel.handleEvent(name: eName, data: eData, jsonPayload: jsonObject)
+                    internalChannel.handleEvent(name: eName, data: eData, jsonObject: jsonObject)
                 }
             }
         }
