@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
         "state": {
           "branch": null,
-          "revision": "3a2acbb32ab68215ee1596ee6004da8e90c3721b",
-          "version": "1.0.0"
+          "revision": "5da70ba744d58d772201f03600eb16c53197652d",
+          "version": "0.15.0"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
         "state": {
           "branch": null,
-          "revision": "6c8652a8ea35a64cf36367d07b3d6e5e6a24b272",
-          "version": "4.3.1"
+          "revision": "6b50ea803760a781b9abe0ba2412092ecef165e4",
+          "version": "4.3.0"
         }
       },
       {
