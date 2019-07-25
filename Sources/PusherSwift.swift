@@ -106,7 +106,8 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
         Binds the client's global channel to all events
 
-        - parameter callback: The function to call when a new event is received. Callback receives the event data
+        - parameter callback: The function to call when a new event is received. The callback
+                              receives the event's data payload
 
         - returns: A unique string that can be used to unbind the callback from the client
     */
@@ -119,7 +120,9 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
      Binds the client's global channel to all events
 
-     - parameter eventCallback: The function to call when a new event is received. Callback receives a PusherEvent
+     - parameter eventCallback: The function to call when a new event is received. The callback
+                                receives a PusherEvent, containg the event's data payload and
+                                other properties.
 
      - returns: A unique string that can be used to unbind the callback from the client
      */
@@ -130,7 +133,8 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
         Unbinds the client from its global channel
 
-        - parameter callbackId: The unique callbackId string used to identify which callback to unbind
+        - parameter callbackId: The unique callbackId string used to identify which callback
+                                to unbind
     */
     open func unbind(callbackId: String) {
         self.connection.removeCallbackFromGlobalChannel(callbackId: callbackId)

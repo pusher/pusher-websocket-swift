@@ -12,7 +12,7 @@ public struct PusherEvent {
     /// The data payload of the event
     public let data: Any?
 
-    /// The Id of the user who triggered the event. Only present in client event on presence channels
+    /// The ID of the user who triggered the event. Only present in client event on presence channels
     public let userId: String?
 
     /**

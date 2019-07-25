@@ -61,9 +61,9 @@ open class PusherChannel: NSObject {
         Binds a callback to a given event name, scoped to the PusherChannel the function is
         called on
 
-        - parameter eventName:  The name of the event to bind to
-        - parameter callback:   The function to call when a message is received with the relevant
-                                    channel and event names
+        - parameter eventName: The name of the event to bind to
+        - parameter callback:  The function to call when a new event is received. The
+                               callback receives the event's data payload
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
@@ -78,8 +78,9 @@ open class PusherChannel: NSObject {
      called on
 
      - parameter eventName:     The name of the event to bind to
-     - parameter eventCallback: The function to call when a message is received with the relevant
-                                channel and event names
+     - parameter eventCallback: The function to call when a new event is received. The callback
+                                receives a PusherEvent, containg the event's data payload and
+                                other properties.
 
      - returns: A unique callbackId that can be used to unbind the callback at a later time
      */
@@ -153,7 +154,6 @@ open class PusherChannel: NSObject {
             unsentEvents.insert(QueuedEvent(name: eventName, data: data), at: 0)
         }
     }
-
 }
 
 public struct EventHandler {
