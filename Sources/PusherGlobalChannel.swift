@@ -24,12 +24,12 @@ import Foundation
                                  to, if relevant
     */
     internal func handleEvent(name: String, data: String, channelName: String?) {
+        var payload: [String: Any] = ["event": name, "data": data]
+        if let channelName = channelName {
+            payload["channel"] = channelName
+        }
+        let event = PusherEvent(eventName: name, payload: payload, jsonize: self.shouldParseJSON)
         for (_, callback) in self.globalCallbacks {
-            var payload: [String: Any] = ["event": name, "data": data]
-            if let channelName = channelName {
-                payload["channel"] = channelName
-            }
-            let event = PusherEvent(eventName: name, payload: payload, jsonize: self.shouldParseJSON)
             callback(event)
         }
     }
@@ -41,9 +41,9 @@ import Foundation
         - parameter data: The data associated with the received message
     */
     internal func handleErrorEvent(name: String, data: [String: AnyObject]) {
+        let payload = ["event": name, "data": data] as [String: Any]
+        let event = PusherEvent(eventName: name, payload: payload, jsonize: false)
         for (_, callback) in self.globalCallbacks {
-            let payload = ["event": name, "data": data] as [String: Any]
-            let event = PusherEvent(eventName: name, payload: payload, jsonize: false)
             callback(event)
         }
     }
