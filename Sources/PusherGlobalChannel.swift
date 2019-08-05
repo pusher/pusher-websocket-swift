@@ -24,7 +24,7 @@ import Foundation
                                  to, if relevant
     */
     internal func handleEvent(name: String, data: String, channelName: String?) {
-        var payload: [String: Any] = ["event": name, "data": data]
+        var payload = ["event": name, "data": data] as [String: Any]
         if let channelName = channelName {
             payload["channel"] = channelName
         }

@@ -131,9 +131,9 @@ open class PusherChannel: NSObject {
         - parameter jsonObject:     The JSON payload received from the websocket
     */
     open func handleEvent(name: String, jsonObject: [String:Any]) {
-        // PusherEvent is a struct so will be passed by value to callbacks
-        let event = PusherEvent(eventName: name, payload: jsonObject, jsonize: self.shouldParseJSON)
         if let eventHandlerArray = self.eventHandlers[name] {
+            // PusherEvent is a struct so will be passed by value to callbacks
+            let event = PusherEvent(eventName: name, payload: jsonObject, jsonize: self.shouldParseJSON)
             for eventHandler in eventHandlerArray {
                 eventHandler.callback(event)
             }
