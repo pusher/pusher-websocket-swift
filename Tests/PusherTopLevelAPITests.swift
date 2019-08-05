@@ -119,7 +119,7 @@ class PusherTopLevelApiTests: XCTestCase {
     func testSubscriptionSucceededEventSentToGlobalChannelViaEventCallback() {
         pusher.connect()
         let callback = { (event: PusherEvent) -> Void in
-            if event.name == "pusher:subscription_succeeded" {
+            if event.eventName == "pusher:subscription_succeeded" {
                 self.socket.appendToCallbackCheckString("globalCallbackCalled")
             }
         }

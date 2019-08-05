@@ -6,9 +6,9 @@ public struct PusherEvent {
 
     // According to Channels protocol, there is always an event https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#events
     /// The name of the event
-    public let name: String
+    public let eventName: String
     /// The name of the channel that the event is associated with, e.g. "my-channel". Not present in events without an associated channel, e.g. "pusher:error" events relating to the connection
-    public let channel: String?
+    public let channelName: String?
     /// The data payload of the event
     public let data: Any?
 
@@ -32,9 +32,9 @@ public struct PusherEvent {
             self.data = payload["data"]
         }
 
-        self.channel = payload["channel"] as? String
+        self.channelName = payload["channel"] as? String
         self.userId = payload["user_id"] as? String
-        self.name = eventName
+        self.eventName = eventName
 
         // Replace the event name (so pusher_internal:subscription_succeeded can be mapped to pusher:subscription_succeeded)
         var payloadCopy = payload
