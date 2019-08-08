@@ -30,7 +30,7 @@ import Foundation
         }
         let event = PusherEvent(eventName: name, payload: payload, jsonize: self.shouldParseJSON)
         for (_, callback) in self.globalCallbacks {
-            callback(event)
+            callback(event.copy() as! PusherEvent)
         }
     }
 
@@ -44,7 +44,7 @@ import Foundation
         let payload = ["event": name, "data": data] as [String: Any]
         let event = PusherEvent(eventName: name, payload: payload, jsonize: false)
         for (_, callback) in self.globalCallbacks {
-            callback(event)
+            callback(event.copy() as! PusherEvent)
         }
     }
 
