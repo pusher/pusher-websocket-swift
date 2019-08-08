@@ -607,9 +607,7 @@ public typealias PusherEventJSON = [String: AnyObject]
         default:
             callGlobalCallbacks(forEvent: eventName, jsonObject: jsonObject)
             if let channelName = jsonObject["channel"] as? String, let internalChannel = self.channels.find(name: channelName) {
-                if let eName = jsonObject["event"] as? String {
-                    internalChannel.handleEvent(name: eName, jsonObject: jsonObject)
-                }
+                internalChannel.handleEvent(name: eventName, jsonObject: jsonObject)
             }
         }
     }
