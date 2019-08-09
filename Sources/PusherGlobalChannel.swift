@@ -23,26 +23,7 @@ import Foundation
         - parameter channelName: The name of the channel that the received message was triggered
                                  to, if relevant
     */
-    internal func handleEvent(name: String, data: String, channelName: String?) {
-        var payload = ["event": name, "data": data] as [String: Any]
-        if let channelName = channelName {
-            payload["channel"] = channelName
-        }
-        let event = PusherEvent(eventName: name, payload: payload, jsonize: self.shouldParseJSON)
-        for (_, callback) in self.globalCallbacks {
-            callback(event.copy() as! PusherEvent)
-        }
-    }
-
-    /**
-        Calls the appropriate callbacks for the given event name in the scope of the global channel
-
-        - parameter name: The name of the received event
-        - parameter data: The data associated with the received message
-    */
-    internal func handleErrorEvent(name: String, data: [String: AnyObject]) {
-        let payload = ["event": name, "data": data] as [String: Any]
-        let event = PusherEvent(eventName: name, payload: payload, jsonize: false)
+    internal func handleGlobalEvent(event: PusherEvent) {
         for (_, callback) in self.globalCallbacks {
             callback(event.copy() as! PusherEvent)
         }

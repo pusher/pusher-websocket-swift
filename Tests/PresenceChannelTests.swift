@@ -1,3 +1,4 @@
+@testable
 import PusherSwift
 import XCTest
 
@@ -66,7 +67,8 @@ class PusherPresenceChannelTests: XCTestCase {
         pusher.connect()
 
         let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
+        let pusherEvent = PusherEvent(payload: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
+        pusher.connection.handleEvent(event: pusherEvent!)
         let member = chan!.findMember(userId: "100")
 
         XCTAssertEqual(member!.userId, "100", "the userId should be 100")
@@ -132,7 +134,8 @@ class PusherPresenceChannelTests: XCTestCase {
             let _ = self.stubber.stub(functionName: "onMemberAdded", args: [member], functionToCall: nil)
         }
         let _ = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+        let pusherEvent = PusherEvent(payload: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+        pusher.connection.handleEvent(event: pusherEvent!)
 
         XCTAssertEqual(stubber.calls.first?.name, "onMemberAdded", "the onMemberAdded function should have been called")
         XCTAssertEqual((stubber.calls.first?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
@@ -154,7 +157,8 @@ class PusherPresenceChannelTests: XCTestCase {
         let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
         chan?.members.append(PusherPresenceChannelMember(userId: "100"))
 
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+        let pusherEvent = PusherEvent(payload: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+        pusher.connection.handleEvent(event: pusherEvent!)
 
         XCTAssertEqual(stubber.calls.last?.name, "onMemberRemoved", "the onMemberRemoved function should have been called")
         XCTAssertEqual((stubber.calls.last?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
@@ -173,8 +177,12 @@ class PusherPresenceChannelTests: XCTestCase {
             let _ = self.stubber.stub(functionName: "onMemberRemoved", args: [member], functionToCall: nil)
         }
         let _ = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+
+        let addedEvent = PusherEvent(payload: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+        let removedEvent = PusherEvent(payload: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+
+        pusher.connection.handleEvent(event: addedEvent!)
+        pusher.connection.handleEvent(event: removedEvent!)
 
         XCTAssertEqual(stubber.calls.last?.name, "onMemberRemoved", "the onMemberRemoved function should have been called")
         XCTAssertEqual((stubber.calls.last?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")

@@ -69,7 +69,17 @@ open class PusherChannel: NSObject {
     */
     @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         return bind(eventName: eventName, eventCallback: { (event: PusherEvent) -> Void in
-           callback(event.data)
+            let callbackData: Any?
+            if self.shouldParseJSON {
+                if event.jsonData != nil {
+                    callbackData = event.jsonData
+                }else{
+                    callbackData = event.data
+                }
+            }else{
+                callbackData = event.payload["data"]
+            }
+            callback(callbackData)
         });
     }
 
@@ -130,9 +140,8 @@ open class PusherChannel: NSObject {
         - parameter name:           The name of the received event
         - parameter jsonObject:     The JSON payload received from the websocket
     */
-    open func handleEvent(name: String, jsonObject: [String:Any]) {
-        if let eventHandlerArray = self.eventHandlers[name] {
-            let event = PusherEvent(eventName: name, payload: jsonObject, jsonize: self.shouldParseJSON)
+    open func handleEvent(event: PusherEvent) {
+        if let eventHandlerArray = self.eventHandlers[event.eventName] {
             for eventHandler in eventHandlerArray {
                 eventHandler.callback(event.copy() as! PusherEvent)
             }

@@ -224,11 +224,11 @@ open class MockPusherConnection: PusherConnection {
         super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: options)
     }
 
-    open override func handleEvent(eventName: String, jsonObject: [String: AnyObject]) {
+    open override func handleEvent(event: PusherEvent) {
         let _ = stubber.stub(
             functionName: "handleEvent",
-            args: [eventName, jsonObject],
-            functionToCall: { super.handleEvent(eventName: eventName, jsonObject: jsonObject) }
+            args: [event],
+            functionToCall: { super.handleEvent(event: event) }
         )
     }
 }

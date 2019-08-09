@@ -3,8 +3,6 @@ import Reachability
 import Starscream
 import CryptoSwift
 
-public typealias PusherEventJSON = [String: AnyObject]
-
 @objcMembers
 @objc open class PusherConnection: NSObject {
     public let url: String
@@ -459,29 +457,28 @@ public typealias PusherEventJSON = [String: AnyObject]
 
         - parameter json: The PusherEventJSON containing successful subscription data
     */
-    fileprivate func handleSubscriptionSucceededEvent(json: PusherEventJSON) {
-        if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) {
+    fileprivate func handleSubscriptionSucceededEvent(event: PusherEvent) {
+        if let channelName = event.channelName, let chan = self.channels.find(name: channelName) {
             chan.subscribed = true
 
-            guard let eventData = json["data"] as? String else {
+            guard event.data != nil else {
                 self.delegate?.debugLog?(message: "[PUSHER DEBUG] Subscription succeeded event received without data key in payload")
                 return
             }
 
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                    if let dataJSON = PusherParser.getPusherEventJSON(from: eventData) {
-                        if let presenceData = dataJSON["presence"] as? [String : AnyObject],
-                           let presenceHash = presenceData["hash"] as? [String : AnyObject]
-                        {
-                            presChan.addExistingMembers(memberHash: presenceHash)
-                        }
+                    if let dataJSON = event.jsonData, let presenceData = dataJSON["presence"] as? [String : AnyObject],
+                       let presenceHash = presenceData["hash"] as? [String : AnyObject]
+                    {
+                        presChan.addExistingMembers(memberHash: presenceHash)
                     }
                 }
             }
 
-            callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
-            chan.handleEvent(name: "pusher:subscription_succeeded", jsonObject: json)
+            let subscriptionEvent = PusherEvent(eventName: "pusher:subscription_succeeded", event: event)
+            callGlobalCallbacks(event: subscriptionEvent)
+            chan.handleEvent(event: subscriptionEvent)
 
             self.delegate?.subscribedToChannel?(name: channelName)
 
@@ -501,22 +498,20 @@ public typealias PusherEventJSON = [String: AnyObject]
 
         - parameter json: The PusherEventJSON containing connection established data
     */
-    fileprivate func handleConnectionEstablishedEvent(json: PusherEventJSON) {
-        if let data = json["data"] as? String {
-            if let connectionData = PusherParser.getPusherEventJSON(from: data),
-               let socketId = connectionData["socket_id"] as? String
-            {
-                self.socketId = socketId
-                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
-                self.reconnectAttempts = 0
-                self.reconnectTimer?.invalidate()
+    fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
+        if let connectionData = event.jsonData,
+           let socketId = connectionData["socket_id"] as? String
+        {
+            self.socketId = socketId
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
+            self.reconnectAttempts = 0
+            self.reconnectTimer?.invalidate()
 
-                if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
-                    self.activityTimeoutInterval = activityTimeoutFromServer
-                }
-
-                self.connectionEstablishedMessageReceived = true
+            if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
+                self.activityTimeoutInterval = activityTimeoutFromServer
             }
+
+            self.connectionEstablishedMessageReceived = true
         }
     }
 
@@ -537,14 +532,12 @@ public typealias PusherEventJSON = [String: AnyObject]
 
         - parameter json: The PusherEventJSON containing the member data
     */
-    fileprivate func handleMemberAddedEvent(json: PusherEventJSON) {
-        if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                if let memberJSON = PusherParser.getPusherEventJSON(from: data) {
-                    chan.addMember(memberJSON: memberJSON)
-                } else {
-                    print("Unable to add member")
-                }
+    fileprivate func handleMemberAddedEvent(event: PusherEvent) {
+        if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
+            if let memberJSON = event.jsonData {
+                chan.addMember(memberJSON: memberJSON)
+            } else {
+                print("Unable to add member")
             }
         }
     }
@@ -554,14 +547,12 @@ public typealias PusherEventJSON = [String: AnyObject]
 
         - parameter json: The PusherEventJSON containing the member data
     */
-    fileprivate func handleMemberRemovedEvent(json: PusherEventJSON) {
-        if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                if let memberJSON = PusherParser.getPusherEventJSON(from: data) {
-                    chan.removeMember(memberJSON: memberJSON)
-                } else {
-                    print("Unable to remove member")
-                }
+    fileprivate func handleMemberRemovedEvent(event: PusherEvent) {
+        if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
+            if let memberJSON = event.jsonData {
+                chan.removeMember(memberJSON: memberJSON)
+            } else {
+                print("Unable to remove member")
             }
         }
     }
@@ -579,9 +570,10 @@ public typealias PusherEventJSON = [String: AnyObject]
             "channel": channelName,
             "data": data ?? ""
         ]
+        let event = PusherEvent(payload: json)!
         DispatchQueue.main.async {
             // TODO: Consider removing in favour of exclusively using delegate
-            self.handleEvent(eventName: eventName, jsonObject: json as [String : AnyObject])
+            self.handleEvent(event: event)
         }
 
         self.delegate?.failedToSubscribeToChannel?(name: channelName, response: response, data: data, error: error)
@@ -593,21 +585,21 @@ public typealias PusherEventJSON = [String: AnyObject]
         - parameter eventName:  The name of the incoming event
         - parameter jsonObject: The event-specific data related to the incoming event
     */
-    open func handleEvent(eventName: String, jsonObject: [String : AnyObject]) {
+    open func handleEvent(event: PusherEvent) {
         resetActivityTimeoutTimer()
-        switch eventName {
+        switch event.eventName {
         case "pusher_internal:subscription_succeeded":
-            handleSubscriptionSucceededEvent(json: jsonObject)
+            handleSubscriptionSucceededEvent(event: event)
         case "pusher:connection_established":
-            handleConnectionEstablishedEvent(json: jsonObject)
+            handleConnectionEstablishedEvent(event: event)
         case "pusher_internal:member_added":
-            handleMemberAddedEvent(json: jsonObject)
+            handleMemberAddedEvent(event: event)
         case "pusher_internal:member_removed":
-            handleMemberRemovedEvent(json: jsonObject)
+            handleMemberRemovedEvent(event: event)
         default:
-            callGlobalCallbacks(forEvent: eventName, jsonObject: jsonObject)
-            if let channelName = jsonObject["channel"] as? String, let internalChannel = self.channels.find(name: channelName) {
-                internalChannel.handleEvent(name: eventName, jsonObject: jsonObject)
+            callGlobalCallbacks(event: event)
+            if let channelName = event.channelName, let internalChannel = self.channels.find(name: channelName) {
+                internalChannel.handleEvent(event: event)
             }
         }
     }
@@ -618,15 +610,8 @@ public typealias PusherEventJSON = [String: AnyObject]
         - parameter eventName:  The name of the incoming event
         - parameter jsonObject: The event-specific data related to the incoming event
     */
-    fileprivate func callGlobalCallbacks(forEvent eventName: String, jsonObject: [String : AnyObject]) {
-        if let globalChannel = self.globalChannel {
-            if let eData =  jsonObject["data"] as? String {
-                let channelName = jsonObject["channel"] as! String?
-                globalChannel.handleEvent(name: eventName, data: eData, channelName: channelName)
-            } else if let eData =  jsonObject["data"] as? [String: AnyObject] {
-                globalChannel.handleErrorEvent(name: eventName, data: eData)
-            }
-        }
+    fileprivate func callGlobalCallbacks(event: PusherEvent) {
+        globalChannel?.handleGlobalEvent(event: event)
     }
 
     /**
