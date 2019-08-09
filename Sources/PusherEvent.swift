@@ -15,10 +15,11 @@ open class PusherEvent: NSObject, NSCopying {
     /// The ID of the user who triggered the event. Only present in client event on presence channels
     public var userId: String? { return payload["user_id"] as? String }
 
+    // Cache of the data payload parsed as JSON.
     private var json: Any?
 
-    /// The data property parsed as JSON. This is done lazily and the result is cached so parsing only happens once. Returns nil if it is not possible to parse as JSON.
-    public lazy var jsonData: Any? = getJSON();
+    /// The data property parsed as JSON. This the result is cached so parsing only happens once. Returns nil if it is not possible to parse as JSON.
+    public var jsonData: Any? { return getJSON() }
 
     internal init?(payload: [String:Any]){
         // Every event must have a name
