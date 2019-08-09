@@ -20,7 +20,7 @@ open class PusherEvent: NSObject, NSCopying {
     // Have we tried to parse the data before? Necessary because the json variable could be nil because a parsing attempt failed previously, rather than us not trying.
     private var parseAttempted: Bool = false
 
-    /// The data property parsed as JSON. This the result is cached so parsing only happens once. Returns nil if it is not possible to parse as JSON.
+    /// The data property parsed as JSON. The result is cached so parsing only happens once. Returns nil if it is not possible to parse as JSON.
     public var jsonData: Any? { return getJSON() }
 
     internal init?(payload: [String:Any]){
