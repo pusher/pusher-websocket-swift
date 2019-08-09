@@ -193,6 +193,21 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertNil(event.getProperty(name: "random-key"))
     }
 
+    func testArrayThatIsNotDoubleEncodedIsParsedAsJSON() {
+        let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
+        let chan = pusher.subscribe("my-channel")
+        let _ = chan.bind(eventName: "test-event", eventCallback: callback)
+
+        XCTAssertNil(socket.eventGivenToCallback)
+        let pusherEvent = PusherEvent(payload: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": [1,2,3,4,5] as AnyObject])
+        pusher.connection.handleEvent(event: pusherEvent!)
+
+        guard let event = socket.eventGivenToCallback else {
+            return XCTFail("Event not received.")
+        }
+
+        XCTAssertEqual(event.jsonData as! [Int], [1,2,3,4,5])
+    }
 
     func testEventObjectReturnedToGlobalCallback() {
         let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }

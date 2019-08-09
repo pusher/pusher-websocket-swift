@@ -21,12 +21,14 @@ open class PusherEvent: NSObject, NSCopying {
     public lazy var jsonData: Any? = getJSON();
 
     internal init?(payload: [String:Any]){
+        // Every event must have a name
         if !(payload["event"] is String){
             return nil
         }
 
-        if let json = payload["data"] as? [String:Any] {
-            self.json = json
+        // If the data payload is already JSON (not double encoded)
+        if let possibleJSON = payload["data"], JSONSerialization.isValidJSONObject(possibleJSON){
+            self.json = possibleJSON
         }
 
         self.payload = payload

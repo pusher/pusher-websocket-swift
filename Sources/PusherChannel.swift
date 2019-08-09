@@ -135,8 +135,7 @@ open class PusherChannel: NSObject {
     /**
         Calls the appropriate callbacks for the given eventName in the scope of the acted upon channel
 
-        - parameter name:           The name of the received event
-        - parameter jsonObject:     The JSON payload received from the websocket
+        - parameter event: The event received from the websocket
     */
     open func handleEvent(event: PusherEvent) {
         if let eventHandlerArray = self.eventHandlers[event.eventName] {

@@ -496,7 +496,7 @@ import CryptoSwift
         Handle setting connection state and making subscriptions that couldn't be
         attempted while the connection was not in a connected state
 
-        - parameter json: The PusherEventJSON containing connection established data
+        - parameter event: The event to be processed
     */
     fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
         if let connectionData = event.jsonData as? [String:Any],
@@ -530,7 +530,7 @@ import CryptoSwift
     /**
         Handle a new member subscribing to a presence channel
 
-        - parameter json: The PusherEventJSON containing the member data
+        - parameter event: The event to be processed
     */
     fileprivate func handleMemberAddedEvent(event: PusherEvent) {
         if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
@@ -545,7 +545,7 @@ import CryptoSwift
     /**
         Handle a member unsubscribing from a presence channel
 
-        - parameter json: The PusherEventJSON containing the member data
+        - parameter event: The event to be processed
     */
     fileprivate func handleMemberRemovedEvent(event: PusherEvent) {
         if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
@@ -582,8 +582,7 @@ import CryptoSwift
     /**
         Handles incoming events and passes them on to be handled by the appropriate function
 
-        - parameter eventName:  The name of the incoming event
-        - parameter jsonObject: The event-specific data related to the incoming event
+        - parameter event: The incoming event to be processed
     */
     open func handleEvent(event: PusherEvent) {
         resetActivityTimeoutTimer()
@@ -607,8 +606,7 @@ import CryptoSwift
     /**
         Call any global callbacks
 
-        - parameter eventName:  The name of the incoming event
-        - parameter jsonObject: The event-specific data related to the incoming event
+        - parameter event: The incoming event
     */
     fileprivate func callGlobalCallbacks(event: PusherEvent) {
         globalChannel?.handleGlobalEvent(event: event)

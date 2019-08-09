@@ -18,10 +18,7 @@ import Foundation
     /**
         Calls the appropriate callbacks for the given event name in the scope of the global channel
 
-        - parameter name:        The name of the received event
-        - parameter data:        The data associated with the received message
-        - parameter channelName: The name of the channel that the received message was triggered
-                                 to, if relevant
+        - parameter event: The event received from the websocket
     */
     internal func handleGlobalEvent(event: PusherEvent) {
         for (_, callback) in self.globalCallbacks {
