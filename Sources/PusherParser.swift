@@ -33,7 +33,7 @@ internal class PusherParser: NSObject {
 
      - returns: The object sent as the payload part of the Pusher message
      */
-    class func getEventDataJSON(from string: String) -> Any {
+    class func getEventDataJSON(from string: String) -> Any? {
         let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
@@ -43,6 +43,6 @@ internal class PusherParser: NSObject {
                 print("Returning data string instead because unable to parse string as JSON - check that your JSON is valid.")
             }
         }
-        return string
+        return nil
     }
 }

@@ -157,7 +157,7 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testReceivingAnErrorWhereTheDataPartOfTheMessageIsNotDoubleEncodedViaEventCallback() {
         let _ = pusher.bind(eventCallback:{ (event: PusherEvent) in
             if event.eventName == "pusher:error" {
-                if let data = event.jsonData, let errorMessage = data["message"] as? String {
+                if let data = event.jsonData as? [String:Any], let errorMessage = data["message"] as? String {
                     self.socket.appendToCallbackCheckString(errorMessage)
                 }
             }
