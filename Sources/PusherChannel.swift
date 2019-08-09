@@ -35,9 +35,7 @@ open class PusherChannel: NSObject {
     public var auth: PusherAuth?
 
     internal var shouldParseJSON: Bool {
-        get {
-            return connection?.options.attemptToReturnJSONObject ?? true
-        }
+        return connection?.options.attemptToReturnJSONObject ?? true
     }
 
     /**

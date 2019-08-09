@@ -16,6 +16,8 @@ open class PusherEvent: NSObject, NSCopying {
     public var userId: String? { return payload["user_id"] as? String }
 
     private var json: [String:Any]?
+
+    /// The data property parsed as JSON. This is done lazily and the result is cached so parsing only happens once. Returns nil if it is not possible to parse as JSON.
     public lazy var jsonData: [String:Any]? = getJSON();
 
     internal init?(payload: [String:Any]){
