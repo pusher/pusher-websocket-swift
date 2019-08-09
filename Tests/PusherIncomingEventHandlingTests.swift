@@ -182,6 +182,7 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertEqual(event.eventName, "test-event")
         XCTAssertEqual(event.channelName!, "my-channel")
+        XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
         XCTAssertEqual(event.jsonData as! [String: String], ["test": "test string", "and": "another"])
 
         XCTAssertNil(event.userId)
@@ -224,6 +225,7 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertEqual(event.eventName, "test-event")
         XCTAssertEqual(event.channelName!, "my-channel")
+        XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
         XCTAssertEqual(event.jsonData as! [String: String], ["test": "test string", "and": "another"])
 
         XCTAssertNil(event.userId)
@@ -249,28 +251,8 @@ class HandlingIncomingEventsTests: XCTestCase {
         }
 
         XCTAssertEqual(event.data!, "test")
+        XCTAssertNil(event.jsonData)
         XCTAssertEqual(event.getProperty(name: "data") as! String, "test")
-    }
-
-    func testReturningJSONStringInEventCallbacksIfTheStringCanBeParsedButAttemptToReturnJSONObjectIsFalse() {
-        let options = PusherClientOptions(attemptToReturnJSONObject: false)
-        pusher = Pusher(key: key, options: options)
-        socket.delegate = pusher.connection
-        pusher.connection.socket = socket
-        let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
-        let chan = pusher.subscribe("my-channel")
-        let _ = chan.bind(eventName: "test-event", eventCallback: callback)
-
-        XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(payload: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
-        pusher.connection.handleEvent(event: pusherEvent!)
-
-        guard let event = socket.eventGivenToCallback else {
-            return XCTFail("Event not received.")
-        }
-
-        XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
     }
 
     func testAccessingANewKeyInTheEventObject(){
