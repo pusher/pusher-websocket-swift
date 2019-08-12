@@ -68,7 +68,7 @@ open class PusherChannel: NSObject {
     @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         return bind(eventName: eventName, eventCallback: { [weak self] (event: PusherEvent) -> Void in
             guard let self = self else { return }
-    
+
             let callbackData: Any?
             if self.shouldParseJSON {
                 if event.jsonData != nil {
