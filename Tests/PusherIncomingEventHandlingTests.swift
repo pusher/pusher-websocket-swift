@@ -194,22 +194,6 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertNil(event.getProperty(name: "random-key"))
     }
 
-    func testArrayThatIsNotDoubleEncodedIsParsedAsJSON() {
-        let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
-        let chan = pusher.subscribe("my-channel")
-        let _ = chan.bind(eventName: "test-event", eventCallback: callback)
-
-        XCTAssertNil(socket.eventGivenToCallback)
-        let pusherEvent = PusherEvent(payload: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": [1,2,3,4,5] as AnyObject])
-        pusher.connection.handleEvent(event: pusherEvent!)
-
-        guard let event = socket.eventGivenToCallback else {
-            return XCTFail("Event not received.")
-        }
-
-        XCTAssertEqual(event.jsonData as! [Int], [1,2,3,4,5])
-    }
-
     func testEventObjectReturnedToGlobalCallback() {
         let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
         let _ = pusher.subscribe("my-channel")
@@ -235,84 +219,5 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
 
         XCTAssertNil(event.getProperty(name: "random-key"))
-    }
-
-    func testReturningJSONStringInEventCallbacksIfTheStringCannotBeParsed() {
-        let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
-        let chan = pusher.subscribe("my-channel")
-        let _ = chan.bind(eventName: "test-event", eventCallback: callback)
-
-        XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(payload: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "test" as AnyObject])
-        pusher.connection.handleEvent(event: pusherEvent!)
-
-        guard let event = socket.eventGivenToCallback else {
-            return XCTFail("Event not received.")
-        }
-
-        XCTAssertEqual(event.data!, "test")
-        XCTAssertNil(event.jsonData)
-        XCTAssertEqual(event.getProperty(name: "data") as! String, "test")
-    }
-
-    func testAccessingANewKeyInTheEventObject(){
-        let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
-        let chan = pusher.subscribe("my-channel")
-        let _ = chan.bind(eventName: "test-event", eventCallback: callback)
-
-        XCTAssertNil(socket.eventGivenToCallback)
-
-        let payload = "{\"new-feature\":\"This is the value\", \"event\":\"test-event\", \"channel\":\"my-channel\", \"data\":\"{\\\"test\\\":\\\"test string\\\",\\\"and\\\":\\\"another\\\"}\"}";
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
-
-        guard let event = socket.eventGivenToCallback else {
-            return XCTFail("Event not received.")
-        }
-
-        XCTAssertEqual(event.getProperty(name: "new-feature") as! String, "This is the value")
-    }
-
-    func testAccessingANonStringKeyInTheEventObject(){
-        let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
-        let chan = pusher.subscribe("my-channel")
-        let _ = chan.bind(eventName: "test-event", eventCallback: callback)
-
-        XCTAssertNil(socket.eventGivenToCallback)
-
-        let payload = "{\"timestamp\":123456789, \"event\":\"test-event\", \"channel\":\"my-channel\", \"data\":\"{\\\"test\\\":\\\"test string\\\",\\\"and\\\":\\\"another\\\"}\"}";
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
-
-        guard let event = socket.eventGivenToCallback else {
-            return XCTFail("Event not received.")
-        }
-
-        XCTAssertEqual(event.getProperty(name: "timestamp") as! Int, 123456789)
-    }
-
-    func testEventObjectContainsUserId(){
-        let options = PusherClientOptions(
-            authMethod: .inline(secret: "secret"),
-            autoReconnect: false
-        )
-        pusher = Pusher(key: "key", options: options)
-        socket.delegate = pusher.connection
-        pusher.connection.socket = socket
-
-        let pusher = Pusher(withAppKey: key, options: options)
-
-        let callback = { (event: PusherEvent) -> Void in self.socket.storeEventGivenToCallback(event) }
-        let chan = pusher.subscribe("private-test-channel")
-        let _ = chan.bind(eventName: "client-test-event", eventCallback: callback)
-
-        XCTAssertNil(socket.eventGivenToCallback)
-        let pusherEvent = PusherEvent(payload: ["user_id": "user12345" as AnyObject, "event": "client-test-event" as AnyObject, "channel": "private-test-channel" as AnyObject, "data": "{}" as AnyObject])
-        pusher.connection.handleEvent(event: pusherEvent!)
-
-        guard let event = socket.eventGivenToCallback else {
-            return XCTFail("Event not received.")
-        }
-
-        XCTAssertEqual(event.userId, "user12345")
-        XCTAssertEqual(event.getProperty(name: "user_id") as! String, "user12345")
     }
 }
