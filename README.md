@@ -839,7 +839,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 The callbacks you bind receive a `PusherEvent`:
 
 |  Property            | Type           | Description  |
-| ------------------ |:-------------:| ------------:|
+| ------------------ |--------------| ------------|
 | `eventName`       | `String`      | The name of the event. Always present |
 | `channelName`   | `String?`    | The name of the channel that the event was triggered on  |
 | `data`                | `String?`     | The data payload of the event. This is your data that you pass to `trigger`. |
@@ -847,7 +847,7 @@ The callbacks you bind receive a `PusherEvent`:
 | `userId`            | `String?`     | The ID of the user who triggered the event. Only available on client events triggered on presence channels. |
 
 | Function            | Parameters                                                |  Return Type           | Description                                                                                                                                                                                                     |
-| -----------------  |:-----------------------------------------------:| --------------------- :| ---------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| -----------------  |------------------------------------------------| -----------------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `getProperty`   | `name: String` - The key of the property |  `Any?`                     | A helper function for accessing raw keys from the websocket event. Data returned from this function should not be considered stable |
 
 ### Receiving errors
