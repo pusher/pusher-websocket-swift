@@ -698,6 +698,7 @@ myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> 
 ```
 
 <details><summary>Alternative bind function</summary>
+
 ```swift
 let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
@@ -817,6 +818,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 }];
 ```
 <details><summary>Alternative bind function</summary>
+
 ```objc
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
@@ -830,6 +832,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 }];
 ```
 </details>
+
 ### Receiving errors
 
 Errors are sent to the client for which they are relevant with an event name of `pusher:error`. These can be received and handled using code as follows. Obviously the specifics of how to handle them are left up to the developer but this displays the general pattern.
@@ -846,6 +849,7 @@ pusher.bind(eventCallback: { (event: PusherEvent) in
 })
 ```
 <details><summary>Alternative bind function</summary>
+
 ```swift
 pusher.bind({ (message: Any?) in
     if let message = message as? [String: AnyObject], eventName = message["event"] as? String where eventName == "pusher:error" {
@@ -868,6 +872,7 @@ pusher.bind({ (message: Any?) in
 }];
 ```
 <details><summary>Alternative bind function</summary>
+    
 ```objc
 [pusher bind:^void (NSDictionary *data) {
     NSString *eventName = data[@"event"];
