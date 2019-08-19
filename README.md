@@ -714,7 +714,7 @@ myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
 ```
 </details>
 
-In the above snippet, we use the `dataAsJSON` property of  `PusherEvent`, which contains the data payload parsed from the JSON string into Swift objects. You can also choose to decode the JSON string yourself. The `data` property of `PusherEvent` contains the raw JSON string and you can use the Swift `JSONDecoder` to decode the JSON into a Codable Class or Struct. See the Apple docs: [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
+In the above snippet, we use the `dataAsJSON` property of  [`PusherEvent`](#pusherevent), which contains the data payload parsed from the JSON string into Swift objects. You can also choose to decode the JSON string yourself. The `data` property of  [`PusherEvent`](#pusherevent) contains the raw JSON string and you can use the Swift `JSONDecoder` to decode the JSON into a Codable Class or Struct. See the Apple docs: [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
 
 ```swift
 struct PriceUpdate: Codable {
@@ -842,7 +842,7 @@ The callbacks you bind receive a `PusherEvent`:
 | ------------------ |--------------| ------------|
 | `eventName`       | `String`      | The name of the event. Always present. |
 | `channelName`   | `String?`    | The name of the channel that the event was triggered on.  |
-| `data`                | `String?`     | The data payload of the event. This is the data that was passed to `trigger`, encoded as a string. If you triggered JSON then this contains stringified JSON. |
+| `data`                | `String?`     | The data payload of the event. This is the data that was passed to `trigger`, encoded as a string. If you passed an object to the trigger method then that will have been encoded as a JSON string. |
 | `dataAsJSON`    | `Any?`           | The `data` parsed as JSON into Swift objects, if possible. You can cast this to Swift objects as appropriate--see [examples](#per-channel-events). This is a computed property. The parsing is done lazily and the result is cached so it is only done once. |
 | `userId`            | `String?`     | The ID of the user who triggered the event. This is only available for client events triggered on presence channels. |
 
