@@ -7,7 +7,7 @@
 
 @implementation PusherObjectiveCAPITests
 
-- (void)testThatDataBindIsAccessible {
+- (void)testThatChannelDataBindIsAccessible {
     Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
@@ -21,7 +21,7 @@
 
 
 
-- (void)testThatEventBindIsAccessible {
+- (void)testThatChannelEventBindIsAccessible {
     Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
@@ -41,5 +41,38 @@
     }];
 }
 
+- (void)testThatGlobalDataBindIsAccessible {
+    Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
+    PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+    [pusher bind: ^void (NSDictionary *data) {
+        NSString *commenter = data[@"commenter"];
+        NSString *message = data[@"message"];
+
+        NSLog(@"%@ wrote %@", commenter, message);
+    }];
+}
+
+
+
+- (void)testThatGlobalEventBindIsAccessible {
+    Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
+    PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+    [pusher bindWithEventCallback: ^void (PusherEvent *event) {
+        NSDictionary *data = event.jsonData;
+
+        NSString *commenter = data[@"commenter"];
+        NSString *message = data[@"message"];
+
+        NSLog(@"%@ wrote %@", commenter, message);
+
+        NSString *eventName = event.eventName;
+        NSString *channelName = event.channelName;
+        NSString *userId = event.userId;
+
+        NSLog(@"%@, %@, %@", eventName, channelName, userId);
+    }];
+}
 
 @end
