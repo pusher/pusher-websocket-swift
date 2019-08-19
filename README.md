@@ -698,7 +698,7 @@ myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> 
 })
 ```
 
-<details><summary>Legacy approach</summary>
+<details><summary>View legacy approach</summary>
 
 ```swift
 let pusher = Pusher(key: "YOUR_APP_KEY")
@@ -755,7 +755,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
     NSLog(@"%@ is now priced at %@", company, price);
 }];
 ```
-<details><summary>Legacy approach</summary>
+<details><summary>View legacy approach</summary>
 
 ```objc
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
@@ -788,7 +788,7 @@ pusher.bind(eventCallback: { (event: PusherEvent) -> Void in
     }
 })
 ```
-<details><summary>Legacy approach</summary>
+<details><summary>View legacy approach</summary>
 
 ```swift
 let pusher = Pusher(key: "YOUR_APP_KEY")
@@ -818,7 +818,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
     NSLog(@"%@ wrote %@", commenter, message);
 }];
 ```
-<details><summary>Legacy approach</summary>
+<details><summary>View legacy approach</summary>
 
 ```objc
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
@@ -867,7 +867,7 @@ pusher.bind(eventCallback: { (event: PusherEvent) in
     }
 })
 ```
-<details><summary>Legacy approach</summary>
+<details><summary>View legacy approach</summary>
 
 ```swift
 pusher.bind({ (message: Any?) in
@@ -891,7 +891,7 @@ pusher.bind({ (message: Any?) in
     }
 }];
 ```
-<details><summary>Legacy approach</summary>
+<details><summary>View legacy approach</summary>
     
 ```objc
 [pusher bind:^void (NSDictionary *data) {
