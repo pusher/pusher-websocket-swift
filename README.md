@@ -33,7 +33,7 @@ What else would you want? Head over to one of our example apps:
 - [Binding to events](#binding-to-events)
   - [Per-channel](#per-channel-events)
   - [Globally](#global-events)
-  - [PusherEvent](#pusherevent)
+  - [Callback parameters](#callback-parameters)
   - [Receiving errors](#receiving-errors)
 - [Testing](#testing)
 - [Extensions](#extensions)
@@ -834,7 +834,9 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 ```
 </details>
 
-### PusherEvent
+### Callback parameters
+
+#### PusherEvent
 
 The callbacks you bind receive a `PusherEvent`:
 
@@ -842,13 +844,13 @@ The callbacks you bind receive a `PusherEvent`:
 | ------------------ |--------------| ------------|
 | `eventName`       | `String`      | The name of the event. Always present. |
 | `channelName`   | `String?`    | The name of the channel that the event was triggered on.  |
-| `data`                | `String?`     | The data payload of the event. This is the data that was passed to `trigger`, encoded as a string. If you passed an object to the trigger method then that will have been encoded as a JSON string. |
+| `data`                | `String?`     | The data payload of the event. This is the data that was passed to `trigger`, encoded as a string. If you passed an object then that will have been encoded as a JSON string. |
 | `dataAsJSON`    | `Any?`           | The `data` parsed as JSON into Swift objects, if possible. You can cast this to Swift objects as appropriate--see [examples](#per-channel-events). This is a computed property. The parsing is done lazily and the result is cached so it is only done once. |
 | `userId`            | `String?`     | The ID of the user who triggered the event. This is only available for client events triggered on presence channels. |
 
 | Function            | Parameters                                                    |  Return Type           | Description                                                                                                                                                                                                     |
 | -----------------  |---------------------------------------------------| -----------------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `getProperty`   | `name: String` - The name of the property |  `Any?`                      | A helper function for accessing raw properties from the websocket event. Data returned from this function should not be considered stable and it is recommended that you use the properties above instead. |
+| `getProperty`   | `name: String` - The name of the property |  `Any?`                      | A helper function for accessing raw properties from the websocket event. Data returned by this function should not be considered stable and it is recommended that you use the properties above instead. |
 
 ### Receiving errors
 
