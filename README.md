@@ -31,8 +31,9 @@ What else would you want? Head over to one of our example apps:
   - [Private channels](#private-channels)
   - [Presence channels](#presence-channels)
 - [Binding to events](#binding-to-events)
-  - [Globally](#global-events)
   - [Per-channel](#per-channel-events)
+  - [Globally](#global-events)
+  - [PusherEvent](#pusherevent)
   - [Receiving errors](#receiving-errors)
 - [Testing](#testing)
 - [Extensions](#extensions)
@@ -832,6 +833,22 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 }];
 ```
 </details>
+
+### PusherEvent
+
+The callbacks you bind receive a `PusherEvent`:
+
+|  Property            | Type           | Description  |
+| ------------------ |:-------------:| ------------:|
+| `eventName`       | `String`      | The name of the event. Always present |
+| `channelName`   | `String?`    | The name of the channel that the event was triggered on  |
+| `data`                | `String?`     | The data payload of the event. This is your data that you pass to `trigger`. |
+| `dataAsJSON`    | `Any?`           | The `data` payload parsed as JSON, if possible. This is a computed property. The parsing is done lazily and the result is cached so it is only done once. |
+| `userId`            | `String?`     | The ID of the user who triggered the event. Only available on client events triggered on presence channels. |
+
+| Function            | Parameters                                                |  Return Type           | Description                                                                                                                                                                                                     |
+| -----------------  |:-----------------------------------------------:| --------------------- :| ---------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| `getProperty`   | `name: String` - The key of the property |  `Any?`                     | A helper function for accessing raw keys from the websocket event. Data returned from this function should not be considered stable |
 
 ### Receiving errors
 
