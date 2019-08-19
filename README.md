@@ -678,67 +678,6 @@ Keep in mind that in order to generate a valid auth value for a subscription the
 
 Events can be bound to at 2 levels; globally and per channel. When binding to an event you can choose to save the return value, which is a unique identifier for the event handler that gets created. The only reason to save this is if you're going to want to unbind from the event at a later point in time. There is an example of this below.
 
-### Global events
-
-You can attach behaviour to these events regardless of the channel the event is broadcast to. The following is an example of an app that binds to new comments from any channel (that you are subscribed to):
-
-#### Swift
-
-```swift
-let pusher = Pusher(key: "YOUR_APP_KEY")
-pusher.subscribe("my-channel")
-
-pusher.bind(eventCallback: { (event: PusherEvent) -> Void in
-    if let data = event.jsonData as? [String : AnyObject] {
-        if let commenter = data["commenter"] as? String, message = data["message"] as? String {
-            print("\(commenter) wrote \(message)")
-        }
-    }
-})
-```
-or
-
-```swift
-let pusher = Pusher(key: "YOUR_APP_KEY")
-pusher.subscribe("my-channel")
-
-pusher.bind(callback: { (event: Any?) -> Void in
-    if let data = event["data"] as? [String : AnyObject] {
-        if let commenter = data["commenter"] as? String, message = data["message"] as? String {
-            print("\(commenter) wrote \(message)")
-        }
-    }
-})
-```
-
-#### Objective-C
-
-```objc
-Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
-PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
-
-[pusher bindWithEventCallback: ^void (PusherEvent *event) {
-    NSDictionary *data = event.jsonData;
-    NSString *commenter = data[@"commenter"];
-    NSString *message = data[@"message"];
-
-    NSLog(@"%@ wrote %@", commenter, message);
-}];
-```
-or
-```objc
-Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
-PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
-
-[pusher bind: ^void (NSDictionary *event) {
-    NSDictionary *data = event[@"data"];
-    NSString *commenter = data[@"commenter"];
-    NSString *message = data[@"message"];
-
-    NSLog(@"%@ wrote %@", commenter, message);
-}];
-```
-
 ### Per-channel events
 
 These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. The following might be an example of a stock tracking app where several channels are opened for different companies:
@@ -750,14 +689,15 @@ let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
 myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> Void in
-    if let data = event.jsonData as? [String : AnyObject] {
+    if let data = event.dataAsJSON as? [String : AnyObject] {
         if let price = data["price"] as? String, company = data["company"] as? String {
             print("\(company) is now priced at \(price)")
         }
     }
 })
 ```
-or
+
+<details><summary>Alternative bind function</summary>
 ```swift
 let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
@@ -770,7 +710,35 @@ myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
     }
 })
 ```
+</details>
 
+In the above snippet, we use the `dataAsJSON` property of  `PusherEvent`, which contains the data payload parsed from the JSON string into Swift objects. You can also choose to decode the JSON string yourself. The `data` property of `PusherEvent` contains the raw JSON string and you can use the Swift `JSONDecoder` to decode the JSON into a Codable Class or Struct. See the Apple docs: [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
+
+```swift
+struct PriceUpdate: Codable {
+    public let company: String,
+    public let price: Int,
+}
+
+let pusher = Pusher(key: "YOUR_APP_KEY")
+let myChannel = pusher.subscribe("my-channel")
+let decoder = JSONDecoder()
+
+myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> Void in
+    if let jsonString = event.data, jsonData = jsonString.data(using: .utf8) {
+        let update: PriceUpdate = try? decoder.decode(PriceUpdate.self, from: jsonData)
+        if let update = update {
+            processPriceUpdate(update)
+        }else{
+            print("Could not decode update")
+        }
+    }
+})
+
+func processPriceUpdate(_ update: PriceUpdate){
+    print("\(update.company) is now priced at \(update.price)")
+}
+```
 #### Objective-C
 
 ```objc
@@ -785,7 +753,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
     NSLog(@"%@ is now priced at %@", company, price);
 }];
 ```
-or
+<details><summary>Alternative bind function</summary>
 
 ```objc
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
@@ -798,7 +766,70 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
     NSLog(@"%@ is now priced at %@", company, price);
 }];
 ```
+</details>
 
+### Global events
+
+You can attach behaviour to these events regardless of the channel the event is broadcast to. The following is an example of an app that binds to new comments from any channel (that you are subscribed to):
+
+#### Swift
+
+```swift
+let pusher = Pusher(key: "YOUR_APP_KEY")
+pusher.subscribe("my-channel")
+
+pusher.bind(eventCallback: { (event: PusherEvent) -> Void in
+    if let data = event.dataAsJSON as? [String : AnyObject] {
+        if let commenter = data["commenter"] as? String, message = data["message"] as? String {
+            print("\(commenter) wrote \(message)")
+        }
+    }
+})
+```
+<details><summary>Alternative bind function</summary>
+
+```swift
+let pusher = Pusher(key: "YOUR_APP_KEY")
+pusher.subscribe("my-channel")
+
+pusher.bind(callback: { (event: Any?) -> Void in
+    if let data = event["data"] as? [String : AnyObject] {
+        if let commenter = data["commenter"] as? String, message = data["message"] as? String {
+            print("\(commenter) wrote \(message)")
+        }
+    }
+})
+```
+</details>
+
+#### Objective-C
+
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+[pusher bindWithEventCallback: ^void (PusherEvent *event) {
+    NSDictionary *data = event.dataAsJSON;
+    NSString *commenter = data[@"commenter"];
+    NSString *message = data[@"message"];
+
+    NSLog(@"%@ wrote %@", commenter, message);
+}];
+```
+<details><summary>Alternative bind function</summary>
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+[pusher bind: ^void (NSDictionary *event) {
+    NSDictionary *data = event[@"data"];
+    NSString *commenter = data[@"commenter"];
+    NSString *message = data[@"message"];
+
+    NSLog(@"%@ wrote %@", commenter, message);
+}];
+```
+</details>
 ### Receiving errors
 
 Errors are sent to the client for which they are relevant with an event name of `pusher:error`. These can be received and handled using code as follows. Obviously the specifics of how to handle them are left up to the developer but this displays the general pattern.
@@ -808,13 +839,13 @@ Errors are sent to the client for which they are relevant with an event name of 
 ```swift
 pusher.bind(eventCallback: { (event: PusherEvent) in
     if event.eventName == "pusher:error" {
-        if let data = event.jsonData as? [String: AnyObject], errorMessage = data["message"] as? String {
+        if let data = event.dataAsJSON as? [String: AnyObject], errorMessage = data["message"] as? String {
             print("Error message: \(errorMessage)")
         }
     }
 })
 ```
-or
+<details><summary>Alternative bind function</summary>
 ```swift
 pusher.bind({ (message: Any?) in
     if let message = message as? [String: AnyObject], eventName = message["event"] as? String where eventName == "pusher:error" {
@@ -824,9 +855,19 @@ pusher.bind({ (message: Any?) in
     }
 })
 ```
-
+</details>
 #### Objective-C
 
+```objc
+[pusher bindWithEventCallback:^void (PusherEvent *event) {
+    if ([event.name isEqualToString:@"pusher:error"]) {
+        NSDictionary *data = event.dataAsJSON;
+        NSString *errorMessage = data[@"message"];
+        NSLog(@"Error message: %@", errorMessage);
+    }
+}];
+```
+<details><summary>Alternative bind function</summary>
 ```objc
 [pusher bind:^void (NSDictionary *data) {
     NSString *eventName = data[@"event"];
@@ -837,6 +878,7 @@ pusher.bind({ (message: Any?) in
     }
 }];
 ```
+</details>
 
 The sort of errors you might get are:
 
@@ -872,7 +914,7 @@ You can remove previously-bound handlers from an object by using the `unbind` fu
 let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
-let eventHandlerId = myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
+let eventHandlerId = myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> Void in
   ...
 })
 
@@ -885,7 +927,7 @@ myChannel.unbind(eventName: "new-price", callbackId: eventHandlerId)
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
-NSString *callbackId = [chan bindWithEventName:@"new-price" callback:^void (NSDictionary *data) {
+NSString *callbackId = [chan bindWithEventName:@"new-price" eventCallback:^void (PusherEvent *event) {
     ...
 }];
 
