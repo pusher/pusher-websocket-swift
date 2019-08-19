@@ -468,7 +468,7 @@ import CryptoSwift
 
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                    if let dataJSON = event.jsonData as? [String:Any], let presenceData = dataJSON["presence"] as? [String : AnyObject],
+                    if let dataJSON = event.dataAsJSON as? [String:Any], let presenceData = dataJSON["presence"] as? [String : AnyObject],
                        let presenceHash = presenceData["hash"] as? [String : AnyObject]
                     {
                         presChan.addExistingMembers(memberHash: presenceHash)
@@ -499,7 +499,7 @@ import CryptoSwift
         - parameter event: The event to be processed
     */
     fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
-        if let connectionData = event.jsonData as? [String:Any],
+        if let connectionData = event.dataAsJSON as? [String:Any],
            let socketId = connectionData["socket_id"] as? String
         {
             self.socketId = socketId
@@ -534,7 +534,7 @@ import CryptoSwift
     */
     fileprivate func handleMemberAddedEvent(event: PusherEvent) {
         if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-            if let memberJSON = event.jsonData as? [String:Any] {
+            if let memberJSON = event.dataAsJSON as? [String:Any] {
                 chan.addMember(memberJSON: memberJSON)
             } else {
                 print("Unable to add member")
@@ -549,7 +549,7 @@ import CryptoSwift
     */
     fileprivate func handleMemberRemovedEvent(event: PusherEvent) {
         if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-            if let memberJSON = event.jsonData as? [String:Any] {
+            if let memberJSON = event.dataAsJSON as? [String:Any] {
                 chan.removeMember(memberJSON: memberJSON)
             } else {
                 print("Unable to remove member")

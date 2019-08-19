@@ -63,7 +63,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.jsonData as! [String:String], ["test":"test string", "and":"another"] as [String:String])
+        XCTAssertEqual(event.dataAsJSON as! [String:String], ["test":"test string", "and":"another"] as [String:String])
     }
 
     func testDoubleEncodedArrayDataIsParsed() {
@@ -72,7 +72,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertEqual(event.data!, "[\"test\",\"and\"]")
-        XCTAssertEqual(event.jsonData as! [String], ["test", "and"] as [String])
+        XCTAssertEqual(event.dataAsJSON as! [String], ["test", "and"] as [String])
     }
 
     func testJsonEncodedDataIsParsed() {
@@ -81,7 +81,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertNil(event.data)
-        XCTAssertEqual(event.jsonData as! [String:String], ["test":"test string", "and":"another"] as [String:String])
+        XCTAssertEqual(event.dataAsJSON as! [String:String], ["test":"test string", "and":"another"] as [String:String])
     }
 
     func testIfDataStringCannotBeParsed() {
@@ -90,7 +90,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertEqual(event.data!, "test")
-        XCTAssertNil(event.jsonData)
+        XCTAssertNil(event.dataAsJSON)
         XCTAssertEqual(event.getProperty(name: "data") as! String, "test")
     }
 
@@ -100,7 +100,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertNil(event.data)
-        XCTAssertEqual(event.jsonData as! [String], ["test", "and"] as [String])
+        XCTAssertEqual(event.dataAsJSON as! [String], ["test", "and"] as [String])
     }
 
     func testStringPropertyIsExtracted() {

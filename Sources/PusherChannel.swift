@@ -71,8 +71,8 @@ open class PusherChannel: NSObject {
 
             let callbackData: Any?
             if self.shouldParseJSON {
-                if event.jsonData != nil {
-                    callbackData = event.jsonData
+                if event.dataAsJSON != nil {
+                    callbackData = event.dataAsJSON
                 }else{
                     callbackData = event.data
                 }

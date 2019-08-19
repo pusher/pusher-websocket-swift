@@ -157,7 +157,7 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testReceivingAnErrorWhereTheDataPartOfTheMessageIsNotDoubleEncodedViaEventCallback() {
         let _ = pusher.bind(eventCallback:{ (event: PusherEvent) in
             if event.eventName == "pusher:error" {
-                if let data = event.jsonData as? [String:Any], let errorMessage = data["message"] as? String {
+                if let data = event.dataAsJSON as? [String:Any], let errorMessage = data["message"] as? String {
                     self.socket.appendToCallbackCheckString(errorMessage)
                 }
             }
@@ -183,7 +183,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(event.eventName, "test-event")
         XCTAssertEqual(event.channelName!, "my-channel")
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.jsonData as! [String: String], ["test": "test string", "and": "another"])
+        XCTAssertEqual(event.dataAsJSON as! [String: String], ["test": "test string", "and": "another"])
 
         XCTAssertNil(event.userId)
 
@@ -210,7 +210,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(event.eventName, "test-event")
         XCTAssertEqual(event.channelName!, "my-channel")
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.jsonData as! [String: String], ["test": "test string", "and": "another"])
+        XCTAssertEqual(event.dataAsJSON as! [String: String], ["test": "test string", "and": "another"])
 
         XCTAssertNil(event.userId)
 

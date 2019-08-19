@@ -16,12 +16,12 @@ open class PusherEvent: NSObject, NSCopying {
     public var userId: String? { return payload["user_id"] as? String }
 
     // Cache of the data payload parsed as JSON.
-    private var json: Any?
+    private var jsonCache: Any?
     // Have we tried to parse the data before? Necessary because the json variable could be nil because a parsing attempt failed previously, rather than us not trying.
     private var parseAttempted: Bool = false
 
     /// The data property parsed as JSON. The result is cached so parsing only happens once. Returns nil if it is not possible to parse as JSON.
-    public var jsonData: Any? { return getJSON() }
+    public var dataAsJSON: Any? { return getJSON() }
 
     internal init?(payload: [String:Any]){
         // Every event must have a name
@@ -31,7 +31,7 @@ open class PusherEvent: NSObject, NSCopying {
 
         // If the data payload is already JSON (not double encoded)
         if let possibleJSON = payload["data"], JSONSerialization.isValidJSONObject(possibleJSON){
-            self.json = possibleJSON
+            self.jsonCache = possibleJSON
         }
 
         self.payload = payload
@@ -55,11 +55,11 @@ open class PusherEvent: NSObject, NSCopying {
     }
 
     private func getJSON() -> Any? {
-        if self.json == nil, !parseAttempted, let data = self.data {
-            self.json = PusherParser.getEventDataJSON(from: data)
+        if self.jsonCache == nil, !parseAttempted, let data = self.data {
+            self.jsonCache = PusherParser.getEventDataJSON(from: data)
             parseAttempted = true
         }
-        return self.json
+        return self.jsonCache
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
