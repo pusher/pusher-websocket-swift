@@ -844,8 +844,8 @@ The callbacks you bind receive a `PusherEvent`:
 | ------------------ |--------------| ------------|
 | `eventName`       | `String`      | The name of the event. Always present. |
 | `channelName`   | `String?`    | The name of the channel that the event was triggered on.  |
-| `data`                | `String?`     | The data payload of the event. This is the data that was passed to `trigger`, encoded as a string. If you passed an object then that will have been encoded as a JSON string. |
-| `dataAsJSON`    | `Any?`           | The `data` parsed as JSON into Swift objects, if possible. You can cast this to Swift objects as appropriate--see [examples](#per-channel-events). This is a computed property. The parsing is done lazily and the result is cached so it is only done once. |
+| `data`                | `String?`     | The data that was passed to `trigger`, encoded as a string. If you passed an object then that will have been encoded as a JSON string. |
+| `dataAsJSON`    | `Any?`           | The `data` property parsed from JSON into Swift objects, if possible. You can cast this to Swift objects as appropriate—see [examples](#per-channel-events). This is a computed property. The parsing is done lazily and the result is cached so it is only done once. |
 | `userId`            | `String?`     | The ID of the user who triggered the event. This is only available for client events triggered on presence channels. |
 
 | Function            | Parameters                                                    |  Return Type           | Description                                                                                                                                                                                                     |
