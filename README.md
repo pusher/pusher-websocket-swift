@@ -12,6 +12,17 @@ This is the [Pusher Channels](https://pusher.com/channels) websocket client, Pus
 
 For tutorials and more in-depth information about Pusher Channels, visit our [official docs](https://pusher.com/docs/channels).
 
+## Supported platforms
+- Swift 4.2 and above (can be used with Swift 5)
+- Xcode 10.0 and above
+- Can be used with Objective-C
+
+### Deployment targets
+- iOS 8.0 and above
+- macOS (OS X) 10.10 and above
+- tvOS 9.0 and above
+- Not currently compatible with watchOS
+
 ## I just want to copy and paste some code to get me started
 
 What else would you want? Head over to one of our example apps:
