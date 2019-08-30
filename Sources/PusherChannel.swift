@@ -68,16 +68,18 @@ open class PusherChannel: NSObject {
     @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         return bind(eventName: eventName, eventCallback: { [weak self] (event: PusherEvent) -> Void in
             guard let self = self else { return }
-
+            // Mimic the old parsing behaviour for backwards compatibility
             let callbackData: Any?
             if self.shouldParseJSON {
-                if event.dataAsJSON != nil {
-                    callbackData = event.dataAsJSON
+                if let data = event.dataToJSONObject() {
+                    // Parsed data
+                    callbackData = data
                 }else{
+                    // Unparsed string if we couldn't parse
                     callbackData = event.data
                 }
             }else{
-                callbackData = event.payload["data"]
+                callbackData = event.raw["data"]
             }
             callback(callbackData)
         });

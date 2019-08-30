@@ -113,7 +113,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     */
     @discardableResult open func bind(_ callback: @escaping (Any?) -> Void) -> String {
         return bind(eventCallback: { (event: PusherEvent) -> Void in
-            callback(event.payload)
+            callback(event.raw)
         })
     }
 
