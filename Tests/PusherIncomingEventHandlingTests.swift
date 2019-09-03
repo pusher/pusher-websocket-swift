@@ -149,21 +149,9 @@ class HandlingIncomingEventsTests: XCTestCase {
         })
         // pretend that we tried to subscribe to my-channel twice and got this error
         // back from Pusher
-        let pusherEvent = PusherEvent(jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
-        pusher.connection.handleEvent(event: pusherEvent!)
-        XCTAssertEqual(socket.callbackCheckString, "Existing subscription to channel my-channel")
-    }
 
-    func testReceivingAnErrorWhereTheDataPartOfTheMessageIsNotDoubleEncodedViaEventCallback() {
-        let _ = pusher.bind(eventCallback:{ (event: PusherEvent) in
-            if event.eventName == "pusher:error" {
-                if let data = event.dataToJSONObject() as? [String:Any], let errorMessage = data["message"] as? String {
-                    self.socket.appendToCallbackCheckString(errorMessage)
-                }
-            }
-        })
-        let pusherEvent = PusherEvent(jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
-        pusher.connection.handleEvent(event: pusherEvent!)
+        let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Existing subscription to channel my-channel\"}}";
+        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
         XCTAssertEqual(socket.callbackCheckString, "Existing subscription to channel my-channel")
     }
 
@@ -183,7 +171,6 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(event.eventName, "test-event")
         XCTAssertEqual(event.channelName!, "my-channel")
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
 
         XCTAssertNil(event.userId)
 
@@ -210,7 +197,6 @@ class HandlingIncomingEventsTests: XCTestCase {
         XCTAssertEqual(event.eventName, "test-event")
         XCTAssertEqual(event.channelName!, "my-channel")
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
 
         XCTAssertNil(event.userId)
 

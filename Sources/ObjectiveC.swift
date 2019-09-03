@@ -185,3 +185,14 @@ public extension AuthMethod {
         self.authorizer = authorizer
     }
 }
+
+public extension PusherError {
+    /// The error code as an NSNumber (for Objective-C compatibility)
+    var codeOC: NSNumber? {
+        if let code = code {
+            return NSNumber(value: code)
+        }else{
+            return nil
+        }
+    }
+}

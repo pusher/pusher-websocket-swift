@@ -3,6 +3,7 @@ import Foundation
 @objcMembers
 @objc open class GlobalChannel: PusherChannel {
     open var globalCallbacks: [String : (PusherEvent) -> Void] = [:]
+    open var globalLegacyCallbacks: [String : (Any) -> Void] = [:]
 
     /**
         Initializes a new GlobalChannel instance
@@ -27,6 +28,18 @@ import Foundation
     }
 
     /**
+     Calls the appropriate legacy callbacks for the given event name in the scope of the global channel
+
+     - parameter event: The JSON object received from the websocket
+     */
+    internal func handleLegacyGlobalEvent(event: [String:Any]) {
+        for (_, callback) in self.globalLegacyCallbacks {
+            callback(event)
+        }
+    }
+
+
+    /**
         Binds a callback to the global channel
 
         - parameter callback:  The function to call when a message is received
@@ -40,12 +53,26 @@ import Foundation
     }
 
     /**
+     Binds a callback to the global channel
+
+     - parameter callback:  The function to call when a message is received
+
+     - returns: A unique callbackId that can be used to unbind the callback at a later time
+     */
+    internal func bindLegacy(_ callback: @escaping (Any) -> Void) -> String {
+        let randomId = UUID().uuidString
+        self.globalLegacyCallbacks[randomId] = callback
+        return randomId
+    }
+
+    /**
         Unbinds the callback with the given callbackId from the global channel
 
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
     internal func unbind(callbackId: String) {
         globalCallbacks.removeValue(forKey: callbackId)
+        globalLegacyCallbacks.removeValue(forKey: callbackId)
     }
 
     /**
@@ -53,5 +80,6 @@ import Foundation
     */
     override open func unbindAll() {
         globalCallbacks = [:]
+        globalLegacyCallbacks = [:]
     }
 }

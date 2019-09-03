@@ -75,15 +75,6 @@ class PusherEventTests: XCTestCase {
         XCTAssertEqual(event.dataToJSONObject() as! [String], ["test", "and"] as [String])
     }
 
-    func testJsonEncodedDataIsParsed() {
-        let payload = "{\"event\":\"test-event\", \"channel\":\"my-channel\", \"data\":{\"test\":\"test string\",\"and\":\"another\"}}";
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
-        guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
-
-        XCTAssertNil(event.data)
-        XCTAssertEqual(event.dataToJSONObject() as! [String:String], ["test":"test string", "and":"another"] as [String:String])
-    }
-
     func testIfDataStringCannotBeParsed() {
         let payload = "{\"event\":\"test-event\", \"channel\":\"my-channel\", \"data\":\"test\"}";
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
@@ -92,15 +83,6 @@ class PusherEventTests: XCTestCase {
         XCTAssertEqual(event.data!, "test")
         XCTAssertNil(event.dataToJSONObject())
         XCTAssertEqual(event.getProperty(name: "data") as! String, "test")
-    }
-
-    func testArrayEncodedDataIsParsed() {
-        let payload = "{\"event\":\"test-event\", \"channel\":\"my-channel\", \"data\":[\"test\",\"and\"]}";
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
-        guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
-
-        XCTAssertNil(event.data)
-        XCTAssertEqual(event.dataToJSONObject() as! [String], ["test", "and"] as [String])
     }
 
     func testStringPropertyIsExtracted() {

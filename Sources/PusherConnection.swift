@@ -323,6 +323,17 @@ import CryptoSwift
     }
 
     /**
+     Add legacy callback to the connection's global channel
+
+     - parameter callback: The callback to be stored
+
+     - returns: A callbackId that can be used to remove the callback from the connection
+     */
+    internal func addLegacyCallbackToGlobalChannel(_ callback: @escaping (Any) -> Void) -> String {
+        return globalChannel.bindLegacy(callback)
+    }
+
+    /**
         Remove the callback with id of callbackId from the connection's global channel
 
         - parameter callbackId: The unique string representing the callback to be removed
@@ -558,6 +569,16 @@ import CryptoSwift
     }
 
     /**
+     Handles incoming error
+
+     - parameter error: The incoming error to be processed
+     */
+    open func handleError(error: PusherError) {
+        self.delegate?.receivedError?(error: error)
+        self.globalChannel?.handleLegacyGlobalEvent(event: error.raw)
+    }
+
+    /**
         Handle failure of our auth endpoint
 
         - parameter channelName: The name of channel for which authorization failed
@@ -610,6 +631,7 @@ import CryptoSwift
     */
     fileprivate func callGlobalCallbacks(event: PusherEvent) {
         globalChannel?.handleGlobalEvent(event: event)
+        globalChannel?.handleLegacyGlobalEvent(event: event.raw)
     }
 
     /**

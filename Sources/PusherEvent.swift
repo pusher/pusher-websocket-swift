@@ -29,15 +29,13 @@ open class PusherEvent: NSObject, NSCopying {
         self.init(jsonObject: jsonObject)!
     }
 
-    /// Parse the data payload to a JSON object, or return it without parsing if it's already a JSON object
+    /// Parse the data payload to a JSON object
     internal func dataToJSONObject() -> Any? {
-        if let dataString = raw["data"] as? String {
-            // Parse or return nil if we can't parse
-            return PusherParser.getEventDataJSON(from: dataString)
-        }else{
-            // If not a string then it's either already a JSON object or nil
-            return raw["data"];
+        guard let data = data else {
+            return nil
         }
+        // Parse or return nil if we can't parse
+        return PusherParser.getEventDataJSON(from: data)
     }
 
     /**
