@@ -34,6 +34,7 @@ What else would you want? Head over to one of our example apps:
   - [Per-channel](#per-channel-events)
   - [Globally](#global-events)
   - [Callback parameters](#callback-parameters)
+  - [Parsing event data](#parsing-event-data)
   - [Receiving errors](#receiving-errors)
 - [Testing](#testing)
 - [Extensions](#extensions)
@@ -363,7 +364,7 @@ The names of the functions largely give away what their purpose is but just for 
 - `subscribedToChannel` - use this if you want to be informed of when a channel has successfully been subscribed to, which is useful if you want to perform actions that are only relevant after a subscription has succeeded, e.g. logging out the members of a presence channel
 - `failedToSubscribeToChannel` - use this if you want to be informed of a failed subscription attempt, which you could use, for example, to then attempt another subscription or make a call to a service you use to track errors
 - `debugLog` - use this if you want to log Pusher-related events, e.g. the underlying websocket receiving a message
-- `receivedError` - use this if you want to be informed of errors received from Pusher Channels e.g. `Application is over connection quota`. You can find possible errors listed [here](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes).
+- `receivedError` - use this if you want to be informed of errors received from Pusher Channels e.g. `Application is over connection quota`. You can find some of the possible errors listed [here](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes).
 
 Setting up a delegate looks like this:
 
@@ -419,11 +420,10 @@ class DummyDelegate: PusherDelegate {
     }
 
     func receivedError(error: PusherError) {
+        let message = error.message
         if let code = error.code {
             // ...
         }
-        let message = error.message
-        // ...
     }
 }
 ```
@@ -698,7 +698,7 @@ Events can be bound to at 2 levels; globally and per channel. When binding to an
 
 ### Per-channel events
 
-These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. The following might be an example of a stock tracking app where several channels are opened for different companies:
+These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. 
 
 #### Swift
 
@@ -712,6 +712,8 @@ myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> 
     }
 })
 ```
+
+The callback is passed a `PusherEvent`  (see [docs](#pusherevent)).
 
 <details><summary>View legacy approach</summary>
 
@@ -729,36 +731,6 @@ myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
 ```
 </details>
 
-In the above snippet, the `data` property of  [`PusherEvent`](#pusherevent) contains the string representation of the data you passed when you triggered the event. If you passed an object then that object will have been serialized to JSON. You can parse the JSON as approriate. You can make use of [`JSONSerialization`](https://developer.apple.com/swift/blog/?id=37), or you can use the `JSONDecoder` to decode the JSON into a Codable Class or Struct. See the Apple docs: [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types). For example:
-
-```swift
-struct PriceUpdate: Codable {
-    public let company: String,
-    public let price: Int,
-}
-
-let pusher = Pusher(key: "YOUR_APP_KEY")
-let myChannel = pusher.subscribe("my-channel")
-let decoder = JSONDecoder()
-
-myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> Void in
-    guard let json: String = event.data,
-        let jsonData: Data = json.data(using: .utf8)
-    else{
-        print("Could not convert JSON string to data")
-        return
-    }
-
-    let priceUpdate = try? decoder.decode(PriceUpdate.self, from: jsonData)
-    guard let priceUpdate = priceUpdate else {
-        print("Could not decode price update")
-        return
-    }
-
-    print("\(priceUpdate.company) is now priced at \(priceUpdate.price)")
-})
-
-```
 #### Objective-C
 
 ```objc
@@ -766,16 +738,8 @@ Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 [chan bindWithEventName:@"new-price" eventCallback:^void (PusherEvent *event) {
-    NSString *dataString = event.data;
-    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-
-    NSError *error;
-    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-
-    NSString *price = jsonObject[@"price"];
-    NSString *company = jsonObject[@"company"];
-
-    NSLog(@"%@ is now priced at %@", company, price);
+    NSString *data = event.data;
+    // `data` is a string that you can parse if necessary.
 }];
 ```
 <details><summary>View legacy approach</summary>
@@ -795,7 +759,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 ### Global events
 
-You can attach behaviour to these events regardless of the channel the event is broadcast to. The following is an example of an app that binds to new comments from any channel (that you are subscribed to):
+You can attach behaviour to these events regardless of the channel the event is broadcast to. 
 
 #### Swift
 
@@ -809,6 +773,8 @@ pusher.bind(eventCallback: { (event: PusherEvent) -> Void in
     }
 })
 ```
+The callback is passed a `PusherEvent`  (see [docs](#pusherevent)).
+
 <details><summary>View legacy approach</summary>
 
 ```swift
@@ -832,8 +798,8 @@ Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 [pusher bindWithEventCallback: ^void (PusherEvent *event) {
-    NSString *data = event.data;
     // `data` is a string that you can parse if necessary.
+    NSString *data = event.data;
 }];
 ```
 <details><summary>View legacy approach</summary>
@@ -862,13 +828,93 @@ The callbacks you bind receive a `PusherEvent`:
 | ------------------ |--------------| ------------
 | `eventName`       | `String`      | The name of the event. |
 | `channelName`   | `String?`    | The name of the channel that the event was triggered on. |
-| `data`                | `String?`     | The data that was passed to `trigger`, encoded as a string. If you passed an object then that will have been encoded as a JSON string which you can parse as necessary. |
+| `data`                | `String?`     | The data that was passed to `trigger`, encoded as a string. If you passed an object then that will have been serialized to a JSON string which you can parse as necessary. See [parsing event data](#parsing-event-data). |
 | `userId`            | `String?`     | The ID of the user who triggered the event. This is only available for client events triggered on presence channels. |
 
 | Function            | Parameters                                                    |  Return Type           | Description                                                                                                                                                                                                     |
 | -----------------  |---------------------------------------------------| -----------------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `getProperty`   | `name: String` - The name of the property |  `Any?`                      | A helper function for accessing raw properties from the websocket event. Data returned by this function should not be considered stable and it is recommended that you use the properties above instead. |
 
+### Parsing event data
+The `data` property of  [`PusherEvent`](#pusherevent) contains the string representation of the data that you passed when you triggered the event. If you passed an object then that object will have been serialized to JSON. You can parse that JSON as approriate. You can make use of [`JSONSerialization`](https://developer.apple.com/swift/blog/?id=37), or you can use the `JSONDecoder` to decode the JSON into a Codable Class or Struct. See the Apple docs: [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
+
+For example, the following might be an example of a stock tracking app publishing price updates for companies. You can decode the "price-update" event into a struct in Swift:
+
+```swift
+struct PriceUpdate: Codable {
+    public let company: String,
+    public let price: Int,
+}
+
+let pusher = Pusher(key: "YOUR_APP_KEY")
+let myChannel = pusher.subscribe("my-channel")
+let decoder = JSONDecoder()
+
+myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) -> Void in
+    guard let json: String = event.data,
+        let jsonData: Data = json.data(using: .utf8)
+    else{
+        print("Could not convert JSON string to data")
+        return
+    }
+
+    let priceUpdate = try? decoder.decode(PriceUpdate.self, from: jsonData)
+    guard let priceUpdate = priceUpdate else {
+        print("Could not decode price update")
+        return
+    }
+
+    print("\(priceUpdate.company) is now priced at \(priceUpdate.price)")
+})
+
+```
+
+Alternatively, you could use [`JSONSerialization`](https://developer.apple.com/documentation/foundation/jsonserialization) to decode the JSON into Swift data types: 
+
+#### Swift
+
+```swift
+let pusher = Pusher(key: "YOUR_APP_KEY")
+let myChannel = pusher.subscribe("my-channel")
+
+myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) -> Void in
+    guard let json: String = event.data,
+        let jsonData: Data = json.data(using: .utf8)
+    else{
+        print("Could not convert JSON string to data")
+        return
+    }
+
+    let priceUpdate = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+    guard let priceUpdate = priceUpdate else {
+        print("Could not decode price update")
+        return
+    }
+
+    if let company = priceUpdate["company"] as? String, let price = priceUpdate["price"] as? String {
+        print("\(company) is now priced at \(price)")
+    }
+})
+```
+#### Objective-C
+
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+[chan bindWithEventName:@"price-update" eventCallback:^void (PusherEvent *event) {
+    NSString *dataString = event.data;
+    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+
+    NSError *error;
+    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+
+    NSString *price = jsonObject[@"price"];
+    NSString *company = jsonObject[@"company"];
+
+    NSLog(@"%@ is now priced at %@", company, price);
+}];
+```
 
 ### Receiving errors
 
