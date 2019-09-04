@@ -460,8 +460,8 @@ class DummyDelegate: PusherDelegate {
 }
 
 - (void)receivedError:(PusherError *)error {
-    let code = error.code
-    let message = error.message
+    NSNumber *code = error.codeOC;
+    NSString *message = error.message;
     // ...
 }
 
@@ -858,8 +858,8 @@ myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) 
         return
     }
 
-    let priceUpdate = try? decoder.decode(PriceUpdate.self, from: jsonData)
-    guard let priceUpdate = priceUpdate else {
+    let decoded = try? decoder.decode(PriceUpdate.self, from: jsonData)
+    guard let priceUpdate = decoded else {
         print("Could not decode price update")
         return
     }
@@ -885,8 +885,8 @@ myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) 
         return
     }
 
-    let priceUpdate = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-    guard let priceUpdate = priceUpdate else {
+    let decoded = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+    guard let priceUpdate = decoded else {
         print("Could not decode price update")
         return
     }
@@ -986,7 +986,7 @@ let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
 let eventHandlerId = myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> Void in
-  ...
+  //...
 })
 
 myChannel.unbind(eventName: "new-price", callbackId: eventHandlerId)
@@ -999,7 +999,7 @@ Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 NSString *callbackId = [chan bindWithEventName:@"new-price" eventCallback:^void (PusherEvent *event) {
-    ...
+    //...
 }];
 
 [chan unbindWithEventName:@"new-price" callbackId:callbackId];
