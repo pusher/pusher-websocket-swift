@@ -574,6 +574,7 @@ import CryptoSwift
      - parameter error: The incoming error to be processed
      */
     open func handleError(error: PusherError) {
+        resetActivityTimeoutTimer()
         self.delegate?.receivedError?(error: error)
         self.globalChannel?.handleGlobalEventLegacy(event: error.raw)
     }
