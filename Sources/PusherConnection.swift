@@ -575,7 +575,7 @@ import CryptoSwift
      */
     open func handleError(error: PusherError) {
         self.delegate?.receivedError?(error: error)
-        self.globalChannel?.handleLegacyGlobalEvent(event: error.raw)
+        self.globalChannel?.handleGlobalEventLegacy(event: error.raw)
     }
 
     /**
@@ -631,7 +631,7 @@ import CryptoSwift
     */
     fileprivate func callGlobalCallbacks(event: PusherEvent) {
         globalChannel?.handleGlobalEvent(event: event)
-        globalChannel?.handleLegacyGlobalEvent(event: event.raw)
+        globalChannel?.handleGlobalEventLegacy(event: event.raw)
     }
 
     /**

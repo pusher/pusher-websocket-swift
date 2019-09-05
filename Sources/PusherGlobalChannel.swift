@@ -32,7 +32,7 @@ import Foundation
 
      - parameter event: The JSON object received from the websocket
      */
-    internal func handleLegacyGlobalEvent(event: [String:Any]) {
+    internal func handleGlobalEventLegacy(event: [String:Any]) {
         for (_, callback) in self.globalLegacyCallbacks {
             callback(event)
         }
