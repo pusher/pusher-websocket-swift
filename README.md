@@ -102,12 +102,17 @@ github "pusher/pusher-websocket-swift"
 There are a number of configuration parameters which can be set for the Pusher client. For Swift usage they are:
 
 - `authMethod (AuthMethod)` - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)
-- `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
 - `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd like to connect to
 - `activityTimeout (TimeInterval)` - after this time (in seconds) without any messages received from the server, a ping message will be sent to check if the connection is still working; the default value is supplied by the server, low values will result in unnecessary traffic.
+
+<details><summary>View legacy configuration options</summary>
+
+- `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
+
+</details>
 
 The `authMethod` parameter must be of the type `AuthMethod`. This is an enum defined as:
 
@@ -178,11 +183,11 @@ OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithAuthEndpoint:@"https://
 OCPusherHost *host = [[OCPusherHost alloc] initWithCluster:@"eu"];
 PusherClientOptions *options = [[PusherClientOptions alloc]
                                 initWithOcAuthMethod:authMethod
-                                attemptToReturnJSONObject:YES
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES];
+                                encrypted:YES
+                                activityTimeout:nil];
 ```
 
 All of these configuration options need to be passed to a `PusherClientOptions` object, which in turn needs to be passed to the Pusher object, when instantiating it, for example:
@@ -204,11 +209,11 @@ OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithAuthEndpoint:@"https://
 OCPusherHost *host = [[OCPusherHost alloc] initWithCluster:@"eu"];
 PusherClientOptions *options = [[PusherClientOptions alloc]
                                 initWithOcAuthMethod:authMethod
-                                attemptToReturnJSONObject:YES
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES];
+                                encrypted:YES
+                                activityTimeout:nil];
 pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
 ```
 

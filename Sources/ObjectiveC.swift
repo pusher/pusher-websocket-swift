@@ -55,6 +55,27 @@ import Foundation
 }
 
 @objc public extension PusherClientOptions {
+
+    // initializer without legacy "attemptToReturnJSONObject"
+    convenience init(
+        ocAuthMethod authMethod: OCAuthMethod,
+        autoReconnect: Bool = true,
+        ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
+        port: NSNumber? = nil,
+        encrypted: Bool = true,
+        activityTimeout: NSNumber? = nil
+    ) {
+        self.init(
+            ocAuthMethod: authMethod,
+            attemptToReturnJSONObject: true,
+            autoReconnect: autoReconnect,
+            ocHost: host,
+            port: port,
+            encrypted: encrypted,
+            activityTimeout: activityTimeout
+        )
+    }
+
     convenience init(
         ocAuthMethod authMethod: OCAuthMethod,
         attemptToReturnJSONObject: Bool = true,

@@ -82,7 +82,7 @@ class ViewController: UIViewController, PusherDelegate {
             print("\(message.name) says \(message.message)")
         })
 
-
+        // callback for member added event
         let onMemberAdded = { (member: PusherPresenceChannelMember) in
             print(member)
         }
