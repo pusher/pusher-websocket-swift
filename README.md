@@ -841,6 +841,7 @@ The callbacks you bind receive a `PusherEvent`:
 | `getProperty`   | `name: String` - The name of the property |  `Any?`                      | A helper function for accessing raw properties from the websocket event. Data returned by this function should not be considered stable and it is recommended that you use the properties above instead. |
 
 ### Parsing event data
+
 The `data` property of  [`PusherEvent`](#pusherevent) contains the string representation of the data that you passed when you triggered the event. If you passed an object then that object will have been serialized to JSON. You can parse that JSON as appropriate. You can make use of [`JSONSerialization`](https://developer.apple.com/swift/blog/?id=37), or you can use the `JSONDecoder` to decode the JSON into a Codable Class or Struct. See the Apple docs: [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
 
 For example, the following might be an example of a stock tracking app publishing price updates for companies. You can decode the "price-update" event into a struct in Swift:
