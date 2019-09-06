@@ -40,7 +40,7 @@ internal class PusherParser: NSObject {
             if let jsonData = data, let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) {
                 return jsonObject
             } else {
-                print("Returning data string instead because unable to parse string as JSON - check that your JSON is valid.")
+                print("Unable to parse string as JSON - check that your JSON is valid.")
             }
         }
         return nil
