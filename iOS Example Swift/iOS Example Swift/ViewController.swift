@@ -61,7 +61,7 @@ class ViewController: UIViewController, PusherDelegate {
         // subscribe to a channel
         let myChannel = pusher.subscribe("my-channel")
 
-        // bind a callback to event "test-event" on that channel
+        // bind a callback to event "my-event" on that channel
         let _ = myChannel.bind(eventName: "my-event", eventCallback: { (event: PusherEvent) in
 
             // convert the data string to type data for decoding
