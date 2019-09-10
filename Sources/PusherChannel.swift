@@ -30,7 +30,7 @@ open class PusherChannel: NSObject {
     open var subscribed = false
     public let name: String
     open weak var connection: PusherConnection?
-    open var unsentEvents = [QueuedEvent]()
+    open var unsentEvents = [QueuedClientEvent]()
     public let type: PusherChannelType
     public var auth: PusherAuth?
 
@@ -160,7 +160,7 @@ open class PusherChannel: NSObject {
         if subscribed {
             connection?.sendEvent(event: eventName, data: data, channel: self)
         } else {
-            unsentEvents.insert(QueuedEvent(name: eventName, data: data), at: 0)
+            unsentEvents.insert(QueuedClientEvent(name: eventName, data: data), at: 0)
         }
     }
 }
@@ -170,7 +170,7 @@ public struct EventHandler {
     let callback: (PusherEvent) -> Void
 }
 
-public struct QueuedEvent {
+public struct QueuedClientEvent {
     public let name: String
     public let data: Any
 }
