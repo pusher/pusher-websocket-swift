@@ -11,7 +11,7 @@ open class PusherError: NSObject {
 
     internal let raw: [String:Any]
 
-    internal init?(jsonObject: [String:Any]){
+    internal init?(jsonObject: [String:Any]) {
         guard let data = jsonObject["data"] as? [String:Any] else {
             return nil
         }

@@ -15,15 +15,15 @@ open class PusherEvent: NSObject, NSCopying {
     /// The ID of the user who triggered the event. Only present in client event on presence channels
     public var userId: String? { return raw["user_id"] as? String }
 
-    internal init?(jsonObject: [String:Any]){
+    internal init?(jsonObject: [String:Any]) {
         // Every event must have a name
-        if !(jsonObject["event"] is String){
+        if !(jsonObject["event"] is String) {
             return nil
         }
         self.raw = jsonObject
     }
 
-    internal convenience init(eventName: String, event: PusherEvent){
+    internal convenience init(eventName: String, event: PusherEvent) {
         var jsonObject = event.raw
         jsonObject["event"] = eventName
         self.init(jsonObject: jsonObject)!
