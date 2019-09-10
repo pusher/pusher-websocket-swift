@@ -7,7 +7,7 @@
 
 @implementation PusherObjectiveCAPITests
 
-- (void)testThatChannelDataBindIsAccessible {
+- (void)testChannelDataBindIsAccessible {
     Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
@@ -21,7 +21,7 @@
 
 
 
-- (void)testThatChannelEventBindIsAccessible {
+- (void)testChannelEventBindIsAccessible {
     Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
@@ -41,7 +41,7 @@
     }];
 }
 
-- (void)testThatGlobalDataBindIsAccessible {
+- (void)testGlobalDataBindIsAccessible {
     Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
@@ -55,7 +55,7 @@
 
 
 
-- (void)testThatGlobalEventBindIsAccessible {
+- (void)testGlobalEventBindIsAccessible {
     Pusher *pusher = [[Pusher alloc] initWithKey:@"YOUR_APP_KEY"];
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
