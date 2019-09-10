@@ -34,7 +34,7 @@ open class PusherChannel: NSObject {
     public let type: PusherChannelType
     public var auth: PusherAuth?
 
-    internal var shouldParseJSON: Bool {
+    internal var shouldParseJSONForLegacyCallbacks: Bool {
         return connection?.options.attemptToReturnJSONObject ?? true
     }
 
@@ -70,7 +70,7 @@ open class PusherChannel: NSObject {
             guard let self = self else { return }
             // Mimic the old parsing behaviour for backwards compatibility
             let callbackData: Any?
-            if self.shouldParseJSON {
+            if self.shouldParseJSONForLegacyCallbacks {
                 if let data = event.dataToJSONObject() {
                     // Parsed data
                     callbackData = data
