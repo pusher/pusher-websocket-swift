@@ -9,6 +9,7 @@ open class PusherError: NSObject {
     /// The error message
     public let message: String
 
+    // The websocket payload which needs to passed to legacy callbacks for backwards compatibility
     internal let raw: [String:Any]
 
     internal init?(jsonObject: [String:Any]) {
