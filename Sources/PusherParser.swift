@@ -11,7 +11,7 @@ internal class PusherParser: NSObject {
      - returns: A dictionary of Pusher-relevant event data
      */
 
-    class func getPusherEventJSON(from string: String) -> [String : AnyObject]? {
+    static func getPusherEventJSON(from string: String) -> [String : AnyObject]? {
         let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
@@ -33,7 +33,7 @@ internal class PusherParser: NSObject {
 
      - returns: The object sent as the payload part of the Pusher message
      */
-    class func getEventDataJSON(from string: String) -> Any? {
+    static func getEventDataJSON(from string: String) -> Any? {
         let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
