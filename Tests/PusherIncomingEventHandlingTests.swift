@@ -174,11 +174,11 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertNil(event.userId)
 
-        XCTAssertEqual(event.getProperty(name: "event") as! String, "test-event")
-        XCTAssertEqual(event.getProperty(name: "channel") as! String, "my-channel")
-        XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+        XCTAssertEqual(event.property(withKey: "event") as! String, "test-event")
+        XCTAssertEqual(event.property(withKey: "channel") as! String, "my-channel")
+        XCTAssertEqual(event.property(withKey: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
 
-        XCTAssertNil(event.getProperty(name: "random-key"))
+        XCTAssertNil(event.property(withKey: "random-key"))
     }
 
     func testEventObjectReturnedToGlobalCallback() {
@@ -200,10 +200,10 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         XCTAssertNil(event.userId)
 
-        XCTAssertEqual(event.getProperty(name: "event") as! String, "test-event")
-        XCTAssertEqual(event.getProperty(name: "channel") as! String, "my-channel")
-        XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+        XCTAssertEqual(event.property(withKey: "event") as! String, "test-event")
+        XCTAssertEqual(event.property(withKey: "channel") as! String, "my-channel")
+        XCTAssertEqual(event.property(withKey: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
 
-        XCTAssertNil(event.getProperty(name: "random-key"))
+        XCTAssertNil(event.property(withKey: "random-key"))
     }
 }

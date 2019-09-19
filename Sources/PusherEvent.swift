@@ -44,12 +44,12 @@ open class PusherEvent: NSObject, NSCopying {
      that you use the properties of the `PusherEvent` instance instead e.g.
      `eventName`, `channelName` etc.
 
-     - parameter name: The name of the property to be returned
+     - parameter key: The key of the property to be returned
 
-     - returns: The named property, if present
+     - returns: The property, if present
      */
-    public func getProperty(name: String) -> Any? {
-        return raw[name]
+    public func property(withKey key: String) -> Any? {
+        return raw[key]
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {

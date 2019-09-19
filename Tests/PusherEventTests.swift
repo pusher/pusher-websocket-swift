@@ -27,7 +27,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertEqual(event.channelName!, "my-channel")
-        XCTAssertEqual(event.getProperty(name: "channel") as! String, "my-channel")
+        XCTAssertEqual(event.property(withKey: "channel") as! String, "my-channel")
     }
 
     func testEventNameIsExtracted() {
@@ -36,7 +36,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertEqual(event.eventName, "test-event")
-        XCTAssertEqual(event.getProperty(name: "event") as! String, "test-event")
+        XCTAssertEqual(event.property(withKey: "event") as! String, "test-event")
     }
 
     func testDataIsExtracted() {
@@ -45,7 +45,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
-        XCTAssertEqual(event.getProperty(name: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+        XCTAssertEqual(event.property(withKey: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
     }
 
     func testUserIdIsExtracted() {
@@ -54,7 +54,7 @@ class PusherEventTests: XCTestCase {
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
         XCTAssertEqual(event.userId!, "user123")
-        XCTAssertEqual(event.getProperty(name: "user_id") as! String, "user123")
+        XCTAssertEqual(event.property(withKey: "user_id") as! String, "user123")
     }
 
     func testDoubleEncodedJsonDataIsParsed() {
@@ -82,7 +82,7 @@ class PusherEventTests: XCTestCase {
 
         XCTAssertEqual(event.data!, "test")
         XCTAssertNil(event.dataToJSONObject())
-        XCTAssertEqual(event.getProperty(name: "data") as! String, "test")
+        XCTAssertEqual(event.property(withKey: "data") as! String, "test")
     }
 
     func testStringPropertyIsExtracted() {
@@ -90,7 +90,7 @@ class PusherEventTests: XCTestCase {
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
-        XCTAssertEqual(event.getProperty(name: "my_property") as! String, "string123")
+        XCTAssertEqual(event.property(withKey: "my_property") as! String, "string123")
     }
 
     func testIntegerPropertyIsExtracted() {
@@ -98,7 +98,7 @@ class PusherEventTests: XCTestCase {
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
-        XCTAssertEqual(event.getProperty(name: "my_integer") as! Int, 1234567)
+        XCTAssertEqual(event.property(withKey: "my_integer") as! Int, 1234567)
     }
 
     func testBooleanPropertyIsExtracted() {
@@ -106,7 +106,7 @@ class PusherEventTests: XCTestCase {
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
-        XCTAssertEqual(event.getProperty(name: "my_boolean") as! Bool, true)
+        XCTAssertEqual(event.property(withKey: "my_boolean") as! Bool, true)
     }
 
     func testArrayPropertyIsExtracted() {
@@ -114,7 +114,7 @@ class PusherEventTests: XCTestCase {
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
-        XCTAssertEqual(event.getProperty(name: "my_array") as! [Int], [1,2,3])
+        XCTAssertEqual(event.property(withKey: "my_array") as! [Int], [1,2,3])
     }
 
     func testObjectPropertyIsExtracted() {
@@ -122,7 +122,7 @@ class PusherEventTests: XCTestCase {
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
-        XCTAssertEqual(event.getProperty(name: "my_object") as! [String:String], ["key":"value"])
+        XCTAssertEqual(event.property(withKey: "my_object") as! [String:String], ["key":"value"])
     }
 
     func testNullPropertyIsExtracted() {
@@ -130,7 +130,7 @@ class PusherEventTests: XCTestCase {
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
         guard let event = socket.eventGivenToCallback else { return XCTFail("Event not received.")}
 
-        XCTAssertTrue(event.getProperty(name: "my_null") is NSNull)
+        XCTAssertTrue(event.property(withKey: "my_null") is NSNull)
     }
 
 }

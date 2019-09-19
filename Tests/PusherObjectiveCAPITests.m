@@ -71,6 +71,8 @@
         NSString *channelName = event.channelName;
         NSString *userId = event.userId;
 
+        NSString *extra = [event propertyWithKey:@"extra-property"];
+
         NSLog(@"%@, %@, %@", eventName, channelName, userId);
     }];
 }
