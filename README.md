@@ -838,7 +838,7 @@ The callbacks you bind receive a `PusherEvent`:
 
 | Function            | Parameters                                                    |  Return Type           | Description                                                                                                                                                                                                     |
 | -----------------  |---------------------------------------------------| -----------------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `getProperty`   | `name: String` - The name of the property |  `Any?`                      | A helper function for accessing raw properties from the websocket event. Data returned by this function should not be considered stable and it is recommended that you use the properties above instead. |
+| `property`   | `withKey: String` - The key of the property |  `Any?`                      | A helper function for accessing raw properties from the websocket event. Data returned by this function should not be considered stable and it is recommended that you use the properties above instead. |
 
 ### Parsing event data
 
