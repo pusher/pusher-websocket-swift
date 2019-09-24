@@ -11,11 +11,11 @@ internal struct PusherParser {
      - returns: A dictionary of Pusher-relevant event data
      */
 
-    static func getPusherEventJSON(from string: String) -> [String : AnyObject]? {
+    static func getPusherEventJSON(from string: String) -> [String: AnyObject]? {
         let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
-            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : AnyObject] {
+            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
                 print("Unable to parse string from WebSocket: \(string)")

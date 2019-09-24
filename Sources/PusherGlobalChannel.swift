@@ -2,8 +2,8 @@ import Foundation
 
 @objcMembers
 @objc open class GlobalChannel: PusherChannel {
-    open var globalCallbacks: [String : (PusherEvent) -> Void] = [:]
-    open var globalLegacyCallbacks: [String : (Any) -> Void] = [:]
+    open var globalCallbacks: [String: (PusherEvent) -> Void] = [:]
+    open var globalLegacyCallbacks: [String: (Any) -> Void] = [:]
 
     /**
         Initializes a new GlobalChannel instance
@@ -32,7 +32,7 @@ import Foundation
 
      - parameter event: The JSON object received from the websocket
      */
-    internal func handleGlobalEventLegacy(event: [String:Any]) {
+    internal func handleGlobalEventLegacy(event: [String: Any]) {
         for (_, callback) in self.globalLegacyCallbacks {
             callback(event)
         }

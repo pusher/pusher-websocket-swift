@@ -74,11 +74,11 @@ open class PusherChannel: NSObject {
                 if let data = event.dataToJSONObject() {
                     // Parsed data
                     callbackData = data
-                }else{
+                } else {
                     // Unparsed string if we couldn't parse
                     callbackData = event.data
                 }
-            }else{
+            } else {
                 callbackData = event.raw["data"]
             }
             callback(callbackData)

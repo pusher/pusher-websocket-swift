@@ -67,7 +67,7 @@ class ViewController: UIViewController, PusherDelegate {
             // convert the data string to type data for decoding
             guard let json: String = event.data,
                 let jsonData: Data = json.data(using: .utf8)
-            else{
+            else {
                 print("Could not convert JSON string to data")
                 return
             }
@@ -112,7 +112,7 @@ class ViewController: UIViewController, PusherDelegate {
     func receivedError(error: PusherError) {
         if let code = error.code {
             print("Received error: (\(code)) \(error.message)")
-        }else{
+        } else {
             print("Received error: \(error.message)")
         }
     }

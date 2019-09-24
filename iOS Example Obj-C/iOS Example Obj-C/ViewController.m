@@ -150,7 +150,7 @@
     NSNumber *code = error.codeOC;
     if(code) {
         NSLog(@"Received error: (%ld) %@", [code longValue], error.message);
-    }else{
+    } else {
         NSLog(@"Received error: %@", error.message);
     }
 }

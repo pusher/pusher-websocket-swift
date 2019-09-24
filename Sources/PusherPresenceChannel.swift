@@ -1,6 +1,6 @@
 import Foundation
 
-public typealias PusherUserInfoObject = [String : AnyObject]
+public typealias PusherUserInfoObject = [String: AnyObject]
 
 @objcMembers
 @objc open class PusherPresenceChannel: PusherChannel {

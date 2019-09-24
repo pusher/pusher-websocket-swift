@@ -212,7 +212,7 @@ public extension PusherError {
     var codeOC: NSNumber? {
         if let code = code {
             return NSNumber(value: code)
-        }else{
+        } else {
             return nil
         }
     }

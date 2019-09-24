@@ -10,10 +10,10 @@ open class PusherError: NSObject {
     public let message: String
 
     // The websocket payload which needs to passed to legacy callbacks for backwards compatibility
-    internal let raw: [String:Any]
+    internal let raw: [String: Any]
 
-    internal init?(jsonObject: [String:Any]) {
-        guard let data = jsonObject["data"] as? [String:Any] else {
+    internal init?(jsonObject: [String: Any]) {
+        guard let data = jsonObject["data"] as? [String: Any] else {
             return nil
         }
 

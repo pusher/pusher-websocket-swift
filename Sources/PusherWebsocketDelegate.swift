@@ -12,7 +12,9 @@ extension PusherConnection: WebSocketDelegate {
     public func websocketDidReceiveMessage(socket ws: WebSocketClient, text: String) {
         self.delegate?.debugLog?(message: "[PUSHER DEBUG] websocketDidReceiveMessage \(text)")
 
-        guard let payload = PusherParser.getPusherEventJSON(from: text), let event =  payload["event"] as? String else {
+        guard let payload = PusherParser.getPusherEventJSON(from: text),
+            let event = payload["event"] as? String
+        else {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming Websocket message \(text)")
             return
         }
@@ -23,7 +25,7 @@ extension PusherConnection: WebSocketDelegate {
                 return
             }
             self.handleError(error: error)
-        }else{
+        } else {
             guard let event = PusherEvent(jsonObject: payload) else {
                 self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming event \(text)")
                 return
