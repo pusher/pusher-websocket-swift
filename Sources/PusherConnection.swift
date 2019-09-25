@@ -487,7 +487,7 @@ import CryptoSwift
                 }
             }
 
-            let subscriptionEvent = PusherEvent(eventName: "pusher:subscription_succeeded", event: event)
+            let subscriptionEvent = event.copy(withEventName: "pusher:subscription_succeeded")
             callGlobalCallbacks(event: subscriptionEvent)
             chan.handleEvent(event: subscriptionEvent)
 

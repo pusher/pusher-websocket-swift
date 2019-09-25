@@ -23,12 +23,6 @@ open class PusherEvent: NSObject, NSCopying {
         self.raw = jsonObject
     }
 
-    internal convenience init(eventName: String, event: PusherEvent) {
-        var jsonObject = event.raw
-        jsonObject["event"] = eventName
-        self.init(jsonObject: jsonObject)!
-    }
-
     /// Parse the data payload to a JSON object
     internal func dataToJSONObject() -> Any? {
         guard let data = data else {
@@ -50,6 +44,20 @@ open class PusherEvent: NSObject, NSCopying {
      */
     public func property(withKey key: String) -> Any? {
         return raw[key]
+    }
+
+    /**
+     Creates a copy of the PusherEvent with an updated event name. This is useful
+     when translating `pusher_internal:` events to `pusher:` events.
+
+     - parameter eventName: The name of the new event
+
+     - returns: The new PusherEvent
+     */
+    internal func copy(withEventName eventName: String) -> PusherEvent {
+        var jsonObject = self.raw
+        jsonObject["event"] = eventName
+        return PusherEvent(jsonObject: jsonObject)!
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
