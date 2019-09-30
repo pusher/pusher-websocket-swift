@@ -312,8 +312,6 @@ Where `"Authorization"` and `"myToken"` are the field and value your server is e
 
 A Websocket connection is established by providing your API key to the constructor function:
 
-**Important:** You must keep a strong reference to the `Pusher` client. You could achieve that by making `pusher` a property of your app delegate, for example.
-
 #### Swift
 
 ```swift
@@ -329,6 +327,8 @@ Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 ```
 
 This returns a client object which can then be used to subscribe to channels and then calling `connect()` triggers the connection process to start.
+
+**Important:** You must keep a strong reference to the `Pusher` client. You could achieve that by making `pusher` a property of your app delegate, for example.
 
 You can also set a `userDataFetcher` on the connection object.
 
