@@ -3,7 +3,7 @@ import Foundation
 @objcMembers
 @objc open class GlobalChannel: PusherChannel {
     open var globalCallbacks: [String: (PusherEvent) -> Void] = [:]
-    open var globalLegacyCallbacks: [String: (Any) -> Void] = [:]
+    open var globalLegacyCallbacks: [String: (Any?) -> Void] = [:]
 
     /**
         Initializes a new GlobalChannel instance
@@ -59,7 +59,7 @@ import Foundation
 
      - returns: A unique callbackId that can be used to unbind the callback at a later time
      */
-    internal func bindLegacy(_ callback: @escaping (Any) -> Void) -> String {
+    internal func bindLegacy(_ callback: @escaping (Any?) -> Void) -> String {
         let randomId = UUID().uuidString
         self.globalLegacyCallbacks[randomId] = callback
         return randomId

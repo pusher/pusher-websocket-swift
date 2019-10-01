@@ -329,7 +329,7 @@ import CryptoSwift
 
      - returns: A callbackId that can be used to remove the callback from the connection
      */
-    internal func addLegacyCallbackToGlobalChannel(_ callback: @escaping (Any) -> Void) -> String {
+    internal func addLegacyCallbackToGlobalChannel(_ callback: @escaping (Any?) -> Void) -> String {
         return globalChannel.bindLegacy(callback)
     }
 
