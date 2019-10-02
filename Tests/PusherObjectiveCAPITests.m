@@ -26,13 +26,6 @@
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
     [chan bindWithEventName:@"my-event" eventCallback: ^void (PusherEvent *event) {
-        NSDictionary *data = [event dataToJSONObject];
-
-        NSString *commenter = data[@"commenter"];
-        NSString *message = data[@"message"];
-
-        NSLog(@"%@ wrote %@", commenter, message);
-
         NSString *eventName = event.eventName;
         NSString *channelName = event.channelName;
         NSString *userId = event.userId;
@@ -60,13 +53,6 @@
     PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
     [pusher bindWithEventCallback: ^void (PusherEvent *event) {
-        NSDictionary *data = [event dataToJSONObject];
-
-        NSString *commenter = data[@"commenter"];
-        NSString *message = data[@"message"];
-
-        NSLog(@"%@ wrote %@", commenter, message);
-
         NSString *eventName = event.eventName;
         NSString *channelName = event.channelName;
         NSString *userId = event.userId;
