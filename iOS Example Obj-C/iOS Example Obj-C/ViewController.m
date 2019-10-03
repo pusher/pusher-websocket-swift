@@ -66,38 +66,64 @@
         return [[PusherPresenceChannelMember alloc] initWithUserId:uuid userInfo:nil];
     };
 
-    [self.client bind:^void (NSDictionary *data) {
-        NSString *eventName = data[@"event"];
+    // bind to all events globally
+    [self.client bindWithEventCallback:^void (PusherEvent *event) {
+        NSString *message = [NSString stringWithFormat: @"Event received '%@'", event.eventName];
 
-        if ([eventName isEqualToString:@"pusher:error"]) {
-            NSString *errorMessage = data[@"data"][@"message"];
-            NSLog(@"Error message: %@", errorMessage);
+        if (event.channelName) {
+            message = [message stringByAppendingFormat: @" on channel '%@'", event.channelName];
         }
+        if (event.userId) {
+            message = [message stringByAppendingFormat: @" from user '%@'", event.userId];
+        }
+        if (event.data) {
+            message = [message stringByAppendingFormat: @" with data '%@'", event.data];
+        }
+
+        NSLog(@"%@", message);
     }];
 
     [self.client connect];
 
-    PusherChannel *presChan = [self.client subscribeWithChannelName:@"presence-test"];
+    // subscribe to a public channel
+    PusherChannel *myChannel = [self.client subscribeWithChannelName:@"my-channel"];
 
-    [presChan bindWithEventName:@"test-event" callback:^void (id data) {
-        NSLog(@"And here is the data: %@", data);
+    // bind a callback to an event on that channel
+    [myChannel bindWithEventName:@"my-event" eventCallback:^void (PusherEvent *event) {
+        NSString *dataString = event.data;
+        // convert string to data for decoding
+        NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+
+        NSError *error;
+        // parse data as json
+        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+
+        NSString *name = jsonObject[@"name"];
+        NSString *message = jsonObject[@"message"];
+
+        NSLog(@"%@ says %@", name, message);
     }];
 
+    // callback for member added event
     void (^onMemberAdded)(PusherPresenceChannelMember*) = ^void (PusherPresenceChannelMember *member) {
         NSLog(@"member added: %@", member);
     };
 
+    // callback for member removed event
     void (^onMemberRemoved)(PusherPresenceChannelMember*) = ^void (PusherPresenceChannelMember *member) {
         NSLog(@"member removed: %@", member);
     };
 
+    // subscribe to a presence channel
     PusherPresenceChannel *presChanExplicit = [self.client subscribeToPresenceChannelWithChannelName:@"presence-explicit" onMemberAdded:onMemberAdded onMemberRemoved:onMemberRemoved];
 
-    [presChanExplicit bindWithEventName:@"testing" callback: ^void (id data) {
-        NSLog(@"Data: %@", data);
-
-        [presChanExplicit triggerWithEventName:@"client-testing" data:@{ @"developers" : @"developers developers developers" }];
+    // bind a callback on the presence channel
+    [presChanExplicit bindWithEventName:@"testing" eventCallback: ^void (PusherEvent *event) {
+        NSLog(@"Data: %@", event.data);
     }];
+
+    // trigger a client event
+    [presChanExplicit triggerWithEventName:@"client-testing" data:@{ @"developers" : @"developers developers developers" }];
 }
 
 - (void)changedConnectionStateFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
@@ -118,6 +144,15 @@
 
 - (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error {
     NSLog(@"Failed to subscribe to channel %@", name);
+}
+
+- (void)receivedError:(PusherError *)error {
+    NSNumber *code = error.codeOC;
+    if(code) {
+        NSLog(@"Received error: (%ld) %@", [code longValue], error.message);
+    } else {
+        NSLog(@"Received error: %@", error.message);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
