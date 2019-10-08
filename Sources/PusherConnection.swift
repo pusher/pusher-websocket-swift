@@ -221,7 +221,7 @@ import CryptoSwift
 
         - parameter event:       The name of the event
         - parameter data:        The data to be stringified and sent
-        - parameter channelName: The name of the channel
+        - parameter channel: The name of the channel
     */
     open func sendEvent(event: String, data: Any, channel: PusherChannel? = nil) {
         if event.components(separatedBy: "-")[0] == "client" {
