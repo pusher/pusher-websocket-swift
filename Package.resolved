@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
         "state": {
           "branch": null,
-          "revision": "6c8652a8ea35a64cf36367d07b3d6e5e6a24b272",
-          "version": "4.3.1"
+          "revision": "6b50ea803760a781b9abe0ba2412092ecef165e4",
+          "version": "4.3.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/daltoniam/Starscream.git",
         "state": {
           "branch": null,
-          "revision": "9c03ef715d1bc9334b446c90df53586dd38cf849",
-          "version": "3.1.0"
+          "revision": "ebdc260ea64e68f7569c62e8744b5cd15d3a49d6",
+          "version": "3.0.6"
         }
       }
     ]
