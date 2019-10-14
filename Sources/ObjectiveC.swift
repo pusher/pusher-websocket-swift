@@ -55,6 +55,27 @@ import Foundation
 }
 
 @objc public extension PusherClientOptions {
+
+    // initializer without legacy "attemptToReturnJSONObject"
+    convenience init(
+        ocAuthMethod authMethod: OCAuthMethod,
+        autoReconnect: Bool = true,
+        ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
+        port: NSNumber? = nil,
+        encrypted: Bool = true,
+        activityTimeout: NSNumber? = nil
+    ) {
+        self.init(
+            ocAuthMethod: authMethod,
+            attemptToReturnJSONObject: true,
+            autoReconnect: autoReconnect,
+            ocHost: host,
+            port: port,
+            encrypted: encrypted,
+            activityTimeout: activityTimeout
+        )
+    }
+
     convenience init(
         ocAuthMethod authMethod: OCAuthMethod,
         attemptToReturnJSONObject: Bool = true,
@@ -183,5 +204,16 @@ public extension AuthMethod {
     public init(authorizer: Authorizer) {
         self.type = 3
         self.authorizer = authorizer
+    }
+}
+
+public extension PusherError {
+    /// The error code as an NSNumber (for Objective-C compatibility).
+    var codeOC: NSNumber? {
+        if let code = code {
+            return NSNumber(value: code)
+        } else {
+            return nil
+        }
     }
 }

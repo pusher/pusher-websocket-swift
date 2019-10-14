@@ -12,6 +12,17 @@ This is the [Pusher Channels](https://pusher.com/channels) websocket client, Pus
 
 For tutorials and more in-depth information about Pusher Channels, visit our [official docs](https://pusher.com/docs/channels).
 
+## Supported platforms
+- Swift 4.2 and above (can be used with Swift 5)
+- Xcode 10.0 and above
+- Can be used with Objective-C
+
+### Deployment targets
+- iOS 8.0 and above
+- macOS (OS X) 10.10 and above
+- tvOS 9.0 and above
+- Not currently compatible with watchOS
+
 ## I just want to copy and paste some code to get me started
 
 What else would you want? Head over to one of our example apps:
@@ -31,8 +42,10 @@ What else would you want? Head over to one of our example apps:
   - [Private channels](#private-channels)
   - [Presence channels](#presence-channels)
 - [Binding to events](#binding-to-events)
-  - [Globally](#global-events)
   - [Per-channel](#per-channel-events)
+  - [Globally](#global-events)
+  - [Callback parameters](#callback-parameters)
+  - [Parsing event data](#parsing-event-data)
   - [Receiving errors](#receiving-errors)
 - [Testing](#testing)
 - [Extensions](#extensions)
@@ -59,7 +72,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 7.0'
+pod 'PusherSwift', '~> 7.1'
 ```
 
 Then, run the following command:
@@ -100,12 +113,17 @@ github "pusher/pusher-websocket-swift"
 There are a number of configuration parameters which can be set for the Pusher client. For Swift usage they are:
 
 - `authMethod (AuthMethod)` - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)
-- `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
 - `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd like to connect to
 - `activityTimeout (TimeInterval)` - after this time (in seconds) without any messages received from the server, a ping message will be sent to check if the connection is still working; the default value is supplied by the server, low values will result in unnecessary traffic.
+
+<details><summary>View legacy configuration options</summary>
+
+- `attemptToReturnJSONObject (Bool)` - whether or not you'd like the library to try and parse your data as JSON (or not, and just return a string)
+
+</details>
 
 The `authMethod` parameter must be of the type `AuthMethod`. This is an enum defined as:
 
@@ -176,11 +194,11 @@ OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithAuthEndpoint:@"https://
 OCPusherHost *host = [[OCPusherHost alloc] initWithCluster:@"eu"];
 PusherClientOptions *options = [[PusherClientOptions alloc]
                                 initWithOcAuthMethod:authMethod
-                                attemptToReturnJSONObject:YES
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES];
+                                encrypted:YES
+                                activityTimeout:nil];
 ```
 
 All of these configuration options need to be passed to a `PusherClientOptions` object, which in turn needs to be passed to the Pusher object, when instantiating it, for example:
@@ -202,11 +220,11 @@ OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithAuthEndpoint:@"https://
 OCPusherHost *host = [[OCPusherHost alloc] initWithCluster:@"eu"];
 PusherClientOptions *options = [[PusherClientOptions alloc]
                                 initWithOcAuthMethod:authMethod
-                                attemptToReturnJSONObject:YES
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES];
+                                encrypted:YES
+                                activityTimeout:nil];
 pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
 ```
 
@@ -317,6 +335,8 @@ Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 
 This returns a client object which can then be used to subscribe to channels and then calling `connect()` triggers the connection process to start.
 
+**Important:** You must keep a strong reference to the `Pusher` client. You could achieve that by making `pusher` a property of your app delegate, for example.
+
 You can also set a `userDataFetcher` on the connection object.
 
 - `userDataFetcher (() -> PusherPresenceChannelMember)` - if you are subscribing to an authenticated channel and wish to provide a function to return user data
@@ -353,14 +373,16 @@ There is a `PusherDelegate` that you can use to get notified of connection-relat
 @objc optional func subscribedToChannel(name: String)
 @objc optional func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)
 @objc optional func debugLog(message: String)
+@objc(receivedError:) optional func receivedError(error: PusherError)
 ```
 
 The names of the functions largely give away what their purpose is but just for completeness:
 
 - `changedConnectionState` - use this if you want to use connection state changes to perform different actions / UI updates
 - `subscribedToChannel` - use this if you want to be informed of when a channel has successfully been subscribed to, which is useful if you want to perform actions that are only relevant after a subscription has succeeded, e.g. logging out the members of a presence channel
-- `failedToSubscribeToChannel` - use this if you want to be informed of a failed subscription attempt, which you could use, for exampple, to then attempt another subscription or make a call to a service you use to track errors
+- `failedToSubscribeToChannel` - use this if you want to be informed of a failed subscription attempt, which you could use, for example, to then attempt another subscription or make a call to a service you use to track errors
 - `debugLog` - use this if you want to log Pusher-related events, e.g. the underlying websocket receiving a message
+- `receivedError` - use this if you want to be informed of errors received from Pusher Channels e.g. `Application is over connection quota`. You can find some of the possible errors listed [here](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes).
 
 Setting up a delegate looks like this:
 
@@ -414,6 +436,13 @@ class DummyDelegate: PusherDelegate {
     func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
         // ...
     }
+
+    func receivedError(error: PusherError) {
+        let message = error.message
+        if let code = error.code {
+            // ...
+        }
+    }
 }
 ```
 
@@ -426,6 +455,7 @@ class DummyDelegate: PusherDelegate {
 - (void)debugLogWithMessage:(NSString *)message
 - (void)subscribedToChannelWithName:(NSString *)name
 - (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error
+- (void)receivedError:(PusherError *)error
 
 @end
 
@@ -444,6 +474,12 @@ class DummyDelegate: PusherDelegate {
 }
 
 - (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error {
+    // ...
+}
+
+- (void)receivedError:(PusherError *)error {
+    NSNumber *code = error.codeOC;
+    NSString *message = error.message;
     // ...
 }
 
@@ -586,7 +622,7 @@ let pusher = Pusher(key: "YOUR_APP_KEY")
 
 let chan = pusher.subscribeToPresenceChannel("presence-channel")
 
-chan.bind(eventName: "pusher:subscription_succeeded", callback: { data in
+chan.bind(eventName: "pusher:subscription_succeeded", eventCallback: { event in
     print("Subscribed!")
     print("I can now access myId: \(chan.myId)")
     print("And here are the channel members: \(chan.members)")
@@ -599,7 +635,7 @@ chan.bind(eventName: "pusher:subscription_succeeded", callback: { data in
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 PusherPresenceChannel *chan = [pusher subscribeToPresenceChannelWithChannelName:@"presence-channel"];
 
-[chan bindWithEventName:@"pusher:subscription_succeeded" callback: ^void (NSDictionary *data) {
+[chan bindWithEventName:@"pusher:subscription_succeeded" eventCallback: ^void (PusherEvent *event) {
     NSLog(@"Subscribed!");
     NSLog(@"I can now access myId: %@", chan.myId);
     NSLog(@"And here are my channel members: %@", chan.members);
@@ -678,44 +714,26 @@ Keep in mind that in order to generate a valid auth value for a subscription the
 
 Events can be bound to at 2 levels; globally and per channel. When binding to an event you can choose to save the return value, which is a unique identifier for the event handler that gets created. The only reason to save this is if you're going to want to unbind from the event at a later point in time. There is an example of this below.
 
-### Global events
+### Per-channel events
 
-You can attach behaviour to these events regardless of the channel the event is broadcast to. The following is an example of an app that binds to new comments from any channel (that you are subscribed to):
+These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. 
 
 #### Swift
 
 ```swift
 let pusher = Pusher(key: "YOUR_APP_KEY")
-pusher.subscribe("my-channel")
+let myChannel = pusher.subscribe("my-channel")
 
-pusher.bind(callback: { (data: Any?) -> Void in
-    if let data = data as? [String : AnyObject] {
-        if let commenter = data["commenter"] as? String, message = data["message"] as? String {
-            print("\(commenter) wrote \(message)")
-        }
+myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> Void in
+    if let data: String = event.data {
+        // `data` is a string that you can parse if necessary.
     }
 })
 ```
 
-#### Objective-C
+The callback is passed a `PusherEvent`  (see [docs](#pusherevent)).
 
-```objc
-Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
-PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
-
-[pusher bind: ^void (NSDictionary *data) {
-    NSString *commenter = data[@"commenter"];
-    NSString *message = data[@"message"];
-
-    NSLog(@"%@ wrote %@", commenter, message);
-}];
-```
-
-### Per-channel events
-
-These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. The following might be an example of a stock tracking app where several channels are opened for different companies:
-
-#### Swift
+<details><summary>View legacy approach</summary>
 
 ```swift
 let pusher = Pusher(key: "YOUR_APP_KEY")
@@ -729,8 +747,20 @@ myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
     }
 })
 ```
+</details>
 
 #### Objective-C
+
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+[chan bindWithEventName:@"new-price" eventCallback:^void (PusherEvent *event) {
+    NSString *data = event.data;
+    // `data` is a string that you can parse if necessary.
+}];
+```
+<details><summary>View legacy approach</summary>
 
 ```objc
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
@@ -743,8 +773,173 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
     NSLog(@"%@ is now priced at %@", company, price);
 }];
 ```
+</details>
+
+### Global events
+
+You can attach behaviour to these events regardless of the channel the event is broadcast to. 
+
+#### Swift
+
+```swift
+let pusher = Pusher(key: "YOUR_APP_KEY")
+pusher.subscribe("my-channel")
+
+pusher.bind(eventCallback: { (event: PusherEvent) -> Void in
+    if let data: String = event.data {
+        // `data` is a string that you can parse if necessary.
+    }
+})
+```
+The callback is passed a `PusherEvent`  (see [docs](#pusherevent)).
+
+<details><summary>View legacy approach</summary>
+
+```swift
+let pusher = Pusher(key: "YOUR_APP_KEY")
+pusher.subscribe("my-channel")
+
+pusher.bind(callback: { (event: Any?) -> Void in
+    if let data = event["data"] as? [String : AnyObject] {
+        if let commenter = data["commenter"] as? String, message = data["message"] as? String {
+            print("\(commenter) wrote \(message)")
+        }
+    }
+})
+```
+</details>
+
+#### Objective-C
+
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+[pusher bindWithEventCallback: ^void (PusherEvent *event) {
+    // `data` is a string that you can parse if necessary.
+    NSString *data = event.data;
+}];
+```
+<details><summary>View legacy approach</summary>
+
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+[pusher bind: ^void (NSDictionary *event) {
+    NSDictionary *data = event[@"data"];
+    NSString *commenter = data[@"commenter"];
+    NSString *message = data[@"message"];
+
+    NSLog(@"%@ wrote %@", commenter, message);
+}];
+```
+</details>
+
+### Callback parameters
+
+#### PusherEvent
+
+The callbacks you bind receive a `PusherEvent`:
+
+|  Property            | Type           | Description  |
+| ------------------ |--------------| ------------
+| `eventName`       | `String`      | The name of the event. |
+| `channelName`   | `String?`    | The name of the channel that the event was triggered on. |
+| `data`                | `String?`     | The data that was passed to `trigger`, encoded as a string. If you passed an object then that will have been serialized to a JSON string which you can parse as necessary. See [parsing event data](#parsing-event-data). |
+| `userId`            | `String?`     | The ID of the user who triggered the event. This is only available for client events triggered on presence channels. |
+
+| Function            | Parameters                                                    |  Return Type           | Description                                                                                                                                                                                                     |
+| -----------------  |---------------------------------------------------| -----------------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `property`   | `withKey: String` - The key of the property |  `Any?`                      | A helper function for accessing raw properties from the websocket event. Data returned by this function should not be considered stable and it is recommended that you use the properties above instead. |
+
+### Parsing event data
+
+The `data` property of  [`PusherEvent`](#pusherevent) contains the string representation of the data that you passed when you triggered the event. If you passed an object then that object will have been serialized to JSON. You can parse that JSON as appropriate. You can make use of [`JSONSerialization`](https://developer.apple.com/swift/blog/?id=37), or you can use the `JSONDecoder` to decode the JSON into a Codable Class or Struct. See the Apple docs: [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
+
+For example, the following might be an example of a stock tracking app publishing price updates for companies. You can decode the "price-update" event into a struct in Swift:
+
+```swift
+struct PriceUpdate: Codable {
+    public let company: String,
+    public let price: Int,
+}
+
+let pusher = Pusher(key: "YOUR_APP_KEY")
+let myChannel = pusher.subscribe("my-channel")
+let decoder = JSONDecoder()
+
+myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) -> Void in
+    guard let json: String = event.data,
+        let jsonData: Data = json.data(using: .utf8)
+    else{
+        print("Could not convert JSON string to data")
+        return
+    }
+
+    let decoded = try? decoder.decode(PriceUpdate.self, from: jsonData)
+    guard let priceUpdate = decoded else {
+        print("Could not decode price update")
+        return
+    }
+
+    print("\(priceUpdate.company) is now priced at \(priceUpdate.price)")
+})
+
+```
+
+Alternatively, you could use [`JSONSerialization`](https://developer.apple.com/documentation/foundation/jsonserialization) to decode the JSON into Swift data types: 
+
+#### Swift
+
+```swift
+let pusher = Pusher(key: "YOUR_APP_KEY")
+let myChannel = pusher.subscribe("my-channel")
+
+myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) -> Void in
+    guard let json: String = event.data,
+        let jsonData: Data = json.data(using: .utf8)
+    else{
+        print("Could not convert JSON string to data")
+        return
+    }
+
+    let decoded = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+    guard let priceUpdate = decoded else {
+        print("Could not decode price update")
+        return
+    }
+
+    if let company = priceUpdate["company"] as? String, let price = priceUpdate["price"] as? String {
+        print("\(company) is now priced at \(price)")
+    }
+})
+```
+#### Objective-C
+
+```objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
+PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
+
+[chan bindWithEventName:@"price-update" eventCallback:^void (PusherEvent *event) {
+    NSString *dataString = event.data;
+    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+
+    NSError *error;
+    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+
+    NSString *price = jsonObject[@"price"];
+    NSString *company = jsonObject[@"company"];
+
+    NSLog(@"%@ is now priced at %@", company, price);
+}];
+```
 
 ### Receiving errors
+
+Errors received from Pusher Channels can be accessed via the [connection delegate](#connection-delegate). This was previously done by binding callbacks.
+
+<details><summary>View legacy approach</summary>
 
 Errors are sent to the client for which they are relevant with an event name of `pusher:error`. These can be received and handled using code as follows. Obviously the specifics of how to handle them are left up to the developer but this displays the general pattern.
 
@@ -761,7 +956,7 @@ pusher.bind({ (message: Any?) in
 ```
 
 #### Objective-C
-
+    
 ```objc
 [pusher bind:^void (NSDictionary *data) {
     NSString *eventName = data[@"event"];
@@ -797,6 +992,8 @@ You can see that the general form they take is:
 }
 ```
 
+</details>
+
 ### Unbind event handlers
 
 You can remove previously-bound handlers from an object by using the `unbind` function. For example,
@@ -807,8 +1004,8 @@ You can remove previously-bound handlers from an object by using the `unbind` fu
 let pusher = Pusher(key: "YOUR_APP_KEY")
 let myChannel = pusher.subscribe("my-channel")
 
-let eventHandlerId = myChannel.bind(eventName: "new-price", callback: { (data: Any?) -> Void in
-  ...
+let eventHandlerId = myChannel.bind(eventName: "new-price", eventCallback: { (event: PusherEvent) -> Void in
+  //...
 })
 
 myChannel.unbind(eventName: "new-price", callbackId: eventHandlerId)
@@ -820,8 +1017,8 @@ myChannel.unbind(eventName: "new-price", callbackId: eventHandlerId)
 Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY"];
 PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
-NSString *callbackId = [chan bindWithEventName:@"new-price" callback:^void (NSDictionary *data) {
-    ...
+NSString *callbackId = [chan bindWithEventName:@"new-price" eventCallback:^void (PusherEvent *event) {
+    //...
 }];
 
 [chan unbindWithEventName:@"new-price" callbackId:callbackId];

@@ -2,7 +2,7 @@ import Foundation
 import Starscream
 
 let PROTOCOL = 7
-let VERSION = "7.0.0"
+let VERSION = "7.1.0"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 @objcMembers
@@ -106,18 +106,33 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
         Binds the client's global channel to all events
 
-        - parameter callback: The function to call when a new event is received
+        - parameter callback: The function to call when a new event is received. The callback
+                              receives the event's data payload
 
         - returns: A unique string that can be used to unbind the callback from the client
     */
     @discardableResult open func bind(_ callback: @escaping (Any?) -> Void) -> String {
-        return self.connection.addCallbackToGlobalChannel(callback)
+        return self.connection.addLegacyCallbackToGlobalChannel(callback)
+    }
+
+    /**
+     Binds the client's global channel to all events
+
+     - parameter eventCallback: The function to call when a new event is received. The callback
+                                receives a PusherEvent, containing the event's data payload and
+                                other properties.
+
+     - returns: A unique string that can be used to unbind the callback from the client
+     */
+    @discardableResult open func bind(eventCallback: @escaping (PusherEvent) -> Void) -> String {
+        return self.connection.addCallbackToGlobalChannel(eventCallback)
     }
 
     /**
         Unbinds the client from its global channel
 
-        - parameter callbackId: The unique callbackId string used to identify which callback to unbind
+        - parameter callbackId: The unique callbackId string used to identify which callback
+                                to unbind
     */
     open func unbind(callbackId: String) {
         self.connection.removeCallbackFromGlobalChannel(callbackId: callbackId)

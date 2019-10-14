@@ -11,6 +11,7 @@ import PusherSwift
 
 class ViewController: UIViewController, PusherDelegate {
     var pusher: Pusher! = nil
+    let decoder = JSONDecoder()
 
     @IBAction func connectButton(_ sender: AnyObject) {
         pusher.connect()
@@ -40,32 +41,56 @@ class ViewController: UIViewController, PusherDelegate {
 
         pusher.connect()
 
-        let _ = pusher.bind({ (message: Any?) in
-            if let message = message as? [String: AnyObject], let eventName = message["event"] as? String, eventName == "pusher:error" {
-                if let data = message["data"] as? [String: AnyObject], let errorMessage = data["message"] as? String {
-                    print("Error message: \(errorMessage)")
-                }
+        // bind to all events globally
+        let _ = pusher.bind(eventCallback: { (event: PusherEvent) in
+            var message = "Received event: '\(event.eventName)'"
+
+            if let channel = event.channelName {
+                message += " on channel '\(channel)'"
             }
+            if let userId = event.userId {
+                message += " from user '\(userId)'"
+            }
+            if let data = event.data {
+                message += " with data '\(data)'"
+            }
+
+            print(message)
         })
 
+        // subscribe to a channel
+        let myChannel = pusher.subscribe("my-channel")
+
+        // bind a callback to event "my-event" on that channel
+        let _ = myChannel.bind(eventName: "my-event", eventCallback: { (event: PusherEvent) in
+
+            // convert the data string to type data for decoding
+            guard let json: String = event.data,
+                let jsonData: Data = json.data(using: .utf8)
+            else {
+                print("Could not convert JSON string to data")
+                return
+            }
+
+            // decode the event data as json into a DebugConsoleMessage
+            let decodedMessage = try? self.decoder.decode(DebugConsoleMessage.self, from: jsonData)
+            guard let message = decodedMessage else {
+                print("Could not decode message")
+                return
+            }
+
+            print("\(message.name) says \(message.message)")
+        })
+
+        // callback for member added event
         let onMemberAdded = { (member: PusherPresenceChannelMember) in
             print(member)
         }
 
+        // subscribe to a presence channel
         let chan = pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
 
-        let _ = chan.bind(eventName: "test-event", callback: { data in
-            print(data)
-            let _ = self.pusher.subscribe("presence-channel", onMemberAdded: onMemberAdded)
-
-            if let data = data as? [String : AnyObject] {
-                if let testVal = data["test"] as? String {
-                    print(testVal)
-                }
-            }
-        })
-
-        // triggers a client event
+        // triggers a client event on that channel
         chan.trigger(eventName: "client-test", data: ["test": "some value"])
     }
 
@@ -83,6 +108,14 @@ class ViewController: UIViewController, PusherDelegate {
     func debugLog(message: String) {
         print(message)
     }
+
+    func receivedError(error: PusherError) {
+        if let code = error.code {
+            print("Received error: (\(code)) \(error.message)")
+        } else {
+            print("Received error: \(error.message)")
+        }
+    }
 }
 
 
@@ -93,4 +126,9 @@ class AuthRequestBuilder: AuthRequestBuilderProtocol {
         request.httpBody = "socket_id=\(socketID)&channel_name=\(channelName)".data(using: String.Encoding.utf8)
         return request
     }
+}
+
+struct DebugConsoleMessage: Codable {
+    let name: String
+    let message: String
 }

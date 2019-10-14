@@ -33,6 +33,15 @@ class PusherConnectionDelegateTests: XCTestCase {
                 ex!.fulfill()
             }
         }
+
+        open func receivedError(error: PusherError) {
+            let _ = stubber.stub(
+                functionName: "error",
+                args: [error],
+                functionToCall: nil
+            )
+        }
+
     }
 
     var key: String!
@@ -107,5 +116,19 @@ class PusherConnectionDelegateTests: XCTestCase {
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
+    }
+
+    func testErrorFunctionCalledWhenPusherErrorIsReceived() {
+        let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Application is over connection quota\",\"code\":4004}}";
+        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
+
+        XCTAssertEqual(dummyDelegate.stubber.calls.last?.name, "error")
+        guard let error = dummyDelegate.stubber.calls.last?.args?.first as? PusherError else {
+            XCTFail("PusherError not returned")
+            return
+        }
+
+        XCTAssertEqual(error.message, "Application is over connection quota")
+        XCTAssertEqual(error.code!, 4004)
     }
 }
