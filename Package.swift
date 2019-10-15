@@ -10,7 +10,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "0.9.0")),
         .package(url: "https://github.com/ashleymills/Reachability.swift.git", .exact("4.3.0")),
-        .package(url: "https://github.com/daltoniam/Starscream.git", .upToNextMinor(from: "3.0.5")),
+        .package(url: "https://github.com/daltoniam/Starscream.git", .exact("3.0.6")),
     ],
     targets: [
         .target(
