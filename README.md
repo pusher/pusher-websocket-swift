@@ -119,7 +119,7 @@ https://github.com/pusher/pusher-websocket-swift.git
 Alternatively, you can add PusherSwift as a dependency in your `Package.swift` file:
 
 ```swift
-//...
+// ...
 dependencies: [
     .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "7.2.0")
 ],
@@ -128,7 +128,7 @@ targets: [
         name: "YourAppTarget",
         dependencies: ["PusherSwift"])
 ]
-//...
+// ...
 ```
 
 ## Configuration
