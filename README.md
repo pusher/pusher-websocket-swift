@@ -110,7 +110,7 @@ github "pusher/pusher-websocket-swift"
 
 ### Swift Package Manager
 
-To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add it as a dependency using Xcode (11 and above) – see [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
+To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency using Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
 
 ```bash
 https://github.com/pusher/pusher-websocket-swift.git
