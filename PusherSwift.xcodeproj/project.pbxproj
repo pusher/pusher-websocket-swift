@@ -35,7 +35,6 @@
 		E2498293231E612700CFBBD6 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
 		E24D0AA522D798C8009DE31B /* PusherEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24D0AA422D798C8009DE31B /* PusherEvent.swift */; };
 		E29A4CBC2301BA31000BC499 /* PusherEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */; };
-		E2CAFF0322FB09EF007915A7 /* PusherObjectiveCAPITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CAFEFD22FB084B007915A7 /* PusherObjectiveCAPITests.m */; };
 		E2CFE43122D79CA7004187C3 /* PusherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFE43022D79CA7004187C3 /* PusherParser.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,7 +81,6 @@
 		E2498292231E612700CFBBD6 /* PusherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherError.swift; sourceTree = "<group>"; };
 		E24D0AA422D798C8009DE31B /* PusherEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEvent.swift; sourceTree = "<group>"; };
 		E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventTests.swift; sourceTree = "<group>"; };
-		E2CAFEFD22FB084B007915A7 /* PusherObjectiveCAPITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PusherObjectiveCAPITests.m; sourceTree = "<group>"; };
 		E2CFE43022D79CA7004187C3 /* PusherParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,7 +168,6 @@
 				33A962751D8943CA00DA421E /* PusherConnectionDelegateTests.swift */,
 				33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */,
 				33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */,
-				E2CAFEFD22FB084B007915A7 /* PusherObjectiveCAPITests.m */,
 				33BB99671D21226C00B25C2A /* Info.plist */,
 				E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */,
 			);
@@ -358,7 +355,6 @@
 				E29A4CBC2301BA31000BC499 /* PusherEventTests.swift in Sources */,
 				33BB99761D21230100B25C2A /* Mocks.swift in Sources */,
 				33A962771D89483600DA421E /* PusherConnectionDelegateTests.swift in Sources */,
-				E2CAFF0322FB09EF007915A7 /* PusherObjectiveCAPITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
