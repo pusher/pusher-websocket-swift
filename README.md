@@ -108,6 +108,22 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
+### Swift Package Manager
+
+To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add it as a dependency using Xcode (11 and above) – see [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
+
+```bash
+https://github.com/pusher/pusher-websocket-swift.git
+```
+
+Alternatively, you can add PusherSwift as a dependency in your `Package.swift` file:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "7.2.0")
+]
+```
+
 ## Configuration
 
 There are a number of configuration parameters which can be set for the Pusher client. For Swift usage they are:
