@@ -116,19 +116,28 @@ To integrate PusherSwift into your project using [Swift Package Manager](https:/
 https://github.com/pusher/pusher-websocket-swift.git
 ```
 
-Alternatively, you can add PusherSwift as a dependency in your `Package.swift` file:
+Alternatively, you can add PusherSwift as a dependency in your `Package.swift` file. For example:
 
 ```swift
-// ...
-dependencies: [
-    .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "7.2.0")
-],
-targets: [
-    .target(
-        name: "YourAppTarget",
-        dependencies: ["PusherSwift"])
-]
-// ...
+// swift-tools-version:5.1
+import PackageDescription
+
+let package = Package(
+    name: "YourPackage",
+    products: [
+        .library(
+            name: "YourPackage",
+            targets: ["YourPackage"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "7.1.1"),
+    ],
+    targets: [
+        .target(
+            name: "YourPackage",
+            dependencies: ["PusherSwift"]),
+    ]
+)
 ```
 
 ## Configuration
