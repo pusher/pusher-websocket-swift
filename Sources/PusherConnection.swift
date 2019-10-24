@@ -38,7 +38,7 @@ import CryptoSwift
     }
 
     open lazy var reachability: Reachability? = {
-        let reachability = Reachability.init()
+        let reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] reachability in
             guard let self = self else {
                 print("Your Pusher instance has probably become deallocated. See https://github.com/pusher/pusher-websocket-swift/issues/109 for more information")
@@ -720,7 +720,7 @@ import CryptoSwift
                 let msgBuff: [UInt8] = Array(msg.utf8)
 
                 if let hmac = try? HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
-                    let signature = Data(bytes: hmac).toHexString()
+                    let signature = Data(hmac).toHexString()
                     let auth = "\(self.key):\(signature)".lowercased()
 
                     if channel.type == .private {

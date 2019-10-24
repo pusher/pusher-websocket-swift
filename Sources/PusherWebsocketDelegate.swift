@@ -78,7 +78,7 @@ extension PusherConnection: WebSocketDelegate {
             return
         }
 
-        if let reachability = self.reachability, reachability.connection == .none {
+        if let reachability = self.reachability, reachability.connection == .unavailable {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable so reconnect likely to fail")
         }
 

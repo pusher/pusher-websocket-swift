@@ -1,4 +1,4 @@
-// swift-tools-version:4.2
+// swift-tools-version:5.0
 
 import PackageDescription
 
@@ -8,9 +8,9 @@ let package = Package(
         .library(name: "PusherSwift", targets: ["PusherSwift"])
     ],
     dependencies: [
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "0.9.0")),
-        .package(url: "https://github.com/ashleymills/Reachability.swift.git", .exact("4.3.0")),
-        .package(url: "https://github.com/daltoniam/Starscream.git", .exact("3.0.6")),
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/ashleymills/Reachability.swift.git", .upToNextMajor(from: "5.0.0")),
+        .package(url: "https://github.com/daltoniam/Starscream.git", .upToNextMajor(from: "3.1.0")),
     ],
     targets: [
         .target(
@@ -28,5 +28,5 @@ let package = Package(
             path: "Tests"
         )
     ],
-    swiftLanguageVersions: [.v4_2]
+    swiftLanguageVersions: [.v5]
 )
