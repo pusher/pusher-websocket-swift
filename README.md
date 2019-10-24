@@ -72,7 +72,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 7.1'
+pod 'PusherSwift', '~> 7.2'
 ```
 
 Then, run the following command:
@@ -106,6 +106,38 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 
 ```ogdl
 github "pusher/pusher-websocket-swift"
+```
+
+### Swift Package Manager
+
+To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
+
+```bash
+https://github.com/pusher/pusher-websocket-swift.git
+```
+
+Alternatively, you can add PusherSwift as a dependency in your `Package.swift` file. For example:
+
+```swift
+// swift-tools-version:5.1
+import PackageDescription
+
+let package = Package(
+    name: "YourPackage",
+    products: [
+        .library(
+            name: "YourPackage",
+            targets: ["YourPackage"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "7.2.0"),
+    ],
+    targets: [
+        .target(
+            name: "YourPackage",
+            dependencies: ["PusherSwift"]),
+    ]
+)
 ```
 
 ## Configuration

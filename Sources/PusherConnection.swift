@@ -219,9 +219,9 @@ import CryptoSwift
         and data, or calls a client event to be sent if the event is prefixed with
         "client"
 
-        - parameter event:       The name of the event
-        - parameter data:        The data to be stringified and sent
-        - parameter channelName: The name of the channel
+        - parameter event:   The name of the event
+        - parameter data:    The data to be stringified and sent
+        - parameter channel: The name of the channel
     */
     open func sendEvent(event: String, data: Any, channel: PusherChannel? = nil) {
         if event.components(separatedBy: "-")[0] == "client" {
@@ -236,9 +236,9 @@ import CryptoSwift
     /**
         Sends a client event with the given event, data, and channel name
 
-        - parameter event:       The name of the event
-        - parameter data:        The data to be stringified and sent
-        - parameter channelName: The name of the channel
+        - parameter event:   The name of the event
+        - parameter data:    The data to be stringified and sent
+        - parameter channel: The name of the channel
     */
     fileprivate func sendClientEvent(event: String, data: Any, channel: PusherChannel?) {
         if let channel = channel {
