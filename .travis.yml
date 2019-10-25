@@ -2,7 +2,7 @@ language: objective-c
 osx_image: xcode11
 sudo: false
 env:
-  - iOS= DST='platform=iOS Simulator,name=iPhone X' ACTION=test DEVICE='iPhone 11 Pro (13.0)'
+  - iOS= DST='platform=iOS Simulator,name=iPhone 11 Pro' ACTION=test DEVICE='iPhone 11 Pro (13.0)'
   - tvOS= DST='platform=tvOS Simulator,name=Apple TV 4K' ACTION=test DEVICE='Apple TV 4K (11.3)'
   - macOS= DST='platform=OS X' ACTION=test
 before_install:
