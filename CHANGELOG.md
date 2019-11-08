@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/7.2.0...HEAD)
 
+### Fixed
+
+- Update CryptoSwift to 1.1.3 and Reachability.swift to 4.3.1 to quiet build warnings ([@marcetcheverry](https://github.com/marcetcheverry)).
+
 ## [7.2.0](https://github.com/pusher/pusher-websocket-swift/compare/7.1.0...7.2.0) - 2019-10-18
 
 ### Added
