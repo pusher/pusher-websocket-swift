@@ -12,9 +12,9 @@ Pod::Spec.new do |s|
   s.requires_arc  = true
   s.source_files  = 'Sources/*.swift'
 
-  s.dependency 'CryptoSwift', '~> 1.0.0'
+  s.dependency 'CryptoSwift', '~> 1.2.0'
   s.dependency 'ReachabilitySwift', '~> 5.0.0'
-  s.dependency 'Starscream', '~> 3.1.0'
+  s.dependency 'Starscream', '~> 3.1.1'
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
