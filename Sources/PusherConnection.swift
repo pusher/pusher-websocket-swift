@@ -670,7 +670,7 @@ import CryptoSwift
 
             switch self.options.authMethod {
             case .noMethod:
-                let errorMessage = "Authentication method required for private / presence channels but none provided."
+                let errorMessage = "Authentication method required for private / presence channels but none provided. To fix, see: https://pusher.com/docs/channels/server_api/authenticating-users#client-side-setting-the-channel-authentication-endpoint"
                 let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
 
                 print(errorMessage)
