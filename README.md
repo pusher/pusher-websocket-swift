@@ -33,6 +33,9 @@ What else would you want? Head over to one of our example apps:
 ## Table of Contents
 
 - [Installation](#installation)
+  - [CocoaPods](#cocoapods)
+  - [Carthage](#carthage)
+  - [Swift Package Manager](#swift-package-manager)
 - [Configuration](#configuration)
 - [Connection](#connection)
   - [Connection delegate](#connection-delegate)
