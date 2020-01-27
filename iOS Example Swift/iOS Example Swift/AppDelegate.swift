@@ -2,9 +2,6 @@
 //  AppDelegate.swift
 //  iOS Example
 //
-//  Created by Hamilton Chapman on 24/02/2015.
-//  Copyright (c) 2015 Pusher. All rights reserved.
-//
 
 import UIKit
 
