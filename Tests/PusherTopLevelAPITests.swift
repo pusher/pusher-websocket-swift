@@ -1,4 +1,4 @@
-import PusherSwift
+@testable import PusherSwift
 import XCTest
 
 class PusherTopLevelApiTests: XCTestCase {
