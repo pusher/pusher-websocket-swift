@@ -6,3 +6,4 @@
 github "krzyzanowskim/CryptoSwift" ~> 0.15.0
 github "ashleymills/Reachability.swift" == 4.3.0
 github "daltoniam/Starscream" == 3.0.6
+github "jedisct1/swift-sodium" == 0.8.0
