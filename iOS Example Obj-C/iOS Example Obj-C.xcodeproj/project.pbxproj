@@ -195,6 +195,7 @@
 				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Reachability.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Starscream.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/Sodium.framework",
 			);
 			name = "Copy Carthage Frameworks";
 			outputFileListPaths = (
