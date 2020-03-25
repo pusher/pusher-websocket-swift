@@ -21,7 +21,7 @@ open class PusherEvent: NSObject, NSCopying {
     
     /// The data that was passed when the event was triggered.
     public lazy var data: String? = {
-        if self.isEncryptedChannel {
+        if self.isEncryptedChannel && !self.isPusherSystemEvent {
             return self.decryptedString
         }
         return raw["data"] as? String
@@ -32,6 +32,10 @@ open class PusherEvent: NSObject, NSCopying {
 
     @nonobjc private lazy var isEncryptedChannel: Bool = {
         return channelName?.starts(with: "private-encrypted-") ?? false
+    }()
+    
+    @nonobjc private lazy var isPusherSystemEvent: Bool = {
+        return eventName.starts(with: "pusher:") || eventName.starts(with: "pusher_internal:")
     }()
     
     @nonobjc private lazy var decryptedString: String? = {
