@@ -591,7 +591,7 @@ import Starscream
             "channel": channelName,
             "data": data ?? ""
         ]
-        let event = PusherEvent(jsonObject: json)!
+        let event = PusherEvent(jsonObject: json, keyProvider: keyProvider)!
         DispatchQueue.main.async {
             // TODO: Consider removing in favour of exclusively using delegate
             self.handleEvent(event: event)
@@ -600,6 +600,12 @@ import Starscream
         self.delegate?.failedToSubscribeToChannel?(name: channelName, response: response, data: data, error: error)
     }
 
+    // TODO: this needs to be rethought once the auth call provides the decryptionKey
+    internal var keyProvider: PusherKeyProviding {
+        let decryptionKey = "<ENTER_YOUR_KEY>"
+        return PusherKeyProvider(decryptionKey: decryptionKey)
+    }
+    
     /**
         Handles incoming events and passes them on to be handled by the appropriate function
 

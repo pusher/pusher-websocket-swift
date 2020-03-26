@@ -15,6 +15,7 @@
 		33831CC51A9CFCDB00B124F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CC11A9CFCDB00B124F1 /* ViewController.swift */; };
 		33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; };
 		33E94E7620766DBE0005399D /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A920569C3B000D4D08 /* Starscream.framework */; };
+		7327825A242BED6F00906123 /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73278259242BED6F00906123 /* Sodium.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,11 +43,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		335AD5A620569C3B000D4D08 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = ../Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		335AD5A820569C3B000D4D08 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = ../Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		335AD5A920569C3B000D4D08 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = ../Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		335AD5AF20569DC3000D4D08 /* Carthage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Carthage.xcconfig; sourceTree = "<group>"; };
-		3373BF4C2068F201005A61BE /* StarscreamFork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StarscreamFork.framework; path = ../Carthage/Build/iOS/StarscreamFork.framework; sourceTree = "<group>"; };
 		33831C5E1A9CEEE900B124F1 /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831CBC1A9CFCD000B124F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "iOS Example Swift/Info.plist"; sourceTree = SOURCE_ROOT; };
 		33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "iOS Example Swift/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
@@ -54,6 +53,7 @@
 		33831CC01A9CFCDB00B124F1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "iOS Example Swift/Main.storyboard"; sourceTree = SOURCE_ROOT; };
 		33831CC11A9CFCDB00B124F1 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = "iOS Example Swift/ViewController.swift"; sourceTree = SOURCE_ROOT; };
 		33CC82EA1D7F16A8003B699F /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73278259242BED6F00906123 /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = ../Carthage/Build/iOS/Sodium.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +64,7 @@
 				33E94E7620766DBE0005399D /* Starscream.framework in Frameworks */,
 				335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */,
 				33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */,
+				7327825A242BED6F00906123 /* Sodium.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,10 +112,9 @@
 		E0B29E04C3C064CEE6120CF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3373BF4C2068F201005A61BE /* StarscreamFork.framework */,
-				335AD5A620569C3B000D4D08 /* CryptoSwift.framework */,
 				335AD5A820569C3B000D4D08 /* Reachability.framework */,
 				335AD5A920569C3B000D4D08 /* Starscream.framework */,
+				73278259242BED6F00906123 /* Sodium.framework */,
 				33CC82EA1D7F16A8003B699F /* PusherSwift.framework */,
 			);
 			name = Frameworks;
@@ -208,6 +208,7 @@
 			inputPaths = (
 				"$(SRCROOT)/../Carthage/Build/iOS/Reachability.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Starscream.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/Sodium.framework",
 			);
 			name = "Copy Carthage Frameworks";
 			outputPaths = (

@@ -1,5 +1,4 @@
-@testable
-import PusherSwift
+@testable import PusherSwift
 import XCTest
 
 class PusherPresenceChannelTests: XCTestCase {
