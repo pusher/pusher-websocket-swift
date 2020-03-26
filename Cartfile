@@ -1,8 +1,2 @@
-# CryptoSwift versions 0.9 - 0.10 inclusive have iOS deployment
-# target "9.0" set in the Xcode project (but not in the Podspec).
-# PusherSwift has target "8.0" therefore the version in this
-# file can't match PusherSwift's Podspec's minimum CryptoSwift
-# version currently.
-github "krzyzanowskim/CryptoSwift" ~> 0.15.0
 github "ashleymills/Reachability.swift" == 4.3.0
 github "daltoniam/Starscream" == 3.0.6
