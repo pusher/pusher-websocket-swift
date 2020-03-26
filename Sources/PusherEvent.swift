@@ -60,25 +60,27 @@ open class PusherEvent: NSObject, NSCopying {
     }()
     
     @nonobjc private lazy var secretKey: SecretBox.Key? = {
-        guard let keyProvider = self.keyProvider else {
+        guard let keyProvider = self.keyProvider,
+            let decodedKey = Data(base64Encoded: keyProvider.decryptionKey) else {
             return nil
         }
-        return SecretBox.Key(base64: keyProvider.decryptionKey)
+        return SecretBox.Key(decodedKey)
     }()
     
     @nonobjc private lazy var nonce: SecretBox.Nonce? = {
-        guard let encryptedData = self.encryptedData else {
+        guard let encryptedData = self.encryptedData,
+            let decodedNonce = Data(base64Encoded: encryptedData.nonce) else {
             return nil
         }
-        return SecretBox.Nonce(base64: encryptedData.nonce)
+        return SecretBox.Nonce(decodedNonce)
     }()
     
     @nonobjc private lazy var cipherText: Bytes? = {
         guard let encryptedData = self.encryptedData,
-            let decoded_data_cipherText = Data(base64Encoded: encryptedData.ciphertext) else {
+            let decodedCipherText = Data(base64Encoded: encryptedData.ciphertext) else {
             return nil
         }
-        return [UInt8](decoded_data_cipherText)
+        return Bytes(decodedCipherText)
     }()
 
     @nonobjc private let sodium = Sodium()

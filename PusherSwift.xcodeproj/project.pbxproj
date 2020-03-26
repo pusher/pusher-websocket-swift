@@ -32,7 +32,6 @@
 		33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */; };
 		33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		730EECB724290BE700F0EB73 /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 730EECB624290BE700F0EB73 /* Sodium.framework */; };
 		736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
 		736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */; };
 		736E53FA242A4EE00052CC1B /* PusherKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F8242A4DE60052CC1B /* PusherKeyProvider.swift */; };
@@ -41,6 +40,8 @@
 		E24D0AA522D798C8009DE31B /* PusherEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24D0AA422D798C8009DE31B /* PusherEvent.swift */; };
 		E29A4CBC2301BA31000BC499 /* PusherEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */; };
 		E2CFE43122D79CA7004187C3 /* PusherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFE43022D79CA7004187C3 /* PusherParser.swift */; };
+		E2F40FA523ED782B00985C40 /* PusherCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA423ED782B00985C40 /* PusherCrypto.swift */; };
+		E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +84,6 @@
 		33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherTopLevelAPITests.swift; path = ../Tests/PusherTopLevelAPITests.swift; sourceTree = "<group>"; };
 		33BB99671D21226C00B25C2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Tests/Info.plist; sourceTree = "<group>"; };
 		33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectiveC.swift; sourceTree = "<group>"; };
-		730EECB624290BE700F0EB73 /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = Carthage/Build/iOS/Sodium.framework; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
 		736E53F8242A4DE60052CC1B /* PusherKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherKeyProvider.swift; sourceTree = "<group>"; };
@@ -92,6 +92,8 @@
 		E24D0AA422D798C8009DE31B /* PusherEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEvent.swift; sourceTree = "<group>"; };
 		E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventTests.swift; sourceTree = "<group>"; };
 		E2CFE43022D79CA7004187C3 /* PusherParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherParser.swift; sourceTree = "<group>"; };
+		E2F40FA423ED782B00985C40 /* PusherCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherCrypto.swift; sourceTree = "<group>"; };
+		E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherCryptoTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +108,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				730EECB724290BE700F0EB73 /* Sodium.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +154,7 @@
 				E24D0AA422D798C8009DE31B /* PusherEvent.swift */,
 				E2498292231E612700CFBBD6 /* PusherError.swift */,
 				736E53F8242A4DE60052CC1B /* PusherKeyProvider.swift */,
+				E2F40FA423ED782B00985C40 /* PusherCrypto.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -185,6 +187,7 @@
 				E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */,
 				736E53F3242A35D90052CC1B /* String+Extensions.swift */,
 				736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */,
+				E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -192,7 +195,6 @@
 		42D29A655054030A9B238900 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				730EECB624290BE700F0EB73 /* Sodium.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -328,8 +330,8 @@
 			);
 			inputPaths = (
 				Starscream,
-				CryptoSwift,
 				Reachability,
+				Sodium,
 			);
 			name = "Copy Carthage Frameworks";
 			outputPaths = (
@@ -350,6 +352,7 @@
 				E2498293231E612700CFBBD6 /* PusherError.swift in Sources */,
 				E24D0AA522D798C8009DE31B /* PusherEvent.swift in Sources */,
 				3389F56A1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
+				E2F40FA523ED782B00985C40 /* PusherCrypto.swift in Sources */,
 				330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */,
 				3390D1E81F054D1E00E1944D /* Authorizer.swift in Sources */,
 				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
@@ -370,6 +373,7 @@
 			files = (
 				33BB997A1D21230100B25C2A /* PusherConnectionTests.swift in Sources */,
 				736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */,
+				E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */,
 				33BB99791D21230100B25C2A /* PusherClientInitializationTests.swift in Sources */,
 				33BB99771D21230100B25C2A /* PresenceChannelTests.swift in Sources */,
 				33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */,
@@ -506,10 +510,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -576,10 +576,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

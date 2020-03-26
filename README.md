@@ -1083,9 +1083,9 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 
 It uses code from the following repositories:
 
-- [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift)
 - [Reachability.swift](https://github.com/ashleymills/Reachability.swift)
 - [Starscream](https://github.com/daltoniam/Starscream)
+- [Sodium](https://github.com/jedisct1/swift-sodium)
 
 The individual licenses for these libraries are included in the corresponding Swift files.
 
