@@ -29,8 +29,8 @@ while getopts ":w:x:" opt; do
         w)
             echo "-w (Working Directory) was triggered, Parameter: $OPTARG"
             WORKING_DIRECTORY_UNEXPANDED=$OPTARG
+            WORKING_DIRECTORY="$(cd "$(dirname "$WORKING_DIRECTORY_UNEXPANDED")"; pwd)/$(basename "$WORKING_DIRECTORY_UNEXPANDED")"
             echo "WORKING_DIRECTORY_UNEXPANDED=${WORKING_DIRECTORY_UNEXPANDED}"
-			WORKING_DIRECTORY="$( cd "$(dirname "$WORKING_DIRECTORY_UNEXPANDED")" >/dev/null 2>&1 ; pwd -P )"
             echo "WORKING_DIRECTORY=${WORKING_DIRECTORY}"
         ;;
         x)
@@ -81,6 +81,9 @@ fi
 # Setup some variables #
 ########################
 
+# Temporarily change directory into the $WORKING_DIRECTORY
+pushd "${WORKING_DIRECTORY}"
+
 REPO_ROOT_DIR_PATH=$( git rev-parse --show-toplevel )
 REPO_ROOT_ABS_DIR_PATH="$( cd "$REPO_ROOT_DIR_PATH" >/dev/null 2>&1 ; pwd -P )"
 echo "REPO_ROOT_DIR_PATH=$REPO_ROOT_DIR_PATH"
@@ -118,3 +121,6 @@ carthage update
 
 # Delete the temporarily created git tag
 git tag -d "$TEMP_TAG_NAME"
+
+# Return to original directory
+popd
