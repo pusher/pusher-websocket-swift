@@ -10,7 +10,6 @@
 		335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A820569C3B000D4D08 /* Reachability.framework */; };
 		335AD5B220569F14000D4D08 /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */; };
-		33831CC31A9CFCDB00B124F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33831CBF1A9CFCDB00B124F1 /* Images.xcassets */; };
 		33831CC41A9CFCDB00B124F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33831CC01A9CFCDB00B124F1 /* Main.storyboard */; };
 		33831CC51A9CFCDB00B124F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CC11A9CFCDB00B124F1 /* ViewController.swift */; };
 		33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; };
@@ -49,7 +48,6 @@
 		33831C5E1A9CEEE900B124F1 /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831CBC1A9CFCD000B124F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "iOS Example Swift/Info.plist"; sourceTree = SOURCE_ROOT; };
 		33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "iOS Example Swift/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
-		33831CBF1A9CFCDB00B124F1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "iOS Example Swift/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		33831CC01A9CFCDB00B124F1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "iOS Example Swift/Main.storyboard"; sourceTree = SOURCE_ROOT; };
 		33831CC11A9CFCDB00B124F1 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = "iOS Example Swift/ViewController.swift"; sourceTree = SOURCE_ROOT; };
 		33CC82EA1D7F16A8003B699F /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,7 +91,6 @@
 			children = (
 				33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */,
 				33831CC11A9CFCDB00B124F1 /* ViewController.swift */,
-				33831CBF1A9CFCDB00B124F1 /* Images.xcassets */,
 				33831CC01A9CFCDB00B124F1 /* Main.storyboard */,
 				33831C611A9CEEE900B124F1 /* Supporting Files */,
 			);
@@ -193,7 +190,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33831CC41A9CFCDB00B124F1 /* Main.storyboard in Resources */,
-				33831CC31A9CFCDB00B124F1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
