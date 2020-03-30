@@ -1,8 +1,3 @@
-//
-//  main.m
-//  iOS Example Obj-C
-//
-
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 

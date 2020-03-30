@@ -1,16 +1,4 @@
-//
-//  ViewController.m
-//  iOS Example Obj-C
-//
-
-#import "ViewController.h"
-
-@interface AuthRequestBuilder : NSObject <AuthRequestBuilderProtocol>
-
-- (NSMutableURLRequest *)requestForSocketID:(NSString *)socketID channel:(PusherChannel *)channel;
-- (NSURLRequest *)requestForSocketID:(NSString *)socketID channelName:(NSString *)channelName;
-
-@end
+#import "ViewController+Extensions.h"
 
 @implementation AuthRequestBuilder
 
@@ -39,15 +27,10 @@
 
 @end
 
-@interface ViewController ()
+@implementation ViewController (Extensions)
 
-@end
-
-@implementation ViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
+- (Pusher *)makeAndLaunchPusher {
+    
     OCAuthMethod *authMethod = [[OCAuthMethod alloc] initWithSecret:@"YOUR_APP_SECRET"];
     PusherClientOptions *options = [[PusherClientOptions alloc] initWithAuthMethod:authMethod];
 
@@ -55,16 +38,16 @@
 //    OCAuthMethod *endpointAuthMethod = [[OCAuthMethod alloc] initWithAuthRequestBuilder:[[AuthRequestBuilder alloc] init]];
 //    PusherClientOptions *optionsWithEndpoint = [[PusherClientOptions alloc] initWithAuthMethod:endpointAuthMethod];
 
-    self.client = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
-    self.client.connection.delegate = self;
+    Pusher *pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
+    pusher.connection.delegate = self;
 
-    self.client.connection.userDataFetcher = ^PusherPresenceChannelMember* () {
+    pusher.connection.userDataFetcher = ^PusherPresenceChannelMember* () {
         NSString *uuid = [[NSUUID UUID] UUIDString];
         return [[PusherPresenceChannelMember alloc] initWithUserId:uuid userInfo:nil];
     };
 
     // bind to all events globally
-    [self.client bindWithEventCallback:^void (PusherEvent *event) {
+    [pusher bindWithEventCallback:^void (PusherEvent *event) {
         NSString *message = [NSString stringWithFormat: @"Event received '%@'", event.eventName];
 
         if (event.channelName) {
@@ -80,10 +63,10 @@
         NSLog(@"%@", message);
     }];
 
-    [self.client connect];
+    [pusher connect];
 
     // subscribe to a public channel
-    PusherChannel *myChannel = [self.client subscribeWithChannelName:@"my-channel"];
+    PusherChannel *myChannel = [pusher subscribeWithChannelName:@"my-channel"];
 
     // bind a callback to an event on that channel
     [myChannel bindWithEventName:@"my-event" eventCallback:^void (PusherEvent *event) {
@@ -112,7 +95,7 @@
     };
 
     // subscribe to a presence channel
-    PusherPresenceChannel *presChanExplicit = [self.client subscribeToPresenceChannelWithChannelName:@"presence-explicit" onMemberAdded:onMemberAdded onMemberRemoved:onMemberRemoved];
+    PusherPresenceChannel *presChanExplicit = [pusher subscribeToPresenceChannelWithChannelName:@"presence-explicit" onMemberAdded:onMemberAdded onMemberRemoved:onMemberRemoved];
 
     // bind a callback on the presence channel
     [presChanExplicit bindWithEventName:@"testing" eventCallback: ^void (PusherEvent *event) {
@@ -121,6 +104,8 @@
 
     // trigger a client event
     [presChanExplicit triggerWithEventName:@"client-testing" data:@{ @"developers" : @"developers developers developers" }];
+    
+    return pusher;
 }
 
 - (void)changedConnectionStateFrom:(enum ConnectionState)old to:(enum ConnectionState)new_ {
@@ -152,10 +137,4 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 @end
-

@@ -1,38 +1,32 @@
-//
-//  ViewController.swift
-//  iOS Example
-//
-
-import UIKit
+import Foundation
 import PusherSwift
 
-class ViewController: UIViewController, PusherDelegate {
-    var pusher: Pusher! = nil
-    let decoder = JSONDecoder()
-
-    @IBAction func connectButton(_ sender: AnyObject) {
-        pusher.connect()
+class AuthRequestBuilder: AuthRequestBuilderProtocol {
+    func requestFor(socketID: String, channelName: String) -> URLRequest? {
+        var request = URLRequest(url: URL(string: "http://localhost:9292/pusher/auth")!)
+        request.httpMethod = "POST"
+        request.httpBody = "socket_id=\(socketID)&channel_name=\(channelName)".data(using: String.Encoding.utf8)
+        return request
     }
+}
 
-    @IBAction func disconnectButton(_ sender: AnyObject) {
-        pusher.disconnect()
-    }
+struct DebugConsoleMessage: Codable {
+    let name: String
+    let message: String
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+extension ViewController {
+    
+    func makeAndLaunchPusher() -> Pusher {
 
-        // Only use your secret here for testing or if you're sure that there's
-        // no security risk
-//        let pusherClientOptions = PusherClientOptions(authMethod: .inline(secret: "YOUR_APP_SECRET"))
-//        pusher = Pusher(key: "YOUR_APP_KEY", options: pusherClientOptions)
+        // Only use your secret here for testing or if you're sure that there's  security risk
+        let pusherOptions = PusherClientOptions(authMethod: .inline(secret: "YOUR_APP_SECRET"))
 
 //        // Use this if you want to try out your auth endpoint
-//        let optionsWithEndpoint = PusherClientOptions(
+//        let pusherOptions = PusherClientOptions(
 //            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder())
 //        )
-//        pusher = Pusher(key: "YOUR_APP_KEY", options: optionsWithEndpoint)
-
-        // Use this if you want to try out your auth endpoint (deprecated method)
+        let pusher = Pusher(key: "YOUR_APP_KEY", options: pusherOptions)
 
         pusher.delegate = self
 
@@ -70,7 +64,7 @@ class ViewController: UIViewController, PusherDelegate {
             }
 
             // decode the event data as json into a DebugConsoleMessage
-            let decodedMessage = try? self.decoder.decode(DebugConsoleMessage.self, from: jsonData)
+            let decodedMessage = try? JSONDecoder().decode(DebugConsoleMessage.self, from: jsonData)
             guard let message = decodedMessage else {
                 print("Could not decode message")
                 return
@@ -89,8 +83,13 @@ class ViewController: UIViewController, PusherDelegate {
 
         // triggers a client event on that channel
         chan.trigger(eventName: "client-test", data: ["test": "some value"])
+        
+        return pusher
     }
+}
 
+extension ViewController: PusherDelegate {
+    
     // PusherDelegate methods
 
     func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
@@ -113,19 +112,4 @@ class ViewController: UIViewController, PusherDelegate {
             print("Received error: \(error.message)")
         }
     }
-}
-
-
-class AuthRequestBuilder: AuthRequestBuilderProtocol {
-    func requestFor(socketID: String, channelName: String) -> URLRequest? {
-        var request = URLRequest(url: URL(string: "http://localhost:9292/pusher/auth")!)
-        request.httpMethod = "POST"
-        request.httpBody = "socket_id=\(socketID)&channel_name=\(channelName)".data(using: String.Encoding.utf8)
-        return request
-    }
-}
-
-struct DebugConsoleMessage: Codable {
-    let name: String
-    let message: String
 }

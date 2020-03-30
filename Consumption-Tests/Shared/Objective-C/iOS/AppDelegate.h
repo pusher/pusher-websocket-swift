@@ -1,8 +1,3 @@
-//
-//  AppDelegate.h
-//  iOS Example Obj-C
-//
-
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

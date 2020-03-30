@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */; };
+		7306CD5924324C620077C9E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5224324C620077C9E6 /* ViewController.swift */; };
+		7306CD5A24324C620077C9E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CD5324324C620077C9E6 /* Main.storyboard */; };
+		7306CD5B24324C620077C9E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5424324C620077C9E6 /* AppDelegate.swift */; };
+		7306CD5C24324C620077C9E6 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
+		7306CD8324324EDC0077C9E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD4E24324C620077C9E6 /* ViewController.swift */; };
+		7306CD8424324EDC0077C9E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CD4F24324C620077C9E6 /* Main.storyboard */; };
+		7306CD8524324EDC0077C9E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5024324C620077C9E6 /* AppDelegate.swift */; };
+		7306CD8624324EDF0077C9E6 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
+		7306CD8724324EEF0077C9E6 /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7306CD40243248010077C9E6 /* PusherSwift.framework */; };
 		7319BDCF2432019A0074991C /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7319BDCE2432019A0074991C /* PusherSwift.framework */; };
 		7319BDD02432019A0074991C /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7319BDCE2432019A0074991C /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		73461623242E4C65003A9A3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73461622242E4C65003A9A3F /* ViewController.swift */; };
-		7352CCE124321C1400D9141A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7352CCE024321C1400D9141A /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,11 +46,18 @@
 
 /* Begin PBXFileReference section */
 		33831C5E1A9CEEE900B124F1 /* Swift-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7306CD40243248010077C9E6 /* PusherSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PusherSwift.framework; path = Carthage/Build/Mac/PusherSwift.framework; sourceTree = "<group>"; };
+		7306CD4924324BE60077C9E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7306CD4B24324BE60077C9E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7306CD4E24324C620077C9E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7306CD4F24324C620077C9E6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		7306CD5024324C620077C9E6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7306CD5224324C620077C9E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7306CD5324324C620077C9E6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		7306CD5424324C620077C9E6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extensions.swift"; sourceTree = "<group>"; };
+		7306CD7324324EB30077C9E6 /* Swift-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7319BDCE2432019A0074991C /* PusherSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PusherSwift.framework; path = Carthage/Build/iOS/PusherSwift.framework; sourceTree = "<group>"; };
-		73461622242E4C65003A9A3F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7346162D242E5792003A9A3F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7352CCE024321C1400D9141A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +66,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7319BDCF2432019A0074991C /* PusherSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7306CD7024324EB30077C9E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7306CD8724324EEF0077C9E6 /* PusherSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,24 +93,62 @@
 			isa = PBXGroup;
 			children = (
 				33831C5E1A9CEEE900B124F1 /* Swift-iOS.app */,
+				7306CD7324324EB30077C9E6 /* Swift-macOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		33831C601A9CEEE900B124F1 /* Swift */ = {
+		7306CD4824324BE60077C9E6 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				7352CCE024321C1400D9141A /* Main.storyboard */,
-				33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */,
-				73461622242E4C65003A9A3F /* ViewController.swift */,
+				7306CD4924324BE60077C9E6 /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		7306CD4A24324BE60077C9E6 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				7306CD4B24324BE60077C9E6 /* Info.plist */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		7306CD4C24324C620077C9E6 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				7306CD4D24324C620077C9E6 /* macOS */,
+				7306CD5124324C620077C9E6 /* iOS */,
+				7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */,
 			);
 			path = Swift;
+			sourceTree = "<group>";
+		};
+		7306CD4D24324C620077C9E6 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				7306CD4E24324C620077C9E6 /* ViewController.swift */,
+				7306CD4F24324C620077C9E6 /* Main.storyboard */,
+				7306CD5024324C620077C9E6 /* AppDelegate.swift */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		7306CD5124324C620077C9E6 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				7306CD5224324C620077C9E6 /* ViewController.swift */,
+				7306CD5324324C620077C9E6 /* Main.storyboard */,
+				7306CD5424324C620077C9E6 /* AppDelegate.swift */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		7319BDC22431ECA10074991C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				7319BDCE2432019A0074991C /* PusherSwift.framework */,
+				7306CD40243248010077C9E6 /* PusherSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -97,8 +156,9 @@
 		7346163B242E5B73003A9A3F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				33831C601A9CEEE900B124F1 /* Swift */,
-				7346162D242E5792003A9A3F /* Info.plist */,
+				7306CD4824324BE60077C9E6 /* iOS */,
+				7306CD4A24324BE60077C9E6 /* macOS */,
+				7306CD4C24324C620077C9E6 /* Swift */,
 			);
 			name = Shared;
 			path = ../Shared;
@@ -127,13 +187,31 @@
 			productReference = 33831C5E1A9CEEE900B124F1 /* Swift-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7306CD7224324EB30077C9E6 /* Swift-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7306CD8024324EB50077C9E6 /* Build configuration list for PBXNativeTarget "Swift-macOS" */;
+			buildPhases = (
+				7306CD6F24324EB30077C9E6 /* Sources */,
+				7306CD7024324EB30077C9E6 /* Frameworks */,
+				7306CD8824324F090077C9E6 /* Carthage: Copy Platform Specific Frameworks */,
+				7306CD7124324EB30077C9E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Swift-macOS";
+			productName = "Swift-macOS";
+			productReference = 7306CD7324324EB30077C9E6 /* Swift-macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		33831C561A9CEEE900B124F1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Pusher;
 				TargetAttributes = {
@@ -149,6 +227,10 @@
 								enabled = 0;
 							};
 						};
+					};
+					7306CD7224324EB30077C9E6 = {
+						CreatedOnToolsVersion = 11.4;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -167,6 +249,7 @@
 			projectRoot = "";
 			targets = (
 				33831C5D1A9CEEE900B124F1 /* Swift-iOS */,
+				7306CD7224324EB30077C9E6 /* Swift-macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -176,7 +259,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7352CCE124321C1400D9141A /* Main.storyboard in Resources */,
+				7306CD5A24324C620077C9E6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7306CD7124324EB30077C9E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7306CD8424324EDC0077C9E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +292,28 @@
 			shellPath = /bin/sh;
 			shellScript = "sh ../Shared/carthage-copy-platform-specific-frameworks.sh\n";
 		};
+		7306CD8824324F090077C9E6 /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Sodium,
+				Reachability,
+				Starscream,
+				PusherSwift,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh ../Shared/carthage-copy-platform-specific-frameworks.sh\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -208,8 +321,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73461623242E4C65003A9A3F /* ViewController.swift in Sources */,
-				33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */,
+				7306CD5B24324C620077C9E6 /* AppDelegate.swift in Sources */,
+				7306CD5C24324C620077C9E6 /* ViewController+Extensions.swift in Sources */,
+				7306CD5924324C620077C9E6 /* ViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7306CD6F24324EB30077C9E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7306CD8524324EDC0077C9E6 /* AppDelegate.swift in Sources */,
+				7306CD8624324EDF0077C9E6 /* ViewController+Extensions.swift in Sources */,
+				7306CD8324324EDC0077C9E6 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +390,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -315,6 +440,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -334,10 +460,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ../Shared/Info.plist;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -358,14 +483,72 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
-				INFOPLIST_FILE = ../Shared/Info.plist;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		7306CD8124324EB50077C9E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Swift-macOS/Swift_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7306CD8224324EB50077C9E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Swift-macOS/Swift_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -386,6 +569,15 @@
 			buildConfigurations = (
 				33831C7E1A9CEEEA00B124F1 /* Debug */,
 				33831C7F1A9CEEEA00B124F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7306CD8024324EB50077C9E6 /* Build configuration list for PBXNativeTarget "Swift-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7306CD8124324EB50077C9E6 /* Debug */,
+				7306CD8224324EB50077C9E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

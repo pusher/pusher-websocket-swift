@@ -10,21 +10,14 @@
 		331F372D1D82CAB900AE2852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372C1D82CAB900AE2852 /* main.m */; };
 		331F37301D82CAB900AE2852 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372F1D82CAB900AE2852 /* AppDelegate.m */; };
 		331F37331D82CAB900AE2852 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F37321D82CAB900AE2852 /* ViewController.m */; };
+		7306CDAC2432522A0077C9E6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA3243252120077C9E6 /* ViewController.m */; };
+		7306CDAD2432522E0077C9E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CDA4243252120077C9E6 /* Main.storyboard */; };
+		7306CDAE243252320077C9E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA5243252120077C9E6 /* main.m */; };
+		7306CDAF243252350077C9E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA6243252120077C9E6 /* AppDelegate.m */; };
+		7306CDB22432531B0077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
+		7306CDB424325CE90077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		73461638242E5A7E003A9A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73461637242E5A75003A9A3F /* Main.storyboard */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		339CC9B71DAB8D6D00E7F97B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		331F37281D82CAB900AE2852 /* ObjectiveC-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,12 +26,29 @@
 		331F372F1D82CAB900AE2852 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		331F37311D82CAB900AE2852 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		331F37321D82CAB900AE2852 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		73461636242E59E9003A9A3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7306CD6A24324E060077C9E6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7306CD6C24324E060077C9E6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7306CDA2243252120077C9E6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7306CDA3243252120077C9E6 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7306CDA4243252120077C9E6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		7306CDA5243252120077C9E6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7306CDA6243252120077C9E6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7306CDA7243252120077C9E6 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7306CDB02432531B0077C9E6 /* ViewController+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ViewController+Extensions.h"; sourceTree = "<group>"; };
+		7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ViewController+Extensions.m"; sourceTree = "<group>"; };
 		73461637242E5A75003A9A3F /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		331F37251D82CAB900AE2852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7306CD8A2432517B0077C9E6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -60,28 +70,70 @@
 			isa = PBXGroup;
 			children = (
 				331F37281D82CAB900AE2852 /* ObjectiveC-iOS.app */,
+				7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		331F372A1D82CAB900AE2852 /* Objective-C */ = {
+		331F372A1D82CAB900AE2852 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				73461637242E5A75003A9A3F /* Main.storyboard */,
 				331F372E1D82CAB900AE2852 /* AppDelegate.h */,
 				331F372F1D82CAB900AE2852 /* AppDelegate.m */,
+				331F372C1D82CAB900AE2852 /* main.m */,
+				73461637242E5A75003A9A3F /* Main.storyboard */,
 				331F37311D82CAB900AE2852 /* ViewController.h */,
 				331F37321D82CAB900AE2852 /* ViewController.m */,
-				331F372C1D82CAB900AE2852 /* main.m */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		7306CD6124324DCA0077C9E6 /* Objective-C */ = {
+			isa = PBXGroup;
+			children = (
+				7306CDA1243252120077C9E6 /* macOS */,
+				331F372A1D82CAB900AE2852 /* iOS */,
+				7306CDB02432531B0077C9E6 /* ViewController+Extensions.h */,
+				7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */,
 			);
 			path = "Objective-C";
+			sourceTree = "<group>";
+		};
+		7306CD6924324E060077C9E6 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				7306CD6A24324E060077C9E6 /* Info.plist */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		7306CD6B24324E060077C9E6 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				7306CD6C24324E060077C9E6 /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		7306CDA1243252120077C9E6 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				7306CDA2243252120077C9E6 /* AppDelegate.h */,
+				7306CDA6243252120077C9E6 /* AppDelegate.m */,
+				7306CDA5243252120077C9E6 /* main.m */,
+				7306CDA4243252120077C9E6 /* Main.storyboard */,
+				7306CDA7243252120077C9E6 /* ViewController.h */,
+				7306CDA3243252120077C9E6 /* ViewController.m */,
+			);
+			path = macOS;
 			sourceTree = "<group>";
 		};
 		7346163D242E5BC7003A9A3F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				331F372A1D82CAB900AE2852 /* Objective-C */,
-				73461636242E59E9003A9A3F /* Info.plist */,
+				7306CD6B24324E060077C9E6 /* iOS */,
+				7306CD6924324E060077C9E6 /* macOS */,
+				7306CD6124324DCA0077C9E6 /* Objective-C */,
 			);
 			name = Shared;
 			path = ../Shared;
@@ -96,9 +148,8 @@
 			buildPhases = (
 				331F37241D82CAB900AE2852 /* Sources */,
 				331F37251D82CAB900AE2852 /* Frameworks */,
-				E22966B12260A7E00050D509 /* Copy Platform Specific Carthage Frameworks */,
 				331F37261D82CAB900AE2852 /* Resources */,
-				339CC9B71DAB8D6D00E7F97B /* Embed Frameworks */,
+				E22966B12260A7E00050D509 /* Carthage: Copy Platform Specific Frameworks */,
 			);
 			buildRules = (
 			);
@@ -107,6 +158,24 @@
 			name = "ObjectiveC-iOS";
 			productName = "iOS Example Obj-C";
 			productReference = 331F37281D82CAB900AE2852 /* ObjectiveC-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7306CD8C2432517B0077C9E6 /* ObjectiveC-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7306CD9E2432517E0077C9E6 /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS" */;
+			buildPhases = (
+				7306CD892432517B0077C9E6 /* Sources */,
+				7306CD8A2432517B0077C9E6 /* Frameworks */,
+				7306CD8B2432517B0077C9E6 /* Resources */,
+				7306CDB524325DE90077C9E6 /* Carthage: Copy Platform Specific Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ObjectiveC-macOS";
+			productName = "ObjectiveC-macOS";
+			productReference = 7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,6 +197,10 @@
 							};
 						};
 					};
+					7306CD8C2432517B0077C9E6 = {
+						CreatedOnToolsVersion = 11.4;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 331F37231D82CAB900AE2852 /* Build configuration list for PBXProject "ObjectiveC" */;
@@ -145,6 +218,7 @@
 			projectRoot = "";
 			targets = (
 				331F37271D82CAB900AE2852 /* ObjectiveC-iOS */,
+				7306CD8C2432517B0077C9E6 /* ObjectiveC-macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -158,10 +232,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7306CD8B2432517B0077C9E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7306CDAD2432522E0077C9E6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E22966B12260A7E00050D509 /* Copy Platform Specific Carthage Frameworks */ = {
+		7306CDB524325DE90077C9E6 /* Carthage: Copy Platform Specific Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -174,7 +256,29 @@
 				Starscream,
 				PusherSwift,
 			);
-			name = "Copy Platform Specific Carthage Frameworks";
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh ../Shared/carthage-copy-platform-specific-frameworks.sh\n\n";
+		};
+		E22966B12260A7E00050D509 /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Sodium,
+				Reachability,
+				Starscream,
+				PusherSwift,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -190,9 +294,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7306CDB22432531B0077C9E6 /* ViewController+Extensions.m in Sources */,
 				331F37331D82CAB900AE2852 /* ViewController.m in Sources */,
 				331F37301D82CAB900AE2852 /* AppDelegate.m in Sources */,
 				331F372D1D82CAB900AE2852 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7306CD892432517B0077C9E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7306CDB424325CE90077C9E6 /* ViewController+Extensions.m in Sources */,
+				7306CDAE243252320077C9E6 /* main.m in Sources */,
+				7306CDAC2432522A0077C9E6 /* ViewController.m in Sources */,
+				7306CDAF243252350077C9E6 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +367,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -300,6 +417,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -314,9 +432,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ../Shared/Info.plist;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -330,10 +447,60 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ../Shared/Info.plist;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7306CD9F2432517E0077C9E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ObjectiveC-macOS/ObjectiveC_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7306CDA02432517E0077C9E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ObjectiveC-macOS/ObjectiveC_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -354,6 +521,15 @@
 			buildConfigurations = (
 				331F37401D82CAB900AE2852 /* Debug */,
 				331F37411D82CAB900AE2852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7306CD9E2432517E0077C9E6 /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7306CD9F2432517E0077C9E6 /* Debug */,
+				7306CDA02432517E0077C9E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
