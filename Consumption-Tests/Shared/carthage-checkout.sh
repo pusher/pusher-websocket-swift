@@ -129,9 +129,15 @@ set +e
 
 # Perform the `carthage update` (using the Cartfile we just created/updated)
 carthage update
+CARTHAGE_UPDATE_STATUS_CODE=$?
+echo "CARTHAGE_UPDATE_STATUS_CODE=$CARTHAGE_UPDATE_STATUS_CODE"
+
+set -e
 
 # Delete the temporarily created git tag
 git tag -d "$TEMP_TAG_NAME"
 
 # Return to original directorypopd
 popd
+
+exit $CARTHAGE_UPDATE_STATUS_CODE
