@@ -1,0 +1,3 @@
+SWIFT_VERSION = 5.2
+//: IPHONEOS_DEPLOYMENT_TARGET is deliberately not set so the default/lastest value is used
+//: MACOSX_DEPLOYMENT_TARGET is deliberately not set so the default/lastest value is used

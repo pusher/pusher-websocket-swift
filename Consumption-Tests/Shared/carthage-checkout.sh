@@ -122,5 +122,5 @@ carthage update
 # Delete the temporarily created git tag
 git tag -d "$TEMP_TAG_NAME"
 
-# Return to original directory
+# Return to original directorypopd
 popd
