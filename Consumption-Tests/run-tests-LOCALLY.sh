@@ -92,6 +92,7 @@ function assignXcodeAppPathFor { # outputs path to $XCODE_APP_PATH var
 	
 	# If we got here the DESIRED_XCODE_VERSION was not found
 	echo "ERROR: No Xcode (xcodebuild) found for version '$DESIRED_XCODE_VERSION' as defined in '$DESIRED_XCODE_VERSION_FILENAME'" >&2
+	say "Failure. Unable to find ex code application for version $DESIRED_XCODE_VERSION"
 	exit 1 # Exit with a non-zero code to indicate failure and kill the script
 
 }
