@@ -16,7 +16,7 @@
 		7306CDAF243252350077C9E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA6243252120077C9E6 /* AppDelegate.m */; };
 		7306CDB22432531B0077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		7306CDB424325CE90077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
-		7344F5462433362600B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7344F5452433362600B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */; };
+		7344F5462433362600B7DBE2 /* config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7344F5452433362600B7DBE2 /* config.xcconfig */; };
 		73461638242E5A7E003A9A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73461637242E5A75003A9A3F /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,7 @@
 		7306CDA7243252120077C9E6 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7306CDB02432531B0077C9E6 /* ViewController+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ViewController+Extensions.h"; sourceTree = "<group>"; };
 		7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ViewController+Extensions.m"; sourceTree = "<group>"; };
-		7344F5452433362600B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = LATEST_SUPPORTED_VERSIONS.xcconfig; path = ../LATEST_SUPPORTED_VERSIONS.xcconfig; sourceTree = "<group>"; };
+		7344F5452433362600B7DBE2 /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		73461637242E5A75003A9A3F /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +63,7 @@
 		331F371F1D82CAB900AE2852 = {
 			isa = PBXGroup;
 			children = (
-				7344F5452433362600B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */,
+				7344F5452433362600B7DBE2 /* config.xcconfig */,
 				7346163D242E5BC7003A9A3F /* Shared */,
 				331F37291D82CAB900AE2852 /* Products */,
 			);
@@ -231,7 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73461638242E5A7E003A9A3F /* Main.storyboard in Resources */,
-				7344F5462433362600B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig in Resources */,
+				7344F5462433362600B7DBE2 /* config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +320,7 @@
 /* Begin XCBuildConfiguration section */
 		331F373D1D82CAB900AE2852 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7344F5452433362600B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */;
+			baseConfigurationReference = 7344F5452433362600B7DBE2 /* config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -378,7 +378,7 @@
 		};
 		331F373E1D82CAB900AE2852 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7344F5452433362600B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */;
+			baseConfigurationReference = 7344F5452433362600B7DBE2 /* config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

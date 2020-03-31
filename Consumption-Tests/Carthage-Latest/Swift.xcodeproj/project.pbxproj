@@ -18,7 +18,7 @@
 		7306CD8724324EEF0077C9E6 /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7306CD40243248010077C9E6 /* PusherSwift.framework */; };
 		7319BDCF2432019A0074991C /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7319BDCE2432019A0074991C /* PusherSwift.framework */; };
 		7319BDD02432019A0074991C /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7319BDCE2432019A0074991C /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7344F5442433361800B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7344F5432433361800B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */; };
+		7344F5442433361800B7DBE2 /* config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7344F5432433361800B7DBE2 /* config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,7 +59,7 @@
 		7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extensions.swift"; sourceTree = "<group>"; };
 		7306CD7324324EB30077C9E6 /* Swift-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7319BDCE2432019A0074991C /* PusherSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PusherSwift.framework; path = Carthage/Build/iOS/PusherSwift.framework; sourceTree = "<group>"; };
-		7344F5432433361800B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = LATEST_SUPPORTED_VERSIONS.xcconfig; path = ../LATEST_SUPPORTED_VERSIONS.xcconfig; sourceTree = "<group>"; };
+		7344F5432433361800B7DBE2 /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,7 @@
 		33831C551A9CEEE900B124F1 = {
 			isa = PBXGroup;
 			children = (
-				7344F5432433361800B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */,
+				7344F5432433361800B7DBE2 /* config.xcconfig */,
 				7346163B242E5B73003A9A3F /* Shared */,
 				33831C5F1A9CEEE900B124F1 /* Products */,
 				7319BDC22431ECA10074991C /* Frameworks */,
@@ -263,7 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7306CD5A24324C620077C9E6 /* Main.storyboard in Resources */,
-				7344F5442433361800B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig in Resources */,
+				7344F5442433361800B7DBE2 /* config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +346,7 @@
 /* Begin XCBuildConfiguration section */
 		33831C7B1A9CEEEA00B124F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7344F5432433361800B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */;
+			baseConfigurationReference = 7344F5432433361800B7DBE2 /* config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -403,7 +403,7 @@
 		};
 		33831C7C1A9CEEEA00B124F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7344F5432433361800B7DBE2 /* LATEST_SUPPORTED_VERSIONS.xcconfig */;
+			baseConfigurationReference = 7344F5432433361800B7DBE2 /* config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
