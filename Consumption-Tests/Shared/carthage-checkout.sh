@@ -5,9 +5,9 @@
 # This is a little annoying during development when you want to test that your local changes
 # haven't broken anything.  
 # To work around this, this script...
-#  - commits your local changes (don't worry this will be undone later) 
+#  - (if necessary) commits your local changes (don't worry this will be undone later) 
 #  - tags the commit (giving it a name incorporating the current date/time)
-#  - resets the commit (putting your working copy back as it was before)
+#  - (if necessary) resets the commit (putting your working copy back as it was before)
 #  - create/updates the Cartfile so it points to the tag that was just created
 #  - performs a `carthage update` 
 #  - removes the tag 
@@ -98,15 +98,26 @@ echo "TEMP_TAG_NAME=$TEMP_TAG_NAME"
 # Validation Successfully, perform the checkout #
 #################################################
 
-# Temporarily commit all changes in the working copy
-git add -A 
-git commit -m "Temporary commit"
+# Check the status of the working copy to determine if we need to commit the code temporarily
+if [ -z "$(git status --porcelain)" ]; then 
+	TEMP_COMMIT_REQUIRED=0
+else  # Uncommitted changes
+	TEMP_COMMIT_REQUIRED=1
+fi
+
+if (( $TEMP_COMMIT_REQUIRED )); then
+	# Temporarily commit all changes in the working copy
+	git add -A 
+	git commit -m "Temporary commit"
+fi
 
 # Immediately tag the commit 
 git tag "$TEMP_TAG_NAME"
 
-# Rollback the temporary commit, reverting the working copy back where it started
-git reset HEAD~
+if (( $TEMP_COMMIT_REQUIRED )); then
+	# Rollback the temporary commit, reverting the working copy back where it started
+	git reset HEAD~
+fi
 
 # Create/update the Cartfile (in the specified WORKING_DIRECTORY).  This might output for example:
 # git "file:///Users/me/Code/pusher-websocket-swift" "2020-03-30-12-57-46"
