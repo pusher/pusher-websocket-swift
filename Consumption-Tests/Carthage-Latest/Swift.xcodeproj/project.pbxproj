@@ -18,7 +18,6 @@
 		7306CD8724324EEF0077C9E6 /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7306CD40243248010077C9E6 /* PusherSwift.framework */; };
 		7319BDCF2432019A0074991C /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7319BDCE2432019A0074991C /* PusherSwift.framework */; };
 		7319BDD02432019A0074991C /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7319BDCE2432019A0074991C /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7344F5442433361800B7DBE2 /* config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7344F5432433361800B7DBE2 /* config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -196,8 +195,8 @@
 			buildPhases = (
 				7306CD6F24324EB30077C9E6 /* Sources */,
 				7306CD7024324EB30077C9E6 /* Frameworks */,
-				7306CD8824324F090077C9E6 /* Carthage: Copy Platform Specific Frameworks */,
 				7306CD7124324EB30077C9E6 /* Resources */,
+				7306CD8824324F090077C9E6 /* Carthage: Copy Platform Specific Frameworks */,
 			);
 			buildRules = (
 			);
@@ -263,7 +262,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7306CD5A24324C620077C9E6 /* Main.storyboard in Resources */,
-				7344F5442433361800B7DBE2 /* config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +292,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh ../Shared/carthage-copy-platform-specific-frameworks.sh\n";
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
 		7306CD8824324F090077C9E6 /* Carthage: Copy Platform Specific Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -316,7 +314,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh ../Shared/carthage-copy-platform-specific-frameworks.sh\n";
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -9,12 +9,11 @@ appletv*) plat=tvOS;;
 *) echo "error: Unknown PLATFORM_NAME: $PLATFORM_NAME"; exit 1;;
 esac
 for (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do
-VAR=SCRIPT_INPUT_FILE_$n
-framework=$(basename "${!VAR}")
-input_file_path="$SRCROOT/Carthage/Build/$plat/$framework.framework"
-echo "exporting SCRIPT_INPUT_FILE_$n=$input_file_path"
-export SCRIPT_INPUT_FILE_$n="$input_file_path"
-
+	VAR=SCRIPT_INPUT_FILE_$n
+	framework=$(basename "${!VAR}")
+	input_file_path="$SRCROOT/Carthage/Build/$plat/$framework.framework"
+	echo "exporting SCRIPT_INPUT_FILE_$n=$input_file_path"
+	export SCRIPT_INPUT_FILE_$n="$input_file_path"
 done
 
 /usr/local/bin/carthage copy-frameworks || exit
