@@ -82,7 +82,6 @@ if [ "$XCODE_VERSION" != "$ACTUAL_XCODE_VERSION" ]; then
 fi
 
 
-
 ########################
 # Setup some variables #
 ########################
@@ -143,7 +142,7 @@ set -e
 # Delete the temporarily created git tag
 git tag -d "$TEMP_TAG_NAME"
 
-# Return to original directorypopd
+# Return to original directory
 popd
 
 exit $CARTHAGE_UPDATE_STATUS_CODE
