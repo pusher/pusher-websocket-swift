@@ -1,3 +1,4 @@
+#! /bin/sh
 
 # Usage `assignXcodeAppPathFor FILENAME_CONTAINING_DESIRED_VERSION`
 function assignXcodeAppPathFor { # outputs path to $XCODE_APP_PATH var

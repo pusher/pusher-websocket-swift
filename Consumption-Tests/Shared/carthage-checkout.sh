@@ -34,9 +34,9 @@ while getopts ":w:x:" opt; do
             echo "WORKING_DIRECTORY=${WORKING_DIRECTORY}"
         ;;
         x)
-            echo "-x (Xcode Version) was triggered, Parameter: $OPTARG"
-            XCODE_VERSION=$OPTARG
-            echo "XCODE_VERSION=${XCODE_VERSION}"
+            echo "-x (Xcode Version Filename) was triggered, Parameter: $OPTARG"
+            XCODE_VERSION_FILENAME=$OPTARG
+            echo "XCODE_VERSION_FILENAME=${XCODE_VERSION_FILENAME}"
         ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
@@ -55,8 +55,8 @@ if [ -z "${WORKING_DIRECTORY}" ]; then
     exit 1 # exit with non-zero code to indicate failure
 fi
 
-if [ -z "${XCODE_VERSION}" ]; then
-    echo "ERROR: Mandatory -x (Xcode Version) argument was NOT specified" >&2
+if [ -z "${XCODE_VERSION_FILENAME}" ]; then
+    echo "ERROR: Mandatory -x (Xcode Version Filename) argument was NOT specified" >&2
     exit 1 # exit with non-zero code to indicate failure
 fi
 
@@ -65,7 +65,13 @@ fi
 # Check Xcode-Select #
 ######################
 
+SCRIPT_DIRECTORY="$(dirname $0)"
+XCODE_VERSION_FILEPATH="$SCRIPT_DIRECTORY/../$XCODE_VERSION_FILENAME"
+XCODE_VERSION=$( head -n 1 "$XCODE_VERSION_FILEPATH" )
 ACTUAL_XCODE_VERSION=$( xcodebuild -version | head -n 1)
+echo "SCRIPT_DIRECTORY=${SCRIPT_DIRECTORY}"
+echo "XCODE_VERSION_FILEPATH=${XCODE_VERSION_FILEPATH}"
+echo "XCODE_VERSION=${XCODE_VERSION}"
 echo "ACTUAL_XCODE_VERSION=${ACTUAL_XCODE_VERSION}"
 
 if [ "$XCODE_VERSION" != "$ACTUAL_XCODE_VERSION" ]; then

@@ -133,7 +133,7 @@ performCarthageTests() {
 		sudo xcode-select -s "$DESIRED_XCODE_SELECT"
 	fi
 
-	if (( "$SHOULD_CHECKOUT_CARTHAGE" )); then
+	if (( $SHOULD_CARTHAGE_CHECKOUT )); then
 		sh "$WORKING_DIRECTORY/checkout.sh"
 	fi
 
