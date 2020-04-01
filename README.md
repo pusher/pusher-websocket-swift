@@ -19,7 +19,7 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 
 ### Deployment targets
 - iOS 8.0 and above
-- macOS (OS X) 10.10 and above
+- macOS (OS X) 10.11 and above
 - tvOS 9.0 and above
 - Not currently compatible with watchOS
 
