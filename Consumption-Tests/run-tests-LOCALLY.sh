@@ -81,7 +81,7 @@ function runXcodeBuild {
 	local SCHEME="$2"
 	
 	set +e
-	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME" -allowProvisioningUpdates
+	xcodebuild clean build -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME" -allowProvisioningUpdates
 	local XCODEBUILD_STATUS_CODE=$?
 	set -e
 	
@@ -161,6 +161,13 @@ function performTests {
 ####################
 
 performTests "Carthage-Minimum"
+
+
+###################
+# Carthage-Latest #
+###################
+
+performTests "Carthage-Latest"
 
 
 ###################
