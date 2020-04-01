@@ -23,14 +23,14 @@ SUMMARY_LOG_OUTPUT=""
 # Define Functions #
 ####################
 
-# Usage: `runXcodeBuild "WORKSPACE" "SCHEME"`
+# Usage: `runXcodeBuild "WORKSPACE_FILEPATH" "SCHEME"`
 runXcodeBuild() {
 	
 	local WORKSPACE_FILEPATH="$1"
 	local SCHEME="$2"
 	
 	set +e
-	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME"
+	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME" -allowProvisioningUpdates
 	local XCODEBUILD_STATUS_CODE=$?
 	set -e
 	
