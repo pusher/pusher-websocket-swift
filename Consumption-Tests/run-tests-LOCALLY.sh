@@ -138,13 +138,13 @@ function performTests {
 		sudo xcode-select -s "$DESIRED_XCODE_SELECT"
 	fi
 	
-	if ( [[ "$NAME" == "Carthage-"* ]] && (( $SHOULD_CARTHAGE_CHECKOUT )) ) || \
-	   ( [[ "$NAME" == "Cocoapods-"* ]] && (( $SHOULD_COCOAPODS_CHECKOUT )) )
-	then 
-		sh "$WORKING_DIRECTORY/checkout.sh"
+	if [[ "$NAME" == "Carthage-"* ]] && (( $SHOULD_CARTHAGE_CHECKOUT )); then
+		sh "$SCRIPT_DIRECTORY/Shared/carthage-checkout.sh" -w "$WORKING_DIRECTORY"
+	elif [[ "$NAME" == "Cocoapods-"* ]] && (( $SHOULD_COCOAPODS_CHECKOUT )); then
+		sh "$SCRIPT_DIRECTORY/Shared/cocoapods-checkout.sh" -w "$WORKING_DIRECTORY"
 	else
 		echo "**** SKIPPING CHECKOUT ****"
-		SUMMARY_LOG_OUTPUT+=" (note that checkout was skipped) +++++"
+		SUMMARY_LOG_OUTPUT+=" (checkout was skipped) +++++"
 	fi
 
 	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-iOS"
