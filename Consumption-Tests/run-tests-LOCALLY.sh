@@ -11,7 +11,7 @@ set -e
 # Define Variables #
 ####################
 
-SHOULD_CHECKOUT=0
+SHOULD_CHECKOUT=1
 echo "SHOULD_CHECKOUT=$SHOULD_CHECKOUT"
 
 SCRIPT_DIRECTORY="$(dirname $0)"
