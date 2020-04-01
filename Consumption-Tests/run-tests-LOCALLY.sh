@@ -7,20 +7,48 @@
 set -e
 
 
-SHOULD_CHECKOUT=1
+####################
+# Define Variables #
+####################
+
+SHOULD_CHECKOUT=0
 echo "SHOULD_CHECKOUT=$SHOULD_CHECKOUT"
 
 SCRIPT_DIRECTORY="$(dirname $0)"
 echo "SCRIPT_DIRECTORY=$SCRIPT_DIRECTORY"
 
+SUMMARY_LOG_OUTPUT=""
 
 ####################
 # Define Functions #
 ####################
 
+# Usage: `runXcodeBuild "WORKSPACE" "SCHEME"`
+runXcodeBuild() {
+	
+	local WORKSPACE_FILEPATH="$1"
+	local SCHEME="$2"
+	
+	set +e
+	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME"
+	local XCODEBUILD_STATUS_CODE=$?
+	set -e
+	
+	if (( XCODEBUILD_STATUS_CODE )); then
+		# Build errored
+		SUMMARY_LOG_OUTPUT+="\n ❌ $SCHEME"
+		echo "$SUMMARY_LOG_OUTPUT"
+		say "Build failed for scheme, $SCHEME"
+		exit $XCODEBUILD_STATUS_CODE
+	else
+		# Built succeeded
+		SUMMARY_LOG_OUTPUT+="\n ✅ $SCHEME"
+	fi
+}
+
 # Usage: `runCarthageBuilds "MINIMUM_SUPPORTED_XCODE_VERSION" "Carthage-Minimum"`
-runCarthageBuilds() {
-	echo "------ BEGIN runCarthageBuilds ------"
+performCarthageTests() {
+	echo "------ BEGIN performCarthageTests ------"
 
 	local XCODE_VERSION_FILE="$1"
 	local NAME="$2"
@@ -50,12 +78,14 @@ runCarthageBuilds() {
 		sh "$WORKING_DIRECTORY/checkout.sh"
 	fi
 
-	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "Swift-iOS"
-	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "Swift-macOS"
-	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "ObjectiveC-iOS"
-	xcodebuild -workspace "$WORKSPACE_FILEPATH" -scheme "ObjectiveC-macOS"
+	SUMMARY_LOG_OUTPUT+="\n\n+++++ $NAME +++++"
+
+	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-iOS"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-macOS"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-iOS"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-macOS"
 	
-	echo "------ END runCarthageBuilds ------"
+	echo "------ END performCarthageTests ------"
 }
 
 # Usage `assignXcodeAppPathFor FILENAME_CONTAINING_DESIRED_VERSION`
@@ -102,20 +132,20 @@ function assignXcodeAppPathFor { # outputs path to $XCODE_APP_PATH var
 # Carthage-Minimum #
 ####################
 
-runCarthageBuilds "MINIMUM_SUPPORTED_XCODE_VERSION" "Carthage-Minimum"
+performCarthageTests "MINIMUM_SUPPORTED_XCODE_VERSION" "Carthage-Minimum"
 
 
 ###################
 # Carthage-Latest #
 ###################
 
-runCarthageBuilds "LATEST_SUPPORTED_XCODE_VERSION" "Carthage-Latest"
+performCarthageTests "LATEST_SUPPORTED_XCODE_VERSION" "Carthage-Latest"
 
 
+############
+# Conclude #
+############
 
-
+echo "$SUMMARY_LOG_OUTPUT"
 say "All targets built successfully"
-
-
-
 
