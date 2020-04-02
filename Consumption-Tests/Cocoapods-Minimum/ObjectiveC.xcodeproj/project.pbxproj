@@ -60,7 +60,6 @@
 		73461637242E5A75003A9A3F /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-iOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-macOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		739B56A824362C2400937ECD /* WithEncryption.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = WithEncryption.xcconfig; sourceTree = "<group>"; };
 		7CA0B79ED2B581CAA9822072 /* Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS-WithoutEncryption/Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
 		A47DF1A13242A159A9391977 /* Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS-WithEncryption/Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig"; sourceTree = "<group>"; };
 		B32316ACED8F35B431149161 /* Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS-WithoutEncryption/Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,7 +111,6 @@
 				7344F5452433362600B7DBE2 /* config.xcconfig */,
 				7346163D242E5BC7003A9A3F /* Shared */,
 				331F37291D82CAB900AE2852 /* Products */,
-				73853CB7243640AC005F0E49 /* Recovered References */,
 				CB9A77DCA3E9ACCFCB38B39A /* Pods */,
 				68EEDF80AE54A5A88B1D15AF /* Frameworks */,
 			);
@@ -202,14 +200,6 @@
 			);
 			name = Shared;
 			path = ../Shared;
-			sourceTree = "<group>";
-		};
-		73853CB7243640AC005F0E49 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				739B56A824362C2400937ECD /* WithEncryption.xcconfig */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		CB9A77DCA3E9ACCFCB38B39A /* Pods */ = {
