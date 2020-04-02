@@ -1,5 +1,11 @@
 import XCTest
-@testable import PusherSwift
+
+#if WITH_ENCRYPTION
+    @testable import PusherSwiftWithEncryption
+#else
+    @testable import PusherSwift
+#endif
+
 
 public class DummyPusherKeyProvider: PusherKeyProviding {
     

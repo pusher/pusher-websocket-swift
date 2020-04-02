@@ -1,13 +1,7 @@
 import Foundation
-import Sodium
 
 @objcMembers
 open class PusherEvent: NSObject, NSCopying {
-    
-    private struct EncryptedData: Decodable {
-        var nonce: String
-        var ciphertext: String
-    }
     
     /// The JSON object received from the websocket
     @nonobjc internal let raw: [String: Any]
@@ -21,10 +15,11 @@ open class PusherEvent: NSObject, NSCopying {
     
     /// The data that was passed when the event was triggered.
     public lazy var data: String? = {
+        let data = raw["data"] as? String
         if self.isEncryptedChannel && !self.isPusherSystemEvent {
-            return self.decryptedString
+            return PusherDecryptor.decrypt(data: data, keyProvider: self.keyProvider)
         }
-        return raw["data"] as? String
+        return data
     }()
     
     /// The ID of the user who triggered the event. Only present in client event on presence channels.
@@ -38,52 +33,6 @@ open class PusherEvent: NSObject, NSCopying {
         return eventName.starts(with: "pusher:") || eventName.starts(with: "pusher_internal:")
     }()
     
-    @nonobjc private lazy var decryptedString: String? = {
-        guard
-            let cipherText = self.cipherText,
-            let secretKey = self.secretKey,
-            let nonce = self.nonce,
-            let decryptedData = sodium.secretBox.open(authenticatedCipherText: cipherText, secretKey: secretKey, nonce: nonce),
-            let decryptedString = String(bytes: decryptedData, encoding: .utf8) else {
-                return nil
-        }
-        return decryptedString
-    }()
-    
-    @nonobjc private lazy var encryptedData: EncryptedData? = {
-        guard let dataAsString = raw["data"] as? String,
-            let dataAsData = dataAsString.data(using: .utf8),
-            let encryptedData = try? JSONDecoder().decode(EncryptedData.self, from: dataAsData) else {
-                return nil
-        }
-        return encryptedData
-    }()
-    
-    @nonobjc private lazy var secretKey: SecretBox.Key? = {
-        guard let keyProvider = self.keyProvider,
-            let decodedKey = Data(base64Encoded: keyProvider.decryptionKey) else {
-            return nil
-        }
-        return SecretBox.Key(decodedKey)
-    }()
-    
-    @nonobjc private lazy var nonce: SecretBox.Nonce? = {
-        guard let encryptedData = self.encryptedData,
-            let decodedNonce = Data(base64Encoded: encryptedData.nonce) else {
-            return nil
-        }
-        return SecretBox.Nonce(decodedNonce)
-    }()
-    
-    @nonobjc private lazy var cipherText: Bytes? = {
-        guard let encryptedData = self.encryptedData,
-            let decodedCipherText = Data(base64Encoded: encryptedData.ciphertext) else {
-            return nil
-        }
-        return Bytes(decodedCipherText)
-    }()
-
-    @nonobjc private let sodium = Sodium()
     @nonobjc private let keyProvider: PusherKeyProviding?
     
     @nonobjc internal init?(jsonObject: [String: Any], keyProvider: PusherKeyProviding? = nil) {

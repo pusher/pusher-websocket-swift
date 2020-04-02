@@ -1,5 +1,10 @@
 import Foundation
-import PusherSwift
+
+#if WITH_ENCRYPTION
+    @testable import PusherSwiftWithEncryption
+#else
+    @testable import PusherSwift
+#endif
 
 func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {
     if let data = text.data(using: .utf8) {

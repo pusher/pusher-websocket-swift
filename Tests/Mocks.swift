@@ -1,6 +1,11 @@
 import Foundation
-import PusherSwift
 import Starscream
+
+#if WITH_ENCRYPTION
+    @testable import PusherSwiftWithEncryption
+#else
+    @testable import PusherSwift
+#endif
 
 open class MockWebSocket: WebSocket {
     let stubber = StubberForMocks()

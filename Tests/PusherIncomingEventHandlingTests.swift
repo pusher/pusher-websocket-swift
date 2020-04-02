@@ -1,5 +1,10 @@
-@testable import PusherSwift
 import XCTest
+
+#if WITH_ENCRYPTION
+    @testable import PusherSwiftWithEncryption
+#else
+    @testable import PusherSwift
+#endif
 
 class HandlingIncomingEventsTests: XCTestCase {
     var key: String!
