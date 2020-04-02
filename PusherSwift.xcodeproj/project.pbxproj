@@ -497,7 +497,6 @@
 			inputPaths = (
 				Starscream,
 				Reachability,
-				Sodium,
 			);
 			name = "Copy Carthage Frameworks";
 			outputPaths = (
