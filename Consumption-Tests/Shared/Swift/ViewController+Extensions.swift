@@ -1,5 +1,10 @@
 import Foundation
-import PusherSwift
+
+#if WITH_ENCRYPTION
+    import PusherSwiftWithEncryption
+#else
+    import PusherSwift
+#endif
 
 class AuthRequestBuilder: AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channelName: String) -> URLRequest? {

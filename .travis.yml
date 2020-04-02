@@ -38,7 +38,7 @@ script:
   - xcodebuild -version
   - xcodebuild -workspace PusherSwift.xcworkspace -list
   - if [ "$DST" != "platform=OS X" ]; then
-      echo "$SIMULARTOR_ID";
+      echo "$SIMULATOR_ID";
       open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID || true; sleep 20;
     fi
   - xcodebuild -scheme PusherSwift -destination "$DST" -project PusherSwift.xcodeproj clean build | xcpretty -tc;

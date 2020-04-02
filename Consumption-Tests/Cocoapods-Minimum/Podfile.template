@@ -1,34 +1,51 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-workspace 'Cocoapods-Latest.xcworkspace'
+workspace 'Cocoapods-Minimum.xcworkspace'
 
 
 IOS_VERSION='{IOS_VERSION}'
 MAC_VERSION='{MAC_VERSION}'
 
-target 'Swift-iOS' do
+target 'Swift-iOS-WithoutEncryption' do
 	platform :ios, IOS_VERSION
 	project 'Swift.xcodeproj'
 	pod 'PusherSwift', :path => '../../'
 end
-
-target 'Swift-macOS' do
+target 'Swift-iOS-WithEncryption' do
+	platform :ios, IOS_VERSION
+	project 'Swift.xcodeproj'
+	pod 'PusherSwiftWithEncryption', :path => '../../'
+end
+target 'Swift-macOS-WithoutEncryption' do
 	platform :osx, MAC_VERSION
 	project 'Swift.xcodeproj'
 	pod 'PusherSwift', :path => '../../'
 end
-
-target 'ObjectiveC-iOS' do
+target 'Swift-macOS-WithEncryption' do
+	platform :osx, MAC_VERSION
+	project 'Swift.xcodeproj'
+	pod 'PusherSwiftWithEncryption', :path => '../../'
+end
+target 'ObjectiveC-iOS-WithoutEncryption' do
 	platform :ios, IOS_VERSION
 	project 'ObjectiveC.xcodeproj'
 	pod 'PusherSwift', :path => '../../'
 end
-
-target 'ObjectiveC-macOS' do
+target 'ObjectiveC-iOS-WithEncryption' do
+	platform :ios, IOS_VERSION
+	project 'ObjectiveC.xcodeproj'
+	pod 'PusherSwiftWithEncryption', :path => '../../'
+end
+target 'ObjectiveC-macOS-WithoutEncryption' do
 	platform :osx, MAC_VERSION
 	project 'ObjectiveC.xcodeproj'
 	pod 'PusherSwift', :path => '../../'
+end
+target 'ObjectiveC-macOS-WithEncryption' do
+	platform :osx, MAC_VERSION
+	project 'ObjectiveC.xcodeproj'
+	pod 'PusherSwiftWithEncryption', :path => '../../'
 end
 
 

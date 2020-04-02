@@ -118,7 +118,7 @@ function performTests {
 	local WORKING_DIRECTORY="$SCRIPT_DIRECTORY/$NAME"
 	echo "WORKING_DIRECTORY=$WORKING_DIRECTORY"
 	
-	getXcodeVersionFor "$NAME" # should set XCODE_VERSION
+	getXcodeVersionFor "$WORKING_DIRECTORY" # should set XCODE_VERSION
 	echo "XCODE_VERSION=$XCODE_VERSION"
 	
 	assignXcodeAppPathFor "$XCODE_VERSION" # should set XCODE_APP_PATH
@@ -147,10 +147,14 @@ function performTests {
 		SUMMARY_LOG_OUTPUT+=" (checkout was skipped) +++++"
 	fi
 
-	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-iOS"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-macOS"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-iOS"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-macOS"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-iOS-WithoutEncryption"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-iOS-WithEncryption"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-macOS-WithoutEncryption"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-macOS-WithEncryption"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-iOS-WithoutEncryption"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-iOS-WithEncryption"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-macOS-WithoutEncryption"
+	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-macOS-WithEncryption"
 	
 	echo "------ END: $FUNCNAME $@ ------"
 }
@@ -172,4 +176,3 @@ performTests "Cocoapods-Latest"
 
 echo "$SUMMARY_LOG_OUTPUT"
 say "All targets built successfully"
-

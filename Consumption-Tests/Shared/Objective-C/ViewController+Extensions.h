@@ -1,10 +1,16 @@
 #import <Foundation/Foundation.h>
+
 #if TARGET_OS_IOS
     #import "iOS/ViewController.h"
 #else
     #import "macOS/ViewController.h"
 #endif
-#import "PusherSwift/PusherSwift-Swift.h"
+
+#if WITH_ENCRYPTION
+    #import "PusherSwiftWithEncryption/PusherSwiftWithEncryption-Swift.h"
+#else
+    #import "PusherSwift/PusherSwift-Swift.h"
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 

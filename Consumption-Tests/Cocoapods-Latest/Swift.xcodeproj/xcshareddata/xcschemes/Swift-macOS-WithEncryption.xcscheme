@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1100"
+   LastUpgradeVersion = "1140"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7306CD8C2432517B0077C9E6"
-               BuildableName = "ObjectiveC-macOS.app"
-               BlueprintName = "ObjectiveC-macOS"
-               ReferencedContainer = "container:ObjectiveC.xcodeproj">
+               BlueprintIdentifier = "739B569924362BB500937ECD"
+               BuildableName = "Swift-macOS-WithEncryption.app"
+               BlueprintName = "Swift-macOS-WithEncryption"
+               ReferencedContainer = "container:Swift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,10 +44,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7306CD8C2432517B0077C9E6"
-            BuildableName = "ObjectiveC-macOS.app"
-            BlueprintName = "ObjectiveC-macOS"
-            ReferencedContainer = "container:ObjectiveC.xcodeproj">
+            BlueprintIdentifier = "739B569924362BB500937ECD"
+            BuildableName = "Swift-macOS-WithEncryption.app"
+            BlueprintName = "Swift-macOS-WithEncryption"
+            ReferencedContainer = "container:Swift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7306CD8C2432517B0077C9E6"
-            BuildableName = "ObjectiveC-macOS.app"
-            BlueprintName = "ObjectiveC-macOS"
-            ReferencedContainer = "container:ObjectiveC.xcodeproj">
+            BlueprintIdentifier = "739B569924362BB500937ECD"
+            BuildableName = "Swift-macOS-WithEncryption.app"
+            BlueprintName = "Swift-macOS-WithEncryption"
+            ReferencedContainer = "container:Swift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

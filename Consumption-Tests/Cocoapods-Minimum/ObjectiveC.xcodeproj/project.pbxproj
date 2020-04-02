@@ -10,6 +10,9 @@
 		331F372D1D82CAB900AE2852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372C1D82CAB900AE2852 /* main.m */; };
 		331F37301D82CAB900AE2852 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372F1D82CAB900AE2852 /* AppDelegate.m */; };
 		331F37331D82CAB900AE2852 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F37321D82CAB900AE2852 /* ViewController.m */; };
+		45F155856E40085190813BE1 /* Pods_ObjectiveC_macOS_WithEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 545F33195A7B2B5C00DBFE4F /* Pods_ObjectiveC_macOS_WithEncryption.framework */; };
+		6FC62E12A6F2401B79BE8A1E /* Pods_ObjectiveC_macOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AABF519DDF964B281375DE /* Pods_ObjectiveC_macOS_WithoutEncryption.framework */; };
+		715B1FEA39911C5303A03932 /* Pods_ObjectiveC_iOS_WithEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB564BF53FD952A253175C16 /* Pods_ObjectiveC_iOS_WithEncryption.framework */; };
 		7306CDAC2432522A0077C9E6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA3243252120077C9E6 /* ViewController.m */; };
 		7306CDAD2432522E0077C9E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CDA4243252120077C9E6 /* Main.storyboard */; };
 		7306CDAE243252320077C9E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA5243252120077C9E6 /* main.m */; };
@@ -17,23 +20,34 @@
 		7306CDB22432531B0077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		7306CDB424325CE90077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		73461638242E5A7E003A9A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73461637242E5A75003A9A3F /* Main.storyboard */; };
-		883D660A94A91FC384B6411E /* Pods_ObjectiveC_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9E8CB298DBEDC901AF9BAF /* Pods_ObjectiveC_iOS.framework */; };
-		CDBC3FE005ACDE7C2B4E1C12 /* Pods_ObjectiveC_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B7C49D93574244738D5E9D /* Pods_ObjectiveC_macOS.framework */; };
+		739B566D24362B5300937ECD /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
+		739B566E24362B5300937ECD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F37321D82CAB900AE2852 /* ViewController.m */; };
+		739B566F24362B5300937ECD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372F1D82CAB900AE2852 /* AppDelegate.m */; };
+		739B567024362B5300937ECD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372C1D82CAB900AE2852 /* main.m */; };
+		739B567324362B5300937ECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73461637242E5A75003A9A3F /* Main.storyboard */; };
+		739B567C24362B5F00937ECD /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
+		739B567D24362B5F00937ECD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA5243252120077C9E6 /* main.m */; };
+		739B567E24362B5F00937ECD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA3243252120077C9E6 /* ViewController.m */; };
+		739B567F24362B5F00937ECD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA6243252120077C9E6 /* AppDelegate.m */; };
+		739B568224362B5F00937ECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CDA4243252120077C9E6 /* Main.storyboard */; };
+		969383CB82E393C592EAE6A1 /* Pods_ObjectiveC_iOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F2918DC41A7296FAC52C46 /* Pods_ObjectiveC_iOS_WithoutEncryption.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		331F37281D82CAB900AE2852 /* ObjectiveC-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD8AF4227AFD42E80D613A2 /* Pods-ObjectiveC-macOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-macOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-macOS-WithoutEncryption/Pods-ObjectiveC-macOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		331F37281D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-iOS-WithoutEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		331F372C1D82CAB900AE2852 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		331F372E1D82CAB900AE2852 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		331F372F1D82CAB900AE2852 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		331F37311D82CAB900AE2852 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		331F37321D82CAB900AE2852 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		37B7C49D93574244738D5E9D /* Pods_ObjectiveC_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjectiveC_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3F9E8CB298DBEDC901AF9BAF /* Pods_ObjectiveC_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjectiveC_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4836E3D54E0777E43DD0E3AB /* Pods-ObjectiveC-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS/Pods-ObjectiveC-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		42AEDB6D7BBE7B46F7699A9D /* Pods-ObjectiveC-macOS-WithEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-macOS-WithEncryption.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-macOS-WithEncryption/Pods-ObjectiveC-macOS-WithEncryption.release.xcconfig"; sourceTree = "<group>"; };
+		545F33195A7B2B5C00DBFE4F /* Pods_ObjectiveC_macOS_WithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjectiveC_macOS_WithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55F2918DC41A7296FAC52C46 /* Pods_ObjectiveC_iOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjectiveC_iOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A3F69C24ADAF73F376568E2 /* Pods-ObjectiveC-iOS-WithEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS-WithEncryption.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS-WithEncryption/Pods-ObjectiveC-iOS-WithEncryption.debug.xcconfig"; sourceTree = "<group>"; };
 		7306CD6A24324E060077C9E6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7306CD6C24324E060077C9E6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-macOS-WithoutEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7306CDA2243252120077C9E6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7306CDA3243252120077C9E6 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7306CDA4243252120077C9E6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -44,9 +58,16 @@
 		7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ViewController+Extensions.m"; sourceTree = "<group>"; };
 		7344F5452433362600B7DBE2 /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		73461637242E5A75003A9A3F /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		7DE27B31E66CD63ECB50EF53 /* Pods-ObjectiveC-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-macOS.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-macOS/Pods-ObjectiveC-macOS.release.xcconfig"; sourceTree = "<group>"; };
-		8D1183030B0B5D7F8EE11C22 /* Pods-ObjectiveC-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS/Pods-ObjectiveC-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		DCECC95B028F7322B8AD5927 /* Pods-ObjectiveC-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-macOS.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-macOS/Pods-ObjectiveC-macOS.debug.xcconfig"; sourceTree = "<group>"; };
+		739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-iOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-macOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		739B56A824362C2400937ECD /* WithEncryption.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = WithEncryption.xcconfig; sourceTree = "<group>"; };
+		7CA0B79ED2B581CAA9822072 /* Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS-WithoutEncryption/Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		A47DF1A13242A159A9391977 /* Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS-WithEncryption/Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig"; sourceTree = "<group>"; };
+		B32316ACED8F35B431149161 /* Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-iOS-WithoutEncryption/Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
+		D5C8A7F7DF10DEA39260F9EB /* Pods-ObjectiveC-macOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-macOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-macOS-WithoutEncryption/Pods-ObjectiveC-macOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
+		DB564BF53FD952A253175C16 /* Pods_ObjectiveC_iOS_WithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjectiveC_iOS_WithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8AABF519DDF964B281375DE /* Pods_ObjectiveC_macOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjectiveC_macOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6774B23C4C16D7DB57E48A5 /* Pods-ObjectiveC-macOS-WithEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveC-macOS-WithEncryption.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveC-macOS-WithEncryption/Pods-ObjectiveC-macOS-WithEncryption.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				883D660A94A91FC384B6411E /* Pods_ObjectiveC_iOS.framework in Frameworks */,
+				969383CB82E393C592EAE6A1 /* Pods_ObjectiveC_iOS_WithoutEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +83,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDBC3FE005ACDE7C2B4E1C12 /* Pods_ObjectiveC_macOS.framework in Frameworks */,
+				6FC62E12A6F2401B79BE8A1E /* Pods_ObjectiveC_macOS_WithoutEncryption.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B567124362B5300937ECD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				715B1FEA39911C5303A03932 /* Pods_ObjectiveC_iOS_WithEncryption.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B568024362B5F00937ECD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45F155856E40085190813BE1 /* Pods_ObjectiveC_macOS_WithEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,16 +112,19 @@
 				7344F5452433362600B7DBE2 /* config.xcconfig */,
 				7346163D242E5BC7003A9A3F /* Shared */,
 				331F37291D82CAB900AE2852 /* Products */,
-				638446239696654C4475CCD5 /* Pods */,
-				D708B21FBA5BA962F4452B35 /* Frameworks */,
+				73853CB7243640AC005F0E49 /* Recovered References */,
+				CB9A77DCA3E9ACCFCB38B39A /* Pods */,
+				68EEDF80AE54A5A88B1D15AF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		331F37291D82CAB900AE2852 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				331F37281D82CAB900AE2852 /* ObjectiveC-iOS.app */,
-				7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS.app */,
+				331F37281D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption.app */,
+				7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption.app */,
+				739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */,
+				739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,16 +142,15 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		638446239696654C4475CCD5 /* Pods */ = {
+		68EEDF80AE54A5A88B1D15AF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8D1183030B0B5D7F8EE11C22 /* Pods-ObjectiveC-iOS.debug.xcconfig */,
-				4836E3D54E0777E43DD0E3AB /* Pods-ObjectiveC-iOS.release.xcconfig */,
-				DCECC95B028F7322B8AD5927 /* Pods-ObjectiveC-macOS.debug.xcconfig */,
-				7DE27B31E66CD63ECB50EF53 /* Pods-ObjectiveC-macOS.release.xcconfig */,
+				DB564BF53FD952A253175C16 /* Pods_ObjectiveC_iOS_WithEncryption.framework */,
+				55F2918DC41A7296FAC52C46 /* Pods_ObjectiveC_iOS_WithoutEncryption.framework */,
+				545F33195A7B2B5C00DBFE4F /* Pods_ObjectiveC_macOS_WithEncryption.framework */,
+				E8AABF519DDF964B281375DE /* Pods_ObjectiveC_macOS_WithoutEncryption.framework */,
 			);
-			name = Pods;
-			path = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7306CD6124324DCA0077C9E6 /* Objective-C */ = {
@@ -165,56 +204,111 @@
 			path = ../Shared;
 			sourceTree = "<group>";
 		};
-		D708B21FBA5BA962F4452B35 /* Frameworks */ = {
+		73853CB7243640AC005F0E49 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				3F9E8CB298DBEDC901AF9BAF /* Pods_ObjectiveC_iOS.framework */,
-				37B7C49D93574244738D5E9D /* Pods_ObjectiveC_macOS.framework */,
+				739B56A824362C2400937ECD /* WithEncryption.xcconfig */,
 			);
-			name = Frameworks;
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		CB9A77DCA3E9ACCFCB38B39A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6A3F69C24ADAF73F376568E2 /* Pods-ObjectiveC-iOS-WithEncryption.debug.xcconfig */,
+				A47DF1A13242A159A9391977 /* Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig */,
+				7CA0B79ED2B581CAA9822072 /* Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig */,
+				B32316ACED8F35B431149161 /* Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig */,
+				F6774B23C4C16D7DB57E48A5 /* Pods-ObjectiveC-macOS-WithEncryption.debug.xcconfig */,
+				42AEDB6D7BBE7B46F7699A9D /* Pods-ObjectiveC-macOS-WithEncryption.release.xcconfig */,
+				2FD8AF4227AFD42E80D613A2 /* Pods-ObjectiveC-macOS-WithoutEncryption.debug.xcconfig */,
+				D5C8A7F7DF10DEA39260F9EB /* Pods-ObjectiveC-macOS-WithoutEncryption.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		331F37271D82CAB900AE2852 /* ObjectiveC-iOS */ = {
+		331F37271D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 331F373F1D82CAB900AE2852 /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS" */;
+			buildConfigurationList = 331F373F1D82CAB900AE2852 /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS-WithoutEncryption" */;
 			buildPhases = (
-				F105BB61C14332C5F709CB96 /* [CP] Check Pods Manifest.lock */,
+				327E33A1A0A6A209D3B9034D /* [CP] Check Pods Manifest.lock */,
 				331F37241D82CAB900AE2852 /* Sources */,
 				331F37251D82CAB900AE2852 /* Frameworks */,
 				331F37261D82CAB900AE2852 /* Resources */,
 				E22966B12260A7E00050D509 /* Carthage: Copy Platform Specific Frameworks */,
-				A9805FAC40CD34DA0D8FD41D /* [CP] Embed Pods Frameworks */,
+				CF441A7EDDAE1B86C718655B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "ObjectiveC-iOS";
+			name = "ObjectiveC-iOS-WithoutEncryption";
 			productName = "iOS Example Obj-C";
-			productReference = 331F37281D82CAB900AE2852 /* ObjectiveC-iOS.app */;
+			productReference = 331F37281D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7306CD8C2432517B0077C9E6 /* ObjectiveC-macOS */ = {
+		7306CD8C2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7306CD9E2432517E0077C9E6 /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS" */;
+			buildConfigurationList = 7306CD9E2432517E0077C9E6 /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS-WithoutEncryption" */;
 			buildPhases = (
-				DB08988A2CB9459A6122D72A /* [CP] Check Pods Manifest.lock */,
+				630B9461B8E80D06D3C4E6B4 /* [CP] Check Pods Manifest.lock */,
 				7306CD892432517B0077C9E6 /* Sources */,
 				7306CD8A2432517B0077C9E6 /* Frameworks */,
 				7306CD8B2432517B0077C9E6 /* Resources */,
 				7306CDB524325DE90077C9E6 /* Carthage: Copy Platform Specific Frameworks */,
-				9C2EFAA74FD2BD1F351239C4 /* [CP] Embed Pods Frameworks */,
+				23C5E6B88A6CBCE82D693835 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "ObjectiveC-macOS";
+			name = "ObjectiveC-macOS-WithoutEncryption";
 			productName = "ObjectiveC-macOS";
-			productReference = 7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS.app */;
+			productReference = 7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
+		739B566B24362B5300937ECD /* ObjectiveC-iOS-WithEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 739B567524362B5300937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS-WithEncryption" */;
+			buildPhases = (
+				3F2865449F29DADB039ACF7C /* [CP] Check Pods Manifest.lock */,
+				739B566C24362B5300937ECD /* Sources */,
+				739B567124362B5300937ECD /* Frameworks */,
+				739B567224362B5300937ECD /* Resources */,
+				739B567424362B5300937ECD /* Carthage: Copy Platform Specific Frameworks */,
+				D97F85360CE086C53943F569 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ObjectiveC-iOS-WithEncryption";
+			productName = "iOS Example Obj-C";
+			productReference = 739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
+		739B567A24362B5F00937ECD /* ObjectiveC-macOS-WithEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 739B568424362B5F00937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS-WithEncryption" */;
+			buildPhases = (
+				EB135F6E2D7CF2F8A2956FF7 /* [CP] Check Pods Manifest.lock */,
+				739B567B24362B5F00937ECD /* Sources */,
+				739B568024362B5F00937ECD /* Frameworks */,
+				739B568124362B5F00937ECD /* Resources */,
+				739B568324362B5F00937ECD /* Carthage: Copy Platform Specific Frameworks */,
+				9DD855811CC4C8FD0398C003 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ObjectiveC-macOS-WithEncryption";
+			productName = "ObjectiveC-macOS";
+			productReference = 739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -240,6 +334,12 @@
 						CreatedOnToolsVersion = 11.4;
 						ProvisioningStyle = Automatic;
 					};
+					739B566B24362B5300937ECD = {
+						DevelopmentTeam = H7FL434D9W;
+					};
+					739B567A24362B5F00937ECD = {
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 331F37231D82CAB900AE2852 /* Build configuration list for PBXProject "ObjectiveC" */;
@@ -255,8 +355,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				331F37271D82CAB900AE2852 /* ObjectiveC-iOS */,
-				7306CD8C2432517B0077C9E6 /* ObjectiveC-macOS */,
+				331F37271D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption */,
+				739B566B24362B5300937ECD /* ObjectiveC-iOS-WithEncryption */,
+				7306CD8C2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption */,
+				739B567A24362B5F00937ECD /* ObjectiveC-macOS-WithEncryption */,
 			);
 		};
 /* End PBXProject section */
@@ -278,80 +380,48 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		739B567224362B5300937ECD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B567324362B5300937ECD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B568124362B5F00937ECD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B568224362B5F00937ECD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7306CDB524325DE90077C9E6 /* Carthage: Copy Platform Specific Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				Sodium,
-				Reachability,
-				Starscream,
-				PusherSwift,
-			);
-			name = "Carthage: Copy Platform Specific Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
-		};
-		9C2EFAA74FD2BD1F351239C4 /* [CP] Embed Pods Frameworks */ = {
+		23C5E6B88A6CBCE82D693835 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-macOS/Pods-ObjectiveC-macOS-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-macOS-WithoutEncryption/Pods-ObjectiveC-macOS-WithoutEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift-macOS/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Sodium-macOS/Sodium.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-macOS/Pods-ObjectiveC-macOS-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-macOS-WithoutEncryption/Pods-ObjectiveC-macOS-WithoutEncryption-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A9805FAC40CD34DA0D8FD41D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-iOS/Pods-ObjectiveC-iOS-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PusherSwift-iOS/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Sodium-iOS/Sodium.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-iOS/Starscream.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-iOS/Pods-ObjectiveC-iOS-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DB08988A2CB9459A6122D72A /* [CP] Check Pods Manifest.lock */ = {
+		327E33A1A0A6A209D3B9034D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -366,11 +436,190 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ObjectiveC-macOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ObjectiveC-iOS-WithoutEncryption-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3F2865449F29DADB039ACF7C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ObjectiveC-iOS-WithEncryption-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		630B9461B8E80D06D3C4E6B4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ObjectiveC-macOS-WithoutEncryption-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7306CDB524325DE90077C9E6 /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Reachability,
+				Starscream,
+				PusherSwift,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
+		739B567424362B5300937ECD /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Sodium,
+				Reachability,
+				Starscream,
+				PusherSwiftWithEncryption,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
+		739B568324362B5F00937ECD /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Sodium,
+				Reachability,
+				Starscream,
+				PusherSwiftWithEncryption,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
+		9DD855811CC4C8FD0398C003 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-macOS-WithEncryption/Pods-ObjectiveC-macOS-WithEncryption-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-macOS/PusherSwiftWithEncryption.framework",
+				"${BUILT_PRODUCTS_DIR}/Sodium-macOS/Sodium.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-macOS-WithEncryption/Pods-ObjectiveC-macOS-WithEncryption-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF441A7EDDAE1B86C718655B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-iOS-WithoutEncryption/Pods-ObjectiveC-iOS-WithoutEncryption-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift-iOS/PusherSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream-iOS/Starscream.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-iOS-WithoutEncryption/Pods-ObjectiveC-iOS-WithoutEncryption-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D97F85360CE086C53943F569 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-iOS-WithEncryption/Pods-ObjectiveC-iOS-WithEncryption-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream-iOS/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-iOS/PusherSwiftWithEncryption.framework",
+				"${BUILT_PRODUCTS_DIR}/Sodium-iOS/Sodium.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-iOS-WithEncryption/Pods-ObjectiveC-iOS-WithEncryption-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E22966B12260A7E00050D509 /* Carthage: Copy Platform Specific Frameworks */ = {
@@ -381,7 +630,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				Sodium,
 				Reachability,
 				Starscream,
 				PusherSwift,
@@ -395,7 +643,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
-		F105BB61C14332C5F709CB96 /* [CP] Check Pods Manifest.lock */ = {
+		EB135F6E2D7CF2F8A2956FF7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -410,7 +658,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ObjectiveC-iOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ObjectiveC-macOS-WithEncryption-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -439,6 +687,28 @@
 				7306CDAE243252320077C9E6 /* main.m in Sources */,
 				7306CDAC2432522A0077C9E6 /* ViewController.m in Sources */,
 				7306CDAF243252350077C9E6 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B566C24362B5300937ECD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B566D24362B5300937ECD /* ViewController+Extensions.m in Sources */,
+				739B566E24362B5300937ECD /* ViewController.m in Sources */,
+				739B566F24362B5300937ECD /* AppDelegate.m in Sources */,
+				739B567024362B5300937ECD /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B567B24362B5F00937ECD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B567C24362B5F00937ECD /* ViewController+Extensions.m in Sources */,
+				739B567D24362B5F00937ECD /* main.m in Sources */,
+				739B567E24362B5F00937ECD /* ViewController.m in Sources */,
+				739B567F24362B5F00937ECD /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,7 +827,7 @@
 		};
 		331F37401D82CAB900AE2852 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8D1183030B0B5D7F8EE11C22 /* Pods-ObjectiveC-iOS.debug.xcconfig */;
+			baseConfigurationReference = 7CA0B79ED2B581CAA9822072 /* Pods-ObjectiveC-iOS-WithoutEncryption.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
@@ -569,7 +839,7 @@
 		};
 		331F37411D82CAB900AE2852 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4836E3D54E0777E43DD0E3AB /* Pods-ObjectiveC-iOS.release.xcconfig */;
+			baseConfigurationReference = B32316ACED8F35B431149161 /* Pods-ObjectiveC-iOS-WithoutEncryption.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
@@ -581,7 +851,7 @@
 		};
 		7306CD9F2432517E0077C9E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCECC95B028F7322B8AD5927 /* Pods-ObjectiveC-macOS.debug.xcconfig */;
+			baseConfigurationReference = 2FD8AF4227AFD42E80D613A2 /* Pods-ObjectiveC-macOS-WithoutEncryption.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -603,7 +873,7 @@
 		};
 		7306CDA02432517E0077C9E6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DE27B31E66CD63ECB50EF53 /* Pods-ObjectiveC-macOS.release.xcconfig */;
+			baseConfigurationReference = D5C8A7F7DF10DEA39260F9EB /* Pods-ObjectiveC-macOS-WithoutEncryption.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -622,6 +892,89 @@
 			};
 			name = Release;
 		};
+		739B567624362B5300937ECD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A3F69C24ADAF73F376568E2 /* Pods-ObjectiveC-iOS-WithEncryption.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		739B567724362B5300937ECD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A47DF1A13242A159A9391977 /* Pods-ObjectiveC-iOS-WithEncryption.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		739B568524362B5F00937ECD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6774B23C4C16D7DB57E48A5 /* Pods-ObjectiveC-macOS-WithEncryption.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		739B568624362B5F00937ECD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42AEDB6D7BBE7B46F7699A9D /* Pods-ObjectiveC-macOS-WithEncryption.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -634,7 +987,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		331F373F1D82CAB900AE2852 /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS" */ = {
+		331F373F1D82CAB900AE2852 /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS-WithoutEncryption" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				331F37401D82CAB900AE2852 /* Debug */,
@@ -643,11 +996,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7306CD9E2432517E0077C9E6 /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS" */ = {
+		7306CD9E2432517E0077C9E6 /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS-WithoutEncryption" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7306CD9F2432517E0077C9E6 /* Debug */,
 				7306CDA02432517E0077C9E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		739B567524362B5300937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS-WithEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				739B567624362B5300937ECD /* Debug */,
+				739B567724362B5300937ECD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		739B568424362B5F00937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS-WithEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				739B568524362B5F00937ECD /* Debug */,
+				739B568624362B5F00937ECD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

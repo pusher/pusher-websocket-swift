@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "33831C5D1A9CEEE900B124F1"
-               BuildableName = "Swift-iOS.app"
-               BlueprintName = "Swift-iOS"
-               ReferencedContainer = "container:Swift.xcodeproj">
+               BlueprintIdentifier = "739B567A24362B5F00937ECD"
+               BuildableName = "ObjectiveC-macOS-WithEncryption.app"
+               BlueprintName = "ObjectiveC-macOS-WithEncryption"
+               ReferencedContainer = "container:ObjectiveC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,10 +44,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33831C5D1A9CEEE900B124F1"
-            BuildableName = "Swift-iOS.app"
-            BlueprintName = "Swift-iOS"
-            ReferencedContainer = "container:Swift.xcodeproj">
+            BlueprintIdentifier = "739B567A24362B5F00937ECD"
+            BuildableName = "ObjectiveC-macOS-WithEncryption.app"
+            BlueprintName = "ObjectiveC-macOS-WithEncryption"
+            ReferencedContainer = "container:ObjectiveC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33831C5D1A9CEEE900B124F1"
-            BuildableName = "Swift-iOS.app"
-            BlueprintName = "Swift-iOS"
-            ReferencedContainer = "container:Swift.xcodeproj">
+            BlueprintIdentifier = "739B567A24362B5F00937ECD"
+            BuildableName = "ObjectiveC-macOS-WithEncryption.app"
+            BlueprintName = "ObjectiveC-macOS-WithEncryption"
+            ReferencedContainer = "container:ObjectiveC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
