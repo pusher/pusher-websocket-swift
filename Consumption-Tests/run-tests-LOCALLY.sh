@@ -156,24 +156,13 @@ function performTests {
 }
 
 
-####################
-# Carthage-Minimum #
-####################
+#################
+# Perform Tests #
+#################
 
 performTests "Carthage-Minimum"
-
-
-###################
-# Carthage-Latest #
-###################
-
+performTests "Cocoapods-Minimum"
 performTests "Carthage-Latest"
-
-
-###################
-# Carthage-Latest #
-###################
-
 performTests "Cocoapods-Latest"
 
 
