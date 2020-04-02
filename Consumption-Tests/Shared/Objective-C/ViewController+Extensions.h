@@ -7,9 +7,9 @@
 #endif
 
 #if WITH_ENCRYPTION
-    #import "PusherSwiftWithEncryption/PusherSwiftWithEncryption-Swift.h"
+    @import PusherSwiftWithEncryption;
 #else
-    #import "PusherSwift/PusherSwift-Swift.h"
+    @import PusherSwift;
 #endif
 
 NS_ASSUME_NONNULL_BEGIN

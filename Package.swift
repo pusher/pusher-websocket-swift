@@ -18,12 +18,14 @@ let package = Package(
                 "Reachability",
                 "Starscream",
             ],
-            path: "Sources"
+            path: "Sources",
+            exclude: ["PusherSwiftWithEncryption-Only"]
         ),
         .testTarget(
             name: "PusherSwiftTests",
             dependencies: ["PusherSwift"],
-            path: "Tests"
+            path: "Tests",
+            exclude: ["PusherSwiftWithEncryption-Only"]
         )
     ],
     swiftLanguageVersions: [.v4_2]

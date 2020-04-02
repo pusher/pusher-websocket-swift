@@ -33,6 +33,7 @@ SHOULD_CARTHAGE_CHECKOUT=1
 SHOULD_COCOAPODS_CHECKOUT=1
 SHOULD_SKIP_CARTHAGE=0
 SHOULD_SKIP_COCOAPODS=0
+SHOULD_SKIP_SPM=0
 
 while test $# -gt 0; do
 	case "$1" in
@@ -42,6 +43,15 @@ while test $# -gt 0; do
 			;;
 		-skip-cocoapods)
 			SHOULD_SKIP_COCOAPODS=1
+			shift
+			;;
+		-skip-spm)
+			SHOULD_SKIP_SPM=1
+			shift
+			;;
+		-skip-checkouts)
+			SHOULD_CARTHAGE_CHECKOUT=0
+			SHOULD_COCOAPODS_CHECKOUT=0
 			shift
 			;;
 		-skip-carthage-checkouts)
@@ -57,6 +67,8 @@ while test $# -gt 0; do
 			echo "Possible options are:"
 			echo "   -skip-carthage"
 			echo "   -skip-cocoapods"
+			echo "   -skip-spm"
+			echo "   -skip-checkouts"
 			echo "   -skip-carthage-checkouts"
 			echo "   -skip-cocoapods-checkouts"
 			exit 1;
@@ -68,17 +80,39 @@ echo "SHOULD_CARTHAGE_CHECKOUT=$SHOULD_CARTHAGE_CHECKOUT"
 echo "SHOULD_COCOAPODS_CHECKOUT=$SHOULD_COCOAPODS_CHECKOUT"
 echo "SHOULD_SKIP_CARTHAGE=$SHOULD_SKIP_CARTHAGE"
 echo "SHOULD_SKIP_COCOAPODS=$SHOULD_SKIP_COCOAPODS"
+echo "SHOULD_SKIP_SPM=$SHOULD_SKIP_SPM"
 
 
 ####################
 # Define Functions #
 ####################
 
-# Usage: `runXcodeBuild "WORKSPACE_FILEPATH" "SCHEME"`
+# Usage: `runXcodeBuild "NAME" "SCHEME"`
 function runXcodeBuild {
+
+	echo "------ BEGIN: $FUNCNAME $@ ------"
 	
-	local WORKSPACE_FILEPATH="$1"
+	local NAME="$1"
+	echo "NAME=$NAME"
 	local SCHEME="$2"
+	echo "SCHEME=$SCHEME"
+	
+	if [[ "$NAME" == "SwiftPackageManager"* ]] && [[ "$SCHEME" == *"WithEncryption" ]];	then
+		SUMMARY_LOG_OUTPUT+="\n 🔘 $SCHEME (SPM integration not supported with PusherSwiftWithEncyrption)"
+		echo "**** SKIPPING '$NAME - $SCHEME' ****"	
+		echo "------ END: $FUNCNAME $@ ------"
+		return 0
+	fi
+	
+	if [[ "$NAME" == "SwiftPackageManager-Minimum" ]] && [[ "$SCHEME" == "ObjectiveC"* ]]; then
+		SUMMARY_LOG_OUTPUT+="\n 🔘 $SCHEME (SPM integration not supported with Obj-C in Xcode versions < v11.4)"
+		echo "**** SKIPPING '$NAME - $SCHEME' ****"	
+		echo "------ END: $FUNCNAME $@ ------"
+		return 0
+	fi
+	
+	local WORKSPACE_FILEPATH="$SCRIPT_DIRECTORY/$NAME/$NAME.xcworkspace"
+	echo "WORKSPACE_FILEPATH=$WORKSPACE_FILEPATH"
 	
 	set +e
 	xcodebuild clean build -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME" -allowProvisioningUpdates
@@ -95,6 +129,8 @@ function runXcodeBuild {
 		# Built succeeded
 		SUMMARY_LOG_OUTPUT+="\n 🟢 $SCHEME"
 	fi
+	
+	echo "------ END: $FUNCNAME $@ ------"
 }
 
 # Usage: `performTests "Carthage-Minimum"`
@@ -107,7 +143,8 @@ function performTests {
 	SUMMARY_LOG_OUTPUT+="\n\n+++++ $NAME +++++"
 	
 	if ( [[ "$NAME" == "Carthage-"* ]] && (( $SHOULD_SKIP_CARTHAGE )) ) || \
-	   ( [[ "$NAME" == "Cocoapods-"* ]] && (( $SHOULD_SKIP_COCOAPODS )) )
+	   ( [[ "$NAME" == "Cocoapods-"* ]] && (( $SHOULD_SKIP_COCOAPODS )) ) || \
+	   ( [[ "$NAME" == "SwiftPackageManager-"* ]] && (( $SHOULD_SKIP_SPM )) )
 	then 
 		echo "**** SKIPPING '$NAME' ****"	
 		echo "------ END: $FUNCNAME $@ ------"
@@ -125,20 +162,24 @@ function performTests {
 	echo "XCODE_APP_PATH=$XCODE_APP_PATH"	
 	
 	local DESIRED_XCODE_SELECT="$XCODE_APP_PATH/Contents/Developer"
-	local WORKSPACE_FILEPATH="$WORKING_DIRECTORY/$NAME.xcworkspace"
 	echo "DESIRED_XCODE_SELECT=$DESIRED_XCODE_SELECT"
-	echo "WORKSPACE_FILEPATH=$WORKSPACE_FILEPATH"
 
 	CURRENT_XCODE_SELECT=$( xcode-select -p )
 	echo "CURRENT_XCODE_SELECT=$CURRENT_XCODE_SELECT"
 	
 	if [ "$CURRENT_XCODE_SELECT" != "$DESIRED_XCODE_SELECT" ]; then
 		echo "***** Will perform xcode-select to '$DESIRED_XCODE_SELECT'"
-		say "ex code selecting, your password may be required, please check"
+		if sudo -n true 2>/dev/null; then 
+			echo "sudo already granted"
+		else
+			say "ex code select requires your password"
+		fi
 		sudo xcode-select -s "$DESIRED_XCODE_SELECT"
 	fi
 	
-	if [[ "$NAME" == "Carthage-"* ]] && (( $SHOULD_CARTHAGE_CHECKOUT )); then
+	if [[ "$NAME" == "SwiftPackageManager-"* ]]; then
+		true # Do nothing. No checkout to perform
+	elif [[ "$NAME" == "Carthage-"* ]] && (( $SHOULD_CARTHAGE_CHECKOUT )); then
 		sh "$SCRIPT_DIRECTORY/Shared/carthage-checkout.sh" -w "$WORKING_DIRECTORY"
 	elif [[ "$NAME" == "Cocoapods-"* ]] && (( $SHOULD_COCOAPODS_CHECKOUT )); then
 		sh "$SCRIPT_DIRECTORY/Shared/cocoapods-checkout.sh" -w "$WORKING_DIRECTORY"
@@ -147,14 +188,14 @@ function performTests {
 		SUMMARY_LOG_OUTPUT+=" (checkout was skipped) +++++"
 	fi
 
-	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-iOS-WithoutEncryption"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-iOS-WithEncryption"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-macOS-WithoutEncryption"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "Swift-macOS-WithEncryption"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-iOS-WithoutEncryption"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-iOS-WithEncryption"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-macOS-WithoutEncryption"
-	runXcodeBuild "$WORKSPACE_FILEPATH" "ObjectiveC-macOS-WithEncryption"
+	runXcodeBuild "$NAME" "Swift-iOS-WithoutEncryption"
+	runXcodeBuild "$NAME" "Swift-iOS-WithEncryption"
+	runXcodeBuild "$NAME" "Swift-macOS-WithoutEncryption"
+	runXcodeBuild "$NAME" "Swift-macOS-WithEncryption"
+	runXcodeBuild "$NAME" "ObjectiveC-iOS-WithoutEncryption"
+	runXcodeBuild "$NAME" "ObjectiveC-iOS-WithEncryption"
+	runXcodeBuild "$NAME" "ObjectiveC-macOS-WithoutEncryption"
+	runXcodeBuild "$NAME" "ObjectiveC-macOS-WithEncryption"
 	
 	echo "------ END: $FUNCNAME $@ ------"
 }
@@ -166,8 +207,10 @@ function performTests {
 
 performTests "Carthage-Minimum"
 performTests "Cocoapods-Minimum"
+performTests "SwiftPackageManager-Minimum"
 performTests "Carthage-Latest"
 performTests "Cocoapods-Latest"
+performTests "SwiftPackageManager-Latest"
 
 
 ############
