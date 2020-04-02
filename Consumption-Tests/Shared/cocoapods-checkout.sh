@@ -96,12 +96,6 @@ sed <Podfile.template \
     -e "s#{MAC_VERSION}#${MACOSX_DEPLOYMENT_TARGET}#" \
     >Podfile
 
-# Just to be sure we deintegrate (i.e. remove anything Pod related) from all projects first
-for PROJECT in *xcodeproj; do
-	echo $PROJECT
-    pod deintegrate $PROJECT
-done
-
 # Perform the `pod install` (using the Podfile we just created)
 pod install
 
