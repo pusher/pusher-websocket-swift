@@ -6,6 +6,7 @@ workspace 'Cocoapods-Latest.xcworkspace'
 
 IOS_VERSION='{IOS_VERSION}'
 MAC_VERSION='{MAC_VERSION}'
+TVOS_VERSION='{TVOS_VERSION}'
 
 target 'Swift-iOS-WithoutEncryption' do
 	platform :ios, IOS_VERSION
@@ -27,6 +28,16 @@ target 'Swift-macOS-WithEncryption' do
 	project 'Swift.xcodeproj'
 	pod 'PusherSwiftWithEncryption', :path => '../../'
 end
+target 'Swift-tvOS-WithoutEncryption' do
+	platform :tvos, TVOS_VERSION
+	project 'Swift.xcodeproj'
+	pod 'PusherSwift', :path => '../../'
+end
+target 'Swift-tvOS-WithEncryption' do
+	platform :tvos, TVOS_VERSION
+	project 'Swift.xcodeproj'
+	pod 'PusherSwiftWithEncryption', :path => '../../'
+end
 target 'ObjectiveC-iOS-WithoutEncryption' do
 	platform :ios, IOS_VERSION
 	project 'ObjectiveC.xcodeproj'
@@ -44,6 +55,16 @@ target 'ObjectiveC-macOS-WithoutEncryption' do
 end
 target 'ObjectiveC-macOS-WithEncryption' do
 	platform :osx, MAC_VERSION
+	project 'ObjectiveC.xcodeproj'
+	pod 'PusherSwiftWithEncryption', :path => '../../'
+end
+target 'ObjectiveC-tvOS-WithoutEncryption' do
+	platform :tvos, TVOS_VERSION
+	project 'ObjectiveC.xcodeproj'
+	pod 'PusherSwift', :path => '../../'
+end
+target 'ObjectiveC-tvOS-WithEncryption' do
+	platform :tvos, TVOS_VERSION
 	project 'ObjectiveC.xcodeproj'
 	pod 'PusherSwiftWithEncryption', :path => '../../'
 end
