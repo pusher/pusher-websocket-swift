@@ -8,6 +8,8 @@
 ## Objective
 The objective of the "Consumption Tests" is to _truly verify_ that our core code/project is written/configured such that it _can_ be integrated into _any_ of the types of client project we support.
 
+Note that the "Consumption Tests" only **compile** the code and do not run or perform any unit testing.
+
 A “suite” of projects/targets exist, each is configured to use one of:
 
 - `PusherSwift.framework` _or_ `PusherSwiftWithEncryption.framework`
@@ -17,8 +19,10 @@ A “suite” of projects/targets exist, each is configured to use one of:
 | Toolset                    | MINIMUM | LATEST |
 |----------------------------|---------|--------|
 | Xcode version              | 11      | 11.4   |
+| SWIFT_VERSION              | 4.2     |  5.2  |
 | IPHONEOS_DEPLOYMENT_TARGET | 8.0     |  13.0  |
 | MACOSX_DEPLOYMENT_TARGET   | 10.11   | 10.15  |
+| TVOS_DEPLOYMENT_TARGET     | 9.0     | 13.4  |
 
 Giving us the following “suite”:
 
@@ -157,8 +161,7 @@ _Note: use the minimum version of Xcode supported because if you use a new versi
     - `SwiftPackageManager-Latest/SwiftPackageManager-Latest.xcworkspace`
     - `SwiftPackageManager-Minimum/SwiftPackageManager-Minimum.xcworkspace`
 - and update both `Swift` and `ObjectiveC` projects as follows:
-    - Delete all targets ending with `WithEncryption` since these aren’t supported with SPM
-    - For each remaining target under `Build Phases` > `Link Binary with Libraries` add `PusherSwift`
+    - For every target, under `Build Phases` > `Link Binary with Libraries` add `PusherSwift`
  
 
 
