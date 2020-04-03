@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,6 +37,12 @@
 		E2A5E52E2437807E00EE93A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E52124377C7100EE93A0 /* main.m */; };
 		E2A5E52F2437807E00EE93A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E51324377C6F00EE93A0 /* AppDelegate.m */; };
 		E2A5E5322437807E00EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E51824377C6F00EE93A0 /* Main.storyboard */; };
+		E2A5E59624379FDD00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59524379FDD00EE93A0 /* PusherSwift */; };
+		E2A5E59824379FE100EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59724379FE100EE93A0 /* PusherSwift */; };
+		E2A5E59A24379FE500EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59924379FE500EE93A0 /* PusherSwift */; };
+		E2A5E59C24379FEA00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59B24379FEA00EE93A0 /* PusherSwift */; };
+		E2A5E59E24379FEF00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59D24379FEF00EE93A0 /* PusherSwift */; };
+		E2A5E5A024379FF200EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59F24379FF200EE93A0 /* PusherSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A5E59624379FDD00EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A5E59A24379FE500EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A5E59824379FE100EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A5E59C24379FEA00EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A5E59E24379FEF00EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A5E5A024379FF200EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +136,7 @@
 				7344F5452433362600B7DBE2 /* config.xcconfig */,
 				7346163D242E5BC7003A9A3F /* Shared */,
 				331F37291D82CAB900AE2852 /* Products */,
+				E2A5E59424379FDD00EE93A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -227,6 +240,13 @@
 			path = tvOS;
 			sourceTree = "<group>";
 		};
+		E2A5E59424379FDD00EE93A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -244,6 +264,9 @@
 			dependencies = (
 			);
 			name = "ObjectiveC-iOS-WithoutEncryption";
+			packageProductDependencies = (
+				E2A5E59524379FDD00EE93A0 /* PusherSwift */,
+			);
 			productName = "iOS Example Obj-C";
 			productReference = 331F37281D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption.app */;
 			productType = "com.apple.product-type.application";
@@ -262,6 +285,9 @@
 			dependencies = (
 			);
 			name = "ObjectiveC-macOS-WithoutEncryption";
+			packageProductDependencies = (
+				E2A5E59924379FE500EE93A0 /* PusherSwift */,
+			);
 			productName = "ObjectiveC-macOS";
 			productReference = 7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption.app */;
 			productType = "com.apple.product-type.application";
@@ -280,6 +306,9 @@
 			dependencies = (
 			);
 			name = "ObjectiveC-iOS-WithEncryption";
+			packageProductDependencies = (
+				E2A5E59724379FE100EE93A0 /* PusherSwift */,
+			);
 			productName = "iOS Example Obj-C";
 			productReference = 739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */;
 			productType = "com.apple.product-type.application";
@@ -298,6 +327,9 @@
 			dependencies = (
 			);
 			name = "ObjectiveC-macOS-WithEncryption";
+			packageProductDependencies = (
+				E2A5E59B24379FEA00EE93A0 /* PusherSwift */,
+			);
 			productName = "ObjectiveC-macOS";
 			productReference = 739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */;
 			productType = "com.apple.product-type.application";
@@ -316,6 +348,9 @@
 			dependencies = (
 			);
 			name = "ObjectiveC-tvOS-WithoutEncryption";
+			packageProductDependencies = (
+				E2A5E59D24379FEF00EE93A0 /* PusherSwift */,
+			);
 			productName = "ObjectiveC-tvOS-WithoutEncryption";
 			productReference = E2A5E51024377C6F00EE93A0 /* ObjectiveC-tvOS-WithoutEncryption.app */;
 			productType = "com.apple.product-type.application";
@@ -334,6 +369,9 @@
 			dependencies = (
 			);
 			name = "ObjectiveC-tvOS-WithEncryption";
+			packageProductDependencies = (
+				E2A5E59F24379FF200EE93A0 /* PusherSwift */,
+			);
 			productName = "ObjectiveC-tvOS-WithoutEncryption";
 			productReference = E2A5E5372437807E00EE93A0 /* ObjectiveC-tvOS-WithEncryption.app */;
 			productType = "com.apple.product-type.application";
@@ -781,7 +819,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -792,7 +833,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -809,7 +853,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -830,7 +877,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -844,7 +894,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DWITH_ENCRYPTION",
@@ -859,7 +912,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DWITH_ENCRYPTION",
@@ -880,7 +936,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -905,7 +964,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (
@@ -929,7 +991,10 @@
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -951,7 +1016,10 @@
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -972,7 +1040,10 @@
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (
@@ -998,7 +1069,10 @@
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -1078,6 +1152,33 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E2A5E59524379FDD00EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59724379FE100EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59924379FE500EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59B24379FEA00EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59D24379FEF00EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59F24379FF200EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 331F37201D82CAB900AE2852 /* Project object */;
 }

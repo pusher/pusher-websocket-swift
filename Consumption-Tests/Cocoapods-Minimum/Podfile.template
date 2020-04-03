@@ -33,11 +33,6 @@ target 'Swift-tvOS-WithoutEncryption' do
 	project 'Swift.xcodeproj'
 	pod 'PusherSwift', :path => '../../'
 end
-target 'Swift-tvOS-WithEncryption' do
-	platform :tvos, TVOS_VERSION
-	project 'Swift.xcodeproj'
-	pod 'PusherSwiftWithEncryption', :path => '../../'
-end
 target 'ObjectiveC-iOS-WithoutEncryption' do
 	platform :ios, IOS_VERSION
 	project 'ObjectiveC.xcodeproj'
@@ -63,12 +58,6 @@ target 'ObjectiveC-tvOS-WithoutEncryption' do
 	project 'ObjectiveC.xcodeproj'
 	pod 'PusherSwift', :path => '../../'
 end
-target 'ObjectiveC-tvOS-WithEncryption' do
-	platform :tvos, TVOS_VERSION
-	project 'ObjectiveC.xcodeproj'
-	pod 'PusherSwiftWithEncryption', :path => '../../'
-end
-
 
 post_install do |pi|
     pi.pods_project.targets.each do |t|

@@ -31,12 +31,12 @@
 		E2A5E50124377A9500EE93A0 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
 		E2A5E50224377A9500EE93A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4E82437768600EE93A0 /* AppDelegate.swift */; };
 		E2A5E50524377A9500EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E4F82437776400EE93A0 /* Main.storyboard */; };
-		E2A5E53B2437824200EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E53A2437824200EE93A0 /* PusherSwift */; };
-		E2A5E53D2437824700EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E53C2437824700EE93A0 /* PusherSwift */; };
-		E2A5E53F2437824B00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E53E2437824B00EE93A0 /* PusherSwift */; };
-		E2A5E5412437824F00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E5402437824F00EE93A0 /* PusherSwift */; };
-		E2A5E5432437825300EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E5422437825300EE93A0 /* PusherSwift */; };
-		E2A5E5452437825700EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E5442437825700EE93A0 /* PusherSwift */; };
+		E2A5E58924379FA600EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58824379FA600EE93A0 /* PusherSwift */; };
+		E2A5E58B24379FAA00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58A24379FAA00EE93A0 /* PusherSwift */; };
+		E2A5E58D24379FAF00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58C24379FAF00EE93A0 /* PusherSwift */; };
+		E2A5E58F24379FB200EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58E24379FB200EE93A0 /* PusherSwift */; };
+		E2A5E59124379FB600EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59024379FB600EE93A0 /* PusherSwift */; };
+		E2A5E59324379FBB00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59224379FBB00EE93A0 /* PusherSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E53B2437824200EE93A0 /* PusherSwift in Frameworks */,
+				E2A5E58924379FA600EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E53F2437824B00EE93A0 /* PusherSwift in Frameworks */,
+				E2A5E58D24379FAF00EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E53D2437824700EE93A0 /* PusherSwift in Frameworks */,
+				E2A5E58B24379FAA00EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E5412437824F00EE93A0 /* PusherSwift in Frameworks */,
+				E2A5E58F24379FB200EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E5432437825300EE93A0 /* PusherSwift in Frameworks */,
+				E2A5E59124379FB600EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E5452437825700EE93A0 /* PusherSwift in Frameworks */,
+				E2A5E59324379FBB00EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +163,7 @@
 				7344F5432433361800B7DBE2 /* config.xcconfig */,
 				7346163B242E5B73003A9A3F /* Shared */,
 				33831C5F1A9CEEE900B124F1 /* Products */,
-				E2A5E5392437824200EE93A0 /* Frameworks */,
+				E2A5E58724379FA600EE93A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -257,7 +257,7 @@
 			path = tvOS;
 			sourceTree = "<group>";
 		};
-		E2A5E5392437824200EE93A0 /* Frameworks */ = {
+		E2A5E58724379FA600EE93A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -284,7 +284,7 @@
 			);
 			name = "Swift-iOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E53A2437824200EE93A0 /* PusherSwift */,
+				E2A5E58824379FA600EE93A0 /* PusherSwift */,
 			);
 			productName = "iOS Example";
 			productReference = 33831C5E1A9CEEE900B124F1 /* Swift-iOS-WithoutEncryption.app */;
@@ -305,7 +305,7 @@
 			);
 			name = "Swift-macOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E53E2437824B00EE93A0 /* PusherSwift */,
+				E2A5E58C24379FAF00EE93A0 /* PusherSwift */,
 			);
 			productName = "Swift-macOS";
 			productReference = 7306CD7324324EB30077C9E6 /* Swift-macOS-WithoutEncryption.app */;
@@ -328,7 +328,7 @@
 			);
 			name = "Swift-iOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E53C2437824700EE93A0 /* PusherSwift */,
+				E2A5E58A24379FAA00EE93A0 /* PusherSwift */,
 			);
 			productName = "iOS Example";
 			productReference = 739B569724362BA900937ECD /* Swift-iOS-WithEncryption.app */;
@@ -349,7 +349,7 @@
 			);
 			name = "Swift-macOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E5402437824F00EE93A0 /* PusherSwift */,
+				E2A5E58E24379FB200EE93A0 /* PusherSwift */,
 			);
 			productName = "Swift-macOS";
 			productReference = 739B56A524362BB500937ECD /* Swift-macOS-WithEncryption.app */;
@@ -370,7 +370,7 @@
 			);
 			name = "Swift-tvOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E5422437825300EE93A0 /* PusherSwift */,
+				E2A5E59024379FB600EE93A0 /* PusherSwift */,
 			);
 			productName = "Swift-tvOS-WithoutEncryption";
 			productReference = E2A5E4E62437768600EE93A0 /* Swift-tvOS-WithoutEncryption.app */;
@@ -391,7 +391,7 @@
 			);
 			name = "Swift-tvOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E5442437825700EE93A0 /* PusherSwift */,
+				E2A5E59224379FBB00EE93A0 /* PusherSwift */,
 			);
 			productName = "Swift-tvOS-WithoutEncryption";
 			productReference = E2A5E50A24377A9500EE93A0 /* Swift-tvOS-WithEncryption.app */;
@@ -1021,7 +1021,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
@@ -1050,7 +1049,6 @@
 				SDKROOT = appletvos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
@@ -1080,7 +1078,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
@@ -1110,7 +1107,6 @@
 				SDKROOT = appletvos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
@@ -1185,27 +1181,27 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E2A5E53A2437824200EE93A0 /* PusherSwift */ = {
+		E2A5E58824379FA600EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E53C2437824700EE93A0 /* PusherSwift */ = {
+		E2A5E58A24379FAA00EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E53E2437824B00EE93A0 /* PusherSwift */ = {
+		E2A5E58C24379FAF00EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E5402437824F00EE93A0 /* PusherSwift */ = {
+		E2A5E58E24379FB200EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E5422437825300EE93A0 /* PusherSwift */ = {
+		E2A5E59024379FB600EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E5442437825700EE93A0 /* PusherSwift */ = {
+		E2A5E59224379FBB00EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
