@@ -1,11 +1,12 @@
 # Consumption Tests
 
 ### Table of Contents  
-[Objective](#objective)  
-[How to Run the Test Suite LOCALLY](#howto)  
-[Maintaining the Suite of Projects/Targets](#maintenance)  
+- [Objective](#objective)  
+- [How to Run the Test Suite LOCALLY](#howto)  
+- [Maintaining the Suite of Projects/Targets](#maintenance)  
 
 <a name=“objective” />
+
 ## Objective
 The objective of the "Consumption Tests" is to _truly verify_ that our core code/project is written/configured such that it _can_ be integrated into _any_ of the types of client project we support.
 
@@ -77,7 +78,8 @@ _Note that SwiftPackageManager integration is not supported with `PusherSwiftWit
 
 _Note that SwiftPackageManager integration not supported with Objective-C in Xcode versions < v11.4 or at all with `PusherSwiftWithEncyrption`_
 
-<a name=“howto” />
+<a name=“howto” /> 
+
 ## How to Run the Test Suite LOCALLY
 
 To run the _full_ suite of tests, simply execute:
@@ -110,6 +112,7 @@ Full list of flags available…
 
 
 <a name=“maintenance” />
+
 ## Maintaining the Suite of Projects/Targets
 
 I foresee two types of maintenance: 
@@ -118,6 +121,7 @@ b. [Updates to the project/targets](#update-targets)
 
 
 <a name=“update-toolset” />
+
 ### Updates to the “toolset”
 
 Examples of why you’d need to update:
@@ -133,6 +137,7 @@ How to update:
 
 
 <a name=“update-targets” />
+
 ### Updates to the projects/targets
 
 Examples of why you’d need to update:
