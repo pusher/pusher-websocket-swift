@@ -2,6 +2,8 @@
 
 #if TARGET_OS_IOS
     #import "iOS/ViewController.h"
+#elif TARGET_OS_TV
+    #import "tvOS/ViewController.h"
 #else
     #import "macOS/ViewController.h"
 #endif

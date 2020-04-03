@@ -23,6 +23,14 @@
 		739B569C24362BB500937ECD /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
 		739B569D24362BB500937ECD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD4E24324C620077C9E6 /* ViewController.swift */; };
 		739B56A024362BB500937ECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CD4F24324C620077C9E6 /* Main.storyboard */; };
+		E2A5E4E92437768600EE93A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4E82437768600EE93A0 /* AppDelegate.swift */; };
+		E2A5E4EB2437768600EE93A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4EA2437768600EE93A0 /* ViewController.swift */; };
+		E2A5E4F92437776400EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E4F82437776400EE93A0 /* Main.storyboard */; };
+		E2A5E4FC2437795D00EE93A0 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
+		E2A5E50024377A9500EE93A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4EA2437768600EE93A0 /* ViewController.swift */; };
+		E2A5E50124377A9500EE93A0 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
+		E2A5E50224377A9500EE93A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4E82437768600EE93A0 /* AppDelegate.swift */; };
+		E2A5E50524377A9500EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E4F82437776400EE93A0 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,6 +91,12 @@
 		7344F5432433361800B7DBE2 /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		739B569724362BA900937ECD /* Swift-iOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-iOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		739B56A524362BB500937ECD /* Swift-macOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-macOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2A5E4E62437768600EE93A0 /* Swift-tvOS-WithoutEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-tvOS-WithoutEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2A5E4E82437768600EE93A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E2A5E4EA2437768600EE93A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E2A5E4F82437776400EE93A0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E2A5E4FB2437783400EE93A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2A5E50A24377A9500EE93A0 /* Swift-tvOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-tvOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +128,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E2A5E4E32437768600EE93A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E50324377A9500EE93A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -133,6 +161,8 @@
 				7306CD7324324EB30077C9E6 /* Swift-macOS-WithoutEncryption.app */,
 				739B569724362BA900937ECD /* Swift-iOS-WithEncryption.app */,
 				739B56A524362BB500937ECD /* Swift-macOS-WithEncryption.app */,
+				E2A5E4E62437768600EE93A0 /* Swift-tvOS-WithoutEncryption.app */,
+				E2A5E50A24377A9500EE93A0 /* Swift-tvOS-WithEncryption.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,6 +188,7 @@
 			children = (
 				7306CD4D24324C620077C9E6 /* macOS */,
 				7306CD5124324C620077C9E6 /* iOS */,
+				E2A5E4E72437768600EE93A0 /* tvOS */,
 				7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */,
 			);
 			path = Swift;
@@ -186,12 +217,31 @@
 		7346163B242E5B73003A9A3F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E2A5E4FA2437783400EE93A0 /* tvOS */,
 				7306CD4824324BE60077C9E6 /* iOS */,
 				7306CD4A24324BE60077C9E6 /* macOS */,
 				7306CD4C24324C620077C9E6 /* Swift */,
 			);
 			name = Shared;
 			path = ../Shared;
+			sourceTree = "<group>";
+		};
+		E2A5E4E72437768600EE93A0 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				E2A5E4F82437776400EE93A0 /* Main.storyboard */,
+				E2A5E4E82437768600EE93A0 /* AppDelegate.swift */,
+				E2A5E4EA2437768600EE93A0 /* ViewController.swift */,
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
+		E2A5E4FA2437783400EE93A0 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				E2A5E4FB2437783400EE93A0 /* Info.plist */,
+			);
+			path = tvOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,13 +323,49 @@
 			productReference = 739B56A524362BB500937ECD /* Swift-macOS-WithEncryption.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E2A5E4E52437768600EE93A0 /* Swift-tvOS-WithoutEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2A5E4F72437768800EE93A0 /* Build configuration list for PBXNativeTarget "Swift-tvOS-WithoutEncryption" */;
+			buildPhases = (
+				E2A5E4E22437768600EE93A0 /* Sources */,
+				E2A5E4E32437768600EE93A0 /* Frameworks */,
+				E2A5E4E42437768600EE93A0 /* Resources */,
+				E2A5E4FD24377A1F00EE93A0 /* Carthage: Copy Platform Specific Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Swift-tvOS-WithoutEncryption";
+			productName = "Swift-tvOS-WithoutEncryption";
+			productReference = E2A5E4E62437768600EE93A0 /* Swift-tvOS-WithoutEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E2A5E4FE24377A9500EE93A0 /* Swift-tvOS-WithEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2A5E50724377A9500EE93A0 /* Build configuration list for PBXNativeTarget "Swift-tvOS-WithEncryption" */;
+			buildPhases = (
+				E2A5E4FF24377A9500EE93A0 /* Sources */,
+				E2A5E50324377A9500EE93A0 /* Frameworks */,
+				E2A5E50424377A9500EE93A0 /* Resources */,
+				E2A5E50624377A9500EE93A0 /* Carthage: Copy Platform Specific Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Swift-tvOS-WithEncryption";
+			productName = "Swift-tvOS-WithoutEncryption";
+			productReference = E2A5E50A24377A9500EE93A0 /* Swift-tvOS-WithEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		33831C561A9CEEE900B124F1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Pusher;
 				TargetAttributes = {
@@ -306,6 +392,15 @@
 					739B569924362BB500937ECD = {
 						ProvisioningStyle = Automatic;
 					};
+					E2A5E4E52437768600EE93A0 = {
+						CreatedOnToolsVersion = 11.0;
+						DevelopmentTeam = H7FL434D9W;
+						ProvisioningStyle = Automatic;
+					};
+					E2A5E4FE24377A9500EE93A0 = {
+						DevelopmentTeam = H7FL434D9W;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 33831C591A9CEEE900B124F1 /* Build configuration list for PBXProject "Swift" */;
@@ -326,6 +421,8 @@
 				739B568924362BA900937ECD /* Swift-iOS-WithEncryption */,
 				7306CD7224324EB30077C9E6 /* Swift-macOS-WithoutEncryption */,
 				739B569924362BB500937ECD /* Swift-macOS-WithEncryption */,
+				E2A5E4E52437768600EE93A0 /* Swift-tvOS-WithoutEncryption */,
+				E2A5E4FE24377A9500EE93A0 /* Swift-tvOS-WithEncryption */,
 			);
 		};
 /* End PBXProject section */
@@ -360,6 +457,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				739B56A024362BB500937ECD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E4E42437768600EE93A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E4F92437776400EE93A0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E50424377A9500EE93A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E50524377A9500EE93A0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +557,49 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
+		E2A5E4FD24377A1F00EE93A0 /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Reachability,
+				Starscream,
+				PusherSwift,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
+		E2A5E50624377A9500EE93A0 /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Reachability,
+				Starscream,
+				PusherSwiftWithEncryption,
+				Sodium,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -484,6 +640,26 @@
 				739B569B24362BB500937ECD /* AppDelegate.swift in Sources */,
 				739B569C24362BB500937ECD /* ViewController+Extensions.swift in Sources */,
 				739B569D24362BB500937ECD /* ViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E4E22437768600EE93A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E4EB2437768600EE93A0 /* ViewController.swift in Sources */,
+				E2A5E4FC2437795D00EE93A0 /* ViewController+Extensions.swift in Sources */,
+				E2A5E4E92437768600EE93A0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E4FF24377A9500EE93A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E50024377A9500EE93A0 /* ViewController.swift in Sources */,
+				E2A5E50124377A9500EE93A0 /* ViewController+Extensions.swift in Sources */,
+				E2A5E50224377A9500EE93A0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,6 +932,106 @@
 			};
 			name = Release;
 		};
+		E2A5E4F52437768800EE93A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Debug;
+		};
+		E2A5E4F62437768800EE93A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Release;
+		};
+		E2A5E50824377A9500EE93A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DWITH_ENCRYPTION";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Debug;
+		};
+		E2A5E50924377A9500EE93A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DWITH_ENCRYPTION";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -800,6 +1076,24 @@
 			buildConfigurations = (
 				739B56A324362BB500937ECD /* Debug */,
 				739B56A424362BB500937ECD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2A5E4F72437768800EE93A0 /* Build configuration list for PBXNativeTarget "Swift-tvOS-WithoutEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2A5E4F52437768800EE93A0 /* Debug */,
+				E2A5E4F62437768800EE93A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2A5E50724377A9500EE93A0 /* Build configuration list for PBXNativeTarget "Swift-tvOS-WithEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2A5E50824377A9500EE93A0 /* Debug */,
+				E2A5E50924377A9500EE93A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

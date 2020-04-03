@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,8 +17,32 @@
 		7306CDB22432531B0077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		7306CDB424325CE90077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		73461638242E5A7E003A9A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73461637242E5A75003A9A3F /* Main.storyboard */; };
-		7364F8562436735A000076F8 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7364F8552436735A000076F8 /* PusherSwift */; };
-		7364F8582436735E000076F8 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7364F8572436735E000076F8 /* PusherSwift */; };
+		739B566D24362B5300937ECD /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
+		739B566E24362B5300937ECD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F37321D82CAB900AE2852 /* ViewController.m */; };
+		739B566F24362B5300937ECD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372F1D82CAB900AE2852 /* AppDelegate.m */; };
+		739B567024362B5300937ECD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372C1D82CAB900AE2852 /* main.m */; };
+		739B567324362B5300937ECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73461637242E5A75003A9A3F /* Main.storyboard */; };
+		739B567C24362B5F00937ECD /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
+		739B567D24362B5F00937ECD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA5243252120077C9E6 /* main.m */; };
+		739B567E24362B5F00937ECD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA3243252120077C9E6 /* ViewController.m */; };
+		739B567F24362B5F00937ECD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDA6243252120077C9E6 /* AppDelegate.m */; };
+		739B568224362B5F00937ECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CDA4243252120077C9E6 /* Main.storyboard */; };
+		E2A5E51424377C6F00EE93A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E51324377C6F00EE93A0 /* AppDelegate.m */; };
+		E2A5E51724377C6F00EE93A0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E51624377C6F00EE93A0 /* ViewController.m */; };
+		E2A5E51A24377C6F00EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E51824377C6F00EE93A0 /* Main.storyboard */; };
+		E2A5E52224377C7100EE93A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E52124377C7100EE93A0 /* main.m */; };
+		E2A5E52824377E1300EE93A0 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
+		E2A5E52C2437807E00EE93A0 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
+		E2A5E52D2437807E00EE93A0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E51624377C6F00EE93A0 /* ViewController.m */; };
+		E2A5E52E2437807E00EE93A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E52124377C7100EE93A0 /* main.m */; };
+		E2A5E52F2437807E00EE93A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E51324377C6F00EE93A0 /* AppDelegate.m */; };
+		E2A5E5322437807E00EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E51824377C6F00EE93A0 /* Main.storyboard */; };
+		E2A5E59624379FDD00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59524379FDD00EE93A0 /* PusherSwift */; };
+		E2A5E59824379FE100EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59724379FE100EE93A0 /* PusherSwift */; };
+		E2A5E59A24379FE500EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59924379FE500EE93A0 /* PusherSwift */; };
+		E2A5E59C24379FEA00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59B24379FEA00EE93A0 /* PusherSwift */; };
+		E2A5E59E24379FEF00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59D24379FEF00EE93A0 /* PusherSwift */; };
+		E2A5E5A024379FF200EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59F24379FF200EE93A0 /* PusherSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +65,17 @@
 		7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ViewController+Extensions.m"; sourceTree = "<group>"; };
 		7344F5452433362600B7DBE2 /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		73461637242E5A75003A9A3F /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-iOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-macOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2A5E51024377C6F00EE93A0 /* ObjectiveC-tvOS-WithoutEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-tvOS-WithoutEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2A5E51224377C6F00EE93A0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E2A5E51324377C6F00EE93A0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E2A5E51524377C6F00EE93A0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E2A5E51624377C6F00EE93A0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E2A5E51924377C6F00EE93A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E2A5E52124377C7100EE93A0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E2A5E52724377D9600EE93A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2A5E5372437807E00EE93A0 /* ObjectiveC-tvOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ObjectiveC-tvOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7364F8562436735A000076F8 /* PusherSwift in Frameworks */,
+				E2A5E59624379FDD00EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +91,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7364F8582436735E000076F8 /* PusherSwift in Frameworks */,
+				E2A5E59A24379FE500EE93A0 /* PusherSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B567124362B5300937ECD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E59824379FE100EE93A0 /* PusherSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B568024362B5F00937ECD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E59C24379FEA00EE93A0 /* PusherSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E50D24377C6F00EE93A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E59E24379FEF00EE93A0 /* PusherSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E5302437807E00EE93A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E5A024379FF200EE93A0 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +136,7 @@
 				7344F5452433362600B7DBE2 /* config.xcconfig */,
 				7346163D242E5BC7003A9A3F /* Shared */,
 				331F37291D82CAB900AE2852 /* Products */,
+				E2A5E59424379FDD00EE93A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +145,10 @@
 			children = (
 				331F37281D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption.app */,
 				7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption.app */,
+				739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */,
+				739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */,
+				E2A5E51024377C6F00EE93A0 /* ObjectiveC-tvOS-WithoutEncryption.app */,
+				E2A5E5372437807E00EE93A0 /* ObjectiveC-tvOS-WithEncryption.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,6 +169,7 @@
 		7306CD6124324DCA0077C9E6 /* Objective-C */ = {
 			isa = PBXGroup;
 			children = (
+				E2A5E51124377C6F00EE93A0 /* tvOS */,
 				7306CDA1243252120077C9E6 /* macOS */,
 				331F372A1D82CAB900AE2852 /* iOS */,
 				7306CDB02432531B0077C9E6 /* ViewController+Extensions.h */,
@@ -137,12 +210,41 @@
 		7346163D242E5BC7003A9A3F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E2A5E52624377D9600EE93A0 /* tvOS */,
 				7306CD6B24324E060077C9E6 /* iOS */,
 				7306CD6924324E060077C9E6 /* macOS */,
 				7306CD6124324DCA0077C9E6 /* Objective-C */,
 			);
 			name = Shared;
 			path = ../Shared;
+			sourceTree = "<group>";
+		};
+		E2A5E51124377C6F00EE93A0 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				E2A5E51224377C6F00EE93A0 /* AppDelegate.h */,
+				E2A5E51324377C6F00EE93A0 /* AppDelegate.m */,
+				E2A5E51524377C6F00EE93A0 /* ViewController.h */,
+				E2A5E51624377C6F00EE93A0 /* ViewController.m */,
+				E2A5E51824377C6F00EE93A0 /* Main.storyboard */,
+				E2A5E52124377C7100EE93A0 /* main.m */,
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
+		E2A5E52624377D9600EE93A0 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				E2A5E52724377D9600EE93A0 /* Info.plist */,
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
+		E2A5E59424379FDD00EE93A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +265,7 @@
 			);
 			name = "ObjectiveC-iOS-WithoutEncryption";
 			packageProductDependencies = (
-				7364F8552436735A000076F8 /* PusherSwift */,
+				E2A5E59524379FDD00EE93A0 /* PusherSwift */,
 			);
 			productName = "iOS Example Obj-C";
 			productReference = 331F37281D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption.app */;
@@ -184,10 +286,94 @@
 			);
 			name = "ObjectiveC-macOS-WithoutEncryption";
 			packageProductDependencies = (
-				7364F8572436735E000076F8 /* PusherSwift */,
+				E2A5E59924379FE500EE93A0 /* PusherSwift */,
 			);
 			productName = "ObjectiveC-macOS";
 			productReference = 7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
+		739B566B24362B5300937ECD /* ObjectiveC-iOS-WithEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 739B567524362B5300937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS-WithEncryption" */;
+			buildPhases = (
+				739B566C24362B5300937ECD /* Sources */,
+				739B567124362B5300937ECD /* Frameworks */,
+				739B567224362B5300937ECD /* Resources */,
+				739B567424362B5300937ECD /* Carthage: Copy Platform Specific Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ObjectiveC-iOS-WithEncryption";
+			packageProductDependencies = (
+				E2A5E59724379FE100EE93A0 /* PusherSwift */,
+			);
+			productName = "iOS Example Obj-C";
+			productReference = 739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
+		739B567A24362B5F00937ECD /* ObjectiveC-macOS-WithEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 739B568424362B5F00937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS-WithEncryption" */;
+			buildPhases = (
+				739B567B24362B5F00937ECD /* Sources */,
+				739B568024362B5F00937ECD /* Frameworks */,
+				739B568124362B5F00937ECD /* Resources */,
+				739B568324362B5F00937ECD /* Carthage: Copy Platform Specific Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ObjectiveC-macOS-WithEncryption";
+			packageProductDependencies = (
+				E2A5E59B24379FEA00EE93A0 /* PusherSwift */,
+			);
+			productName = "ObjectiveC-macOS";
+			productReference = 739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E2A5E50F24377C6F00EE93A0 /* ObjectiveC-tvOS-WithoutEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2A5E52524377C7100EE93A0 /* Build configuration list for PBXNativeTarget "ObjectiveC-tvOS-WithoutEncryption" */;
+			buildPhases = (
+				E2A5E50C24377C6F00EE93A0 /* Sources */,
+				E2A5E50D24377C6F00EE93A0 /* Frameworks */,
+				E2A5E50E24377C6F00EE93A0 /* Resources */,
+				E2A5E52924377FF700EE93A0 /* Carthage: Copy Platform Specific Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ObjectiveC-tvOS-WithoutEncryption";
+			packageProductDependencies = (
+				E2A5E59D24379FEF00EE93A0 /* PusherSwift */,
+			);
+			productName = "ObjectiveC-tvOS-WithoutEncryption";
+			productReference = E2A5E51024377C6F00EE93A0 /* ObjectiveC-tvOS-WithoutEncryption.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E2A5E52A2437807E00EE93A0 /* ObjectiveC-tvOS-WithEncryption */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2A5E5342437807E00EE93A0 /* Build configuration list for PBXNativeTarget "ObjectiveC-tvOS-WithEncryption" */;
+			buildPhases = (
+				E2A5E52B2437807E00EE93A0 /* Sources */,
+				E2A5E5302437807E00EE93A0 /* Frameworks */,
+				E2A5E5312437807E00EE93A0 /* Resources */,
+				E2A5E5332437807E00EE93A0 /* Carthage: Copy Platform Specific Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ObjectiveC-tvOS-WithEncryption";
+			packageProductDependencies = (
+				E2A5E59F24379FF200EE93A0 /* PusherSwift */,
+			);
+			productName = "ObjectiveC-tvOS-WithoutEncryption";
+			productReference = E2A5E5372437807E00EE93A0 /* ObjectiveC-tvOS-WithEncryption.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -213,6 +399,21 @@
 						CreatedOnToolsVersion = 11.4;
 						ProvisioningStyle = Automatic;
 					};
+					739B566B24362B5300937ECD = {
+						DevelopmentTeam = H7FL434D9W;
+					};
+					739B567A24362B5F00937ECD = {
+						ProvisioningStyle = Automatic;
+					};
+					E2A5E50F24377C6F00EE93A0 = {
+						CreatedOnToolsVersion = 11.0;
+						DevelopmentTeam = H7FL434D9W;
+						ProvisioningStyle = Automatic;
+					};
+					E2A5E52A2437807E00EE93A0 = {
+						DevelopmentTeam = H7FL434D9W;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 331F37231D82CAB900AE2852 /* Build configuration list for PBXProject "ObjectiveC" */;
@@ -229,7 +430,11 @@
 			projectRoot = "";
 			targets = (
 				331F37271D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption */,
+				739B566B24362B5300937ECD /* ObjectiveC-iOS-WithEncryption */,
 				7306CD8C2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption */,
+				739B567A24362B5F00937ECD /* ObjectiveC-macOS-WithEncryption */,
+				E2A5E50F24377C6F00EE93A0 /* ObjectiveC-tvOS-WithoutEncryption */,
+				E2A5E52A2437807E00EE93A0 /* ObjectiveC-tvOS-WithEncryption */,
 			);
 		};
 /* End PBXProject section */
@@ -248,6 +453,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				7306CDAD2432522E0077C9E6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B567224362B5300937ECD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B567324362B5300937ECD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B568124362B5F00937ECD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B568224362B5F00937ECD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E50E24377C6F00EE93A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E51A24377C6F00EE93A0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E5312437807E00EE93A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E5322437807E00EE93A0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +512,50 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
+		739B567424362B5300937ECD /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Sodium,
+				Reachability,
+				Starscream,
+				PusherSwiftWithEncryption,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
+		739B568324362B5F00937ECD /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Sodium,
+				Reachability,
+				Starscream,
+				PusherSwiftWithEncryption,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
 		E22966B12260A7E00050D509 /* Carthage: Copy Platform Specific Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -286,6 +567,49 @@
 				Reachability,
 				Starscream,
 				PusherSwift,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
+		E2A5E52924377FF700EE93A0 /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Reachability,
+				Starscream,
+				PusherSwift,
+			);
+			name = "Carthage: Copy Platform Specific Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
+		};
+		E2A5E5332437807E00EE93A0 /* Carthage: Copy Platform Specific Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				Reachability,
+				Starscream,
+				PusherSwiftWithEncryption,
+				Sodium,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
 			outputFileListPaths = (
@@ -321,7 +645,62 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		739B566C24362B5300937ECD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B566D24362B5300937ECD /* ViewController+Extensions.m in Sources */,
+				739B566E24362B5300937ECD /* ViewController.m in Sources */,
+				739B566F24362B5300937ECD /* AppDelegate.m in Sources */,
+				739B567024362B5300937ECD /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		739B567B24362B5F00937ECD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739B567C24362B5F00937ECD /* ViewController+Extensions.m in Sources */,
+				739B567D24362B5F00937ECD /* main.m in Sources */,
+				739B567E24362B5F00937ECD /* ViewController.m in Sources */,
+				739B567F24362B5F00937ECD /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E50C24377C6F00EE93A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E52824377E1300EE93A0 /* ViewController+Extensions.m in Sources */,
+				E2A5E51724377C6F00EE93A0 /* ViewController.m in Sources */,
+				E2A5E52224377C7100EE93A0 /* main.m in Sources */,
+				E2A5E51424377C6F00EE93A0 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A5E52B2437807E00EE93A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A5E52C2437807E00EE93A0 /* ViewController+Extensions.m in Sources */,
+				E2A5E52D2437807E00EE93A0 /* ViewController.m in Sources */,
+				E2A5E52E2437807E00EE93A0 /* main.m in Sources */,
+				E2A5E52F2437807E00EE93A0 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E2A5E51824377C6F00EE93A0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2A5E51924377C6F00EE93A0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		331F373D1D82CAB900AE2852 /* Debug */ = {
@@ -440,7 +819,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -451,7 +833,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -468,7 +853,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -489,11 +877,211 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		739B567624362B5300937ECD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		739B567724362B5300937ECD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				INFOPLIST_FILE = ../Shared/iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		739B568524362B5F00937ECD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		739B568624362B5F00937ECD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/macOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E2A5E52324377C7100EE93A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Debug;
+		};
+		E2A5E52424377C7100EE93A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Release;
+		};
+		E2A5E5352437807E00EE93A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Debug;
+		};
+		E2A5E5362437807E00EE93A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H7FL434D9W;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ../Shared/tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DWITH_ENCRYPTION",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -527,14 +1115,66 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		739B567524362B5300937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-iOS-WithEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				739B567624362B5300937ECD /* Debug */,
+				739B567724362B5300937ECD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		739B568424362B5F00937ECD /* Build configuration list for PBXNativeTarget "ObjectiveC-macOS-WithEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				739B568524362B5F00937ECD /* Debug */,
+				739B568624362B5F00937ECD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2A5E52524377C7100EE93A0 /* Build configuration list for PBXNativeTarget "ObjectiveC-tvOS-WithoutEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2A5E52324377C7100EE93A0 /* Debug */,
+				E2A5E52424377C7100EE93A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2A5E5342437807E00EE93A0 /* Build configuration list for PBXNativeTarget "ObjectiveC-tvOS-WithEncryption" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2A5E5352437807E00EE93A0 /* Debug */,
+				E2A5E5362437807E00EE93A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7364F8552436735A000076F8 /* PusherSwift */ = {
+		E2A5E59524379FDD00EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		7364F8572436735E000076F8 /* PusherSwift */ = {
+		E2A5E59724379FE100EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59924379FE500EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59B24379FEA00EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59D24379FEF00EE93A0 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PusherSwift;
+		};
+		E2A5E59F24379FF200EE93A0 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};

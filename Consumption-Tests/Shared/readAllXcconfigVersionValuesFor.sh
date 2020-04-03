@@ -6,6 +6,7 @@ set -e # Ensure Script Exits immediately if any command exits with a non-zero st
 #	SWIFT_VERSION
 #	IPHONEOS_DEPLOYMENT_TARGET
 #	MACOSX_DEPLOYMENT_TARGET
+#	TVOS_DEPLOYMENT_TARGET
 #
 # by reading them  from the appropriate xcconfig file, either 
 #	MINIMUM_SUPPORTED_VERSIONS.xconfig
@@ -54,6 +55,7 @@ function readAllXcconfigVersionValuesFor {
 	echo "SWIFT_VERSION=$SWIFT_VERSION"
 	echo "IPHONEOS_DEPLOYMENT_TARGET=$IPHONEOS_DEPLOYMENT_TARGET"
 	echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET"
+	echo "TVOS_DEPLOYMENT_TARGET=$TVOS_DEPLOYMENT_TARGET"
 
 	echo "------ END: $FUNCNAME $@ ------"
 }

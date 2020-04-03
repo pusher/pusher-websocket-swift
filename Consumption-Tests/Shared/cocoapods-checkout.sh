@@ -71,10 +71,11 @@ fi
 #################
 
 readAllXcconfigVersionValuesFor "$WORKING_DIRECTORY"
-# should set SWIFT_VERSION, IPHONEOS_DEPLOYMENT_TARGET & MACOSX_DEPLOYMENT_TARGET
+# should set SWIFT_VERSION, IPHONEOS_DEPLOYMENT_TARGET, MACOSX_DEPLOYMENT_TARGET & TVOS_DEPLOYMENT_TARGET
 echo "SWIFT_VERSION=$SWIFT_VERSION"
 echo "IPHONEOS_DEPLOYMENT_TARGET=$IPHONEOS_DEPLOYMENT_TARGET"
 echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET"
+echo "TVOS_DEPLOYMENT_TARGET=$TVOS_DEPLOYMENT_TARGET"
 
 
 #################################################
@@ -94,6 +95,7 @@ rm -rf "Pods"
 sed <Podfile.template \
     -e "s#{IOS_VERSION}#${IPHONEOS_DEPLOYMENT_TARGET}#" \
     -e "s#{MAC_VERSION}#${MACOSX_DEPLOYMENT_TARGET}#" \
+    -e "s#{TVOS_VERSION}#${TVOS_DEPLOYMENT_TARGET}#" \
     >Podfile
 
 # Perform the `pod install` (using the Podfile we just created)
