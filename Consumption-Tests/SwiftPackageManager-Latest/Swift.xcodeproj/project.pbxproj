@@ -15,6 +15,12 @@
 		7306CD8424324EDC0077C9E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CD4F24324C620077C9E6 /* Main.storyboard */; };
 		7306CD8524324EDC0077C9E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5024324C620077C9E6 /* AppDelegate.swift */; };
 		7306CD8624324EDF0077C9E6 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
+		7357FE522437C0D3009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE512437C0D3009804A4 /* PusherSwift */; };
+		7357FE542437C0D6009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE532437C0D6009804A4 /* PusherSwift */; };
+		7357FE562437C0DA009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE552437C0DA009804A4 /* PusherSwift */; };
+		7357FE582437C0DF009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE572437C0DF009804A4 /* PusherSwift */; };
+		7357FE5A2437C0E4009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE592437C0E4009804A4 /* PusherSwift */; };
+		7357FE5C2437C0E8009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE5B2437C0E8009804A4 /* PusherSwift */; };
 		739B568B24362BA900937ECD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5424324C620077C9E6 /* AppDelegate.swift */; };
 		739B568C24362BA900937ECD /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
 		739B568D24362BA900937ECD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5224324C620077C9E6 /* ViewController.swift */; };
@@ -31,12 +37,6 @@
 		E2A5E50124377A9500EE93A0 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
 		E2A5E50224377A9500EE93A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4E82437768600EE93A0 /* AppDelegate.swift */; };
 		E2A5E50524377A9500EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E4F82437776400EE93A0 /* Main.storyboard */; };
-		E2A5E58924379FA600EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58824379FA600EE93A0 /* PusherSwift */; };
-		E2A5E58B24379FAA00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58A24379FAA00EE93A0 /* PusherSwift */; };
-		E2A5E58D24379FAF00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58C24379FAF00EE93A0 /* PusherSwift */; };
-		E2A5E58F24379FB200EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58E24379FB200EE93A0 /* PusherSwift */; };
-		E2A5E59124379FB600EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59024379FB600EE93A0 /* PusherSwift */; };
-		E2A5E59324379FBB00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E59224379FBB00EE93A0 /* PusherSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58924379FA600EE93A0 /* PusherSwift in Frameworks */,
+				7357FE522437C0D3009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58D24379FAF00EE93A0 /* PusherSwift in Frameworks */,
+				7357FE562437C0DA009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58B24379FAA00EE93A0 /* PusherSwift in Frameworks */,
+				7357FE542437C0D6009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58F24379FB200EE93A0 /* PusherSwift in Frameworks */,
+				7357FE582437C0DF009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E59124379FB600EE93A0 /* PusherSwift in Frameworks */,
+				7357FE5A2437C0E4009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E59324379FBB00EE93A0 /* PusherSwift in Frameworks */,
+				7357FE5C2437C0E8009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +163,7 @@
 				7344F5432433361800B7DBE2 /* config.xcconfig */,
 				7346163B242E5B73003A9A3F /* Shared */,
 				33831C5F1A9CEEE900B124F1 /* Products */,
-				E2A5E58724379FA600EE93A0 /* Frameworks */,
+				7357FE502437C0D3009804A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,6 +239,13 @@
 			path = ../Shared;
 			sourceTree = "<group>";
 		};
+		7357FE502437C0D3009804A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E2A5E4E72437768600EE93A0 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,13 +262,6 @@
 				E2A5E4FB2437783400EE93A0 /* Info.plist */,
 			);
 			path = tvOS;
-			sourceTree = "<group>";
-		};
-		E2A5E58724379FA600EE93A0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,7 +284,7 @@
 			);
 			name = "Swift-iOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E58824379FA600EE93A0 /* PusherSwift */,
+				7357FE512437C0D3009804A4 /* PusherSwift */,
 			);
 			productName = "iOS Example";
 			productReference = 33831C5E1A9CEEE900B124F1 /* Swift-iOS-WithoutEncryption.app */;
@@ -305,7 +305,7 @@
 			);
 			name = "Swift-macOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E58C24379FAF00EE93A0 /* PusherSwift */,
+				7357FE552437C0DA009804A4 /* PusherSwift */,
 			);
 			productName = "Swift-macOS";
 			productReference = 7306CD7324324EB30077C9E6 /* Swift-macOS-WithoutEncryption.app */;
@@ -328,7 +328,7 @@
 			);
 			name = "Swift-iOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E58A24379FAA00EE93A0 /* PusherSwift */,
+				7357FE532437C0D6009804A4 /* PusherSwift */,
 			);
 			productName = "iOS Example";
 			productReference = 739B569724362BA900937ECD /* Swift-iOS-WithEncryption.app */;
@@ -349,7 +349,7 @@
 			);
 			name = "Swift-macOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E58E24379FB200EE93A0 /* PusherSwift */,
+				7357FE572437C0DF009804A4 /* PusherSwift */,
 			);
 			productName = "Swift-macOS";
 			productReference = 739B56A524362BB500937ECD /* Swift-macOS-WithEncryption.app */;
@@ -370,7 +370,7 @@
 			);
 			name = "Swift-tvOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E59024379FB600EE93A0 /* PusherSwift */,
+				7357FE592437C0E4009804A4 /* PusherSwift */,
 			);
 			productName = "Swift-tvOS-WithoutEncryption";
 			productReference = E2A5E4E62437768600EE93A0 /* Swift-tvOS-WithoutEncryption.app */;
@@ -391,7 +391,7 @@
 			);
 			name = "Swift-tvOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E59224379FBB00EE93A0 /* PusherSwift */,
+				7357FE5B2437C0E8009804A4 /* PusherSwift */,
 			);
 			productName = "Swift-tvOS-WithoutEncryption";
 			productReference = E2A5E50A24377A9500EE93A0 /* Swift-tvOS-WithEncryption.app */;
@@ -1022,7 +1022,6 @@
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
@@ -1050,7 +1049,6 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -1079,7 +1077,6 @@
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
@@ -1108,7 +1105,6 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -1181,27 +1177,27 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E2A5E58824379FA600EE93A0 /* PusherSwift */ = {
+		7357FE512437C0D3009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E58A24379FAA00EE93A0 /* PusherSwift */ = {
+		7357FE532437C0D6009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E58C24379FAF00EE93A0 /* PusherSwift */ = {
+		7357FE552437C0DA009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E58E24379FB200EE93A0 /* PusherSwift */ = {
+		7357FE572437C0DF009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E59024379FB600EE93A0 /* PusherSwift */ = {
+		7357FE592437C0E4009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E59224379FBB00EE93A0 /* PusherSwift */ = {
+		7357FE5B2437C0E8009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};

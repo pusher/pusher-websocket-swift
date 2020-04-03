@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D235AC06F8127D6683BCF4F /* Pods_Swift_macOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBBE6F9DFFA10D52005759D /* Pods_Swift_macOS_WithoutEncryption.framework */; };
+		4E5ABB29E90A80AE30D55D8F /* Pods_Swift_iOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFA31229A64E1681FBE03890 /* Pods_Swift_iOS_WithoutEncryption.framework */; };
 		7306CD5924324C620077C9E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5224324C620077C9E6 /* ViewController.swift */; };
 		7306CD5A24324C620077C9E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CD5324324C620077C9E6 /* Main.storyboard */; };
 		7306CD5B24324C620077C9E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5424324C620077C9E6 /* AppDelegate.swift */; };
@@ -16,7 +16,6 @@
 		7306CD8424324EDC0077C9E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CD4F24324C620077C9E6 /* Main.storyboard */; };
 		7306CD8524324EDC0077C9E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5024324C620077C9E6 /* AppDelegate.swift */; };
 		7306CD8624324EDF0077C9E6 /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
-		7318F110DBF87782F184B46D /* Pods_Swift_macOS_WithEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A3BD50F9A407A371990A95 /* Pods_Swift_macOS_WithEncryption.framework */; };
 		739B568B24362BA900937ECD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5424324C620077C9E6 /* AppDelegate.swift */; };
 		739B568C24362BA900937ECD /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
 		739B568D24362BA900937ECD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5224324C620077C9E6 /* ViewController.swift */; };
@@ -25,9 +24,10 @@
 		739B569C24362BB500937ECD /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD5524324C620077C9E6 /* ViewController+Extensions.swift */; };
 		739B569D24362BB500937ECD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7306CD4E24324C620077C9E6 /* ViewController.swift */; };
 		739B56A024362BB500937ECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7306CD4F24324C620077C9E6 /* Main.storyboard */; };
-		964114B4B956F6E76C5318D8 /* Pods_Swift_iOS_WithEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0ADDD726F87535CBE167A3 /* Pods_Swift_iOS_WithEncryption.framework */; };
-		9AB61D6FBB6A12BB1C2F5B78 /* Pods_Swift_iOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194A5B52E3FFBF77926DE620 /* Pods_Swift_iOS_WithoutEncryption.framework */; };
-		B31371A4CB15F9FFA9B1F1AF /* Pods_Swift_tvOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA9C607AF7A66FB17AB4928 /* Pods_Swift_tvOS_WithoutEncryption.framework */; };
+		A1364D47A8AED298D9FFA5B2 /* Pods_Swift_macOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DDF9A5EA3D2E7CF6011939C /* Pods_Swift_macOS_WithoutEncryption.framework */; };
+		A3F05EAB7FDE424AF15875C6 /* Pods_Swift_macOS_WithEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DDB9D908DF5FC439D0BE957 /* Pods_Swift_macOS_WithEncryption.framework */; };
+		B738947CDF5E1110B3128A77 /* Pods_Swift_iOS_WithEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C792C54436BEC36881BBBE4F /* Pods_Swift_iOS_WithEncryption.framework */; };
+		C02C77DB4C0E7DFCA1BD45CD /* Pods_Swift_tvOS_WithoutEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D1109A609B1B43BFCD0641 /* Pods_Swift_tvOS_WithoutEncryption.framework */; };
 		E2A5E4E92437768600EE93A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4E82437768600EE93A0 /* AppDelegate.swift */; };
 		E2A5E4EB2437768600EE93A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E4EA2437768600EE93A0 /* ViewController.swift */; };
 		E2A5E4F92437776400EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E4F82437776400EE93A0 /* Main.storyboard */; };
@@ -82,15 +82,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		194A5B52E3FFBF77926DE620 /* Pods_Swift_iOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_iOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1C0ADDD726F87535CBE167A3 /* Pods_Swift_iOS_WithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_iOS_WithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		248987FB90714AC37E7EA152 /* Pods-Swift-tvOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-tvOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
-		297210A5842E74B2D6C92366 /* Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		02D1109A609B1B43BFCD0641 /* Pods_Swift_tvOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_tvOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C91BD209B7A033A24A6AAC1 /* Pods-Swift-iOS-WithEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption.release.xcconfig"; sourceTree = "<group>"; };
+		17A5A0845A1EAE97A1F2AD41 /* Pods-Swift-macOS-WithEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		1CAC2C17723471D26B9A36E0 /* Pods-Swift-iOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithoutEncryption/Pods-Swift-iOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
+		1D5309BA5621579C7F9A810A /* Pods-Swift-macOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		2A1F5DE6A82A7C16DE769DB3 /* Pods-Swift-macOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
 		33831C5E1A9CEEE900B124F1 /* Swift-iOS-WithoutEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-iOS-WithoutEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		37A3BD50F9A407A371990A95 /* Pods_Swift_macOS_WithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_macOS_WithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4AA9C607AF7A66FB17AB4928 /* Pods_Swift_tvOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_tvOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6875D72A6D847108FF05D56B /* Pods-Swift-macOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
-		6D1FF755C834A1B2C8278706 /* Pods-Swift-macOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		382342049BD2457691680778 /* Pods-Swift-macOS-WithEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption.release.xcconfig"; sourceTree = "<group>"; };
+		3E459F06AC11C1DAD434E11B /* Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		5DDF9A5EA3D2E7CF6011939C /* Pods_Swift_macOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_macOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6380C98657A00F4228196A19 /* Pods-Swift-tvOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-tvOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
 		7306CD4924324BE60077C9E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7306CD4B24324BE60077C9E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7306CD4E24324C620077C9E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,19 +106,17 @@
 		7344F5432433361800B7DBE2 /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		739B569724362BA900937ECD /* Swift-iOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-iOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		739B56A524362BB500937ECD /* Swift-macOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-macOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		905312BA3EF16A64A893B800 /* Pods-Swift-macOS-WithEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption.release.xcconfig"; sourceTree = "<group>"; };
-		97050409F033ADC771319323 /* Pods-Swift-iOS-WithEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption.release.xcconfig"; sourceTree = "<group>"; };
-		A31C29368CAC188026BD2FFA /* Pods-Swift-iOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithoutEncryption/Pods-Swift-iOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
-		CEBBE6F9DFFA10D52005759D /* Pods_Swift_macOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_macOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D6F3889B3976E9A81575B52E /* Pods-Swift-iOS-WithEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		7DDB9D908DF5FC439D0BE957 /* Pods_Swift_macOS_WithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_macOS_WithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C792C54436BEC36881BBBE4F /* Pods_Swift_iOS_WithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_iOS_WithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7E53629E70F6C87CD74D9AC /* Pods-Swift-iOS-WithEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		D822A9177B97A5EF59525976 /* Pods-Swift-iOS-WithoutEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithoutEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithoutEncryption/Pods-Swift-iOS-WithoutEncryption.debug.xcconfig"; sourceTree = "<group>"; };
+		DFA31229A64E1681FBE03890 /* Pods_Swift_iOS_WithoutEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swift_iOS_WithoutEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A5E4E62437768600EE93A0 /* Swift-tvOS-WithoutEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-tvOS-WithoutEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A5E4E82437768600EE93A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2A5E4EA2437768600EE93A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E2A5E4F82437776400EE93A0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E2A5E4FB2437783400EE93A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2A5E50A24377A9500EE93A0 /* Swift-tvOS-WithEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-tvOS-WithEncryption.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F3CAEE9B068CD91D20790DAF /* Pods-Swift-macOS-WithEncryption.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-macOS-WithEncryption.debug.xcconfig"; path = "Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption.debug.xcconfig"; sourceTree = "<group>"; };
-		F768710BE6E8F0D36A6F345A /* Pods-Swift-iOS-WithoutEncryption.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swift-iOS-WithoutEncryption.release.xcconfig"; path = "Target Support Files/Pods-Swift-iOS-WithoutEncryption/Pods-Swift-iOS-WithoutEncryption.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AB61D6FBB6A12BB1C2F5B78 /* Pods_Swift_iOS_WithoutEncryption.framework in Frameworks */,
+				4E5ABB29E90A80AE30D55D8F /* Pods_Swift_iOS_WithoutEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D235AC06F8127D6683BCF4F /* Pods_Swift_macOS_WithoutEncryption.framework in Frameworks */,
+				A1364D47A8AED298D9FFA5B2 /* Pods_Swift_macOS_WithoutEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,7 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				964114B4B956F6E76C5318D8 /* Pods_Swift_iOS_WithEncryption.framework in Frameworks */,
+				B738947CDF5E1110B3128A77 /* Pods_Swift_iOS_WithEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7318F110DBF87782F184B46D /* Pods_Swift_macOS_WithEncryption.framework in Frameworks */,
+				A3F05EAB7FDE424AF15875C6 /* Pods_Swift_macOS_WithEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B31371A4CB15F9FFA9B1F1AF /* Pods_Swift_tvOS_WithoutEncryption.framework in Frameworks */,
+				C02C77DB4C0E7DFCA1BD45CD /* Pods_Swift_tvOS_WithoutEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,8 +176,8 @@
 				7344F5432433361800B7DBE2 /* config.xcconfig */,
 				7346163B242E5B73003A9A3F /* Shared */,
 				33831C5F1A9CEEE900B124F1 /* Products */,
-				E0F77CE9190532082D2AF037 /* Pods */,
-				820FB61C831BE1FED77A83D5 /* Frameworks */,
+				E2A6685179916BECB039075C /* Pods */,
+				34256A424C42AC79BB19FF8B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -192,6 +192,18 @@
 				E2A5E50A24377A9500EE93A0 /* Swift-tvOS-WithEncryption.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		34256A424C42AC79BB19FF8B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C792C54436BEC36881BBBE4F /* Pods_Swift_iOS_WithEncryption.framework */,
+				DFA31229A64E1681FBE03890 /* Pods_Swift_iOS_WithoutEncryption.framework */,
+				7DDB9D908DF5FC439D0BE957 /* Pods_Swift_macOS_WithEncryption.framework */,
+				5DDF9A5EA3D2E7CF6011939C /* Pods_Swift_macOS_WithoutEncryption.framework */,
+				02D1109A609B1B43BFCD0641 /* Pods_Swift_tvOS_WithoutEncryption.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7306CD4824324BE60077C9E6 /* iOS */ = {
@@ -253,36 +265,6 @@
 			path = ../Shared;
 			sourceTree = "<group>";
 		};
-		820FB61C831BE1FED77A83D5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1C0ADDD726F87535CBE167A3 /* Pods_Swift_iOS_WithEncryption.framework */,
-				194A5B52E3FFBF77926DE620 /* Pods_Swift_iOS_WithoutEncryption.framework */,
-				37A3BD50F9A407A371990A95 /* Pods_Swift_macOS_WithEncryption.framework */,
-				CEBBE6F9DFFA10D52005759D /* Pods_Swift_macOS_WithoutEncryption.framework */,
-				4AA9C607AF7A66FB17AB4928 /* Pods_Swift_tvOS_WithoutEncryption.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E0F77CE9190532082D2AF037 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D6F3889B3976E9A81575B52E /* Pods-Swift-iOS-WithEncryption.debug.xcconfig */,
-				97050409F033ADC771319323 /* Pods-Swift-iOS-WithEncryption.release.xcconfig */,
-				A31C29368CAC188026BD2FFA /* Pods-Swift-iOS-WithoutEncryption.debug.xcconfig */,
-				F768710BE6E8F0D36A6F345A /* Pods-Swift-iOS-WithoutEncryption.release.xcconfig */,
-				F3CAEE9B068CD91D20790DAF /* Pods-Swift-macOS-WithEncryption.debug.xcconfig */,
-				905312BA3EF16A64A893B800 /* Pods-Swift-macOS-WithEncryption.release.xcconfig */,
-				6D1FF755C834A1B2C8278706 /* Pods-Swift-macOS-WithoutEncryption.debug.xcconfig */,
-				6875D72A6D847108FF05D56B /* Pods-Swift-macOS-WithoutEncryption.release.xcconfig */,
-				297210A5842E74B2D6C92366 /* Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig */,
-				248987FB90714AC37E7EA152 /* Pods-Swift-tvOS-WithoutEncryption.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		E2A5E4E72437768600EE93A0 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +283,24 @@
 			path = tvOS;
 			sourceTree = "<group>";
 		};
+		E2A6685179916BECB039075C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D7E53629E70F6C87CD74D9AC /* Pods-Swift-iOS-WithEncryption.debug.xcconfig */,
+				0C91BD209B7A033A24A6AAC1 /* Pods-Swift-iOS-WithEncryption.release.xcconfig */,
+				D822A9177B97A5EF59525976 /* Pods-Swift-iOS-WithoutEncryption.debug.xcconfig */,
+				1CAC2C17723471D26B9A36E0 /* Pods-Swift-iOS-WithoutEncryption.release.xcconfig */,
+				17A5A0845A1EAE97A1F2AD41 /* Pods-Swift-macOS-WithEncryption.debug.xcconfig */,
+				382342049BD2457691680778 /* Pods-Swift-macOS-WithEncryption.release.xcconfig */,
+				1D5309BA5621579C7F9A810A /* Pods-Swift-macOS-WithoutEncryption.debug.xcconfig */,
+				2A1F5DE6A82A7C16DE769DB3 /* Pods-Swift-macOS-WithoutEncryption.release.xcconfig */,
+				3E459F06AC11C1DAD434E11B /* Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig */,
+				6380C98657A00F4228196A19 /* Pods-Swift-tvOS-WithoutEncryption.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -308,14 +308,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33831C7D1A9CEEEA00B124F1 /* Build configuration list for PBXNativeTarget "Swift-iOS-WithoutEncryption" */;
 			buildPhases = (
-				4F3287034BBC43D8DBA0AED9 /* [CP] Check Pods Manifest.lock */,
+				5F76FA26584CD3F6A0349525 /* [CP] Check Pods Manifest.lock */,
 				33831C5A1A9CEEE900B124F1 /* Sources */,
 				33831C5B1A9CEEE900B124F1 /* Frameworks */,
 				33831C5C1A9CEEE900B124F1 /* Resources */,
 				335AD5AE20569C58000D4D08 /* Carthage: Copy Platform Specific Frameworks */,
 				3330F8921D86EF1900D8DC88 /* Embed App Extensions */,
 				7319BDCD2431F07A0074991C /* Embed Frameworks */,
-				F69D3719695EA1222D512198 /* [CP] Embed Pods Frameworks */,
+				F6D18DEFA403074F6F37A443 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -330,12 +330,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7306CD8024324EB50077C9E6 /* Build configuration list for PBXNativeTarget "Swift-macOS-WithoutEncryption" */;
 			buildPhases = (
-				AFA6AE87AA4AEDE729E4A050 /* [CP] Check Pods Manifest.lock */,
+				D81726A72D244C21A8658DC7 /* [CP] Check Pods Manifest.lock */,
 				7306CD6F24324EB30077C9E6 /* Sources */,
 				7306CD7024324EB30077C9E6 /* Frameworks */,
 				7306CD7124324EB30077C9E6 /* Resources */,
 				7306CD8824324F090077C9E6 /* Carthage: Copy Platform Specific Frameworks */,
-				EA8AED5D0753CD1F55D7B095 /* [CP] Embed Pods Frameworks */,
+				77E54D660B0985977612BC6B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -350,14 +350,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 739B569424362BA900937ECD /* Build configuration list for PBXNativeTarget "Swift-iOS-WithEncryption" */;
 			buildPhases = (
-				A8995BEAE7D52A688178DB08 /* [CP] Check Pods Manifest.lock */,
+				B6F11949D303F4F29D5FC6DE /* [CP] Check Pods Manifest.lock */,
 				739B568A24362BA900937ECD /* Sources */,
 				739B568E24362BA900937ECD /* Frameworks */,
 				739B568F24362BA900937ECD /* Resources */,
 				739B569124362BA900937ECD /* Carthage: Copy Platform Specific Frameworks */,
 				739B569224362BA900937ECD /* Embed App Extensions */,
 				739B569324362BA900937ECD /* Embed Frameworks */,
-				5A85BB8B42165E0A01093980 /* [CP] Embed Pods Frameworks */,
+				CB3AB2CF78BBBF4EE37FA364 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -372,12 +372,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 739B56A224362BB500937ECD /* Build configuration list for PBXNativeTarget "Swift-macOS-WithEncryption" */;
 			buildPhases = (
-				309E9147730BF00494EAF332 /* [CP] Check Pods Manifest.lock */,
+				AF5D29DFD2CACFB7F134DC17 /* [CP] Check Pods Manifest.lock */,
 				739B569A24362BB500937ECD /* Sources */,
 				739B569E24362BB500937ECD /* Frameworks */,
 				739B569F24362BB500937ECD /* Resources */,
 				739B56A124362BB500937ECD /* Carthage: Copy Platform Specific Frameworks */,
-				D97F4B60CE6B9F9368C4FCB8 /* [CP] Embed Pods Frameworks */,
+				6882B6D40A50FA533493735D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -392,12 +392,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2A5E4F72437768800EE93A0 /* Build configuration list for PBXNativeTarget "Swift-tvOS-WithoutEncryption" */;
 			buildPhases = (
-				98AD25A8968541A87E6BE799 /* [CP] Check Pods Manifest.lock */,
+				71F40904929409E7FF641BF4 /* [CP] Check Pods Manifest.lock */,
 				E2A5E4E22437768600EE93A0 /* Sources */,
 				E2A5E4E32437768600EE93A0 /* Frameworks */,
 				E2A5E4E42437768600EE93A0 /* Resources */,
 				E2A5E4FD24377A1F00EE93A0 /* Carthage: Copy Platform Specific Frameworks */,
-				EA9CE5C9743440AE6C59E59D /* [CP] Embed Pods Frameworks */,
+				88E6CBDD2E5806FCB062D381 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -546,28 +546,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		309E9147730BF00494EAF332 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Swift-macOS-WithEncryption-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		335AD5AE20569C58000D4D08 /* Carthage: Copy Platform Specific Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -585,7 +563,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
-		4F3287034BBC43D8DBA0AED9 /* [CP] Check Pods Manifest.lock */ = {
+		5F76FA26584CD3F6A0349525 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -607,17 +585,17 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5A85BB8B42165E0A01093980 /* [CP] Embed Pods Frameworks */ = {
+		6882B6D40A50FA533493735D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-iOS/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-iOS/PusherSwiftWithEncryption.framework",
-				"${BUILT_PRODUCTS_DIR}/Sodium-iOS/Sodium.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-macOS/PusherSwiftWithEncryption.framework",
+				"${BUILT_PRODUCTS_DIR}/Sodium-macOS/Sodium.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -628,7 +606,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		71F40904929409E7FF641BF4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Swift-tvOS-WithoutEncryption-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7306CD8824324F090077C9E6 /* Carthage: Copy Platform Specific Frameworks */ = {
@@ -692,7 +692,51 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
-		98AD25A8968541A87E6BE799 /* [CP] Check Pods Manifest.lock */ = {
+		77E54D660B0985977612BC6B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift-macOS/PusherSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88E6CBDD2E5806FCB062D381 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift-tvOS/PusherSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-tvOS/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream-tvOS/Starscream.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF5D29DFD2CACFB7F134DC17 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -707,14 +751,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Swift-tvOS-WithoutEncryption-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Swift-macOS-WithEncryption-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A8995BEAE7D52A688178DB08 /* [CP] Check Pods Manifest.lock */ = {
+		B6F11949D303F4F29D5FC6DE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -736,7 +780,31 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AFA6AE87AA4AEDE729E4A050 /* [CP] Check Pods Manifest.lock */ = {
+		CB3AB2CF78BBBF4EE37FA364 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream-iOS/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-iOS/PusherSwiftWithEncryption.framework",
+				"${BUILT_PRODUCTS_DIR}/Sodium-iOS/Sodium.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D81726A72D244C21A8658DC7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -756,30 +824,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D97F4B60CE6B9F9368C4FCB8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-macOS/PusherSwiftWithEncryption.framework",
-				"${BUILT_PRODUCTS_DIR}/Sodium-macOS/Sodium.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E2A5E4FD24377A1F00EE93A0 /* Carthage: Copy Platform Specific Frameworks */ = {
@@ -825,51 +869,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ $SRCROOT == *\"Carthage\"* ]]; then\n    # This looks like a Carthage based project so perform the copy\n    sh ../Shared/carthage-copy-platform-specific-frameworks.sh\nelse \n    # This does NOT look like a Carthage based project so do nothing\n    echo \"IGNORING 'Carthage: Copy Platform Specific Framework' build phase\"\nfi\n";
 		};
-		EA8AED5D0753CD1F55D7B095 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PusherSwift-macOS/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EA9CE5C9743440AE6C59E59D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PusherSwift-tvOS/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-tvOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-tvOS/Starscream.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F69D3719695EA1222D512198 /* [CP] Embed Pods Frameworks */ = {
+		F6D18DEFA403074F6F37A443 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1065,7 +1065,7 @@
 		};
 		33831C7E1A9CEEEA00B124F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A31C29368CAC188026BD2FFA /* Pods-Swift-iOS-WithoutEncryption.debug.xcconfig */;
+			baseConfigurationReference = D822A9177B97A5EF59525976 /* Pods-Swift-iOS-WithoutEncryption.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1082,7 +1082,7 @@
 		};
 		33831C7F1A9CEEEA00B124F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F768710BE6E8F0D36A6F345A /* Pods-Swift-iOS-WithoutEncryption.release.xcconfig */;
+			baseConfigurationReference = 1CAC2C17723471D26B9A36E0 /* Pods-Swift-iOS-WithoutEncryption.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1100,7 +1100,7 @@
 		};
 		7306CD8124324EB50077C9E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6D1FF755C834A1B2C8278706 /* Pods-Swift-macOS-WithoutEncryption.debug.xcconfig */;
+			baseConfigurationReference = 1D5309BA5621579C7F9A810A /* Pods-Swift-macOS-WithoutEncryption.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1124,7 +1124,7 @@
 		};
 		7306CD8224324EB50077C9E6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6875D72A6D847108FF05D56B /* Pods-Swift-macOS-WithoutEncryption.release.xcconfig */;
+			baseConfigurationReference = 2A1F5DE6A82A7C16DE769DB3 /* Pods-Swift-macOS-WithoutEncryption.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1147,7 +1147,7 @@
 		};
 		739B569524362BA900937ECD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6F3889B3976E9A81575B52E /* Pods-Swift-iOS-WithEncryption.debug.xcconfig */;
+			baseConfigurationReference = D7E53629E70F6C87CD74D9AC /* Pods-Swift-iOS-WithEncryption.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1165,7 +1165,7 @@
 		};
 		739B569624362BA900937ECD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97050409F033ADC771319323 /* Pods-Swift-iOS-WithEncryption.release.xcconfig */;
+			baseConfigurationReference = 0C91BD209B7A033A24A6AAC1 /* Pods-Swift-iOS-WithEncryption.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1184,7 +1184,7 @@
 		};
 		739B56A324362BB500937ECD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3CAEE9B068CD91D20790DAF /* Pods-Swift-macOS-WithEncryption.debug.xcconfig */;
+			baseConfigurationReference = 17A5A0845A1EAE97A1F2AD41 /* Pods-Swift-macOS-WithEncryption.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1209,7 +1209,7 @@
 		};
 		739B56A424362BB500937ECD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 905312BA3EF16A64A893B800 /* Pods-Swift-macOS-WithEncryption.release.xcconfig */;
+			baseConfigurationReference = 382342049BD2457691680778 /* Pods-Swift-macOS-WithEncryption.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1233,7 +1233,7 @@
 		};
 		E2A5E4F52437768800EE93A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 297210A5842E74B2D6C92366 /* Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig */;
+			baseConfigurationReference = 3E459F06AC11C1DAD434E11B /* Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1253,13 +1253,12 @@
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
 		E2A5E4F62437768800EE93A0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 248987FB90714AC37E7EA152 /* Pods-Swift-tvOS-WithoutEncryption.release.xcconfig */;
+			baseConfigurationReference = 6380C98657A00F4228196A19 /* Pods-Swift-tvOS-WithoutEncryption.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1278,7 +1277,6 @@
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -1304,7 +1302,6 @@
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
@@ -1329,7 +1326,6 @@
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};

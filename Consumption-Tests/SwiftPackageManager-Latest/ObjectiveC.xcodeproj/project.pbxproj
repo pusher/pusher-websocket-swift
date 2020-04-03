@@ -17,6 +17,12 @@
 		7306CDB22432531B0077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		7306CDB424325CE90077C9E6 /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		73461638242E5A7E003A9A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73461637242E5A75003A9A3F /* Main.storyboard */; };
+		7357FE5F2437C0EF009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE5E2437C0EF009804A4 /* PusherSwift */; };
+		7357FE612437C0F2009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE602437C0F2009804A4 /* PusherSwift */; };
+		7357FE632437C0F5009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE622437C0F5009804A4 /* PusherSwift */; };
+		7357FE652437C0F8009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE642437C0F8009804A4 /* PusherSwift */; };
+		7357FE672437C0FB009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE662437C0FB009804A4 /* PusherSwift */; };
+		7357FE692437C0FE009804A4 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7357FE682437C0FE009804A4 /* PusherSwift */; };
 		739B566D24362B5300937ECD /* ViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7306CDB12432531B0077C9E6 /* ViewController+Extensions.m */; };
 		739B566E24362B5300937ECD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F37321D82CAB900AE2852 /* ViewController.m */; };
 		739B566F24362B5300937ECD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 331F372F1D82CAB900AE2852 /* AppDelegate.m */; };
@@ -37,12 +43,6 @@
 		E2A5E52E2437807E00EE93A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E52124377C7100EE93A0 /* main.m */; };
 		E2A5E52F2437807E00EE93A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A5E51324377C6F00EE93A0 /* AppDelegate.m */; };
 		E2A5E5322437807E00EE93A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2A5E51824377C6F00EE93A0 /* Main.storyboard */; };
-		E2A5E57C24379D4900EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E57B24379D4900EE93A0 /* PusherSwift */; };
-		E2A5E57E24379D4E00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E57D24379D4E00EE93A0 /* PusherSwift */; };
-		E2A5E58024379D5200EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E57F24379D5200EE93A0 /* PusherSwift */; };
-		E2A5E58224379D5500EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58124379D5500EE93A0 /* PusherSwift */; };
-		E2A5E58424379D5900EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58324379D5900EE93A0 /* PusherSwift */; };
-		E2A5E58624379D5E00EE93A0 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2A5E58524379D5E00EE93A0 /* PusherSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E57C24379D4900EE93A0 /* PusherSwift in Frameworks */,
+				7357FE5F2437C0EF009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58024379D5200EE93A0 /* PusherSwift in Frameworks */,
+				7357FE632437C0F5009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E57E24379D4E00EE93A0 /* PusherSwift in Frameworks */,
+				7357FE612437C0F2009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58224379D5500EE93A0 /* PusherSwift in Frameworks */,
+				7357FE652437C0F8009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58424379D5900EE93A0 /* PusherSwift in Frameworks */,
+				7357FE672437C0FB009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2A5E58624379D5E00EE93A0 /* PusherSwift in Frameworks */,
+				7357FE692437C0FE009804A4 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,7 +136,7 @@
 				7344F5452433362600B7DBE2 /* config.xcconfig */,
 				7346163D242E5BC7003A9A3F /* Shared */,
 				331F37291D82CAB900AE2852 /* Products */,
-				E2A5E57A24379D4900EE93A0 /* Frameworks */,
+				7357FE5D2437C0EF009804A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -219,6 +219,13 @@
 			path = ../Shared;
 			sourceTree = "<group>";
 		};
+		7357FE5D2437C0EF009804A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E2A5E51124377C6F00EE93A0 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,13 +247,6 @@
 			path = tvOS;
 			sourceTree = "<group>";
 		};
-		E2A5E57A24379D4900EE93A0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -265,7 +265,7 @@
 			);
 			name = "ObjectiveC-iOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E57B24379D4900EE93A0 /* PusherSwift */,
+				7357FE5E2437C0EF009804A4 /* PusherSwift */,
 			);
 			productName = "iOS Example Obj-C";
 			productReference = 331F37281D82CAB900AE2852 /* ObjectiveC-iOS-WithoutEncryption.app */;
@@ -286,7 +286,7 @@
 			);
 			name = "ObjectiveC-macOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E57F24379D5200EE93A0 /* PusherSwift */,
+				7357FE622437C0F5009804A4 /* PusherSwift */,
 			);
 			productName = "ObjectiveC-macOS";
 			productReference = 7306CD8D2432517B0077C9E6 /* ObjectiveC-macOS-WithoutEncryption.app */;
@@ -307,7 +307,7 @@
 			);
 			name = "ObjectiveC-iOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E57D24379D4E00EE93A0 /* PusherSwift */,
+				7357FE602437C0F2009804A4 /* PusherSwift */,
 			);
 			productName = "iOS Example Obj-C";
 			productReference = 739B567824362B5300937ECD /* ObjectiveC-iOS-WithEncryption.app */;
@@ -328,7 +328,7 @@
 			);
 			name = "ObjectiveC-macOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E58124379D5500EE93A0 /* PusherSwift */,
+				7357FE642437C0F8009804A4 /* PusherSwift */,
 			);
 			productName = "ObjectiveC-macOS";
 			productReference = 739B568724362B5F00937ECD /* ObjectiveC-macOS-WithEncryption.app */;
@@ -349,7 +349,7 @@
 			);
 			name = "ObjectiveC-tvOS-WithoutEncryption";
 			packageProductDependencies = (
-				E2A5E58324379D5900EE93A0 /* PusherSwift */,
+				7357FE662437C0FB009804A4 /* PusherSwift */,
 			);
 			productName = "ObjectiveC-tvOS-WithoutEncryption";
 			productReference = E2A5E51024377C6F00EE93A0 /* ObjectiveC-tvOS-WithoutEncryption.app */;
@@ -370,7 +370,7 @@
 			);
 			name = "ObjectiveC-tvOS-WithEncryption";
 			packageProductDependencies = (
-				E2A5E58524379D5E00EE93A0 /* PusherSwift */,
+				7357FE682437C0FE009804A4 /* PusherSwift */,
 			);
 			productName = "ObjectiveC-tvOS-WithoutEncryption";
 			productReference = E2A5E5372437807E00EE93A0 /* ObjectiveC-tvOS-WithEncryption.app */;
@@ -753,7 +753,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
@@ -805,7 +804,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
 				SDKROOT = iphoneos;
@@ -857,7 +855,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -881,7 +878,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -940,7 +936,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (
@@ -968,7 +963,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -1000,7 +994,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
@@ -1024,7 +1017,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -1053,7 +1045,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
@@ -1081,7 +1072,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -1154,27 +1144,27 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E2A5E57B24379D4900EE93A0 /* PusherSwift */ = {
+		7357FE5E2437C0EF009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E57D24379D4E00EE93A0 /* PusherSwift */ = {
+		7357FE602437C0F2009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E57F24379D5200EE93A0 /* PusherSwift */ = {
+		7357FE622437C0F5009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E58124379D5500EE93A0 /* PusherSwift */ = {
+		7357FE642437C0F8009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E58324379D5900EE93A0 /* PusherSwift */ = {
+		7357FE662437C0FB009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
-		E2A5E58524379D5E00EE93A0 /* PusherSwift */ = {
+		7357FE682437C0FE009804A4 /* PusherSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PusherSwift;
 		};
