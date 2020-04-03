@@ -38,9 +38,6 @@ extractArgs $@
 performTests "Carthage-Minimum"
 performTests "Cocoapods-Minimum"
 performTests "SwiftPackageManager-Minimum"
-performTests "Carthage-Latest"
-performTests "Cocoapods-Latest"
-performTests "SwiftPackageManager-Latest"
 
 
 ############
