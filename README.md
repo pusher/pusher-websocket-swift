@@ -14,7 +14,7 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 
 ## Supported platforms
 - Swift 4.2 and above (can be used with Swift 5)
-- Xcode 10.0 and above
+- Xcode 11.0 and above
 - Can be used with Objective-C
 
 ### Deployment targets
