@@ -2,10 +2,8 @@
 
 ### Table of Contents  
 - [Objective](#objective)  
-- [How to Run the Test Suite LOCALLY](#howto)  
-- [Maintaining the Suite of Projects/Targets](#maintenance)  
-
-<a name=“objective” />
+- [How to Run the Test Suite LOCALLY](#how-to-run-the-test-suite-locally)  
+- [Maintaining the Suite of Projects/Targets](#maintaining-the-suite-of-projectstargets)  
 
 ## Objective
 The objective of the "Consumption Tests" is to _truly verify_ that our core code/project is written/configured such that it _can_ be integrated into _any_ of the types of client project we support.
@@ -78,7 +76,6 @@ _Note that SwiftPackageManager integration is not supported with `PusherSwiftWit
 
 _Note that SwiftPackageManager integration not supported with Objective-C in Xcode versions < v11.4 or at all with `PusherSwiftWithEncyrption`_
 
-<a name=“howto” /> 
 
 ## How to Run the Test Suite LOCALLY
 
@@ -111,16 +108,13 @@ Full list of flags available…
 | -skip-cocoapods-checkouts | Does not perform any `pod install`      
 
 
-<a name=“maintenance” />
-
 ## Maintaining the Suite of Projects/Targets
 
 I foresee two types of maintenance: 
-a. [Updates to the “toolset”](#update-toolset)
-b. [Updates to the project/targets](#update-targets)
+ - [Updates to the “toolset”](#updates-to-the-toolset)
+ - [Updates to the project/targets](#updates-to-the-projectstargets)
 
 
-<a name=“update-toolset” />
 
 ### Updates to the “toolset”
 
@@ -135,8 +129,6 @@ How to update:
     - `MINIMUM_SUPPORTED_VERSIONS.xcconfig`
     - `MINIMUM_SUPPORTED_XCODE_VERSION`
 
-
-<a name=“update-targets” />
 
 ### Updates to the projects/targets
 
