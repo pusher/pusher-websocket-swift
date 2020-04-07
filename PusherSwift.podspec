@@ -4,17 +4,16 @@ Pod::Spec.new do |s|
   s.summary          = 'A Pusher client library in Swift'
   s.homepage         = 'https://github.com/pusher/pusher-websocket-swift'
   s.license          = 'MIT'
-  s.author           = { "Hamilton Chapman" => "hamchapman@gmail.com" }
+  s.author           = { "Pusher Limited" => "support@pusher.com" }
   s.source           = { git: "https://github.com/pusher/pusher-websocket-swift.git", tag: s.version.to_s }
   s.social_media_url = 'https://twitter.com/pusher'
 
   s.swift_version = '4.2'
   s.requires_arc  = true
-  s.source_files  = 'Sources/*.swift'
+  s.source_files  = ['Sources/*.swift', 'Sources/PusherSwift-Only/*.swift']
 
   s.dependency 'ReachabilitySwift', '4.3.0'
   s.dependency 'Starscream', '~> 3.0.5'
-  s.dependency 'Sodium', '~> 0.8.0'
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'

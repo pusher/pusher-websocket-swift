@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Reachability",
+        "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "6b50ea803760a781b9abe0ba2412092ecef165e4",
+          "version": "4.3.0"
+        }
+      },
+      {
+        "package": "Starscream",
+        "repositoryURL": "https://github.com/daltoniam/Starscream.git",
+        "state": {
+          "branch": null,
+          "revision": "ebdc260ea64e68f7569c62e8744b5cd15d3a49d6",
+          "version": "3.0.6"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
