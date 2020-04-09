@@ -10,6 +10,7 @@ class HandlingIncomingEventsTests: XCTestCase {
     var key: String!
     var pusher: Pusher!
     var socket: MockWebSocket!
+    var eventFactory = PusherConcreteEventFactory()
 
     override func setUp() {
         super.setUp()
@@ -26,7 +27,16 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = pusher.bind(callback)
 
         XCTAssertEqual(socket.callbackCheckString, "")
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
+
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "stupid data"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
+
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.callbackCheckString, "testingIWasCalled")
     }
@@ -37,7 +47,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = chan.bind(eventName: "test-event", callback: callback)
 
         XCTAssertEqual(socket.callbackCheckString, "")
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "stupid data"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.callbackCheckString, "channelCallbackCalled")
     }
@@ -50,7 +67,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = chan.bind(eventName: "test-event", callback: callbackForChannel)
 
         XCTAssertEqual(socket.callbackCheckString, "")
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "stupid data" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "stupid data"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.callbackCheckString, "globalCallbackCalledchannelCallbackCalled")
     }
@@ -61,7 +85,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = pusher.bind(callback)
 
         XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
     }
@@ -78,7 +109,13 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = pusher.bind(callback)
 
         XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["event": "test-event", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
     }
@@ -88,7 +125,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = pusher.bind(callback)
 
         XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "pusher:error" as AnyObject, "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"] as AnyObject])
+        let jsonDict = """
+        {
+            "event": "pusher:error",
+            "channel": "my-channel",
+            "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"]
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
 
         guard let event = socket.objectGivenToCallback as? [String: AnyObject] else {
@@ -112,7 +156,15 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = chan.bind(eventName: "test-event", callback: callback)
 
         XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.objectGivenToCallback as! [String: String], ["test": "test string", "and": "another"])
     }
@@ -123,7 +175,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = chan.bind(eventName: "test-event", callback: callback)
 
         XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "test" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "test"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.objectGivenToCallback as? String, "test")
     }
@@ -138,7 +197,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = chan.bind(eventName: "test-event", callback: callback)
 
         XCTAssertNil(socket.objectGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         XCTAssertEqual(socket.objectGivenToCallback as? String, "{\"test\":\"test string\",\"and\":\"another\"}")
     }
@@ -165,7 +231,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = chan.bind(eventName: "test-event", eventCallback: callback)
 
         XCTAssertNil(socket.eventGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
 
         guard let event = socket.eventGivenToCallback else {
@@ -191,7 +264,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         let _ = pusher.bind(eventCallback: callback)
 
         XCTAssertNil(socket.eventGivenToCallback)
-        let pusherEvent = PusherEvent(jsonObject: ["event": "test-event" as AnyObject, "channel": "my-channel" as AnyObject, "data": "{\"test\":\"test string\",\"and\":\"another\"}" as AnyObject])
+         let jsonDict = """
+        {
+            "event": "test-event",
+            "channel": "my-channel",
+            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
 
         guard let event = socket.eventGivenToCallback else {

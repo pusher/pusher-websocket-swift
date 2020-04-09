@@ -11,6 +11,7 @@ class PusherPresenceChannelTests: XCTestCase {
     var socket: MockWebSocket!
     var options: PusherClientOptions!
     var stubber: StubberForMocks!
+    var eventFactory = PusherConcreteEventFactory()
 
     override func setUp() {
         super.setUp()
@@ -71,7 +72,14 @@ class PusherPresenceChannelTests: XCTestCase {
         pusher.connect()
 
         let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        let pusherEvent = PusherEvent(jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "pusher_internal:member_added",
+            "channel": "presence-channel",
+            "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
         let member = chan!.findMember(userId: "100")
 
@@ -138,7 +146,15 @@ class PusherPresenceChannelTests: XCTestCase {
             let _ = self.stubber.stub(functionName: "onMemberAdded", args: [member], functionToCall: nil)
         }
         let _ = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
-        let pusherEvent = PusherEvent(jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+
+        let jsonDict = """
+        {
+            "event": "pusher_internal:member_added",
+            "channel": "presence-channel",
+            "data": "{\"user_id\":\"100\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
 
         XCTAssertEqual(stubber.calls.first?.name, "onMemberAdded", "the onMemberAdded function should have been called")
@@ -161,7 +177,14 @@ class PusherPresenceChannelTests: XCTestCase {
         let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
         chan?.members.append(PusherPresenceChannelMember(userId: "100"))
 
-        let pusherEvent = PusherEvent(jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
+        let jsonDict = """
+        {
+            "event": "pusher_internal:member_removed",
+            "channel": "presence-channel",
+            "data": "{\"user_id\":\"100\"}"
+        }
+        """.toJsonDict()
+        let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
         pusher.connection.handleEvent(event: pusherEvent!)
 
         XCTAssertEqual(stubber.calls.last?.name, "onMemberRemoved", "the onMemberRemoved function should have been called")
@@ -182,8 +205,23 @@ class PusherPresenceChannelTests: XCTestCase {
         }
         let _ = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
 
-        let addedEvent = PusherEvent(jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
-        let removedEvent = PusherEvent(jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+        let addedJsonDict = """
+        {
+            "event": "pusher_internal:member_added",
+            "channel": "presence-channel",
+            "data": "{\"user_id\":100}"
+        }
+        """.toJsonDict()
+        let addedEvent = try? eventFactory.makeEvent(fromJSON: addedJsonDict)
+
+        let removedJsonDict = """
+        {
+            "event": "pusher_internal:member_removed",
+            "channel": "presence-channel",
+            "data": "{\"user_id\":100}"
+        }
+        """.toJsonDict()
+        let removedEvent = try? eventFactory.makeEvent(fromJSON: removedJsonDict)
 
         pusher.connection.handleEvent(event: addedEvent!)
         pusher.connection.handleEvent(event: removedEvent!)
