@@ -49,3 +49,4 @@ script:
     fi
 after_success:
   - sleep 5
+  - bash <(curl -s https://codecov.io/bash)
