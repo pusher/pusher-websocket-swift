@@ -4,17 +4,11 @@ protocol PusherEventQueue {
     
     var delegate: PusherEventQueueDelegate? { get set }
 
-    func removeQueue(forChannelName channelName: String)
     func report(json: PusherEventPayload, forChannelName channelName: String?)
     
 }
 
 // MARK: - Concrete implementation
-
-class ChannelQueue {
-    var queue: [PusherEventPayload] = []
-    var paused: Bool = false
-}
 
 class PusherConcreteEventQueue: PusherEventQueue {
     
@@ -22,24 +16,18 @@ class PusherConcreteEventQueue: PusherEventQueue {
     
     private let eventFactory: PusherEventFactory
     private let keyProvider: PusherKeyProvider
-    private var queues: [String : DispatchQueue]
+    private var queue = DispatchQueue(label: "com.pusher.pusherswift-event-queue-\(UUID().uuidString)")
     
     weak var delegate: PusherEventQueueDelegate?
     
     // MARK: - Initializers
     
     init(eventFactory: PusherEventFactory, keyProvider: PusherKeyProvider) {
-        self.queues = [:]
         self.eventFactory = eventFactory
         self.keyProvider = keyProvider
     }
     
     // MARK: - Event queue
-
-    func removeQueue(forChannelName channelName: String){
-        self.queues.removeValue(forKey: channelName)
-    }
-    
     func report(json: PusherEventPayload, forChannelName channelName: String?) {
         if let channelName = channelName {
             self.enqueue(json: json, forChannelName: channelName)
@@ -53,9 +41,7 @@ class PusherConcreteEventQueue: PusherEventQueue {
     // MARK: - Private methods
     
     private func enqueue(json: PusherEventPayload, forChannelName channelName: String) {
-        let channelQueue = self.queues[channelName] ?? DispatchQueue(label: "com.pusher.pusherswift-event-queue-\(UUID().uuidString)")
-        self.queues[channelName] = channelQueue
-        channelQueue.async {
+        queue.async {
             do {
                 try self.processEvent(json: json, forChannelName: channelName)
             } catch PusherEventError.invalidDecryptionKey {
