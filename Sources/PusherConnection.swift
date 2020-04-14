@@ -1,7 +1,6 @@
 import Foundation
 import Reachability
 import Starscream
-import CryptoSwift
 
 @objcMembers
 @objc open class PusherConnection: NSObject {
@@ -707,27 +706,22 @@ import CryptoSwift
 
                 return true
             case .inline(secret: let secret):
-                var msg = ""
+                var message = ""
                 var channelData = ""
                 if channel.type == .presence {
                     channelData = getUserDataJSON()
-                    msg = "\(self.socketId!):\(channel.name):\(channelData)"
+                    message = "\(self.socketId!):\(channel.name):\(channelData)"
                 } else {
-                    msg = "\(self.socketId!):\(channel.name)"
+                    message = "\(self.socketId!):\(channel.name)"
                 }
 
-                let secretBuff: [UInt8] = Array(secret.utf8)
-                let msgBuff: [UInt8] = Array(msg.utf8)
+                let signature = PusherCrypto.generateSHA256HMAC(secret: secret, message: message)
+                let auth = "\(self.key):\(signature)".lowercased()
 
-                if let hmac = try? HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
-                    let signature = Data(bytes: hmac).toHexString()
-                    let auth = "\(self.key):\(signature)".lowercased()
-
-                    if channel.type == .private {
-                        self.handlePrivateChannelAuth(authValue: auth, channel: channel)
-                    } else {
-                        self.handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData)
-                    }
+                if channel.type == .private {
+                    self.handlePrivateChannelAuth(authValue: auth, channel: channel)
+                } else {
+                    self.handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData)
                 }
 
                 return true

@@ -36,6 +36,8 @@
 		E24D0AA522D798C8009DE31B /* PusherEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24D0AA422D798C8009DE31B /* PusherEvent.swift */; };
 		E29A4CBC2301BA31000BC499 /* PusherEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */; };
 		E2CFE43122D79CA7004187C3 /* PusherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFE43022D79CA7004187C3 /* PusherParser.swift */; };
+		E2F40FA523ED782B00985C40 /* PusherCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA423ED782B00985C40 /* PusherCrypto.swift */; };
+		E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		E24D0AA422D798C8009DE31B /* PusherEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEvent.swift; sourceTree = "<group>"; };
 		E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventTests.swift; sourceTree = "<group>"; };
 		E2CFE43022D79CA7004187C3 /* PusherParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherParser.swift; sourceTree = "<group>"; };
+		E2F40FA423ED782B00985C40 /* PusherCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherCrypto.swift; sourceTree = "<group>"; };
+		E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherCryptoTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,7 @@
 				33831CD61A9CFFF200B124F1 /* PusherSwift.h */,
 				E24D0AA422D798C8009DE31B /* PusherEvent.swift */,
 				E2498292231E612700CFBBD6 /* PusherError.swift */,
+				E2F40FA423ED782B00985C40 /* PusherCrypto.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 				33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */,
 				33BB99671D21226C00B25C2A /* Info.plist */,
 				E29A4CBB2301BA31000BC499 /* PusherEventTests.swift */,
+				E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -304,7 +310,6 @@
 			);
 			inputPaths = (
 				Starscream,
-				CryptoSwift,
 				Reachability,
 			);
 			name = "Copy Carthage Frameworks";
@@ -326,6 +331,7 @@
 				E2498293231E612700CFBBD6 /* PusherError.swift in Sources */,
 				E24D0AA522D798C8009DE31B /* PusherEvent.swift in Sources */,
 				3389F56A1CAEDD9100563F49 /* PusherWebsocketDelegate.swift in Sources */,
+				E2F40FA523ED782B00985C40 /* PusherCrypto.swift in Sources */,
 				330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */,
 				3390D1E81F054D1E00E1944D /* Authorizer.swift in Sources */,
 				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
@@ -344,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33BB997A1D21230100B25C2A /* PusherConnectionTests.swift in Sources */,
+				E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */,
 				33BB99791D21230100B25C2A /* PusherClientInitializationTests.swift in Sources */,
 				33BB99771D21230100B25C2A /* PresenceChannelTests.swift in Sources */,
 				33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */,
