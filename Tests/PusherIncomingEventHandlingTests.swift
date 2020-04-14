@@ -89,7 +89,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         {
             "event": "test-event",
             "channel": "my-channel",
-            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.toJsonDict()
         let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
@@ -112,7 +112,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         let jsonDict = """
         {
             "event": "test-event",
-            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.toJsonDict()
         let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
@@ -129,7 +129,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         {
             "event": "pusher:error",
             "channel": "my-channel",
-            "data": ["code": "<null>", "message": "Existing subscription to channel my-channel"]
+            "data": {"code": "<null>", "message": "Existing subscription to channel my-channel"}
         }
         """.toJsonDict()
         let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
@@ -161,7 +161,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         {
             "event": "test-event",
             "channel": "my-channel",
-            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.toJsonDict()
         let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
@@ -201,7 +201,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         {
             "event": "test-event",
             "channel": "my-channel",
-            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.toJsonDict()
         let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
@@ -235,7 +235,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         {
             "event": "test-event",
             "channel": "my-channel",
-            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.toJsonDict()
         let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)
@@ -268,7 +268,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         {
             "event": "test-event",
             "channel": "my-channel",
-            "data": "{\"test\":\"test string\",\"and\":\"another\"}"
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.toJsonDict()
         let pusherEvent = try? eventFactory.makeEvent(fromJSON: jsonDict)

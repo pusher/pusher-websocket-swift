@@ -47,11 +47,20 @@ class ClientEventTests: XCTestCase {
         chan.trigger(eventName: "client-test-event", data: ["data": "testing client events"])
         XCTAssertEqual(chan.unsentEvents.last!.name, "client-test-event")
         XCTAssertEqual(socket.stubber.calls.count, 0, "no events should have been sent yet")
+
+        let expectation = XCTestExpectation(description: "send client event eventually")
+        socket.stubber.registerCallback { calls in
+            let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
+            if let lastCall = calls.last, lastCall.name == "writeString" {
+                let parsedSubscribeArgs = convertStringToDictionary(lastCall.args!.first as! String)
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+                if parsedEqualsExpected {
+                    expectation.fulfill()
+                }
+            }
+        }
         connection.connect()
-        let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-        let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
-        XCTAssertTrue(parsedEqualsExpected)
+        wait(for: [expectation], timeout: 0.25)
     }
 
     func testTriggeringMultipleClientEventsWithTheSameNameThatWereQueuedBeforeSuccessfulSubscription() {
@@ -63,10 +72,20 @@ class ClientEventTests: XCTestCase {
         XCTAssertEqual(chan.unsentEvents.last!.name, "client-test-event")
         XCTAssertEqual(chan.unsentEvents.count, 2, "two events should have been queued")
         XCTAssertEqual(socket.stubber.calls.count, 0, "no events should have been sent yet")
+
+        let expectation = XCTestExpectation(description: "send client event eventually")
+        socket.stubber.registerCallback { calls in
+            if let lastCall = calls.last, lastCall.name == "writeString" {
+                let parsedSubscribeArgs = convertStringToDictionary(lastCall.args!.first as! String)
+                let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+                if parsedEqualsExpected {
+                    expectation.fulfill()
+                }
+            }
+
+        }
         connection.connect()
-        let parsedSubscribeArgs = convertStringToDictionary(socket.stubber.calls.last?.args!.first as! String)
-        let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
-        let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
-        XCTAssertTrue(parsedEqualsExpected)
+        wait(for: [expectation], timeout: 0.25)
     }
 }

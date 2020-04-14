@@ -242,20 +242,33 @@ open class MockPusherConnection: PusherConnection {
 open class StubberForMocks {
     open var calls: [FunctionCall]
     open var responses: [String: AnyObject]
+    open var callbacks: [([FunctionCall]) -> Void]
 
     init() {
         self.calls = []
         self.responses = [:]
+        self.callbacks = []
     }
 
     open func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
         calls.append(FunctionCall(name: functionName, args: args))
+        self.callCallbacks(calls: calls)
         if let response: AnyObject = responses[functionName] {
             return response
         } else if let functionToCall = functionToCall {
             functionToCall()
         }
         return nil
+    }
+
+    open func registerCallback(callback: @escaping ([FunctionCall]) -> Void){
+        callbacks.append(callback)
+    }
+
+    open func callCallbacks(calls: [FunctionCall]){
+        for callback in callbacks{
+            callback(calls)
+        }
     }
 }
 
