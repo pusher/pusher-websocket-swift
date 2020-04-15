@@ -206,6 +206,13 @@ open class MockWebSocket: WebSocket {
                     self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"777\\\"],\\\"hash\\\":{\\\"777\\\":{\\\"twitter\\\":\\\"hamchapman\\\"}}}}\",\"channel\":\"presence-test-channel-authorizer\"}")
                 }
             )
+        } else if stringContainsElements(string, elements: ["testKey123:12345678gfder78ikjbg", "private-encrypted-channel", "pusher:subscribe"]) {
+            let _ = stubber.stub(
+                functionName: "writeString",
+                args: [string],
+                functionToCall: {
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-encrypted-channel\",\"data\":\"{}\"}")
+            } )
         } else {
             print("No match in write(string: ...) mock for string: \(string)")
         }
