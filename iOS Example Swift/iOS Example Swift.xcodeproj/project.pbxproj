@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		335AD5AA20569C3C000D4D08 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A620569C3B000D4D08 /* CryptoSwift.framework */; };
 		335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A820569C3B000D4D08 /* Reachability.framework */; };
 		335AD5B220569F14000D4D08 /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */; };
@@ -63,7 +62,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33E94E7620766DBE0005399D /* Starscream.framework in Frameworks */,
-				335AD5AA20569C3C000D4D08 /* CryptoSwift.framework in Frameworks */,
 				335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */,
 				33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */,
 			);
@@ -208,7 +206,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Reachability.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Starscream.framework",
 			);

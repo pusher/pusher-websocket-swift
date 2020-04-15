@@ -192,7 +192,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Reachability.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Starscream.framework",
 			);

@@ -8,7 +8,6 @@ let package = Package(
         .library(name: "PusherSwift", targets: ["PusherSwift"])
     ],
     dependencies: [
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.2.0")),
         .package(url: "https://github.com/ashleymills/Reachability.swift.git", .upToNextMajor(from: "5.0.0")),
         .package(url: "https://github.com/daltoniam/Starscream.git", .upToNextMajor(from: "3.1.1")),
     ],
@@ -16,7 +15,6 @@ let package = Package(
         .target(
             name: "PusherSwift",
             dependencies: [
-                "CryptoSwift",
                 "Reachability",
                 "Starscream",
             ],
