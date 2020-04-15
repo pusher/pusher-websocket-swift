@@ -11,7 +11,7 @@ class PusherPresenceChannelTests: XCTestCase {
     var socket: MockWebSocket!
     var options: PusherClientOptions!
     var stubber: StubberForMocks!
-    var eventFactory = PusherConcreteEventFactory()
+    var eventFactory: PusherConcreteEventFactory!
 
     override func setUp() {
         super.setUp()
@@ -25,6 +25,7 @@ class PusherPresenceChannelTests: XCTestCase {
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
         stubber = StubberForMocks()
+        eventFactory = PusherConcreteEventFactory()
     }
 
     func testMembersObjectStoresUserIdIfAUserDataFetcherIsProvided() {

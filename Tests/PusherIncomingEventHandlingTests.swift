@@ -10,7 +10,7 @@ class HandlingIncomingEventsTests: XCTestCase {
     var key: String!
     var pusher: Pusher!
     var socket: MockWebSocket!
-    var eventFactory = PusherConcreteEventFactory()
+    var eventFactory: PusherConcreteEventFactory!
 
     override func setUp() {
         super.setUp()
@@ -20,6 +20,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         socket = MockWebSocket()
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
+        eventFactory = PusherConcreteEventFactory()
     }
 
     func testCallbacksOnGlobalChannelShouldBeCalled() {
