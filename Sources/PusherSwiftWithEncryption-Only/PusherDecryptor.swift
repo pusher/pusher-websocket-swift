@@ -1,30 +1,69 @@
 import Sodium
 
 class PusherDecryptor {
-    
+
     private struct EncryptedData: Decodable {
-        var nonce: String
-        var ciphertext: String
+        let nonce: String
+        let ciphertext: String
+
     }
-    
+
     private static let sodium = Sodium()
-    
-    static func decrypt(data dataAsString: String?, keyProvider: PusherKeyProviding?) -> String? {
-        
-        guard
-            let dataAsString = dataAsString,
-            let keyProvider = keyProvider,
-            let dataAsData = dataAsString.data(using: .utf8),
-            let encryptedData = try? JSONDecoder().decode(EncryptedData.self, from: dataAsData),
-            let cipherText = Data(base64Encoded: encryptedData.ciphertext),
-            let secretKey = Data(base64Encoded: keyProvider.decryptionKey),
-            let nonce = Data(base64Encoded: encryptedData.nonce),
-            let decryptedData = sodium.secretBox.open(authenticatedCipherText: Bytes(cipherText), secretKey: Bytes(secretKey), nonce: Bytes(nonce)),
-            let decryptedString = String(bytes: decryptedData, encoding: .utf8) else {
-                return nil
+
+    static func decrypt(data: String?, decryptionKey: String?) throws -> String? {
+        guard let data = data else {
+            return nil
         }
-    
+
+        guard let decryptionKey = decryptionKey else {
+            throw PusherEventError.invalidDecryptionKey
+        }
+
+        let encryptedData = try self.encryptedData(fromData: data)
+        let cipherText = try self.decodedCipherText(fromEncryptedData: encryptedData)
+        let nonce = try self.decodedNonce(fromEncryptedData: encryptedData)
+        let secretKey = try self.decodedDecryptionKey(fromDecryptionKey: decryptionKey)
+
+        guard let decryptedData = self.sodium.secretBox.open(authenticatedCipherText: cipherText, secretKey: secretKey, nonce: nonce),
+            let decryptedString = String(bytes: decryptedData, encoding: .utf8) else {
+                throw PusherEventError.invalidDecryptionKey
+        }
+
         return decryptedString
     }
+
+    private static func encryptedData(fromData data: String) throws -> EncryptedData {
+        guard let encodedData = data.data(using: .utf8),
+            let encryptedData = try? JSONDecoder().decode(EncryptedData.self, from: encodedData) else {
+                throw PusherEventError.invalidFormat
+        }
+
+        return encryptedData
+    }
+
+    private static func decodedCipherText(fromEncryptedData encryptedData: EncryptedData) throws -> Bytes {
+        guard let decodedCipherText = Data(base64Encoded: encryptedData.ciphertext) else {
+            throw PusherEventError.invalidFormat
+        }
+
+        return Bytes(decodedCipherText)
+    }
+
+    private static func decodedNonce(fromEncryptedData encryptedData: EncryptedData) throws -> SecretBox.Nonce {
+        guard let decodedNonce = Data(base64Encoded: encryptedData.nonce) else {
+            throw PusherEventError.invalidFormat
+        }
+
+        return SecretBox.Nonce(decodedNonce)
+    }
+
+    private static func decodedDecryptionKey(fromDecryptionKey decryptionKey: String) throws -> SecretBox.Key {
+        guard let decodedDecryptionKey = Data(base64Encoded: decryptionKey) else {
+            throw PusherEventError.invalidDecryptionKey
+        }
+
+        return SecretBox.Key(decodedDecryptionKey)
+    }
+
     
 }
