@@ -9,21 +9,15 @@ struct PusherCrypto {
         - returns: The hex encoded MAC string
     */
      static func generateSHA256HMAC(secret: String, message: String) -> String {
-        let secretData = Data(secret.utf8)
-        let messageData = Data(message.utf8)
+        guard let secret = secret.cString(using: .utf8), let message = message.cString(using: .utf8) else {
+            return ""
+        }
 
         let algorithm = CCHmacAlgorithm(kCCHmacAlgSHA256)
         let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
+        var digest = [UInt8](repeating: 0, count: digestLength)
 
-        var digest = Data(count: digestLength)
-
-        _ = digest.withUnsafeMutableBytes { digestBytes in
-            _ = secretData.withUnsafeBytes { secretBytes in
-                _ = messageData.withUnsafeBytes { messageBytes in
-                    CCHmac(algorithm, secretBytes, secretData.count, messageBytes, messageData.count, digestBytes)
-                }
-            }
-        }
+        CCHmac(algorithm, secret, secret.count - 1, message, message.count - 1, &digest)
 
         // Data to hex string
         let signature = digest
