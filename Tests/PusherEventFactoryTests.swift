@@ -6,7 +6,7 @@ import XCTest
     @testable import PusherSwift
 #endif
 
-class PusherConcreteEventFactoryTests: XCTestCase {
+class PusherEventFactoryTests: XCTestCase {
 
     var eventFactory: PusherConcreteEventFactory!
 

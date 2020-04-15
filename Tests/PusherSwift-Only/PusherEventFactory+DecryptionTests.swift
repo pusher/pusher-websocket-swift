@@ -1,14 +1,14 @@
-@testable import PusherSwiftWithEncryption
+@testable import PusherSwift
 import XCTest
 
-class PusherEventDecryptionTests: XCTestCase {
+class PusherEventFactoryDecryptionTests: XCTestCase {
 
     var eventFactory: PusherConcreteEventFactory!
 
     override func setUp() {
         eventFactory = PusherConcreteEventFactory()
     }
-    
+
     // MARK: Encryption related tests
     
     func test_init_unencryptedChannelAndUnencryptedPayload_returnsWithUnalteredPayload() {
@@ -27,9 +27,9 @@ class PusherEventDecryptionTests: XCTestCase {
             "data": \(dataPayload.escaped)
         }
         """.toJsonDict()
-        
+
         let event = try? eventFactory.makeEvent(fromJSON: jsonDict)
-        
+
         XCTAssertNotNil(event) { event in
             XCTAssertEqual(event.eventName, "test-event")
             XCTAssertEqual(event.channelName, "my-channel")
@@ -56,7 +56,7 @@ class PusherEventDecryptionTests: XCTestCase {
         """.toJsonDict()
         
         let event = try? eventFactory.makeEvent(fromJSON: jsonDict)
-        
+
         XCTAssertNotNil(event) { event in
             XCTAssertEqual(event.eventName, "test-event")
             XCTAssertEqual(event.channelName, "my-channel")
@@ -83,7 +83,7 @@ class PusherEventDecryptionTests: XCTestCase {
         """.toJsonDict()
         
         let event = try? eventFactory.makeEvent(fromJSON: jsonDict)
-        
+
         XCTAssertNotNil(event) { event in
             XCTAssertEqual(event.eventName, "pusher:event")
             XCTAssertEqual(event.channelName, "private-encrypted-channel")
@@ -109,8 +109,8 @@ class PusherEventDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
         
-       let event = try? eventFactory.makeEvent(fromJSON: jsonDict)
-        
+        let event = try? eventFactory.makeEvent(fromJSON: jsonDict)
+
         XCTAssertNotNil(event) { event in
             XCTAssertEqual(event.eventName, "pusher:event")
             XCTAssertEqual(event.channelName, "private-encrypted-channel")
@@ -118,7 +118,7 @@ class PusherEventDecryptionTests: XCTestCase {
         }
     }
     
-    func test_init_encryptedChannelAndUserEventAndUnencryptedPayload_returnsWithNilEvent() {
+    func test_init_encryptedChannelAndUserEventAndUnencryptedPayload_returnsWithUnalteredPayload() {
         
         let dataPayload = """
         {
@@ -136,13 +136,48 @@ class PusherEventDecryptionTests: XCTestCase {
         """.toJsonDict()
         
         let event = try? eventFactory.makeEvent(fromJSON: jsonDict)
-        
-        XCTAssertNil(event)
+
+        XCTAssertNotNil(event) { event in
+            XCTAssertEqual(event.eventName, "user-event")
+            XCTAssertEqual(event.channelName, "private-encrypted-channel")
+            XCTAssertEqual(event.data, dataPayload)
+        }
     }
-    
-    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadAndValidKey_returnsWithDecryptedPayload() {
-        
+
+
+    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadAndValidKey_returnsWithUnalteredPayload() {
+
         let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+
+        let dataPayload = """
+        {
+            "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
+            "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
+        }
+        """.removing(.whitespacesAndNewlines)
+        
+        let jsonDict = """
+        {
+            "event": "user-event",
+            "channel": "private-encrypted-channel",
+            "data": \(dataPayload.escaped)
+        }
+        """.toJsonDict()
+
+        let event = try? eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)
+
+        XCTAssertNotNil(event) { event in
+            XCTAssertEqual(event.eventName, "user-event")
+            XCTAssertEqual(event.channelName, "private-encrypted-channel")
+            XCTAssertEqual(event.data, dataPayload)
+        }
+    }
+
+    
+    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadButBadKey_returnsWithUnalteredPayload() {
+        
+        let decryptionKey = "00000000000000000000000000000000000000000000"
+
         
         let dataPayload = """
         {
@@ -160,50 +195,18 @@ class PusherEventDecryptionTests: XCTestCase {
         """.toJsonDict()
         
         let event = try? eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)
-        
-        let expectedDecryptedPayload = """
-        {
-            "name": "freddy",
-            "message": "hello"
-        }
-        """.removing(.whitespacesAndNewlines)
-        
+
         XCTAssertNotNil(event) { event in
             XCTAssertEqual(event.eventName, "user-event")
             XCTAssertEqual(event.channelName, "private-encrypted-channel")
-            XCTAssertEqual(event.data, expectedDecryptedPayload)
+            XCTAssertEqual(event.data, dataPayload)
         }
     }
     
-    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadButBadKey_throwsInvalidDecryptionKey() {
-        
-        let decryptionKey = "00000000000000000000000000000000000000000000"
-        
-        let dataPayload = """
-        {
-            "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
-            "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
-        }
-        """.removing(.whitespacesAndNewlines)
-        
-        let jsonDict = """
-        {
-            "event": "user-event",
-            "channel": "private-encrypted-channel",
-            "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
+    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadButBadNonce_returnsWithUnalteredPayload() {
 
-
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
-            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
-        }
-    }
-    
-    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadButBadNonce_throwsInvalidDecryptionKey() {
-        
         let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
-        
+
         let dataPayload = """
         {
             "nonce": "00000000000000000000000000000000",
@@ -218,13 +221,17 @@ class PusherEventDecryptionTests: XCTestCase {
             "data": \(dataPayload.escaped)
         }
         """.toJsonDict()
+        
+        let event = try? eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
-            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
+        XCTAssertNotNil(event) { event in
+            XCTAssertEqual(event.eventName, "user-event")
+            XCTAssertEqual(event.channelName, "private-encrypted-channel")
+            XCTAssertEqual(event.data, dataPayload)
         }
     }
     
-    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadButBadCiphertext_throwsInvalidDecryptionKey() {
+    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadButBadCiphertext_returnsWithUnalteredPayload() {
         
         let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
         
@@ -242,10 +249,14 @@ class PusherEventDecryptionTests: XCTestCase {
             "data": \(dataPayload.escaped)
         }
         """.toJsonDict()
+        
+        let event = try? eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
-            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
+        XCTAssertNotNil(event) { event in
+            XCTAssertEqual(event.eventName, "user-event")
+            XCTAssertEqual(event.channelName, "private-encrypted-channel")
+            XCTAssertEqual(event.data, dataPayload)
         }
     }
-    
+
 }
