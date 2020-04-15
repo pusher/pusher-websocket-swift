@@ -1,6 +1,9 @@
 language: objective-c
 osx_image: xcode11
 sudo: false
+cache:
+  directories:
+  - Carthage
 env:
   - iOS= DST='platform=iOS Simulator,name=iPhone 11' ACTION=test DEVICE='iPhone 11 (11.3)'
   - tvOS= DST='platform=tvOS Simulator,name=Apple TV 4K' ACTION=test DEVICE='Apple TV 4K (11.3)'
@@ -15,7 +18,7 @@ before_install:
       brew install carthage;
     fi
   - gem install xcpretty --no-document
-  - carthage bootstrap --no-use-binaries
+  - carthage bootstrap --no-use-binaries --cache-builds
   - SIMULATOR_ID=$(xcrun instruments -s | grep -o "$DEVICE \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
   - echo "$SIMULATOR_ID"
 before_deploy:
@@ -26,7 +29,7 @@ deploy:
   provider: releases
   api_key:
     secure: cjodA0I5fTEU60M+W1NNCj18EpL7yt3uxLN1aeexN33HfRoo153oi4jV/FWlPtQ4QC5FhFF+Nbc69V2paOSrI4iht+UB2Hb0jYTuHWv8ecYa33GFksl7zD9BCf8D3RZqIagTzJC7Vf0FqKKlspZMwIMAL02Z5uwsp5h4Zjrq8lo=
-  file: 
+  file:
     - PusherSwift.framework.zip
     - PusherSwiftWithEncryption.framework.zip
   skip_cleanup: true
@@ -49,3 +52,4 @@ script:
     fi
 after_success:
   - sleep 5
+  - bash <(curl -s https://codecov.io/bash)
