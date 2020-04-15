@@ -252,12 +252,13 @@ open class StubberForMocks {
 
     open func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
         calls.append(FunctionCall(name: functionName, args: args))
-        self.callCallbacks(calls: calls)
         if let response: AnyObject = responses[functionName] {
+            self.callCallbacks(calls: calls)
             return response
         } else if let functionToCall = functionToCall {
             functionToCall()
         }
+        self.callCallbacks(calls: calls)
         return nil
     }
 
