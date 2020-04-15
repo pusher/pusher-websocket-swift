@@ -49,7 +49,7 @@ class PusherConcreteEventQueue: PusherEventQueue {
                 do {
                     try self.processEvent(json: json, forChannelName: channelName)
                 }catch {
-                    print("Skipping event that could not be decrypted")
+                    self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channelName)
                 }
             } catch {}
         }
@@ -72,6 +72,7 @@ class PusherConcreteEventQueue: PusherEventQueue {
 protocol PusherEventQueueDelegate: AnyObject {
     
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?)
+    func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String?)
     func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannelName channelName: String)
     
 }
