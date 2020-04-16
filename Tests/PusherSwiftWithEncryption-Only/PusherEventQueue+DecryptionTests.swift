@@ -59,7 +59,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             ex.fulfill()
         }
 
-        eventQueue.report(json: jsonDict, forChannelName: "private-encrypted-channel")
+        eventQueue.enqueue(json: jsonDict)
         wait(for: [ex], timeout: 0.5)
     }
 
@@ -107,7 +107,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             receivedEv.fulfill()
         }
 
-        eventQueue.report(json: jsonDict, forChannelName: "private-encrypted-channel")
+        eventQueue.enqueue(json: jsonDict)
         wait(for: [reloadEx, receivedEv], timeout: 0.5)
     }
 
@@ -148,7 +148,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             failedEv.fulfill()
         }
 
-        eventQueue.report(json: jsonDict, forChannelName: "private-encrypted-channel")
+        eventQueue.enqueue(json: jsonDict)
         wait(for: [reloadEx, failedEv], timeout: 0.5)
     }
 
@@ -217,8 +217,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             successEv.fulfill()
         }
 
-        eventQueue.report(json: undecryptableEvent, forChannelName: "private-encrypted-channel")
-        eventQueue.report(json: decryptableEvent, forChannelName: "private-encrypted-channel")
+        eventQueue.enqueue(json: undecryptableEvent)
+        eventQueue.enqueue(json: decryptableEvent)
 
         wait(for: [reloadEx, failedEv, successEv], timeout: 0.5)
     }
@@ -292,8 +292,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             successEv.fulfill()
         }
 
-        eventQueue.report(json: undecryptableEvent, forChannelName: undecryptableChannel)
-        eventQueue.report(json: decryptableEvent, forChannelName: decryptableChannel)
+        eventQueue.enqueue(json: undecryptableEvent)
+        eventQueue.enqueue(json: decryptableEvent)
 
         wait(for: [reloadEx, failedEv, successEv], timeout: 0.5)
     }
