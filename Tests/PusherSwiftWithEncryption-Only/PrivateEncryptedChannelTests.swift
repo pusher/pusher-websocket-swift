@@ -87,11 +87,109 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    //  test incorrect shared secret should raise some sort of notice
+    func testIncorrectSharedSecretShouldNotifyFailedToDecrypt() {
+        // connect with an incorrect shared secret
+        let channel = subscribeToChannel(authData: incorrectSharedSecretAuthData)
+        
+        // prepare a message
+        let dataPayload = """
+        {
+            "nonce": "4sVYwy4j/8dCcjyxtPCWyk19GaaViaW9",
+            "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
+        }
+        """
+        
+        // set up a delegate to listen for failedToDecryptEvent
+        let errorDelegate = DummyErrorDelegate()
+        errorDelegate.expectation = expectation(description: "the message should fail to decrypt")
+        errorDelegate.channelName = channelName
+        
+        pusher.delegate = errorDelegate
+        
+        // send the message
+        socket.delegate?.websocketDidReceiveMessage(
+            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        
+        waitForExpectations(timeout: 1)
+    }
     
-    // twoEventsReceivedWithSecondRetryCorrect
+    func testTwoEventsReceivedOnlySecondRetryIsCorrect() {
+        // connect with an incorrect shared secret
+        let channel = subscribeToChannel(authData: incorrectSharedSecretAuthData)
+        
+        // prepare a message
+        let dataPayload = """
+        {
+            "nonce": "4sVYwy4j/8dCcjyxtPCWyk19GaaViaW9",
+            "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
+        }
+        """
+        
+        // set up a delegate to listen for failedToDecryptEvent
+        let errorDelegate = DummyErrorDelegate()
+        errorDelegate.expectation = expectation(description: "the message should fail to decrypt")
+        errorDelegate.channelName = channelName
+        
+        pusher.delegate = errorDelegate
+        
+        // send the message
+        socket.delegate?.websocketDidReceiveMessage(
+            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        
+        waitForExpectations(timeout: 1)
+        
+        // ensure the next event has a valid shared secret
+        mockAuthResponse(jsonData: validAuthData)
+        
+        let exp = expectation(description: "second event should be decrypted")
+        
+        // listen for the messages
+        channel.bind(eventName: eventName, eventCallback: { (event: PusherEvent) in
+            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}");
+            exp.fulfill()
+        })
+        
+        // send the second message
+        socket.delegate?.websocketDidReceiveMessage(
+            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        
+        waitForExpectations(timeout: 1)
+    }
     
-    // twoEventsReceivedWithIncorrectSharedSecret
+    func testTwoEventsReceivedBothFailDecryption() {
+        // connect with an incorrect shared secret
+        let channel = subscribeToChannel(authData: incorrectSharedSecretAuthData)
+        
+        // prepare a message
+        let dataPayload = """
+        {
+            "nonce": "4sVYwy4j/8dCcjyxtPCWyk19GaaViaW9",
+            "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
+        }
+        """
+        
+        // set up a delegate to listen for failedToDecryptEvent
+        let errorDelegate = DummyErrorDelegate()
+        errorDelegate.expectation = expectation(description: "the message should fail to decrypt")
+        errorDelegate.channelName = channelName
+        
+        pusher.delegate = errorDelegate
+        
+        // send the message
+        socket.delegate?.websocketDidReceiveMessage(
+            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        
+        waitForExpectations(timeout: 1)
+        
+        // set a new expectation for the error delegate for the second event
+        errorDelegate.expectation = expectation(description: "second event should fail to decrpyt too.")
+        
+        // send a second message
+        socket.delegate?.websocketDidReceiveMessage(
+            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        
+        waitForExpectations(timeout: 1)
+    }
     
     // utility method to ensure you're subscribed to a channel
     // option to pass authData to simulate a valid/invalid shared secret
@@ -125,6 +223,17 @@ class PrivateEncryptedChannelTests: XCTestCase {
         func subscribedToChannel(name: String) {
             if name == channelName {
                 // only fulfill if the channel connected is actually the channel we cared about
+                expectation?.fulfill()
+            }
+        }
+    }
+    
+    class DummyErrorDelegate: PusherDelegate {
+        var expectation: XCTestExpectation? = nil
+        var channelName: String? = nil
+        
+        func failedToDecryptEvent(eventName: String, channelName: String, data: String?) {
+            if channelName == self.channelName {
                 expectation?.fulfill()
             }
         }
