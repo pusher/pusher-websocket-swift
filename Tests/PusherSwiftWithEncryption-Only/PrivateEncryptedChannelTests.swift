@@ -138,7 +138,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
                 statusCode: 200,
                 httpVersion: nil,
                 headerFields: nil)
-            MockSession.mockResponse = (data: jsosnData.data(using: String.Encoding.utf8, allowLossyConversion: false)!,
+            MockSession.mockResponse = (data: jsonData.data(using: String.Encoding.utf8, allowLossyConversion: false)!,
                                         urlResponse: urlResponse,
                                         error: nil)
             pusher.connection.URLSession = MockSession.shared
