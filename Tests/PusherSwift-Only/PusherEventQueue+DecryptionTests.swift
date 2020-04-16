@@ -47,7 +47,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             ex.fulfill()
         }
 
-        eventQueue.report(json: jsonDict, forChannelName: "private-encrypted-channel")
+        eventQueue.enqueue(json: jsonDict)
         wait(for: [ex], timeout: 0.5)
     }
 
@@ -73,7 +73,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             XCTAssertNil(channelName)
             ex.fulfill()
         }
-        eventQueue.report(json: jsonDict, forChannelName: nil)
+        eventQueue.enqueue(json: jsonDict)
         wait(for: [ex], timeout: 0.5)
     }
 }

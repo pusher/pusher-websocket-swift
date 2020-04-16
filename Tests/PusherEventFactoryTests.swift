@@ -206,4 +206,17 @@ class PusherEventFactoryTests: XCTestCase {
         XCTAssertTrue(event.property(withKey: "my_null") is NSNull)
     }
 
+    func testInvalidMessageThrowsException() {
+        let jsonDict = """
+        {
+            "channel": "my-channel",
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
+        }
+        """.toJsonDict();
+
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
+        }
+    }
+
 }

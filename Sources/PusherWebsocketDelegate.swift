@@ -26,7 +26,7 @@ extension PusherConnection: WebSocketDelegate {
             }
             self.handleError(error: error)
         } else {
-            self.eventQueue.report(json: payload, forChannelName: payload["channel"] as? String)
+            self.eventQueue.enqueue(json: payload)
         }
     }
 

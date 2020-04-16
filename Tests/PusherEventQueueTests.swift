@@ -10,10 +10,10 @@ class InlineMockEventQueueDelegate: PusherEventQueueDelegate {
     var didReceiveEvent: ((PusherEventQueue, PusherEvent, String?) -> Void)?
     var didFailToDecryptEvent: ((PusherEventQueue, PusherEventPayload, String) -> Void)?
     var reloadDecryptionKeySync: ((PusherEventQueue, String) -> Void)?
-    var didReceiveInvalidEvent: ((PusherEventQueue, PusherEventPayload, String) -> Void)?
+    var didReceiveInvalidEvent: ((PusherEventQueue, PusherEventPayload) -> Void)?
 
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload, forChannelName channelName: String){
-        self.didReceiveInvalidEvent?(eventQueue, payload, channelName)
+    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload){
+        self.didReceiveInvalidEvent?(eventQueue, payload)
     }
 
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?) {
@@ -69,7 +69,7 @@ class PusherEventQueueTests: XCTestCase {
             ex.fulfill()
         }
 
-        eventQueue.report(json: jsonDict, forChannelName: "my-channel")
+        eventQueue.enqueue(json: jsonDict)
         wait(for: [ex], timeout: 0.5)
     }
 
@@ -96,7 +96,32 @@ class PusherEventQueueTests: XCTestCase {
             ex.fulfill()
         }
 
-        eventQueue.report(json: jsonDict, forChannelName: nil)
+        eventQueue.enqueue(json: jsonDict)
+        wait(for: [ex], timeout: 0.5)
+    }
+
+    func testInvalidEventShouldCallDidReceiveInvalidEvent() {
+        let dataPayload = """
+        {
+           "test": "test string",
+           "and": "another"
+        }
+        """.removing(.whitespacesAndNewlines)
+
+        let jsonDict = """
+        {
+           "data": \(dataPayload.escaped)
+        }
+        """.toJsonDict()
+
+        let ex = expectation(description: "should call didReceiveInvalidEvent")
+        eventQueueDelegate.didReceiveInvalidEvent = { (eventQueue, payload) in
+            let equal = NSDictionary(dictionary: jsonDict).isEqual(to: payload)
+            XCTAssertTrue(equal)
+            ex.fulfill()
+        }
+
+        eventQueue.enqueue(json: jsonDict)
         wait(for: [ex], timeout: 0.5)
     }
 }

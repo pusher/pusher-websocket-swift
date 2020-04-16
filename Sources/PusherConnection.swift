@@ -918,7 +918,7 @@ import Starscream
 }
 
 extension PusherConnection: PusherEventQueueDelegate {
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
+    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
         DispatchQueue.main.async {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming Websocket message \(payload)")
         }

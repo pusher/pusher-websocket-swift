@@ -4,7 +4,7 @@ protocol PusherEventQueue {
     
     var delegate: PusherEventQueueDelegate? { get set }
 
-    func report(json: PusherEventPayload, forChannelName channelName: String?)
+    func enqueue(json: PusherEventPayload)
     
 }
 
@@ -28,34 +28,29 @@ class PusherConcreteEventQueue: PusherEventQueue {
     }
     
     // MARK: - Event queue
-    func report(json: PusherEventPayload, forChannelName channelName: String?) {
-        if let channelName = channelName {
-            self.enqueue(json: json, forChannelName: channelName)
-        }
-        else {
-            // Events with a missing channel name should never be encrypted, therefore we can ignore `invalidDecryptionKey` errors here.
-            try? self.processEvent(json: json)
-        }
-    }
-    
-    // MARK: - Private methods
-    
-    private func enqueue(json: PusherEventPayload, forChannelName channelName: String) {
+
+    public func enqueue(json: PusherEventPayload) {
         queue.async {
+            let channelName = json["channel"] as? String
             do {
                 try self.processEvent(json: json, forChannelName: channelName)
             } catch PusherEventError.invalidDecryptionKey {
-                self.delegate?.eventQueue(self, reloadDecryptionKeySyncForChannelName: channelName)
-                do {
-                    try self.processEvent(json: json, forChannelName: channelName)
-                }catch {
-                    self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channelName)
+                // Only encrypted channels should throw this error
+                if let channelName = channelName {
+                    self.delegate?.eventQueue(self, reloadDecryptionKeySyncForChannelName: channelName)
+                    do {
+                        try self.processEvent(json: json, forChannelName: channelName)
+                    }catch {
+                        self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channelName)
+                    }
                 }
             } catch {
-                self.delegate?.eventQueue(self, didReceiveInvalidEventWithPayload: json, forChannelName: channelName)
+                self.delegate?.eventQueue(self, didReceiveInvalidEventWithPayload: json)
             }
         }
     }
+
+    // MARK: - Private methods
 
     private func processEvent(json: PusherEventPayload, forChannelName channelName: String? = nil) throws {
         var decryptionKey: String? = nil
@@ -73,7 +68,7 @@ protocol PusherEventQueueDelegate: AnyObject {
     
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?)
     func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String)
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload, forChannelName channelName: String)
+    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload)
     func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannelName channelName: String)
     
 }
