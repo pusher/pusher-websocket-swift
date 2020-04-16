@@ -919,8 +919,26 @@ import Starscream
 
 extension PusherConnection: PusherEventQueueDelegate {
 
+    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
+        DispatchQueue.main.async {
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming Websocket message \(payload)")
+        }
+    }
+
+    func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
+        DispatchQueue.main.async {
+            if let eventName = payload["event"] as? String {
+                let data = payload["data"] as? String
+                self.delegate?.failedToDecryptEvent?(eventName: eventName, channelName: channelName, data: data)
+            }
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Failed to decrypt event on channel '\(channelName)'. Skipping.")
+        }
+    }
+
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?) {
-       self.handleEvent(event: event)
+        DispatchQueue.main.async {
+            self.handleEvent(event: event)
+        }
     }
 
     func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannelName channelName: String) {
