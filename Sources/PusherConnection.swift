@@ -927,7 +927,8 @@ extension PusherConnection: PusherEventQueueDelegate {
 
     func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
         DispatchQueue.main.async {
-            if let eventName = payload["event"] as? String, let data = payload["data"] as? String {
+            if let eventName = payload["event"] as? String {
+                let data = payload["data"] as? String
                 self.delegate?.failedToDecryptEvent?(eventName: eventName, channelName: channelName, data: data)
             }
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Failed to decrypt event on channel '\(channelName)'. Skipping.")
