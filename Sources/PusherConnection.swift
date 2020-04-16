@@ -919,8 +919,17 @@ import Starscream
 
 extension PusherConnection: PusherEventQueueDelegate {
 
+    func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
+        DispatchQueue.main.async {
+            self.delegate?.failedToDecryptEvent?(payload: payload, channelName: channelName)
+            self.delegate?.debugLog?(message: "Failed to decrypt event on channel '\(channelName)'. Skipping.")
+        }
+    }
+
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?) {
-       self.handleEvent(event: event)
+        DispatchQueue.main.async {
+            self.handleEvent(event: event)
+        }
     }
 
     func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannelName channelName: String) {

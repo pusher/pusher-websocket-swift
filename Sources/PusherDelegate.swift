@@ -6,5 +6,6 @@ import Foundation
     @objc optional func changedConnectionState(from old: ConnectionState, to new: ConnectionState)
     @objc optional func subscribedToChannel(name: String)
     @objc optional func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)
+    @objc optional func failedToDecryptEvent(payload: [String: Any], channelName: String)
     @objc(receivedError:) optional func receivedError(error: PusherError)
 }
