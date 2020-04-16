@@ -35,7 +35,7 @@ class PusherConcreteEventQueue: PusherEventQueue {
             do {
                 try self.processEvent(json: json, forChannelName: channelName)
             } catch PusherEventError.invalidDecryptionKey {
-                // Only encrypted channels should throw this error
+                // Only events on encrypted channels throw this error, which have a channel name
                 if let channelName = channelName {
                     self.delegate?.eventQueue(self, reloadDecryptionKeySyncForChannelName: channelName)
                     do {
