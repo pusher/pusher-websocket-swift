@@ -100,7 +100,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         socket.delegate?.websocketDidReceiveMessage(socket: socket, text: message)
         waitForExpectations(timeout: 1)
     }
-    s
+    
     
     // onMessageRaisesExceptionWhenFailingToDecryptTwice
     
