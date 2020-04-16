@@ -118,7 +118,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
     }
     
-    func test_init_encryptedChannelAndUserEventAndUnencryptedPayload_returnsWithNilEvent() {
+    func test_init_encryptedChannelAndUserEventAndUnencryptedPayloadWithNoDecryptionKey_throwsInvalidFormat() {
         
         let dataPayload = """
         {
@@ -134,10 +134,33 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
             "data": \(dataPayload.escaped)
         }
         """.toJsonDict()
-        
-        let event = try? eventFactory.makeEvent(fromJSON: jsonDict)
-        
-        XCTAssertNil(event)
+
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
+        }
+    }
+
+    func test_init_encryptedChannelAndUserEventAndUnencryptedPayloadWithDecryptionKey_throwsInvalidFormat() {
+        let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+
+        let dataPayload = """
+        {
+            "test": "test string",
+            "and": "another"
+        }
+        """.removing(.whitespacesAndNewlines)
+
+        let jsonDict = """
+        {
+            "event": "user-event",
+            "channel": "private-encrypted-channel",
+            "data": \(dataPayload.escaped)
+        }
+        """.toJsonDict()
+
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
+        }
     }
     
     func test_init_encryptedChannelAndUserEventAndEncryptedPayloadAndValidKey_returnsWithDecryptedPayload() {
@@ -247,5 +270,4 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
         }
     }
-    
 }
