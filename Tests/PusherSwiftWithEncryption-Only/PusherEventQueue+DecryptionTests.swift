@@ -63,6 +63,39 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
+    func testEncryptedChannelShouldCallDidFailToDecryptEventWithNonEncryptedEvent() {
+
+        let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+
+        let dataPayload = """
+        {
+          "message": "Hello"
+        }
+        """.removing(.whitespacesAndNewlines)
+
+        let jsonDict = """
+        {
+          "event": "user-event",
+          "channel": "private-encrypted-channel",
+          "data": \(dataPayload.escaped)
+        }
+        """.toJsonDict()
+
+        keyProvider.setDecryptionKey(decryptionKey, forChannelName: "private-encrypted-channel")
+
+        let ex = expectation(description: "should call didFailToDecryptEvent")
+
+        eventQueueDelegate.didFailToDecryptEvent = { (eventQueue, payload, channelName) in
+            let equal = NSDictionary(dictionary: jsonDict).isEqual(to: payload)
+            XCTAssertTrue(equal)
+            XCTAssertEqual("private-encrypted-channel", channelName)
+            ex.fulfill()
+        }
+
+        eventQueue.enqueue(json: jsonDict)
+        waitForExpectations(timeout: 0.5)
+    }
+
     func testShouldReloadDecryptionKeyAndDecryptSuccessfully() {
 
         let wrongDecryptionKey = "00000000000000000000000000000000000000000000"

@@ -44,6 +44,10 @@ class PusherConcreteEventQueue: PusherEventQueue {
                         self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channelName)
                     }
                 }
+            } catch PusherEventError.invalidEncryptedData {
+                if let channelName = channelName {
+                    self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channelName)
+                }
             } catch {
                 self.delegate?.eventQueue(self, didReceiveInvalidEventWithPayload: json)
             }
