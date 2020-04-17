@@ -7,6 +7,7 @@
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
+[![codecov](https://codecov.io/gh/pusher/pusher-websocket-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/pusher/pusher-websocket-swift)
 
 This is the [Pusher Channels](https://pusher.com/channels) websocket client, PusherSwift, which supports iOS, macOS (OS X) and tvOS. It works with Swift and Objective-C.
 
@@ -43,6 +44,7 @@ What else would you want? Head over to one of our example apps:
 - [Subscribing to channels](#subscribing)
   - [Public channels](#public-channels)
   - [Private channels](#private-channels)
+  - [Private encrypted channels [BETA]](#private-encrypted-channels)
   - [Presence channels](#presence-channels)
 - [Binding to events](#binding-to-events)
   - [Per-channel](#per-channel-events)
@@ -591,6 +593,41 @@ PusherChannel *myPrivateChannel = [pusher subscribeWithChannelName:@"private-my-
 ```
 
 Subscribing to private channels involves the client being authenticated. See the [Configuration](#configuration) section for the authenticated channel example for more information.
+
+### Private encrypted channels [BETA]
+
+Similar to Private channels, you can also subscribe to a
+[private encrypted channel](https://pusher.com/docs/channels/using_channels/encrypted-channels).
+This library now fully supports end-to-end encryption. This means that only you and your
+connected clients will be able to read your messages. Pusher cannot decrypt them.
+
+To use this feature, you will need to update your dependencies to use
+`PusherSwiftWithEncryption` instead of `PusherSwift` using whichever package manager you were using originally.
+It is important to note that PusherSwiftWithEncryption will *not* work with tvOS,
+however it is fully supported in macOS and iOS.
+
+Like the private channel, you must provide your own authentication endpoint,
+with your own encryption master key. There is a
+[demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption).
+
+#### Swift
+
+```swift
+let privateEncryptedChannel = pusher.subscribe(channelName: "private-encrypted-my-channel")
+```
+
+#### Objective-C
+
+```objc
+PusherChannel *privateEncryptedChannel = [pusher subscribeWithChannelName:@"private-encrypted-my-channel"];
+```
+
+There is also an additional callback in the connection delegate which can optionally add to listen to
+failed decryption events:
+
+```swift
+optional func failedToDecryptEvent(eventName: String, channelName: String, data: String?)
+```
 
 ### Presence channels
 
