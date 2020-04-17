@@ -34,25 +34,25 @@ class PusherPresenceChannelTests: XCTestCase {
         }
 
         pusher.connect()
-        let expectation = XCTestExpectation(description: "subscription succeed")
+        let ex = expectation(description: "subscription succeed")
         let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
         chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            expectation.fulfill()
+            ex.fulfill()
             XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
         }
-        wait(for: [expectation], timeout: 0.25)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testMembersObjectStoresSocketIdIfNoUserDataFetcherIsProvided() {
         pusher.connect()
 
         let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        let expectation = XCTestExpectation(description: "subscription succeed")
+        let ex = expectation(description: "subscription succeed")
         chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            expectation.fulfill()
+            ex.fulfill()
             XCTAssertEqual(chan?.members.first!.userId, "46123.486095", "the userId should be 46123.486095")
         }
-        wait(for: [expectation], timeout: 0.25)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testMembersObjectStoresUserIdAndUserInfoIfAUserDataFetcherIsProvidedThatReturnsBoth() {
@@ -66,13 +66,13 @@ class PusherPresenceChannelTests: XCTestCase {
 
         let channelName = "presence-test"
 
-        let expectation = XCTestExpectation(description: "subscription succeed")
+        let ex = expectation(description: "subscription succeed")
         guard let chan = pusher.subscribe(channelName) as? PusherPresenceChannel else {
             return XCTFail("Couldn't subscribe to channel: \(channelName).")
         }
 
         chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            expectation.fulfill()
+            ex.fulfill()
 
             guard let firstUser = chan.members.first else {
                return XCTFail("User doesn't exist.")
@@ -84,7 +84,7 @@ class PusherPresenceChannelTests: XCTestCase {
            XCTAssertEqual(userId, "123", "the userId should be 123")
            XCTAssertEqual(userInfo, ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
         }
-        wait(for: [expectation], timeout: 0.25)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testFindingPusherPresenceChannelMemberByUserId() {
@@ -120,9 +120,9 @@ class PusherPresenceChannelTests: XCTestCase {
             return XCTFail("Couldn't subscribe to channel: \(channelName).")
         }
 
-        let expectation = XCTestExpectation(description: "subscription succeed")
+        let ex = expectation(description: "subscription succeed")
         presenceChannel.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            expectation.fulfill()
+            ex.fulfill()
 
             guard let member = presenceChannel.me() else {
                return XCTFail("Couldn't find member with id: \(userId).")
@@ -132,7 +132,7 @@ class PusherPresenceChannelTests: XCTestCase {
            XCTAssertEqual(member.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
 
         }
-        wait(for: [expectation], timeout: 0.25)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testFindingAPresenceChannelAsAPusherPresenceChannel() {
@@ -147,9 +147,9 @@ class PusherPresenceChannelTests: XCTestCase {
 
         let presenceChannel = pusher.subscribe(channelName)
 
-        let expectation = XCTestExpectation(description: "subscription succeed")
+        let ex = expectation(description: "subscription succeed")
         presenceChannel.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            expectation.fulfill()
+            ex.fulfill()
             guard let presenceChannel = self.pusher.connection.channels.findPresence(name: channelName) else {
                 return XCTFail("Presence for channel: \(channelName) not found.")
             }
@@ -160,7 +160,7 @@ class PusherPresenceChannelTests: XCTestCase {
 
             XCTAssertEqual(member.userId, userId, "the userId of the client's member object should be \(userId)")
         }
-        wait(for: [expectation], timeout: 0.25)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testOnMemberAddedFunctionGetsCalledWhenANewSubscriptionSucceeds() {

@@ -70,7 +70,7 @@ class PusherEventQueueTests: XCTestCase {
         }
 
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [ex], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testEventWithNoChannelShouldCallDidReceiveEvent() {
@@ -97,7 +97,7 @@ class PusherEventQueueTests: XCTestCase {
         }
 
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [ex], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testInvalidEventShouldCallDidReceiveInvalidEvent() {
@@ -122,6 +122,6 @@ class PusherEventQueueTests: XCTestCase {
         }
 
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [ex], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 }

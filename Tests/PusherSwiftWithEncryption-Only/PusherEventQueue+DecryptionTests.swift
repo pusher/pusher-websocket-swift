@@ -60,7 +60,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
 
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [ex], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testShouldReloadDecryptionKeyAndDecryptSuccessfully() {
@@ -108,7 +108,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
 
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [reloadEx, receivedEv], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testShouldReloadDecryptionKeyOnceAndFailIfSecondKeyIsBad() {
@@ -149,7 +149,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
 
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [reloadEx, failedEv], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testShouldMoveOnAfterFailingToDecryptAMessage() {
@@ -220,7 +220,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         eventQueue.enqueue(json: undecryptableEvent)
         eventQueue.enqueue(json: decryptableEvent)
 
-        wait(for: [reloadEx, failedEx, successEx], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testFailingToDecryptOnOneChannelShouldNotAffectAnother() {
@@ -295,7 +295,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         eventQueue.enqueue(json: undecryptableEvent)
         eventQueue.enqueue(json: decryptableEvent)
 
-        wait(for: [reloadEx, failedEx, successEx], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     

@@ -92,13 +92,13 @@ class AuthenticationTests: XCTestCase {
         let chan = pusher.subscribe("private-test-channel")
         XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
 
-        let expectation = XCTestExpectation(description: "subscription succeed")
+        let ex = expectation(description: "subscription succeed")
         chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            expectation.fulfill()
+            ex.fulfill()
             XCTAssertTrue(chan.subscribed, "the channel should be subscribed")
         }
         pusher.connect()
-        wait(for: [expectation], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testSubscribingToAPrivateChannelShouldFailIfNoAuthMethodIsProvided() {

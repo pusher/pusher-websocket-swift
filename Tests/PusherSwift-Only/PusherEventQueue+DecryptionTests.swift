@@ -48,7 +48,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
 
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [ex], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testNoChannelShouldCallDidReceiveEventWithoutAttemptingDecryption() {
@@ -74,6 +74,6 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             ex.fulfill()
         }
         eventQueue.enqueue(json: jsonDict)
-        wait(for: [ex], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 }

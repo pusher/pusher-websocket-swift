@@ -81,7 +81,7 @@ class PusherConnectionDelegateTests: XCTestCase {
                 ex.fulfill()
             }
         }
-        wait(for: [ex], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testConnectionStateChangeDelegateFunctionGetsCalledFourTimesGoingFromDisconnectedToConnectingToConnectedToDisconnectingToDisconnected() {
@@ -103,7 +103,7 @@ class PusherConnectionDelegateTests: XCTestCase {
             }
         }
         pusher.connect()
-        wait(for: [isConnected, isDisconnected], timeout: 0.5)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testPassingIncomingMessagesToTheDebugLogFunctionIfOneIsImplemented() {
