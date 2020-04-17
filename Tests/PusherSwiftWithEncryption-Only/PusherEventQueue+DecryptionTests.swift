@@ -195,8 +195,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         keyProvider.setDecryptionKey(wrongDecryptionKey, forChannelName: "private-encrypted-channel")
 
         let reloadEx = expectation(description: "should attempt to reload key")
-        let failedEv = expectation(description: "should fail to decrypt message")
-        let successEv = expectation(description: "should succeed in decrypting message")
+        let failedEx = expectation(description: "should fail to decrypt message")
+        let successEx = expectation(description: "should succeed in decrypting message")
 
         eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelName) in
             XCTAssertEqual("private-encrypted-channel", channelName)
@@ -208,24 +208,24 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             let equal = NSDictionary(dictionary: undecryptableEvent).isEqual(to: payload)
             XCTAssertTrue(equal)
             XCTAssertEqual("private-encrypted-channel", channelName)
-            failedEv.fulfill()
+            failedEx.fulfill()
         }
 
         eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in
             XCTAssertEqual(expectedDecryptedPayload, event.data)
             XCTAssertEqual("private-encrypted-channel", channelName)
-            successEv.fulfill()
+            successEx.fulfill()
         }
 
         eventQueue.enqueue(json: undecryptableEvent)
         eventQueue.enqueue(json: decryptableEvent)
 
-        wait(for: [reloadEx, failedEv, successEv], timeout: 0.5)
+        wait(for: [reloadEx, failedEx, successEx], timeout: 0.5)
     }
 
     func testFailingToDecryptOnOneChannelShouldNotAffectAnother() {
         let decryptableChannel = "private-encrypted-decryptable"
-        let undecryptableChannel = "private-encrypted-fail"
+        let undecryptableChannel = "private-encrypted-undecryptable"
 
         let wrongDecryptionKey = "00000000000000000000000000000000000000000000"
 
@@ -270,8 +270,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         keyProvider.setDecryptionKey(wrongDecryptionKey, forChannelName: undecryptableChannel)
 
         let reloadEx = expectation(description: "should attempt to reload key")
-        let failedEv = expectation(description: "should fail to decrypt message")
-        let successEv = expectation(description: "should succeed in decrypting message")
+        let failedEx = expectation(description: "should fail to decrypt message")
+        let successEx = expectation(description: "should succeed in decrypting message")
 
         eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelName) in
             XCTAssertEqual(undecryptableChannel, channelName)
@@ -283,19 +283,19 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             let equal = NSDictionary(dictionary: undecryptableEvent).isEqual(to: payload)
             XCTAssertTrue(equal)
             XCTAssertEqual(undecryptableChannel, channelName)
-            failedEv.fulfill()
+            failedEx.fulfill()
         }
 
         eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in
             XCTAssertEqual(expectedDecryptedPayload, event.data)
             XCTAssertEqual(decryptableChannel, channelName)
-            successEv.fulfill()
+            successEx.fulfill()
         }
 
         eventQueue.enqueue(json: undecryptableEvent)
         eventQueue.enqueue(json: decryptableEvent)
 
-        wait(for: [reloadEx, failedEv, successEv], timeout: 0.5)
+        wait(for: [reloadEx, failedEx, successEx], timeout: 0.5)
     }
 
     
