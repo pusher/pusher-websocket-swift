@@ -140,7 +140,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
     }
 
-    func test_init_encryptedChannelAndUserEventAndUnencryptedPayloadWithDecryptionKey_throwsInvalidFormat() {
+    func test_init_encryptedChannelAndUserEventAndUnencryptedPayloadWithDecryptionKey_throwsInvalidEncryptedData() {
         let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
 
         let dataPayload = """
@@ -159,7 +159,51 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         """.toJsonDict()
 
         XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
-            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidEncryptedData)
+        }
+    }
+
+    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadMissingNonce_throwsInvalidEncryptedData() {
+        let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+
+        let dataPayload = """
+        {
+            "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
+        }
+        """.removing(.whitespacesAndNewlines)
+
+        let jsonDict = """
+        {
+            "event": "user-event",
+            "channel": "private-encrypted-channel",
+            "data": \(dataPayload.escaped)
+        }
+        """.toJsonDict()
+
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidEncryptedData)
+        }
+    }
+
+    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadMissingCiphertext_throwsInvalidEncryptedData() {
+        let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+
+        let dataPayload = """
+        {
+            "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm"
+        }
+        """.removing(.whitespacesAndNewlines)
+
+        let jsonDict = """
+        {
+            "event": "user-event",
+            "channel": "private-encrypted-channel",
+            "data": \(dataPayload.escaped)
+        }
+        """.toJsonDict()
+
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidEncryptedData)
         }
     }
     

@@ -35,7 +35,7 @@ class PusherDecryptor {
     private static func encryptedData(fromData data: String) throws -> EncryptedData {
         guard let encodedData = data.data(using: .utf8),
             let encryptedData = try? JSONDecoder().decode(EncryptedData.self, from: encodedData) else {
-                throw PusherEventError.invalidFormat
+                throw PusherEventError.invalidEncryptedData
         }
 
         return encryptedData
@@ -43,7 +43,7 @@ class PusherDecryptor {
 
     private static func decodedCipherText(fromEncryptedData encryptedData: EncryptedData) throws -> Bytes {
         guard let decodedCipherText = Data(base64Encoded: encryptedData.ciphertext) else {
-            throw PusherEventError.invalidFormat
+            throw PusherEventError.invalidEncryptedData
         }
 
         return Bytes(decodedCipherText)
@@ -51,7 +51,7 @@ class PusherDecryptor {
 
     private static func decodedNonce(fromEncryptedData encryptedData: EncryptedData) throws -> SecretBox.Nonce {
         guard let decodedNonce = Data(base64Encoded: encryptedData.nonce) else {
-            throw PusherEventError.invalidFormat
+            throw PusherEventError.invalidEncryptedData
         }
 
         return SecretBox.Nonce(decodedNonce)
