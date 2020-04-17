@@ -411,6 +411,7 @@ There is a `PusherDelegate` that you can use to get notified of connection-relat
 @objc optional func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)
 @objc optional func debugLog(message: String)
 @objc(receivedError:) optional func receivedError(error: PusherError)
+@objc optional func failedToDecryptEvent(eventName: String, channelName: String, data: String?)
 ```
 
 The names of the functions largely give away what their purpose is but just for completeness:
@@ -420,6 +421,7 @@ The names of the functions largely give away what their purpose is but just for 
 - `failedToSubscribeToChannel` - use this if you want to be informed of a failed subscription attempt, which you could use, for example, to then attempt another subscription or make a call to a service you use to track errors
 - `debugLog` - use this if you want to log Pusher-related events, e.g. the underlying websocket receiving a message
 - `receivedError` - use this if you want to be informed of errors received from Pusher Channels e.g. `Application is over connection quota`. You can find some of the possible errors listed [here](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes).
+- `failedToDecryptEvent` - only used with private encrypted channels - use this if you want to be notified if any messages fail to decrypt.
 
 Setting up a delegate looks like this:
 
@@ -480,6 +482,11 @@ class DummyDelegate: PusherDelegate {
             // ...
         }
     }
+
+    func failedToDecryptEvent(eventName: String, channelName: String, data: String?) {
+      // ...
+    }
+
 }
 ```
 
@@ -493,6 +500,7 @@ class DummyDelegate: PusherDelegate {
 - (void)subscribedToChannelWithName:(NSString *)name
 - (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error
 - (void)receivedError:(PusherError *)error
+- (void)failedToDecryptEventWithEventName:(NSString *)eventName channelName:(NSString *)channelName data:(NSString *)data
 
 @end
 
@@ -518,6 +526,10 @@ class DummyDelegate: PusherDelegate {
     NSNumber *code = error.codeOC;
     NSString *message = error.message;
     // ...
+}
+
+- (void)failedToDecryptEventWithEventName:(NSString *)eventName channelName:(NSString *)channelName data:(NSString *)data {
+  // ...
 }
 
 @end
