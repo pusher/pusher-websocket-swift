@@ -622,8 +622,8 @@ let privateEncryptedChannel = pusher.subscribe(channelName: "private-encrypted-m
 PusherChannel *privateEncryptedChannel = [pusher subscribeWithChannelName:@"private-encrypted-my-channel"];
 ```
 
-There is also an additional callback in the connection delegate which can optionally add to listen to
-failed decryption events:
+There is also an optional callback in the connection delegate when you can listen for
+any failed decryption events:
 
 ```swift
 optional func failedToDecryptEvent(eventName: String, channelName: String, data: String?)
