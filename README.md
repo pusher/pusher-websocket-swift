@@ -613,14 +613,25 @@ Similar to Private channels, you can also subscribe to a
 This library now fully supports end-to-end encryption. This means that only you and your
 connected clients will be able to read your messages. Pusher cannot decrypt them.
 
-To use this feature, you will need to update your dependencies to use
-`PusherSwiftWithEncryption` instead of `PusherSwift` using whichever package manager you were using originally.
-It is important to note that PusherSwiftWithEncryption will *not* work with tvOS,
-however it is fully supported in macOS and iOS.
-
 Like the private channel, you must provide your own authentication endpoint,
 with your own encryption master key. There is a
 [demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption).
+
+### Installation
+
+#### CocoaPods
+Update your podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
+
+#### Carthage
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of PusherSwift.
+
+#### Swift Package Manager
+PusherSwiftWithEncryption is not yet compatible with the swift package manager.
+
+#### Limitations
+
+* Is not currently possible to use with tvOS .
+* Is not safe for use in extensions.
 
 #### Swift
 
