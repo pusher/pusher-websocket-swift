@@ -6,7 +6,7 @@ import XCTest
     @testable import PusherSwift
 #endif
 
-class PusherConcreteEventFactoryTests: XCTestCase {
+class PusherEventFactoryTests: XCTestCase {
 
     var eventFactory: PusherConcreteEventFactory!
 
@@ -204,6 +204,19 @@ class PusherConcreteEventFactoryTests: XCTestCase {
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertTrue(event.property(withKey: "my_null") is NSNull)
+    }
+
+    func testInvalidMessageThrowsException() {
+        let jsonDict = """
+        {
+            "channel": "my-channel",
+            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
+        }
+        """.toJsonDict();
+
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
+        }
     }
 
 }

@@ -58,17 +58,23 @@
 		73D8A2192435F24E001FDE05 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995F1D21226C00B25C2A /* Helpers.swift */; };
 		73D8A21A2435F24E001FDE05 /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995D1D21226C00B25C2A /* AuthenticationTests.swift */; };
 		73D8A21B2435F24E001FDE05 /* PusherChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99621D21226C00B25C2A /* PusherChannelTests.swift */; };
-		73D8A21C2435F24E001FDE05 /* PusherConcreteEventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherConcreteEventFactoryTests.swift */; };
+		73D8A21C2435F24E001FDE05 /* PusherEventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */; };
 		73D8A21D2435F24E001FDE05 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99601D21226C00B25C2A /* Mocks.swift */; };
 		73D8A21E2435F24E001FDE05 /* PusherConnectionDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A962751D8943CA00DA421E /* PusherConnectionDelegateTests.swift */; };
 		73D8A2202435F24E001FDE05 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D8A2282435F325001FDE05 /* PusherDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A2062435EAD5001FDE05 /* PusherDecryptor.swift */; };
 		73D8A2292435F329001FDE05 /* PusherDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A2012435E686001FDE05 /* PusherDecryptor.swift */; };
-		73D8A22D2435F381001FDE05 /* PusherEvent+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A22C2435F381001FDE05 /* PusherEvent+DecryptionTests.swift */; };
-		73D8A22F2435F393001FDE05 /* PusherEvent+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A22E2435F393001FDE05 /* PusherEvent+DecryptionTests.swift */; };
+		73D8A22D2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */; };
+		73D8A22F2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A22E2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift */; };
 		D32DBA1B2445BCD60064DA56 /* PrivateEncryptedChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */; };
 		E2498293231E612700CFBBD6 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
-		E29A4CBC2301BA31000BC499 /* PusherConcreteEventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherConcreteEventFactoryTests.swift */; };
+		E2594CE124475E6000E36300 /* PusherKeyProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2594CE024475E6000E36300 /* PusherKeyProviderTests.swift */; };
+		E2594CE224475E6000E36300 /* PusherKeyProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2594CE024475E6000E36300 /* PusherKeyProviderTests.swift */; };
+		E2594CE42447753200E36300 /* PusherEventQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2594CE32447753200E36300 /* PusherEventQueueTests.swift */; };
+		E2594CE52447753200E36300 /* PusherEventQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2594CE32447753200E36300 /* PusherEventQueueTests.swift */; };
+		E291AFA024486A6E00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291AF9E2448636400594552 /* PusherEventQueue+DecryptionTests.swift */; };
+		E291AFA324486CAE00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */; };
+		E29A4CBC2301BA31000BC499 /* PusherEventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */; };
 		E2B21EFF243F5B1E0049A35B /* PusherEventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */; };
 		E2B21F00243F5B1E0049A35B /* PusherEventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */; };
 		E2B21F01243F5B1E0049A35B /* PusherEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */; };
@@ -137,11 +143,15 @@
 		73D8A2012435E686001FDE05 /* PusherDecryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherDecryptor.swift; sourceTree = "<group>"; };
 		73D8A2062435EAD5001FDE05 /* PusherDecryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherDecryptor.swift; sourceTree = "<group>"; };
 		73D8A2262435F24E001FDE05 /* PusherSwiftWithEncryptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftWithEncryptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		73D8A22C2435F381001FDE05 /* PusherEvent+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEvent+DecryptionTests.swift"; sourceTree = "<group>"; };
-		73D8A22E2435F393001FDE05 /* PusherEvent+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEvent+DecryptionTests.swift"; sourceTree = "<group>"; };
+		73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
+		73D8A22E2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
 		D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateEncryptedChannelTests.swift; sourceTree = "<group>"; };
 		E2498292231E612700CFBBD6 /* PusherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherError.swift; sourceTree = "<group>"; };
-		E29A4CBB2301BA31000BC499 /* PusherConcreteEventFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherConcreteEventFactoryTests.swift; sourceTree = "<group>"; };
+		E2594CE024475E6000E36300 /* PusherKeyProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherKeyProviderTests.swift; sourceTree = "<group>"; };
+		E2594CE32447753200E36300 /* PusherEventQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventQueueTests.swift; sourceTree = "<group>"; };
+		E291AF9E2448636400594552 /* PusherEventQueue+DecryptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PusherEventQueue+DecryptionTests.swift"; sourceTree = "<group>"; };
+		E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventQueue+DecryptionTests.swift"; sourceTree = "<group>"; };
+		E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventFactoryTests.swift; sourceTree = "<group>"; };
 		E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherEventQueue.swift; sourceTree = "<group>"; };
 		E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherEventFactory.swift; sourceTree = "<group>"; };
 		E2B21F03243F5B570049A35B /* PusherKeyProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherKeyProvider.swift; sourceTree = "<group>"; };
@@ -249,32 +259,26 @@
 			children = (
 				73D8A22A2435F33B001FDE05 /* PusherSwift-Only */,
 				73D8A22B2435F347001FDE05 /* PusherSwiftWithEncryption-Only */,
-				736E53FB242A55110052CC1B /* Doubles */,
 				33BB995D1D21226C00B25C2A /* AuthenticationTests.swift */,
 				3342F3BB1D808AC500C0296E /* ClientEventTests.swift */,
 				33BB995F1D21226C00B25C2A /* Helpers.swift */,
 				33BB99601D21226C00B25C2A /* Mocks.swift */,
 				33BB99611D21226C00B25C2A /* PresenceChannelTests.swift */,
 				33BB99621D21226C00B25C2A /* PusherChannelTests.swift */,
-				33BB99631D21226C00B25C2A /* PusherClientInitializationTests.swift */,
 				33BB99641D21226C00B25C2A /* PusherConnectionTests.swift */,
+				33BB99631D21226C00B25C2A /* PusherClientInitializationTests.swift */,
+				E2594CE32447753200E36300 /* PusherEventQueueTests.swift */,
 				33A962751D8943CA00DA421E /* PusherConnectionDelegateTests.swift */,
 				33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */,
 				33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */,
 				33BB99671D21226C00B25C2A /* Info.plist */,
-				E29A4CBB2301BA31000BC499 /* PusherConcreteEventFactoryTests.swift */,
+				E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */,
+				E2594CE024475E6000E36300 /* PusherKeyProviderTests.swift */,
 				736E53F3242A35D90052CC1B /* String+Extensions.swift */,
 				736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */,
 				E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		736E53FB242A55110052CC1B /* Doubles */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Doubles;
 			sourceTree = "<group>";
 		};
 		73D8A2002435E66E001FDE05 /* PusherSwiftWithEncryption-Only */ = {
@@ -296,7 +300,8 @@
 		73D8A22A2435F33B001FDE05 /* PusherSwift-Only */ = {
 			isa = PBXGroup;
 			children = (
-				73D8A22E2435F393001FDE05 /* PusherEvent+DecryptionTests.swift */,
+				73D8A22E2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift */,
+				E291AF9E2448636400594552 /* PusherEventQueue+DecryptionTests.swift */,
 			);
 			path = "PusherSwift-Only";
 			sourceTree = "<group>";
@@ -304,8 +309,9 @@
 		73D8A22B2435F347001FDE05 /* PusherSwiftWithEncryption-Only */ = {
 			isa = PBXGroup;
 			children = (
+				73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */,
+				E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */,
 				D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */,
-				73D8A22C2435F381001FDE05 /* PusherEvent+DecryptionTests.swift */,
 			);
 			path = "PusherSwiftWithEncryption-Only";
 			sourceTree = "<group>";
@@ -563,20 +569,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73D8A22F2435F393001FDE05 /* PusherEvent+DecryptionTests.swift in Sources */,
+				73D8A22F2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */,
 				33BB997A1D21230100B25C2A /* PusherConnectionTests.swift in Sources */,
 				736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */,
 				E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */,
 				33BB99791D21230100B25C2A /* PusherClientInitializationTests.swift in Sources */,
 				33BB99771D21230100B25C2A /* PresenceChannelTests.swift in Sources */,
+				E2594CE124475E6000E36300 /* PusherKeyProviderTests.swift in Sources */,
 				33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */,
 				736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */,
+				E2594CE42447753200E36300 /* PusherEventQueueTests.swift in Sources */,
+				E291AFA024486A6E00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */,
 				33BB997B1D21230100B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */,
 				3342F3BD1D808AC900C0296E /* ClientEventTests.swift in Sources */,
 				33BB99751D21230100B25C2A /* Helpers.swift in Sources */,
 				33BB99731D21230100B25C2A /* AuthenticationTests.swift in Sources */,
 				33BB99781D21230100B25C2A /* PusherChannelTests.swift in Sources */,
-				E29A4CBC2301BA31000BC499 /* PusherConcreteEventFactoryTests.swift in Sources */,
+				E29A4CBC2301BA31000BC499 /* PusherEventFactoryTests.swift in Sources */,
 				33BB99761D21230100B25C2A /* Mocks.swift in Sources */,
 				33A962771D89483600DA421E /* PusherConnectionDelegateTests.swift in Sources */,
 			);
@@ -613,21 +622,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73D8A22D2435F381001FDE05 /* PusherEvent+DecryptionTests.swift in Sources */,
+				73D8A22D2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */,
 				73D8A20F2435F24E001FDE05 /* PusherConnectionTests.swift in Sources */,
 				73D8A2102435F24E001FDE05 /* String+Extensions.swift in Sources */,
 				73D8A2112435F24E001FDE05 /* PusherCryptoTest.swift in Sources */,
 				D32DBA1B2445BCD60064DA56 /* PrivateEncryptedChannelTests.swift in Sources */,
 				73D8A2122435F24E001FDE05 /* PusherClientInitializationTests.swift in Sources */,
 				73D8A2132435F24E001FDE05 /* PresenceChannelTests.swift in Sources */,
+				E2594CE224475E6000E36300 /* PusherKeyProviderTests.swift in Sources */,
 				73D8A2142435F24E001FDE05 /* PusherTopLevelAPITests.swift in Sources */,
 				73D8A2152435F24E001FDE05 /* XCTest+Assertions.swift in Sources */,
+				E2594CE52447753200E36300 /* PusherEventQueueTests.swift in Sources */,
+				E291AFA324486CAE00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */,
 				73D8A2162435F24E001FDE05 /* PusherIncomingEventHandlingTests.swift in Sources */,
 				73D8A2182435F24E001FDE05 /* ClientEventTests.swift in Sources */,
 				73D8A2192435F24E001FDE05 /* Helpers.swift in Sources */,
 				73D8A21A2435F24E001FDE05 /* AuthenticationTests.swift in Sources */,
 				73D8A21B2435F24E001FDE05 /* PusherChannelTests.swift in Sources */,
-				73D8A21C2435F24E001FDE05 /* PusherConcreteEventFactoryTests.swift in Sources */,
+				73D8A21C2435F24E001FDE05 /* PusherEventFactoryTests.swift in Sources */,
 				73D8A21D2435F24E001FDE05 /* Mocks.swift in Sources */,
 				73D8A21E2435F24E001FDE05 /* PusherConnectionDelegateTests.swift in Sources */,
 			);
