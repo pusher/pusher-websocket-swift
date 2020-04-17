@@ -10,6 +10,8 @@ protocol PusherKeyProvider: AnyObject {
 
 class PusherConcreteKeyProvider: PusherKeyProvider {
 
+    private var queue = DispatchQueue(label: "com.pusher.pusherswift-key-provider-\(UUID().uuidString)")
+
     // MARK: - Properties
 
     private var decryptionKeys: [String : String] = [:]
@@ -17,14 +19,20 @@ class PusherConcreteKeyProvider: PusherKeyProvider {
     // MARK: - Key provider
 
     func decryptionKey(forChannelName channelName: String) -> String? {
-        return self.decryptionKeys[channelName]
+        return queue.sync {
+            return self.decryptionKeys[channelName]
+        }
     }
 
     func setDecryptionKey(_ decryptionKey: String, forChannelName channelName: String) {
-        self.decryptionKeys[channelName] = decryptionKey
+        queue.sync {
+            self.decryptionKeys[channelName] = decryptionKey
+        }
     }
 
     func clearDecryptionKey(forChannelName channelName: String) {
-        self.decryptionKeys.removeValue(forKey: channelName)
+        queue.sync {
+            _ = self.decryptionKeys.removeValue(forKey: channelName)
+        }
     }
 }

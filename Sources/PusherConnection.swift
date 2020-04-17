@@ -213,9 +213,7 @@ import Starscream
             )
 
             self.channels.remove(name: channelName)
-            DispatchQueue.main.async {
-                self.keyProvider.clearDecryptionKey(forChannelName: channelName)
-            }
+            self.keyProvider.clearDecryptionKey(forChannelName: channelName)
         }
     }
     
