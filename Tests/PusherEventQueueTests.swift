@@ -9,7 +9,7 @@ import XCTest
 class InlineMockEventQueueDelegate: PusherEventQueueDelegate {
     var didReceiveEvent: ((PusherEventQueue, PusherEvent, String?) -> Void)?
     var didFailToDecryptEvent: ((PusherEventQueue, PusherEventPayload, String) -> Void)?
-    var reloadDecryptionKeySync: ((PusherEventQueue, String) -> Void)?
+    var reloadDecryptionKeySync: ((PusherEventQueue, PusherChannel) -> Void)?
     var didReceiveInvalidEvent: ((PusherEventQueue, PusherEventPayload) -> Void)?
 
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload){
@@ -24,28 +24,38 @@ class InlineMockEventQueueDelegate: PusherEventQueueDelegate {
         self.didFailToDecryptEvent?(eventQueue, payload, channelName)
     }
 
-    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannelName channelName: String) {
-        self.reloadDecryptionKeySync?(eventQueue, channelName)
+    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel) {
+        self.reloadDecryptionKeySync?(eventQueue, channel)
     }
 }
 
 class PusherEventQueueTests: XCTestCase {
 
     var eventQueue: PusherEventQueue!
-    var keyProvider: PusherKeyProvider!
     var eventFactory: PusherEventFactory!
     var eventQueueDelegate: InlineMockEventQueueDelegate!
+    var channels: PusherChannels!
+    var connection: PusherConnection!
+
 
     override func setUp() {
         super.setUp()
-        keyProvider = PusherConcreteKeyProvider()
+        channels = PusherChannels()
+        connection = MockPusherConnection()
         eventFactory = PusherConcreteEventFactory()
-        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, keyProvider: keyProvider)
+        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, channels: channels)
         eventQueueDelegate = InlineMockEventQueueDelegate()
         eventQueue.delegate = eventQueueDelegate
     }
 
+    func createAndSubscribe(_ channelName: String) -> PusherChannel {
+        let channel = channels.add(name: channelName, connection: connection)
+        channel.subscribed = true
+        return channel
+    }
+
     func testNonEncryptedChannelShouldCallDidReceiveEvent() {
+        let channel = createAndSubscribe("my-channel")
         let dataPayload = """
         {
            "test": "test string",
@@ -65,7 +75,7 @@ class PusherEventQueueTests: XCTestCase {
         eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: event.raw)
             XCTAssertTrue(equal)
-            XCTAssertEqual("my-channel", channelName)
+            XCTAssertEqual(channel.name, channelName)
             ex.fulfill()
         }
 

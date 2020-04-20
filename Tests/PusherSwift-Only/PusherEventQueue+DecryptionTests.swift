@@ -10,21 +10,31 @@ import XCTest
 class PusherEventQueueDecryptionTests: XCTestCase {
 
     var eventQueue: PusherEventQueue!
-    var keyProvider: PusherKeyProvider!
+    var channels: PusherChannels!
     var eventFactory: PusherEventFactory!
     var eventQueueDelegate: InlineMockEventQueueDelegate!
+    var mockConnection: PusherConnection!
+
 
     override func setUp() {
         super.setUp()
-        keyProvider = PusherConcreteKeyProvider()
+        channels = PusherChannels()
         eventFactory = PusherConcreteEventFactory()
-        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, keyProvider: keyProvider)
+        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, channels: channels)
         eventQueueDelegate = InlineMockEventQueueDelegate()
         eventQueue.delegate = eventQueueDelegate
+        mockConnection = MockPusherConnection()
+    }
+
+    func createAndSubscribe(_ channelName: String) -> PusherChannel {
+        let channel = channels.add(name: channelName, connection: mockConnection)
+        channel.subscribed = true
+        return channel
     }
 
     func testEncryptedChannelShouldCallDidReceiveEventWithoutAttemptingDecryption() {
-      let dataPayload = """
+        let channel = createAndSubscribe("private-encrypted-channel")
+        let dataPayload = """
         {
             "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
             "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
@@ -39,11 +49,12 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
+
         let ex = expectation(description: "should call didReceiveEvent")
         eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: event.raw)
             XCTAssertTrue(equal)
-            XCTAssertEqual("private-encrypted-channel", channelName)
+            XCTAssertEqual(channel.name, channelName)
             ex.fulfill()
         }
 
@@ -52,7 +63,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     }
 
     func testNoChannelShouldCallDidReceiveEventWithoutAttemptingDecryption() {
-      let dataPayload = """
+        let dataPayload = """
         {
             "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
             "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"

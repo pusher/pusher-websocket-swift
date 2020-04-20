@@ -68,4 +68,11 @@ class PusherChannelTests: XCTestCase {
         chan.unbindAll()
         XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no callbacks")
     }
+
+    func testCanSetDecryptionKey() {
+        let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+        let chan = PusherChannel(name: "private-encrypted-test-channel", connection: MockPusherConnection())
+        chan.decryptionKey = decryptionKey
+        XCTAssertEqual(chan.decryptionKey, decryptionKey)
+    }
 }
