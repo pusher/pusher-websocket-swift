@@ -50,6 +50,9 @@ let CLIENT_NAME = "pusher-websocket-swift"
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
     ) -> PusherChannel {
+
+        PusherDecryptor.encryptedChannelWarning(forChannelName: channelName)
+
         return self.connection.subscribe(
             channelName: channelName,
             auth: auth,
