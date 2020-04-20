@@ -1,4 +1,4 @@
-// swift-tools-version:4.2
+// swift-tools-version:5.1
 
 import PackageDescription
 
@@ -28,5 +28,5 @@ let package = Package(
             exclude: ["PusherSwiftWithEncryption-Only"]
         )
     ],
-    swiftLanguageVersions: [.v4_2]
+    swiftLanguageVersions: [.v5]
 )
