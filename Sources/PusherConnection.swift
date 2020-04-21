@@ -41,7 +41,7 @@ import Starscream
     }
 
     open lazy var reachability: Reachability? = {
-        let reachability = Reachability.init()
+        let reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] reachability in
             guard let self = self else {
                 print("Your Pusher instance has probably become deallocated. See https://github.com/pusher/pusher-websocket-swift/issues/109 for more information")
