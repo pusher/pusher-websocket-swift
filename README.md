@@ -626,7 +626,7 @@ Update your podfile to include `PusherSwiftWithEncryption` instead of `PusherSwi
 You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of PusherSwift.
 
 #### Swift Package Manager
-PusherSwiftWithEncryption is not yet compatible with the swift package manager.
+PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
 
 #### Limitations
 
