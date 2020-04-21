@@ -13,7 +13,7 @@ This is the [Pusher Channels](https://pusher.com/channels) websocket client, Pus
 For tutorials and more in-depth information about Pusher Channels, visit our [official docs](https://pusher.com/docs/channels).
 
 ## Supported platforms
-- Swift 4.2 and above (can be used with Swift 5)
+- Swift 5.0 and above
 - Xcode 11.0 and above
 - Can be used with Objective-C
 
