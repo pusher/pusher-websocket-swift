@@ -44,7 +44,7 @@ What else would you want? Head over to one of our example apps:
 - [Subscribing to channels](#subscribing)
   - [Public channels](#public-channels)
   - [Private channels](#private-channels)
-  - [Private encrypted channels [BETA]](#private-encrypted-channels)
+  - [Private encrypted channels [BETA]](#private-encrypted-channels-beta)
   - [Presence channels](#presence-channels)
 - [Binding to events](#binding-to-events)
   - [Per-channel](#per-channel-events)
