@@ -938,16 +938,18 @@ extension PusherConnection: PusherEventQueueDelegate {
     func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel) {
         let group = DispatchGroup()
         group.enter()
-        _ = requestPusherAuthFromAuthMethod(channel: channel) { pusherAuth, error in
-            if let pusherAuth = pusherAuth,
-                let decryptionKey = pusherAuth.sharedSecret,
-                error == nil
-            {
-                channel.decryptionKey = decryptionKey
-            }else{
-                channel.decryptionKey = nil
+        DispatchQueue.main.async {
+            _ = self.requestPusherAuthFromAuthMethod(channel: channel) { pusherAuth, error in
+                if let pusherAuth = pusherAuth,
+                    let decryptionKey = pusherAuth.sharedSecret,
+                    error == nil
+                {
+                    channel.decryptionKey = decryptionKey
+                }else{
+                    channel.decryptionKey = nil
+                }
+                group.leave()
             }
-            group.leave()
         }
         group.wait()
     }
