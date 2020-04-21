@@ -96,6 +96,8 @@ $ pod install
 
 Also you'll need to make sure that you've not got the version of PusherSwift locked to an old version in your `Podfile.lock` file.
 
+If you are looking to use encrypted channels, please read the [specific installation instructions](#cocoapods-1).
+
 ### Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
@@ -112,6 +114,8 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 ```ogdl
 github "pusher/pusher-websocket-swift"
 ```
+
+If you are looking to use encrypted channels, please read the [specific installation instructions](#carthage-1).
 
 ### Swift Package Manager
 
@@ -144,6 +148,8 @@ let package = Package(
     ]
 )
 ```
+
+Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
 
 ## Configuration
 
