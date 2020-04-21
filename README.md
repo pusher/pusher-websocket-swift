@@ -630,7 +630,7 @@ PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
 
 #### Limitations
 
-* Is not currently possible to use with tvOS .
+* Is not currently compatible with tvOS.
 * Is not safe for use in extensions.
 
 #### Swift
