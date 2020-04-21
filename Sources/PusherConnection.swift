@@ -935,9 +935,17 @@ extension PusherConnection: PusherEventQueueDelegate {
         }
     }
 
+    /**
+     Synchronously reloads the decryption key from the auth endpoint. This should be called from the event
+     queue's dispatch queue. This method should NOT be called from the main thread as it will cause deadlock.
+
+        - parameter eventQueue: The event queue that is requesting the reload
+        - parameter channel:  The PusherChannel for which the key is being reloaded
+    */
     func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel) {
         let group = DispatchGroup()
         group.enter()
+        // Schedule the loading of the key on the main thread
         DispatchQueue.main.async {
             _ = self.requestPusherAuthFromAuthMethod(channel: channel) { pusherAuth, error in
                 if let pusherAuth = pusherAuth,
@@ -948,9 +956,11 @@ extension PusherConnection: PusherEventQueueDelegate {
                 }else{
                     channel.decryptionKey = nil
                 }
+                // Once we've updated the key, release the event queue thread to continue processing events
                 group.leave()
             }
         }
+        // Pause the event queue thread until we have the response from the auth endpoint
         group.wait()
     }
 }
