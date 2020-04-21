@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.source_files  = ['Sources/*.swift', 'Sources/PusherSwiftWithEncryption-Only/*.swift']
 
   s.dependency 'ReachabilitySwift', '~> 5.0'
-  s.dependency 'Starscream', '~> 3.0.5'
+  s.dependency 'Starscream', '~> 3.1'
   s.dependency 'Sodium', '~> 0.8.0'
 
   s.ios.deployment_target = '8.0'
