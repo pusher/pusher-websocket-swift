@@ -64,6 +64,8 @@ What else would you want? Head over to one of our example apps:
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects and is our recommended method of installing PusherSwift and its dependencies.
 
+> If you are looking to use encrypted channels, please read the [specific installation instructions](#cocoapods-1).
+
 If you don't already have the Cocoapods gem installed, run the following command:
 
 ```bash
@@ -96,11 +98,11 @@ $ pod install
 
 Also you'll need to make sure that you've not got the version of PusherSwift locked to an old version in your `Podfile.lock` file.
 
-If you are looking to use encrypted channels, please read the [specific installation instructions](#cocoapods-1).
-
 ### Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
+
+> If you are looking to use encrypted channels, please read the [specific installation instructions](#carthage-1).
 
 You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
 
@@ -115,9 +117,9 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
-If you are looking to use encrypted channels, please read the [specific installation instructions](#carthage-1).
-
 ### Swift Package Manager
+
+> Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
 
 To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
 
@@ -148,8 +150,6 @@ let package = Package(
     ]
 )
 ```
-
-Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
 
 ## Configuration
 
