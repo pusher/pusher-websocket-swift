@@ -89,7 +89,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
     
     func testIncorrectSharedSecretShouldNotifyFailedToDecrypt() {
         // connect with an incorrect shared secret
-        let channel = subscribeToChannel(authData: incorrectSharedSecretAuthData)
+        let _ = subscribeToChannel(authData: incorrectSharedSecretAuthData)
         
         // prepare a message
         let dataPayload = """
@@ -158,7 +158,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
     
     func testTwoEventsReceivedBothFailDecryption() {
         // connect with an incorrect shared secret
-        let channel = subscribeToChannel(authData: incorrectSharedSecretAuthData)
+        let _ = subscribeToChannel(authData: incorrectSharedSecretAuthData)
         
         // prepare a message
         let dataPayload = """

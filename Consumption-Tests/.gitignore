@@ -12,3 +12,7 @@ Carthage
 Podfile
 Podfile.lock
 Pods
+
+# We do not want to version anything SPM related to emulate a fresh SPM checkout
+Package.resolved
+

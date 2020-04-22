@@ -1,6 +1,6 @@
 import XCTest
 
-private func executeAndAssignResult<T>(_ expression: @autoclosure () throws -> T?, to: inout T?) rethrows {
+private func executeAndAssignResult<T>(_ expression: () throws -> T?, to: inout T?) rethrows {
     to = try expression()
 }
 
