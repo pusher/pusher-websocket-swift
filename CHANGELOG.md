@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/7.2.0...HEAD)
 
+### Changed
+
+- The `encrypted` parameter for `PusherClientOptions` has been renamed to `useTLS`. It's behavior and default value (`true`) are unchanged.
+
 ## [7.2.0](https://github.com/pusher/pusher-websocket-swift/compare/7.1.0...7.2.0) - 2019-10-18
 
 ### Added
