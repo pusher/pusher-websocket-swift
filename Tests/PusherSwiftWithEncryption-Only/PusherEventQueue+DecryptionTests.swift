@@ -10,20 +10,29 @@ import XCTest
 class PusherEventQueueDecryptionTests: XCTestCase {
 
     var eventQueue: PusherEventQueue!
-    var keyProvider: PusherKeyProvider!
+    var channels: PusherChannels!
     var eventFactory: PusherEventFactory!
     var eventQueueDelegate: InlineMockEventQueueDelegate!
+    var mockConnection: PusherConnection!
 
     override func setUp() {
         super.setUp()
-        keyProvider = PusherConcreteKeyProvider()
+        channels = PusherChannels()
         eventFactory = PusherConcreteEventFactory()
-        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, keyProvider: keyProvider)
+        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, channels: channels)
         eventQueueDelegate = InlineMockEventQueueDelegate()
         eventQueue.delegate = eventQueueDelegate
+        mockConnection = MockPusherConnection()
+    }
+
+    func createAndSubscribe(_ channelName: String) -> PusherChannel {
+        let channel = channels.add(name: channelName, connection: mockConnection)
+        channel.subscribed = true
+        return channel
     }
 
     func testEncryptedChannelShouldCallDidReceiveEventWithDecryptedMessage() {
+        let channel = createAndSubscribe("private-encrypted-channel")
 
         let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
 
@@ -49,7 +58,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
         """.removing(.whitespacesAndNewlines)
 
-        keyProvider.setDecryptionKey(decryptionKey, forChannelName: "private-encrypted-channel")
+        channel.decryptionKey = decryptionKey
 
         let ex = expectation(description: "should call didReceiveEvent")
 
@@ -64,7 +73,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     }
 
     func testEncryptedChannelShouldCallDidFailToDecryptEventWithNonEncryptedEvent() {
-
+        let channel = createAndSubscribe("private-encrypted-channel")
         let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
 
         let dataPayload = """
@@ -81,7 +90,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        keyProvider.setDecryptionKey(decryptionKey, forChannelName: "private-encrypted-channel")
+        channel.decryptionKey = decryptionKey
 
         let ex = expectation(description: "should call didFailToDecryptEvent")
 
@@ -97,6 +106,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     }
 
     func testShouldReloadDecryptionKeyAndDecryptSuccessfully() {
+        let channel = createAndSubscribe("private-encrypted-channel")
 
         let wrongDecryptionKey = "00000000000000000000000000000000000000000000"
         let correctDecryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
@@ -123,14 +133,14 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
         """.removing(.whitespacesAndNewlines)
 
-        keyProvider.setDecryptionKey(wrongDecryptionKey, forChannelName: "private-encrypted-channel")
+        channel.decryptionKey = wrongDecryptionKey
 
         let reloadEx = expectation(description: "should attempt to reload key")
         let receivedEv = expectation(description: "should call didReceiveEvent")
 
-        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelName) in
-            XCTAssertEqual("private-encrypted-channel", channelName)
-            self.keyProvider.setDecryptionKey(correctDecryptionKey, forChannelName: channelName)
+        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelToReload) in
+            XCTAssertEqual(channel, channelToReload)
+            channelToReload.decryptionKey = correctDecryptionKey
             reloadEx.fulfill()
         }
 
@@ -145,6 +155,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     }
 
     func testShouldReloadDecryptionKeyOnceAndFailIfSecondKeyIsBad() {
+        let channel = createAndSubscribe("private-encrypted-channel")
+
         let wrongDecryptionKey0 = "00000000000000000000000000000000000000000000"
         let wrongDecryptionKey1 = "11111111111111111111111111111111111111111111"
 
@@ -163,14 +175,14 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        keyProvider.setDecryptionKey(wrongDecryptionKey0, forChannelName: "private-encrypted-channel")
+        channel.decryptionKey = wrongDecryptionKey0
 
         let reloadEx = expectation(description: "should attempt to reload key")
         let failedEv = expectation(description: "should fail to decrypt message")
 
-        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelName) in
-            XCTAssertEqual("private-encrypted-channel", channelName)
-            self.keyProvider.setDecryptionKey(wrongDecryptionKey1, forChannelName: channelName)
+        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelToReload) in
+            XCTAssertEqual(channel, channelToReload)
+            channelToReload.decryptionKey = wrongDecryptionKey1
             reloadEx.fulfill()
         }
 
@@ -186,6 +198,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     }
 
     func testShouldMoveOnAfterFailingToDecryptAMessage() {
+        let channel = createAndSubscribe("private-encrypted-channel")
+
         let wrongDecryptionKey = "00000000000000000000000000000000000000000000"
 
         // Decryption key for "decryptableData" but not "undecryptableData"
@@ -225,15 +239,15 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
         """.removing(.whitespacesAndNewlines)
 
-        keyProvider.setDecryptionKey(wrongDecryptionKey, forChannelName: "private-encrypted-channel")
+        channel.decryptionKey = wrongDecryptionKey
 
         let reloadEx = expectation(description: "should attempt to reload key")
         let failedEx = expectation(description: "should fail to decrypt message")
         let successEx = expectation(description: "should succeed in decrypting message")
 
-        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelName) in
-            XCTAssertEqual("private-encrypted-channel", channelName)
-            self.keyProvider.setDecryptionKey(correctDecryptionKey, forChannelName: channelName)
+        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelToReload) in
+            XCTAssertEqual(channel, channelToReload)
+            channelToReload.decryptionKey = correctDecryptionKey
             reloadEx.fulfill()
         }
 
@@ -257,8 +271,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     }
 
     func testFailingToDecryptOnOneChannelShouldNotAffectAnother() {
-        let decryptableChannel = "private-encrypted-decryptable"
-        let undecryptableChannel = "private-encrypted-undecryptable"
+        let decryptableChannel = createAndSubscribe("private-encrypted-decryptable")
+        let undecryptableChannel = createAndSubscribe("private-encrypted-undecryptable")
 
         let wrongDecryptionKey = "00000000000000000000000000000000000000000000"
 
@@ -289,8 +303,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             """.toJsonDict()
         }
 
-        let undecryptableEvent = generateEvent(undecryptableChannel, undecryptableData)
-        let decryptableEvent = generateEvent(decryptableChannel, decryptableData)
+        let undecryptableEvent = generateEvent(undecryptableChannel.name, undecryptableData)
+        let decryptableEvent = generateEvent(decryptableChannel.name, decryptableData)
 
         let expectedDecryptedPayload = """
         {
@@ -299,29 +313,29 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         }
         """.removing(.whitespacesAndNewlines)
 
-        keyProvider.setDecryptionKey(correctDecryptionKey, forChannelName: decryptableChannel)
-        keyProvider.setDecryptionKey(wrongDecryptionKey, forChannelName: undecryptableChannel)
+        decryptableChannel.decryptionKey = correctDecryptionKey
+        undecryptableChannel.decryptionKey = wrongDecryptionKey
 
         let reloadEx = expectation(description: "should attempt to reload key")
         let failedEx = expectation(description: "should fail to decrypt message")
         let successEx = expectation(description: "should succeed in decrypting message")
 
-        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelName) in
-            XCTAssertEqual(undecryptableChannel, channelName)
-            self.keyProvider.setDecryptionKey(wrongDecryptionKey, forChannelName: undecryptableChannel)
+        eventQueueDelegate.reloadDecryptionKeySync = { (eventQueue, channelToReload) in
+            XCTAssertEqual(undecryptableChannel, channelToReload)
+            channelToReload.decryptionKey = wrongDecryptionKey
             reloadEx.fulfill()
         }
 
         eventQueueDelegate.didFailToDecryptEvent = { (event, payload, channelName) in
             let equal = NSDictionary(dictionary: undecryptableEvent).isEqual(to: payload)
             XCTAssertTrue(equal)
-            XCTAssertEqual(undecryptableChannel, channelName)
+            XCTAssertEqual(undecryptableChannel.name, channelName)
             failedEx.fulfill()
         }
 
         eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in
             XCTAssertEqual(expectedDecryptedPayload, event.data)
-            XCTAssertEqual(decryptableChannel, channelName)
+            XCTAssertEqual(decryptableChannel.name, channelName)
             successEx.fulfill()
         }
 

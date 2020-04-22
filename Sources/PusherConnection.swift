@@ -27,7 +27,6 @@ import Starscream
 
     var eventQueue: PusherEventQueue
     var eventFactory: PusherEventFactory
-    var keyProvider: PusherKeyProvider
 
     var socketConnected: Bool = false {
         didSet {
@@ -111,8 +110,7 @@ import Starscream
         self.activityTimeoutInterval = options.activityTimeout ?? 60
 
         self.eventFactory = PusherConcreteEventFactory()
-        self.keyProvider = PusherConcreteKeyProvider()
-        self.eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, keyProvider: keyProvider)
+        self.eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, channels: channels)
 
         super.init()
 
@@ -213,7 +211,6 @@ import Starscream
             )
 
             self.channels.remove(name: channelName)
-            self.keyProvider.clearDecryptionKey(forChannelName: channelName)
         }
     }
     
@@ -864,7 +861,7 @@ import Starscream
     */
     fileprivate func handleAuthInfo(pusherAuth: PusherAuth, channel: PusherChannel) {
         if let decryptionKey = pusherAuth.sharedSecret {
-            self.keyProvider.setDecryptionKey(decryptionKey, forChannelName: channel.name)
+            channel.decryptionKey = decryptionKey
         }
 
         if let channelData = pusherAuth.channelData {
@@ -938,23 +935,33 @@ extension PusherConnection: PusherEventQueueDelegate {
         }
     }
 
-    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannelName channelName: String) {
-       let group = DispatchGroup()
-       if let channel = self.channels.find(name: channelName){
-           group.enter()
-           _ = requestPusherAuthFromAuthMethod(channel: channel) { [weak self] pusherAuth, error in
-               if let pusherAuth = pusherAuth,
-                   let decryptionKey = pusherAuth.sharedSecret,
-                   error == nil
-               {
-                   self?.keyProvider.setDecryptionKey(decryptionKey, forChannelName: channel.name)
-               }else{
-                   self?.keyProvider.clearDecryptionKey(forChannelName: channel.name)
-               }
-               group.leave()
-           }
-       }
-       group.wait()
+    /**
+     Synchronously reloads the decryption key from the auth endpoint. This should be called from the event
+     queue's dispatch queue. This method should NOT be called from the main thread as it will cause deadlock.
+
+        - parameter eventQueue: The event queue that is requesting the reload
+        - parameter channel:  The PusherChannel for which the key is being reloaded
+    */
+    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel) {
+        let group = DispatchGroup()
+        group.enter()
+        // Schedule the loading of the key on the main thread
+        DispatchQueue.main.async {
+            _ = self.requestPusherAuthFromAuthMethod(channel: channel) { pusherAuth, error in
+                if let pusherAuth = pusherAuth,
+                    let decryptionKey = pusherAuth.sharedSecret,
+                    error == nil
+                {
+                    channel.decryptionKey = decryptionKey
+                }else{
+                    channel.decryptionKey = nil
+                }
+                // Once we've updated the key, release the event queue thread to continue processing events
+                group.leave()
+            }
+        }
+        // Pause the event queue thread until we have the response from the auth endpoint
+        group.wait()
     }
 }
 
