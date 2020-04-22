@@ -49,7 +49,7 @@ class ClientInitializationTests: XCTestCase {
 
     func testProvidingEcryptedOptionAsFalse() {
         let options = PusherClientOptions(
-            encrypted: false
+            useTLS: false
         )
         pusher = Pusher(key: key, options: options)
         XCTAssertEqual(pusher.connection.url, "ws://ws.pusherapp.com:80/app/testKey123?client=pusher-websocket-swift&version=\(VERSION)&protocol=7", "the connection should be set correctly")

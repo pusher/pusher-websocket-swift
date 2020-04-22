@@ -174,7 +174,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
-    if options.encrypted {
+    if options.useTLS {
         url = "wss://\(options.host):\(options.port)/app/\(key)"
     } else {
         url = "ws://\(options.host):\(options.port)/app/\(key)"
