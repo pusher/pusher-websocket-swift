@@ -148,7 +148,7 @@ let package = Package(
 There are a number of configuration parameters which can be set for the Pusher client. For Swift usage they are:
 
 - `authMethod (AuthMethod)` - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)
-- `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
+- `useTLS (Bool)` - whether or not you'd like to use TLS encrypted transport or not, default is `true`
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd like to connect to
@@ -232,7 +232,7 @@ PusherClientOptions *options = [[PusherClientOptions alloc]
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES
+                                useTLS:YES
                                 activityTimeout:nil];
 ```
 
@@ -258,7 +258,7 @@ PusherClientOptions *options = [[PusherClientOptions alloc]
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES
+                                useTLS:YES
                                 activityTimeout:nil];
 pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
 ```
