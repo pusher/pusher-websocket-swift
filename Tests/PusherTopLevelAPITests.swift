@@ -161,19 +161,29 @@ class PusherTopLevelApiTests: XCTestCase {
     }
 
     func testCallingSubscribeAfterSuccessfulConnectionSendsSubscribeEventOverSocket() {
-        pusher.connect()
-        let _ = pusher.subscribe("test-channel")
+        let delegate = ConnectionStateDelegate()
+        pusher.delegate = delegate
 
+        let connected = expectation(description: "should connect")
         let subscribed = expectation(description: "should subscribe")
-        socket.stubber.registerCallback { calls in
-            if let name = calls.last?.name, name == "writeString" {
-                let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
-                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String: Any]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
-                XCTAssertTrue(parsedEqualsExpected)
-                subscribed.fulfill()
+
+        delegate.registerCallback(connectionState: ConnectionState.connected){
+            connected.fulfill()
+            let _ = self.pusher.subscribe("test-channel")
+
+            self.socket.stubber.registerCallback { calls in
+                if let name = calls.last?.name, name == "writeString" {
+                    let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
+                    let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String: Any]
+                    let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+                    XCTAssertTrue(parsedEqualsExpected)
+                    subscribed.fulfill()
+                }
             }
         }
+
+        pusher.connect()
+
         waitForExpectations(timeout: 0.5)
     }
 
@@ -205,7 +215,6 @@ class PusherTopLevelApiTests: XCTestCase {
     func testSubscriptionSucceededEventSentToChannelCallbackViaDataCallback() {
         let ex = expectation(description: "should call channel callback")
         let callback = { (data: Any?) -> Void in
-            self.socket.appendToCallbackCheckString("channelCallbackCalled")
             ex.fulfill()
         }
         let channel = pusher.subscribe("test-channel")
