@@ -713,7 +713,10 @@ import Starscream
                 return false
             }
         case .authorizer(authorizer: let authorizer):
-            authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name){ pusherAuth in
+            authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { pusherAuth in
+                if pusherAuth == nil {
+                    print("Auth info passed to authorizer completionHandler was nil")
+                }
                 completionHandler(pusherAuth, nil)
             }
             return true
