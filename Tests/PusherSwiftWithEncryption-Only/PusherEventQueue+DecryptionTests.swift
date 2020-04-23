@@ -1,11 +1,5 @@
+@testable import PusherSwiftWithEncryption
 import XCTest
-
-#if WITH_ENCRYPTION
-    @testable import PusherSwiftWithEncryption
-#else
-    @testable import PusherSwift
-#endif
-
 
 class PusherEventQueueDecryptionTests: XCTestCase {
 

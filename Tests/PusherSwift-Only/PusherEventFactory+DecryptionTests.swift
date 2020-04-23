@@ -1,6 +1,10 @@
 @testable import PusherSwift
 import XCTest
 
+/**
+    These tests check that the PusherDecryptor in PusherSwift leaves events untouched and
+    doesn't attempt to decrypt them. Only PusherSwiftWithEncryption should decrypt events.
+*/
 class PusherEventFactoryDecryptionTests: XCTestCase {
 
     var eventFactory: PusherConcreteEventFactory!
