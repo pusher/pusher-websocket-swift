@@ -118,15 +118,37 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
     }
     
-    func test_init_encryptedChannelAndUserEventAndUnencryptedPayloadWithNoDecryptionKey_throwsInvalidFormat() {
+    func test_init_encryptedChannelAndUserEventAndEncryptedPayloadWithNoDecryptionKey_throwsInvalidDecryptionKey() {
         
+        let dataPayload = """
+        {
+            "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
+            "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
+        }
+        """.removing(.whitespacesAndNewlines)
+        
+        let jsonDict = """
+        {
+            "event": "user-event",
+            "channel": "private-encrypted-channel",
+            "data": \(dataPayload.escaped)
+        }
+        """.toJsonDict()
+
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
+            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
+        }
+    }
+
+    func test_init_encryptedChannelAndUserEventAndUnencryptedPayloadWithNoDecryptionKey_throwsInvalidDecryptionKey() {
+
         let dataPayload = """
         {
             "test": "test string",
             "and": "another"
         }
         """.removing(.whitespacesAndNewlines)
-        
+
         let jsonDict = """
         {
             "event": "user-event",
