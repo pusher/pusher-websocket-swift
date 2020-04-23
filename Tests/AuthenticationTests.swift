@@ -129,6 +129,7 @@ class AuthenticationTests: XCTestCase {
 
         let _ = pusher.bind({ (data: Any?) -> Void in
             if let data = data as? [String: AnyObject], let eventName = data["event"] as? String, eventName == "pusher:subscription_error" {
+                XCTAssertEqual("private-test-channel", data["channel"] as? String)
                 XCTAssertTrue(Thread.isMainThread)
                 ex.fulfill()
             }
