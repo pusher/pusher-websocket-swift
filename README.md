@@ -623,7 +623,7 @@ Like with private channels, you must provide an authentication endpoint. That en
 ### Installation
 
 #### CocoaPods
-Update your podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
+Importing using CocoaPods will require a separate pod which has not yet been published.
 
 #### Carthage
 You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of PusherSwift. You will also need to import the `Sodium` framework into your project.
