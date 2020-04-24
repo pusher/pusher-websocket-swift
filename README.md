@@ -205,7 +205,7 @@ public protocol Authorizer {
 where `PusherAuth` is defined as:
 
 ```swift
- public class PusherAuth: NSObject {
+public class PusherAuth: NSObject {
     public let auth: String
     public let channelData: String?
     public let sharedSecret: String?
