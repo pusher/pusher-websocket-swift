@@ -6,9 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/7.2.0...HEAD)
 
+### Added
+
+- Added support for [end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels). There is a new target: `PusherSwiftWithEncryption` and a new dependency for that target `Sodium`. The original `PusherSwift` target does not require `Sodium` and has all the same features as `PusherSwiftWithEncryption` except the ability to decrypt events. You can find details about how to use `PusherSwiftWithEncryption` in the [README](https://github.com/pusher/pusher-websocket-swift#private-encrypted-channels-beta). As part of this feature, there is a new function in the `PusherDelegate`: `failedToDecryptEvent`, and channel names prefixed with `private-encrypted-` are now interpreted as encrypted chanels in both targets.
+
 ### Changed
 
 - The `encrypted` parameter for `PusherClientOptions` has been renamed to `useTLS`. Its behavior and default value (`true`) are unchanged.
+- Updated to Swift 5.0 and updated dependencies ([@JonathanDowning](https://github.com/JonathanDowning)).
+
+### Removed
+- CryptoSwift is no longer a dependency.
 
 ## [7.2.0](https://github.com/pusher/pusher-websocket-swift/compare/7.1.0...7.2.0) - 2019-10-18
 
