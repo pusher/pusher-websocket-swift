@@ -27,7 +27,7 @@ public enum AuthMethod {
     public let autoReconnect: Bool
     public let host: String
     public let port: Int
-    public let encrypted: Bool
+    public let useTLS: Bool
     public let activityTimeout: TimeInterval?
 
     @nonobjc public init(
@@ -36,15 +36,15 @@ public enum AuthMethod {
         autoReconnect: Bool = true,
         host: PusherHost = .host("ws.pusherapp.com"),
         port: Int? = nil,
-        encrypted: Bool = true,
+        useTLS: Bool = true,
         activityTimeout: TimeInterval? = nil
     ) {
         self.authMethod = authMethod
         self.attemptToReturnJSONObject = attemptToReturnJSONObject
         self.autoReconnect = autoReconnect
         self.host = host.stringValue
-        self.port = port ?? (encrypted ? 443 : 80)
-        self.encrypted = encrypted
+        self.port = port ?? (useTLS ? 443 : 80)
+        self.useTLS = useTLS
         self.activityTimeout = activityTimeout
     }
 }
