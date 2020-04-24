@@ -170,6 +170,14 @@ open class PusherChannel: NSObject {
         - parameter data:      The data to be sent as the message payload
     */
     open func trigger(eventName: String, data: Any) {
+        if PusherEncryptionHelpers.isEncryptedChannel(channelName: self.name) {
+            let error = """
+            ERROR: Client events are not supported on encrypted channels: '\(self.name)'. Client event '\(eventName)' will not be sent.
+            """
+            print(error)
+            return
+        }
+
         if subscribed {
             connection?.sendEvent(event: eventName, data: data, channel: self)
         } else {
