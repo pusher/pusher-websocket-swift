@@ -65,9 +65,7 @@ class PusherDecryptor {
         return SecretBox.Key(decodedDecryptionKey)
     }
 
-    static func encryptedChannelWarning(forChannelName channelName: String) {
-        // No warning necessary because encrypted channels are supported in this version
+    static func isDecryptionAvailable() -> Bool {
+        return true
     }
-
-    
 }
