@@ -616,14 +616,9 @@ Subscribing to private channels involves the client being authenticated. See the
 
 ### Private encrypted channels [BETA]
 
-Similar to Private channels, you can also subscribe to a
-[private encrypted channel](https://pusher.com/docs/channels/using_channels/encrypted-channels).
-This library now fully supports end-to-end encryption. This means that only you and your
-connected clients will be able to read your messages. Pusher cannot decrypt them.
+Similar to Private channels, you can also subscribe to a [private encrypted channel](https://pusher.com/docs/channels/using_channels/encrypted-channels). This library now fully supports end-to-end encryption. This means that only you and your connected clients will be able to read your messages. Pusher cannot decrypt them.
 
-Like the private channel, you must provide your own authentication endpoint,
-with your own encryption master key. There is a
-[demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption).
+Like with private channels, you must provide an authentication endpoint. That endpoint must be using a [server client that supports end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels#server). There is a [demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption). The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed. Because of the requirement to reload the shared secret on demand, you can only use the following [auth method](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
 
 ### Installation
 
@@ -652,6 +647,8 @@ let privateEncryptedChannel = pusher.subscribe(channelName: "private-encrypted-m
 ```objc
 PusherChannel *privateEncryptedChannel = [pusher subscribeWithChannelName:@"private-encrypted-my-channel"];
 ```
+
+You must use one of the following [auth methods](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`
 
 There is also an optional callback in the connection delegate when you can listen for
 any failed decryption events:
