@@ -14,7 +14,6 @@
 		33831CC51A9CFCDB00B124F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CC11A9CFCDB00B124F1 /* ViewController.swift */; };
 		33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; };
 		33E94E7620766DBE0005399D /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A920569C3B000D4D08 /* Starscream.framework */; };
-		7327825A242BED6F00906123 /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73278259242BED6F00906123 /* Sodium.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,7 +61,6 @@
 				33E94E7620766DBE0005399D /* Starscream.framework in Frameworks */,
 				335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */,
 				33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */,
-				7327825A242BED6F00906123 /* Sodium.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +202,6 @@
 			inputPaths = (
 				"$(SRCROOT)/../Carthage/Build/iOS/Reachability.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Starscream.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/Sodium.framework",
 			);
 			name = "Copy Carthage Frameworks";
 			outputPaths = (
