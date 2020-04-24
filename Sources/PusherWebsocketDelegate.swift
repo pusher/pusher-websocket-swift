@@ -26,11 +26,7 @@ extension PusherConnection: WebSocketDelegate {
             }
             self.handleError(error: error)
         } else {
-            guard let event = PusherEvent(jsonObject: payload) else {
-                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming event \(text)")
-                return
-            }
-            self.handleEvent(event: event)
+            self.eventQueue.enqueue(json: payload)
         }
     }
 
@@ -78,7 +74,7 @@ extension PusherConnection: WebSocketDelegate {
             return
         }
 
-        if let reachability = self.reachability, reachability.connection == .none {
+        if let reachability = self.reachability, reachability.connection == .unavailable {
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable so reconnect likely to fail")
         }
 

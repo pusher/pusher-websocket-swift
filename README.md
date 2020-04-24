@@ -7,19 +7,20 @@
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
+[![codecov](https://codecov.io/gh/pusher/pusher-websocket-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/pusher/pusher-websocket-swift)
 
 This is the [Pusher Channels](https://pusher.com/channels) websocket client, PusherSwift, which supports iOS, macOS (OS X) and tvOS. It works with Swift and Objective-C.
 
 For tutorials and more in-depth information about Pusher Channels, visit our [official docs](https://pusher.com/docs/channels).
 
 ## Supported platforms
-- Swift 4.2 and above (can be used with Swift 5)
-- Xcode 10.0 and above
+- Swift 5.0 and above
+- Xcode 11.0 and above
 - Can be used with Objective-C
 
 ### Deployment targets
 - iOS 8.0 and above
-- macOS (OS X) 10.10 and above
+- macOS (OS X) 10.11 and above
 - tvOS 9.0 and above
 - Not currently compatible with watchOS
 
@@ -43,6 +44,7 @@ What else would you want? Head over to one of our example apps:
 - [Subscribing to channels](#subscribing)
   - [Public channels](#public-channels)
   - [Private channels](#private-channels)
+  - [Private encrypted channels [BETA]](#private-encrypted-channels-beta)
   - [Presence channels](#presence-channels)
 - [Binding to events](#binding-to-events)
   - [Per-channel](#per-channel-events)
@@ -61,6 +63,8 @@ What else would you want? Head over to one of our example apps:
 ### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects and is our recommended method of installing PusherSwift and its dependencies.
+
+> If you are looking to use encrypted channels, please read the [specific installation instructions](#cocoapods-1).
 
 If you don't already have the Cocoapods gem installed, run the following command:
 
@@ -98,6 +102,8 @@ Also you'll need to make sure that you've not got the version of PusherSwift loc
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
 
+> If you are looking to use encrypted channels, please read the [specific installation instructions](#carthage-1).
+
 You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
 
 ```bash
@@ -112,6 +118,8 @@ github "pusher/pusher-websocket-swift"
 ```
 
 ### Swift Package Manager
+
+> Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
 
 To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
 
@@ -148,7 +156,7 @@ let package = Package(
 There are a number of configuration parameters which can be set for the Pusher client. For Swift usage they are:
 
 - `authMethod (AuthMethod)` - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)
-- `encrypted (Bool)` - whether or not you'd like to use encypted transport or not, default is `true`
+- `useTLS (Bool)` - whether or not you'd like to use TLS encrypted transport or not, default is `true`
 - `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd like to connect to
@@ -200,10 +208,12 @@ where `PusherAuth` is defined as:
 public class PusherAuth: NSObject {
     public let auth: String
     public let channelData: String?
+    public let sharedSecret: String?
 
-    public init(auth: String, channelData: String? = nil) {
+    public init(auth: String, channelData: String? = nil, sharedSecret: String? = nil) {
         self.auth = auth
         self.channelData = channelData
+        self.sharedSecret = sharedSecret
     }
 }
 ```
@@ -232,7 +242,7 @@ PusherClientOptions *options = [[PusherClientOptions alloc]
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES
+                                useTLS:YES
                                 activityTimeout:nil];
 ```
 
@@ -258,7 +268,7 @@ PusherClientOptions *options = [[PusherClientOptions alloc]
                                 autoReconnect:YES
                                 ocHost:host
                                 port:nil
-                                encrypted:YES
+                                useTLS:YES
                                 activityTimeout:nil];
 pusher = [[Pusher alloc] initWithAppKey:@"YOUR_APP_KEY" options:options];
 ```
@@ -409,6 +419,7 @@ There is a `PusherDelegate` that you can use to get notified of connection-relat
 @objc optional func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)
 @objc optional func debugLog(message: String)
 @objc(receivedError:) optional func receivedError(error: PusherError)
+@objc optional func failedToDecryptEvent(eventName: String, channelName: String, data: String?)
 ```
 
 The names of the functions largely give away what their purpose is but just for completeness:
@@ -418,6 +429,7 @@ The names of the functions largely give away what their purpose is but just for 
 - `failedToSubscribeToChannel` - use this if you want to be informed of a failed subscription attempt, which you could use, for example, to then attempt another subscription or make a call to a service you use to track errors
 - `debugLog` - use this if you want to log Pusher-related events, e.g. the underlying websocket receiving a message
 - `receivedError` - use this if you want to be informed of errors received from Pusher Channels e.g. `Application is over connection quota`. You can find some of the possible errors listed [here](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes).
+- `failedToDecryptEvent` - only used with private encrypted channels - use this if you want to be notified if any messages fail to decrypt.
 
 Setting up a delegate looks like this:
 
@@ -478,6 +490,11 @@ class DummyDelegate: PusherDelegate {
             // ...
         }
     }
+
+    func failedToDecryptEvent(eventName: String, channelName: String, data: String?) {
+      // ...
+    }
+
 }
 ```
 
@@ -491,6 +508,7 @@ class DummyDelegate: PusherDelegate {
 - (void)subscribedToChannelWithName:(NSString *)name
 - (void)failedToSubscribeToChannelWithName:(NSString *)name response:(NSURLResponse *)response data:(NSString *)data error:(NSError *)error
 - (void)receivedError:(PusherError *)error
+- (void)failedToDecryptEventWithEventName:(NSString *)eventName channelName:(NSString *)channelName data:(NSString *)data
 
 @end
 
@@ -516,6 +534,10 @@ class DummyDelegate: PusherDelegate {
     NSNumber *code = error.codeOC;
     NSString *message = error.message;
     // ...
+}
+
+- (void)failedToDecryptEventWithEventName:(NSString *)eventName channelName:(NSString *)channelName data:(NSString *)data {
+  // ...
 }
 
 @end
@@ -591,6 +613,50 @@ PusherChannel *myPrivateChannel = [pusher subscribeWithChannelName:@"private-my-
 ```
 
 Subscribing to private channels involves the client being authenticated. See the [Configuration](#configuration) section for the authenticated channel example for more information.
+
+### Private encrypted channels [BETA]
+
+Similar to Private channels, you can also subscribe to a [private encrypted channel](https://pusher.com/docs/channels/using_channels/encrypted-channels). This library now fully supports end-to-end encryption. This means that only you and your connected clients will be able to read your messages. Pusher cannot decrypt them.
+
+Like with private channels, you must provide an authentication endpoint. That endpoint must be using a [server client that supports end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels#server). There is a [demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption). The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed. Because of the requirement to reload the shared secret on demand, you can only use the following [auth method](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
+
+### Installation
+
+#### CocoaPods
+Update your podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
+
+#### Carthage
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of PusherSwift. You will also need to import the `Sodium` framework into your project.
+
+#### Swift Package Manager
+PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
+
+#### Limitations
+
+* Is not currently compatible with tvOS.
+* Is not safe for use in extensions.
+* Client events are not supported on encrypted channels
+
+#### Swift
+
+```swift
+let privateEncryptedChannel = pusher.subscribe(channelName: "private-encrypted-my-channel")
+```
+
+#### Objective-C
+
+```objc
+PusherChannel *privateEncryptedChannel = [pusher subscribeWithChannelName:@"private-encrypted-my-channel"];
+```
+
+You must use one of the following [auth methods](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`
+
+There is also an optional callback in the connection delegate when you can listen for
+any failed decryption events:
+
+```swift
+optional func failedToDecryptEvent(eventName: String, channelName: String, data: String?)
+```
 
 ### Presence channels
 
@@ -1083,9 +1149,9 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 
 It uses code from the following repositories:
 
-- [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift)
 - [Reachability.swift](https://github.com/ashleymills/Reachability.swift)
 - [Starscream](https://github.com/daltoniam/Starscream)
+- [Sodium](https://github.com/jedisct1/swift-sodium)
 
 The individual licenses for these libraries are included in the corresponding Swift files.
 

@@ -50,6 +50,30 @@ let CLIENT_NAME = "pusher-websocket-swift"
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
     ) -> PusherChannel {
+
+        let isEncryptedChannel = PusherEncryptionHelpers.isEncryptedChannel(channelName: channelName)
+
+        if isEncryptedChannel && !PusherDecryptor.isDecryptionAvailable(){
+            let error = """
+
+            WARNING: You are subscribing to an encrypted channel: '\(channelName)' but this version of PusherSwift does not \
+            support end-to-end encryption. Events will not be decrypted. You must import 'PusherSwiftWithEncryption' in \
+            order for events to be decrypted. See https://github.com/pusher/pusher-websocket-swift for more information
+
+            """
+            print(error)
+        }
+
+        if isEncryptedChannel && auth != nil {
+            let error = """
+
+            WARNING: Passing an auth value to 'subscribe' is not supported for encrypted channels. Event decryption will \
+            fail. You must use one of the following auth methods: 'endpoint', 'authRequestBuilder', 'authorizer'
+
+            """
+            print(error)
+        }
+
         return self.connection.subscribe(
             channelName: channelName,
             auth: auth,
@@ -171,7 +195,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
 
-    if options.encrypted {
+    if options.useTLS {
         url = "wss://\(options.host):\(options.port)/app/\(key)"
     } else {
         url = "ws://\(options.host):\(options.port)/app/\(key)"

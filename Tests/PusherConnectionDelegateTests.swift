@@ -1,5 +1,10 @@
-import PusherSwift
 import XCTest
+
+#if WITH_ENCRYPTION
+    @testable import PusherSwiftWithEncryption
+#else
+    @testable import PusherSwift
+#endif
 
 class PusherConnectionDelegateTests: XCTestCase {
     open class DummyDelegate: PusherDelegate {
@@ -62,29 +67,43 @@ class PusherConnectionDelegateTests: XCTestCase {
     }
 
     func testConnectionStateChangeDelegateFunctionGetsCalledTwiceGoingFromDisconnectedToConnectingToConnected() {
+        let ex = expectation(description: "there should be 2 calls to changedConnectionState")
         XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)
         pusher.connect()
-        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.connected)
-        XCTAssertEqual(dummyDelegate.stubber.calls.first?.name, "connectionChange")
-        XCTAssertEqual(dummyDelegate.stubber.calls.first?.args?.first as? ConnectionState, ConnectionState.disconnected)
-        XCTAssertEqual(dummyDelegate.stubber.calls.first?.args?.last as? ConnectionState, ConnectionState.connecting)
-        XCTAssertEqual(dummyDelegate.stubber.calls.last?.name, "connectionChange")
-        XCTAssertEqual(dummyDelegate.stubber.calls.last?.args?.first as? ConnectionState, ConnectionState.connecting)
-        XCTAssertEqual(dummyDelegate.stubber.calls.last?.args?.last as? ConnectionState, ConnectionState.connected)
+        dummyDelegate.stubber.registerCallback { calls in
+            if calls.count == 2 {
+                XCTAssertEqual(calls.first?.name, "connectionChange")
+                XCTAssertEqual(calls.first?.args?.first as? ConnectionState, ConnectionState.disconnected)
+                XCTAssertEqual(calls.first?.args?.last as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls.last?.name, "connectionChange")
+                XCTAssertEqual(calls.last?.args?.first as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls.last?.args?.last as? ConnectionState, ConnectionState.connected)
+                ex.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 0.5)
     }
 
     func testConnectionStateChangeDelegateFunctionGetsCalledFourTimesGoingFromDisconnectedToConnectingToConnectedToDisconnectingToDisconnected() {
-        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)
+        let isConnected = expectation(description: "there should be 2 calls to changedConnectionState to connected")
+        let isDisconnected = expectation(description: "there should be 2 calls to changedConnectionState to disconnected")
+        dummyDelegate.stubber.registerCallback { calls in
+            if calls.count == 2 {
+                XCTAssertEqual(calls.last?.args?.last as? ConnectionState, ConnectionState.connected)
+                isConnected.fulfill()
+                self.pusher.disconnect()
+            }else if calls.count == 4 {
+                XCTAssertEqual(calls[2].name, "connectionChange")
+                XCTAssertEqual(calls[2].args?.first as? ConnectionState, ConnectionState.connected)
+                XCTAssertEqual(calls[2].args?.last as? ConnectionState, ConnectionState.disconnecting)
+                XCTAssertEqual(calls.last?.name, "connectionChange")
+                XCTAssertEqual(calls.last?.args?.first as? ConnectionState, ConnectionState.disconnecting)
+                XCTAssertEqual(calls.last?.args?.last as? ConnectionState, ConnectionState.disconnected)
+                isDisconnected.fulfill()
+            }
+        }
         pusher.connect()
-        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.connected)
-        pusher.disconnect()
-        XCTAssertEqual(dummyDelegate.stubber.calls.count, 4)
-        XCTAssertEqual(dummyDelegate.stubber.calls[2].name, "connectionChange")
-        XCTAssertEqual(dummyDelegate.stubber.calls[2].args?.first as? ConnectionState, ConnectionState.connected)
-        XCTAssertEqual(dummyDelegate.stubber.calls[2].args?.last as? ConnectionState, ConnectionState.disconnecting)
-        XCTAssertEqual(dummyDelegate.stubber.calls.last?.name, "connectionChange")
-        XCTAssertEqual(dummyDelegate.stubber.calls.last?.args?.first as? ConnectionState, ConnectionState.disconnecting)
-        XCTAssertEqual(dummyDelegate.stubber.calls.last?.args?.last as? ConnectionState, ConnectionState.disconnected)
+        waitForExpectations(timeout: 0.5)
     }
 
     func testPassingIncomingMessagesToTheDebugLogFunctionIfOneIsImplemented() {

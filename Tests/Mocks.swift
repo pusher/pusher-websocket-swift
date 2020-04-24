@@ -1,6 +1,11 @@
 import Foundation
-import PusherSwift
 import Starscream
+
+#if WITH_ENCRYPTION
+    @testable import PusherSwiftWithEncryption
+#else
+    @testable import PusherSwift
+#endif
 
 open class MockWebSocket: WebSocket {
     let stubber = StubberForMocks()
@@ -201,6 +206,13 @@ open class MockWebSocket: WebSocket {
                     self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"data\":\"{\\\"presence\\\":{\\\"count\\\":1,\\\"ids\\\":[\\\"777\\\"],\\\"hash\\\":{\\\"777\\\":{\\\"twitter\\\":\\\"hamchapman\\\"}}}}\",\"channel\":\"presence-test-channel-authorizer\"}")
                 }
             )
+        } else if stringContainsElements(string, elements: ["private-encrypted-channel", "pusher:subscribe", "636a81ba7e7b15725c00:3ee04892514e8a669dc5d30267221f16727596688894712cad305986e6fc0f3c"]) {
+            let _ = stubber.stub(
+                functionName: "writeString",
+                args: [string],
+                functionToCall: {
+                    self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-encrypted-channel\",\"data\":\"{}\"}")
+            } )
         } else {
             print("No match in write(string: ...) mock for string: \(string)")
         }
@@ -237,20 +249,34 @@ open class MockPusherConnection: PusherConnection {
 open class StubberForMocks {
     open var calls: [FunctionCall]
     open var responses: [String: AnyObject]
+    open var callbacks: [([FunctionCall]) -> Void]
 
     init() {
         self.calls = []
         self.responses = [:]
+        self.callbacks = []
     }
 
     open func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
         calls.append(FunctionCall(name: functionName, args: args))
         if let response: AnyObject = responses[functionName] {
+            self.callCallbacks(calls: calls)
             return response
         } else if let functionToCall = functionToCall {
             functionToCall()
         }
+        self.callCallbacks(calls: calls)
         return nil
+    }
+
+    open func registerCallback(callback: @escaping ([FunctionCall]) -> Void){
+        callbacks.append(callback)
+    }
+
+    open func callCallbacks(calls: [FunctionCall]){
+        for callback in callbacks{
+            callback(calls)
+        }
     }
 }
 

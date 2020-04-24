@@ -62,7 +62,7 @@ import Foundation
         autoReconnect: Bool = true,
         ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
         port: NSNumber? = nil,
-        encrypted: Bool = true,
+        useTLS: Bool = true,
         activityTimeout: NSNumber? = nil
     ) {
         self.init(
@@ -71,7 +71,7 @@ import Foundation
             autoReconnect: autoReconnect,
             ocHost: host,
             port: port,
-            encrypted: encrypted,
+            useTLS: useTLS,
             activityTimeout: activityTimeout
         )
     }
@@ -82,7 +82,7 @@ import Foundation
         autoReconnect: Bool = true,
         ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
         port: NSNumber? = nil,
-        encrypted: Bool = true,
+        useTLS: Bool = true,
         activityTimeout: NSNumber? = nil
     ) {
         self.init(
@@ -91,7 +91,7 @@ import Foundation
             autoReconnect: autoReconnect,
             host: PusherHost.fromObjc(source: host),
             port: port as? Int,
-            encrypted: encrypted,
+            useTLS: useTLS,
             activityTimeout: activityTimeout as? TimeInterval
         )
     }

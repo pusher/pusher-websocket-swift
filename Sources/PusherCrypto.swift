@@ -17,10 +17,10 @@ struct PusherCrypto {
 
         var digest = Data(count: digestLength)
 
-        _ = digest.withUnsafeMutableBytes { digestBytes in
-            _ = secretData.withUnsafeBytes { secretBytes in
-                _ = messageData.withUnsafeBytes { messageBytes in
-                    CCHmac(algorithm, secretBytes, secretData.count, messageBytes, messageData.count, digestBytes)
+        _ = digest.withUnsafeMutableBytes { (digestBytes: UnsafeMutableRawBufferPointer) in
+            _ = secretData.withUnsafeBytes { (secretBytes: UnsafeRawBufferPointer) in
+                _ = messageData.withUnsafeBytes { (messageBytes: UnsafeRawBufferPointer) in
+                    CCHmac(algorithm, secretBytes.baseAddress, secretData.count, messageBytes.baseAddress, messageData.count, digestBytes.baseAddress)
                 }
             }
         }

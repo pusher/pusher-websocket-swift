@@ -100,7 +100,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
             id = String.init(describing: memberJSON["user_id"]!)
         }
 
-        if let index = self.members.index(where: { $0.userId == id }) {
+        if let index = self.members.firstIndex(where: { $0.userId == id }) {
             let member = self.members[index]
             self.members.remove(at: index)
             self.onMemberRemoved?(member)

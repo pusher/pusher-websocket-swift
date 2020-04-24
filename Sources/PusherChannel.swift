@@ -34,6 +34,19 @@ open class PusherChannel: NSObject {
     public let type: PusherChannelType
     public var auth: PusherAuth?
 
+    // Wrap accesses to the decryption key in a serial queue because it will be accessed from multiple threads
+    @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)")
+    @nonobjc private var decryptionKeyInternal: String? = nil
+    @nonobjc internal var decryptionKey: String? {
+        get {
+            return decryptionKeyQueue.sync { decryptionKeyInternal }
+        }
+
+        set {
+            decryptionKeyQueue.sync { decryptionKeyInternal = newValue }
+        }
+    }
+
     internal var shouldParseJSONForLegacyCallbacks: Bool {
         return connection?.options.attemptToReturnJSONObject ?? true
     }
@@ -157,6 +170,14 @@ open class PusherChannel: NSObject {
         - parameter data:      The data to be sent as the message payload
     */
     open func trigger(eventName: String, data: Any) {
+        if PusherEncryptionHelpers.isEncryptedChannel(channelName: self.name) {
+            let error = """
+            ERROR: Client events are not supported on encrypted channels: '\(self.name)'. Client event '\(eventName)' will not be sent.
+            """
+            print(error)
+            return
+        }
+
         if subscribed {
             connection?.sendEvent(event: eventName, data: data, channel: self)
         } else {
