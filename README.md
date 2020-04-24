@@ -635,6 +635,7 @@ PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
 
 * Is not currently compatible with tvOS.
 * Is not safe for use in extensions.
+* Client events are not supported on encrypted channels
 
 #### Swift
 
