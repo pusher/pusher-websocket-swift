@@ -44,7 +44,7 @@ What else would you want? Head over to one of our example apps:
 - [Subscribing to channels](#subscribing)
   - [Public channels](#public-channels)
   - [Private channels](#private-channels)
-  - [Private encrypted channels [BETA]](#private-encrypted-channels-beta)
+  - [Private encrypted channels](#private-encrypted-channels)
   - [Presence channels](#presence-channels)
 - [Binding to events](#binding-to-events)
   - [Per-channel](#per-channel-events)
@@ -614,13 +614,13 @@ PusherChannel *myPrivateChannel = [pusher subscribeWithChannelName:@"private-my-
 
 Subscribing to private channels involves the client being authenticated. See the [Configuration](#configuration) section for the authenticated channel example for more information.
 
-### Private encrypted channels [BETA]
+### Private encrypted channels
 
 Similar to Private channels, you can also subscribe to a [private encrypted channel](https://pusher.com/docs/channels/using_channels/encrypted-channels). This library now fully supports end-to-end encryption. This means that only you and your connected clients will be able to read your messages. Pusher cannot decrypt them.
 
-Like with private channels, you must provide an authentication endpoint. That endpoint must be using a [server client that supports end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels#server). There is a [demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption). 
+Like with private channels, you must provide an authentication endpoint. That endpoint must be using a [server client that supports end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels#server). There is a [demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption).
 
-The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed. 
+The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed.
 
 Because of the requirement to reload the shared secret on demand, you can only use the following [auth method](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
 
@@ -821,7 +821,7 @@ Events can be bound to at 2 levels; globally and per channel. When binding to an
 
 ### Per-channel events
 
-These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. 
+These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application.
 
 #### Swift
 
@@ -882,7 +882,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 ### Global events
 
-You can attach behaviour to these events regardless of the channel the event is broadcast to. 
+You can attach behaviour to these events regardless of the channel the event is broadcast to.
 
 #### Swift
 
@@ -993,7 +993,7 @@ myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) 
 
 ```
 
-Alternatively, you could use [`JSONSerialization`](https://developer.apple.com/documentation/foundation/jsonserialization) to decode the JSON into Swift data types: 
+Alternatively, you could use [`JSONSerialization`](https://developer.apple.com/documentation/foundation/jsonserialization) to decode the JSON into Swift data types:
 
 #### Swift
 
@@ -1061,7 +1061,7 @@ pusher.bind({ (message: Any?) in
 ```
 
 #### Objective-C
-    
+
 ```objc
 [pusher bind:^void (NSDictionary *data) {
     NSString *eventName = data[@"event"];
