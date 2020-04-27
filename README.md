@@ -117,9 +117,10 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
-Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using.
-If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`,  `Starscream` and `Reachability`
-If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium`, `Starscream` and `Reachability`
+Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
+
+- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`, `Starscream` and `Reachability`
+- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium`, `Starscream` and `Reachability`
 
 ### Swift Package Manager
 
