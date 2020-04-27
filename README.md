@@ -44,7 +44,7 @@ What else would you want? Head over to one of our example apps:
 - [Subscribing to channels](#subscribing)
   - [Public channels](#public-channels)
   - [Private channels](#private-channels)
-  - [Private encrypted channels [BETA]](#private-encrypted-channels-beta)
+  - [Private encrypted channels](#private-encrypted-channels)
   - [Presence channels](#presence-channels)
 - [Binding to events](#binding-to-events)
   - [Per-channel](#per-channel-events)
@@ -614,7 +614,7 @@ PusherChannel *myPrivateChannel = [pusher subscribeWithChannelName:@"private-my-
 
 Subscribing to private channels involves the client being authenticated. See the [Configuration](#configuration) section for the authenticated channel example for more information.
 
-### Private encrypted channels [BETA]
+### Private encrypted channels
 
 Similar to Private channels, you can also subscribe to a [private encrypted channel](https://pusher.com/docs/channels/using_channels/encrypted-channels). This library now fully supports end-to-end encryption. This means that only you and your connected clients will be able to read your messages. Pusher cannot decrypt them.
 
