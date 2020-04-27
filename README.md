@@ -117,6 +117,10 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
+Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using.
+If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`,  `Starscream` and `Reachability`
+If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium`, `Starscream` and `Reachability`
+
 ### Swift Package Manager
 
 > Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
@@ -622,15 +626,17 @@ Like with private channels, you must provide an authentication endpoint. That en
 
 The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed. 
 
-Because of the requirement to reload the shared secret on demand, you can only use the following [auth method](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
+Because of the requirement to reload the shared secret on demand, you can only use the following [auth methods](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
 
 ### Installation
 
+In your Swift files, you will need to import `PusherSwiftWithEncryption` rather than `PusherSwift`. In Objective-C files, you will need to import `PusherSwiftWithEncryption/PusherSwiftWithEncryption-Swift.h` rather than `PusherSwift/PusherSwift-Swift.h`.
+
 #### CocoaPods
-Update your podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
+Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
 
 #### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project.
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Starscream` and `Reachability`).
 
 #### Swift Package Manager
 PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
@@ -652,8 +658,6 @@ let privateEncryptedChannel = pusher.subscribe(channelName: "private-encrypted-m
 ```objc
 PusherChannel *privateEncryptedChannel = [pusher subscribeWithChannelName:@"private-encrypted-my-channel"];
 ```
-
-You must use one of the following [auth methods](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`
 
 There is also an optional callback in the connection delegate when you can listen for
 any failed decryption events:
