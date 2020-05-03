@@ -187,7 +187,7 @@ public enum AuthMethod {
 
 - `endpoint(authEndpoint: String)` - the client will make a `POST` request to the endpoint you specify with the socket ID of the client and the channel name attempting to be subscribed to
 - `authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)` - you specify an object that conforms to the `AuthRequestBuilderProtocol` (defined below), which must generate an `URLRequest` object that will be used to make the auth request
-- `inline(secret: String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly desgined to be used for development)
+- `inline(secret: String)` - your app's secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly designed to be used for development)
 - `authorizer(authorizer: Authorizer)` - you specify an object that conforms to the `Authorizer` protocol which must be able to provide the appropriate auth information
 - `noMethod` - if you are only using public channels then you do not need to set an `authMethod` (this is the default value)
 
@@ -570,7 +570,7 @@ In the case of the first type of disconnection the library will (as you'd hope) 
 
 The library uses [Reachability](https://github.com/ashleymills/Reachability.swift) to attempt to detect network degradation events that lead to disconnection. If this is detected then the library will attempt to reconnect (by default) with an exponential backoff, indefinitely (the maximum time between reconnect attempts is, by default, capped at 120 seconds). The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish to set a maximum number of reconnect attempts.
 
-If the Pusher servers close the websocket, or if a disconnection happens due to nevtwork events that aren't covered by Reachability, then the library will still attempt to reconnect as described above.
+If the Pusher servers close the websocket, or if a disconnection happens due to network events that aren't covered by Reachability, then the library will still attempt to reconnect as described above.
 
 All of this is the case if you have the client option of `autoReconnect` set as `true`, which it is by default. If the reconnection strategies are not suitable for your use case then you can set `autoReconnect` to `false` and implement your own reconnection strategy based on the connection state changes.
 
@@ -671,7 +671,7 @@ optional func failedToDecryptEvent(eventName: String, channelName: String, data:
 
 Presence channels are channels whose names are prefixed by `presence-`.
 
-The recommended way of subscribing to a presence channel is to use the `subscribeToPresenceChannel` function, as opposed to the standard `subscribe` function. Using the `subscribeToPresenceChannel` function means that you get a `PusherPresenceChannel` object returned, as opposed to a standard `PusherChannel`. This `PusherPresenceChannel` object has some extra, presence-channel-specific functions availalbe to it, such as `members`, `me`, and `findMember`.
+The recommended way of subscribing to a presence channel is to use the `subscribeToPresenceChannel` function, as opposed to the standard `subscribe` function. Using the `subscribeToPresenceChannel` function means that you get a `PusherPresenceChannel` object returned, as opposed to a standard `PusherChannel`. This `PusherPresenceChannel` object has some extra, presence-channel-specific functions available to it, such as `members`, `me`, and `findMember`.
 
 #### Swift
 
@@ -723,7 +723,7 @@ PusherChannel *myPresenceChannel = [pusher subscribeWithChannelName:@"presence-m
 
 **Note**: The `members` and `myId` properties of `PusherPresenceChannel` objects (and functions that get the value of these properties) will only be set once subscription to the channel has succeeded.
 
-The easiest way to find out when a channel has been successfully susbcribed to is to bind to the event named `pusher:subscription_succeeded` on the channel you're interested in. It would look something like this:
+The easiest way to find out when a channel has been successfully subscribed to is to bind to the event named `pusher:subscription_succeeded` on the channel you're interested in. It would look something like this:
 
 #### Swift
 
@@ -752,7 +752,7 @@ PusherPresenceChannel *chan = [pusher subscribeToPresenceChannelWithChannelName:
 }];
 ```
 
-You can also be notified of a successfull subscription by using the `subscriptionDidSucceed` delegate method that is part of the `PusherDelegate` protocol.
+You can also be notified of a successful subscription by using the `subscriptionDidSucceed` delegate method that is part of the `PusherDelegate` protocol.
 
 Here is an example of using the delegate:
 
@@ -799,7 +799,7 @@ let chan = pusher.subscribeToPresenceChannel("presence-channel")
     PusherChannel *chan = [pusher subscribeToPresenceChannelWithChannelName:@"presence-channel"];
 ```
 
-Note that both private and presence channels require the user to be authenticated in order to subscribe to the channel. This authentication can either happen inside the library, if you configured your Pusher object with your app's secret, or an authentication request is made to an authentication endpoint that you provide, again when instantiaing your Pusher object.
+Note that both private and presence channels require the user to be authenticated in order to subscribe to the channel. This authentication can either happen inside the library, if you configured your Pusher object with your app's secret, or an authentication request is made to an authentication endpoint that you provide, again when instantiating your Pusher object.
 
 We recommend that you use an authentication endpoint over including your app's secret in your app in the vast majority of use cases. If you are completely certain that there's no risk to you including your app's secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.
 
@@ -1150,7 +1150,7 @@ The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websoc
 
 - If you have found a bug, please open an issue.
 - If you have a feature request, please open an issue.
-- If you want to contribute, please submit a pull request (preferrably with some tests 🙂 ).
+- If you want to contribute, please submit a pull request (preferably with some tests 🙂 ).
 
 ## Credits
 
