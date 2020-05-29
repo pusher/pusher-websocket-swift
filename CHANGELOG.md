@@ -4,7 +4,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/7.0.0...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/8.0.0...HEAD)
+
+## [8.0.0](https://github.com/pusher/pusher-websocket-swift/compare/7.2.0...8.0.0) - 2020-04-27
+
+### Added
+
+- Added support for [end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels). There is a new target: `PusherSwiftWithEncryption` and a new dependency for that target `Sodium`. The original `PusherSwift` target does not require `Sodium` and has all the same features as `PusherSwiftWithEncryption` except the ability to decrypt events. You can find details about how to use `PusherSwiftWithEncryption` in the [README](https://github.com/pusher/pusher-websocket-swift#private-encrypted-channels-beta). As part of this feature, there is a new function in the `PusherDelegate`: `failedToDecryptEvent`, and channel names prefixed with `private-encrypted-` are now interpreted as encrypted channels in both targets.
+
+### Changed
+
+- The `encrypted` parameter for `PusherClientOptions` has been renamed to `useTLS`. Its behavior and default value (`true`) are unchanged.
+- Updated to Swift 5.0 and updated dependencies ([@JonathanDowning](https://github.com/JonathanDowning)).
+
+### Removed
+
+- CryptoSwift is no longer a dependency.
+
+## [7.2.0](https://github.com/pusher/pusher-websocket-swift/compare/7.1.0...7.2.0) - 2019-10-18
+
+### Added
+
+- Added support for Swift Package Manager ([@JonathanDowning](https://github.com/JonathanDowning)).
+
+### Fixed
+
+- Fixed a compilation warning caused by incorrect parameter names in documentation comments ([@funkyboy](https://github.com/funkyboy)).
+
+## [7.1.0](https://github.com/pusher/pusher-websocket-swift/compare/7.0.0...7.1.0) - 2019-10-03
+
+### Added
+
+- Added new `bind` functions which accept a callback that receives a `PusherEvent`. A `PusherEvent` represents an event received from the websocket and has properties containing the event name, channel name and data. In addition, `PusherEvent` has a new property, `userId`, which allows you to verify the ID of the user who triggered a client event on a presence channel. You can read more about this feature in [the docs](https://pusher.com/docs/channels/using_channels/events#user-id-in-client-events). All the old `bind` functions are still available for backwards compatibility. The `data` property of `PusherEvent` is not automatically parsed from JSON and you can decide to parse that as required. The parsing behaviour is unchanged for data passed to callbacks bound by the old `bind` functions.
+
+### Changed
+
+- Updated the deployment targets so they are consistent regardless of whether you import the library using CocoaPods or Carthage.
 
 ## [7.0.0](https://github.com/pusher/pusher-websocket-swift/compare/6.1.0...7.0.0) - 2019-04-16
 

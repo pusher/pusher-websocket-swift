@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yEm-Wa-8Rj">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="Y6i-aQ-cnE">
+            <objects>
+                <viewController id="yEm-Wa-8Rj" customClass="ViewController" customModule="iOS_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fji-4t-sKP"/>
+                        <viewControllerLayoutGuide type="bottom" id="r12-OR-bkP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="y96-ws-RaM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pak-HB-Rmg">
+                                <rect key="frame" x="169" y="156" width="78" height="30"/>
+                                <state key="normal" title="Disconnect"/>
+                                <connections>
+                                    <action selector="disconnectButton:" destination="yEm-Wa-8Rj" eventType="touchUpInside" id="DIg-Tc-6e2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrh-9X-Fym">
+                                <rect key="frame" x="178.5" y="62" width="59" height="30"/>
+                                <state key="normal" title="Connect"/>
+                                <connections>
+                                    <action selector="connectButton:" destination="yEm-Wa-8Rj" eventType="touchUpInside" id="Hla-Ru-KoR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="pak-HB-Rmg" firstAttribute="centerX" secondItem="y96-ws-RaM" secondAttribute="centerX" constant="1" id="55L-vA-Tvc"/>
+                            <constraint firstItem="zrh-9X-Fym" firstAttribute="centerX" secondItem="y96-ws-RaM" secondAttribute="centerX" constant="1" id="BgE-CD-tkr"/>
+                            <constraint firstItem="pak-HB-Rmg" firstAttribute="top" secondItem="fji-4t-sKP" secondAttribute="bottom" constant="112" id="aX3-md-844"/>
+                            <constraint firstItem="zrh-9X-Fym" firstAttribute="top" secondItem="fji-4t-sKP" secondAttribute="bottom" constant="18" id="goe-io-Zww"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="weS-V8-jg5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3745.5" y="97.5"/>
+        </scene>
+    </scenes>
+</document>
