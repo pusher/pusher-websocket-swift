@@ -2,7 +2,7 @@ import Foundation
 import Starscream
 
 let PROTOCOL = 7
-let VERSION = "7.0.0"
+let VERSION = "8.0.0"
 let CLIENT_NAME = "pusher-websocket-swift"
 
 @objcMembers
@@ -50,6 +50,30 @@ let CLIENT_NAME = "pusher-websocket-swift"
         onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
     ) -> PusherChannel {
+
+        let isEncryptedChannel = PusherEncryptionHelpers.isEncryptedChannel(channelName: channelName)
+
+        if isEncryptedChannel && !PusherDecryptor.isDecryptionAvailable(){
+            let error = """
+
+            WARNING: You are subscribing to an encrypted channel: '\(channelName)' but this version of PusherSwift does not \
+            support end-to-end encryption. Events will not be decrypted. You must import 'PusherSwiftWithEncryption' in \
+            order for events to be decrypted. See https://github.com/pusher/pusher-websocket-swift for more information
+
+            """
+            print(error)
+        }
+
+        if isEncryptedChannel && auth != nil {
+            let error = """
+
+            WARNING: Passing an auth value to 'subscribe' is not supported for encrypted channels. Event decryption will \
+            fail. You must use one of the following auth methods: 'endpoint', 'authRequestBuilder', 'authorizer'
+
+            """
+            print(error)
+        }
+
         return self.connection.subscribe(
             channelName: channelName,
             auth: auth,
@@ -106,18 +130,33 @@ let CLIENT_NAME = "pusher-websocket-swift"
     /**
         Binds the client's global channel to all events
 
-        - parameter callback: The function to call when a new event is received
+        - parameter callback: The function to call when a new event is received. The callback
+                              receives the event's data payload
 
         - returns: A unique string that can be used to unbind the callback from the client
     */
     @discardableResult open func bind(_ callback: @escaping (Any?) -> Void) -> String {
-        return self.connection.addCallbackToGlobalChannel(callback)
+        return self.connection.addLegacyCallbackToGlobalChannel(callback)
+    }
+
+    /**
+     Binds the client's global channel to all events
+
+     - parameter eventCallback: The function to call when a new event is received. The callback
+                                receives a PusherEvent, containing the event's data payload and
+                                other properties.
+
+     - returns: A unique string that can be used to unbind the callback from the client
+     */
+    @discardableResult open func bind(eventCallback: @escaping (PusherEvent) -> Void) -> String {
+        return self.connection.addCallbackToGlobalChannel(eventCallback)
     }
 
     /**
         Unbinds the client from its global channel
 
-        - parameter callbackId: The unique callbackId string used to identify which callback to unbind
+        - parameter callbackId: The unique callbackId string used to identify which callback
+                                to unbind
     */
     open func unbind(callbackId: String) {
         self.connection.removeCallbackFromGlobalChannel(callbackId: callbackId)
@@ -156,7 +195,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
 func constructUrl(key: String, options: PusherClientOptions) -> String {
     var url = ""
     let additionalPathComponents = options.path ?? ""
-    if options.encrypted {
+    if options.useTLS {
         url = "wss://\(options.host):\(options.port)\(additionalPathComponents)/app/\(key)"
     } else {
         url = "ws://\(options.host):\(options.port)\(additionalPathComponents)/app/\(key)"

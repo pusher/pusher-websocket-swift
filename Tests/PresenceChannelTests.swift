@@ -1,5 +1,10 @@
-import PusherSwift
 import XCTest
+
+#if WITH_ENCRYPTION
+    @testable import PusherSwiftWithEncryption
+#else
+    @testable import PusherSwift
+#endif
 
 class PusherPresenceChannelTests: XCTestCase {
     var pusher: Pusher!
@@ -27,14 +32,25 @@ class PusherPresenceChannelTests: XCTestCase {
         }
 
         pusher.connect()
+        let ex = expectation(description: "subscription succeed")
         let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+            ex.fulfill()
+            XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
+        }
+        waitForExpectations(timeout: 0.5)
     }
 
     func testMembersObjectStoresSocketIdIfNoUserDataFetcherIsProvided() {
         pusher.connect()
+
         let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        XCTAssertEqual(chan?.members.first!.userId, "46123.486095", "the userId should be 46123.486095")
+        let ex = expectation(description: "subscription succeed")
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+            ex.fulfill()
+            XCTAssertEqual(chan?.members.first!.userId, "46123.486095", "the userId should be 46123.486095")
+        }
+        waitForExpectations(timeout: 0.5)
     }
 
     func testMembersObjectStoresUserIdAndUserInfoIfAUserDataFetcherIsProvidedThatReturnsBoth() {
@@ -47,30 +63,54 @@ class PusherPresenceChannelTests: XCTestCase {
         pusher.connect()
 
         let channelName = "presence-test"
+
+        let ex = expectation(description: "subscription succeed")
         guard let chan = pusher.subscribe(channelName) as? PusherPresenceChannel else {
             return XCTFail("Couldn't subscribe to channel: \(channelName).")
         }
 
-        guard let firstUser = chan.members.first else {
-            return XCTFail("User doesn't exist.")
+        chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+            ex.fulfill()
+
+            guard let firstUser = chan.members.first else {
+               return XCTFail("User doesn't exist.")
+           }
+
+           let userId = firstUser.userId
+           let userInfo = firstUser.userInfo as! [String: String]
+
+           XCTAssertEqual(userId, "123", "the userId should be 123")
+           XCTAssertEqual(userInfo, ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
         }
-
-        let userId = firstUser.userId
-        let userInfo = firstUser.userInfo as! [String: String]
-
-        XCTAssertEqual(userId, "123", "the userId should be 123")
-        XCTAssertEqual(userInfo, ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+        waitForExpectations(timeout: 0.5)
     }
 
     func testFindingPusherPresenceChannelMemberByUserId() {
         pusher.connect()
+        let ex = expectation(description: "member added")
 
-        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\", \"user_info\":{\"twitter\":\"hamchapman\"}}" as AnyObject])
-        let member = chan!.findMember(userId: "100")
+        var chan: PusherPresenceChannel? = nil
+        let memberAdded = { (member: PusherPresenceChannelMember) in
+            let member = chan!.findMember(userId: "100")
 
-        XCTAssertEqual(member!.userId, "100", "the userId should be 100")
-        XCTAssertEqual(member!.userInfo as! [String: String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+            XCTAssertEqual(member!.userId, "100", "the userId should be 100")
+            XCTAssertEqual(member!.userInfo as! [String: String], ["twitter": "hamchapman"], "the userInfo should be [\"twitter\": \"hamchapman\"]")
+            ex.fulfill()
+        }
+
+        chan = pusher.subscribe("presence-channel", onMemberAdded: memberAdded) as? PusherPresenceChannel
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+            let jsonDict = """
+            {
+                "event": "pusher_internal:member_added",
+                "channel": "presence-channel",
+                "data": "{\\"user_id\\":\\"100\\", \\"user_info\\":{\\"twitter\\":\\"hamchapman\\"}}"
+            }
+            """.removing(.newlines)
+            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: jsonDict)
+        }
+
+        waitForExpectations(timeout: 0.5)
     }
 
     func testFindingTheClientsMemberObject() {
@@ -87,12 +127,19 @@ class PusherPresenceChannelTests: XCTestCase {
             return XCTFail("Couldn't subscribe to channel: \(channelName).")
         }
 
-        guard let member = presenceChannel.me() else {
-            return XCTFail("Couldn't find member with id: \(userId).")
-        }
+        let ex = expectation(description: "subscription succeed")
+        presenceChannel.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+            ex.fulfill()
 
-        XCTAssertEqual(member.userId, userId, "the userId should be \(userId)")
-        XCTAssertEqual(member.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
+            guard let member = presenceChannel.me() else {
+               return XCTFail("Couldn't find member with id: \(userId).")
+           }
+
+           XCTAssertEqual(member.userId, userId, "the userId should be \(userId)")
+           XCTAssertEqual(member.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
+
+        }
+        waitForExpectations(timeout: 0.5)
     }
 
     func testFindingAPresenceChannelAsAPusherPresenceChannel() {
@@ -105,78 +152,100 @@ class PusherPresenceChannelTests: XCTestCase {
 
         let channelName = "presence-channel"
 
-        let _ = pusher.subscribe(channelName)
+        let presenceChannel = pusher.subscribe(channelName)
 
-        guard let presenceChannel = pusher.connection.channels.findPresence(name: channelName) else {
-            return XCTFail("Presence for channel: \(channelName) not found.")
+        let ex = expectation(description: "subscription succeed")
+        presenceChannel.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+            ex.fulfill()
+            guard let presenceChannel = self.pusher.connection.channels.findPresence(name: channelName) else {
+                return XCTFail("Presence for channel: \(channelName) not found.")
+            }
+
+            guard let member = presenceChannel.me() else {
+                return XCTFail("Couldn't find member.")
+            }
+
+            XCTAssertEqual(member.userId, userId, "the userId of the client's member object should be \(userId)")
         }
-
-        guard let member = presenceChannel.me() else {
-            return XCTFail("Couldn't find member.")
-        }
-
-        XCTAssertEqual(member.userId, userId, "the userId of the client's member object should be \(userId)")
+        waitForExpectations(timeout: 0.5)
     }
 
     func testOnMemberAddedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
-        let options = PusherClientOptions(
-            authMethod: .inline(secret: "secretsecretsecretsecret"),
-            autoReconnect: false
-        )
-        pusher = Pusher(key: "key", options: options)
-        socket.delegate = pusher.connection
-        pusher.connection.socket = socket
+        let ex = expectation(description: "member added")
+
         pusher.connect()
 
         let memberAddedFunction = { (member: PusherPresenceChannelMember) -> Void in
-            let _ = self.stubber.stub(functionName: "onMemberAdded", args: [member], functionToCall: nil)
+            XCTAssertEqual(member.userId, "100", "the userId should be 100")
+            ex.fulfill()
         }
-        let _ = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
-
-        XCTAssertEqual(stubber.calls.first?.name, "onMemberAdded", "the onMemberAdded function should have been called")
-        XCTAssertEqual((stubber.calls.first?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
+        let chan = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (event: PusherEvent) in
+            let jsonDict = """
+            {
+                "event": "pusher_internal:member_added",
+                "channel": "presence-channel",
+                "data": "{\\"user_id\\":\\"100\\"}"
+            }
+            """.removing(.newlines)
+            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: jsonDict)
+        }
+        waitForExpectations(timeout: 0.5)
     }
 
     func testOnMemberRemovedFunctionGetsCalledWhenANewSubscriptionSucceeds() {
-        let options = PusherClientOptions(
-            authMethod: .inline(secret: "secretsecretsecretsecret"),
-            autoReconnect: false
-        )
-        pusher = Pusher(key: "key", options: options)
-        socket.delegate = pusher.connection
-        pusher.connection.socket = socket
+        let ex = expectation(description: "member removed")
+
         pusher.connect()
 
         let memberRemovedFunction = { (member: PusherPresenceChannelMember) -> Void in
-            let _ = self.stubber.stub(functionName: "onMemberRemoved", args: [member], functionToCall: nil)
+            XCTAssertEqual(member.userId, "100", "the userId should be 100")
+            ex.fulfill()
         }
         let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
         chan?.members.append(PusherPresenceChannelMember(userId: "100"))
-
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":\"100\"}" as AnyObject])
-
-        XCTAssertEqual(stubber.calls.last?.name, "onMemberRemoved", "the onMemberRemoved function should have been called")
-        XCTAssertEqual((stubber.calls.last?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (event: PusherEvent) in
+            let jsonDict = """
+            {
+                "event": "pusher_internal:member_removed",
+                "channel": "presence-channel",
+                "data": "{\\"user_id\\":\\"100\\"}"
+            }
+            """.removing(.newlines)
+            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: jsonDict)
+        }
+        waitForExpectations(timeout: 0.5)
     }
 
     func testOnMemberRemovedFunctionGetsCalledWhenANewSubscriptionSucceedsIfTheMemberUserIdWasNotAStringOriginally() {
-        let options = PusherClientOptions(
-            authMethod: .inline(secret: "secretsecretsecretsecret"),
-            autoReconnect: false
-        )
-        pusher = Pusher(key: "key", options: options)
-        socket.delegate = pusher.connection
-        pusher.connection.socket = socket
-        pusher.connect()
-        let memberRemovedFunction = { (member: PusherPresenceChannelMember) -> Void in
-            let _ = self.stubber.stub(functionName: "onMemberRemoved", args: [member], functionToCall: nil)
-        }
-        let _ = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_added", jsonObject: ["event": "pusher_internal:member_added" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
-        pusher.connection.handleEvent(eventName: "pusher_internal:member_removed", jsonObject: ["event": "pusher_internal:member_removed" as AnyObject, "channel": "presence-channel" as AnyObject, "data": "{\"user_id\":100}" as AnyObject])
+        let ex = expectation(description: "member removed")
 
-        XCTAssertEqual(stubber.calls.last?.name, "onMemberRemoved", "the onMemberRemoved function should have been called")
-        XCTAssertEqual((stubber.calls.last?.args?.first as? PusherPresenceChannelMember)?.userId, "100", "the userId should be 100")
+        pusher.connect()
+
+        let memberRemovedFunction = { (member: PusherPresenceChannelMember) -> Void in
+            XCTAssertEqual(member.userId, "100", "the userId should be 100")
+            ex.fulfill()
+        }
+        let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (event: PusherEvent) in
+            let addedJsonDict = """
+            {
+                "event": "pusher_internal:member_added",
+                "channel": "presence-channel",
+                "data": "{\\"user_id\\":100}"
+            }
+            """.removing(.newlines)
+            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: addedJsonDict)
+
+            let removedJsonDict = """
+            {
+                "event": "pusher_internal:member_removed",
+                "channel": "presence-channel",
+                "data": "{\\"user_id\\":100}"
+            }
+            """.removing(.newlines)
+            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: removedJsonDict)
+        }
+        waitForExpectations(timeout: 0.5)
     }
 }

@@ -1,9 +1,6 @@
 import Foundation
 import Reachability
 import Starscream
-import CryptoSwift
-
-public typealias PusherEventJSON = [String: AnyObject]
 
 @objcMembers
 @objc open class PusherConnection: NSObject {
@@ -28,6 +25,9 @@ public typealias PusherEventJSON = [String: AnyObject]
     var activityTimeoutTimer: Timer? = nil
     var intentionalDisconnect: Bool = false
 
+    var eventQueue: PusherEventQueue
+    var eventFactory: PusherEventFactory
+
     var socketConnected: Bool = false {
         didSet {
             setConnectionStateToConnectedAndAttemptSubscriptions()
@@ -40,7 +40,7 @@ public typealias PusherEventJSON = [String: AnyObject]
     }
 
     open lazy var reachability: Reachability? = {
-        let reachability = Reachability.init()
+        let reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] reachability in
             guard let self = self else {
                 print("Your Pusher instance has probably become deallocated. See https://github.com/pusher/pusher-websocket-swift/issues/109 for more information")
@@ -108,7 +108,13 @@ public typealias PusherEventJSON = [String: AnyObject]
         self.URLSession = URLSession
         self.socket = socket
         self.activityTimeoutInterval = options.activityTimeout ?? 60
+
+        self.eventFactory = PusherConcreteEventFactory()
+        self.eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, channels: channels)
+
         super.init()
+
+        self.eventQueue.delegate = self
         self.socket.delegate = self
         self.socket.pongDelegate = self
     }
@@ -203,6 +209,7 @@ public typealias PusherEventJSON = [String: AnyObject]
                     "channel": channelName
                 ] as [String : Any]
             )
+
             self.channels.remove(name: channelName)
         }
     }
@@ -221,9 +228,9 @@ public typealias PusherEventJSON = [String: AnyObject]
         and data, or calls a client event to be sent if the event is prefixed with
         "client"
 
-        - parameter event:       The name of the event
-        - parameter data:        The data to be stringified and sent
-        - parameter channelName: The name of the channel
+        - parameter event:   The name of the event
+        - parameter data:    The data to be stringified and sent
+        - parameter channel: The name of the channel
     */
     open func sendEvent(event: String, data: Any, channel: PusherChannel? = nil) {
         if event.components(separatedBy: "-")[0] == "client" {
@@ -238,9 +245,9 @@ public typealias PusherEventJSON = [String: AnyObject]
     /**
         Sends a client event with the given event, data, and channel name
 
-        - parameter event:       The name of the event
-        - parameter data:        The data to be stringified and sent
-        - parameter channelName: The name of the channel
+        - parameter event:   The name of the event
+        - parameter data:    The data to be stringified and sent
+        - parameter channel: The name of the channel
     */
     fileprivate func sendClientEvent(event: String, data: Any, channel: PusherChannel?) {
         if let channel = channel {
@@ -320,8 +327,19 @@ public typealias PusherEventJSON = [String: AnyObject]
 
         - returns: A callbackId that can be used to remove the callback from the connection
     */
-    internal func addCallbackToGlobalChannel(_ callback: @escaping (Any?) -> Void) -> String {
+    internal func addCallbackToGlobalChannel(_ callback: @escaping (PusherEvent) -> Void) -> String {
         return globalChannel.bind(callback)
+    }
+
+    /**
+     Add legacy callback to the connection's global channel
+
+     - parameter callback: The callback to be stored
+
+     - returns: A callbackId that can be used to remove the callback from the connection
+     */
+    internal func addLegacyCallbackToGlobalChannel(_ callback: @escaping (Any?) -> Void) -> String {
+        return globalChannel.bindLegacy(callback)
     }
 
     /**
@@ -459,29 +477,28 @@ public typealias PusherEventJSON = [String: AnyObject]
 
         - parameter json: The PusherEventJSON containing successful subscription data
     */
-    fileprivate func handleSubscriptionSucceededEvent(json: PusherEventJSON) {
-        if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) {
+    fileprivate func handleSubscriptionSucceededEvent(event: PusherEvent) {
+        if let channelName = event.channelName, let chan = self.channels.find(name: channelName) {
             chan.subscribed = true
 
-            guard let eventData = json["data"] as? String else {
+            guard event.data != nil else {
                 self.delegate?.debugLog?(message: "[PUSHER DEBUG] Subscription succeeded event received without data key in payload")
                 return
             }
 
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                    if let dataJSON = getPusherEventJSON(from: eventData) {
-                        if let presenceData = dataJSON["presence"] as? [String : AnyObject],
-                           let presenceHash = presenceData["hash"] as? [String : AnyObject]
-                        {
-                            presChan.addExistingMembers(memberHash: presenceHash)
-                        }
+                    if let dataJSON = event.dataToJSONObject() as? [String: Any], let presenceData = dataJSON["presence"] as? [String: AnyObject],
+                       let presenceHash = presenceData["hash"] as? [String: AnyObject]
+                    {
+                        presChan.addExistingMembers(memberHash: presenceHash)
                     }
                 }
             }
 
-            callGlobalCallbacks(forEvent: "pusher:subscription_succeeded", jsonObject: json)
-            chan.handleEvent(name: "pusher:subscription_succeeded", data: eventData)
+            let subscriptionEvent = event.copy(withEventName: "pusher:subscription_succeeded")
+            callGlobalCallbacks(event: subscriptionEvent)
+            chan.handleEvent(event: subscriptionEvent)
 
             self.delegate?.subscribedToChannel?(name: channelName)
 
@@ -499,24 +516,22 @@ public typealias PusherEventJSON = [String: AnyObject]
         Handle setting connection state and making subscriptions that couldn't be
         attempted while the connection was not in a connected state
 
-        - parameter json: The PusherEventJSON containing connection established data
+        - parameter event: The event to be processed
     */
-    fileprivate func handleConnectionEstablishedEvent(json: PusherEventJSON) {
-        if let data = json["data"] as? String {
-            if let connectionData = getPusherEventJSON(from: data),
-               let socketId = connectionData["socket_id"] as? String
-            {
-                self.socketId = socketId
-                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
-                self.reconnectAttempts = 0
-                self.reconnectTimer?.invalidate()
+    fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
+        if let connectionData = event.dataToJSONObject() as? [String:Any],
+           let socketId = connectionData["socket_id"] as? String
+        {
+            self.socketId = socketId
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
+            self.reconnectAttempts = 0
+            self.reconnectTimer?.invalidate()
 
-                if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
-                    self.activityTimeoutInterval = activityTimeoutFromServer
-                }
-
-                self.connectionEstablishedMessageReceived = true
+            if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
+                self.activityTimeoutInterval = activityTimeoutFromServer
             }
+
+            self.connectionEstablishedMessageReceived = true
         }
     }
 
@@ -535,16 +550,14 @@ public typealias PusherEventJSON = [String: AnyObject]
     /**
         Handle a new member subscribing to a presence channel
 
-        - parameter json: The PusherEventJSON containing the member data
+        - parameter event: The event to be processed
     */
-    fileprivate func handleMemberAddedEvent(json: PusherEventJSON) {
-        if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                if let memberJSON = getPusherEventJSON(from: data) {
-                    chan.addMember(memberJSON: memberJSON)
-                } else {
-                    print("Unable to add member")
-                }
+    fileprivate func handleMemberAddedEvent(event: PusherEvent) {
+        if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
+            if let memberJSON = event.dataToJSONObject() as? [String: Any] {
+                chan.addMember(memberJSON: memberJSON)
+            } else {
+                print("Unable to add member")
             }
         }
     }
@@ -552,18 +565,27 @@ public typealias PusherEventJSON = [String: AnyObject]
     /**
         Handle a member unsubscribing from a presence channel
 
-        - parameter json: The PusherEventJSON containing the member data
+        - parameter event: The event to be processed
     */
-    fileprivate func handleMemberRemovedEvent(json: PusherEventJSON) {
-        if let data = json["data"] as? String {
-            if let channelName = json["channel"] as? String, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                if let memberJSON = getPusherEventJSON(from: data) {
-                    chan.removeMember(memberJSON: memberJSON)
-                } else {
-                    print("Unable to remove member")
-                }
+    fileprivate func handleMemberRemovedEvent(event: PusherEvent) {
+        if let channelName = event.channelName, let chan = self.channels.find(name: channelName) as? PusherPresenceChannel {
+            if let memberJSON = event.dataToJSONObject() as? [String: Any] {
+                chan.removeMember(memberJSON: memberJSON)
+            } else {
+                print("Unable to remove member")
             }
         }
+    }
+
+    /**
+     Handles incoming error
+
+     - parameter error: The incoming error to be processed
+     */
+    open func handleError(error: PusherError) {
+        resetActivityTimeoutTimer()
+        self.delegate?.receivedError?(error: error)
+        self.globalChannel?.handleGlobalEventLegacy(event: error.raw)
     }
 
     /**
@@ -572,87 +594,46 @@ public typealias PusherEventJSON = [String: AnyObject]
         - parameter channelName: The name of channel for which authorization failed
         - parameter data:        The error returned by the auth endpoint
     */
-    fileprivate func handleAuthorizationError(forChannel channelName: String, response: URLResponse?, data: String?, error: NSError?) {
+    fileprivate func handleAuthorizationError(forChannel channelName: String, error: PusherAuthError) {
         let eventName = "pusher:subscription_error"
         let json = [
             "event": eventName,
             "channel": channelName,
-            "data": data ?? ""
+            "data": error.data ?? ""
         ]
-        DispatchQueue.main.async {
-            // TODO: Consider removing in favour of exclusively using delegate
-            self.handleEvent(eventName: eventName, jsonObject: json as [String : AnyObject])
-        }
-
-        self.delegate?.failedToSubscribeToChannel?(name: channelName, response: response, data: data, error: error)
-    }
-
-    /**
-        Parse a string to extract Pusher event information from it
-
-        - parameter string: The string received over the websocket connection containing
-                            Pusher event information
-
-        - returns: A dictionary of Pusher-relevant event data
-    */
-    open func getPusherEventJSON(from string: String) -> [String : AnyObject]? {
-        let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
-
-        do {
-            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : AnyObject] {
-                return jsonObject
-            } else {
-                print("Unable to parse string from WebSocket: \(string)")
+        if let event = try? self.eventFactory.makeEvent(fromJSON: json, withDecryptionKey: nil){
+            DispatchQueue.main.async {
+                // TODO: Consider removing in favour of exclusively using delegate
+                self.handleEvent(event: event)
             }
-        } catch let error as NSError {
-            print("Error: \(error.localizedDescription)")
-        }
-        return nil
-    }
 
-    /**
-        Parse a string to extract Pusher event data from it
-
-        - parameter string: The data string received as part of a Pusher message
-
-        - returns: The object sent as the payload part of the Pusher message
-    */
-    open func getEventDataJSON(from string: String) -> Any {
-        let data = (string as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
-
-        do {
-            if let jsonData = data, let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) {
-                return jsonObject
-            } else {
-                print("Returning data string instead because unable to parse string as JSON - check that your JSON is valid.")
+            if let message = error.message{
+                print(message)
             }
+            self.delegate?.failedToSubscribeToChannel?(name: channelName, response: error.response, data: error.data, error: error.error)
         }
-        return string
     }
-
+    
     /**
         Handles incoming events and passes them on to be handled by the appropriate function
 
-        - parameter eventName:  The name of the incoming event
-        - parameter jsonObject: The event-specific data related to the incoming event
+        - parameter event: The incoming event to be processed
     */
-    open func handleEvent(eventName: String, jsonObject: [String : AnyObject]) {
+    open func handleEvent(event: PusherEvent) {
         resetActivityTimeoutTimer()
-        switch eventName {
+        switch event.eventName {
         case "pusher_internal:subscription_succeeded":
-            handleSubscriptionSucceededEvent(json: jsonObject)
+            handleSubscriptionSucceededEvent(event: event)
         case "pusher:connection_established":
-            handleConnectionEstablishedEvent(json: jsonObject)
+            handleConnectionEstablishedEvent(event: event)
         case "pusher_internal:member_added":
-            handleMemberAddedEvent(json: jsonObject)
+            handleMemberAddedEvent(event: event)
         case "pusher_internal:member_removed":
-            handleMemberRemovedEvent(json: jsonObject)
+            handleMemberRemovedEvent(event: event)
         default:
-            callGlobalCallbacks(forEvent: eventName, jsonObject: jsonObject)
-            if let channelName = jsonObject["channel"] as? String, let internalChannel = self.channels.find(name: channelName) {
-                if let eName = jsonObject["event"] as? String, let eData = jsonObject["data"] as? String {
-                    internalChannel.handleEvent(name: eName, data: eData)
-                }
+            callGlobalCallbacks(event: event)
+            if let channelName = event.channelName, let internalChannel = self.channels.find(name: channelName) {
+                internalChannel.handleEvent(event: event)
             }
         }
     }
@@ -660,18 +641,11 @@ public typealias PusherEventJSON = [String: AnyObject]
     /**
         Call any global callbacks
 
-        - parameter eventName:  The name of the incoming event
-        - parameter jsonObject: The event-specific data related to the incoming event
+        - parameter event: The incoming event
     */
-    fileprivate func callGlobalCallbacks(forEvent eventName: String, jsonObject: [String : AnyObject]) {
-        if let globalChannel = self.globalChannel {
-            if let eData =  jsonObject["data"] as? String {
-                let channelName = jsonObject["channel"] as! String?
-                globalChannel.handleEvent(name: eventName, data: eData, channelName: channelName)
-            } else if let eData =  jsonObject["data"] as? [String: AnyObject] {
-                globalChannel.handleErrorEvent(name: eventName, data: eData)
-            }
-        }
+    fileprivate func callGlobalCallbacks(event: PusherEvent) {
+        globalChannel?.handleGlobalEvent(event: event)
+        globalChannel?.handleGlobalEventLegacy(event: event.raw)
     }
 
     /**
@@ -699,78 +673,76 @@ public typealias PusherEventJSON = [String: AnyObject]
                 self.delegate?.debugLog?(message: "[PUSHER DEBUG] Attempting to subscribe to presence channel but no channelData value provided")
                 return false
             }
-
             return true
         } else {
-            guard let socketId = self.socketId else {
-                print("socketId value not found. You may not be connected.")
-                return false
+            return requestPusherAuthFromAuthMethod(channel: channel) { [weak self] pusherAuth, error in
+                if let error = error {
+                    self?.handleAuthorizationError(forChannel: channel.name, error: error)
+                }else if let pusherAuth = pusherAuth {
+                    self?.handleAuthInfo(pusherAuth: pusherAuth, channel: channel)
+                }
             }
+        }
+    }
 
-            switch self.options.authMethod {
-            case .noMethod:
-                let errorMessage = "Authentication method required for private / presence channels but none provided."
+    fileprivate func requestPusherAuthFromAuthMethod(channel: PusherChannel, completionHandler:@escaping (PusherAuth?, PusherAuthError?) -> ()) -> Bool{
+        guard let socketId = self.socketId else {
+            let message = "socketId value not found. You may not be connected."
+            completionHandler(nil, PusherAuthError(kind: .notConnected, message: message))
+            return false
+        }
+
+        switch self.options.authMethod {
+        case .noMethod:
+            let errorMessage = "Authentication method required for private / presence channels but none provided."
+            let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
+            completionHandler(nil, PusherAuthError(kind: .noMethod, message: errorMessage, error: error))
+            return false
+        case .endpoint(authEndpoint: let authEndpoint):
+            let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
+            sendAuthorisationRequest(request: request, channel: channel, completionHandler: completionHandler)
+            return true
+        case .authRequestBuilder(authRequestBuilder: let builder):
+            if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
+                sendAuthorisationRequest(request: request, channel: channel, completionHandler: completionHandler)
+                return true
+            } else {
+                let errorMessage = "Authentication request could not be built"
                 let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
-
-                print(errorMessage)
-
-                handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
-
+                completionHandler(nil, PusherAuthError(kind:.couldNotBuildRequest, message: errorMessage, error: error))
                 return false
-            case .endpoint(authEndpoint: let authEndpoint):
-                let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
-                sendAuthorisationRequest(request: request, channel: channel)
-                return true
-            case .authRequestBuilder(authRequestBuilder: let builder):
-                if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
-                    sendAuthorisationRequest(request: request, channel: channel)
-
-                    return true
-                } else {
-                    let errorMessage = "Authentication request could not be built"
-                    let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
-
-                    handleAuthorizationError(forChannel: channel.name, response: nil, data: nil, error: error)
-
-                    return false
-                }
-            case .authorizer(authorizer: let authorizer):
-                authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { authInfo in
-                    guard let authInfo = authInfo else {
-                        print("Auth info passed to authorizer completionHandler was nil so channel subscription failed")
-                        return
-                    }
-
-                    self.handleAuthInfo(authString: authInfo.auth, channelData: authInfo.channelData, channel: channel)
-                }
-
-                return true
-            case .inline(secret: let secret):
-                var msg = ""
-                var channelData = ""
-                if channel.type == .presence {
-                    channelData = getUserDataJSON()
-                    msg = "\(self.socketId!):\(channel.name):\(channelData)"
-                } else {
-                    msg = "\(self.socketId!):\(channel.name)"
-                }
-
-                let secretBuff: [UInt8] = Array(secret.utf8)
-                let msgBuff: [UInt8] = Array(msg.utf8)
-
-                if let hmac = try? HMAC(key: secretBuff, variant: .sha256).authenticate(msgBuff) {
-                    let signature = Data(bytes: hmac).toHexString()
-                    let auth = "\(self.key):\(signature)".lowercased()
-
-                    if channel.type == .private {
-                        self.handlePrivateChannelAuth(authValue: auth, channel: channel)
-                    } else {
-                        self.handlePresenceChannelAuth(authValue: auth, channel: channel, channelData: channelData)
-                    }
-                }
-
-                return true
             }
+        case .authorizer(authorizer: let authorizer):
+            authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { pusherAuth in
+                if pusherAuth == nil {
+                    print("Auth info passed to authorizer completionHandler was nil")
+                }
+                completionHandler(pusherAuth, nil)
+            }
+            return true
+        case .inline(secret: let secret):
+            var message = ""
+            var channelData = ""
+            if channel.type == .presence {
+                channelData = getUserDataJSON()
+                message = "\(self.socketId!):\(channel.name):\(channelData)"
+            } else {
+                message = "\(self.socketId!):\(channel.name)"
+            }
+
+            let signature = PusherCrypto.generateSHA256HMAC(secret: secret, message: message)
+            let auth = "\(self.key):\(signature)".lowercased()
+
+            var pusherAuth: PusherAuth
+
+            if channel.type == .private {
+                pusherAuth = PusherAuth(auth: auth)
+            } else {
+                pusherAuth = PusherAuth(auth: auth, channelData: channelData)
+            }
+
+            completionHandler(pusherAuth, nil)
+            return true
         }
     }
 
@@ -838,56 +810,49 @@ public typealias PusherEventJSON = [String: AnyObject]
         - parameter request: The request to send
         - parameter channel: The PusherChannel to authenticate subsciption for
     */
-    fileprivate func sendAuthorisationRequest(request: URLRequest, channel: PusherChannel) {
+    fileprivate func sendAuthorisationRequest(request: URLRequest, channel: PusherChannel, completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> ()) {
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, sessionError in
             if let error = sessionError {
-                print("Error authorizing channel [\(channel.name)]: \(error)")
-                self.handleAuthorizationError(forChannel: channel.name, response: response, data: nil, error: error as NSError?)
+                let message = "Error authorizing channel [\(channel.name)]: \(error)"
+                completionHandler(nil, PusherAuthError(kind: .requestFailure, message: message, response: response, error: error as NSError?))
                 return
             }
 
             guard let data = data else {
-                print("Error authorizing channel [\(channel.name)]")
-                self.handleAuthorizationError(forChannel: channel.name, response: response, data: nil, error: nil)
+                let message = "Error authorizing channel [\(channel.name)]"
+                completionHandler(nil, PusherAuthError(kind: .invalidAuthResponse, message: message, response: response))
                 return
             }
 
             guard let httpResponse = response as? HTTPURLResponse, (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) else {
                 let dataString = String(data: data, encoding: String.Encoding.utf8)
-                print ("Error authorizing channel [\(channel.name)]: \(String(describing: dataString))")
-                self.handleAuthorizationError(forChannel: channel.name, response: response, data: dataString, error: nil)
+                let message = "Error authorizing channel [\(channel.name)]: \(String(describing: dataString))"
+                completionHandler(nil, PusherAuthError(kind: .invalidAuthResponse, message: message, response: response, data: dataString))
                 return
             }
 
             guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []), let json = jsonObject as? [String: AnyObject] else {
-                print("Error authorizing channel [\(channel.name)]")
-                self.handleAuthorizationError(forChannel: channel.name, response: httpResponse, data: nil, error: nil)
+                let message = "Error authorizing channel [\(channel.name)]: Could not parse response from auth endpoint"
+                completionHandler(nil, PusherAuthError(kind: .invalidAuthResponse, message: message, response: httpResponse))
                 return
             }
 
-            self.handleAuthResponse(json: json, channel: channel)
+            guard let auth = json["auth"] as? String else {
+                let message = "Error authorizing channel [\(channel.name)]: No auth field in response"
+                completionHandler(nil, PusherAuthError(kind: .invalidAuthResponse, message: message, response: httpResponse))
+                return
+            }
+
+            let pusherAuth = PusherAuth(
+                auth: auth,
+                channelData: json["channel_data"] as? String,
+                sharedSecret: json["shared_secret"] as? String
+            )
+
+            completionHandler(pusherAuth, nil)
         })
 
         task.resume()
-    }
-
-    /**
-        Handle authorizer request response and call appropriate handle function
-
-        - parameter json:    The auth response as a dictionary
-        - parameter channel: The PusherChannel to authorize subsciption for
-    */
-    fileprivate func handleAuthResponse(
-        json: [String: AnyObject],
-        channel: PusherChannel
-    ) {
-        if let auth = json["auth"] as? String {
-            handleAuthInfo(
-                authString: auth,
-                channelData: json["channel_data"] as? String,
-                channel: channel
-            )
-        }
     }
 
     /**
@@ -897,11 +862,15 @@ public typealias PusherEventJSON = [String: AnyObject]
         - parameter channelData: The channelData to send along with the auth request
         - parameter channel:     The PusherChannel to authorize the subsciption for
     */
-    fileprivate func handleAuthInfo(authString: String, channelData: String?, channel: PusherChannel) {
-        if let channelData = channelData {
-            handlePresenceChannelAuth(authValue: authString, channel: channel, channelData: channelData)
+    fileprivate func handleAuthInfo(pusherAuth: PusherAuth, channel: PusherChannel) {
+        if let decryptionKey = pusherAuth.sharedSecret {
+            channel.decryptionKey = decryptionKey
+        }
+
+        if let channelData = pusherAuth.channelData {
+            handlePresenceChannelAuth(authValue: pusherAuth.auth, channel: channel, channelData: channelData)
         } else {
-            handlePrivateChannelAuth(authValue: authString, channel: channel)
+            handlePrivateChannelAuth(authValue: pusherAuth.auth, channel: channel)
         }
     }
 
@@ -946,13 +915,86 @@ public typealias PusherEventJSON = [String: AnyObject]
     }
 }
 
+extension PusherConnection: PusherEventQueueDelegate {
+    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
+        DispatchQueue.main.async {
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming Websocket message \(payload)")
+        }
+    }
+
+    func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
+        DispatchQueue.main.async {
+            if let eventName = payload["event"] as? String {
+                let data = payload["data"] as? String
+                self.delegate?.failedToDecryptEvent?(eventName: eventName, channelName: channelName, data: data)
+            }
+            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Failed to decrypt event on channel '\(channelName)'. Skipping.")
+        }
+    }
+
+    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?) {
+        DispatchQueue.main.async {
+            self.handleEvent(event: event)
+        }
+    }
+
+    /**
+     Synchronously reloads the decryption key from the auth endpoint. This should be called from the event
+     queue's dispatch queue. This method should NOT be called from the main thread as it will cause deadlock.
+
+        - parameter eventQueue: The event queue that is requesting the reload
+        - parameter channel:  The PusherChannel for which the key is being reloaded
+    */
+    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel) {
+        let group = DispatchGroup()
+        group.enter()
+        // Schedule the loading of the key on the main thread
+        DispatchQueue.main.async {
+            _ = self.requestPusherAuthFromAuthMethod(channel: channel) { pusherAuth, error in
+                if let pusherAuth = pusherAuth,
+                    let decryptionKey = pusherAuth.sharedSecret,
+                    error == nil
+                {
+                    channel.decryptionKey = decryptionKey
+                }else{
+                    channel.decryptionKey = nil
+                }
+                // Once we've updated the key, release the event queue thread to continue processing events
+                group.leave()
+            }
+        }
+        // Pause the event queue thread until we have the response from the auth endpoint
+        group.wait()
+    }
+}
+
+internal struct PusherAuthError: Error {
+    enum Kind {
+        case notConnected
+        case noMethod
+        case couldNotBuildRequest
+        case invalidAuthResponse
+        case requestFailure
+    }
+
+    let kind: Kind
+
+    var message: String? = nil
+
+    var response: URLResponse? = nil
+    var data: String? = nil
+    var error: NSError? = nil
+}
+
 @objc public class PusherAuth: NSObject {
     public let auth: String
     public let channelData: String?
+    public let sharedSecret: String?
 
-    public init(auth: String, channelData: String? = nil) {
+    public init(auth: String, channelData: String? = nil, sharedSecret: String? = nil) {
         self.auth = auth
         self.channelData = channelData
+        self.sharedSecret = sharedSecret
     }
 }
 

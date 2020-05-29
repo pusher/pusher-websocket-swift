@@ -28,7 +28,7 @@ public enum AuthMethod {
     public let host: String
     public let port: Int
     public let path: String?
-    public let encrypted: Bool
+    public let useTLS: Bool
     public let activityTimeout: TimeInterval?
 
     @nonobjc public init(
@@ -38,7 +38,7 @@ public enum AuthMethod {
         host: PusherHost = .host("ws.pusherapp.com"),
         port: Int? = nil,
         path: String? = nil,
-        encrypted: Bool = true,
+        useTLS: Bool = true,
         activityTimeout: TimeInterval? = nil
     ) {
         self.authMethod = authMethod
@@ -47,7 +47,8 @@ public enum AuthMethod {
         self.host = host.stringValue
         self.port = port ?? (encrypted ? 443 : 80)
         self.path = path
-        self.encrypted = encrypted
+        self.port = port ?? (useTLS ? 443 : 80)
+        self.useTLS = useTLS
         self.activityTimeout = activityTimeout
     }
 }

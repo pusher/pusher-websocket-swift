@@ -2,7 +2,8 @@ import Foundation
 
 @objcMembers
 @objc open class GlobalChannel: PusherChannel {
-    open var globalCallbacks: [String : (Any?) -> Void] = [:]
+    open var globalCallbacks: [String: (PusherEvent) -> Void] = [:]
+    open var globalLegacyCallbacks: [String: (Any?) -> Void] = [:]
 
     /**
         Initializes a new GlobalChannel instance
@@ -18,32 +19,25 @@ import Foundation
     /**
         Calls the appropriate callbacks for the given event name in the scope of the global channel
 
-        - parameter name:        The name of the received event
-        - parameter data:        The data associated with the received message
-        - parameter channelName: The name of the channel that the received message was triggered
-                                 to, if relevant
+        - parameter event: The event received from the websocket
     */
-    internal func handleEvent(name: String, data: String, channelName: String?) {
+    internal func handleGlobalEvent(event: PusherEvent) {
         for (_, callback) in self.globalCallbacks {
-            if let channelName = channelName {
-                callback(["channel": channelName, "event": name, "data": data] as [String: Any])
-            } else {
-                callback(["event": name, "data": data] as [String: Any])
-            }
+            callback(event.copy() as! PusherEvent)
         }
     }
 
     /**
-        Calls the appropriate callbacks for the given event name in the scope of the global channel
+     Calls the appropriate legacy callbacks for the given event name in the scope of the global channel
 
-        - parameter name: The name of the received event
-        - parameter data: The data associated with the received message
-    */
-    internal func handleErrorEvent(name: String, data: [String: AnyObject]) {
-        for (_, callback) in self.globalCallbacks {
-            callback(["event": name, "data": data])
+     - parameter event: The JSON object received from the websocket
+     */
+    internal func handleGlobalEventLegacy(event: [String: Any]) {
+        for (_, callback) in self.globalLegacyCallbacks {
+            callback(event)
         }
     }
+
 
     /**
         Binds a callback to the global channel
@@ -52,9 +46,22 @@ import Foundation
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
-    internal func bind(_ callback: @escaping (Any?) -> Void) -> String {
+    internal func bind(_ callback: @escaping (PusherEvent) -> Void) -> String {
         let randomId = UUID().uuidString
         self.globalCallbacks[randomId] = callback
+        return randomId
+    }
+
+    /**
+     Binds a callback to the global channel
+
+     - parameter callback:  The function to call when a message is received
+
+     - returns: A unique callbackId that can be used to unbind the callback at a later time
+     */
+    internal func bindLegacy(_ callback: @escaping (Any?) -> Void) -> String {
+        let randomId = UUID().uuidString
+        self.globalLegacyCallbacks[randomId] = callback
         return randomId
     }
 
@@ -65,6 +72,7 @@ import Foundation
     */
     internal func unbind(callbackId: String) {
         globalCallbacks.removeValue(forKey: callbackId)
+        globalLegacyCallbacks.removeValue(forKey: callbackId)
     }
 
     /**
@@ -72,5 +80,6 @@ import Foundation
     */
     override open func unbindAll() {
         globalCallbacks = [:]
+        globalLegacyCallbacks = [:]
     }
 }
