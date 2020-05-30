@@ -45,7 +45,6 @@ public enum AuthMethod {
         self.attemptToReturnJSONObject = attemptToReturnJSONObject
         self.autoReconnect = autoReconnect
         self.host = host.stringValue
-        self.port = port ?? (encrypted ? 443 : 80)
         self.path = path
         self.port = port ?? (useTLS ? 443 : 80)
         self.useTLS = useTLS
