@@ -116,7 +116,6 @@ import Starscream
 
         self.eventQueue.delegate = self
         self.socket.delegate = self
-        self.socket.pongDelegate = self
     }
 
     deinit {

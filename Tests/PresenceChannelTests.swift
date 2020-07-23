@@ -107,7 +107,7 @@ class PusherPresenceChannelTests: XCTestCase {
                 "data": "{\\"user_id\\":\\"100\\", \\"user_info\\":{\\"twitter\\":\\"hamchapman\\"}}"
             }
             """.removing(.newlines)
-            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: jsonDict)
+            self.pusher.connection.didReceive(event: .text(jsonDict), client: self.socket)
         }
 
         waitForExpectations(timeout: 0.5)
@@ -188,7 +188,7 @@ class PusherPresenceChannelTests: XCTestCase {
                 "data": "{\\"user_id\\":\\"100\\"}"
             }
             """.removing(.newlines)
-            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: jsonDict)
+            self.pusher.connection.didReceive(event: .text(jsonDict), client: self.socket)
         }
         waitForExpectations(timeout: 0.5)
     }
@@ -212,7 +212,7 @@ class PusherPresenceChannelTests: XCTestCase {
                 "data": "{\\"user_id\\":\\"100\\"}"
             }
             """.removing(.newlines)
-            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: jsonDict)
+            self.pusher.connection.didReceive(event: .text(jsonDict), client: self.socket)
         }
         waitForExpectations(timeout: 0.5)
     }
@@ -235,7 +235,7 @@ class PusherPresenceChannelTests: XCTestCase {
                 "data": "{\\"user_id\\":100}"
             }
             """.removing(.newlines)
-            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: addedJsonDict)
+            self.pusher.connection.didReceive(event: .text(addedJsonDict), client: self.socket)
 
             let removedJsonDict = """
             {
@@ -244,7 +244,7 @@ class PusherPresenceChannelTests: XCTestCase {
                 "data": "{\\"user_id\\":100}"
             }
             """.removing(.newlines)
-            self.pusher.connection.websocketDidReceiveMessage(socket: self.socket, text: removedJsonDict)
+            self.pusher.connection.didReceive(event: .text(removedJsonDict), client: self.socket)
         }
         waitForExpectations(timeout: 0.5)
     }
