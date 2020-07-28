@@ -52,7 +52,9 @@ open class MockWebSocket: WebSocket {
             functionName: "disconnect",
             args: nil,
             functionToCall: {
-                self.delegate?.didReceive(event: .disconnected("", 0), client: self)
+                self.delegate?.didReceive(event: .disconnected("The connection closed normally.",
+                                                               closeCode),
+                                          client: self)
             }
         )
     }
