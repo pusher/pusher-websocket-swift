@@ -48,9 +48,6 @@ open class MockWebSocket: WebSocket {
     }
 
     open override func disconnect(closeCode: UInt16 = CloseCode.normal.rawValue) {
-        <#code#>
-    }
-    open override func disconnect(forceTimeout: TimeInterval? = nil, closeCode: UInt16 = CloseCode.normal.rawValue) {
         let _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
