@@ -16,7 +16,15 @@ open class MockWebSocket: WebSocket {
     init() {
         var request = URLRequest(url: URL(string: "test")!)
         request.timeoutInterval = 5
-        super.init(request: request)
+        let certPinner = FoundationSecurity()
+
+        if #available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *) {
+            super.init(request: request,
+                       engine: WSEngine(transport: TCPTransport(), certPinner: certPinner))
+        } else {
+            super.init(request: request,
+                       engine: WSEngine(transport: FoundationTransport(), certPinner: certPinner))
+        }
     }
 
     open func appendToCallbackCheckString(_ str: String) {
