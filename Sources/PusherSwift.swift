@@ -26,8 +26,9 @@ let CLIENT_NAME = "pusher-websocket-swift"
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
         self.key = key
         let urlString = constructUrl(key: key, options: options)
-        let ws = WebSocket(url: URL(string: urlString)!)
+        let ws = WebSocket(request: URLRequest(url: URL(string: urlString)!), useCustomEngine: false)
         connection = PusherConnection(key: key, socket: ws, url: urlString, options: options)
+        ws.delegate = connection
         connection.createGlobalChannel()
     }
 

@@ -9,7 +9,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ashleymills/Reachability.swift.git", .upToNextMajor(from: "5.0.0")),
-        .package(url: "https://github.com/daltoniam/Starscream.git", .upToNextMajor(from: "3.1.0")),
+        .package(url: "https://github.com/JonathanDowning/Starscream.git", .branch("feature/WebSocketDelegate-change")),
     ],
     targets: [
         .target(

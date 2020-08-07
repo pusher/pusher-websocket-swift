@@ -11,7 +11,7 @@ import Starscream
     open var socketId: String?
     open var connectionState = ConnectionState.disconnected
     open var channels = PusherChannels()
-    open var socket: WebSocket!
+    open var socket: WebSocketClient!
     open var URLSession: Foundation.URLSession
     open var userDataFetcher: (() -> PusherPresenceChannelMember)?
     open var reconnectAttemptsMax: Int? = nil
@@ -97,7 +97,7 @@ import Starscream
     */
     public init(
         key: String,
-        socket: WebSocket,
+        socket: WebSocketClient,
         url: String,
         options: PusherClientOptions,
         URLSession: Foundation.URLSession = Foundation.URLSession.shared
@@ -115,8 +115,6 @@ import Starscream
         super.init()
 
         self.eventQueue.delegate = self
-        self.socket.delegate = self
-        self.socket.pongDelegate = self
     }
 
     deinit {
