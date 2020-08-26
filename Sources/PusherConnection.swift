@@ -204,9 +204,9 @@ import Starscream
     */
     internal func unsubscribe(channelName: String) {
         if let chan = self.channels.find(name: channelName), chan.subscribed {
-            self.sendEvent(event: "pusher:unsubscribe",
+            self.sendEvent(event: Constants.Events.Pusher.unsubscribe,
                 data: [
-                    "channel": channelName
+                    Constants.JSONKeys.channel: channelName
                 ] as [String : Any]
             )
 
@@ -233,10 +233,11 @@ import Starscream
         - parameter channel: The name of the channel
     */
     open func sendEvent(event: String, data: Any, channel: PusherChannel? = nil) {
-        if event.components(separatedBy: "-")[0] == "client" {
+        if event.components(separatedBy: "-")[0] == Constants.EventTypes.client {
             sendClientEvent(event: event, data: data, channel: channel)
         } else {
-            let dataString = JSONStringify(["event": event, "data": data])
+            let dataString = JSONStringify([Constants.JSONKeys.event: event,
+                                            Constants.JSONKeys.data: data])
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendEvent \(dataString)")
             self.socket.write(string: dataString)
         }
@@ -252,7 +253,9 @@ import Starscream
     fileprivate func sendClientEvent(event: String, data: Any, channel: PusherChannel?) {
         if let channel = channel {
             if channel.type == .presence || channel.type == .private {
-                let dataString = JSONStringify(["event": event, "data": data, "channel": channel.name] as [String : Any])
+                let dataString = JSONStringify([Constants.JSONKeys.event: event,
+                                                Constants.JSONKeys.data: data,
+                                                Constants.JSONKeys.channel: channel.name] as [String : Any])
                 self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendClientEvent \(dataString)")
                 self.socket.write(string: dataString)
             } else {
@@ -488,15 +491,15 @@ import Starscream
 
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
-                    if let dataJSON = event.dataToJSONObject() as? [String: Any], let presenceData = dataJSON["presence"] as? [String: AnyObject],
-                       let presenceHash = presenceData["hash"] as? [String: AnyObject]
+                    if let dataJSON = event.dataToJSONObject() as? [String: Any], let presenceData = dataJSON[Constants.JSONKeys.presence] as? [String: AnyObject],
+                        let presenceHash = presenceData[Constants.JSONKeys.hash] as? [String: AnyObject]
                     {
                         presChan.addExistingMembers(memberHash: presenceHash)
                     }
                 }
             }
 
-            let subscriptionEvent = event.copy(withEventName: "pusher:subscription_succeeded")
+            let subscriptionEvent = event.copy(withEventName: Constants.Events.Pusher.subscriptionSucceeded)
             callGlobalCallbacks(event: subscriptionEvent)
             chan.handleEvent(event: subscriptionEvent)
 
@@ -520,14 +523,14 @@ import Starscream
     */
     fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
         if let connectionData = event.dataToJSONObject() as? [String:Any],
-           let socketId = connectionData["socket_id"] as? String
+            let socketId = connectionData[Constants.JSONKeys.socketId] as? String
         {
             self.socketId = socketId
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
             self.reconnectAttempts = 0
             self.reconnectTimer?.invalidate()
 
-            if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
+            if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData[Constants.JSONKeys.activityTimeout] as? TimeInterval {
                 self.activityTimeoutInterval = activityTimeoutFromServer
             }
 
@@ -595,11 +598,11 @@ import Starscream
         - parameter data:        The error returned by the auth endpoint
     */
     fileprivate func handleAuthorizationError(forChannel channelName: String, error: PusherAuthError) {
-        let eventName = "pusher:subscription_error"
+        let eventName = Constants.Events.Pusher.subscriptionError
         let json = [
-            "event": eventName,
-            "channel": channelName,
-            "data": error.data ?? ""
+            Constants.JSONKeys.event: eventName,
+            Constants.JSONKeys.channel: channelName,
+            Constants.JSONKeys.data: error.data ?? ""
         ]
         if let event = try? self.eventFactory.makeEvent(fromJSON: json, withDecryptionKey: nil){
             DispatchQueue.main.async {
@@ -622,13 +625,13 @@ import Starscream
     open func handleEvent(event: PusherEvent) {
         resetActivityTimeoutTimer()
         switch event.eventName {
-        case "pusher_internal:subscription_succeeded":
+        case Constants.Events.PusherInternal.subscriptionSucceeded:
             handleSubscriptionSucceededEvent(event: event)
-        case "pusher:connection_established":
+        case Constants.Events.Pusher.connectionEstablished:
             handleConnectionEstablishedEvent(event: event)
-        case "pusher_internal:member_added":
+        case Constants.Events.PusherInternal.memberAdded:
             handleMemberAddedEvent(event: event)
-        case "pusher_internal:member_removed":
+        case Constants.Events.PusherInternal.memberRemoved:
             handleMemberRemovedEvent(event: event)
         default:
             callGlobalCallbacks(event: event)
@@ -756,13 +759,14 @@ import Starscream
         if let userDataFetcher = self.userDataFetcher {
             let userData = userDataFetcher()
             if let userInfo: Any = userData.userInfo {
-                return JSONStringify(["user_id": userData.userId, "user_info": userInfo])
+                return JSONStringify([Constants.JSONKeys.userId: userData.userId,
+                                      Constants.JSONKeys.userInfo: userInfo])
             } else {
-                return JSONStringify(["user_id": userData.userId])
+                return JSONStringify([Constants.JSONKeys.userId: userData.userId])
             }
         } else {
             if let socketId = self.socketId {
-                return JSONStringify(["user_id": socketId])
+                return JSONStringify([Constants.JSONKeys.userId: socketId])
             } else {
                 print("Authentication failed. You may not be connected")
                 return ""
@@ -777,9 +781,9 @@ import Starscream
     */
     fileprivate func subscribeToNormalChannel(_ channel: PusherChannel) {
         self.sendEvent(
-            event: "pusher:subscribe",
+            event: Constants.Events.Pusher.subscribe,
             data: [
-                "channel": channel.name
+                Constants.JSONKeys.channel: channel.name
             ]
         )
     }
@@ -837,7 +841,7 @@ import Starscream
                 return
             }
 
-            guard let auth = json["auth"] as? String else {
+            guard let auth = json[Constants.JSONKeys.auth] as? String else {
                 let message = "Error authorizing channel [\(channel.name)]: No auth field in response"
                 completionHandler(nil, PusherAuthError(kind: .invalidAuthResponse, message: message, response: httpResponse))
                 return
@@ -845,8 +849,8 @@ import Starscream
 
             let pusherAuth = PusherAuth(
                 auth: auth,
-                channelData: json["channel_data"] as? String,
-                sharedSecret: json["shared_secret"] as? String
+                channelData: json[Constants.JSONKeys.channelData] as? String,
+                sharedSecret: json[Constants.JSONKeys.sharedSecret] as? String
             )
 
             completionHandler(pusherAuth, nil)
@@ -889,11 +893,11 @@ import Starscream
         (channel as? PusherPresenceChannel)?.setMyUserId(channelData: channelData)
 
         self.sendEvent(
-            event: "pusher:subscribe",
+            event: Constants.Events.Pusher.subscribe,
             data: [
-                "channel": channel.name,
-                "auth": authValue,
-                "channel_data": channelData
+                Constants.JSONKeys.channel: channel.name,
+                Constants.JSONKeys.auth: authValue,
+                Constants.JSONKeys.channelData: channelData
             ]
         )
     }
@@ -906,10 +910,10 @@ import Starscream
     */
     fileprivate func handlePrivateChannelAuth(authValue auth: String, channel: PusherChannel) {
         self.sendEvent(
-            event: "pusher:subscribe",
+            event: Constants.Events.Pusher.subscribe,
             data: [
-                "channel": channel.name,
-                "auth": auth
+                Constants.JSONKeys.channel: channel.name,
+                Constants.JSONKeys.auth: auth
             ]
         )
     }
@@ -924,8 +928,8 @@ extension PusherConnection: PusherEventQueueDelegate {
 
     func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
         DispatchQueue.main.async {
-            if let eventName = payload["event"] as? String {
-                let data = payload["data"] as? String
+            if let eventName = payload[Constants.JSONKeys.event] as? String {
+                let data = payload[Constants.JSONKeys.data] as? String
                 self.delegate?.failedToDecryptEvent?(eventName: eventName, channelName: channelName, data: data)
             }
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Failed to decrypt event on channel '\(channelName)'. Skipping.")

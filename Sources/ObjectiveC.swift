@@ -60,7 +60,7 @@ import Foundation
     convenience init(
         ocAuthMethod authMethod: OCAuthMethod,
         autoReconnect: Bool = true,
-        ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
+        ocHost host: OCPusherHost = PusherHost.host(Constants.API.defaultHost).toObjc(),
         port: NSNumber? = nil,
         useTLS: Bool = true,
         activityTimeout: NSNumber? = nil
@@ -80,7 +80,7 @@ import Foundation
         ocAuthMethod authMethod: OCAuthMethod,
         attemptToReturnJSONObject: Bool = true,
         autoReconnect: Bool = true,
-        ocHost host: OCPusherHost = PusherHost.host("ws.pusherapp.com").toObjc(),
+        ocHost host: OCPusherHost = PusherHost.host(Constants.API.defaultHost).toObjc(),
         port: NSNumber? = nil,
         useTLS: Bool = true,
         activityTimeout: NSNumber? = nil
@@ -112,7 +112,7 @@ public extension PusherHost {
         case let .host(host):
             return OCPusherHost(host: host)
         case let .cluster(cluster):
-            return OCPusherHost(cluster: "ws-\(cluster).pusher.com")
+            return OCPusherHost(cluster: "ws-\(cluster).\(Constants.API.pusherDomain)")
         }
     }
 
@@ -120,7 +120,7 @@ public extension PusherHost {
         switch (source.type) {
         case 0: return PusherHost.host(source.host!)
         case 1: return PusherHost.cluster(source.cluster!)
-        default: return PusherHost.host("ws.pusherapp.com")
+        default: return PusherHost.host(Constants.API.defaultHost)
         }
     }
 }

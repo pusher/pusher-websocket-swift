@@ -32,7 +32,7 @@ class PusherConcreteEventQueue: PusherEventQueue {
         var channel: PusherChannel? = nil
 
         // If this event is for a particular channel, find the channel
-        if let channelName = json["channel"] as? String {
+        if let channelName = json[Constants.JSONKeys.channel] as? String {
             channel = channels.find(name: channelName)
             if channel == nil {
                 // If we can't find the channel then we have unsubscribed, drop the event

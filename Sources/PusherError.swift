@@ -13,15 +13,15 @@ open class PusherError: NSObject {
     @nonobjc internal let raw: [String: Any]
 
     @nonobjc internal init?(jsonObject: [String: Any]) {
-        guard let data = jsonObject["data"] as? [String: Any] else {
+        guard let data = jsonObject[Constants.JSONKeys.data] as? [String: Any] else {
             return nil
         }
 
-        guard let message = data["message"] as? String else {
+        guard let message = data[Constants.JSONKeys.message] as? String else {
             return nil
         }
 
-        self.code = data["code"] as? Int
+        self.code = data[Constants.JSONKeys.code] as? Int
         self.message = message
         self.raw = jsonObject
     }

@@ -47,18 +47,18 @@ public typealias PusherUserInfoObject = [String: AnyObject]
     internal func addMember(memberJSON: [String : Any]) {
         let member: PusherPresenceChannelMember
 
-        if let userId = memberJSON["user_id"] as? String {
-            if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
+        if let userId = memberJSON[Constants.JSONKeys.userId] as? String {
+            if let userInfo = memberJSON[Constants.JSONKeys.userInfo] as? PusherUserInfoObject {
                 member = PusherPresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
 
             } else {
                 member = PusherPresenceChannelMember(userId: userId)
             }
         } else {
-            if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!), userInfo: userInfo as AnyObject?)
+            if let userInfo = memberJSON[Constants.JSONKeys.userInfo] as? PusherUserInfoObject {
+                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON[Constants.JSONKeys.userId]!), userInfo: userInfo as AnyObject?)
             } else {
-                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!))
+                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON[Constants.JSONKeys.userId]!))
             }
         }
         members.append(member)
@@ -94,10 +94,10 @@ public typealias PusherUserInfoObject = [String: AnyObject]
     internal func removeMember(memberJSON: [String : Any]) {
         let id: String
 
-        if let userId = memberJSON["user_id"] as? String {
+        if let userId = memberJSON[Constants.JSONKeys.userId] as? String {
             id = userId
         } else {
-            id = String.init(describing: memberJSON["user_id"]!)
+            id = String.init(describing: memberJSON[Constants.JSONKeys.userId]!)
         }
 
         if let index = self.members.firstIndex(where: { $0.userId == id }) {
@@ -115,7 +115,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
                                  to the channel
     */
     internal func setMyUserId(channelData: String) {
-        if let channelDataObject = parse(channelData: channelData), let userId = channelDataObject["user_id"] {
+        if let channelDataObject = parse(channelData: channelData), let userId = channelDataObject[Constants.JSONKeys.userId] {
             self.myId = String.init(describing: userId)
         }
     }

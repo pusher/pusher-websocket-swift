@@ -7,7 +7,7 @@ public enum PusherHost {
     public var stringValue: String {
         switch self {
             case .host(let host): return host
-            case .cluster(let cluster): return "ws-\(cluster).pusher.com"
+        case .cluster(let cluster): return "ws-\(cluster).\(Constants.API.pusherDomain)"
         }
     }
 }
@@ -34,7 +34,7 @@ public enum AuthMethod {
         authMethod: AuthMethod = .noMethod,
         attemptToReturnJSONObject: Bool = true,
         autoReconnect: Bool = true,
-        host: PusherHost = .host("ws.pusherapp.com"),
+        host: PusherHost = .host(Constants.API.defaultHost),
         port: Int? = nil,
         useTLS: Bool = true,
         activityTimeout: TimeInterval? = nil

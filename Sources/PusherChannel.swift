@@ -10,9 +10,9 @@ public enum PusherChannelType {
     }
 
     public static func type(forName name: String) -> PusherChannelType {
-        if (name.components(separatedBy: "-")[0] == "presence") {
+        if (name.components(separatedBy: "-")[0] == Constants.EventTypes.presence) {
             return .presence
-        } else if (name.components(separatedBy: "-")[0] == "private") {
+        } else if (name.components(separatedBy: "-")[0] == Constants.EventTypes.private) {
             return .private
         } else {
             return .normal
@@ -92,7 +92,7 @@ open class PusherChannel: NSObject {
                     callbackData = event.data
                 }
             } else {
-                callbackData = event.raw["data"]
+                callbackData = event.raw[Constants.JSONKeys.data]
             }
             callback(callbackData)
         });

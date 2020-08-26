@@ -19,7 +19,7 @@ extension PusherConnection: WebSocketDelegate {
             return
         }
 
-        if event == "pusher:error" {
+        if event == Constants.Events.Pusher.error {
             guard let error = PusherError(jsonObject: payload) else {
                 self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming error \(text)")
                 return
