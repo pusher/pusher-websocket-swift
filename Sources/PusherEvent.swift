@@ -64,7 +64,7 @@ open class PusherEvent: NSObject, NSCopying {
      */
     @nonobjc internal func copy(withEventName eventName: String) -> PusherEvent {
         var jsonObject = self.raw
-        jsonObject["event"] = eventName
+        jsonObject[Constants.JSONKeys.event] = eventName
         return PusherEvent(eventName: eventName, channelName: self.channelName, data: self.data, userId: self.userId, raw: jsonObject)
     }
 

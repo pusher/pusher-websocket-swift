@@ -13,7 +13,7 @@ extension PusherConnection: WebSocketDelegate {
         self.delegate?.debugLog?(message: PusherLogger.debug(for: .receivedMessage, context: text))
 
         guard let payload = PusherParser.getPusherEventJSON(from: text),
-            let event = payload["event"] as? String
+            let event = payload[Constants.JSONKeys.event] as? String
         else {
             self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToHandleIncomingMessage, context: text))
             return
