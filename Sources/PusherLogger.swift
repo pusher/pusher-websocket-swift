@@ -54,8 +54,9 @@ internal class PusherLogger {
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
     /// - Returns: A `String` with information to log concerning the event.
-    internal static func debug(for event: LoggingEvent, context: Any? = nil) -> String {
-        return message(for: event, level: .debug)
+    internal static func debug(for event: LoggingEvent,
+                               context: CustomStringConvertible? = nil) -> String {
+        return message(for: event, level: .debug, context: context)
     }
 
     /// An informational message relating to a particular event of interest.
@@ -63,8 +64,9 @@ internal class PusherLogger {
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
     /// - Returns: A `String` with information to log concerning the event.
-    internal static func info(for event: LoggingEvent, context: Any? = nil) -> String {
-        return message(for: event, level: .info)
+    internal static func info(for event: LoggingEvent,
+                              context: CustomStringConvertible? = nil) -> String {
+        return message(for: event, level: .info, context: context)
     }
 
     /// A warning message relating to a particular event of interest.
@@ -72,8 +74,9 @@ internal class PusherLogger {
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
     /// - Returns: A `String` with information to log concerning the event.
-    internal static func warning(for event: LoggingEvent, context: Any? = nil) -> String {
-        return message(for: event, level: .warning)
+    internal static func warning(for event: LoggingEvent,
+                                 context: CustomStringConvertible? = nil) -> String {
+        return message(for: event, level: .warning, context: context)
     }
 
     /// An error message relating to a particular event of interest.
@@ -81,8 +84,9 @@ internal class PusherLogger {
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
     /// - Returns: A `String` with information to log concerning the event.
-    internal static func error(for event: LoggingEvent, context: Any? = nil) -> String {
-        return message(for: event, level: .error)
+    internal static func error(for event: LoggingEvent,
+                               context: CustomStringConvertible? = nil) -> String {
+        return message(for: event, level: .error, context: context)
     }
 
     // MARK: - Private methods
