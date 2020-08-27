@@ -48,18 +48,38 @@ internal class PusherLogger {
 
     // MARK: - Event logging
 
+    /// A debug message relating to a particular event of interest.
+    /// - Parameters:
+    ///   - event: A particular `LoggingEvent` of interest.
+    ///   - context: Additional context for the message.
+    /// - Returns: A `String` with information to log concerning the event.
     internal static func debug(for event: LoggingEvent, context: Any? = nil) -> String {
         return message(for: event, level: .debug)
     }
 
+    /// An informational message relating to a particular event of interest.
+    /// - Parameters:
+    ///   - event: A particular `LoggingEvent` of interest.
+    ///   - context: Additional context for the message.
+    /// - Returns: A `String` with information to log concerning the event.
     internal static func info(for event: LoggingEvent, context: Any? = nil) -> String {
         return message(for: event, level: .info)
     }
 
+    /// A warning message relating to a particular event of interest.
+    /// - Parameters:
+    ///   - event: A particular `LoggingEvent` of interest.
+    ///   - context: Additional context for the message.
+    /// - Returns: A `String` with information to log concerning the event.
     internal static func warning(for event: LoggingEvent, context: Any? = nil) -> String {
         return message(for: event, level: .warning)
     }
 
+    /// An error message relating to a particular event of interest.
+    /// - Parameters:
+    ///   - event: A particular `LoggingEvent` of interest.
+    ///   - context: Additional context for the message.
+    /// - Returns: A `String` with information to log concerning the event.
     internal static func error(for event: LoggingEvent, context: Any? = nil) -> String {
         return message(for: event, level: .error)
     }
@@ -69,7 +89,7 @@ internal class PusherLogger {
     /// An informational message relating to a particular event of interest.
     /// - Parameter event: A particular `LoggingEvent` of interest.
     /// - Parameter level: The `LoggingLevel` to set for the message.
-    /// - Parameter context: Additonal context for the message.
+    /// - Parameter context: Additional context for the message.
     /// - Returns: A `String` with information to log concerning the event.
     private static func message(for event: LoggingEvent,
                                 level: LoggingLevel,

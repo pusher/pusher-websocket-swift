@@ -47,7 +47,7 @@ import Starscream
                 return
             }
 
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network reachable")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .networkReachable))
 
             switch self.connectionState {
             case .disconnecting, .connecting, .reconnecting:
@@ -63,9 +63,7 @@ import Starscream
                 // If already connected then we assume that there was a missed network event that
                 // led to a bad connection so we move to the disconnected state and then attempt
                 // reconnection
-                self.delegate?.debugLog?(
-                    message: "[PUSHER DEBUG] Connection state is \(self.connectionState.stringValue()) but received network reachability change so going to call attemptReconnect"
-                )
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .attemptReconnectionAfterReachabilityChange))
                 self.resetConnectionAndAttemptReconnect()
                 return
             }
@@ -76,7 +74,7 @@ import Starscream
                 return
             }
 
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Network unreachable")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .networkUnreachable))
             self.resetConnectionAndAttemptReconnect()
         }
         return reachability
@@ -238,7 +236,8 @@ import Starscream
         } else {
             let dataString = JSONStringify([Constants.JSONKeys.event: event,
                                             Constants.JSONKeys.data: data])
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendEvent \(dataString)")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .eventSent,
+                                                                 context: dataString))
             self.socket.write(string: dataString)
         }
     }
@@ -256,7 +255,8 @@ import Starscream
                 let dataString = JSONStringify([Constants.JSONKeys.event: event,
                                                 Constants.JSONKeys.data: data,
                                                 Constants.JSONKeys.channel: channel.name] as [String : Any])
-                self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendClientEvent \(dataString)")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .clientEventSent,
+                                                                     context: dataString))
                 self.socket.write(string: dataString)
             } else {
                 print("You must be subscribed to a private or presence channel to send client events")
@@ -445,7 +445,7 @@ import Starscream
     */
     @objc fileprivate func sendPing() {
         socket.write(ping: Data()) {
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Ping sent")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .pingSent))
             self.setupPongResponseTimeoutTimer()
         }
     }
@@ -485,7 +485,7 @@ import Starscream
             chan.subscribed = true
 
             guard event.data != nil else {
-                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Subscription succeeded event received without data key in payload")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .subscriptionSucceededNoDataInPayload))
                 return
             }
 
@@ -526,7 +526,8 @@ import Starscream
             let socketId = connectionData[Constants.JSONKeys.socketId] as? String
         {
             self.socketId = socketId
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .connectionEstablished,
+                                                                 context: socketId))
             self.reconnectAttempts = 0
             self.reconnectTimer?.invalidate()
 
@@ -673,7 +674,7 @@ import Starscream
             } else if let channelData = auth.channelData {
                 self.handlePresenceChannelAuth(authValue: auth.auth, channel: channel, channelData: channelData)
             } else {
-                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Attempting to subscribe to presence channel but no channelData value provided")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .presenceChannelSubscriptionAttemptWithoutChannelData))
                 return false
             }
             return true
@@ -922,7 +923,8 @@ import Starscream
 extension PusherConnection: PusherEventQueueDelegate {
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
         DispatchQueue.main.async {
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Unable to handle incoming Websocket message \(payload)")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToHandleIncomingMessage,
+                                                                 context: payload))
         }
     }
 
@@ -932,7 +934,8 @@ extension PusherConnection: PusherEventQueueDelegate {
                 let data = payload[Constants.JSONKeys.data] as? String
                 self.delegate?.failedToDecryptEvent?(eventName: eventName, channelName: channelName, data: data)
             }
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Failed to decrypt event on channel '\(channelName)'. Skipping.")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .skippedEventAfterDecryptionFailure,
+                                                                 context: channelName))
         }
     }
 
