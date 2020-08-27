@@ -59,7 +59,7 @@ extension PusherConnection: WebSocketDelegate {
 
         if let error = error {
             self.delegate?.debugLog?(message: PusherLogger.debug(for: .disconnectionWithError,
-                                                                 context: "(code: \((error as NSError).code)): \(error.localizedDescription)"))
+                                                                 context: "Error (code: \((error as NSError).code)): \(error.localizedDescription)"))
         } else {
             self.delegate?.debugLog?(message: PusherLogger.debug(for: .disconnectionWithoutError))
         }
