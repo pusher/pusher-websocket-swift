@@ -104,9 +104,13 @@ extension PusherConnection: WebSocketDelegate {
                                                            : reconnectInterval
 
         if reconnectAttemptsMax != nil {
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Waiting \(timeInterval) seconds before attempting to reconnect (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))")
+            let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
+                                             context: "\(timeInterval) seconds (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))")
+            self.delegate?.debugLog?(message: message)
         } else {
-            self.delegate?.debugLog?(message: "[PUSHER DEBUG] Waiting \(timeInterval) seconds before attempting to reconnect (attempt \(reconnectAttempts + 1))")
+            let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
+                                             context: "\(timeInterval) seconds (attempt \(reconnectAttempts + 1))")
+            self.delegate?.debugLog?(message: message)
         }
 
         reconnectTimer = Timer.scheduledTimer(
