@@ -358,6 +358,7 @@
 				33831C861A9CF61600B124F1 /* Headers */,
 				33831C871A9CF61600B124F1 /* Resources */,
 				50355EA8A07B4B8038A4DDF1 /* Frameworks */,
+				5333AD0824F928F1006E8DF0 /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -396,6 +397,7 @@
 				73D8A1F72435E5F3001FDE05 /* Headers */,
 				73D8A1F92435E5F3001FDE05 /* Resources */,
 				73D8A1FA2435E5F3001FDE05 /* Frameworks */,
+				5333AD0924F92916006E8DF0 /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -519,6 +521,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "case \"$PLATFORM_NAME\" in\nmacosx) plat=Mac;;\niphone*) plat=iOS;;\nwatch*) plat=watchOS;;\ntv*) plat=tvOS;;\nappletv*) plat=tvOS;;\n*) echo \"error: Unknown PLATFORM_NAME: $PLATFORM_NAME\"; exit 1;;\nesac\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nframework=$(basename \"${!VAR}\")\nexport SCRIPT_INPUT_FILE_$n=\"$SRCROOT\"/Carthage/Build/$plat/\"$framework\".framework\ndone\n\n/usr/local/bin/carthage copy-frameworks || exit\n\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nsource=${!VAR}.dSYM\ndest=${BUILT_PRODUCTS_DIR}/$(basename \"$source\")\nditto \"$source\" \"$dest\" || exit\ndone\n";
+		};
+		5333AD0824F928F1006E8DF0 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		5333AD0924F92916006E8DF0 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		73D8A2222435F24E001FDE05 /* Copy Carthage Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
