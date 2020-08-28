@@ -14,15 +14,15 @@ import Starscream
     open var socket: WebSocket!
     open var URLSession: Foundation.URLSession
     open var userDataFetcher: (() -> PusherPresenceChannelMember)?
-    open var reconnectAttemptsMax: Int? = nil
+    open var reconnectAttemptsMax: Int?
     open var reconnectAttempts: Int = 0
     open var maxReconnectGapInSeconds: Double? = 120
     open weak var delegate: PusherDelegate?
     open var pongResponseTimeoutInterval: TimeInterval = 30
     open var activityTimeoutInterval: TimeInterval
-    var reconnectTimer: Timer? = nil
-    var pongResponseTimeoutTimer: Timer? = nil
-    var activityTimeoutTimer: Timer? = nil
+    var reconnectTimer: Timer?
+    var pongResponseTimeoutTimer: Timer?
+    var activityTimeoutTimer: Timer?
     var intentionalDisconnect: Bool = false
 
     var eventQueue: PusherEventQueue
@@ -141,8 +141,8 @@ import Starscream
     internal func subscribe(
         channelName: String,
         auth: PusherAuth? = nil,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherChannel {
             let newChannel = channels.add(
                 name: channelName,
@@ -177,8 +177,8 @@ import Starscream
     internal func subscribeToPresenceChannel(
         channelName: String,
         auth: PusherAuth? = nil,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherPresenceChannel {
         let newChannel = channels.addPresence(
             channelName: channelName,
@@ -207,13 +207,13 @@ import Starscream
             self.sendEvent(event: "pusher:unsubscribe",
                 data: [
                     "channel": channelName
-                ] as [String : Any]
+                ] as [String: Any]
             )
 
             self.channels.remove(name: channelName)
         }
     }
-    
+
     /**
         Unsubscribes from all PusherChannels
     */
@@ -252,7 +252,7 @@ import Starscream
     fileprivate func sendClientEvent(event: String, data: Any, channel: PusherChannel?) {
         if let channel = channel {
             if channel.type == .presence || channel.type == .private {
-                let dataString = JSONStringify(["event": event, "data": data, "channel": channel.name] as [String : Any])
+                let dataString = JSONStringify(["event": event, "data": data, "channel": channel.name] as [String: Any])
                 self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendClientEvent \(dataString)")
                 self.socket.write(string: dataString)
             } else {
@@ -297,7 +297,7 @@ import Starscream
     /**
         Establish a websocket connection
     */
-    @objc open func connect() {
+    open func connect() {
         // reset the intentional disconnect state
         intentionalDisconnect = false
 
@@ -375,8 +375,7 @@ import Starscream
     fileprivate func setConnectionStateToConnectedAndAttemptSubscriptions() {
         if self.connectionEstablishedMessageReceived &&
            self.socketConnected &&
-           self.connectionState != .connected
-        {
+           self.connectionState != .connected {
             updateConnectionState(to: .connected)
             attemptSubscriptionsToUnsubscribedChannels()
         }
@@ -489,8 +488,7 @@ import Starscream
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
                     if let dataJSON = event.dataToJSONObject() as? [String: Any], let presenceData = dataJSON["presence"] as? [String: AnyObject],
-                       let presenceHash = presenceData["hash"] as? [String: AnyObject]
-                    {
+                       let presenceHash = presenceData["hash"] as? [String: AnyObject] {
                         presChan.addExistingMembers(memberHash: presenceHash)
                     }
                 }
@@ -519,9 +517,8 @@ import Starscream
         - parameter event: The event to be processed
     */
     fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
-        if let connectionData = event.dataToJSONObject() as? [String:Any],
-           let socketId = connectionData["socket_id"] as? String
-        {
+        if let connectionData = event.dataToJSONObject() as? [String: Any],
+           let socketId = connectionData["socket_id"] as? String {
             self.socketId = socketId
             self.delegate?.debugLog?(message: "[PUSHER DEBUG] Socket established with socket ID: \(socketId)")
             self.reconnectAttempts = 0
@@ -601,19 +598,19 @@ import Starscream
             "channel": channelName,
             "data": error.data ?? ""
         ]
-        if let event = try? self.eventFactory.makeEvent(fromJSON: json, withDecryptionKey: nil){
+        if let event = try? self.eventFactory.makeEvent(fromJSON: json, withDecryptionKey: nil) {
             DispatchQueue.main.async {
                 // TODO: Consider removing in favour of exclusively using delegate
                 self.handleEvent(event: event)
             }
 
-            if let message = error.message{
+            if let message = error.message {
                 print(message)
             }
             self.delegate?.failedToSubscribeToChannel?(name: channelName, response: error.response, data: error.data, error: error.error)
         }
     }
-    
+
     /**
         Handles incoming events and passes them on to be handled by the appropriate function
 
@@ -678,14 +675,14 @@ import Starscream
             return requestPusherAuthFromAuthMethod(channel: channel) { [weak self] pusherAuth, error in
                 if let error = error {
                     self?.handleAuthorizationError(forChannel: channel.name, error: error)
-                }else if let pusherAuth = pusherAuth {
+                } else if let pusherAuth = pusherAuth {
                     self?.handleAuthInfo(pusherAuth: pusherAuth, channel: channel)
                 }
             }
         }
     }
 
-    fileprivate func requestPusherAuthFromAuthMethod(channel: PusherChannel, completionHandler:@escaping (PusherAuth?, PusherAuthError?) -> ()) -> Bool{
+    fileprivate func requestPusherAuthFromAuthMethod(channel: PusherChannel, completionHandler:@escaping (PusherAuth?, PusherAuthError?) -> Void) -> Bool {
         guard let socketId = self.socketId else {
             let message = "socketId value not found. You may not be connected."
             completionHandler(nil, PusherAuthError(kind: .notConnected, message: message))
@@ -709,7 +706,7 @@ import Starscream
             } else {
                 let errorMessage = "Authentication request could not be built"
                 let error = NSError(domain: "com.pusher.PusherSwift", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
-                completionHandler(nil, PusherAuthError(kind:.couldNotBuildRequest, message: errorMessage, error: error))
+                completionHandler(nil, PusherAuthError(kind: .couldNotBuildRequest, message: errorMessage, error: error))
                 return false
             }
         case .authorizer(authorizer: let authorizer):
@@ -810,7 +807,7 @@ import Starscream
         - parameter request: The request to send
         - parameter channel: The PusherChannel to authenticate subsciption for
     */
-    fileprivate func sendAuthorisationRequest(request: URLRequest, channel: PusherChannel, completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> ()) {
+    fileprivate func sendAuthorisationRequest(request: URLRequest, channel: PusherChannel, completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> Void) {
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, sessionError in
             if let error = sessionError {
                 let message = "Error authorizing channel [\(channel.name)]: \(error)"
@@ -953,10 +950,9 @@ extension PusherConnection: PusherEventQueueDelegate {
             _ = self.requestPusherAuthFromAuthMethod(channel: channel) { pusherAuth, error in
                 if let pusherAuth = pusherAuth,
                     let decryptionKey = pusherAuth.sharedSecret,
-                    error == nil
-                {
+                    error == nil {
                     channel.decryptionKey = decryptionKey
-                }else{
+                } else {
                     channel.decryptionKey = nil
                 }
                 // Once we've updated the key, release the event queue thread to continue processing events
@@ -979,11 +975,11 @@ internal struct PusherAuthError: Error {
 
     let kind: Kind
 
-    var message: String? = nil
+    var message: String?
 
-    var response: URLResponse? = nil
-    var data: String? = nil
-    var error: NSError? = nil
+    var response: URLResponse?
+    var data: String?
+    var error: NSError?
 }
 
 @objc public class PusherAuth: NSObject {
@@ -1010,7 +1006,7 @@ internal struct PusherAuthError: Error {
         connected: "connected",
         disconnecting: "disconnecting",
         disconnected: "disconnected",
-        reconnecting: "reconnecting",
+        reconnecting: "reconnecting"
     ]
 
     public func stringValue() -> String {

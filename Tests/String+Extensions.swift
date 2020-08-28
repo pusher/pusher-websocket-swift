@@ -1,7 +1,7 @@
 import XCTest
 
 extension String {
-    
+
     public func removing(_ set: CharacterSet) -> String {
         var newString = self
         newString.removeAll { char -> Bool in
@@ -10,11 +10,11 @@ extension String {
         }
         return newString
     }
-    
+
     public var escaped: String {
         return self.debugDescription
     }
-    
+
     public func toJsonData(validate: Bool = true, file: StaticString = #file, line: UInt = #line) -> Data {
         do {
             let data = try self.toData()
@@ -28,7 +28,7 @@ extension String {
         }
         return Data()
     }
-    
+
     public func toJsonDict(file: StaticString = #file, line: UInt = #line) -> [String: Any] {
         do {
             let json = try toJsonAny()
@@ -38,26 +38,26 @@ extension String {
                 return [:]
             }
             return jsonDict
-            
+
         } catch {
             XCTFail("\(error)", file: file, line: line)
         }
         return [:]
     }
-    
+
     // MARK: - Private methods
-    
+
     private func toJsonAny() throws -> Any {
-        return try JSONSerialization.jsonObject(with: self.toData(), options : .allowFragments)
+        return try JSONSerialization.jsonObject(with: self.toData(), options: .allowFragments)
     }
-    
+
     private func toData() throws -> Data {
         guard let data = self.data(using: .utf8) else {
             throw JSONError.conversionFailed
         }
         return data
     }
-    
+
 }
 
 // MARK: - Error handling

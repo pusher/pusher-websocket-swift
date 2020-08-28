@@ -23,8 +23,8 @@ import Foundation
         name: String,
         connection: PusherConnection,
         auth: PusherAuth? = nil,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherChannel {
         if let channel = self.channels[name] {
             return channel
@@ -65,8 +65,8 @@ import Foundation
         channelName: String,
         connection: PusherConnection,
         auth: PusherAuth? = nil,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherPresenceChannel {
         if let channel = self.channels[channelName] as? PusherPresenceChannel {
             return channel

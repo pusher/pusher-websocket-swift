@@ -38,7 +38,6 @@ import Foundation
         }
     }
 
-
     /**
         Binds a callback to the global channel
 

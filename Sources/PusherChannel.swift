@@ -10,9 +10,9 @@ public enum PusherChannelType {
     }
 
     public static func type(forName name: String) -> PusherChannelType {
-        if (name.components(separatedBy: "-")[0] == "presence") {
+        if name.components(separatedBy: "-")[0] == "presence" {
             return .presence
-        } else if (name.components(separatedBy: "-")[0] == "private") {
+        } else if name.components(separatedBy: "-")[0] == "private" {
             return .private
         } else {
             return .normal
@@ -36,7 +36,7 @@ open class PusherChannel: NSObject {
 
     // Wrap accesses to the decryption key in a serial queue because it will be accessed from multiple threads
     @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)")
-    @nonobjc private var decryptionKeyInternal: String? = nil
+    @nonobjc private var decryptionKeyInternal: String?
     @nonobjc internal var decryptionKey: String? {
         get {
             return decryptionKeyQueue.sync { decryptionKeyInternal }
@@ -95,7 +95,7 @@ open class PusherChannel: NSObject {
                 callbackData = event.raw["data"]
             }
             callback(callbackData)
-        });
+        })
     }
 
     /**

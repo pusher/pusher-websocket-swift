@@ -6,9 +6,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     var eventQueue: PusherEventQueue!
     var channels: PusherChannels!
     var eventFactory: PusherEventFactory!
-    var eventQueueDelegate: InlineMockEventQueueDelegate!
+    weak var eventQueueDelegate: InlineMockEventQueueDelegate!
     var mockConnection: PusherConnection!
-
 
     override func setUp() {
         super.setUp()
@@ -42,7 +41,6 @@ class PusherEventQueueDecryptionTests: XCTestCase {
             "data": \(dataPayload.escaped)
         }
         """.toJsonDict()
-
 
         let ex = expectation(description: "should call didReceiveEvent")
         eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in

@@ -47,13 +47,13 @@ let CLIENT_NAME = "pusher-websocket-swift"
     open func subscribe(
         _ channelName: String,
         auth: PusherAuth? = nil,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherChannel {
 
         let isEncryptedChannel = PusherEncryptionHelpers.isEncryptedChannel(channelName: channelName)
 
-        if isEncryptedChannel && !PusherDecryptor.isDecryptionAvailable(){
+        if isEncryptedChannel && !PusherDecryptor.isDecryptionAvailable() {
             let error = """
 
             WARNING: You are subscribing to an encrypted channel: '\(channelName)' but this version of PusherSwift does not \
@@ -100,8 +100,8 @@ let CLIENT_NAME = "pusher-websocket-swift"
     open func subscribeToPresenceChannel(
         channelName: String,
         auth: PusherAuth? = nil,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherPresenceChannel {
         return self.connection.subscribeToPresenceChannel(
             channelName: channelName,

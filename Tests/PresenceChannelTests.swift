@@ -89,7 +89,7 @@ class PusherPresenceChannelTests: XCTestCase {
         pusher.connect()
         let ex = expectation(description: "member added")
 
-        var chan: PusherPresenceChannel? = nil
+        var chan: PusherPresenceChannel?
         let memberAdded = { (member: PusherPresenceChannelMember) in
             let member = chan!.findMember(userId: "100")
 
@@ -180,7 +180,7 @@ class PusherPresenceChannelTests: XCTestCase {
             ex.fulfill()
         }
         let chan = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (event: PusherEvent) in
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
             let jsonDict = """
             {
                 "event": "pusher_internal:member_added",
@@ -204,7 +204,7 @@ class PusherPresenceChannelTests: XCTestCase {
         }
         let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
         chan?.members.append(PusherPresenceChannelMember(userId: "100"))
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (event: PusherEvent) in
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
             let jsonDict = """
             {
                 "event": "pusher_internal:member_removed",
@@ -227,7 +227,7 @@ class PusherPresenceChannelTests: XCTestCase {
             ex.fulfill()
         }
         let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (event: PusherEvent) in
+        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
             let addedJsonDict = """
             {
                 "event": "pusher_internal:member_added",

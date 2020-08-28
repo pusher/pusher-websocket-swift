@@ -6,7 +6,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     var eventQueue: PusherEventQueue!
     var channels: PusherChannels!
     var eventFactory: PusherEventFactory!
-    var eventQueueDelegate: InlineMockEventQueueDelegate!
+    weak var eventQueueDelegate: InlineMockEventQueueDelegate!
     var mockConnection: PusherConnection!
 
     override func setUp() {
@@ -339,5 +339,4 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    
 }
