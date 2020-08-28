@@ -157,6 +157,7 @@ open class PusherChannel: NSObject {
     open func handleEvent(event: PusherEvent) {
         if let eventHandlerArray = self.eventHandlers[event.eventName] {
             for eventHandler in eventHandlerArray {
+                // swiftlint:disable:next force_cast
                 eventHandler.callback(event.copy() as! PusherEvent)
             }
         }

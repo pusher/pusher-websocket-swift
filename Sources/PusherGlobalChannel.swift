@@ -23,6 +23,7 @@ import Foundation
     */
     internal func handleGlobalEvent(event: PusherEvent) {
         for (_, callback) in self.globalCallbacks {
+            // swiftlint:disable:next force_cast
             callback(event.copy() as! PusherEvent)
         }
     }
