@@ -6,7 +6,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     var eventQueue: PusherEventQueue!
     var channels: PusherChannels!
     var eventFactory: PusherEventFactory!
-    weak var eventQueueDelegate: InlineMockEventQueueDelegate!
+    // swiftlint:disable:next weak_delegate
+    var eventQueueDelegate: InlineMockEventQueueDelegate!
     var mockConnection: PusherConnection!
 
     override func setUp() {
