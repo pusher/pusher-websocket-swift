@@ -57,6 +57,7 @@ open class MockWebSocket: WebSocket {
         )
     }
 
+    //swiftlint:disable:next function_body_length cyclomatic_complexity
     open override func write(string: String, completion: (() -> Void)? = nil) {
         if string == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             _ = stubber.stub(

@@ -2,6 +2,8 @@ import Foundation
 import Reachability
 import Starscream
 
+//swiftlint:disable file_length type_body_length
+
 @objcMembers
 @objc open class PusherConnection: NSObject {
     public let url: String
