@@ -1,3 +1,10 @@
 excluded:
   - Carthage
   - Package.swift
+
+identifier_name:
+  excluded:
+  - id
+  - ex
+  - to
+  - ws
