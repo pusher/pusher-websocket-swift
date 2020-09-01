@@ -14,7 +14,10 @@ import Foundation
     }
 
     func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
-        return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: nil, onMemberRemoved: nil)
+        return self.subscribeToPresenceChannel(channelName: channelName,
+                                               auth: nil,
+                                               onMemberAdded: nil,
+                                               onMemberRemoved: nil)
     }
 
     func subscribeToPresenceChannel(
@@ -22,7 +25,10 @@ import Foundation
         onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
         onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherPresenceChannel {
-        return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        return self.subscribeToPresenceChannel(channelName: channelName,
+                                               auth: nil,
+                                               onMemberAdded: onMemberAdded,
+                                               onMemberRemoved: onMemberRemoved)
     }
 
     convenience init(withAppKey key: String, options: PusherClientOptions) {

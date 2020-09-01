@@ -56,7 +56,8 @@ public typealias PusherUserInfoObject = [String: AnyObject]
             }
         } else {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!), userInfo: userInfo as AnyObject?)
+                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!),
+                                                     userInfo: userInfo as AnyObject?)
             } else {
                 member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!))
             }
@@ -131,7 +132,9 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         let data = (channelData as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
-            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: AnyObject] {
+            if let jsonData = data,
+                let jsonObject = try JSONSerialization.jsonObject(with: jsonData,
+                                                                  options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
                 print("Unable to parse string: \(channelData)")

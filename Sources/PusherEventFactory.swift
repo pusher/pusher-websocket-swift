@@ -12,13 +12,17 @@ struct PusherConcreteEventFactory: PusherEventFactory {
 
     // MARK: - Event factory
 
-    func makeEvent(fromJSON json: PusherEventPayload, withDecryptionKey decryptionKey: String? = nil) throws -> PusherEvent {
+    func makeEvent(fromJSON json: PusherEventPayload,
+                   withDecryptionKey decryptionKey: String? = nil) throws -> PusherEvent {
         guard let eventName = json["event"] as? String else {
             throw PusherEventError.invalidFormat
         }
 
         let channelName = json["channel"] as? String
-        let data = try self.data(fromJSON: json, eventName: eventName, channelName: channelName, decryptionKey: decryptionKey)
+        let data = try self.data(fromJSON: json,
+                                 eventName: eventName,
+                                 channelName: channelName,
+                                 decryptionKey: decryptionKey)
         let userId = json["user_id"] as? String
 
         return PusherEvent(eventName: eventName, channelName: channelName, data: data, userId: userId, raw: json)
@@ -26,7 +30,10 @@ struct PusherConcreteEventFactory: PusherEventFactory {
 
     // MARK: - Private methods
 
-    private func data(fromJSON json: PusherEventPayload, eventName: String, channelName: String?, decryptionKey: String?) throws -> String? {
+    private func data(fromJSON json: PusherEventPayload,
+                      eventName: String,
+                      channelName: String?,
+                      decryptionKey: String?) throws -> String? {
         let data = json["data"] as? String
 
         if PusherEncryptionHelpers.shouldDecryptMessage(eventName: eventName, channelName: channelName) {

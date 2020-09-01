@@ -58,7 +58,9 @@ class PusherConcreteEventQueue: PusherEventQueue {
                 do {
                     try self.processEvent(json: json, channel: channel)
                 } catch {
-                    self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channel.name)
+                    self.delegate?.eventQueue(self,
+                                              didFailToDecryptEventWithPayload: json,
+                                              forChannelName: channel.name)
                 }
             }
         } catch PusherEventError.invalidEncryptedData {
@@ -81,9 +83,15 @@ class PusherConcreteEventQueue: PusherEventQueue {
 
 protocol PusherEventQueueDelegate: AnyObject {
 
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?)
-    func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String)
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload)
-    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel)
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    didReceiveEvent event: PusherEvent,
+                    forChannelName channelName: String?)
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    didFailToDecryptEventWithPayload payload: PusherEventPayload,
+                    forChannelName channelName: String)
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    didReceiveInvalidEventWithPayload payload: PusherEventPayload)
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    reloadDecryptionKeySyncForChannel channel: PusherChannel)
 
 }

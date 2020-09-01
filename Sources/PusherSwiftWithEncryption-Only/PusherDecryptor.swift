@@ -24,7 +24,9 @@ class PusherDecryptor {
         let nonce = try self.decodedNonce(fromEncryptedData: encryptedData)
         let secretKey = try self.decodedDecryptionKey(fromDecryptionKey: decryptionKey)
 
-        guard let decryptedData = self.sodium.secretBox.open(authenticatedCipherText: cipherText, secretKey: secretKey, nonce: nonce),
+        guard let decryptedData = self.sodium.secretBox.open(authenticatedCipherText: cipherText,
+                                                             secretKey: secretKey,
+                                                             nonce: nonce),
             let decryptedString = String(bytes: decryptedData, encoding: .utf8) else {
                 throw PusherEventError.invalidDecryptionKey
         }
