@@ -294,12 +294,11 @@ public typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSEr
 
 public class MockSession: URLSession {
     static public var mockResponses: [String: Response] = [:]
+    //swiftlint:disable:next large_tuple
     static public var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
 
     override public class var shared: URLSession {
-        get {
-            return MockSession()
-        }
+        return MockSession()
     }
 
     override public func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
