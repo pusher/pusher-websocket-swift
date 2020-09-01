@@ -52,7 +52,8 @@ class PusherConnectionDelegateTests: XCTestCase {
     var key: String!
     var pusher: Pusher!
     var socket: MockWebSocket!
-    weak var dummyDelegate: DummyDelegate!
+    // swiftlint:disable:next weak_delegate
+    var dummyDelegate: DummyDelegate!
 
     override func setUp() {
         super.setUp()
