@@ -221,8 +221,8 @@ open class MockWebSocket: WebSocket {
 
 public func stringContainsElements(_ str: String, elements: [String]) -> Bool {
     var allElementsPresent = true
-    for e in elements {
-        if str.range(of: e) == nil {
+    for element in elements {
+        if str.range(of: element) == nil {
             allElementsPresent = false
         }
     }
