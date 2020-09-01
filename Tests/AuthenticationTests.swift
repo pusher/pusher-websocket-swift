@@ -1,6 +1,6 @@
 import XCTest
 
-//swiftlint:disable nesting
+// swiftlint:disable nesting
 
 #if WITH_ENCRYPTION
     @testable import PusherSwiftWithEncryption

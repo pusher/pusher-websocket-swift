@@ -57,7 +57,7 @@ open class MockWebSocket: WebSocket {
         )
     }
 
-    //swiftlint:disable:next function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     open override func write(string: String, completion: (() -> Void)? = nil) {
         if string == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             _ = stubber.stub(
@@ -295,7 +295,7 @@ public typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSEr
 
 public class MockSession: URLSession {
     static public var mockResponses: [String: Response] = [:]
-    //swiftlint:disable:next large_tuple
+    // swiftlint:disable:next large_tuple
     static public var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
 
     override public class var shared: URLSession {
