@@ -214,8 +214,13 @@ import Starscream
         if let chan = self.channels.find(name: channelName), chan.subscribed {
             self.sendEvent(event: Constants.Events.Pusher.unsubscribe,
                 data: [
+<<<<<<< HEAD
                     Constants.JSONKeys.channel: channelName
+                ] as [String : Any]
+=======
+                    "channel": channelName
                 ] as [String: Any]
+>>>>>>> master
             )
 
             self.channels.remove(name: channelName)
@@ -262,11 +267,16 @@ import Starscream
     fileprivate func sendClientEvent(event: String, data: Any, channel: PusherChannel?) {
         if let channel = channel {
             if channel.type == .presence || channel.type == .private {
+<<<<<<< HEAD
                 let dataString = JSONStringify([Constants.JSONKeys.event: event,
                                                 Constants.JSONKeys.data: data,
-                                                Constants.JSONKeys.channel: channel.name] as [String: Any])
+                                                Constants.JSONKeys.channel: channel.name] as [String : Any])
                 self.delegate?.debugLog?(message: PusherLogger.debug(for: .clientEventSent,
                                                                      context: dataString))
+=======
+                let dataString = JSONStringify(["event": event, "data": data, "channel": channel.name] as [String: Any])
+                self.delegate?.debugLog?(message: "[PUSHER DEBUG] sendClientEvent \(dataString)")
+>>>>>>> master
                 self.socket.write(string: dataString)
             } else {
                 print("You must be subscribed to a private or presence channel to send client events")
@@ -500,9 +510,15 @@ import Starscream
 
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
+<<<<<<< HEAD
+                    if let dataJSON = event.dataToJSONObject() as? [String: Any], let presenceData = dataJSON[Constants.JSONKeys.presence] as? [String: AnyObject],
+                        let presenceHash = presenceData[Constants.JSONKeys.hash] as? [String: AnyObject]
+                    {
+=======
                     if let dataJSON = event.dataToJSONObject() as? [String: Any],
-                        let presenceData = dataJSON[Constants.JSONKeys.presence] as? [String: AnyObject],
-                        let presenceHash = presenceData[Constants.JSONKeys.hash] as? [String: AnyObject] {
+                        let presenceData = dataJSON["presence"] as? [String: AnyObject],
+                       let presenceHash = presenceData["hash"] as? [String: AnyObject] {
+>>>>>>> master
                         presChan.addExistingMembers(memberHash: presenceHash)
                     }
                 }
@@ -531,16 +547,26 @@ import Starscream
         - parameter event: The event to be processed
     */
     fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
+<<<<<<< HEAD
+        if let connectionData = event.dataToJSONObject() as? [String:Any],
+            let socketId = connectionData[Constants.JSONKeys.socketId] as? String
+        {
+=======
         if let connectionData = event.dataToJSONObject() as? [String: Any],
-            let socketId = connectionData[Constants.JSONKeys.socketId] as? String {
+           let socketId = connectionData["socket_id"] as? String {
+>>>>>>> master
             self.socketId = socketId
             self.delegate?.debugLog?(message: PusherLogger.debug(for: .connectionEstablished,
                                                                  context: socketId))
             self.reconnectAttempts = 0
             self.reconnectTimer?.invalidate()
 
+<<<<<<< HEAD
+            if options.activityTimeout == nil, let activityTimeoutFromServer = connectionData[Constants.JSONKeys.activityTimeout] as? TimeInterval {
+=======
             if options.activityTimeout == nil,
                 let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
+>>>>>>> master
                 self.activityTimeoutInterval = activityTimeoutFromServer
             }
 

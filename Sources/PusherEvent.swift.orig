@@ -70,12 +70,17 @@ open class PusherEvent: NSObject, NSCopying {
      */
     @nonobjc internal func copy(withEventName eventName: String) -> PusherEvent {
         var jsonObject = self.raw
+<<<<<<< HEAD
         jsonObject[Constants.JSONKeys.event] = eventName
+        return PusherEvent(eventName: eventName, channelName: self.channelName, data: self.data, userId: self.userId, raw: jsonObject)
+=======
+        jsonObject["event"] = eventName
         return PusherEvent(eventName: eventName,
                            channelName: self.channelName,
                            data: self.data,
                            userId: self.userId,
                            raw: jsonObject)
+>>>>>>> master
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
