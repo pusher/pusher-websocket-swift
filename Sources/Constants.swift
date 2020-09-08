@@ -9,6 +9,8 @@ public enum Constants {
     }
 
     enum ChannelTypes {
+        static let presence         = "presence"
+        static let `private`        = "private"
         static let privateEncrypted = "private-encrypted"
     }
 
@@ -33,8 +35,6 @@ public enum Constants {
         static let client           = "client"
         static let pusher           = "pusher"
         static let pusherInternal   = "pusher_internal"
-        static let presence         = "presence"
-        static let `private`        = "private"
     }
 
     enum JSONKeys {

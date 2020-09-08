@@ -10,9 +10,9 @@ public enum PusherChannelType {
     }
 
     public static func type(forName name: String) -> PusherChannelType {
-        if (name.components(separatedBy: "-")[0] == Constants.EventTypes.presence) {
+        if (name.components(separatedBy: "-")[0] == Constants.ChannelTypes.presence) {
             return .presence
-        } else if (name.components(separatedBy: "-")[0] == Constants.EventTypes.private) {
+        } else if (name.components(separatedBy: "-")[0] == Constants.ChannelTypes.private) {
             return .private
         } else {
             return .normal
