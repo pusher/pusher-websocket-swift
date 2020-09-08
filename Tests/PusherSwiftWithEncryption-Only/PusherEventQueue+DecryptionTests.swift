@@ -6,6 +6,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     var eventQueue: PusherEventQueue!
     var channels: PusherChannels!
     var eventFactory: PusherEventFactory!
+    // swiftlint:disable:next weak_delegate
     var eventQueueDelegate: InlineMockEventQueueDelegate!
     var mockConnection: PusherConnection!
 
@@ -339,5 +340,4 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    
 }

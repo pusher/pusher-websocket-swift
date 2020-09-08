@@ -1,5 +1,7 @@
 import Foundation
 
+// swiftlint:disable nesting
+
 public enum Constants {
 
     public enum API {

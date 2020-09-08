@@ -10,8 +10,8 @@ import Starscream
 open class MockWebSocket: WebSocket {
     let stubber = StubberForMocks()
     var callbackCheckString: String = ""
-    var objectGivenToCallback: Any? = nil
-    var eventGivenToCallback: PusherEvent? = nil
+    var objectGivenToCallback: Any?
+    var eventGivenToCallback: PusherEvent?
 
     init() {
         var request = URLRequest(url: URL(string: "test")!)
@@ -33,7 +33,7 @@ open class MockWebSocket: WebSocket {
 
     open override func connect() {
         let connectionEstablishedString = "{\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"
-        let _ = stubber.stub(
+        _ = stubber.stub(
             functionName: "connect",
             args: nil,
             functionToCall: {
@@ -48,7 +48,7 @@ open class MockWebSocket: WebSocket {
     }
 
     open override func disconnect(forceTimeout: TimeInterval? = nil, closeCode: UInt16 = CloseCode.normal.rawValue) {
-        let _ = stubber.stub(
+        _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
             functionToCall: {
@@ -57,9 +57,10 @@ open class MockWebSocket: WebSocket {
         )
     }
 
-    open override func write(string: String, completion: (() -> ())? = nil) {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    open override func write(string: String, completion: (() -> Void)? = nil) {
         if string == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -67,7 +68,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if string == "{\"data\":{\"channel\":\"test-channel2\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel2\"}}" {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -75,7 +76,7 @@ open class MockWebSocket: WebSocket {
             }
             )
         } else if stringContainsElements(string, elements: ["testkey123:6aae8814fabd5285245422096705abbed64ea59614648814ffb0bf2dc5d19168", "private-channel", "pusher:subscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -83,7 +84,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["key:5ce61ee2b8594e22b66323913d7c7af9d8e815659365be3627733993f4ce3824", "presence-channel", "user_id", "45481.3166671", "pusher:subscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -91,7 +92,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["testkey123:5ce61ee2b8594e22b66323913d7c7af9d8e815659365be3627733993f4ce3824", "presence-channel", "user_id", "45481.3166671", "pusher:subscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -99,7 +100,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["key:e1d0947a10d6ff1a25990798910b2505687bb096e3e8b6c97eef02c6b1abb4c7", "private-channel", "pusher:subscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -107,13 +108,13 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["data", "testing client events", "private-channel", "client-test-event"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: nil
             )
         } else if stringContainsElements(string, elements: ["testKey123:12345678gfder78ikjbg", "private-test-channel", "pusher:subscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -121,7 +122,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["pusher:subscribe", "testKey123:12345678gfder78ikjbgmanualauth", "private-manual-auth"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -129,7 +130,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["pusher:subscribe", "testKey123:12345678gfder78ikjbgmanualauth", "presence-manual-auth"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -137,7 +138,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["key:0d0d2e7c2cd967246d808180ef0f115dad51979e48cac9ad203928141f9e6a6f", "private-test-channel", "pusher:subscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -145,7 +146,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["private-reservations-for-venue@venue_id=399edd2d-3f4a-43k9-911c-9e4b6bdf0f16;date=2017-01-13", "pusher:subscribe", "testKey123:12345678gfder78ikjbg"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -153,20 +154,20 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["test-channel", "pusher:unsubscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: nil
             )
         } else if stringContainsElements(string, elements: ["test-channel2", "pusher:unsubscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: nil
             )
         } else if stringContainsElements(string, elements: ["presence-test", "user_id", "123", "pusher:subscribe", "user_info", "twitter", "hamchapman"]) && (stringContainsElements(string, elements: ["testkey123:736f0b19c2e56f985f3e6faa38db5b69d39305bc8519952c8f9f5595d69fcb3d"]) || stringContainsElements(string, elements: ["testkey123:e5ee520a16348ced21be557e14ae70fcd1ae89f79d32d14d22a19049eaf56881"])) {
             // We require different auth signatures depending on the ordering of the channel_data JSON/Dictionary
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -174,7 +175,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["key:c2b53f001321bc088814f210fb63c259b464f590890eee2dde6387ea9b469a30", "presence-channel", "user_id", "123", "pusher:subscribe"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -183,7 +184,7 @@ open class MockWebSocket: WebSocket {
             )
         } else if stringContainsElements(string, elements: ["pusher:subscribe", "presence-channel", "friends", "0", "user_id", "123"]) && (stringContainsElements(string, elements: ["key:dd2885ee6dc6f5c964d8e3c720980397db50bf8f528e0630d4208bff80ee23f0"]) || stringContainsElements(string, elements: ["key:80cfefb0ef08fb55353dbbc0480e6160059fac14fce862e9ed1f0121ae8a440f"])) {
             // We require different auth signatures depending on the ordering of the channel_data JSON/Dictionary
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -191,7 +192,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["pusher:subscribe", "testKey123:authorizerblah123", "private-test-channel-authorizer"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -199,7 +200,7 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["pusher:subscribe", "testKey123:authorizerblah1234", "presence-test-channel-authorizer"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
@@ -207,12 +208,12 @@ open class MockWebSocket: WebSocket {
                 }
             )
         } else if stringContainsElements(string, elements: ["private-encrypted-channel", "pusher:subscribe", "636a81ba7e7b15725c00:3ee04892514e8a669dc5d30267221f16727596688894712cad305986e6fc0f3c"]) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "writeString",
                 args: [string],
                 functionToCall: {
                     self.delegate?.websocketDidReceiveMessage(socket: self, text: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-encrypted-channel\",\"data\":\"{}\"}")
-            } )
+            })
         } else {
             print("No match in write(string: ...) mock for string: \(string)")
         }
@@ -221,8 +222,8 @@ open class MockWebSocket: WebSocket {
 
 public func stringContainsElements(_ str: String, elements: [String]) -> Bool {
     var allElementsPresent = true
-    for e in elements {
-        if str.range(of: e) == nil {
+    for element in elements {
+        if str.range(of: element) == nil {
             allElementsPresent = false
         }
     }
@@ -238,7 +239,7 @@ open class MockPusherConnection: PusherConnection {
     }
 
     open override func handleEvent(event: PusherEvent) {
-        let _ = stubber.stub(
+        _ = stubber.stub(
             functionName: "handleEvent",
             args: [event],
             functionToCall: { super.handleEvent(event: event) }
@@ -269,12 +270,12 @@ open class StubberForMocks {
         return nil
     }
 
-    open func registerCallback(callback: @escaping ([FunctionCall]) -> Void){
+    open func registerCallback(callback: @escaping ([FunctionCall]) -> Void) {
         callbacks.append(callback)
     }
 
-    open func callCallbacks(calls: [FunctionCall]){
-        for callback in callbacks{
+    open func callCallbacks(calls: [FunctionCall]) {
+        for callback in callbacks {
             callback(calls)
         }
     }
@@ -294,12 +295,11 @@ public typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSEr
 
 public class MockSession: URLSession {
     static public var mockResponses: [String: Response] = [:]
+    // swiftlint:disable:next large_tuple
     static public var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
 
     override public class var shared: URLSession {
-        get {
-            return MockSession()
-        }
+        return MockSession()
     }
 
     override public func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {

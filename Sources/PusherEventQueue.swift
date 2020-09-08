@@ -1,35 +1,35 @@
 import Foundation
 
 protocol PusherEventQueue {
-    
+
     var delegate: PusherEventQueueDelegate? { get set }
 
     func enqueue(json: PusherEventPayload)
-    
+
 }
 
 // MARK: - Concrete implementation
 
 class PusherConcreteEventQueue: PusherEventQueue {
-    
+
     // MARK: - Properties
-    
+
     private let eventFactory: PusherEventFactory
     private let channels: PusherChannels
     private var queue = DispatchQueue(label: "com.pusher.pusherswift-event-queue-\(UUID().uuidString)")
-    
+
     weak var delegate: PusherEventQueueDelegate?
-    
+
     // MARK: - Initializers
-    
+
     init(eventFactory: PusherEventFactory, channels: PusherChannels) {
         self.eventFactory = eventFactory
         self.channels = channels
     }
-    
+
     // MARK: - Event queue
     public func enqueue(json: PusherEventPayload) {
-        var channel: PusherChannel? = nil
+        var channel: PusherChannel?
 
         // If this event is for a particular channel, find the channel
         if let channelName = json[Constants.JSONKeys.channel] as? String {
@@ -57,8 +57,10 @@ class PusherConcreteEventQueue: PusherEventQueue {
                 self.delegate?.eventQueue(self, reloadDecryptionKeySyncForChannel: channel)
                 do {
                     try self.processEvent(json: json, channel: channel)
-                }catch {
-                    self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channel.name)
+                } catch {
+                    self.delegate?.eventQueue(self,
+                                              didFailToDecryptEventWithPayload: json,
+                                              forChannelName: channel.name)
                 }
             }
         } catch PusherEventError.invalidEncryptedData {
@@ -80,10 +82,16 @@ class PusherConcreteEventQueue: PusherEventQueue {
 // MARK: - Delegate
 
 protocol PusherEventQueueDelegate: AnyObject {
-    
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?)
-    func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String)
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload)
-    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel)
-    
+
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    didReceiveEvent event: PusherEvent,
+                    forChannelName channelName: String?)
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    didFailToDecryptEventWithPayload payload: PusherEventPayload,
+                    forChannelName channelName: String)
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    didReceiveInvalidEventWithPayload payload: PusherEventPayload)
+    func eventQueue(_ eventQueue: PusherEventQueue,
+                    reloadDecryptionKeySyncForChannel channel: PusherChannel)
+
 }

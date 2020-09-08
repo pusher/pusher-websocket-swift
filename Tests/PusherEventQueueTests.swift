@@ -12,7 +12,7 @@ class InlineMockEventQueueDelegate: PusherEventQueueDelegate {
     var reloadDecryptionKeySync: ((PusherEventQueue, PusherChannel) -> Void)?
     var didReceiveInvalidEvent: ((PusherEventQueue, PusherEventPayload) -> Void)?
 
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload){
+    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
         self.didReceiveInvalidEvent?(eventQueue, payload)
     }
 
@@ -33,10 +33,10 @@ class PusherEventQueueTests: XCTestCase {
 
     var eventQueue: PusherEventQueue!
     var eventFactory: PusherEventFactory!
+    // swiftlint:disable:next weak_delegate
     var eventQueueDelegate: InlineMockEventQueueDelegate!
     var channels: PusherChannels!
     var connection: PusherConnection!
-
 
     override func setUp() {
         super.setUp()

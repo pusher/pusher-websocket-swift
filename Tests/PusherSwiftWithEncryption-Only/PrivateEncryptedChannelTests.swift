@@ -3,7 +3,6 @@ import XCTest
 
 class PrivateEncryptedChannelTests: XCTestCase {
 
-
     private let channelName = "private-encrypted-channel"
     private let eventName = "my-event"
     private let authEndpointURL = "http://localhost:3030"
@@ -29,76 +28,76 @@ class PrivateEncryptedChannelTests: XCTestCase {
         pusher.connection.socket = socket
         return (pusher, socket)
     }
-    
+
     func testPrivateEncryptedChannelMessageDecrypted() {
         let (pusher, socket) = configurePusherWithAuthMethod()
-        
+
         // connect to the channel
         let channel = subscribeToChannel(authData: validAuthData, pusher: pusher)
-        
+
         // prepare a message
         let exp = expectation(description: "the channel should receive a message.")
-        
+
         let dataPayload = """
         {
             "nonce": "4sVYwy4j/8dCcjyxtPCWyk19GaaViaW9",
             "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
         }
         """
-        
+
         // listen for messages to the eventName
         channel.bind(eventName: eventName, eventCallback: { (event: PusherEvent) in
-            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}");
+            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}")
             exp.fulfill()
         })
-        
+
         // send the message
         socket.delegate?.websocketDidReceiveMessage(
             socket: socket, text: createMessagePayload(dataPayload: dataPayload))
-        
+
         // wait for message to be received
         waitForExpectations(timeout: 1)
     }
-    
+
     func testShouldRetryAuth() {
         let (pusher, socket) = configurePusherWithAuthMethod()
 
         // connect with an incorrect shared secret
         let channel = subscribeToChannel(authData: incorrectSharedSecretAuthData, pusher: pusher)
-        
+
         // next authorizer should return a valid shared secret
         mockAuthResponse(jsonData: validAuthData, pusher: pusher)
-        
+
         // prepare a message
         let exp = expectation(description: "the channel should receive a message.")
-        
+
         let dataPayload = """
         {
             "nonce": "4sVYwy4j/8dCcjyxtPCWyk19GaaViaW9",
             "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
         }
         """
-        
+
         // listen to messages on eventname
         channel.bind(eventName: eventName, eventCallback: { (event: PusherEvent) in
-            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}");
+            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}")
             exp.fulfill()
         })
-        
+
         // send the message
         socket.delegate?.websocketDidReceiveMessage(
             socket: socket, text: createMessagePayload(dataPayload: dataPayload))
-        
+
         // wait for the message to be received
         waitForExpectations(timeout: 1)
     }
-    
+
     func testIncorrectSharedSecretShouldNotifyFailedToDecrypt() {
         let (pusher, socket) = configurePusherWithAuthMethod()
 
         // connect with an incorrect shared secret
-        let _ = subscribeToChannel(authData: incorrectSharedSecretAuthData, pusher: pusher)
-        
+        _ = subscribeToChannel(authData: incorrectSharedSecretAuthData, pusher: pusher)
+
         // prepare a message
         let dataPayload = """
         {
@@ -106,27 +105,27 @@ class PrivateEncryptedChannelTests: XCTestCase {
             "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
         }
         """
-        
+
         // set up a delegate to listen for failedToDecryptEvent
         let errorDelegate = DummyErrorDelegate()
         errorDelegate.expectation = expectation(description: "the message should fail to decrypt")
         errorDelegate.channelName = channelName
-        
+
         pusher.delegate = errorDelegate
-        
+
         // send the message
         socket.delegate?.websocketDidReceiveMessage(
             socket: socket, text: createMessagePayload(dataPayload: dataPayload))
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testTwoEventsReceivedOnlySecondRetryIsCorrect() {
         let (pusher, socket) = configurePusherWithAuthMethod()
 
         // connect with an incorrect shared secret
         let channel = subscribeToChannel(authData: incorrectSharedSecretAuthData, pusher: pusher)
-        
+
         // prepare a message
         let dataPayload = """
         {
@@ -134,44 +133,44 @@ class PrivateEncryptedChannelTests: XCTestCase {
             "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
         }
         """
-        
+
         // set up a delegate to listen for failedToDecryptEvent
         let errorDelegate = DummyErrorDelegate()
         errorDelegate.expectation = expectation(description: "the message should fail to decrypt")
         errorDelegate.channelName = channelName
-        
+
         pusher.delegate = errorDelegate
-        
+
         // send the message
         socket.delegate?.websocketDidReceiveMessage(
             socket: socket, text: createMessagePayload(dataPayload: dataPayload))
-        
+
         waitForExpectations(timeout: 1)
-        
+
         // ensure the next event has a valid shared secret
         mockAuthResponse(jsonData: validAuthData, pusher: pusher)
-        
+
         let exp = expectation(description: "second event should be decrypted")
-        
+
         // listen for the messages
         channel.bind(eventName: eventName, eventCallback: { (event: PusherEvent) in
-            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}");
+            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}")
             exp.fulfill()
         })
-        
+
         // send the second message
         socket.delegate?.websocketDidReceiveMessage(
             socket: socket, text: createMessagePayload(dataPayload: dataPayload))
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testTwoEventsReceivedBothFailDecryption() {
         let (pusher, socket) = configurePusherWithAuthMethod()
 
         // connect with an incorrect shared secret
-        let _ = subscribeToChannel(authData: incorrectSharedSecretAuthData, pusher: pusher)
-        
+        _ = subscribeToChannel(authData: incorrectSharedSecretAuthData, pusher: pusher)
+
         // prepare a message
         let dataPayload = """
         {
@@ -179,37 +178,37 @@ class PrivateEncryptedChannelTests: XCTestCase {
             "ciphertext": "/GMESnFGlbNn01BuBjp31XYa3i9vZsGKR8fgR9EDhXKx3lzGiUD501A="
         }
         """
-        
+
         // set up a delegate to listen for failedToDecryptEvent
         let errorDelegate = DummyErrorDelegate()
         errorDelegate.expectation = expectation(description: "the message should fail to decrypt")
         errorDelegate.channelName = channelName
-        
+
         pusher.delegate = errorDelegate
-        
+
         // send the message
         socket.delegate?.websocketDidReceiveMessage(
             socket: socket, text: createMessagePayload(dataPayload: dataPayload))
-        
+
         waitForExpectations(timeout: 1)
-        
+
         // set a new expectation for the error delegate for the second event
         errorDelegate.expectation = expectation(description: "second event should fail to decrpyt too.")
-        
+
         // send a second message
         socket.delegate?.websocketDidReceiveMessage(
             socket: socket, text: createMessagePayload(dataPayload: dataPayload))
-        
+
         waitForExpectations(timeout: 1)
     }
 
-    func authorizerReponseSequence(_ authSequence: [PusherAuth]){
+    func authorizerReponseSequence(_ authSequence: [PusherAuth]) {
         let (pusher, socket) = configurePusherWithAuthMethod(authMethod: AuthMethod.authorizer(authorizer: TestAuthorizer(authSequence)))
         pusher.connect()
 
         let subscriptionExp = expectation(description: "should subscribe to channel")
         let channel = pusher.subscribe(channelName)
-        channel.bind(eventName: "pusher:subscription_succeeded", eventCallback: { (event: PusherEvent) in
+        channel.bind(eventName: "pusher:subscription_succeeded", eventCallback: { (_: PusherEvent) in
             subscriptionExp.fulfill()
         })
         waitForExpectations(timeout: 1)
@@ -226,7 +225,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
 
         // listen for messages to the eventName
         channel.bind(eventName: eventName, eventCallback: { (event: PusherEvent) in
-            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}");
+            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}")
             exp.fulfill()
         })
 
@@ -238,17 +237,17 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testInitialLoadKeyAuthorizerAuthMethod(){
+    func testInitialLoadKeyAuthorizerAuthMethod() {
         authorizerReponseSequence([validAuth])
     }
 
-    func testReloadKeyAuthorizerAuthMethod(){
+    func testReloadKeyAuthorizerAuthMethod() {
         authorizerReponseSequence([incorrectSharedSecretAuth, validAuth])
     }
 
-    func testInitialLoadKeyRequestBuilder(){
+    func testInitialLoadKeyRequestBuilder() {
         let (pusher, socket) = configurePusherWithAuthMethod(authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: TestAuthRequestBuilder()))
-        
+
         // connect with an incorrect shared secret
         let channel = subscribeToChannel(authData: validAuthData, pusher: pusher)
 
@@ -264,7 +263,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
 
         // listen to messages on eventname
         channel.bind(eventName: eventName, eventCallback: { (event: PusherEvent) in
-            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}");
+            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}")
             exp.fulfill()
         })
 
@@ -276,7 +275,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testReloadKeyRequestBuilder(){
+    func testReloadKeyRequestBuilder() {
         let (pusher, socket) = configurePusherWithAuthMethod(authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: TestAuthRequestBuilder()))
 
         // connect with an incorrect shared secret
@@ -297,7 +296,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
 
         // listen to messages on eventname
         channel.bind(eventName: eventName, eventCallback: { (event: PusherEvent) in
-            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}");
+            XCTAssertEqual(event.data, "{\"message\":\"hello world\"}")
             exp.fulfill()
         })
 
@@ -308,36 +307,36 @@ class PrivateEncryptedChannelTests: XCTestCase {
         // wait for the message to be received
         waitForExpectations(timeout: 1)
     }
-    
+
     // utility method to ensure you're subscribed to a channel
     // option to pass authData to simulate a valid/invalid shared secret
     private func subscribeToChannel(authData: String, pusher: Pusher) -> PusherChannel {
-        
+
         // set up a connection delegate with an expectation to be subscribed
         let dummyDelegate = DummySubscriptionDelegate()
         dummyDelegate.expectation =  expectation(description: "the channel should be subscribed to successfully")
         dummyDelegate.channelName = channelName
         pusher.delegate = dummyDelegate
-        
+
         // send the provided auth data when the auth endpoint is hit
         mockAuthResponse(jsonData: authData, pusher: pusher)
-        
+
         // assert we aren't connected before we connect
         let channel = pusher.subscribe(channelName)
         XCTAssertFalse(channel.subscribed, "the channel should not be subscribed...yet")
-        
+
         // connect and wait for the expectation to be fulfilled
         pusher.connect()
         waitForExpectations(timeout: 0.5)
-        
+
         return channel
     }
-    
+
     // PusherDelegate that handles the expectation that a subscription event has occurred
     class DummySubscriptionDelegate: PusherDelegate {
-        var expectation: XCTestExpectation? = nil
-        var channelName: String? = nil
-        
+        var expectation: XCTestExpectation?
+        var channelName: String?
+
         func subscribedToChannel(name: String) {
             if name == channelName {
                 // only fulfill if the channel connected is actually the channel we cared about
@@ -348,10 +347,10 @@ class PrivateEncryptedChannelTests: XCTestCase {
 
     class TestAuthorizer: Authorizer {
         var authReponseSequence: [PusherAuth]
-        public init(_ authReponseSequence: [PusherAuth]){
+        public init(_ authReponseSequence: [PusherAuth]) {
             self.authReponseSequence = authReponseSequence
         }
-        func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> ()) {
+        func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> Void) {
             completionHandler(authReponseSequence.removeFirst())
         }
     }
@@ -364,18 +363,18 @@ class PrivateEncryptedChannelTests: XCTestCase {
             return request
         }
     }
-    
+
     class DummyErrorDelegate: PusherDelegate {
-        var expectation: XCTestExpectation? = nil
-        var channelName: String? = nil
-        
+        var expectation: XCTestExpectation?
+        var channelName: String?
+
         func failedToDecryptEvent(eventName: String, channelName: String, data: String?) {
             if channelName == self.channelName {
                 expectation?.fulfill()
             }
         }
     }
-    
+
     // utility method to mock an authorizor response with the jsonData provided
     func mockAuthResponse(jsonData: String, pusher: Pusher) {
         let urlResponse = HTTPURLResponse(
@@ -388,7 +387,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
                                     error: nil)
         pusher.connection.URLSession = MockSession.shared
     }
-    
+
     // utility method to create a pusher message with the provided datapayload
     private func createMessagePayload(dataPayload: String) -> String {
         return """

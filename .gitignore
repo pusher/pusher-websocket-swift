@@ -61,3 +61,7 @@ fastlane/screenshots
 .swift-version
 test_push.rb
 SwiftLibExampleCertificate.pem
+
+# macOS
+
+.DS_Store
