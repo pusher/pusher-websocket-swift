@@ -7,22 +7,28 @@ import Foundation
 
     func subscribe(
         channelName: String,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherChannel {
         return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
     }
 
     func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
-        return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: nil, onMemberRemoved: nil)
+        return self.subscribeToPresenceChannel(channelName: channelName,
+                                               auth: nil,
+                                               onMemberAdded: nil,
+                                               onMemberRemoved: nil)
     }
 
     func subscribeToPresenceChannel(
         channelName: String,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherPresenceChannel {
-        return self.subscribeToPresenceChannel(channelName: channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        return self.subscribeToPresenceChannel(channelName: channelName,
+                                               auth: nil,
+                                               onMemberAdded: onMemberAdded,
+                                               onMemberRemoved: onMemberRemoved)
     }
 
     convenience init(withAppKey key: String, options: PusherClientOptions) {
@@ -105,7 +111,6 @@ import Foundation
     }
 }
 
-
 public extension PusherHost {
     func toObjc() -> OCPusherHost {
         switch self {
@@ -117,7 +122,7 @@ public extension PusherHost {
     }
 
     static func fromObjc(source: OCPusherHost) -> PusherHost {
-        switch (source.type) {
+        switch source.type {
         case 0: return PusherHost.host(source.host!)
         case 1: return PusherHost.cluster(source.cluster!)
         default: return PusherHost.host("ws.pusherapp.com")
@@ -128,8 +133,8 @@ public extension PusherHost {
 @objcMembers
 @objc public class OCPusherHost: NSObject {
     var type: Int
-    var host: String? = nil
-    var cluster: String? = nil
+    var host: String?
+    var cluster: String?
 
     public override init() {
         self.type = 2
@@ -163,7 +168,7 @@ public extension AuthMethod {
     }
 
     static func fromObjc(source: OCAuthMethod) -> AuthMethod {
-        switch (source.type) {
+        switch source.type {
         case 0: return AuthMethod.endpoint(authEndpoint: source.authEndpoint!)
         case 1: return AuthMethod.authRequestBuilder(authRequestBuilder: source.authRequestBuilder!)
         case 2: return AuthMethod.inline(secret: source.secret!)
@@ -177,10 +182,10 @@ public extension AuthMethod {
 @objcMembers
 @objc public class OCAuthMethod: NSObject {
     var type: Int
-    var secret: String? = nil
-    var authEndpoint: String? = nil
-    var authRequestBuilder: AuthRequestBuilderProtocol? = nil
-    var authorizer: Authorizer? = nil
+    var secret: String?
+    var authEndpoint: String?
+    var authRequestBuilder: AuthRequestBuilderProtocol?
+    var authorizer: Authorizer?
 
     public init(type: Int) {
         self.type = type

@@ -1,0 +1,14 @@
+excluded:
+  - Carthage
+  - Package.swift
+
+identifier_name:
+  excluded:
+  - id
+  - ex
+  - to
+  - ws
+
+# This generates a compiler error if more than this many SwiftLint warnings are present
+# (This threshold can become more restrictive as remaining warnings are resolved via refactoring)
+warning_threshold: 25

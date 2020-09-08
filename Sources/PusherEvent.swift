@@ -6,11 +6,13 @@ open class PusherEvent: NSObject, NSCopying {
     /// The JSON object received from the websocket
     @nonobjc internal let raw: [String: Any]
 
-    // According to Channels protocol, there is always an event https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#events
+    /// According to Channels protocol, there is always an event
+    /// https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#events
     /// The name of the event.
     public let eventName: String
 
-    /// The name of the channel that the event was triggered on. Not present in events without an associated channel, e.g. "pusher:error" events relating to the connection.
+    /// The name of the channel that the event was triggered on.
+    /// Not present in events without an associated channel, e.g. "pusher:error" events relating to the connection.
     public let channelName: String?
 
     /// The data that was passed when the event was triggered.
@@ -19,7 +21,11 @@ open class PusherEvent: NSObject, NSCopying {
     /// The ID of the user who triggered the event. Only present in client event on presence channels.
     public let userId: String?
 
-    @nonobjc internal init(eventName: String, channelName: String?, data: String?, userId: String?, raw: [String: Any]) {
+    @nonobjc internal init(eventName: String,
+                           channelName: String?,
+                           data: String?,
+                           userId: String?,
+                           raw: [String: Any]) {
         self.eventName = eventName
         self.channelName = channelName
         self.data = data
@@ -65,11 +71,19 @@ open class PusherEvent: NSObject, NSCopying {
     @nonobjc internal func copy(withEventName eventName: String) -> PusherEvent {
         var jsonObject = self.raw
         jsonObject["event"] = eventName
-        return PusherEvent(eventName: eventName, channelName: self.channelName, data: self.data, userId: self.userId, raw: jsonObject)
+        return PusherEvent(eventName: eventName,
+                           channelName: self.channelName,
+                           data: self.data,
+                           userId: self.userId,
+                           raw: jsonObject)
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        return PusherEvent(eventName: self.eventName, channelName: self.channelName, data: self.data, userId: self.userId, raw: self.raw)
+        return PusherEvent(eventName: self.eventName,
+                           channelName: self.channelName,
+                           data: self.data,
+                           userId: self.userId,
+                           raw: self.raw)
     }
 
 }

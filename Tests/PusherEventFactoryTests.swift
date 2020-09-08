@@ -21,7 +21,7 @@ class PusherEventFactoryTests: XCTestCase {
             "channel": "my-channel",
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -36,7 +36,7 @@ class PusherEventFactoryTests: XCTestCase {
             "channel": "my-channel",
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -51,7 +51,7 @@ class PusherEventFactoryTests: XCTestCase {
             "channel": "my-channel",
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -67,7 +67,7 @@ class PusherEventFactoryTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}",
             "user_id":"user123"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -82,7 +82,7 @@ class PusherEventFactoryTests: XCTestCase {
             "channel": "my-channel",
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -97,7 +97,7 @@ class PusherEventFactoryTests: XCTestCase {
             "channel": "my-channel",
             "data": "[\\"test\\",\\\"and\\"]"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -112,7 +112,7 @@ class PusherEventFactoryTests: XCTestCase {
             "channel": "my-channel",
             "data": "test"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -129,7 +129,7 @@ class PusherEventFactoryTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}",
             "my_property": "string123"
         }
-        """.toJsonDict();
+        """.toJsonDict()
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
         XCTAssertEqual(event.property(withKey: "my_property") as! String, "string123")
     }
@@ -142,7 +142,7 @@ class PusherEventFactoryTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}",
             "my_integer": 1234567
         }
-        """.toJsonDict();
+        """.toJsonDict()
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.property(withKey: "my_integer") as! Int, 1234567)
@@ -156,7 +156,7 @@ class PusherEventFactoryTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}",
             "my_boolean": true
         }
-        """.toJsonDict();
+        """.toJsonDict()
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.property(withKey: "my_boolean") as! Bool, true)
@@ -170,7 +170,7 @@ class PusherEventFactoryTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}",
             "my_array": [1, 2, 3]
         }
-        """.toJsonDict();
+        """.toJsonDict()
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.property(withKey: "my_array") as! [Int], [1, 2, 3])
@@ -184,7 +184,7 @@ class PusherEventFactoryTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}",
             "my_object": {"key": "value"}
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -199,7 +199,7 @@ class PusherEventFactoryTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}",
             "my_null": null
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
 
@@ -212,7 +212,7 @@ class PusherEventFactoryTests: XCTestCase {
             "channel": "my-channel",
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
-        """.toJsonDict();
+        """.toJsonDict()
 
         XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)

@@ -5,9 +5,9 @@ public typealias PusherUserInfoObject = [String: AnyObject]
 @objcMembers
 @objc open class PusherPresenceChannel: PusherChannel {
     open var members: [PusherPresenceChannelMember]
-    open var onMemberAdded: ((PusherPresenceChannelMember) -> ())?
-    open var onMemberRemoved: ((PusherPresenceChannelMember) -> ())?
-    open var myId: String? = nil
+    open var onMemberAdded: ((PusherPresenceChannelMember) -> Void)?
+    open var onMemberRemoved: ((PusherPresenceChannelMember) -> Void)?
+    open var myId: String?
 
     /**
         Initializes a new PusherPresenceChannel with a given name, conenction, and optional
@@ -28,8 +28,8 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         name: String,
         connection: PusherConnection,
         auth: PusherAuth? = nil,
-        onMemberAdded: ((PusherPresenceChannelMember) -> ())? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> ())? = nil
+        onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) {
         self.members = []
         self.onMemberAdded = onMemberAdded
@@ -44,7 +44,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         - parameter memberJSON: A dictionary representing the member that has joined
                                 the presence channel
     */
-    internal func addMember(memberJSON: [String : Any]) {
+    internal func addMember(memberJSON: [String: Any]) {
         let member: PusherPresenceChannelMember
 
         if let userId = memberJSON["user_id"] as? String {
@@ -56,7 +56,8 @@ public typealias PusherUserInfoObject = [String: AnyObject]
             }
         } else {
             if let userInfo = memberJSON["user_info"] as? PusherUserInfoObject {
-                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!), userInfo: userInfo as AnyObject?)
+                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!),
+                                                     userInfo: userInfo as AnyObject?)
             } else {
                 member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON["user_id"]!))
             }
@@ -72,7 +73,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         - parameter memberHash: A dictionary representing the members that were already
                                 subscribed to the presence channel
     */
-    internal func addExistingMembers(memberHash: [String : AnyObject]) {
+    internal func addExistingMembers(memberHash: [String: AnyObject]) {
         for (userId, userInfo) in memberHash {
             let member: PusherPresenceChannelMember
             if let userInfo = userInfo as? PusherUserInfoObject {
@@ -91,7 +92,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         - parameter memberJSON: A dictionary representing the member that has left the
                                 presence channel
     */
-    internal func removeMember(memberJSON: [String : Any]) {
+    internal func removeMember(memberJSON: [String: Any]) {
         let id: String
 
         if let userId = memberJSON["user_id"] as? String {
@@ -131,7 +132,9 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         let data = (channelData as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
-            if let jsonData = data, let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: AnyObject] {
+            if let jsonData = data,
+                let jsonObject = try JSONSerialization.jsonObject(with: jsonData,
+                                                                  options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
                 print("Unable to parse string: \(channelData)")
@@ -141,7 +144,6 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         }
         return nil
     }
-
 
     /**
         Returns the PusherPresenceChannelMember object for the given user id
