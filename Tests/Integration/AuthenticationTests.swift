@@ -1,5 +1,7 @@
 import XCTest
 
+// swiftlint:disable nesting
+
 #if WITH_ENCRYPTION
     @testable import PusherSwiftWithEncryption
 #else
@@ -8,8 +10,8 @@ import XCTest
 
 class AuthenticationTests: XCTestCase {
     class DummyDelegate: PusherDelegate {
-        var ex: XCTestExpectation? = nil
-        var testingChannelName: String? = nil
+        var ex: XCTestExpectation?
+        var testingChannelName: String?
 
         func subscribedToChannel(name: String) {
             if let cName = testingChannelName, cName == name {
@@ -127,7 +129,7 @@ class AuthenticationTests: XCTestCase {
         let chan = pusher.subscribe("private-test-channel")
         XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
 
-        let _ = pusher.bind({ (data: Any?) -> Void in
+        _ = pusher.bind({ (data: Any?) -> Void in
             if let data = data as? [String: AnyObject], let eventName = data["event"] as? String, eventName == "pusher:subscription_error" {
                 XCTAssertEqual("private-test-channel", data["channel"] as? String)
                 XCTAssertTrue(Thread.isMainThread)
@@ -221,7 +223,7 @@ class AuthenticationTests: XCTestCase {
     func testAuthorizationUsingSomethingConformingToTheAuthorizerProtocol() {
 
         class SomeAuthorizer: Authorizer {
-            func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> ()) {
+            func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> Void) {
                 completionHandler(PusherAuth(auth: "testKey123:authorizerblah123"))
             }
         }
@@ -252,7 +254,7 @@ class AuthenticationTests: XCTestCase {
     func testAuthorizationOfPresenceChannelSubscriptionUsingSomethingConformingToTheAuthorizerProtocol() {
 
         class SomeAuthorizer: Authorizer {
-            func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> ()) {
+            func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> Void) {
                 completionHandler(PusherAuth(
                     auth: "testKey123:authorizerblah1234",
                     channelData: "{\"user_id\":\"777\", \"user_info\":{\"twitter\":\"hamchapman\"}}"

@@ -9,12 +9,12 @@ import XCTest
 class PusherConnectionDelegateTests: XCTestCase {
     open class DummyDelegate: PusherDelegate {
         public let stubber = StubberForMocks()
-        open var socket: MockWebSocket? = nil
-        open var ex: XCTestExpectation? = nil
-        var testingChannelName: String? = nil
+        open var socket: MockWebSocket?
+        open var ex: XCTestExpectation?
+        var testingChannelName: String?
 
         open func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "connectionChange",
                 args: [old, new],
                 functionToCall: nil
@@ -40,7 +40,7 @@ class PusherConnectionDelegateTests: XCTestCase {
         }
 
         open func receivedError(error: PusherError) {
-            let _ = stubber.stub(
+            _ = stubber.stub(
                 functionName: "error",
                 args: [error],
                 functionToCall: nil
@@ -52,6 +52,7 @@ class PusherConnectionDelegateTests: XCTestCase {
     var key: String!
     var pusher: Pusher!
     var socket: MockWebSocket!
+    // swiftlint:disable:next weak_delegate
     var dummyDelegate: DummyDelegate!
 
     override func setUp() {
@@ -92,7 +93,7 @@ class PusherConnectionDelegateTests: XCTestCase {
                 XCTAssertEqual(calls.last?.args?.last as? ConnectionState, ConnectionState.connected)
                 isConnected.fulfill()
                 self.pusher.disconnect()
-            }else if calls.count == 4 {
+            } else if calls.count == 4 {
                 XCTAssertEqual(calls[2].name, "connectionChange")
                 XCTAssertEqual(calls[2].args?.first as? ConnectionState, ConnectionState.connected)
                 XCTAssertEqual(calls[2].args?.last as? ConnectionState, ConnectionState.disconnecting)
@@ -118,7 +119,7 @@ class PusherConnectionDelegateTests: XCTestCase {
         dummyDelegate.ex = ex
         dummyDelegate.testingChannelName = channelName
 
-        let _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(channelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
@@ -131,14 +132,14 @@ class PusherConnectionDelegateTests: XCTestCase {
         dummyDelegate.testingChannelName = channelName
         pusher.connection.options.authMethod = .noMethod
 
-        let _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(channelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
     }
 
     func testErrorFunctionCalledWhenPusherErrorIsReceived() {
-        let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Application is over connection quota\",\"code\":4004}}";
+        let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Application is over connection quota\",\"code\":4004}}"
         pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
 
         XCTAssertEqual(dummyDelegate.stubber.calls.last?.name, "error")

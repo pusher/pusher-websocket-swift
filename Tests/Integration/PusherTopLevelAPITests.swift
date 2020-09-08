@@ -11,7 +11,7 @@ class PusherTopLevelApiTests: XCTestCase {
     class ConnectionStateDelegate: PusherDelegate {
         var callbacks: [ConnectionState: [() -> Void]] = [:]
 
-        func registerCallback(connectionState: ConnectionState, callback: @escaping () -> Void){
+        func registerCallback(connectionState: ConnectionState, callback: @escaping () -> Void) {
             var connectionStateCallbacks = callbacks[connectionState, default: []]
             connectionStateCallbacks.append(callback)
             callbacks[connectionState] = connectionStateCallbacks
@@ -27,8 +27,8 @@ class PusherTopLevelApiTests: XCTestCase {
     }
 
     class DummyDelegate: PusherDelegate {
-        var ex: XCTestExpectation? = nil
-        var testingChannelName: String? = nil
+        var ex: XCTestExpectation?
+        var testingChannelName: String?
         var connectionStubber = StubberForMocks()
 
         func subscribedToChannel(name: String) {
@@ -38,7 +38,7 @@ class PusherTopLevelApiTests: XCTestCase {
         }
 
         func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
-            let _ = connectionStubber.stub(
+            _ = connectionStubber.stub(
                 functionName: "connectionChange",
                 args: [old, new],
                 functionToCall: nil
@@ -111,13 +111,13 @@ class PusherTopLevelApiTests: XCTestCase {
         let connected = expectation(description: "should connect")
         let disconnected = expectation(description: "should disconnect")
 
-        delegate.registerCallback(connectionState: ConnectionState.connected){
+        delegate.registerCallback(connectionState: ConnectionState.connected) {
             XCTAssertEqual(self.pusher.connection.connectionState, ConnectionState.connected)
             connected.fulfill()
             self.pusher.disconnect()
         }
 
-        delegate.registerCallback(connectionState: ConnectionState.disconnected){
+        delegate.registerCallback(connectionState: ConnectionState.disconnected) {
             XCTAssertEqual(self.pusher.connection.connectionState, ConnectionState.disconnected)
             disconnected.fulfill()
         }
@@ -134,7 +134,7 @@ class PusherTopLevelApiTests: XCTestCase {
         let disconnected = expectation(description: "should disconnect")
 
         let chan = pusher.subscribe("test-channel")
-        connectionDelegate.registerCallback(connectionState: ConnectionState.disconnected){
+        connectionDelegate.registerCallback(connectionState: ConnectionState.disconnected) {
             XCTAssertFalse(chan.subscribed)
             disconnected.fulfill()
         }
@@ -167,9 +167,9 @@ class PusherTopLevelApiTests: XCTestCase {
         let connected = expectation(description: "should connect")
         let subscribed = expectation(description: "should subscribe")
 
-        delegate.registerCallback(connectionState: ConnectionState.connected){
+        delegate.registerCallback(connectionState: ConnectionState.connected) {
             connected.fulfill()
-            let _ = self.pusher.subscribe("test-channel")
+            _ = self.pusher.subscribe("test-channel")
 
             self.socket.stubber.registerCallback { calls in
                 if let name = calls.last?.name, name == "writeString" {
@@ -207,8 +207,8 @@ class PusherTopLevelApiTests: XCTestCase {
                 ex.fulfill()
             }
         }
-        let _ = pusher.bind(callback)
-        let _ = pusher.subscribe("test-channel")
+        _ = pusher.bind(callback)
+        _ = pusher.subscribe("test-channel")
         waitForExpectations(timeout: 0.5)
     }
 
@@ -218,7 +218,7 @@ class PusherTopLevelApiTests: XCTestCase {
             ex.fulfill()
         }
         let channel = pusher.subscribe("test-channel")
-        let _ = channel.bind(eventName: "pusher:subscription_succeeded", callback: callback)
+        _ = channel.bind(eventName: "pusher:subscription_succeeded", callback: callback)
         pusher.connect()
         waitForExpectations(timeout: 0.5)
     }
@@ -231,8 +231,8 @@ class PusherTopLevelApiTests: XCTestCase {
                 ex.fulfill()
             }
         }
-        let _ = pusher.bind(eventCallback: callback)
-        let _ = pusher.subscribe("test-channel")
+        _ = pusher.bind(eventCallback: callback)
+        _ = pusher.subscribe("test-channel")
         waitForExpectations(timeout: 0.5)
     }
 
@@ -242,7 +242,7 @@ class PusherTopLevelApiTests: XCTestCase {
             ex.fulfill()
         }
         let channel = pusher.subscribe("test-channel")
-        let _ = channel.bind(eventName: "pusher:subscription_succeeded", eventCallback: callback)
+        _ = channel.bind(eventName: "pusher:subscription_succeeded", eventCallback: callback)
         pusher.connect()
         waitForExpectations(timeout: 0.5)
     }
@@ -266,7 +266,7 @@ class PusherTopLevelApiTests: XCTestCase {
         pusher.delegate = dummyDelegate
 
         pusher.connect()
-        let _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(channelName)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -281,7 +281,7 @@ class PusherTopLevelApiTests: XCTestCase {
         pusher.delegate = dummyDelegate
 
         pusher.connect()
-        let _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(channelName)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -297,7 +297,7 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testSubscribingToAPublicChannelWhenCurrentlyDisconnected() {
         let subscribed = expectation(description: "should subscribe")
-        let _ = pusher.subscribe("test-channel")
+        _ = pusher.subscribe("test-channel")
         let testChannel = pusher.connection.channels.channels["test-channel"]
         testChannel!.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
             XCTAssertTrue(testChannel!.subscribed)
@@ -326,7 +326,7 @@ class PusherTopLevelApiTests: XCTestCase {
         dummyDelegate.testingChannelName = channelName
         pusher.connection.delegate = dummyDelegate
 
-        let _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(channelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
@@ -341,7 +341,7 @@ class PusherTopLevelApiTests: XCTestCase {
         dummyDelegate.testingChannelName = channelName
         pusher.connection.delegate = dummyDelegate
 
-        let _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(channelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
@@ -424,7 +424,7 @@ class PusherTopLevelApiTests: XCTestCase {
                         }
                         return NSDictionary(dictionary: parsedCallArgs).isEqual(to: NSDictionary(dictionary: expectedCallArguments) as [NSObject: AnyObject])
                     }
-                    if unsubscribedFromChannel{
+                    if unsubscribedFromChannel {
                         unsubscribeCount += 1
                     }
                 }
@@ -446,7 +446,7 @@ class PusherTopLevelApiTests: XCTestCase {
         let callback = { (data: Any?) in }
 
         XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 0, "the global channel should not have any bound callbacks")
-        let _ = pusher.bind(callback)
+        _ = pusher.bind(callback)
         XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 1, "the global channel should have 1 bound callback")
     }
 
@@ -455,7 +455,7 @@ class PusherTopLevelApiTests: XCTestCase {
         let callback = { (data: PusherEvent?) in }
 
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
-        let _ = pusher.bind(eventCallback: callback)
+        _ = pusher.bind(eventCallback: callback)
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
     }
 
@@ -482,9 +482,9 @@ class PusherTopLevelApiTests: XCTestCase {
     func testUnbindingAllGlobalCallbacksShouldRemoveAllLegacyCallbacksFromGlobalChannel() {
         pusher.connect()
         let callback = { (data: Any?) in }
-        let _ = pusher.bind(callback)
+        _ = pusher.bind(callback)
         let callbackTwo = { (someData: Any?) in }
-        let _ = pusher.bind(callbackTwo)
+        _ = pusher.bind(callbackTwo)
 
         XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 2, "the global channel should have 2 bound callbacks")
         pusher.unbindAll()
@@ -494,9 +494,9 @@ class PusherTopLevelApiTests: XCTestCase {
     func testUnbindingAllGlobalCallbacksShouldRemoveAllCallbacksFromGlobalChannel() {
         pusher.connect()
         let callback = { (data: Any?) in }
-        let _ = pusher.bind(callback)
+        _ = pusher.bind(callback)
         let callbackTwo = { (someData: PusherEvent?) in }
-        let _ = pusher.bind(eventCallback: callbackTwo)
+        _ = pusher.bind(eventCallback: callbackTwo)
 
         XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 1, "the global channel should have 1 bound legacy callback")
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound regular callback")

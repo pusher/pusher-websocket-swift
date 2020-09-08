@@ -39,7 +39,7 @@ class ViewController: UIViewController, PusherDelegate {
         pusher.connect()
 
         // bind to all events globally
-        let _ = pusher.bind(eventCallback: { (event: PusherEvent) in
+        _ = pusher.bind(eventCallback: { (event: PusherEvent) in
             var message = "Received event: '\(event.eventName)'"
 
             if let channel = event.channelName {
@@ -59,7 +59,7 @@ class ViewController: UIViewController, PusherDelegate {
         let myChannel = pusher.subscribe("my-channel")
 
         // bind a callback to event "my-event" on that channel
-        let _ = myChannel.bind(eventName: "my-event", eventCallback: { (event: PusherEvent) in
+        _ = myChannel.bind(eventName: "my-event", eventCallback: { (event: PusherEvent) in
 
             // convert the data string to type data for decoding
             guard let json: String = event.data,
@@ -114,7 +114,6 @@ class ViewController: UIViewController, PusherDelegate {
         }
     }
 }
-
 
 class AuthRequestBuilder: AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channelName: String) -> URLRequest? {
