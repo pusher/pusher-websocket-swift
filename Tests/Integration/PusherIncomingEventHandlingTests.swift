@@ -35,7 +35,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "stupid data"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -54,7 +54,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "stupid data"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -76,7 +76,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "stupid data"
         }
         """.removing(.whitespacesAndNewlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -97,7 +97,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -123,7 +123,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -156,7 +156,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": {"code": "<null>", "message": "Existing subscription to channel my-channel"}
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -179,7 +179,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -202,7 +202,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "test"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -228,7 +228,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -247,7 +247,7 @@ class HandlingIncomingEventsTests: XCTestCase {
         // pretend that we tried to subscribe to my-channel twice and got this error
         // back from Pusher
         let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Existing subscription to channel my-channel\"}}"
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: payload)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -280,7 +280,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -314,7 +314,7 @@ class HandlingIncomingEventsTests: XCTestCase {
             "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
         }
         """.removing(.newlines)
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
 
         waitForExpectations(timeout: 0.5)
     }

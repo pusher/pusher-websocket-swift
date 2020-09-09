@@ -140,7 +140,7 @@ class PusherConnectionDelegateTests: XCTestCase {
 
     func testErrorFunctionCalledWhenPusherErrorIsReceived() {
         let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Application is over connection quota\",\"code\":4004}}"
-        pusher.connection.websocketDidReceiveMessage(socket: socket, text: payload)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: payload)
 
         XCTAssertEqual(dummyDelegate.stubber.calls.last?.name, "error")
         guard let error = dummyDelegate.stubber.calls.last?.args?.first as? PusherError else {

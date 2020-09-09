@@ -1,6 +1,5 @@
 import Foundation
 import Reachability
-import Starscream
 
 // swiftlint:disable file_length type_body_length
 
@@ -124,7 +123,6 @@ import Starscream
 
         self.eventQueue.delegate = self
         self.socket.delegate = self
-        self.socket.pongDelegate = self
     }
 
     deinit {
@@ -248,7 +246,7 @@ import Starscream
                                             Constants.JSONKeys.data: data])
             self.delegate?.debugLog?(message: PusherLogger.debug(for: .eventSent,
                                                                  context: dataString))
-            self.socket.write(string: dataString)
+            self.socket.send(string: dataString)
         }
     }
 
@@ -267,7 +265,7 @@ import Starscream
                                                 Constants.JSONKeys.channel: channel.name] as [String: Any])
                 self.delegate?.debugLog?(message: PusherLogger.debug(for: .clientEventSent,
                                                                      context: dataString))
-                self.socket.write(string: dataString)
+                self.socket.send(string: dataString)
             } else {
                 print("You must be subscribed to a private or presence channel to send client events")
             }
@@ -453,10 +451,9 @@ import Starscream
         Send a ping to the server
     */
     @objc fileprivate func sendPing() {
-        socket.write(ping: Data()) {
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .pingSent))
-            self.setupPongResponseTimeoutTimer()
-        }
+        socket.ping()
+        self.delegate?.debugLog?(message: PusherLogger.debug(for: .pingSent))
+        self.setupPongResponseTimeoutTimer()
     }
 
     /**

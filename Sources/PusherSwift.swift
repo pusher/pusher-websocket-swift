@@ -1,5 +1,4 @@
 import Foundation
-import Starscream
 
 let PROTOCOL = 7
 let VERSION = "8.0.0"
