@@ -40,7 +40,7 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
         }
     }
 
-    // MARK: - URLSessionWebSocketDelegate methods
+    // MARK: - URLSessionWebSocketDelegate conformance
 
     public func urlSession(_ session: URLSession,
                            webSocketTask: URLSessionWebSocketTask,
@@ -57,7 +57,7 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
                                          reason: reason)
     }
 
-    // MARK: - WebSocketConnectionDelegate methods
+    // MARK: - WebSocketConnection conformance
 
     func connect() {
         webSocketTask.resume()
