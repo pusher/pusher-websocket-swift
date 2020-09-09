@@ -6,7 +6,7 @@ internal extension URLSessionWebSocketTask.CloseCode {
 
     /// Describes closure codes as specified by the Pusher Channels Protocol
     ///
-    /// For reference: https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes
+    /// Reference: https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes
     enum PusherChannelsProtocol: Int {
 
         // 4000 - 4099
@@ -44,6 +44,8 @@ internal extension URLSessionWebSocketTask.CloseCode {
     // MARK: - Pusher Channels Protocol reconnection strategies
 
     /// Describes the reconnection strategy for a given `PusherChannelsProtocol` closure code.
+    ///
+    /// Reference: https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#connection-closure
     enum PusherChannelsReconnectionStrategy: Int {
 
         /// Indicates an error resulting in the connection being closed by Pusher Channels,
