@@ -1,4 +1,4 @@
-import Foundation
+import Network
 
 extension PusherConnection: WebSocketConnectionDelegate {
 
@@ -45,7 +45,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
      - parameter reason: Optional further information on the connection closure.
      */
     func webSocketDidDisconnect(connection: WebSocketConnection,
-                                closeCode: Int,
+                                closeCode: NWProtocolWebSocket.CloseCode,
                                 reason: Data?) {
         // Handles setting channel subscriptions to unsubscribed wheter disconnection
         // is intentional or not

@@ -1,4 +1,4 @@
-import Foundation
+import Network
 
 /// Manages a websocket connection to a given server which can accept such connections.
 open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate {
@@ -41,8 +41,10 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
                            webSocketTask: URLSessionWebSocketTask,
                            didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
                            reason: Data?) {
+        // swiftlint:disable:next force_try
+        let nwCloseCode = try! NWProtocolWebSocket.CloseCode(rawValue: UInt16(closeCode.rawValue))
         delegate?.webSocketDidDisconnect(connection: self,
-                                         closeCode: closeCode.rawValue,
+                                         closeCode: nwCloseCode,
                                          reason: reason)
     }
 
@@ -110,9 +112,19 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
         }
     }
 
-    func disconnect(closeCode: Int = URLSessionWebSocketTask.CloseCode.normalClosure.rawValue) {
-        let closeCode = URLSessionWebSocketTask.CloseCode(rawValue: closeCode) ?? .normalClosure
-        webSocketTask?.cancel(with: closeCode, reason: nil)
+    func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+
+        var webSocketTaskCloseCode: URLSessionWebSocketTask.CloseCode!
+        switch closeCode {
+        case .protocolCode(let definedCode):
+            webSocketTaskCloseCode = URLSessionWebSocketTask.CloseCode(rawValue: Int(definedCode.rawValue))
+        case .applicationCode, .privateCode:
+            webSocketTaskCloseCode = .normalClosure
+        @unknown default:
+            fatalError()
+        }
+
+        webSocketTask?.cancel(with: webSocketTaskCloseCode, reason: nil)
         webSocketTask = nil
         pingTimer?.invalidate()
     }

@@ -1,4 +1,4 @@
-import Foundation
+import Network
 
 /// Defines a websocket connection.
 internal protocol WebSocketConnection {
@@ -25,7 +25,7 @@ internal protocol WebSocketConnection {
 
     /// Disconnect from the websocket.
     /// - Parameter closeCode: The code to use when closing the websocket connection.
-    func disconnect(closeCode: Int)
+    func disconnect(closeCode: NWProtocolWebSocket.CloseCode)
 
     var delegate: WebSocketConnectionDelegate? { get set }
 }
@@ -33,7 +33,9 @@ internal protocol WebSocketConnection {
 /// Defines a delegate for a websocket connection.
 internal protocol WebSocketConnectionDelegate: AnyObject {
     func webSocketDidConnect(connection: WebSocketConnection)
-    func webSocketDidDisconnect(connection: WebSocketConnection, closeCode: Int, reason: Data?)
+    func webSocketDidDisconnect(connection: WebSocketConnection,
+                                closeCode: NWProtocolWebSocket.CloseCode,
+                                reason: Data?)
     func webSocketDidReceiveError(connection: WebSocketConnection, error: Error)
     func webSocketDidReceivePong(connection: WebSocketConnection)
     func webSocketDidReceiveMessage(connection: WebSocketConnection, string: String)

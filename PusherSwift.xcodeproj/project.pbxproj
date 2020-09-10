@@ -30,6 +30,8 @@
 		33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */; };
 		33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		53140355250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */; };
+		53140356250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */; };
 		539D9AFC2507F67300B5765A /* PusherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFB2507F67300B5765A /* PusherLogger.swift */; };
 		539D9AFE2507F68400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
 		539D9AFF2507F69400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
@@ -38,8 +40,6 @@
 		539D9B032509101E00B5765A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B012509101E00B5765A /* WebSocket.swift */; };
 		539D9B05250913B300B5765A /* WebSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B04250913B300B5765A /* WebSocketConnection.swift */; };
 		539D9B06250913B300B5765A /* WebSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B04250913B300B5765A /* WebSocketConnection.swift */; };
-		539D9B082509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B072509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift */; };
-		539D9B092509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B072509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift */; };
 		736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
 		736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */; };
 		73D8A1E72435E5F3001FDE05 /* PusherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BA541F1D9035BD00CD853B /* PusherDelegate.swift */; };
@@ -145,11 +145,11 @@
 		33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherTopLevelAPITests.swift; sourceTree = "<group>"; };
 		33BB99671D21226C00B25C2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Tests/Info.plist; sourceTree = "<group>"; };
 		33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectiveC.swift; sourceTree = "<group>"; };
+		53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherChannelsProtocolCloseCode.swift; sourceTree = "<group>"; };
 		539D9AFB2507F67300B5765A /* PusherLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherLogger.swift; sourceTree = "<group>"; };
 		539D9AFD2507F68400B5765A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		539D9B012509101E00B5765A /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		539D9B04250913B300B5765A /* WebSocketConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketConnection.swift; sourceTree = "<group>"; };
-		539D9B072509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionWebSocketTask.CloseCode+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
 		73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwiftWithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -283,6 +283,7 @@
 				539D9AFD2507F68400B5765A /* Constants.swift */,
 				3384C1B81CAECD9C00F10796 /* PusherChannel.swift */,
 				3389F5711CAEDDF300563F49 /* PusherChannels.swift */,
+				53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */,
 				3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */,
 				E2498292231E612700CFBBD6 /* PusherError.swift */,
 				E2B21F06243F5B860049A35B /* PusherEvent.swift */,
@@ -308,7 +309,6 @@
 		5333ACFC24F80F5C006E8DF0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				539D9B072509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift */,
 				E2B21F0C243F5DC10049A35B /* PusherWebsocketDelegate.swift */,
 			);
 			path = Extensions;
@@ -750,6 +750,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53140355250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */,
 				E26B8606244A079E00735172 /* PusherEncryptionHelpers.swift in Sources */,
 				539D9AFE2507F68400B5765A /* Constants.swift in Sources */,
 				E2B21F0A243F5BB50049A35B /* PusherConnection.swift in Sources */,
@@ -772,7 +773,6 @@
 				E2B21EFF243F5B1E0049A35B /* PusherEventQueue.swift in Sources */,
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
 				33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */,
-				539D9B082509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift in Sources */,
 				3390D1E61F054D0400E1944D /* AuthRequestBuilderProtocol.swift in Sources */,
 				330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */,
 			);
@@ -807,6 +807,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53140356250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */,
 				E26B8607244A079E00735172 /* PusherEncryptionHelpers.swift in Sources */,
 				E2B21F0B243F5BB50049A35B /* PusherConnection.swift in Sources */,
 				73D8A1E72435E5F3001FDE05 /* PusherDelegate.swift in Sources */,
@@ -829,7 +830,6 @@
 				E2B21F00243F5B1E0049A35B /* PusherEventQueue.swift in Sources */,
 				73D8A1F22435E5F3001FDE05 /* PusherPresenceChannel.swift in Sources */,
 				73D8A1F32435E5F3001FDE05 /* ObjectiveC.swift in Sources */,
-				539D9B092509142200B5765A /* URLSessionWebSocketTask.CloseCode+Extensions.swift in Sources */,
 				73D8A1F52435E5F3001FDE05 /* AuthRequestBuilderProtocol.swift in Sources */,
 				73D8A1F62435E5F3001FDE05 /* PusherSwift.swift in Sources */,
 			);
