@@ -19,26 +19,14 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
 
     init(request: URLRequest, connectAutomatically: Bool = false) {
         super.init()
-        urlSession = URLSession(configuration: .default,
-                                delegate: self,
-                                delegateQueue: delegateQueue)
-        webSocketTask = urlSession.webSocketTask(with: request)
-
-        if connectAutomatically {
-            connect()
-        }
+        webSocketRequest = request
+        configureConnection(connectAutomatically: connectAutomatically)
     }
 
     init(url: URL, connectAutomatically: Bool = false) {
         super.init()
-        urlSession = URLSession(configuration: .default,
-                                delegate: self,
-                                delegateQueue: delegateQueue)
-        webSocketTask = urlSession.webSocketTask(with: url)
-
-        if connectAutomatically {
-            connect()
-        }
+        webSocketRequest = URLRequest(url: url)
+        configureConnection(connectAutomatically: connectAutomatically)
     }
 
     // MARK: - URLSessionWebSocketDelegate conformance
@@ -130,6 +118,16 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
     }
 
     // MARK: - Private methods
+
+    private func configureConnection(connectAutomatically: Bool) {
+        urlSession = URLSession(configuration: .default,
+                                delegate: self,
+                                delegateQueue: delegateQueue)
+
+        if connectAutomatically {
+            connect()
+        }
+    }
 
     private func send(message: URLSessionWebSocketTask.Message) {
         webSocketTask?.send(message) { [weak self] error in
