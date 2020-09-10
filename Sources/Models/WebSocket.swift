@@ -9,7 +9,8 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
 
     // MARK: - Private properties
 
-    private var webSocketTask: URLSessionWebSocketTask!
+    private var webSocketTask: URLSessionWebSocketTask?
+    private var webSocketRequest: URLRequest!
     private var urlSession: URLSession!
     private let delegateQueue = OperationQueue()
     private var pingTimer: Timer?
@@ -60,7 +61,11 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
     // MARK: - WebSocketConnection conformance
 
     func connect() {
-        webSocketTask.resume()
+        if webSocketTask == nil {
+            webSocketTask = urlSession.webSocketTask(with: webSocketRequest)
+        }
+
+        webSocketTask?.resume()
         listen()
     }
 
@@ -73,7 +78,7 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
     }
 
     func listen() {
-        webSocketTask.receive { [weak self] result in
+        webSocketTask?.receive { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -108,7 +113,7 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
     }
 
     func ping() {
-        self.webSocketTask.sendPing { error in
+        self.webSocketTask?.sendPing { error in
             if let error = error {
                 self.delegate?.webSocketDidReceiveError(connection: self, error: error)
             } else {
@@ -119,14 +124,15 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
 
     func disconnect(closeCode: Int = URLSessionWebSocketTask.CloseCode.normalClosure.rawValue) {
         let closeCode = URLSessionWebSocketTask.CloseCode(rawValue: closeCode) ?? .normalClosure
-        webSocketTask.cancel(with: closeCode, reason: nil)
+        webSocketTask?.cancel(with: closeCode, reason: nil)
+        webSocketTask = nil
         pingTimer?.invalidate()
     }
 
     // MARK: - Private methods
 
     private func send(message: URLSessionWebSocketTask.Message) {
-        webSocketTask.send(message) { [weak self] error in
+        webSocketTask?.send(message) { [weak self] error in
             guard let self = self else {
                 return
             }
