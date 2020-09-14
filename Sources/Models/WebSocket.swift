@@ -1,3 +1,4 @@
+import Foundation
 import Network
 
 /// Manages a websocket connection to a given server which can accept such connections.

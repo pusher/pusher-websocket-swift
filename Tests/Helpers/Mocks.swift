@@ -1,4 +1,5 @@
 import Foundation
+import Network
 
 #if WITH_ENCRYPTION
     @testable import PusherSwiftWithEncryption
@@ -46,7 +47,7 @@ open class MockWebSocket: WebSocket {
         )
     }
 
-    open override func disconnect(closeCode: Int = URLSessionWebSocketTask.CloseCode.normalClosure.rawValue) {
+    open override func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         _ = stubber.stub(
             functionName: "disconnect",
             args: nil,

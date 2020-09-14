@@ -1,3 +1,4 @@
+import Foundation
 import Network
 
 /// Defines a websocket connection.
