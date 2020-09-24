@@ -19,7 +19,7 @@ let package = Package(
                 "Reachability",
                 "Starscream",
             ],
-            path: "Sources",
+            path: "Sources"
         ),
         .target(
             name: "PusherSwiftWithEncryption",
@@ -28,17 +28,17 @@ let package = Package(
                 "Starscream",
                 "Sodium",
             ],
-            path: "Sources",
+            path: "Sources"
         ),
         .testTarget(
             name: "PusherSwiftTests",
             dependencies: ["PusherSwift"],
-            path: "Tests",
+            path: "Tests"
         ),
         .testTarget(
             name: "PusherSwiftWithEncryptionTests",
             dependencies: ["PusherSwiftWithEncryption"],
-            path: "Tests",
+            path: "Tests"
         )
     ],
     swiftLanguageVersions: [.v5]
