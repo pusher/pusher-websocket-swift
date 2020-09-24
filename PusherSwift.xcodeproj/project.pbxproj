@@ -30,11 +30,11 @@
 		33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */; };
 		33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		533FFCAE251B8C9800EEC543 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 533FFCAD251B8C9800EEC543 /* Reachability */; };
+		53252968251CB48700359776 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 53252967251CB48700359776 /* Reachability */; };
+		5325296E251CB49100359776 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 5325296D251CB49100359776 /* Reachability */; };
 		533FFCB1251B8CF000EEC543 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 533FFCB0251B8CF000EEC543 /* Starscream */; };
 		53840B23251B8DC7009201C3 /* Sodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B22251B8DC7009201C3 /* Sodium */; };
 		53840B25251B8DC7009201C3 /* Clibsodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B24251B8DC7009201C3 /* Clibsodium */; };
-		53840B2C251B8EAF009201C3 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B2B251B8EAF009201C3 /* Reachability */; };
 		53840B2E251B8EAF009201C3 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B2D251B8EAF009201C3 /* Starscream */; };
 		53840B30251B8EAF009201C3 /* Clibsodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B2F251B8EAF009201C3 /* Clibsodium */; };
 		53840B32251B8EAF009201C3 /* Sodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B31251B8EAF009201C3 /* Sodium */; };
@@ -185,8 +185,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				533FFCAE251B8C9800EEC543 /* Reachability in Frameworks */,
 				53840B25251B8DC7009201C3 /* Clibsodium in Frameworks */,
+				53252968251CB48700359776 /* Reachability in Frameworks */,
 				533FFCB1251B8CF000EEC543 /* Starscream in Frameworks */,
 				53840B23251B8DC7009201C3 /* Sodium in Frameworks */,
 			);
@@ -196,8 +196,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53840B2C251B8EAF009201C3 /* Reachability in Frameworks */,
 				53840B2E251B8EAF009201C3 /* Starscream in Frameworks */,
+				5325296E251CB49100359776 /* Reachability in Frameworks */,
 				53840B30251B8EAF009201C3 /* Clibsodium in Frameworks */,
 				53840B32251B8EAF009201C3 /* Sodium in Frameworks */,
 			);
@@ -509,10 +509,10 @@
 			);
 			name = PusherSwift;
 			packageProductDependencies = (
-				533FFCAD251B8C9800EEC543 /* Reachability */,
 				533FFCB0251B8CF000EEC543 /* Starscream */,
 				53840B22251B8DC7009201C3 /* Sodium */,
 				53840B24251B8DC7009201C3 /* Clibsodium */,
+				53252967251CB48700359776 /* Reachability */,
 			);
 			productName = PusherSwift;
 			productReference = 33831C891A9CF61600B124F1 /* PusherSwift.framework */;
@@ -554,10 +554,10 @@
 			);
 			name = PusherSwiftWithEncryption;
 			packageProductDependencies = (
-				53840B2B251B8EAF009201C3 /* Reachability */,
 				53840B2D251B8EAF009201C3 /* Starscream */,
 				53840B2F251B8EAF009201C3 /* Clibsodium */,
 				53840B31251B8EAF009201C3 /* Sodium */,
+				5325296D251CB49100359776 /* Reachability */,
 			);
 			productName = PusherSwift;
 			productReference = 73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */;
@@ -617,9 +617,9 @@
 			);
 			mainGroup = 33831C491A9CEDF800B124F1;
 			packageReferences = (
-				533FFCAC251B8C9800EEC543 /* XCRemoteSwiftPackageReference "Reachability" */,
 				533FFCAF251B8CF000EEC543 /* XCRemoteSwiftPackageReference "Starscream" */,
 				53840B21251B8DC7009201C3 /* XCRemoteSwiftPackageReference "swift-sodium" */,
+				53252966251CB48700359776 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = 33831C8A1A9CF61600B124F1 /* Products */;
 			projectDirPath = "";
@@ -898,7 +898,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = "";
@@ -940,7 +940,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = "";
 				SUPPORTED_PLATFORMS = "macosx appletvos iphoneos appletvsimulator iphonesimulator";
@@ -1487,7 +1487,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		533FFCAC251B8C9800EEC543 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+		53252966251CB48700359776 /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -1514,9 +1514,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		533FFCAD251B8C9800EEC543 /* Reachability */ = {
+		53252967251CB48700359776 /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 533FFCAC251B8C9800EEC543 /* XCRemoteSwiftPackageReference "Reachability" */;
+			package = 53252966251CB48700359776 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
+		5325296D251CB49100359776 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53252966251CB48700359776 /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
 		};
 		533FFCB0251B8CF000EEC543 /* Starscream */ = {
@@ -1533,11 +1538,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 53840B21251B8DC7009201C3 /* XCRemoteSwiftPackageReference "swift-sodium" */;
 			productName = Clibsodium;
-		};
-		53840B2B251B8EAF009201C3 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 533FFCAC251B8C9800EEC543 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
 		};
 		53840B2D251B8EAF009201C3 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
