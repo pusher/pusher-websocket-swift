@@ -15,11 +15,11 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 
 ## Supported platforms
 - Swift 5.0 and above
-- Xcode 11.0 and above
+- Xcode 12.0 and above
 - Can be used with Objective-C
 
 ### Deployment targets
-- iOS 8.0 and above
+- iOS 9.0 and above
 - macOS (OS X) 10.11 and above
 - tvOS 9.0 and above
 - Not currently compatible with watchOS
