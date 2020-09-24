@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "PusherSwift",
     products: [
-        .library(name: "PusherSwift", targets: ["PusherSwift", "PusherSwiftWithEncryption"])
+        .library(name: "PusherSwift", targets: ["PusherSwift"])
     ],
     dependencies: [
         .package(url: "https://github.com/ashleymills/Reachability.swift.git", .upToNextMajor(from: "5.1.0")),
@@ -19,26 +19,14 @@ let package = Package(
                 "Reachability",
                 "Starscream",
             ],
-            path: "Sources"
-        ),
-        .target(
-            name: "PusherSwiftWithEncryption",
-            dependencies: [
-                "Reachability",
-                "Starscream",
-                "Sodium",
-            ],
-            path: "Sources"
+            path: "Sources",
+            exclude: ["PusherSwiftWithEncryption-Only"]
         ),
         .testTarget(
             name: "PusherSwiftTests",
             dependencies: ["PusherSwift"],
-            path: "Tests"
-        ),
-        .testTarget(
-            name: "PusherSwiftWithEncryptionTests",
-            dependencies: ["PusherSwiftWithEncryption"],
-            path: "Tests"
+            path: "Tests",
+            exclude: ["Unit/PusherSwiftWithEncryption-Only"]
         )
     ],
     swiftLanguageVersions: [.v5]
