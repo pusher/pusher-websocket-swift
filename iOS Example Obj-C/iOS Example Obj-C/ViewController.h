@@ -4,7 +4,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PusherSwift/PusherSwift-Swift.h"
+@import PusherSwift;
 
 @interface ViewController : UIViewController <PusherDelegate>
 

@@ -3,15 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		335AD5B220569F14000D4D08 /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */; };
 		33831CC41A9CFCDB00B124F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33831CC01A9CFCDB00B124F1 /* Main.storyboard */; };
 		33831CC51A9CFCDB00B124F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CC11A9CFCDB00B124F1 /* ViewController.swift */; };
-		33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; };
+		53252985251CF06300359776 /* PusherSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 53252984251CF06300359776 /* PusherSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,17 +22,6 @@
 			files = (
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		335AD5B320569F14000D4D08 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				335AD5B220569F14000D4D08 /* PusherSwift.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -55,7 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */,
+				53252985251CF06300359776 /* PusherSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,13 +108,15 @@
 				33831C5B1A9CEEE900B124F1 /* Frameworks */,
 				33831C5C1A9CEEE900B124F1 /* Resources */,
 				3330F8921D86EF1900D8DC88 /* Embed App Extensions */,
-				335AD5B320569F14000D4D08 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "iOS Example";
+			packageProductDependencies = (
+				53252984251CF06300359776 /* PusherSwift */,
+			);
 			productName = "iOS Example";
 			productReference = 33831C5E1A9CEEE900B124F1 /* iOS Example.app */;
 			productType = "com.apple.product-type.application";
@@ -166,6 +156,9 @@
 				Base,
 			);
 			mainGroup = 33831C551A9CEEE900B124F1;
+			packageReferences = (
+				53252983251CF06300359776 /* XCRemoteSwiftPackageReference "pusher-websocket-swift" */,
+			);
 			productRefGroup = 33831C5F1A9CEEE900B124F1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -316,7 +309,10 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iOS Example Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -337,11 +333,15 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = "iOS Example Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.iOS-Example-Obj-C";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -368,6 +368,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		53252983251CF06300359776 /* XCRemoteSwiftPackageReference "pusher-websocket-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pusher/pusher-websocket-swift";
+			requirement = {
+				branch = "feature/migrate-to-spm";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		53252984251CF06300359776 /* PusherSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53252983251CF06300359776 /* XCRemoteSwiftPackageReference "pusher-websocket-swift" */;
+			productName = PusherSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 33831C561A9CEEE900B124F1 /* Project object */;
 }

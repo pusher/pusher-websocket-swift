@@ -12,7 +12,7 @@
       },
       {
         "package": "Reachability",
-        "repositoryURL": "https://github.com/ashleymills/Reachability.swift",
+        "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
         "state": {
           "branch": null,
           "revision": "c01bbdf2d633cf049ae1ed1a68a2020a8bda32e2",
@@ -21,7 +21,7 @@
       },
       {
         "package": "Starscream",
-        "repositoryURL": "https://github.com/daltoniam/Starscream",
+        "repositoryURL": "https://github.com/daltoniam/Starscream.git",
         "state": {
           "branch": null,
           "revision": "e6b65c6d9077ea48b4a7bdda8994a1d3c6969c8d",
