@@ -33,8 +33,6 @@
 		53252968251CB48700359776 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 53252967251CB48700359776 /* Reachability */; };
 		5325296E251CB49100359776 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 5325296D251CB49100359776 /* Reachability */; };
 		533FFCB1251B8CF000EEC543 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 533FFCB0251B8CF000EEC543 /* Starscream */; };
-		53840B23251B8DC7009201C3 /* Sodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B22251B8DC7009201C3 /* Sodium */; };
-		53840B25251B8DC7009201C3 /* Clibsodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B24251B8DC7009201C3 /* Clibsodium */; };
 		53840B2E251B8EAF009201C3 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B2D251B8EAF009201C3 /* Starscream */; };
 		53840B30251B8EAF009201C3 /* Clibsodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B2F251B8EAF009201C3 /* Clibsodium */; };
 		53840B32251B8EAF009201C3 /* Sodium in Frameworks */ = {isa = PBXBuildFile; productRef = 53840B31251B8EAF009201C3 /* Sodium */; };
@@ -185,10 +183,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53840B25251B8DC7009201C3 /* Clibsodium in Frameworks */,
 				53252968251CB48700359776 /* Reachability in Frameworks */,
 				533FFCB1251B8CF000EEC543 /* Starscream in Frameworks */,
-				53840B23251B8DC7009201C3 /* Sodium in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,8 +506,6 @@
 			name = PusherSwift;
 			packageProductDependencies = (
 				533FFCB0251B8CF000EEC543 /* Starscream */,
-				53840B22251B8DC7009201C3 /* Sodium */,
-				53840B24251B8DC7009201C3 /* Clibsodium */,
 				53252967251CB48700359776 /* Reachability */,
 			);
 			productName = PusherSwift;
@@ -1528,16 +1522,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 533FFCAF251B8CF000EEC543 /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
-		};
-		53840B22251B8DC7009201C3 /* Sodium */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 53840B21251B8DC7009201C3 /* XCRemoteSwiftPackageReference "swift-sodium" */;
-			productName = Sodium;
-		};
-		53840B24251B8DC7009201C3 /* Clibsodium */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 53840B21251B8DC7009201C3 /* XCRemoteSwiftPackageReference "swift-sodium" */;
-			productName = Clibsodium;
 		};
 		53840B2D251B8EAF009201C3 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
