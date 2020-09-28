@@ -52,8 +52,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         })
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         // wait for message to be received
         waitForExpectations(timeout: 1)
@@ -85,8 +85,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         })
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         // wait for the message to be received
         waitForExpectations(timeout: 1)
@@ -114,8 +114,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         pusher.delegate = errorDelegate
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         waitForExpectations(timeout: 1)
     }
@@ -142,8 +142,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         pusher.delegate = errorDelegate
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         waitForExpectations(timeout: 1)
 
@@ -159,8 +159,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         })
 
         // send the second message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         waitForExpectations(timeout: 1)
     }
@@ -187,8 +187,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         pusher.delegate = errorDelegate
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         waitForExpectations(timeout: 1)
 
@@ -196,8 +196,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         errorDelegate.expectation = expectation(description: "second event should fail to decrpyt too.")
 
         // send a second message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         waitForExpectations(timeout: 1)
     }
@@ -230,8 +230,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         })
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         // wait for message to be received
         waitForExpectations(timeout: 1)
@@ -268,8 +268,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         })
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         // wait for the message to be received
         waitForExpectations(timeout: 1)
@@ -301,8 +301,8 @@ class PrivateEncryptedChannelTests: XCTestCase {
         })
 
         // send the message
-        socket.delegate?.websocketDidReceiveMessage(
-            socket: socket, text: createMessagePayload(dataPayload: dataPayload))
+        socket.delegate?.webSocketDidReceiveMessage(
+            connection: socket, string: createMessagePayload(dataPayload: dataPayload))
 
         // wait for the message to be received
         waitForExpectations(timeout: 1)

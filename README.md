@@ -19,10 +19,14 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 - Can be used with Objective-C
 
 ### Deployment targets
-- iOS 8.0 and above
-- macOS (OS X) 10.11 and above
-- tvOS 9.0 and above
+- iOS 13.0 and above
+- macOS (OS X) 10.15 and above
+- tvOS 13.0 and above
 - Not currently compatible with watchOS
+
+### Legacy OS support
+
+If you need support for older versions of iOS, macOS or tvOS, please use the latest v8.x release of the SDK.
 
 ## I just want to copy and paste some code to get me started
 
