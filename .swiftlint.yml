@@ -1,6 +1,8 @@
 excluded:
   - Carthage
   - Package.swift
+  - Consumption-Tests/*/Carthage
+  - Consumption-Tests/*/Pods
 
 identifier_name:
   excluded:
