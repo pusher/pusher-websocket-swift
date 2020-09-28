@@ -1,8 +1,7 @@
 import Foundation
 import Network
 
-/// Manages a websocket connection to a given server which can accept such connections.
-open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate {
+open class WebSocket: WebSocketConnection {
 
     // MARK: - Public properties
 
@@ -10,86 +9,107 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
 
     // MARK: - Private properties
 
-    private var webSocketTask: URLSessionWebSocketTask?
-    private var webSocketRequest: URLRequest!
-    private var urlSession: URLSession!
-    private let delegateQueue = OperationQueue()
+    private var connection: NWConnection?
+    private let endpoint: NWEndpoint
+    private let parameters: NWParameters
+    private let connectionQueue: DispatchQueue
     private var pingTimer: Timer?
+
+    private static let webSocketSubProtocol = "pusher-channels-protocol-\(PROTOCOL)"
 
     // MARK: - Initialization
 
-    init(request: URLRequest, connectAutomatically: Bool = false) {
-        super.init()
-        webSocketRequest = request
-        configureConnection(connectAutomatically: connectAutomatically)
+    init(request: URLRequest,
+         connectAutomatically: Bool = false,
+         connectionQueue: DispatchQueue = .global(qos: .default)) {
+
+        endpoint = .url(request.url!)
+
+        if request.url?.scheme == "ws" {
+            parameters = NWParameters.tcp
+        } else {
+            parameters = NWParameters.tls
+        }
+
+        let wsOptions = NWProtocolWebSocket.Options()
+        wsOptions.autoReplyPing = true
+        wsOptions.setSubprotocols([Self.webSocketSubProtocol])
+        parameters.defaultProtocolStack.applicationProtocols.insert(wsOptions, at: 0)
+
+        self.connectionQueue = connectionQueue
+
+        if connectAutomatically {
+            connect()
+        }
     }
 
-    init(url: URL, connectAutomatically: Bool = false) {
-        super.init()
-        webSocketRequest = URLRequest(url: url)
-        configureConnection(connectAutomatically: connectAutomatically)
-    }
+    init(url: URL,
+         connectAutomatically: Bool = false,
+         connectionQueue: DispatchQueue = .global(qos: .default)) {
 
-    // MARK: - URLSessionWebSocketDelegate conformance
+        endpoint = .url(url)
 
-    public func urlSession(_ session: URLSession,
-                           webSocketTask: URLSessionWebSocketTask,
-                           didOpenWithProtocol protocol: String?) {
-        delegate?.webSocketDidConnect(connection: self)
-    }
+        if url.scheme == "ws" {
+            parameters = NWParameters.tcp
+        } else {
+            parameters = NWParameters.tls
+        }
 
-    public func urlSession(_ session: URLSession,
-                           webSocketTask: URLSessionWebSocketTask,
-                           didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
-                           reason: Data?) {
-        // swiftlint:disable:next force_try
-        let nwCloseCode = try! NWProtocolWebSocket.CloseCode(rawValue: UInt16(closeCode.rawValue))
-        delegate?.webSocketDidDisconnect(connection: self,
-                                         closeCode: nwCloseCode,
-                                         reason: reason)
+        let wsOptions = NWProtocolWebSocket.Options()
+        wsOptions.autoReplyPing = true
+        wsOptions.setSubprotocols([Self.webSocketSubProtocol])
+        parameters.defaultProtocolStack.applicationProtocols.insert(wsOptions, at: 0)
+
+        self.connectionQueue = connectionQueue
+
+        if connectAutomatically {
+            connect()
+        }
     }
 
     // MARK: - WebSocketConnection conformance
 
     func connect() {
-        if webSocketTask == nil {
-            webSocketTask = urlSession.webSocketTask(with: webSocketRequest)
+        if connection == nil {
+            connection = NWConnection(to: endpoint, using: parameters)
         }
-
-        webSocketTask?.resume()
+        connection?.stateUpdateHandler = stateDidChange(to:)
         listen()
+        connection?.start(queue: connectionQueue)
     }
 
     func send(string: String) {
-        send(message: .string(string))
+        guard let data = string.data(using: .utf8) else {
+            return
+        }
+        let metadata = NWProtocolWebSocket.Metadata(opcode: .text)
+        let context = NWConnection.ContentContext(identifier: "textContext", metadata: [metadata])
+
+        send(data: data, context: context)
     }
 
     func send(data: Data) {
-        send(message: .data(data))
+        let metadata = NWProtocolWebSocket.Metadata(opcode: .binary)
+        let context = NWConnection.ContentContext(identifier: "binaryContext", metadata: [metadata])
+
+        send(data: data, context: context)
     }
 
     func listen() {
-        webSocketTask?.receive { [weak self] result in
+        connection?.receiveMessage { [weak self] (data, context, _, error) in
             guard let self = self else {
                 return
             }
 
-            switch result {
-            case .failure(let error):
-                self.delegate?.webSocketDidReceiveError(connection: self, error: error)
-            case .success(let message):
-                switch message {
-                case .string(let string):
-                    self.delegate?.webSocketDidReceiveMessage(connection: self, string: string)
-                case .data(let data):
-                    self.delegate?.webSocketDidReceiveMessage(connection: self, data: data)
-                @unknown default:
-                    fatalError()
-                }
+            if let data = data, !data.isEmpty, let context = context {
+                self.receiveMessage(data: data, context: context)
             }
 
-            // Recursive to continue listening for future messages on connection
-            self.listen()
+            if let error = error {
+                self.delegate?.webSocketDidReceiveError(connection: self, error: error)
+            } else {
+                self.listen()
+            }
         }
     }
 
@@ -104,53 +124,104 @@ open class WebSocket: NSObject, WebSocketConnection, URLSessionWebSocketDelegate
     }
 
     func ping() {
-        self.webSocketTask?.sendPing { error in
-            if let error = error {
-                self.delegate?.webSocketDidReceiveError(connection: self, error: error)
-            } else {
-                self.delegate?.webSocketDidReceivePong(connection: self)
-            }
-        }
-    }
-
-    func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
-
-        var webSocketTaskCloseCode: URLSessionWebSocketTask.CloseCode!
-        switch closeCode {
-        case .protocolCode(let definedCode):
-            webSocketTaskCloseCode = URLSessionWebSocketTask.CloseCode(rawValue: Int(definedCode.rawValue))
-        case .applicationCode, .privateCode:
-            webSocketTaskCloseCode = .normalClosure
-        @unknown default:
-            fatalError()
-        }
-
-        webSocketTask?.cancel(with: webSocketTaskCloseCode, reason: nil)
-        webSocketTask = nil
-        pingTimer?.invalidate()
-    }
-
-    // MARK: - Private methods
-
-    private func configureConnection(connectAutomatically: Bool) {
-        urlSession = URLSession(configuration: .default,
-                                delegate: self,
-                                delegateQueue: delegateQueue)
-
-        if connectAutomatically {
-            connect()
-        }
-    }
-
-    private func send(message: URLSessionWebSocketTask.Message) {
-        webSocketTask?.send(message) { [weak self] error in
+        let metadata = NWProtocolWebSocket.Metadata(opcode: .ping)
+        metadata.setPongHandler(connectionQueue) { [weak self] error in
             guard let self = self else {
                 return
             }
 
+            self.delegate?.webSocketDidReceivePong(connection: self)
+
             if let error = error {
                 self.delegate?.webSocketDidReceiveError(connection: self, error: error)
             }
         }
+        let context = NWConnection.ContentContext(identifier: "pingContext", metadata: [metadata])
+
+        send(data: Data(), context: context)
+    }
+
+    func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+        let metadata = NWProtocolWebSocket.Metadata(opcode: .close)
+        metadata.closeCode = closeCode
+        let context = NWConnection.ContentContext(identifier: "textContext", metadata: [metadata])
+
+        send(data: nil, context: context)
+        delegate?.webSocketDidDisconnect(connection: self, closeCode: closeCode, reason: nil)
+    }
+
+    // MARK: - Private methods
+
+    private func stateDidChange(to state: NWConnection.State) {
+        switch state {
+        case .ready:
+            delegate?.webSocketDidConnect(connection: self)
+        case .waiting(let error):
+            delegate?.webSocketDidReceiveError(connection: self, error: error)
+        case .failed(let error):
+            stopConnection(error: error)
+        case .setup:
+            break
+        case .preparing:
+            break
+        case .cancelled:
+            stopConnection(error: nil)
+        @unknown default:
+            fatalError()
+        }
+    }
+
+    private func receiveMessage(data: Data, context: NWConnection.ContentContext) {
+        guard let metadata = context.protocolMetadata.first as? NWProtocolWebSocket.Metadata else {
+            return
+        }
+
+        switch metadata.opcode {
+        case .binary:
+            self.delegate?.webSocketDidReceiveMessage(connection: self, data: data)
+        case .cont:
+            //
+            break
+        case .text:
+            guard let string = String(data: data, encoding: .utf8) else {
+                return
+            }
+            self.delegate?.webSocketDidReceiveMessage(connection: self, string: string)
+        case .close:
+            delegate?.webSocketDidDisconnect(connection: self,
+                                             closeCode: metadata.closeCode,
+                                             reason: data)
+        case .ping:
+            // SEE `autoReplyPing = true` in `init()`.
+            break
+        case .pong:
+            // SEE `ping()` FOR PONG RECEIVE LOGIC.
+            break
+        @unknown default:
+            fatalError()
+        }
+    }
+
+    private func send(data: Data?, context: NWConnection.ContentContext) {
+        connection?.send(content: data,
+                         contentContext: context,
+                         isComplete: true,
+                         completion: .contentProcessed({ [weak self] error in
+                            guard let self = self else {
+                                return
+                            }
+
+                            if let error = error {
+                                self.delegate?.webSocketDidReceiveError(connection: self, error: error)
+                            }
+                         }))
+    }
+
+    private func stopConnection(error: Error?) {
+        if let error = error {
+            delegate?.webSocketDidReceiveError(connection: self, error: error)
+        }
+        pingTimer?.invalidate()
+        connection = nil
     }
 }

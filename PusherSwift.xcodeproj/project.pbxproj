@@ -32,12 +32,12 @@
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		53140355250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */; };
 		53140356250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */; };
+		53140358250B8A9F00F3D7BF /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140357250B8A9F00F3D7BF /* WebSocket.swift */; };
+		53140359250B8A9F00F3D7BF /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140357250B8A9F00F3D7BF /* WebSocket.swift */; };
 		539D9AFC2507F67300B5765A /* PusherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFB2507F67300B5765A /* PusherLogger.swift */; };
 		539D9AFE2507F68400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
 		539D9AFF2507F69400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
 		539D9B002507F69B00B5765A /* PusherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFB2507F67300B5765A /* PusherLogger.swift */; };
-		539D9B022509101E00B5765A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B012509101E00B5765A /* WebSocket.swift */; };
-		539D9B032509101E00B5765A /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B012509101E00B5765A /* WebSocket.swift */; };
 		539D9B05250913B300B5765A /* WebSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B04250913B300B5765A /* WebSocketConnection.swift */; };
 		539D9B06250913B300B5765A /* WebSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9B04250913B300B5765A /* WebSocketConnection.swift */; };
 		736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
@@ -146,9 +146,9 @@
 		33BB99671D21226C00B25C2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Tests/Info.plist; sourceTree = "<group>"; };
 		33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectiveC.swift; sourceTree = "<group>"; };
 		53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherChannelsProtocolCloseCode.swift; sourceTree = "<group>"; };
+		53140357250B8A9F00F3D7BF /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		539D9AFB2507F67300B5765A /* PusherLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherLogger.swift; sourceTree = "<group>"; };
 		539D9AFD2507F68400B5765A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		539D9B012509101E00B5765A /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		539D9B04250913B300B5765A /* WebSocketConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketConnection.swift; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 				E2B21F06243F5B860049A35B /* PusherEvent.swift */,
 				3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */,
 				3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */,
-				539D9B012509101E00B5765A /* WebSocket.swift */,
+				53140357250B8A9F00F3D7BF /* WebSocket.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -765,7 +765,6 @@
 				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
 				E2CFE43122D79CA7004187C3 /* PusherParser.swift in Sources */,
 				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
-				539D9B022509101E00B5765A /* WebSocket.swift in Sources */,
 				E2B21F01243F5B1E0049A35B /* PusherEventFactory.swift in Sources */,
 				3389F57A1CAEDEC800563F49 /* PusherClientOptions.swift in Sources */,
 				E2B21F07243F5B860049A35B /* PusherEvent.swift in Sources */,
@@ -774,6 +773,7 @@
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
 				33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */,
 				3390D1E61F054D0400E1944D /* AuthRequestBuilderProtocol.swift in Sources */,
+				53140358250B8A9F00F3D7BF /* WebSocket.swift in Sources */,
 				330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -822,7 +822,6 @@
 				73D8A1EE2435E5F3001FDE05 /* PusherChannels.swift in Sources */,
 				73D8A1EF2435E5F3001FDE05 /* PusherParser.swift in Sources */,
 				539D9AFF2507F69400B5765A /* Constants.swift in Sources */,
-				539D9B032509101E00B5765A /* WebSocket.swift in Sources */,
 				73D8A1F02435E5F3001FDE05 /* PusherGlobalChannel.swift in Sources */,
 				E2B21F02243F5B1E0049A35B /* PusherEventFactory.swift in Sources */,
 				73D8A1F12435E5F3001FDE05 /* PusherClientOptions.swift in Sources */,
@@ -831,6 +830,7 @@
 				73D8A1F22435E5F3001FDE05 /* PusherPresenceChannel.swift in Sources */,
 				73D8A1F32435E5F3001FDE05 /* ObjectiveC.swift in Sources */,
 				73D8A1F52435E5F3001FDE05 /* AuthRequestBuilderProtocol.swift in Sources */,
+				53140359250B8A9F00F3D7BF /* WebSocket.swift in Sources */,
 				73D8A1F62435E5F3001FDE05 /* PusherSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
