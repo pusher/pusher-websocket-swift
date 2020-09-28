@@ -143,7 +143,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
     }
 
     func webSocketDidReceiveError(connection: WebSocketConnection, error: Error) {
-        self.delegate?.debugLog?(message: PusherLogger.debug(for: .disconnectionWithError,
+        self.delegate?.debugLog?(message: PusherLogger.debug(for: .errorReceived,
                                                              context: "Error (code: \((error as NSError).code)): \(error.localizedDescription)"))
     }
 }
