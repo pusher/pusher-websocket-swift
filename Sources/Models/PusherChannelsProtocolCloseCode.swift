@@ -28,10 +28,6 @@ internal enum PusherChannelsProtocolCloseCode: UInt16 {
         /// and that the client may reconnect immediately.
         case reconnectImmediately
 
-        /// Indicates any other type of error in the connection being closed by Pusher Channels,
-        /// and the client may reconnect if appropriate.
-        case reconnectIfAppropriate
-
         /// Indicates that the reconnection strategy is unknown due to the closure code being
         /// outside of the expected range as specified by the Pusher Channels Protocol.
         case unknown
@@ -46,8 +42,6 @@ internal enum PusherChannelsProtocolCloseCode: UInt16 {
                 self = .reconnectAfterBackingOff
             case 4200...4299:
                 self = .reconnectImmediately
-            case 4300...4399:
-                self = .reconnectIfAppropriate
             default:
                 self = .unknown
             }
@@ -77,9 +71,6 @@ internal enum PusherChannelsProtocolCloseCode: UInt16 {
     /// Client has been inactive for a long time (currently 24 hours)
     /// and client does not support ping.
     case closedAfterInactivity                  = 4202
-
-    // 4300 - 4399
-    case clientEventRejectedDueToRateLimit      = 4300
 
     // MARK: - Public properties
 
