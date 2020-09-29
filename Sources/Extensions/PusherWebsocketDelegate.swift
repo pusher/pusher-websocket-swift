@@ -68,7 +68,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
         // Log the disconnection
 
-        self.delegate?.debugLog?(message: PusherLogger.debug(for: .disconnectionWithoutError))
+        logDisconnection(closeCode: closeCode, reason: reason)
 
         // Attempt reconnect if possible
 
@@ -85,13 +85,17 @@ extension PusherConnection: WebSocketConnectionDelegate {
             self.delegate?.debugLog?(message: PusherLogger.debug(for: .reconnectionFailureLikely))
         }
 
-        attemptReconnect()
+        attemptReconnect(closeCode: closeCode)
     }
 
     /**
-        Attempt to reconnect triggered by a disconnection
-    */
-    internal func attemptReconnect() {
+     Attempt to reconnect triggered by a disconnection.
+
+     If the `closeCode` case is `.privateCode()`, then the reconnection logic is determined by
+     `PusherChannelsProtocolCloseCode.ReconnectionStrategy`.
+     - Parameter closeCode: The closure code received by the WebSocket connection.
+     */
+    internal func attemptReconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         guard connectionState != .connected else {
             return
         }
@@ -100,23 +104,34 @@ extension PusherConnection: WebSocketConnectionDelegate {
             return
         }
 
-        if connectionState != .reconnecting {
-            updateConnectionState(to: .reconnecting)
-        }
+        // Reconnect attempt according to Pusher Channels Protocol close code (if present).
+        // (Otherwise, the default behavior is to attempt reconnection after backing off).
+        var timeInterval = reconnectionAttemptTimeInterval(strategy: .reconnectAfterBackingOff)
+        if case let .privateCode(code) = closeCode {
+            let channelsCloseCode = PusherChannelsProtocolCloseCode(rawValue: code)!
+            timeInterval = reconnectionAttemptTimeInterval(strategy: channelsCloseCode.reconnectionStrategy)
 
-        let reconnectInterval = Double(reconnectAttempts * reconnectAttempts)
+            switch channelsCloseCode.reconnectionStrategy {
+            case .doNotReconnectUnchanged:
+                // Return early without attempting reconnection
+                return
+            case .reconnectAfterBackingOff,
+                 .reconnectImmediately,
+                 .unknown:
+                // Reconnect attempt according to `strategy`
+                if connectionState != .reconnecting {
+                    updateConnectionState(to: .reconnecting)
+                }
 
-        let timeInterval = maxReconnectGapInSeconds != nil ? min(reconnectInterval, maxReconnectGapInSeconds!)
-                                                           : reconnectInterval
-
-        if reconnectAttemptsMax != nil {
-            let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
-                                             context: "\(timeInterval) seconds (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))")
-            self.delegate?.debugLog?(message: message)
+                logReconnectionAttempt(strategy: channelsCloseCode.reconnectionStrategy)
+            }
         } else {
-            let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
-                                             context: "\(timeInterval) seconds (attempt \(reconnectAttempts + 1))")
-            self.delegate?.debugLog?(message: message)
+            // Default behavior
+            if connectionState != .reconnecting {
+                updateConnectionState(to: .reconnecting)
+            }
+
+            logReconnectionAttempt(strategy: .reconnectAfterBackingOff)
         }
 
         reconnectTimer = Timer.scheduledTimer(
@@ -127,6 +142,83 @@ extension PusherConnection: WebSocketConnectionDelegate {
             repeats: false
         )
         reconnectAttempts += 1
+    }
+
+    /// Returns a `TimeInterval` appropriate for a reconnection attempt after some delay.
+    /// - Parameter strategy: The reconnection strategy for the reconnection attempt.
+    /// - Returns: An appropriate `TimeInterval`. (0.0 if `strategy == .reconnectImmediately`).
+    internal func reconnectionAttemptTimeInterval(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) -> TimeInterval {
+        if case .reconnectImmediately = strategy {
+            return 0.0
+        }
+
+        let reconnectInterval = Double(reconnectAttempts * reconnectAttempts)
+
+        return maxReconnectGapInSeconds != nil ?
+            min(reconnectInterval, maxReconnectGapInSeconds!) : reconnectInterval
+    }
+
+    /// Logs the websocket reconnection attempt.
+    /// - Parameter strategy: The reconnection strategy for the reconnection attempt.
+    internal func logReconnectionAttempt(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) {
+
+        if case .reconnectImmediately = strategy {
+            if reconnectAttemptsMax != nil {
+                let message = PusherLogger.debug(for: .attemptReconnectionImmediately,
+                                                 context: """
+                    (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))
+                    """)
+                self.delegate?.debugLog?(message: message)
+            } else {
+                let message = PusherLogger.debug(for: .attemptReconnectionImmediately,
+                                                 context: """
+                    (attempt \(reconnectAttempts + 1))
+                    """)
+                self.delegate?.debugLog?(message: message)
+            }
+        } else {
+            let timeInterval = reconnectionAttemptTimeInterval(strategy: strategy)
+            if reconnectAttemptsMax != nil {
+                let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
+                                                 context: """
+                    \(timeInterval) seconds (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))
+                    """)
+                self.delegate?.debugLog?(message: message)
+            } else {
+                let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
+                                                 context: """
+                    \(timeInterval) seconds (attempt \(reconnectAttempts + 1))
+                    """)
+                self.delegate?.debugLog?(message: message)
+            }
+        }
+    }
+
+    /// Logs the websocket disconnection event.
+    /// - Parameters:
+    ///   - closeCode: The closure code for the websocket connection.
+    ///   - reason: Optional further information on the connection closure.
+    internal func logDisconnection(closeCode: NWProtocolWebSocket.CloseCode, reason: Data?) {
+        var rawCode: UInt16!
+        switch closeCode {
+        case .protocolCode(let definedCode):
+            rawCode = definedCode.rawValue
+        case .applicationCode(let applicationCode):
+            rawCode = applicationCode
+        case .privateCode(let protocolCode):
+            rawCode = protocolCode
+        @unknown default:
+            fatalError()
+        }
+
+        var closeMessage: String = "Close code: \(String(describing: rawCode))."
+        if let reason = reason,
+            let reasonString = String(data: reason, encoding: .utf8) {
+            closeMessage += " Reason: \(reasonString)."
+        }
+
+        self.delegate?.debugLog?(message: PusherLogger.debug(for: .disconnectionWithoutError,
+                                                             context: closeMessage))
     }
 
     /**
@@ -144,6 +236,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
     func webSocketDidReceiveError(connection: WebSocketConnection, error: Error) {
         self.delegate?.debugLog?(message: PusherLogger.debug(for: .errorReceived,
-                                                             context: "Error (code: \((error as NSError).code)): \(error.localizedDescription)"))
+                                                             context: """
+            Error (code: \((error as NSError).code)): \(error.localizedDescription)
+            """))
     }
 }
