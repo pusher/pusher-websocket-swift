@@ -1,4 +1,3 @@
-
 class PusherDecryptor {
 
     static func decrypt(data dataAsString: String?, decryptionKey: String?) throws -> String? {
@@ -8,5 +7,5 @@ class PusherDecryptor {
     static func isDecryptionAvailable() -> Bool {
         return false
     }
-    
+
 }

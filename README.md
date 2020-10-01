@@ -1,6 +1,6 @@
 # Pusher Channels Swift Client (also works with Objective-C)
 
-[![Build Status](https://travis-ci.org/pusher/pusher-websocket-swift.svg?branch=master)](https://travis-ci.org/pusher/pusher-websocket-swift)
+![Build Status](https://app.bitrise.io/app/3c6dac112b98e7fe.svg?token=n0z-aWua_Bc35kUGu4qpYg)
 ![Languages](https://img.shields.io/badge/languages-swift%20%7C%20objc-orange.svg)
 [![Platform](https://img.shields.io/cocoapods/p/PusherSwift.svg?style=flat)](http://cocoadocs.org/docsets/PusherSwift)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/PusherSwift.svg)](https://img.shields.io/cocoapods/v/PusherSwift.svg)
@@ -19,10 +19,14 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 - Can be used with Objective-C
 
 ### Deployment targets
-- iOS 8.0 and above
-- macOS (OS X) 10.11 and above
-- tvOS 9.0 and above
+- iOS 13.0 and above
+- macOS (OS X) 10.15 and above
+- tvOS 13.0 and above
 - Not currently compatible with watchOS
+
+### Legacy OS support
+
+If you need support for older versions of iOS, macOS or tvOS, please use the latest v8.x release of the SDK.
 
 ## I just want to copy and paste some code to get me started
 
