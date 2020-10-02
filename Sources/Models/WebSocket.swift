@@ -144,7 +144,7 @@ open class WebSocket: WebSocketConnection {
     func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         let metadata = NWProtocolWebSocket.Metadata(opcode: .close)
         metadata.closeCode = closeCode
-        let context = NWConnection.ContentContext(identifier: "textContext", metadata: [metadata])
+        let context = NWConnection.ContentContext(identifier: "closeContext", metadata: [metadata])
 
         send(data: nil, context: context)
         delegate?.webSocketDidDisconnect(connection: self, closeCode: closeCode, reason: nil)
