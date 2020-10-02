@@ -21,7 +21,7 @@ open class WebSocket: WebSocketConnection {
 
     convenience init(request: URLRequest,
                      connectAutomatically: Bool = false,
-                     connectionQueue: DispatchQueue = .global(qos: .default)) {
+                     connectionQueue: DispatchQueue = .main) {
 
         self.init(url: request.url!,
                   connectAutomatically: connectAutomatically,
@@ -30,7 +30,7 @@ open class WebSocket: WebSocketConnection {
 
     init(url: URL,
          connectAutomatically: Bool = false,
-         connectionQueue: DispatchQueue = .global(qos: .default)) {
+         connectionQueue: DispatchQueue = .main) {
 
         endpoint = .url(url)
 
