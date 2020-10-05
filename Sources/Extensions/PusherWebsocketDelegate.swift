@@ -162,36 +162,21 @@ extension PusherConnection: WebSocketConnectionDelegate {
     /// - Parameter strategy: The reconnection strategy for the reconnection attempt.
     internal func logReconnectionAttempt(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) {
 
-        if case .reconnectImmediately = strategy {
-            if reconnectAttemptsMax != nil {
-                let message = PusherLogger.debug(for: .attemptReconnectionImmediately,
-                                                 context: """
-                    (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))
-                    """)
-                self.delegate?.debugLog?(message: message)
-            } else {
-                let message = PusherLogger.debug(for: .attemptReconnectionImmediately,
-                                                 context: """
-                    (attempt \(reconnectAttempts + 1))
-                    """)
-                self.delegate?.debugLog?(message: message)
-            }
-        } else {
-            let timeInterval = reconnectionAttemptTimeInterval(strategy: strategy)
-            if reconnectAttemptsMax != nil {
-                let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
-                                                 context: """
-                    \(timeInterval) seconds (attempt \(reconnectAttempts + 1) of \(reconnectAttemptsMax!))
-                    """)
-                self.delegate?.debugLog?(message: message)
-            } else {
-                let message = PusherLogger.debug(for: .attemptReconnectionAfterWaiting,
-                                                 context: """
-                    \(timeInterval) seconds (attempt \(reconnectAttempts + 1))
-                    """)
-                self.delegate?.debugLog?(message: message)
-            }
+        var context = "(attempt \(reconnectAttempts + 1))"
+        var loggingEvent = PusherLogger.LoggingEvent.attemptReconnectionImmediately
+
+        if reconnectAttemptsMax != nil {
+            context.insert(contentsOf: " of \(reconnectAttemptsMax!)", at: context.index(before: context.endIndex))
         }
+
+        if strategy != .reconnectImmediately {
+            loggingEvent = .attemptReconnectionAfterWaiting
+            let timeInterval = reconnectionAttemptTimeInterval(strategy: strategy)
+            context = "\(timeInterval) seconds " + context
+        }
+
+        self.delegate?.debugLog?(message: PusherLogger.debug(for: loggingEvent,
+                                                             context: context))
     }
 
     /// Logs the websocket disconnection event.
