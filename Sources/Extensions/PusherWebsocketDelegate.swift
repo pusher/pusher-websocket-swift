@@ -106,36 +106,28 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
         // Reconnect attempt according to Pusher Channels Protocol close code (if present).
         // (Otherwise, the default behavior is to attempt reconnection after backing off).
-        var timeInterval = reconnectionAttemptTimeInterval(strategy: .reconnectAfterBackingOff)
+        var channelsCloseCode: PusherChannelsProtocolCloseCode?
         if case let .privateCode(code) = closeCode {
-            let channelsCloseCode = PusherChannelsProtocolCloseCode(rawValue: code)!
-            timeInterval = reconnectionAttemptTimeInterval(strategy: channelsCloseCode.reconnectionStrategy)
+            channelsCloseCode = PusherChannelsProtocolCloseCode(rawValue: code)
+        }
+        let strategy = channelsCloseCode?.reconnectionStrategy ?? .reconnectAfterBackingOff
 
-            switch channelsCloseCode.reconnectionStrategy {
-            case .doNotReconnectUnchanged:
-                // Return early without attempting reconnection
-                return
-            case .reconnectAfterBackingOff,
-                 .reconnectImmediately,
-                 .unknown:
-                // Reconnect attempt according to `strategy`
-                if connectionState != .reconnecting {
-                    updateConnectionState(to: .reconnecting)
-                }
-
-                logReconnectionAttempt(strategy: channelsCloseCode.reconnectionStrategy)
-            }
-        } else {
-            // Default behavior
+        switch strategy {
+        case .doNotReconnectUnchanged:
+            // Return early without attempting reconnection
+            return
+        case .reconnectAfterBackingOff,
+             .reconnectImmediately,
+             .unknown:
             if connectionState != .reconnecting {
                 updateConnectionState(to: .reconnecting)
             }
 
-            logReconnectionAttempt(strategy: .reconnectAfterBackingOff)
+            logReconnectionAttempt(strategy: strategy)
         }
 
         reconnectTimer = Timer.scheduledTimer(
-            timeInterval: timeInterval,
+            timeInterval: reconnectionAttemptTimeInterval(strategy: strategy),
             target: self,
             selector: #selector(connect),
             userInfo: nil,
