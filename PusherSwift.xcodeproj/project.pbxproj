@@ -34,6 +34,8 @@
 		53140356250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */; };
 		53140358250B8A9F00F3D7BF /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140357250B8A9F00F3D7BF /* WebSocket.swift */; };
 		53140359250B8A9F00F3D7BF /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140357250B8A9F00F3D7BF /* WebSocket.swift */; };
+		536F96B8252C841000D2C2F4 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536F96B7252C841000D2C2F4 /* WebSocketTests.swift */; };
+		536F96B9252C841000D2C2F4 /* WebSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536F96B7252C841000D2C2F4 /* WebSocketTests.swift */; };
 		539D9AFC2507F67300B5765A /* PusherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFB2507F67300B5765A /* PusherLogger.swift */; };
 		539D9AFE2507F68400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
 		539D9AFF2507F69400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
@@ -147,6 +149,7 @@
 		33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectiveC.swift; sourceTree = "<group>"; };
 		53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherChannelsProtocolCloseCode.swift; sourceTree = "<group>"; };
 		53140357250B8A9F00F3D7BF /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		536F96B7252C841000D2C2F4 /* WebSocketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketTests.swift; sourceTree = "<group>"; };
 		539D9AFB2507F67300B5765A /* PusherLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherLogger.swift; sourceTree = "<group>"; };
 		539D9AFD2507F68400B5765A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		539D9B04250913B300B5765A /* WebSocketConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketConnection.swift; sourceTree = "<group>"; };
@@ -405,6 +408,7 @@
 				3342F3BB1D808AC500C0296E /* ClientEventTests.swift */,
 				33BB99611D21226C00B25C2A /* PresenceChannelTests.swift */,
 				33BB99621D21226C00B25C2A /* PusherChannelTests.swift */,
+				536F96B7252C841000D2C2F4 /* WebSocketTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -784,6 +788,7 @@
 			files = (
 				73D8A22F2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */,
 				33BB997A1D21230100B25C2A /* PusherConnectionTests.swift in Sources */,
+				536F96B8252C841000D2C2F4 /* WebSocketTests.swift in Sources */,
 				736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */,
 				E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */,
 				33BB99791D21230100B25C2A /* PusherClientInitializationTests.swift in Sources */,
@@ -844,6 +849,7 @@
 				73D8A2102435F24E001FDE05 /* String+Extensions.swift in Sources */,
 				73D8A2112435F24E001FDE05 /* PusherCryptoTest.swift in Sources */,
 				D32DBA1B2445BCD60064DA56 /* PrivateEncryptedChannelTests.swift in Sources */,
+				536F96B9252C841000D2C2F4 /* WebSocketTests.swift in Sources */,
 				73D8A2122435F24E001FDE05 /* PusherClientInitializationTests.swift in Sources */,
 				73D8A2132435F24E001FDE05 /* PresenceChannelTests.swift in Sources */,
 				73D8A2142435F24E001FDE05 /* PusherTopLevelAPITests.swift in Sources */,
