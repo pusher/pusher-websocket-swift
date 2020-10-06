@@ -44,6 +44,7 @@ class WebSocketTests: XCTestCase {
     }
 
     var shouldDisconnectImmediately: Bool!
+    static let expectationTimeout = 5.0
 
     override func setUp() {
         super.setUp()
@@ -55,34 +56,34 @@ class WebSocketTests: XCTestCase {
     func testConnect() {
         connectExpectation = XCTestExpectation(description: "connectExpectation")
         socket.connect()
-        wait(for: [connectExpectation!], timeout: 1.0)
+        wait(for: [connectExpectation!], timeout: Self.expectationTimeout)
     }
 
     func testDisconnect() {
         disconnectExpectation = XCTestExpectation(description: "disconnectExpectation")
         socket.connect()
-        wait(for: [disconnectExpectation], timeout: 1.0)
+        wait(for: [disconnectExpectation], timeout: Self.expectationTimeout)
     }
 
     func testReceiveStringMessage() {
         stringMessageExpectation = XCTestExpectation(description: "stringMessageExpectation")
         socket.connect()
         socket.send(string: "This is a string message!")
-        wait(for: [stringMessageExpectation], timeout: 1.0)
+        wait(for: [stringMessageExpectation], timeout: Self.expectationTimeout)
     }
 
     func testReceiveDataMessage() {
         dataMessageExpectation = XCTestExpectation(description: "dataMessageExpectation")
         socket.connect()
         socket.send(data: "This is a data message!".data(using: .utf8)!)
-        wait(for: [dataMessageExpectation], timeout: 1.0)
+        wait(for: [dataMessageExpectation], timeout: Self.expectationTimeout)
     }
 
     func testReceivePong() {
         pongExpectation = XCTestExpectation(description: "pongExpectation")
         socket.connect()
         socket.ping()
-        wait(for: [pongExpectation], timeout: 1.0)
+        wait(for: [pongExpectation], timeout: Self.expectationTimeout)
     }
 
     func testReceiveError() {
@@ -93,7 +94,7 @@ class WebSocketTests: XCTestCase {
         errorExpectation = XCTestExpectation(description: "errorExpectation")
         socket.connect()
         // TODO: TRIGGER ERROR
-        wait(for: [errorExpectation!], timeout: 1.0)
+        wait(for: [errorExpectation!], timeout: Self.expectationTimeout)
     }
 
 }
