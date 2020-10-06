@@ -131,8 +131,8 @@ open class WebSocket: WebSocketConnection {
         metadata.closeCode = closeCode
         let context = NWConnection.ContentContext(identifier: "closeContext", metadata: [metadata])
 
+        // See implementation of `send(data:context:)` for `delegate?.webSocketDidDisconnect(…)`
         send(data: nil, context: context)
-        delegate?.webSocketDidDisconnect(connection: self, closeCode: closeCode, reason: nil)
     }
 
     // MARK: - Private methods
@@ -194,6 +194,14 @@ open class WebSocket: WebSocketConnection {
                          completion: .contentProcessed({ [weak self] error in
                             guard let self = self else {
                                 return
+                            }
+
+                            // If a connection closure was sent, inform delegate on completion
+                            if let socketMetadata = context.protocolMetadata.first as? NWProtocolWebSocket.Metadata,
+                                socketMetadata.opcode == .close {
+                                self.delegate?.webSocketDidDisconnect(connection: self,
+                                                                      closeCode: socketMetadata.closeCode,
+                                                                      reason: data)
                             }
 
                             if let error = error {
