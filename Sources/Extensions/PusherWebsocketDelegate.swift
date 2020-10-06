@@ -72,8 +72,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
         // Attempt reconnect if possible
 
+        // `autoReconnect` option is ignored if the closure code is within the 4000-4999 range
         if case .privateCode = closeCode {} else {
-            // `autoReconnect` option is only respected if closeCode is outside the 4000-4999 range
             guard self.options.autoReconnect else {
                 return
             }
