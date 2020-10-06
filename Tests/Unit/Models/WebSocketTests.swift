@@ -7,8 +7,6 @@ import Network
     @testable import PusherSwift
 #endif
 
-// swiftlint:disable todo
-
 class WebSocketTests: XCTestCase {
     var socket: WebSocket!
 
@@ -93,7 +91,6 @@ class WebSocketTests: XCTestCase {
 
         errorExpectation = XCTestExpectation(description: "errorExpectation")
         socket.connect()
-        // TODO: TRIGGER ERROR
         wait(for: [errorExpectation!], timeout: Self.expectationTimeout)
     }
 
