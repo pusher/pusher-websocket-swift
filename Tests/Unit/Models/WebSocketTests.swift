@@ -49,7 +49,7 @@ class WebSocketTests: XCTestCase {
     var shouldDisconnectImmediately: Bool!
     var receivedPongTimestamps = [Date]()
     static let expectationTimeout = 5.0
-    static let repeatedPingInterval = 0.5
+    static let repeatedPingInterval = 1.0
 
     override func setUp() {
         super.setUp()
@@ -97,7 +97,7 @@ class WebSocketTests: XCTestCase {
         pingsWithIntervalExpectation = XCTestExpectation(description: "pingsWithIntervalExpectation")
         socket.connect()
         socket.ping(interval: Self.repeatedPingInterval)
-        wait(for: [pingsWithIntervalExpectation!], timeout: Self.expectationTimeout)
+        wait(for: [pingsWithIntervalExpectation!], timeout: Self.expectationTimeout * 2)
     }
 
     func testReceiveError() {
@@ -142,8 +142,9 @@ extension WebSocketTests: WebSocketConnectionDelegate {
 
         if receivedPongTimestamps.count == 5 {
             let timestampOffsets = zip(receivedPongTimestamps.dropFirst(), receivedPongTimestamps).map { $0.timeIntervalSince($1) }
+            print("DIFFS: \(timestampOffsets)")
             for offset in timestampOffsets {
-                XCTAssertEqual(offset, Self.repeatedPingInterval, accuracy: 0.01)
+                XCTAssertEqual(offset, Self.repeatedPingInterval, accuracy: 0.1)
             }
             pingsWithIntervalExpectation?.fulfill()
         }
