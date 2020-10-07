@@ -102,7 +102,7 @@ class WebSocketTests: XCTestCase {
 
     func testReceiveError() {
         // Redefine socket with invalid path
-        socket = WebSocket(url: URL(string: "wss://echo.websocket.org/abc")!)
+        socket = WebSocket(request: URLRequest(url: URL(string: "wss://echo.websocket.org/abc")!))
         socket.delegate = self
 
         errorExpectation = XCTestExpectation(description: "errorExpectation")
