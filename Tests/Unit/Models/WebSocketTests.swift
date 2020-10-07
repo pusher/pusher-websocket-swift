@@ -30,7 +30,12 @@ class WebSocketTests: XCTestCase {
             shouldDisconnectImmediately = false
         }
     }
-    var pongExpectation: XCTestExpectation! {
+    var pongExpectation: XCTestExpectation? {
+        didSet {
+            shouldDisconnectImmediately = false
+        }
+    }
+    var pingsWithIntervalExpectation: XCTestExpectation? {
         didSet {
             shouldDisconnectImmediately = false
         }
@@ -42,7 +47,9 @@ class WebSocketTests: XCTestCase {
     }
 
     var shouldDisconnectImmediately: Bool!
+    var receivedPongTimestamps = [Date]()
     static let expectationTimeout = 5.0
+    static let repeatedPingInterval = 0.5
 
     override func setUp() {
         super.setUp()
@@ -50,6 +57,8 @@ class WebSocketTests: XCTestCase {
         socket = WebSocket(url: URL(string: "wss://echo.websocket.org")!)
         socket.delegate = self
     }
+
+    // MARK: - Test methods
 
     func testConnect() {
         connectExpectation = XCTestExpectation(description: "connectExpectation")
@@ -81,7 +90,14 @@ class WebSocketTests: XCTestCase {
         pongExpectation = XCTestExpectation(description: "pongExpectation")
         socket.connect()
         socket.ping()
-        wait(for: [pongExpectation], timeout: Self.expectationTimeout)
+        wait(for: [pongExpectation!], timeout: Self.expectationTimeout)
+    }
+
+    func testPingsWithInterval() {
+        pingsWithIntervalExpectation = XCTestExpectation(description: "pingsWithIntervalExpectation")
+        socket.connect()
+        socket.ping(interval: Self.repeatedPingInterval)
+        wait(for: [pingsWithIntervalExpectation!], timeout: Self.expectationTimeout)
     }
 
     func testReceiveError() {
@@ -102,6 +118,7 @@ extension WebSocketTests: WebSocketConnectionDelegate {
 
     func webSocketDidConnect(connection: WebSocketConnection) {
         connectExpectation?.fulfill()
+
         if shouldDisconnectImmediately {
             socket.disconnect()
         }
@@ -117,7 +134,20 @@ extension WebSocketTests: WebSocketConnectionDelegate {
     }
 
     func webSocketDidReceivePong(connection: WebSocketConnection) {
-        pongExpectation.fulfill()
+        pongExpectation?.fulfill()
+
+        guard pingsWithIntervalExpectation != nil else {
+            return
+        }
+
+        if receivedPongTimestamps.count == 5 {
+            let timestampOffsets = zip(receivedPongTimestamps.dropFirst(), receivedPongTimestamps).map { $0.timeIntervalSince($1) }
+            for offset in timestampOffsets {
+                XCTAssertEqual(offset, Self.repeatedPingInterval, accuracy: 0.01)
+            }
+            pingsWithIntervalExpectation?.fulfill()
+        }
+        receivedPongTimestamps.append(Date())
     }
 
     func webSocketDidReceiveMessage(connection: WebSocketConnection, string: String) {
