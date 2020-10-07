@@ -142,7 +142,6 @@ extension WebSocketTests: WebSocketConnectionDelegate {
 
         if receivedPongTimestamps.count == 5 {
             let timestampOffsets = zip(receivedPongTimestamps.dropFirst(), receivedPongTimestamps).map { $0.timeIntervalSince($1) }
-            print("DIFFS: \(timestampOffsets)")
             for offset in timestampOffsets {
                 XCTAssertEqual(offset, Self.repeatedPingInterval, accuracy: 0.1)
             }
