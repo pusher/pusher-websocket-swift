@@ -106,6 +106,7 @@ open class WebSocket: WebSocketConnection {
 
             self.ping()
         }
+        pingTimer?.tolerance = 0.01
     }
 
     func ping() {
