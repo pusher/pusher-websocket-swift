@@ -47,17 +47,19 @@ class WebSocketTests: XCTestCase {
     }
 
     var shouldDisconnectImmediately: Bool!
-    var receivedPongTimestamps = [Date]()
+    var receivedPongTimestamps: [Date]!
 
     static let expectationTimeout = 5.0
     static let stringMessage = "This is a string message!"
     static let dataMessage = "This is a data message!".data(using: .utf8)!
+    static let expectedReceivedPongsCount = 3
 
     override func setUp() {
         super.setUp()
 
         socket = WebSocket(url: URL(string: "wss://echo.websocket.org")!)
         socket.delegate = self
+        receivedPongTimestamps = []
     }
 
     // MARK: - Test methods
@@ -142,7 +144,7 @@ extension WebSocketTests: WebSocketConnectionDelegate {
             return
         }
 
-        if receivedPongTimestamps.count == 3 {
+        if receivedPongTimestamps.count == Self.expectedReceivedPongsCount {
             pingsWithIntervalExpectation?.fulfill()
         }
         receivedPongTimestamps.append(Date())
