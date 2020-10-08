@@ -166,7 +166,7 @@ There are a number of configuration parameters which can be set for the Pusher c
 
 - `authMethod (AuthMethod)` - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)
 - `useTLS (Bool)` - whether or not you'd like to use TLS encrypted transport or not, default is `true`
-- `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
+- `autoReconnect (Bool)` - set whether or not you'd like the library to try and automatically reconnect upon disconnection (where possible). See [Reconnection](#reconnection) for more info
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd like to connect to
 - `activityTimeout (TimeInterval)` - after this time (in seconds) without any messages received from the server, a ping message will be sent to check if the connection is still working; the default value is supplied by the server, low values will result in unnecessary traffic.
@@ -577,6 +577,8 @@ The library uses [Reachability](https://github.com/ashleymills/Reachability.swif
 If the Pusher servers close the websocket, or if a disconnection happens due to network events that aren't covered by Reachability, then the library will still attempt to reconnect as described above.
 
 All of this is the case if you have the client option of `autoReconnect` set as `true`, which it is by default. If the reconnection strategies are not suitable for your use case then you can set `autoReconnect` to `false` and implement your own reconnection strategy based on the connection state changes.
+
+N.B: If the Pusher servers close the websocket with a [Channels Protocol closure code](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#connection-closure), then the `autoReconnect` option is ignored, and the reconnection strategy is determined by the specific closure code that was received.
 
 There are a couple of properties on the connection (`PusherConnection`) that you can set that affect how the reconnection behaviour works. These are:
 

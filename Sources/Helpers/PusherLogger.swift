@@ -31,6 +31,7 @@ internal class PusherLogger {
         case attemptReconnectionAfterReachabilityChange =
         "Connection state is 'connected' but received network reachability change so going to call attemptReconnect"
         case attemptReconnectionAfterWaiting = "Attempting to reconnect after waiting"
+        case attemptReconnectionImmediately = "Attempting to reconnect immediately"
         case connectionEstablished = "Socket established with socket ID:"
         case disconnectionWithoutError = "Websocket is disconnected but no error received"
         case errorReceived = "Websocket received error."

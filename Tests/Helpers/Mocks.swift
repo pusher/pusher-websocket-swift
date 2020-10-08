@@ -14,9 +14,7 @@ open class MockWebSocket: WebSocket {
     var eventGivenToCallback: PusherEvent?
 
     init() {
-        var request = URLRequest(url: URL(string: "test")!)
-        request.timeoutInterval = 5
-        super.init(request: request)
+        super.init(url: URL(string: "test")!)
     }
 
     open func appendToCallbackCheckString(_ str: String) {
