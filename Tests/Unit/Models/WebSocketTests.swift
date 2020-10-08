@@ -48,7 +48,10 @@ class WebSocketTests: XCTestCase {
 
     var shouldDisconnectImmediately: Bool!
     var receivedPongTimestamps = [Date]()
+
     static let expectationTimeout = 5.0
+    static let stringMessage = "This is a string message!"
+    static let dataMessage = "This is a data message!".data(using: .utf8)!
 
     override func setUp() {
         super.setUp()
@@ -74,14 +77,14 @@ class WebSocketTests: XCTestCase {
     func testReceiveStringMessage() {
         stringMessageExpectation = XCTestExpectation(description: "stringMessageExpectation")
         socket.connect()
-        socket.send(string: "This is a string message!")
+        socket.send(string: Self.stringMessage)
         wait(for: [stringMessageExpectation], timeout: Self.expectationTimeout)
     }
 
     func testReceiveDataMessage() {
         dataMessageExpectation = XCTestExpectation(description: "dataMessageExpectation")
         socket.connect()
-        socket.send(data: "This is a data message!".data(using: .utf8)!)
+        socket.send(data: Self.dataMessage)
         wait(for: [dataMessageExpectation], timeout: Self.expectationTimeout)
     }
 
@@ -146,12 +149,12 @@ extension WebSocketTests: WebSocketConnectionDelegate {
     }
 
     func webSocketDidReceiveMessage(connection: WebSocketConnection, string: String) {
-        XCTAssertEqual(string, "This is a string message!")
+        XCTAssertEqual(string, Self.stringMessage)
         stringMessageExpectation.fulfill()
     }
 
     func webSocketDidReceiveMessage(connection: WebSocketConnection, data: Data) {
-        XCTAssertEqual(data, "This is a data message!".data(using: .utf8))
+        XCTAssertEqual(data, Self.dataMessage)
         dataMessageExpectation.fulfill()
     }
 }
