@@ -14,6 +14,7 @@ open class WebSocket: WebSocketConnection {
     private let parameters: NWParameters
     private let connectionQueue: DispatchQueue
     private var pingTimer: Timer?
+    private var intentionalDisconnect: Bool = false
 
     private static let webSocketSubProtocol = "pusher-channels-protocol-\(PROTOCOL)"
 
@@ -58,6 +59,7 @@ open class WebSocket: WebSocketConnection {
         if connection == nil {
             connection = NWConnection(to: endpoint, using: parameters)
         }
+        intentionalDisconnect = false
         connection?.stateUpdateHandler = stateDidChange(to:)
         listen()
         connection?.start(queue: connectionQueue)
@@ -91,7 +93,9 @@ open class WebSocket: WebSocketConnection {
             }
 
             if let error = error {
-                self.delegate?.webSocketDidReceiveError(connection: self, error: error)
+                if self.shouldReportNWError(error) {
+                    self.delegate?.webSocketDidReceiveError(connection: self, error: error)
+                }
             } else {
                 self.listen()
             }
@@ -128,12 +132,21 @@ open class WebSocket: WebSocketConnection {
     }
 
     func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
-        let metadata = NWProtocolWebSocket.Metadata(opcode: .close)
-        metadata.closeCode = closeCode
-        let context = NWConnection.ContentContext(identifier: "closeContext", metadata: [metadata])
+        intentionalDisconnect = true
 
-        // See implementation of `send(data:context:)` for `delegate?.webSocketDidDisconnect(…)`
-        send(data: nil, context: context)
+        // Call `cancel()` directly for a `normalClosure`
+        // (Otherwise send the custom closeCode as a message).
+        if closeCode == .protocolCode(.normalClosure) {
+            connection?.cancel()
+            delegate?.webSocketDidDisconnect(connection: self, closeCode: closeCode, reason: nil)
+        } else {
+            let metadata = NWProtocolWebSocket.Metadata(opcode: .close)
+            metadata.closeCode = closeCode
+            let context = NWConnection.ContentContext(identifier: "closeContext", metadata: [metadata])
+
+            // See implementation of `send(data:context:)` for `delegate?.webSocketDidDisconnect(…)`
+            send(data: nil, context: context)
+        }
     }
 
     // MARK: - Private methods
@@ -211,11 +224,28 @@ open class WebSocket: WebSocketConnection {
                          }))
     }
 
-    private func stopConnection(error: Error?) {
-        if let error = error {
+    private func stopConnection(error: NWError?) {
+        if let error = error, shouldReportNWError(error) {
             delegate?.webSocketDidReceiveError(connection: self, error: error)
         }
         pingTimer?.invalidate()
         connection = nil
+    }
+
+    /// Determine if an Network error should be reported.
+    ///
+    /// POSIX errors of either `ENOTCONN` ("Socket is not connected") or
+    /// `ECANCELED` ("Operation canceled") should not be reported if the disconnection was intentional.
+    /// All other errors should be reported.
+    /// - Parameter error: An `NWError` to inspect.
+    /// - Returns: `true` if the error should be reported.
+    private func shouldReportNWError(_ error: NWError) -> Bool {
+        if case let .posix(code) = error,
+        code == .ENOTCONN || code == .ECANCELED,
+        intentionalDisconnect {
+            return false
+        } else {
+            return true
+        }
     }
 }
