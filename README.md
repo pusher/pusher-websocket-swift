@@ -123,8 +123,8 @@ github "pusher/pusher-websocket-swift"
 
 Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
 
-- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`, `Starscream` and `Reachability`
-- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium`, `Starscream` and `Reachability`
+- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift` and `Reachability`
+- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium` and `Reachability`
 
 ### Swift Package Manager
 
@@ -643,7 +643,7 @@ In your Swift files, you will need to import `PusherSwiftWithEncryption` rather 
 Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
 
 #### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Starscream` and `Reachability`).
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Reachability`).
 
 #### Swift Package Manager
 PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
@@ -1165,7 +1165,7 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 It uses code from the following repositories:
 
 - [Reachability.swift](https://github.com/ashleymills/Reachability.swift)
-- [Starscream](https://github.com/daltoniam/Starscream)
+- [Starscream](https://github.com/daltoniam/Starscream) (removed in v9.0.0)
 - [Sodium](https://github.com/jedisct1/swift-sodium)
 
 The individual licenses for these libraries are included in the corresponding Swift files.
