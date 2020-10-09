@@ -220,7 +220,6 @@
 				9AF2E42F2A3F46CB63C9F582 /* Pods-Swift-tvOS-WithoutEncryption.debug.xcconfig */,
 				B86B38A4AAFCA034F4534C23 /* Pods-Swift-tvOS-WithoutEncryption.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -555,13 +554,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift-tvOS/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-tvOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-tvOS/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -597,7 +594,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwift,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -616,13 +612,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithoutEncryption/Pods-Swift-iOS-WithoutEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift-iOS/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-iOS/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -637,14 +631,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-macOS/PusherSwiftWithEncryption.framework",
 				"${BUILT_PRODUCTS_DIR}/Sodium-macOS/Sodium.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
 			);
@@ -683,14 +675,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-iOS/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-iOS/PusherSwiftWithEncryption.framework",
 				"${BUILT_PRODUCTS_DIR}/Sodium-iOS/Sodium.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
 			);
@@ -708,7 +698,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwift,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -728,7 +717,6 @@
 			inputPaths = (
 				Sodium,
 				Reachability,
-				Starscream,
 				PusherSwiftWithEncryption,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -748,7 +736,6 @@
 			inputPaths = (
 				Sodium,
 				Reachability,
-				Starscream,
 				PusherSwiftWithEncryption,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -769,13 +756,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift-macOS/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream-macOS/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -835,7 +820,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwift,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -856,7 +840,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwiftWithEncryption,
 				Sodium,
 			);
