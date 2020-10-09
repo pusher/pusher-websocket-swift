@@ -10,7 +10,8 @@ Pod::Spec.new do |s|
 
   s.swift_version = '5.0'
   s.requires_arc  = true
-  s.source_files  = ['Sources/*.swift', 'Sources/PusherSwift-Only/*.swift']
+  s.source_files  = ['Sources/**/*.swift']
+  s.exclude_files = ['Sources/PusherSwiftWithEncryption-Only/**/*.swift']
 
   s.dependency 'ReachabilitySwift', '~> 5.0'
 
