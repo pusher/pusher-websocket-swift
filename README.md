@@ -83,7 +83,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 8.0'
+pod 'PusherSwift', '~> 9.0'
 ```
 
 Then, run the following command:
@@ -150,7 +150,7 @@ let package = Package(
             targets: ["YourPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "8.0.0"),
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "9.0.0"),
     ],
     targets: [
         .target(
