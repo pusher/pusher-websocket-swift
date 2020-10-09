@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
   s.dependency 'ReachabilitySwift', '~> 5.0'
   s.dependency 'Sodium', '0.8.0'
 
-  s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.11'
+  s.ios.deployment_target = '13.0'
+  s.osx.deployment_target = '10.15'
 end
