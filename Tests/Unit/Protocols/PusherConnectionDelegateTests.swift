@@ -67,6 +67,83 @@ class PusherConnectionDelegateTests: XCTestCase {
         pusher.delegate = dummyDelegate
     }
 
+    func testUnitentionalDisconnectionThatShouldNotReconnect() {
+        let isConnected = expectation(description: "there should be 2 calls to changedConnectionState to connected")
+        let isDisconnected = expectation(description: "there should be 4 calls to changedConnectionState to disconnected")
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)
+        dummyDelegate.stubber.registerCallback { calls in
+            if calls.count == 2 {
+                XCTAssertEqual(calls.first?.name, "connectionChange")
+                XCTAssertEqual(calls.first?.args?.first as? ConnectionState, ConnectionState.disconnected)
+                XCTAssertEqual(calls.first?.args?.last as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls.last?.name, "connectionChange")
+                XCTAssertEqual(calls.last?.args?.first as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls.last?.args?.last as? ConnectionState, ConnectionState.connected)
+                isConnected.fulfill()
+
+                // Spoof an unintentional disconnection event (that should not reconnect)
+                self.socket.disconnect(closeCode: .privateCode(PusherChannelsProtocolCloseCode.connectionIsUnauthorized.rawValue))
+            } else if calls.count == 3 {
+                XCTAssertEqual(calls[0].name, "connectionChange")
+                XCTAssertEqual(calls[0].args?.first as? ConnectionState, ConnectionState.disconnected)
+                XCTAssertEqual(calls[0].args?.last as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls[1].name, "connectionChange")
+                XCTAssertEqual(calls[1].args?.first as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls[1].args?.last as? ConnectionState, ConnectionState.connected)
+                XCTAssertEqual(calls[2].name, "connectionChange")
+                XCTAssertEqual(calls[2].args?.first as? ConnectionState, ConnectionState.connected)
+                XCTAssertEqual(calls[2].args?.last as? ConnectionState, ConnectionState.disconnected)
+                isDisconnected.fulfill()
+            }
+        }
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
+    func testUnitentionalDisconnectionThatShouldReconnect() {
+        let isConnected = expectation(description: "there should be 2 calls to changedConnectionState to connected")
+        let isDisconnected = expectation(description: "there should be 4 calls to changedConnectionState to disconnected")
+        XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)
+        dummyDelegate.stubber.registerCallback { calls in
+            if calls.count == 2 {
+                XCTAssertEqual(calls.first?.name, "connectionChange")
+                XCTAssertEqual(calls.first?.args?.first as? ConnectionState, ConnectionState.disconnected)
+                XCTAssertEqual(calls.first?.args?.last as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls.last?.name, "connectionChange")
+                XCTAssertEqual(calls.last?.args?.first as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls.last?.args?.last as? ConnectionState, ConnectionState.connected)
+                isConnected.fulfill()
+
+                // Spoof an unintentional disconnection event (that should attempt a reconnect)
+                self.socket.disconnect(closeCode: .privateCode(PusherChannelsProtocolCloseCode.genericReconnectImmediately.rawValue))
+            } else if calls.count == 6 {
+                XCTAssertEqual(calls[0].name, "connectionChange")
+                XCTAssertEqual(calls[0].args?.first as? ConnectionState, ConnectionState.disconnected)
+                XCTAssertEqual(calls[0].args?.last as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls[1].name, "connectionChange")
+                XCTAssertEqual(calls[1].args?.first as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls[1].args?.last as? ConnectionState, ConnectionState.connected)
+                XCTAssertEqual(calls[2].name, "connectionChange")
+                XCTAssertEqual(calls[2].args?.first as? ConnectionState, ConnectionState.connected)
+                XCTAssertEqual(calls[2].args?.last as? ConnectionState, ConnectionState.disconnected)
+                XCTAssertEqual(calls[3].name, "connectionChange")
+                XCTAssertEqual(calls[3].args?.first as? ConnectionState, ConnectionState.disconnected)
+                XCTAssertEqual(calls[3].args?.last as? ConnectionState, ConnectionState.reconnecting)
+                XCTAssertEqual(calls[4].name, "connectionChange")
+                XCTAssertEqual(calls[4].args?.first as? ConnectionState, ConnectionState.reconnecting)
+                XCTAssertEqual(calls[4].args?.last as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls[5].name, "connectionChange")
+                XCTAssertEqual(calls[5].args?.first as? ConnectionState, ConnectionState.connecting)
+                XCTAssertEqual(calls[5].args?.last as? ConnectionState, ConnectionState.connected)
+                isDisconnected.fulfill()
+            }
+        }
+        pusher.connect()
+
+        waitForExpectations(timeout: 0.5)
+    }
+
     func testConnectionStateChangeDelegateFunctionGetsCalledTwiceGoingFromDisconnectedToConnectingToConnected() {
         let ex = expectation(description: "there should be 2 calls to changedConnectionState")
         XCTAssertEqual(pusher.connection.connectionState, ConnectionState.disconnected)

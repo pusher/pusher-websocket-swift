@@ -83,7 +83,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 8.0'
+pod 'PusherSwift', '~> 9.0'
 ```
 
 Then, run the following command:
@@ -123,8 +123,8 @@ github "pusher/pusher-websocket-swift"
 
 Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
 
-- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`, `Starscream` and `Reachability`
-- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium`, `Starscream` and `Reachability`
+- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift` and `Reachability`
+- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium` and `Reachability`
 
 ### Swift Package Manager
 
@@ -150,7 +150,7 @@ let package = Package(
             targets: ["YourPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "8.0.0"),
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "9.0.0"),
     ],
     targets: [
         .target(
@@ -166,7 +166,7 @@ There are a number of configuration parameters which can be set for the Pusher c
 
 - `authMethod (AuthMethod)` - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)
 - `useTLS (Bool)` - whether or not you'd like to use TLS encrypted transport or not, default is `true`
-- `autoReconnect (Bool)` - set whether or not you'd like the library to try and autoReconnect upon disconnection
+- `autoReconnect (Bool)` - set whether or not you'd like the library to try and automatically reconnect upon disconnection (where possible). See [Reconnection](#reconnection) for more info
 - `host (PusherHost)` - set a custom value for the host you'd like to connect to, e.g. `PusherHost.host("ws-test.pusher.com")`
 - `port (Int)` - set a custom value for the port that you'd like to connect to
 - `activityTimeout (TimeInterval)` - after this time (in seconds) without any messages received from the server, a ping message will be sent to check if the connection is still working; the default value is supplied by the server, low values will result in unnecessary traffic.
@@ -578,6 +578,8 @@ If the Pusher servers close the websocket, or if a disconnection happens due to 
 
 All of this is the case if you have the client option of `autoReconnect` set as `true`, which it is by default. If the reconnection strategies are not suitable for your use case then you can set `autoReconnect` to `false` and implement your own reconnection strategy based on the connection state changes.
 
+N.B: If the Pusher servers close the websocket with a [Channels Protocol closure code](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#connection-closure), then the `autoReconnect` option is ignored, and the reconnection strategy is determined by the specific closure code that was received.
+
 There are a couple of properties on the connection (`PusherConnection`) that you can set that affect how the reconnection behaviour works. These are:
 
 - `public var reconnectAttemptsMax: Int? = 6` - if you set this to `nil` then there is no maximum number of reconnect attempts and so attempts will continue to be made with an exponential backoff (based on number of attempts), otherwise only as many attempts as this property's value will be made before the connection's state moves to `.disconnected`
@@ -641,7 +643,7 @@ In your Swift files, you will need to import `PusherSwiftWithEncryption` rather 
 Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
 
 #### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Starscream` and `Reachability`).
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Reachability`).
 
 #### Swift Package Manager
 PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
@@ -1163,7 +1165,7 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 It uses code from the following repositories:
 
 - [Reachability.swift](https://github.com/ashleymills/Reachability.swift)
-- [Starscream](https://github.com/daltoniam/Starscream)
+- [Starscream](https://github.com/daltoniam/Starscream) (removed in v9.0.0)
 - [Sodium](https://github.com/jedisct1/swift-sodium)
 
 The individual licenses for these libraries are included in the corresponding Swift files.

@@ -462,7 +462,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwift,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -484,7 +483,6 @@
 			inputPaths = (
 				Sodium,
 				Reachability,
-				Starscream,
 				PusherSwiftWithEncryption,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -506,7 +504,6 @@
 			inputPaths = (
 				Sodium,
 				Reachability,
-				Starscream,
 				PusherSwiftWithEncryption,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -527,7 +524,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwift,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -548,7 +544,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwift,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
@@ -569,7 +564,6 @@
 			);
 			inputPaths = (
 				Reachability,
-				Starscream,
 				PusherSwiftWithEncryption,
 				Sodium,
 			);

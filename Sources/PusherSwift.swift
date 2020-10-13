@@ -1,7 +1,7 @@
 import Foundation
 
 let PROTOCOL = 7
-let VERSION = "8.0.0"
+let VERSION = "9.0.0"
 // swiftlint:disable:next identifier_name
 let CLIENT_NAME = "pusher-websocket-swift"
 
