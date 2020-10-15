@@ -126,6 +126,10 @@ Carthage will produce a number of frameworks. Which of those you need to include
 - If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift` and `Reachability`
 - If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium` and `Reachability`
 
+#### Xcode 12 considerations
+
+Using Carthage under Xcode 12.0 and above currently requires [a workaround](https://github.com/Carthage/Carthage/issues/3019) in order for the build to be successful. You can find an example of the workaround, which is used for running the 'Consumption-Tests' [here](Consumption-Tests/Shared/carthage.sh).
+
 ### Swift Package Manager
 
 > Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
