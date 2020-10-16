@@ -10,12 +10,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ashleymills/Reachability.swift.git", .upToNextMajor(from: "5.0.0")),
+        .package(url: "https://github.com/pusher/NWWebSocket.git", .upToNextMajor(from: "0.2.1")),
     ],
     targets: [
         .target(
             name: "PusherSwift",
             dependencies: [
                 "Reachability",
+                "NWWebSocket",
             ],
             path: "Sources",
             exclude: ["PusherSwiftWithEncryption-Only"]
