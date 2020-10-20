@@ -525,6 +525,7 @@
 			inputPaths = (
 				Reachability,
 				PusherSwift,
+				NWWebSocket,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
 			outputPaths = (
@@ -543,6 +544,7 @@
 			inputPaths = (
 				Reachability,
 				PusherSwift,
+				NWWebSocket,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
 			outputFileListPaths = (
@@ -562,6 +564,7 @@
 				Sodium,
 				Reachability,
 				PusherSwiftWithEncryption,
+				NWWebSocket,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
 			outputPaths = (
@@ -581,6 +584,7 @@
 				Sodium,
 				Reachability,
 				PusherSwiftWithEncryption,
+				NWWebSocket,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
 			outputFileListPaths = (
@@ -601,6 +605,7 @@
 			inputPaths = (
 				Reachability,
 				PusherSwift,
+				NWWebSocket,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
 			outputFileListPaths = (
@@ -622,6 +627,7 @@
 				Reachability,
 				PusherSwiftWithEncryption,
 				Sodium,
+				NWWebSocket,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
 			outputFileListPaths = (

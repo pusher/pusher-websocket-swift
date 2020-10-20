@@ -1,4 +1,5 @@
 import Foundation
+import NWWebSocket
 import Network
 
 #if WITH_ENCRYPTION
@@ -7,7 +8,7 @@ import Network
     @testable import PusherSwift
 #endif
 
-open class MockWebSocket: WebSocket {
+open class MockWebSocket: NWWebSocket {
     let stubber = StubberForMocks()
     var callbackCheckString: String = ""
     var objectGivenToCallback: Any?

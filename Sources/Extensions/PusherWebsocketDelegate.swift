@@ -1,5 +1,6 @@
 import Foundation
 import Network
+import NWWebSocket
 
 extension PusherConnection: WebSocketConnectionDelegate {
 
@@ -9,7 +10,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
         - parameter connection:   The websocket that has received the message
         - parameter string: The message received over the websocket
     */
-    func webSocketDidReceiveMessage(connection: WebSocketConnection, string: String) {
+    public func webSocketDidReceiveMessage(connection: WebSocketConnection, string: String) {
         self.delegate?.debugLog?(message: PusherLogger.debug(for: .receivedMessage, context: string))
 
         guard let payload = PusherParser.getPusherEventJSON(from: string),
@@ -33,7 +34,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
     /// Delegate method called when a pong is received over a websocket
     /// - Parameter connection: The websocket that has received the pong
-    func webSocketDidReceivePong(connection: WebSocketConnection) {
+    public func webSocketDidReceivePong(connection: WebSocketConnection) {
         self.delegate?.debugLog?(message: PusherLogger.debug(for: .pongReceived))
         resetActivityTimeoutTimer()
     }
@@ -45,9 +46,9 @@ extension PusherConnection: WebSocketConnectionDelegate {
      - parameter closeCode: The closure code for the websocket connection.
      - parameter reason: Optional further information on the connection closure.
      */
-    func webSocketDidDisconnect(connection: WebSocketConnection,
-                                closeCode: NWProtocolWebSocket.CloseCode,
-                                reason: Data?) {
+    public func webSocketDidDisconnect(connection: WebSocketConnection,
+                                       closeCode: NWProtocolWebSocket.CloseCode,
+                                       reason: Data?) {
         // Handles setting channel subscriptions to unsubscribed wheter disconnection
         // is intentional or not
         if connectionState == .disconnecting || connectionState == .connected {
@@ -206,15 +207,15 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
         - parameter connection:    The websocket that connected
     */
-    func webSocketDidConnect(connection: WebSocketConnection) {
+    public func webSocketDidConnect(connection: WebSocketConnection) {
         self.socketConnected = true
     }
 
-    func webSocketDidReceiveMessage(connection: WebSocketConnection, data: Data) {
+    public func webSocketDidReceiveMessage(connection: WebSocketConnection, data: Data) {
         //
     }
 
-    func webSocketDidReceiveError(connection: WebSocketConnection, error: Error) {
+    public func webSocketDidReceiveError(connection: WebSocketConnection, error: Error) {
         self.delegate?.debugLog?(message: PusherLogger.debug(for: .errorReceived,
                                                              context: """
             Error (code: \((error as NSError).code)): \(error.localizedDescription)
