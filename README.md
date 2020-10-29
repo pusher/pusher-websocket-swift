@@ -132,8 +132,6 @@ Using Carthage under Xcode 12.0 and above currently requires [a workaround](http
 
 ### Swift Package Manager
 
-> Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
-
 To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
 
 ```bash
@@ -163,6 +161,8 @@ let package = Package(
     ]
 )
 ```
+
+You will then need to include an `import PusherSwiftWithEncryption` statement in any source files where you wish to use the SDK. (**N.B. When integrating using Swift Package Manager, encrypted channels are supported by default and there is no 'PusherSwift' module**).
 
 ## Configuration
 
@@ -650,7 +650,7 @@ Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwi
 You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Reachability`).
 
 #### Swift Package Manager
-PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
+Encrypted channels are supported by default when integrating using Swift Package Manager. No code or configuration changes are required.
 
 #### Limitations
 
