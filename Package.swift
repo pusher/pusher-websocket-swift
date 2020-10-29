@@ -28,7 +28,8 @@ let package = Package(
             name: "PusherSwiftWithEncryptionTests",
             dependencies: ["PusherSwiftWithEncryption"],
             path: "Tests",
-            exclude: ["Unit/PusherSwift-Only"]
+            exclude: ["Unit/PusherSwift-Only"],
+            swiftSettings: [.define("WITH_ENCRYPTION")]
         )
     ],
     swiftLanguageVersions: [.v5]
