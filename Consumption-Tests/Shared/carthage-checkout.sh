@@ -128,7 +128,9 @@ echo "git \"file://$REPO_ROOT_ABS_DIR_PATH\" \"$TEMP_TAG_NAME\"" > "$WORKING_DIR
 set +e
 
 # Perform the `carthage update` (using the Cartfile we just created/updated)
-carthage update
+# (`./carthage.sh update` instead of `carthage update` as a workaround for Carthage Xcode 12 issue: https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323)
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source ${DIR}/carthage.sh update
 CARTHAGE_UPDATE_STATUS_CODE=$?
 echo "CARTHAGE_UPDATE_STATUS_CODE=$CARTHAGE_UPDATE_STATUS_CODE"
 

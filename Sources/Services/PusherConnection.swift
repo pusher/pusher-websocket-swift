@@ -1,5 +1,6 @@
 import Foundation
 import Reachability
+import NWWebSocket
 
 // swiftlint:disable file_length type_body_length
 
@@ -12,7 +13,7 @@ import Reachability
     open var socketId: String?
     open var connectionState = ConnectionState.disconnected
     open var channels = PusherChannels()
-    open var socket: WebSocket!
+    open var socket: NWWebSocket!
     open var URLSession: Foundation.URLSession
     open var userDataFetcher: (() -> PusherPresenceChannelMember)?
     open var reconnectAttemptsMax: Int?
@@ -104,7 +105,7 @@ import Reachability
     */
     public init(
         key: String,
-        socket: WebSocket,
+        socket: NWWebSocket,
         url: String,
         options: PusherClientOptions,
         URLSession: Foundation.URLSession = Foundation.URLSession.shared
