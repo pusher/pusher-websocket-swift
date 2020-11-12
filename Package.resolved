@@ -20,12 +20,12 @@
         }
       },
       {
-        "package": "Sodium",
-        "repositoryURL": "https://github.com/jedisct1/swift-sodium",
+        "package": "TweetNacl",
+        "repositoryURL": "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
         "state": {
           "branch": null,
-          "revision": "176745ddc4991b27f80c3c2637652eb33b5782eb",
-          "version": "0.9.0"
+          "revision": "d1552db4d907f2c5cb3d1bf1336496b2e16c8ecf",
+          "version": "1.0.2"
         }
       }
     ]
