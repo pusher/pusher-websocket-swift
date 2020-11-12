@@ -654,8 +654,7 @@ Encrypted channels are supported by default when integrating using Swift Package
 
 #### Limitations
 
-* Is not currently compatible with tvOS.
-* Is not safe for use in extensions.
+* Is not safe for use in extensions
 * Client events are not supported on encrypted channels
 
 #### Swift
