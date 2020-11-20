@@ -1,7 +1,7 @@
 import Foundation
 import NWWebSocket
 
-// swiftlint:disable file_length type_body_length unused_closure_parameter
+// swiftlint:disable file_length type_body_length
 
 @objcMembers
 @objc open class PusherConnection: NSObject {

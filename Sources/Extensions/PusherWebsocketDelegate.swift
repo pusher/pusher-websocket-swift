@@ -98,14 +98,13 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
     public func webSocketDidAttemptBetterPathMigration(result: Result<WebSocketConnection, NWError>) {
         switch result {
-        case .success(_):
+        case .success:
             updateConnectionState(to: .reconnecting)
         case .failure(let error):
             self.delegate?.debugLog?(message: PusherLogger.debug(for: .errorReceived,
                                                                  context: """
                 Path migration error: \(error.debugDescription)
                 """))
-            break
         }
     }
 
