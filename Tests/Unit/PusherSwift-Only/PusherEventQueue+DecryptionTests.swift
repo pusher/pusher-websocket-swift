@@ -1,6 +1,8 @@
 @testable import PusherSwift
 import XCTest
 
+// swiftlint:disable unused_closure_parameter
+
 class PusherEventQueueDecryptionTests: XCTestCase {
 
     var eventQueue: PusherEventQueue!

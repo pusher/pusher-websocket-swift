@@ -6,6 +6,8 @@ import XCTest
     @testable import PusherSwift
 #endif
 
+// swiftlint:disable unused_closure_parameter
+
 class PusherTopLevelApiTests: XCTestCase {
 
     class ConnectionStateDelegate: PusherDelegate {
