@@ -123,8 +123,8 @@ github "pusher/pusher-websocket-swift"
 
 Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
 
-- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift` and `Reachability`
-- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium` and `Reachability`
+- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`
+- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption` and `Sodium`
 
 #### Xcode 12 considerations
 
@@ -576,9 +576,9 @@ There are three main ways in which a disconnection can occur:
 
 In the case of the first type of disconnection the library will (as you'd hope) not attempt a reconnection.
 
-The library uses [Reachability](https://github.com/ashleymills/Reachability.swift) to attempt to detect network degradation events that lead to disconnection. If this is detected then the library will attempt to reconnect (by default) with an exponential backoff, indefinitely (the maximum time between reconnect attempts is, by default, capped at 120 seconds). The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish to set a maximum number of reconnect attempts.
+The library uses [NWWebSocket](https://github.com/pusher/NWWebSocket) which attempts to detect network degradation events that lead to disconnection. If this is detected then the library will attempt to reconnect (by default) with an exponential backoff, indefinitely (the maximum time between reconnect attempts is, by default, capped at 120 seconds). The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish to set a maximum number of reconnect attempts.
 
-If the Pusher servers close the websocket, or if a disconnection happens due to network events that aren't covered by Reachability, then the library will still attempt to reconnect as described above.
+If the Pusher servers close the websocket, or if a disconnection happens due to network events that aren't covered by NWWebSocket, then the library will still attempt to reconnect as described above.
 
 All of this is the case if you have the client option of `autoReconnect` set as `true`, which it is by default. If the reconnection strategies are not suitable for your use case then you can set `autoReconnect` to `false` and implement your own reconnection strategy based on the connection state changes.
 
@@ -647,7 +647,7 @@ In your Swift files, you will need to import `PusherSwiftWithEncryption` rather 
 Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
 
 #### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Reachability`).
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project.
 
 #### Swift Package Manager
 PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
@@ -1168,7 +1168,6 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 
 It uses code from the following repositories:
 
-- [Reachability.swift](https://github.com/ashleymills/Reachability.swift)
 - [Starscream](https://github.com/daltoniam/Starscream) (removed in v9.0.0)
 - [Sodium](https://github.com/jedisct1/swift-sodium)
 
