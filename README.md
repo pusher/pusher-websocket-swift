@@ -124,7 +124,7 @@ github "pusher/pusher-websocket-swift"
 Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
 
 - If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift` and `Reachability`
-- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium` and `Reachability`
+- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `TweetNacl` and `Reachability`
 
 #### Xcode 12 considerations
 
@@ -647,7 +647,7 @@ In your Swift files, you will need to import `PusherSwiftWithEncryption` rather 
 Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
 
 #### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Reachability`).
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `TweetNacl` framework into your project (in addition to `Reachability`).
 
 #### Swift Package Manager
 Encrypted channels are supported by default when integrating using Swift Package Manager. No code or configuration changes are required.
