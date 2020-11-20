@@ -6,6 +6,8 @@ import XCTest
     @testable import PusherSwift
 #endif
 
+// swiftlint:disable unused_closure_parameter
+
 class HandlingIncomingEventsTests: XCTestCase {
     var key: String!
     var pusher: Pusher!
