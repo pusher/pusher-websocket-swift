@@ -85,11 +85,28 @@ extension PusherConnection: WebSocketConnectionDelegate {
             return
         }
 
-        if let reachability = self.reachability, reachability.connection == .unavailable {
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .reconnectionFailureLikely))
-        }
-
         attemptReconnect(closeCode: closeCode)
+    }
+
+    public func webSocketViabilityDidChange(connection: WebSocketConnection, isViable: Bool) {
+        if isViable {
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .networkConnectionViable))
+        } else {
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .networkConnectionUnviable))
+        }
+    }
+
+    public func webSocketDidAttemptBetterPathMigration(result: Result<WebSocketConnection, NWError>) {
+        switch result {
+        case .success(_):
+            updateConnectionState(to: .reconnecting)
+        case .failure(let error):
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .errorReceived,
+                                                                 context: """
+                Path migration error: \(error.debugDescription)
+                """))
+            break
+        }
     }
 
     /**
@@ -215,10 +232,10 @@ extension PusherConnection: WebSocketConnectionDelegate {
         //
     }
 
-    public func webSocketDidReceiveError(connection: WebSocketConnection, error: Error) {
+    public func webSocketDidReceiveError(connection: WebSocketConnection, error: NWError) {
         self.delegate?.debugLog?(message: PusherLogger.debug(for: .errorReceived,
                                                              context: """
-            Error (code: \((error as NSError).code)): \(error.localizedDescription)
+            Error: \(error.debugDescription)
             """))
     }
 }
