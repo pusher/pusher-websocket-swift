@@ -1,5 +1,4 @@
 import Foundation
-import Reachability
 import NWWebSocket
 
 // swiftlint:disable file_length type_body_length
@@ -40,55 +39,6 @@ import NWWebSocket
             setConnectionStateToConnectedAndAttemptSubscriptions()
         }
     }
-
-    open lazy var reachability: Reachability? = {
-        let reachability = try? Reachability()
-        reachability?.whenReachable = { [weak self] reachability in
-            guard let self = self else {
-                print("""
-                    Your Pusher instance has probably become deallocated. \
-                    See https://github.com/pusher/pusher-websocket-swift/issues/109 \
-                    for more information
-                    """)
-                return
-            }
-
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .networkReachable))
-
-            switch self.connectionState {
-            case .disconnecting, .connecting, .reconnecting:
-                // If in one of these states then part of the connection, reconnection, or explicit
-                // disconnection process is underway, so do nothing
-                return
-            case .disconnected:
-                // If already disconnected then reset connection and try to reconnect, provided the
-                // state isn't disconnected because of an intentional disconnection
-                if !self.intentionalDisconnect { self.resetConnectionAndAttemptReconnect() }
-                return
-            case .connected:
-                // If already connected then we assume that there was a missed network event that
-                // led to a bad connection so we move to the disconnected state and then attempt
-                // reconnection
-                self.delegate?.debugLog?(message: PusherLogger.debug(for: .attemptReconnectionAfterReachabilityChange))
-                self.resetConnectionAndAttemptReconnect()
-                return
-            }
-        }
-        reachability?.whenUnreachable = { [weak self] reachability in
-            guard let self = self else {
-                print("""
-                    Your Pusher instance has probably become deallocated. \
-                    See https://github.com/pusher/pusher-websocket-swift/issues/109 \
-                    for more information
-                    """)
-                return
-            }
-
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .networkUnreachable))
-            self.resetConnectionAndAttemptReconnect()
-        }
-        return reachability
-    }()
 
     /**
         Initializes a new PusherConnection with an app key, websocket, URL, options and URLSession
@@ -300,7 +250,6 @@ import NWWebSocket
     open func disconnect() {
         if self.connectionState == .connected {
             intentionalDisconnect = true
-            self.reachability?.stopNotifier()
             updateConnectionState(to: .disconnecting)
             self.socket.disconnect()
         }
@@ -318,10 +267,6 @@ import NWWebSocket
         } else {
             updateConnectionState(to: .connecting)
             self.socket.connect()
-            if self.options.autoReconnect {
-                // can call this multiple times and only one notifier will be started
-                _ = try? reachability?.startNotifier()
-            }
         }
     }
 
