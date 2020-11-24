@@ -482,7 +482,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				Sodium,
+				TweetNacl,
 				Reachability,
 				PusherSwiftWithEncryption,
 				NWWebSocket,
@@ -504,7 +504,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				Sodium,
+				TweetNacl,
 				Reachability,
 				PusherSwiftWithEncryption,
 				NWWebSocket,
@@ -570,7 +570,7 @@
 			inputPaths = (
 				Reachability,
 				PusherSwiftWithEncryption,
-				Sodium,
+				TweetNacl,
 				NWWebSocket,
 			);
 			name = "Carthage: Copy Platform Specific Frameworks";
