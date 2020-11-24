@@ -461,7 +461,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				Reachability,
 				PusherSwift,
 				NWWebSocket,
 			);
@@ -483,7 +482,6 @@
 			);
 			inputPaths = (
 				Sodium,
-				Reachability,
 				PusherSwiftWithEncryption,
 				NWWebSocket,
 			);
@@ -505,7 +503,6 @@
 			);
 			inputPaths = (
 				Sodium,
-				Reachability,
 				PusherSwiftWithEncryption,
 				NWWebSocket,
 			);
@@ -526,7 +523,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				Reachability,
 				PusherSwift,
 				NWWebSocket,
 			);
@@ -547,7 +543,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				Reachability,
 				PusherSwift,
 				NWWebSocket,
 			);
@@ -568,7 +563,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				Reachability,
 				PusherSwiftWithEncryption,
 				Sodium,
 				NWWebSocket,
