@@ -1,2 +1,2 @@
-github "jedisct1/swift-sodium" == 0.8.0
+github "bitmark-inc/tweetnacl-swiftwrap" ~> 1.0
 github "pusher/NWWebSocket" ~> 0.5.0

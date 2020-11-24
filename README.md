@@ -124,15 +124,13 @@ github "pusher/pusher-websocket-swift"
 Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
 
 - If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`
-- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption` and `Sodium`
+- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption` and `TweetNacl`
 
 #### Xcode 12 considerations
 
 Using Carthage under Xcode 12.0 and above currently requires [a workaround](https://github.com/Carthage/Carthage/issues/3019) in order for the build to be successful. You can find an example of the workaround, which is used for running the 'Consumption-Tests' [here](Consumption-Tests/Shared/carthage.sh).
 
 ### Swift Package Manager
-
-> Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
 
 To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
 
@@ -163,6 +161,8 @@ let package = Package(
     ]
 )
 ```
+
+You will then need to include an `import PusherSwiftWithEncryption` statement in any source files where you wish to use the SDK. (**N.B. When integrating using Swift Package Manager, encrypted channels are supported by default and there is no 'PusherSwift' module**).
 
 ## Configuration
 
@@ -647,15 +647,14 @@ In your Swift files, you will need to import `PusherSwiftWithEncryption` rather 
 Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
 
 #### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project.
+You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `TweetNacl` framework into your project.
 
 #### Swift Package Manager
-PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
+Encrypted channels are supported by default when integrating using Swift Package Manager. No code or configuration changes are required.
 
 #### Limitations
 
-* Is not currently compatible with tvOS.
-* Is not safe for use in extensions.
+* Is not safe for use in extensions
 * Client events are not supported on encrypted channels
 
 #### Swift
@@ -1168,8 +1167,7 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 
 It uses code from the following repositories:
 
-- [Starscream](https://github.com/daltoniam/Starscream) (removed in v9.0.0)
-- [Sodium](https://github.com/jedisct1/swift-sodium)
+- [TweetNacl](https://github.com/bitmark-inc/tweetnacl-swiftwrap)
 
 The individual licenses for these libraries are included in the corresponding Swift files.
 

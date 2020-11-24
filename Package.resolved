@@ -9,6 +9,15 @@
           "revision": "1e433614ac85aba7928320ecd9279b375dce1333",
           "version": "0.5.0"
         }
+      },
+      {
+        "package": "TweetNacl",
+        "repositoryURL": "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
+        "state": {
+          "branch": null,
+          "revision": "d1552db4d907f2c5cb3d1bf1336496b2e16c8ecf",
+          "version": "1.0.2"
+        }
       }
     ]
   },
