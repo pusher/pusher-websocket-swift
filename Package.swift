@@ -19,14 +19,12 @@ let package = Package(
                 "NWWebSocket",
                 "TweetNacl",
             ],
-            path: "Sources",
-            exclude: ["PusherSwift-Only"]
+            path: "Sources"
         ),
         .testTarget(
             name: "PusherSwiftWithEncryptionTests",
             dependencies: ["PusherSwiftWithEncryption"],
             path: "Tests",
-            exclude: ["Unit/PusherSwift-Only"],
             swiftSettings: [.define("WITH_ENCRYPTION")]
         )
     ],
