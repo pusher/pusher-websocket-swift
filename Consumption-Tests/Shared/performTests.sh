@@ -106,6 +106,13 @@ function runXcodeBuild {
 		echo "------ END: $FUNCNAME $@ ------"
 		return 0
 	fi
+
+	if [[ "$NAME" == "SwiftPackageManager-Minimum" ]] && [[ "$SCHEME" == "ObjectiveC"* ]]; then
+		SUMMARY_LOG_OUTPUT+="\n 🔘 $SCHEME (SPM integration not supported with Obj-C in Xcode versions < v11.4)"
+		echo "**** SKIPPING '$NAME - $SCHEME' ****"	
+		echo "------ END: $FUNCNAME $@ ------"
+		return 0
+	fi
 	
 	local SCRIPT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 	echo "SCRIPT_DIRECTORY=$SCRIPT_DIRECTORY"

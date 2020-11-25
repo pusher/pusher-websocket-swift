@@ -563,14 +563,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-tvOS-WithEncryption/Pods-Swift-tvOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-tvOS/NWWebSocket.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-tvOS/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-tvOS/PusherSwiftWithEncryption.framework",
 				"${BUILT_PRODUCTS_DIR}/TweetNacl-tvOS/TweetNacl.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweetNacl.framework",
 			);
@@ -626,14 +624,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithEncryption/Pods-Swift-macOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-macOS/NWWebSocket.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-macOS/PusherSwiftWithEncryption.framework",
 				"${BUILT_PRODUCTS_DIR}/TweetNacl-macOS/TweetNacl.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweetNacl.framework",
 			);
@@ -734,13 +730,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-macOS-WithoutEncryption/Pods-Swift-macOS-WithoutEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-macOS/NWWebSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift-macOS/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -756,13 +750,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-tvOS-WithoutEncryption/Pods-Swift-tvOS-WithoutEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-tvOS/NWWebSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift-tvOS/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-tvOS/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -843,14 +835,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithEncryption/Pods-Swift-iOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-iOS/NWWebSocket.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-iOS/PusherSwiftWithEncryption.framework",
 				"${BUILT_PRODUCTS_DIR}/TweetNacl-iOS/TweetNacl.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweetNacl.framework",
 			);
@@ -933,13 +923,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Swift-iOS-WithoutEncryption/Pods-Swift-iOS-WithoutEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-iOS/NWWebSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift-iOS/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
