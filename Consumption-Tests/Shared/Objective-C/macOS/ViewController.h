@@ -1,10 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
-#if WITH_ENCRYPTION
-    @import PusherSwiftWithEncryption;
-#else
-    @import PusherSwift;
-#endif
+@import PusherSwift;
 
 @interface ViewController : NSViewController
 
