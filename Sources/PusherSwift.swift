@@ -56,18 +56,6 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
         let isEncryptedChannel = PusherEncryptionHelpers.isEncryptedChannel(channelName: channelName)
 
-        if isEncryptedChannel && !PusherDecryptor.isDecryptionAvailable() {
-            let error = """
-
-            WARNING: You are subscribing to an encrypted channel: '\(channelName)' but this \
-            version of PusherSwift does not support end-to-end encryption. \
-            Events will not be decrypted. You must import 'PusherSwiftWithEncryption' in \
-            order for events to be decrypted. See https://github.com/pusher/pusher-websocket-swift for more information
-
-            """
-            print(error)
-        }
-
         if isEncryptedChannel && auth != nil {
             let error = """
 

@@ -65,8 +65,4 @@ class PusherDecryptor {
 
         return decodedDecryptionKey
     }
-
-    static func isDecryptionAvailable() -> Bool {
-        return true
-    }
 }
