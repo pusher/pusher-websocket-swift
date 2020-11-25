@@ -455,6 +455,7 @@
 			);
 			inputPaths = (
 				NWWebSocket,
+				TweetNacl,
 			);
 			name = "Copy Carthage Frameworks";
 			outputPaths = (
