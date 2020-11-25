@@ -22,14 +22,11 @@ internal class PusherLogger {
 
         // Network
 
-        case networkReachable = "Network reachable"
-        case networkUnreachable = "Network unreachable"
+        case networkConnectionViable = "Network connection became viable"
+        case networkConnectionUnviable = "Network connection became unviable"
 
         // Websockets
 
-        // swiftlint:disable:next identifier_name
-        case attemptReconnectionAfterReachabilityChange =
-        "Connection state is 'connected' but received network reachability change so going to call attemptReconnect"
         case attemptReconnectionAfterWaiting = "Attempting to reconnect after waiting"
         case attemptReconnectionImmediately = "Attempting to reconnect immediately"
         case connectionEstablished = "Socket established with socket ID:"
@@ -37,7 +34,6 @@ internal class PusherLogger {
         case errorReceived = "Websocket received error."
         case intentionalDisconnection = "Deliberate disconnection - skipping reconnect attempts"
         case maxReconnectAttemptsLimitReached = "Max reconnect attempts reached"
-        case reconnectionFailureLikely = "Network unreachable so reconnect likely to fail"
         case pingSent = "Ping sent"
         case pongReceived = "Websocket received pong"
         case receivedMessage = "websocketDidReceiveMessage"

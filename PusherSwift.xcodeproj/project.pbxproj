@@ -638,7 +638,6 @@
 			files = (
 			);
 			inputPaths = (
-				Reachability,
 				NWWebSocket,
 			);
 			name = "Copy Carthage Frameworks";
@@ -726,7 +725,6 @@
 			files = (
 			);
 			inputPaths = (
-				Reachability,
 				TweetNacl,
 				NWWebSocket,
 			);
