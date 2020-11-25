@@ -24,8 +24,7 @@ let package = Package(
         .testTarget(
             name: "PusherSwiftTests",
             dependencies: ["PusherSwift"],
-            path: "Tests",
-            swiftSettings: [.define("WITH_ENCRYPTION")]
+            path: "Tests"
         )
     ],
     swiftLanguageVersions: [.v5]

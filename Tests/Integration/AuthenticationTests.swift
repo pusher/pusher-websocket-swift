@@ -2,11 +2,7 @@ import XCTest
 
 // swiftlint:disable nesting
 
-#if WITH_ENCRYPTION
-    @testable import PusherSwiftWithEncryption
-#else
-    @testable import PusherSwift
-#endif
+@testable import PusherSwift
 
 class AuthenticationTests: XCTestCase {
     class DummyDelegate: PusherDelegate {

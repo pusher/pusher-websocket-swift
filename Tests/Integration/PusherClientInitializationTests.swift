@@ -1,10 +1,6 @@
 import XCTest
 
-#if WITH_ENCRYPTION
-    @testable import PusherSwiftWithEncryption
-#else
-    @testable import PusherSwift
-#endif
+@testable import PusherSwift
 
 let VERSION = "9.0.0"
 
