@@ -449,13 +449,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-iOS-WithEncryption/Pods-ObjectiveC-iOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-iOS/NWWebSocket.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-iOS/PusherSwiftWithEncryption.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift-iOS/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TweetNacl-iOS/TweetNacl.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweetNacl.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,13 +471,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-tvOS-WithEncryption/Pods-ObjectiveC-tvOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-tvOS/NWWebSocket.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-tvOS/PusherSwiftWithEncryption.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift-tvOS/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TweetNacl-tvOS/TweetNacl.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweetNacl.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -537,13 +537,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ObjectiveC-macOS-WithEncryption/Pods-ObjectiveC-macOS-WithEncryption-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/NWWebSocket-macOS/NWWebSocket.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwiftWithEncryption-macOS/PusherSwiftWithEncryption.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift-macOS/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TweetNacl-macOS/TweetNacl.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NWWebSocket.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwiftWithEncryption.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweetNacl.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,7 +675,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$TARGET_NAME";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -725,7 +725,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pusher.$TARGET_NAME;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$TARGET_NAME";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
