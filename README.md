@@ -68,8 +68,6 @@ What else would you want? Head over to one of our example apps:
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects and is our recommended method of installing PusherSwift and its dependencies.
 
-> If you are looking to use encrypted channels, please read the [specific installation instructions](#cocoapods-1).
-
 If you don't already have the Cocoapods gem installed, run the following command:
 
 ```bash
@@ -106,8 +104,6 @@ Also you'll need to make sure that you've not got the version of PusherSwift loc
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
 
-> If you are looking to use encrypted channels, please read the [specific installation instructions](#carthage-1).
-
 You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
 
 ```bash
@@ -121,10 +117,7 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
-Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
-
-- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift`
-- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption` and `TweetNacl`
+Carthage will produce a number of frameworks. You need to include the following framework binaries in your project from the `Carthage/Build` directory: `PusherSwift` and `TweetNacl`
 
 #### Xcode 12 considerations
 
@@ -162,7 +155,7 @@ let package = Package(
 )
 ```
 
-You will then need to include an `import PusherSwiftWithEncryption` statement in any source files where you wish to use the SDK. (**N.B. When integrating using Swift Package Manager, encrypted channels are supported by default and there is no 'PusherSwift' module**).
+You will then need to include an `import PusherSwift` statement in any source files where you wish to use the SDK.
 
 ## Configuration
 
@@ -638,19 +631,6 @@ Like with private channels, you must provide an authentication endpoint. That en
 The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed. 
 
 Because of the requirement to reload the shared secret on demand, you can only use the following [auth methods](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
-
-### Installation
-
-In your Swift files, you will need to import `PusherSwiftWithEncryption` rather than `PusherSwift`. In Objective-C files, you will need to import `PusherSwiftWithEncryption/PusherSwiftWithEncryption-Swift.h` rather than `PusherSwift/PusherSwift-Swift.h`.
-
-#### CocoaPods
-Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
-
-#### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `TweetNacl` framework into your project.
-
-#### Swift Package Manager
-Encrypted channels are supported by default when integrating using Swift Package Manager. No code or configuration changes are required.
 
 #### Limitations
 
