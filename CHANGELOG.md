@@ -4,7 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.0.0...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.1.0...HEAD)
+
+## [9.1.0](https://github.com/pusher/pusher-websocket-swift/compare/9.0.0...9.1.0) - 2020-12-07
+
+### Added
+
+- Encrypted channels are now support by default by the `PusherSwift` target.
+- Encrypted channels are now supported if integrating the SDK via Swift Package Manager.
+- tvOS as a target platform is now supported regardless of if encrypted channels are used.
+- [tweetnacl-swiftwrap](https://github.com/bitmark-inc/tweetnacl-swiftwrap) is now a dependency.
+
+### Changed
+
+- Migrated the WebSocket client code to use our [NWWebSocket](https://github.com/pusher/NWWebSocket) library.
+- Improvements to WebSocket reconnection functionality for unstable connections, or connections which migrate from Wi-Fi to Cellular (or vice versa).
+
+### Removed
+
+- The `PusherSwiftWithEncryption` target has been removed.
+- Reachability is no longer a dependency.
 
 ## [9.0.0](https://github.com/pusher/pusher-websocket-swift/compare/8.0.0...9.0.0) - 2020-10-09
 
