@@ -12,73 +12,69 @@ Note that the "Consumption Tests" only **compile** the code and do not run or pe
 
 A “suite” of projects/targets exist, each is configured to use one of:
 
-- `PusherSwift.framework` _or_ `PusherSwiftWithEncryption.framework`
+- `PusherSwift.framework`
 - `Carthage`, `Cocoapods` _or_ `Swift Package Manager`
 - “Minimum” or “Latest” toolset
 
 | Toolset                    | MINIMUM | LATEST |
 |----------------------------|---------|--------|
-| Xcode version              | 11      | 11.4   |
-| SWIFT_VERSION              | 4.2     |  5.2  |
-| IPHONEOS_DEPLOYMENT_TARGET | 8.0     |  13.0  |
-| MACOSX_DEPLOYMENT_TARGET   | 10.11   | 10.15  |
-| TVOS_DEPLOYMENT_TARGET     | 9.0     | 13.4  |
+| Xcode version              | 11.0      | 12.1   |
+| SWIFT_VERSION              | 5.0     |  5.3  |
+| IPHONEOS_DEPLOYMENT_TARGET | 13.0     |  14.1  |
+| MACOSX_DEPLOYMENT_TARGET   | 10.15   | 10.15  |
+| TVOS_DEPLOYMENT_TARGET     | 13.0     | 14.0  |
 
 Giving us the following “suite”:
 
 **Carthage-Latest**
- - Swift-iOS-WithoutEncryption
  - Swift-iOS-WithEncryption
- - Swift-macOS-WithoutEncryption
  - Swift-macOS-WithEncryption
- - ObjectiveC-iOS-WithoutEncryption
+ - Swift-tvOS-WithEncryption
  - ObjectiveC-iOS-WithEncryption
- - ObjectiveC-macOS-WithoutEncryption
  - ObjectiveC-macOS-WithEncryption
+ - ObjectiveC-tvOS-WithEncryption
 
 **Carthage-Minimum**
- - Swift-iOS-WithoutEncryption
  - Swift-iOS-WithEncryption
- - Swift-macOS-WithoutEncryption
  - Swift-macOS-WithEncryption
- - ObjectiveC-iOS-WithoutEncryption
+ - Swift-tvOS-WithEncryption
  - ObjectiveC-iOS-WithEncryption
- - ObjectiveC-macOS-WithoutEncryption
  - ObjectiveC-macOS-WithEncryption
+ - ObjectiveC-tvOS-WithEncryption
 
 **Cocoapods-Latest**
- - Swift-iOS-WithoutEncryption
  - Swift-iOS-WithEncryption
- - Swift-macOS-WithoutEncryption
  - Swift-macOS-WithEncryption
- - ObjectiveC-iOS-WithoutEncryption
+ - Swift-tvOS-WithEncryption
  - ObjectiveC-iOS-WithEncryption
- - ObjectiveC-macOS-WithoutEncryption
  - ObjectiveC-macOS-WithEncryption
+ - ObjectiveC-tvOS-WithEncryption
  
 **Cocoapods-Minimum**
- - Swift-iOS-WithoutEncryption
  - Swift-iOS-WithEncryption
- - Swift-macOS-WithoutEncryption
  - Swift-macOS-WithEncryption
- - ObjectiveC-iOS-WithoutEncryption
+ - Swift-tvOS-WithEncryption
  - ObjectiveC-iOS-WithEncryption
- - ObjectiveC-macOS-WithoutEncryption
  - ObjectiveC-macOS-WithEncryption
+ - ObjectiveC-tvOS-WithEncryption
 
 **SwiftPackageManager-Latest**
- - Swift-iOS-WithoutEncryption
- - Swift-macOS-WithoutEncryption
- - ObjectiveC-iOS-WithoutEncryption
- - ObjectiveC-macOS-WithoutEncryption
+ - Swift-iOS-WithEncryption
+ - Swift-macOS-WithEncryption
+ - Swift-tvOS-WithEncryption
+ - ObjectiveC-iOS-WithEncryption
+ - ObjectiveC-macOS-WithEncryption
+ - ObjectiveC-tvOS-WithEncryption
 
-_Note that SwiftPackageManager integration is not supported with `PusherSwiftWithEncyrption`_
- 
 **SwiftPackageManager-Minimum**
- - Swift-iOS-WithoutEncryption
- - Swift-macOS-WithoutEncryption
+ - Swift-iOS-WithEncryption
+ - Swift-macOS-WithEncryption
+ - Swift-tvOS-WithEncryption
+ - ObjectiveC-iOS-WithEncryption
+ - ObjectiveC-macOS-WithEncryption
+ - ObjectiveC-tvOS-WithEncryption
 
-_Note that SwiftPackageManager integration not supported with Objective-C in Xcode versions < v11.4 or at all with `PusherSwiftWithEncyrption`_
+_Note that SwiftPackageManager integration not supported with Objective-C in Xcode versions < v11.4_
 
 
 ## How to Run the Test Suite LOCALLY

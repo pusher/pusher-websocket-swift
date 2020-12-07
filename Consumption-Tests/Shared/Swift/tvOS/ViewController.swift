@@ -1,10 +1,6 @@
 import UIKit
 
-#if WITH_ENCRYPTION
-    import PusherSwiftWithEncryption
-#else
-    import PusherSwift
-#endif
+import PusherSwift
 
 class ViewController: UIViewController {
     var pusher: Pusher! = nil

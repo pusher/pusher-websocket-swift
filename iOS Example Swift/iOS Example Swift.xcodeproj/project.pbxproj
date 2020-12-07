@@ -198,7 +198,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/../Carthage/Build/iOS/Reachability.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/TweetNacl.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/NWWebSocket.framework",
 			);
 			name = "Copy Carthage Frameworks";

@@ -31,66 +31,23 @@
 		33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
 		33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		53140355250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */; };
-		53140356250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53140354250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift */; };
+		535AC2A9256EABB100598820 /* PusherDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A2012435E686001FDE05 /* PusherDecryptor.swift */; };
+		535AC2BF256EAE4100598820 /* PusherEventFactory+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */; };
+		535AC2C4256EAE4300598820 /* PusherEventQueue+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */; };
+		535AC2C9256EAE4600598820 /* PrivateEncryptedChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */; };
 		539D9AFC2507F67300B5765A /* PusherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFB2507F67300B5765A /* PusherLogger.swift */; };
 		539D9AFE2507F68400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
-		539D9AFF2507F69400B5765A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFD2507F68400B5765A /* Constants.swift */; };
-		539D9B002507F69B00B5765A /* PusherLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D9AFB2507F67300B5765A /* PusherLogger.swift */; };
 		736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
 		736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */; };
-		73D8A1E72435E5F3001FDE05 /* PusherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BA541F1D9035BD00CD853B /* PusherDelegate.swift */; };
-		73D8A1E82435E5F3001FDE05 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
-		73D8A1EB2435E5F3001FDE05 /* PusherCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA423ED782B00985C40 /* PusherCrypto.swift */; };
-		73D8A1EC2435E5F3001FDE05 /* PusherChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3384C1B81CAECD9C00F10796 /* PusherChannel.swift */; };
-		73D8A1ED2435E5F3001FDE05 /* Authorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390D1E71F054D1E00E1944D /* Authorizer.swift */; };
-		73D8A1EE2435E5F3001FDE05 /* PusherChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5711CAEDDF300563F49 /* PusherChannels.swift */; };
-		73D8A1EF2435E5F3001FDE05 /* PusherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFE43022D79CA7004187C3 /* PusherParser.swift */; };
-		73D8A1F02435E5F3001FDE05 /* PusherGlobalChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5751CAEDE2800563F49 /* PusherGlobalChannel.swift */; };
-		73D8A1F12435E5F3001FDE05 /* PusherClientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F5791CAEDEC800563F49 /* PusherClientOptions.swift */; };
-		73D8A1F22435E5F3001FDE05 /* PusherPresenceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389F56D1CAEDDD800563F49 /* PusherPresenceChannel.swift */; };
-		73D8A1F32435E5F3001FDE05 /* ObjectiveC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1FD6E1D81BFC300921AD7 /* ObjectiveC.swift */; };
-		73D8A1F52435E5F3001FDE05 /* AuthRequestBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390D1E51F054D0400E1944D /* AuthRequestBuilderProtocol.swift */; };
-		73D8A1F62435E5F3001FDE05 /* PusherSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CD31A9CFFD900B124F1 /* PusherSwift.swift */; };
-		73D8A1F82435E5F3001FDE05 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		73D8A20F2435F24E001FDE05 /* PusherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99641D21226C00B25C2A /* PusherConnectionTests.swift */; };
-		73D8A2102435F24E001FDE05 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
-		73D8A2112435F24E001FDE05 /* PusherCryptoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */; };
-		73D8A2122435F24E001FDE05 /* PusherClientInitializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99631D21226C00B25C2A /* PusherClientInitializationTests.swift */; };
-		73D8A2132435F24E001FDE05 /* PresenceChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99611D21226C00B25C2A /* PresenceChannelTests.swift */; };
-		73D8A2142435F24E001FDE05 /* PusherTopLevelAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99661D21226C00B25C2A /* PusherTopLevelAPITests.swift */; };
-		73D8A2152435F24E001FDE05 /* XCTest+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */; };
-		73D8A2162435F24E001FDE05 /* PusherIncomingEventHandlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99651D21226C00B25C2A /* PusherIncomingEventHandlingTests.swift */; };
-		73D8A2182435F24E001FDE05 /* ClientEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342F3BB1D808AC500C0296E /* ClientEventTests.swift */; };
-		73D8A2192435F24E001FDE05 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995F1D21226C00B25C2A /* Helpers.swift */; };
-		73D8A21A2435F24E001FDE05 /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB995D1D21226C00B25C2A /* AuthenticationTests.swift */; };
-		73D8A21B2435F24E001FDE05 /* PusherChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99621D21226C00B25C2A /* PusherChannelTests.swift */; };
-		73D8A21C2435F24E001FDE05 /* PusherEventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */; };
-		73D8A21D2435F24E001FDE05 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BB99601D21226C00B25C2A /* Mocks.swift */; };
-		73D8A21E2435F24E001FDE05 /* PusherConnectionDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A962751D8943CA00DA421E /* PusherConnectionDelegateTests.swift */; };
-		73D8A2202435F24E001FDE05 /* PusherSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 33831CD61A9CFFF200B124F1 /* PusherSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		73D8A2282435F325001FDE05 /* PusherDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A2062435EAD5001FDE05 /* PusherDecryptor.swift */; };
-		73D8A2292435F329001FDE05 /* PusherDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A2012435E686001FDE05 /* PusherDecryptor.swift */; };
-		73D8A22D2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */; };
-		73D8A22F2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8A22E2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift */; };
-		D32DBA1B2445BCD60064DA56 /* PrivateEncryptedChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */; };
 		E2498293231E612700CFBBD6 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
 		E2594CE42447753200E36300 /* PusherEventQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2594CE32447753200E36300 /* PusherEventQueueTests.swift */; };
-		E2594CE52447753200E36300 /* PusherEventQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2594CE32447753200E36300 /* PusherEventQueueTests.swift */; };
 		E26B8606244A079E00735172 /* PusherEncryptionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B8605244A079E00735172 /* PusherEncryptionHelpers.swift */; };
-		E26B8607244A079E00735172 /* PusherEncryptionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B8605244A079E00735172 /* PusherEncryptionHelpers.swift */; };
-		E291AFA024486A6E00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291AF9E2448636400594552 /* PusherEventQueue+DecryptionTests.swift */; };
-		E291AFA324486CAE00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */; };
 		E29A4CBC2301BA31000BC499 /* PusherEventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */; };
 		E2B21EFF243F5B1E0049A35B /* PusherEventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */; };
-		E2B21F00243F5B1E0049A35B /* PusherEventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */; };
 		E2B21F01243F5B1E0049A35B /* PusherEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */; };
-		E2B21F02243F5B1E0049A35B /* PusherEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */; };
 		E2B21F07243F5B860049A35B /* PusherEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F06243F5B860049A35B /* PusherEvent.swift */; };
-		E2B21F08243F5B860049A35B /* PusherEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F06243F5B860049A35B /* PusherEvent.swift */; };
 		E2B21F0A243F5BB50049A35B /* PusherConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F09243F5BB50049A35B /* PusherConnection.swift */; };
-		E2B21F0B243F5BB50049A35B /* PusherConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F09243F5BB50049A35B /* PusherConnection.swift */; };
 		E2B21F0D243F5DC10049A35B /* PusherWebsocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F0C243F5DC10049A35B /* PusherWebsocketDelegate.swift */; };
-		E2B21F0E243F5DC10049A35B /* PusherWebsocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F0C243F5DC10049A35B /* PusherWebsocketDelegate.swift */; };
 		E2CFE43122D79CA7004187C3 /* PusherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFE43022D79CA7004187C3 /* PusherParser.swift */; };
 		E2F40FA523ED782B00985C40 /* PusherCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA423ED782B00985C40 /* PusherCrypto.swift */; };
 		E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */; };
@@ -103,13 +60,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 33831C881A9CF61600B124F1;
 			remoteInfo = PusherSwift;
-		};
-		73D8A2302435F6A9001FDE05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33831C4A1A9CEDF800B124F1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 73D8A1E42435E5F3001FDE05;
-			remoteInfo = PusherSwiftWithEncryption;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -146,17 +96,12 @@
 		539D9AFD2507F68400B5765A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
-		73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwiftWithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D8A2012435E686001FDE05 /* PusherDecryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherDecryptor.swift; sourceTree = "<group>"; };
-		73D8A2062435EAD5001FDE05 /* PusherDecryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherDecryptor.swift; sourceTree = "<group>"; };
-		73D8A2262435F24E001FDE05 /* PusherSwiftWithEncryptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftWithEncryptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
-		73D8A22E2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
 		D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateEncryptedChannelTests.swift; sourceTree = "<group>"; };
 		E2498292231E612700CFBBD6 /* PusherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherError.swift; sourceTree = "<group>"; };
 		E2594CE32447753200E36300 /* PusherEventQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventQueueTests.swift; sourceTree = "<group>"; };
 		E26B8605244A079E00735172 /* PusherEncryptionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEncryptionHelpers.swift; sourceTree = "<group>"; };
-		E291AF9E2448636400594552 /* PusherEventQueue+DecryptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PusherEventQueue+DecryptionTests.swift"; sourceTree = "<group>"; };
 		E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventQueue+DecryptionTests.swift"; sourceTree = "<group>"; };
 		E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventFactoryTests.swift; sourceTree = "<group>"; };
 		E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherEventQueue.swift; sourceTree = "<group>"; };
@@ -184,20 +129,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		73D8A1FA2435E5F3001FDE05 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		73D8A20D2435F24E001FDE05 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -215,8 +146,6 @@
 			children = (
 				33831C891A9CF61600B124F1 /* PusherSwift.framework */,
 				33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */,
-				73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */,
-				73D8A2262435F24E001FDE05 /* PusherSwiftWithEncryptionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,8 +161,6 @@
 				5333ACFD24F80FCD006E8DF0 /* ObjC */,
 				5333ACF924F7FF93006E8DF0 /* Protocols */,
 				5333ACFF24F81468006E8DF0 /* Services */,
-				73D8A2052435EA5B001FDE05 /* PusherSwift-Only */,
-				73D8A2002435E66E001FDE05 /* PusherSwiftWithEncryption-Only */,
 				33831C8C1A9CF61600B124F1 /* Supporting Files */,
 			);
 			path = Sources;
@@ -318,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				E2B21F09243F5BB50049A35B /* PusherConnection.swift */,
+				73D8A2012435E686001FDE05 /* PusherDecryptor.swift */,
 				E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */,
 			);
 			path = Services;
@@ -357,8 +285,6 @@
 			children = (
 				539D9AF92507E1C100B5765A /* Models */,
 				539D9AF82507E19200B5765A /* Protocols */,
-				73D8A22A2435F33B001FDE05 /* PusherSwift-Only */,
-				73D8A22B2435F347001FDE05 /* PusherSwiftWithEncryption-Only */,
 				539D9AF72507E11200B5765A /* Services */,
 				539D9AF62507E0E200B5765A /* Helpers */,
 			);
@@ -370,6 +296,7 @@
 			children = (
 				E2F40FA623ED79BC00985C40 /* PusherCryptoTest.swift */,
 				E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */,
+				73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -379,6 +306,7 @@
 			children = (
 				33BB99641D21226C00B25C2A /* PusherConnectionTests.swift */,
 				E2594CE32447753200E36300 /* PusherEventQueueTests.swift */,
+				E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -396,44 +324,10 @@
 			children = (
 				3342F3BB1D808AC500C0296E /* ClientEventTests.swift */,
 				33BB99611D21226C00B25C2A /* PresenceChannelTests.swift */,
+				D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */,
 				33BB99621D21226C00B25C2A /* PusherChannelTests.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		73D8A2002435E66E001FDE05 /* PusherSwiftWithEncryption-Only */ = {
-			isa = PBXGroup;
-			children = (
-				73D8A2012435E686001FDE05 /* PusherDecryptor.swift */,
-			);
-			path = "PusherSwiftWithEncryption-Only";
-			sourceTree = "<group>";
-		};
-		73D8A2052435EA5B001FDE05 /* PusherSwift-Only */ = {
-			isa = PBXGroup;
-			children = (
-				73D8A2062435EAD5001FDE05 /* PusherDecryptor.swift */,
-			);
-			path = "PusherSwift-Only";
-			sourceTree = "<group>";
-		};
-		73D8A22A2435F33B001FDE05 /* PusherSwift-Only */ = {
-			isa = PBXGroup;
-			children = (
-				73D8A22E2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift */,
-				E291AF9E2448636400594552 /* PusherEventQueue+DecryptionTests.swift */,
-			);
-			path = "PusherSwift-Only";
-			sourceTree = "<group>";
-		};
-		73D8A22B2435F347001FDE05 /* PusherSwiftWithEncryption-Only */ = {
-			isa = PBXGroup;
-			children = (
-				73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */,
-				E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */,
-				D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */,
-			);
-			path = "PusherSwiftWithEncryption-Only";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,22 +346,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33C40CB91C1DFC9C008A54E3 /* PusherSwift.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		73D8A1F72435E5F3001FDE05 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				73D8A1F82435E5F3001FDE05 /* PusherSwift.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		73D8A21F2435F24E001FDE05 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				73D8A2202435F24E001FDE05 /* PusherSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,46 +392,6 @@
 			productReference = 33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		73D8A1E42435E5F3001FDE05 /* PusherSwiftWithEncryption */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 73D8A1FB2435E5F3001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryption" */;
-			buildPhases = (
-				73D8A1E52435E5F3001FDE05 /* Sources */,
-				73D8A1F72435E5F3001FDE05 /* Headers */,
-				73D8A1F92435E5F3001FDE05 /* Resources */,
-				73D8A1FA2435E5F3001FDE05 /* Frameworks */,
-				5333AD0B24FE4AAC006E8DF0 /* Run SwiftLint autocorrect */,
-				5333AD0924F92916006E8DF0 /* Run SwiftLint */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = PusherSwiftWithEncryption;
-			productName = PusherSwift;
-			productReference = 73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		73D8A20A2435F24E001FDE05 /* PusherSwiftWithEncryptionTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 73D8A2232435F24E001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryptionTests" */;
-			buildPhases = (
-				73D8A20D2435F24E001FDE05 /* Frameworks */,
-				73D8A20E2435F24E001FDE05 /* Sources */,
-				73D8A21F2435F24E001FDE05 /* Headers */,
-				73D8A2212435F24E001FDE05 /* Resources */,
-				73D8A2222435F24E001FDE05 /* Copy Carthage Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				73D8A2312435F6A9001FDE05 /* PBXTargetDependency */,
-			);
-			name = PusherSwiftWithEncryptionTests;
-			productName = PusherSwiftTests;
-			productReference = 73D8A2262435F24E001FDE05 /* PusherSwiftWithEncryptionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -569,12 +407,6 @@
 					};
 					33831C931A9CF61600B124F1 = {
 						CreatedOnToolsVersion = 6.3;
-						LastSwiftMigration = 1140;
-					};
-					73D8A1E42435E5F3001FDE05 = {
-						LastSwiftMigration = 1140;
-					};
-					73D8A20A2435F24E001FDE05 = {
 						LastSwiftMigration = 1140;
 					};
 				};
@@ -593,9 +425,7 @@
 			projectRoot = "";
 			targets = (
 				33831C881A9CF61600B124F1 /* PusherSwift */,
-				73D8A1E42435E5F3001FDE05 /* PusherSwiftWithEncryption */,
 				33831C931A9CF61600B124F1 /* PusherSwiftTests */,
-				73D8A20A2435F24E001FDE05 /* PusherSwiftWithEncryptionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -615,20 +445,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		73D8A1F92435E5F3001FDE05 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		73D8A2212435F24E001FDE05 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -639,6 +455,7 @@
 			);
 			inputPaths = (
 				NWWebSocket,
+				TweetNacl,
 			);
 			name = "Copy Carthage Frameworks";
 			outputPaths = (
@@ -648,24 +465,6 @@
 			shellScript = "case \"$PLATFORM_NAME\" in\nmacosx) plat=Mac;;\niphone*) plat=iOS;;\nwatch*) plat=watchOS;;\ntv*) plat=tvOS;;\nappletv*) plat=tvOS;;\n*) echo \"error: Unknown PLATFORM_NAME: $PLATFORM_NAME\"; exit 1;;\nesac\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nframework=$(basename \"${!VAR}\")\nexport SCRIPT_INPUT_FILE_$n=\"$SRCROOT\"/Carthage/Build/$plat/\"$framework\".framework\ndone\n\n/usr/local/bin/carthage copy-frameworks || exit\n\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nsource=${!VAR}.dSYM\ndest=${BUILT_PRODUCTS_DIR}/$(basename \"$source\")\nditto \"$source\" \"$dest\" || exit\ndone\n";
 		};
 		5333AD0824F928F1006E8DF0 /* Run SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run SwiftLint";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		5333AD0924F92916006E8DF0 /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -701,40 +500,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint autocorrect\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		5333AD0B24FE4AAC006E8DF0 /* Run SwiftLint autocorrect */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run SwiftLint autocorrect";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint autocorrect\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		73D8A2222435F24E001FDE05 /* Copy Carthage Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				TweetNacl,
-				NWWebSocket,
-			);
-			name = "Copy Carthage Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "case \"$PLATFORM_NAME\" in\nmacosx) plat=Mac;;\niphone*) plat=iOS;;\nwatch*) plat=watchOS;;\ntv*) plat=tvOS;;\nappletv*) plat=tvOS;;\n*) echo \"error: Unknown PLATFORM_NAME: $PLATFORM_NAME\"; exit 1;;\nesac\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nframework=$(basename \"${!VAR}\")\nexport SCRIPT_INPUT_FILE_$n=\"$SRCROOT\"/Carthage/Build/$plat/\"$framework\".framework\ndone\n\n/usr/local/bin/carthage copy-frameworks || exit\n\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nsource=${!VAR}.dSYM\ndest=${BUILT_PRODUCTS_DIR}/$(basename \"$source\")\nditto \"$source\" \"$dest\" || exit\ndone\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -748,7 +513,6 @@
 				E2B21F0A243F5BB50049A35B /* PusherConnection.swift in Sources */,
 				33BA54201D9035BD00CD853B /* PusherDelegate.swift in Sources */,
 				E2498293231E612700CFBBD6 /* PusherError.swift in Sources */,
-				73D8A2282435F325001FDE05 /* PusherDecryptor.swift in Sources */,
 				E2F40FA523ED782B00985C40 /* PusherCrypto.swift in Sources */,
 				E2B21F0D243F5DC10049A35B /* PusherWebsocketDelegate.swift in Sources */,
 				330D7A6D1CAEDA750032FF2C /* PusherChannel.swift in Sources */,
@@ -763,6 +527,7 @@
 				E2B21EFF243F5B1E0049A35B /* PusherEventQueue.swift in Sources */,
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,
 				33C1FD6F1D81BFC300921AD7 /* ObjectiveC.swift in Sources */,
+				535AC2A9256EABB100598820 /* PusherDecryptor.swift in Sources */,
 				3390D1E61F054D0400E1944D /* AuthRequestBuilderProtocol.swift in Sources */,
 				330D7A6A1CAEDA6C0032FF2C /* PusherSwift.swift in Sources */,
 			);
@@ -772,16 +537,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73D8A22F2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */,
+				535AC2C4256EAE4300598820 /* PusherEventQueue+DecryptionTests.swift in Sources */,
+				535AC2BF256EAE4100598820 /* PusherEventFactory+DecryptionTests.swift in Sources */,
 				33BB997A1D21230100B25C2A /* PusherConnectionTests.swift in Sources */,
 				736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */,
+				535AC2C9256EAE4600598820 /* PrivateEncryptedChannelTests.swift in Sources */,
 				E2F40FA723ED79BC00985C40 /* PusherCryptoTest.swift in Sources */,
 				33BB99791D21230100B25C2A /* PusherClientInitializationTests.swift in Sources */,
 				33BB99771D21230100B25C2A /* PresenceChannelTests.swift in Sources */,
 				33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */,
 				736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */,
 				E2594CE42447753200E36300 /* PusherEventQueueTests.swift in Sources */,
-				E291AFA024486A6E00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */,
 				33BB997B1D21230100B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */,
 				3342F3BD1D808AC900C0296E /* ClientEventTests.swift in Sources */,
 				33BB99751D21230100B25C2A /* Helpers.swift in Sources */,
@@ -793,62 +559,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		73D8A1E52435E5F3001FDE05 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				53140356250A8F7600F3D7BF /* PusherChannelsProtocolCloseCode.swift in Sources */,
-				E26B8607244A079E00735172 /* PusherEncryptionHelpers.swift in Sources */,
-				E2B21F0B243F5BB50049A35B /* PusherConnection.swift in Sources */,
-				73D8A1E72435E5F3001FDE05 /* PusherDelegate.swift in Sources */,
-				73D8A1E82435E5F3001FDE05 /* PusherError.swift in Sources */,
-				73D8A2292435F329001FDE05 /* PusherDecryptor.swift in Sources */,
-				73D8A1EB2435E5F3001FDE05 /* PusherCrypto.swift in Sources */,
-				539D9B002507F69B00B5765A /* PusherLogger.swift in Sources */,
-				E2B21F0E243F5DC10049A35B /* PusherWebsocketDelegate.swift in Sources */,
-				73D8A1EC2435E5F3001FDE05 /* PusherChannel.swift in Sources */,
-				73D8A1ED2435E5F3001FDE05 /* Authorizer.swift in Sources */,
-				73D8A1EE2435E5F3001FDE05 /* PusherChannels.swift in Sources */,
-				73D8A1EF2435E5F3001FDE05 /* PusherParser.swift in Sources */,
-				539D9AFF2507F69400B5765A /* Constants.swift in Sources */,
-				73D8A1F02435E5F3001FDE05 /* PusherGlobalChannel.swift in Sources */,
-				E2B21F02243F5B1E0049A35B /* PusherEventFactory.swift in Sources */,
-				73D8A1F12435E5F3001FDE05 /* PusherClientOptions.swift in Sources */,
-				E2B21F08243F5B860049A35B /* PusherEvent.swift in Sources */,
-				E2B21F00243F5B1E0049A35B /* PusherEventQueue.swift in Sources */,
-				73D8A1F22435E5F3001FDE05 /* PusherPresenceChannel.swift in Sources */,
-				73D8A1F32435E5F3001FDE05 /* ObjectiveC.swift in Sources */,
-				73D8A1F52435E5F3001FDE05 /* AuthRequestBuilderProtocol.swift in Sources */,
-				73D8A1F62435E5F3001FDE05 /* PusherSwift.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		73D8A20E2435F24E001FDE05 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				73D8A22D2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift in Sources */,
-				73D8A20F2435F24E001FDE05 /* PusherConnectionTests.swift in Sources */,
-				73D8A2102435F24E001FDE05 /* String+Extensions.swift in Sources */,
-				73D8A2112435F24E001FDE05 /* PusherCryptoTest.swift in Sources */,
-				D32DBA1B2445BCD60064DA56 /* PrivateEncryptedChannelTests.swift in Sources */,
-				73D8A2122435F24E001FDE05 /* PusherClientInitializationTests.swift in Sources */,
-				73D8A2132435F24E001FDE05 /* PresenceChannelTests.swift in Sources */,
-				73D8A2142435F24E001FDE05 /* PusherTopLevelAPITests.swift in Sources */,
-				73D8A2152435F24E001FDE05 /* XCTest+Assertions.swift in Sources */,
-				E2594CE52447753200E36300 /* PusherEventQueueTests.swift in Sources */,
-				E291AFA324486CAE00594552 /* PusherEventQueue+DecryptionTests.swift in Sources */,
-				73D8A2162435F24E001FDE05 /* PusherIncomingEventHandlingTests.swift in Sources */,
-				73D8A2182435F24E001FDE05 /* ClientEventTests.swift in Sources */,
-				73D8A2192435F24E001FDE05 /* Helpers.swift in Sources */,
-				73D8A21A2435F24E001FDE05 /* AuthenticationTests.swift in Sources */,
-				73D8A21B2435F24E001FDE05 /* PusherChannelTests.swift in Sources */,
-				73D8A21C2435F24E001FDE05 /* PusherEventFactoryTests.swift in Sources */,
-				73D8A21D2435F24E001FDE05 /* Mocks.swift in Sources */,
-				73D8A21E2435F24E001FDE05 /* PusherConnectionDelegateTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -856,11 +566,6 @@
 			isa = PBXTargetDependency;
 			target = 33831C881A9CF61600B124F1 /* PusherSwift */;
 			targetProxy = 33831C961A9CF61600B124F1 /* PBXContainerItemProxy */;
-		};
-		73D8A2312435F6A9001FDE05 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 73D8A1E42435E5F3001FDE05 /* PusherSwiftWithEncryption */;
-			targetProxy = 73D8A2302435F6A9001FDE05 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1157,219 +862,6 @@
 			};
 			name = Release;
 		};
-		73D8A1FC2435E5F3001FDE05 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				APPLICATION_EXTENSION_API_ONLY = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		73D8A1FD2435E5F3001FDE05 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				APPLICATION_EXTENSION_API_ONLY = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_CODE_COVERAGE = NO;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		73D8A2242435F24E001FDE05 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-DWITH_ENCRYPTION";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = "";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		73D8A2252435F24E001FDE05 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_SWIFT_FLAGS = "-DWITH_ENCRYPTION";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = "";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
-				SWIFT_VERSION = 5.0;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1396,24 +888,6 @@
 			buildConfigurations = (
 				33831CA11A9CF61600B124F1 /* Debug */,
 				33831CA21A9CF61600B124F1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		73D8A1FB2435E5F3001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryption" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				73D8A1FC2435E5F3001FDE05 /* Debug */,
-				73D8A1FD2435E5F3001FDE05 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		73D8A2232435F24E001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryptionTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				73D8A2242435F24E001FDE05 /* Debug */,
-				73D8A2252435F24E001FDE05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

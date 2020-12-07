@@ -1,4 +1,4 @@
-@testable import PusherSwiftWithEncryption
+@testable import PusherSwift
 import XCTest
 
 class PusherEventFactoryDecryptionTests: XCTestCase {

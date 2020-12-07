@@ -1,4 +1,4 @@
-@testable import PusherSwiftWithEncryption
+@testable import PusherSwift
 import XCTest
 
 // swiftlint:disable unused_closure_parameter

@@ -100,13 +100,6 @@ function runXcodeBuild {
 	local SCHEME="$2"
 	echo "SCHEME=$SCHEME"
 
-	if [[ "$NAME" == "SwiftPackageManager"* ]] && [[ "$SCHEME" == *"WithoutEncryption" ]];	then
-		SUMMARY_LOG_OUTPUT+="\n 🔘 $SCHEME (SPM integration does not expose PusherSwift module)"
-		echo "**** SKIPPING '$NAME - $SCHEME' ****"	
-		echo "------ END: $FUNCNAME $@ ------"
-		return 0
-	fi
-
 	if [[ "$NAME" == "SwiftPackageManager-Minimum" ]] && [[ "$SCHEME" == "ObjectiveC"* ]]; then
 		SUMMARY_LOG_OUTPUT+="\n 🔘 $SCHEME (SPM integration not supported with Obj-C in Xcode versions < v11.4)"
 		echo "**** SKIPPING '$NAME - $SCHEME' ****"	
@@ -197,17 +190,11 @@ function performTests {
 		SUMMARY_LOG_OUTPUT+=" (checkout was skipped) +++++"
 	fi
 
-	runXcodeBuild "$NAME" "Swift-iOS-WithoutEncryption"
 	runXcodeBuild "$NAME" "Swift-iOS-WithEncryption"
-	runXcodeBuild "$NAME" "Swift-macOS-WithoutEncryption"
 	runXcodeBuild "$NAME" "Swift-macOS-WithEncryption"
-	runXcodeBuild "$NAME" "Swift-tvOS-WithoutEncryption"
 	runXcodeBuild "$NAME" "Swift-tvOS-WithEncryption"
-	runXcodeBuild "$NAME" "ObjectiveC-iOS-WithoutEncryption"
 	runXcodeBuild "$NAME" "ObjectiveC-iOS-WithEncryption"
-	runXcodeBuild "$NAME" "ObjectiveC-macOS-WithoutEncryption"
 	runXcodeBuild "$NAME" "ObjectiveC-macOS-WithEncryption"
-	runXcodeBuild "$NAME" "ObjectiveC-tvOS-WithoutEncryption"
 	runXcodeBuild "$NAME" "ObjectiveC-tvOS-WithEncryption"
 	
 	echo "------ END: $FUNCNAME $@ ------"
