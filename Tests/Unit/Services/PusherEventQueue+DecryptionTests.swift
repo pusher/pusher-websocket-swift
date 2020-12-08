@@ -194,6 +194,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
+    // swiftlint:disable:next function_body_length
     func testShouldMoveOnAfterFailingToDecryptAMessage() {
         let channel = createAndSubscribe("private-encrypted-channel")
 
@@ -267,6 +268,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
+    // swiftlint:disable:next function_body_length
     func testFailingToDecryptOnOneChannelShouldNotAffectAnother() {
         let decryptableChannel = createAndSubscribe("private-encrypted-decryptable")
         let undecryptableChannel = createAndSubscribe("private-encrypted-undecryptable")
