@@ -56,6 +56,7 @@ What else would you want? Head over to one of our example apps:
   - [Callback parameters](#callback-parameters)
   - [Parsing event data](#parsing-event-data)
   - [Receiving errors](#receiving-errors)
+- [Triggering events](#triggering-events)
 - [Testing](#testing)
 - [Extensions](#extensions)
 - [Communication](#communication)
@@ -1124,6 +1125,22 @@ NSString *callbackId = [chan bindWithEventName:@"new-price" eventCallback:^void 
 ```
 
 You can unbind from events at both the global and per channel level. For both objects you also have the option of calling `unbindAll`, which, as you can guess, will unbind all eventHandlers on the object.
+
+## Triggering events
+
+Once a [private](https://pusher.com/docs/channels/using_channels/private-channels) or [presence](https://pusher.com/docs/channels/using_channels/presence-channels) subscription has been authorized (see [authenticating users](https://pusher.com/docs/channels/server_api/authenticating-users)) and the subscription has succeeded, it is possible to trigger events on those channels.
+
+```swift
+chan.trigger(eventName: "client-myEvent", data: ["myName": "Bob"])
+```
+
+Events triggered by clients are called [client events](https://pusher.com/docs/channels/using_channels/events#triggering-client-events). Because they are being triggered from a client which may not be trusted there are a number of enforced rules when using them. Some of these rules include:
+
+* Event names must have a `client-` prefix
+* Rate limits
+* You can only trigger an event when the subscription has succeeded
+
+For full details see the [client events documentation](https://pusher.com/docs/channels/using_channels/events#triggering-client-events).
 
 ## Testing
 
