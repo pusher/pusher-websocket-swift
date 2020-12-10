@@ -578,7 +578,7 @@ All of this is the case if you have the client option of `autoReconnect` set as 
 
 N.B: If the Pusher servers close the websocket with a [Channels Protocol closure code](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#connection-closure), then the `autoReconnect` option is ignored, and the reconnection strategy is determined by the specific closure code that was received.
 
-There are a couple of properties on the connection (`PusherConnection`) that you can set that affect how the reconnection behaviour works. These are:
+There are a couple of properties on the connection (`PusherConnection`) that you can set that affect how the reconnection behavior works. These are:
 
 - `public var reconnectAttemptsMax: Int? = 6` - if you set this to `nil` then there is no maximum number of reconnect attempts and so attempts will continue to be made with an exponential backoff (based on number of attempts), otherwise only as many attempts as this property's value will be made before the connection's state moves to `.disconnected`
 - `public var maxReconnectGapInSeconds: Double? = nil` - if you want to set a maximum length of time (in seconds) between reconnect attempts then set this property appropriately
@@ -804,7 +804,7 @@ let pusherAuth = PusherAuth(auth: yourAuthString, channelData: yourOptionalChann
 let chan = self.pusher.subscribe(channelName, auth: pusherAuth)
 ```
 
-This PusherAuth object can be initialised with just an auth (String) value if the subscription is to a private channel, or both an `auth (String)` and `channelData (String)` pair of values if the subscription is to a presence channel.
+This PusherAuth object can be initialized with just an auth (String) value if the subscription is to a private channel, or both an `auth (String)` and `channelData (String)` pair of values if the subscription is to a presence channel.
 
 These `auth` and `channelData` values are the values that you received if the json object created by a call to pusher.authenticate(...) in one of our various server libraries.
 
@@ -877,7 +877,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 ### Global events
 
-You can attach behaviour to these events regardless of the channel the event is broadcast to. 
+You can attach behavior to these events regardless of the channel the event is broadcast to. 
 
 #### Swift
 

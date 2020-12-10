@@ -25,7 +25,7 @@ internal class PusherLogger {
         case networkConnectionViable = "Network connection became viable"
         case networkConnectionUnviable = "Network connection became unviable"
 
-        // Websockets
+        // WebSocket
 
         case attemptReconnectionAfterWaiting = "Attempting to reconnect after waiting"
         case attemptReconnectionImmediately = "Attempting to reconnect immediately"
