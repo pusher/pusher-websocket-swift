@@ -3,15 +3,18 @@ import Foundation
 @testable import PusherSwift
 
 func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {
-    if let data = text.data(using: .utf8) {
-        do {
-            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject]
-            return json
-        } catch {
-            print("Something went wrong")
-        }
+    guard let data = text.data(using: .utf8) else {
+        return nil
     }
-    return nil
+
+    do {
+        let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject]
+        return json
+    } catch {
+        print("Something went wrong")
+        
+        return nil
+    }
 }
 
 extension AuthMethod: Equatable {

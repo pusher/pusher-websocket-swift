@@ -16,10 +16,12 @@ class PusherTopLevelApiTests: XCTestCase {
         }
 
         func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
-            if let stateCallbacks = callbacks[new] {
-                for callback in stateCallbacks {
-                    callback()
-                }
+            guard let stateCallbacks = callbacks[new] else {
+                return
+            }
+
+            for callback in stateCallbacks {
+                callback()
             }
         }
     }
@@ -30,9 +32,12 @@ class PusherTopLevelApiTests: XCTestCase {
         var connectionStubber = StubberForMocks()
 
         func subscribedToChannel(name: String) {
-            if let cName = testingChannelName, cName == name {
-                ex!.fulfill()
+            guard let cName = testingChannelName,
+                  cName == name else {
+                return
             }
+
+            ex!.fulfill()
         }
 
         func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
@@ -170,13 +175,15 @@ class PusherTopLevelApiTests: XCTestCase {
             _ = self.pusher.subscribe("test-channel")
 
             self.socket.stubber.registerCallback { calls in
-                if let name = calls.last?.name, name == "writeString" {
-                    let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
-                    let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String: Any]
-                    let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
-                    XCTAssertTrue(parsedEqualsExpected)
-                    subscribed.fulfill()
+                guard let name = calls.last?.name, name == "writeString" else {
+                    return
                 }
+
+                let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
+                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String: Any]
+                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+                XCTAssertTrue(parsedEqualsExpected)
+                subscribed.fulfill()
             }
         }
 
@@ -201,9 +208,13 @@ class PusherTopLevelApiTests: XCTestCase {
         let ex = expectation(description: "should call global callback")
         pusher.connect()
         let callback = { (data: Any?) -> Void in
-            if let data = data as? [String: Any], let eName = data["event"] as? String, eName == "pusher:subscription_succeeded" {
-                ex.fulfill()
+            guard let data = data as? [String: Any],
+                  let eName = data["event"] as? String,
+                  eName == "pusher:subscription_succeeded" else {
+                return
             }
+
+            ex.fulfill()
         }
         _ = pusher.bind(callback)
         _ = pusher.subscribe("test-channel")
@@ -368,13 +379,16 @@ class PusherTopLevelApiTests: XCTestCase {
         }
         let ex = expectation(description: "should send unsubscribe")
         socket.stubber.registerCallback { calls in
-            if let name = calls.last?.name, name == "writeString" {
-                let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
-                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"] as [String: Any]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
-                if parsedEqualsExpected {
-                    ex.fulfill()
-                }
+            guard let name = calls.last?.name,
+                  name == "writeString" else {
+                return
+            }
+
+            let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
+            let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"] as [String: Any]
+            let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+            if parsedEqualsExpected {
+                ex.fulfill()
             }
         }
         waitForExpectations(timeout: 0.5)
