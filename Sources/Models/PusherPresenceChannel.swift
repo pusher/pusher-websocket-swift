@@ -101,11 +101,13 @@ public typealias PusherUserInfoObject = [String: AnyObject]
             id = String.init(describing: memberJSON[Constants.JSONKeys.userId]!)
         }
 
-        if let index = self.members.firstIndex(where: { $0.userId == id }) {
-            let member = self.members[index]
-            self.members.remove(at: index)
-            self.onMemberRemoved?(member)
+        guard let index = self.members.firstIndex(where: { $0.userId == id }) else {
+            return
         }
+
+        let member = self.members[index]
+        self.members.remove(at: index)
+        self.onMemberRemoved?(member)
     }
 
     /**
@@ -116,10 +118,12 @@ public typealias PusherUserInfoObject = [String: AnyObject]
                                  to the channel
     */
     internal func setMyUserId(channelData: String) {
-        if let channelDataObject = parse(channelData: channelData),
-            let userId = channelDataObject[Constants.JSONKeys.userId] {
-            self.myId = String.init(describing: userId)
+        guard let channelDataObject = parse(channelData: channelData),
+            let userId = channelDataObject[Constants.JSONKeys.userId] else {
+            return
         }
+
+        self.myId = String.init(describing: userId)
     }
 
     /**
@@ -164,11 +168,11 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         - returns: The connected user's PusherPresenceChannelMember object
     */
     open func me() -> PusherPresenceChannelMember? {
-        if let id = self.myId {
-            return findMember(userId: id)
-        } else {
+        guard let id = self.myId else {
             return nil
         }
+
+        return findMember(userId: id)
     }
 }
 
