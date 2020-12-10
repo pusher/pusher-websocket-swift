@@ -43,7 +43,7 @@ class ClientInitializationTests: XCTestCase {
         XCTAssertEqual(pusher.connection.activityTimeoutInterval, 60, "the activity timeout interval should be 60")
     }
 
-    func testProvidingEcryptedOptionAsFalse() {
+    func testProvidingEncryptedOptionAsFalse() {
         let options = PusherClientOptions(
             useTLS: false
         )
