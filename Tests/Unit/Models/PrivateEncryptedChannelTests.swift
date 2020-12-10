@@ -202,7 +202,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func authorizerReponseSequence(_ authSequence: [PusherAuth]) {
+    func authorizerResponseSequence(_ authSequence: [PusherAuth]) {
         let (pusher, socket) = configurePusherWithAuthMethod(authMethod: AuthMethod.authorizer(authorizer: TestAuthorizer(authSequence)))
         pusher.connect()
 
@@ -238,11 +238,11 @@ class PrivateEncryptedChannelTests: XCTestCase {
     }
 
     func testInitialLoadKeyAuthorizerAuthMethod() {
-        authorizerReponseSequence([validAuth])
+        authorizerResponseSequence([validAuth])
     }
 
     func testReloadKeyAuthorizerAuthMethod() {
-        authorizerReponseSequence([incorrectSharedSecretAuth, validAuth])
+        authorizerResponseSequence([incorrectSharedSecretAuth, validAuth])
     }
 
     func testInitialLoadKeyRequestBuilder() {
