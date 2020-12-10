@@ -193,7 +193,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
 
         // set a new expectation for the error delegate for the second event
-        errorDelegate.expectation = expectation(description: "second event should fail to decrpyt too.")
+        errorDelegate.expectation = expectation(description: "second event should fail to decrypt too.")
 
         // send a second message
         socket.delegate?.webSocketDidReceiveMessage(
@@ -375,7 +375,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         }
     }
 
-    // utility method to mock an authorizor response with the jsonData provided
+    // utility method to mock an authorizer response with the jsonData provided
     func mockAuthResponse(jsonData: String, pusher: Pusher) {
         let urlResponse = HTTPURLResponse(
             url: URL(string: "\(authEndpointURL)?channel_name=\(channelName)&socket_id=45481.3166671")!,

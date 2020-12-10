@@ -10,7 +10,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
     open var myId: String?
 
     /**
-        Initializes a new PusherPresenceChannel with a given name, conenction, and optional
+        Initializes a new PusherPresenceChannel with a given name, connection, and optional
         member added and member removed handler functions
 
         - parameter name:            The name of the channel

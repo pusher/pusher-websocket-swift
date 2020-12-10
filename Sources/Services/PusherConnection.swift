@@ -46,7 +46,7 @@ import NWWebSocket
         - parameter key:        The Pusher app key
         - parameter socket:     The websocket object
         - parameter url:        The URL the connection is made to
-        - parameter options:    A PusherClientOptions instance containing all of the user-speficied
+        - parameter options:    A PusherClientOptions instance containing all of the user-specified
                                 client options
         - parameter URLSession: An NSURLSession instance for the connection to use for making
                                 authentication requests
@@ -271,7 +271,7 @@ import NWWebSocket
     }
 
     /**
-        Instantiate a new GloblalChannel instance for the connection
+        Instantiate a new GlobalChannel instance for the connection
     */
     internal func createGlobalChannel() {
         self.globalChannel = GlobalChannel(connection: self)
@@ -404,7 +404,7 @@ import NWWebSocket
 
     /**
         Schedule a timer that will fire if no pong response is received within the
-        pongResponseTImeoutInterval
+        pongResponseTimeoutInterval
     */
     fileprivate func setupPongResponseTimeoutTimer() {
         pongResponseTimeoutTimer = Timer.scheduledTimer(
@@ -758,7 +758,7 @@ import NWWebSocket
 
         - parameter endpoint: The authEndpoint to which the request will be made
         - parameter socketId: The socketId of the connection's websocket
-        - parameter channel:  The PusherChannel to authenticate subsciption for
+        - parameter channel:  The PusherChannel to authenticate subscription for
 
         - returns: URLRequest object to be used by the function making the auth request
     */
@@ -777,7 +777,7 @@ import NWWebSocket
         Send authentication request to the authEndpoint specified
 
         - parameter request: The request to send
-        - parameter channel: The PusherChannel to authenticate subsciption for
+        - parameter channel: The PusherChannel to authenticate subscription for
     */
     fileprivate func sendAuthorisationRequest(request: URLRequest,
                                               channel: PusherChannel,
@@ -846,7 +846,7 @@ import NWWebSocket
 
         - parameter authString:  The auth response as a dictionary
         - parameter channelData: The channelData to send along with the auth request
-        - parameter channel:     The PusherChannel to authorize the subsciption for
+        - parameter channel:     The PusherChannel to authorize the subscription for
     */
     fileprivate func handleAuthInfo(pusherAuth: PusherAuth, channel: PusherChannel) {
         if let decryptionKey = pusherAuth.sharedSecret {
@@ -864,7 +864,7 @@ import NWWebSocket
         Handle presence channel auth response and send subscribe message to Pusher API
 
         - parameter auth:        The auth string
-        - parameter channel:     The PusherChannel to authorize subsciption for
+        - parameter channel:     The PusherChannel to authorize subscription for
         - parameter channelData: The channelData to send along with the auth request
     */
     fileprivate func handlePresenceChannelAuth(
@@ -888,7 +888,7 @@ import NWWebSocket
         Handle private channel auth response and send subscribe message to Pusher API
 
         - parameter auth:    The auth string
-        - parameter channel: The PusherChannel to authenticate subsciption for
+        - parameter channel: The PusherChannel to authenticate subscription for
     */
     fileprivate func handlePrivateChannelAuth(authValue auth: String, channel: PusherChannel) {
         self.sendEvent(
