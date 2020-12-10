@@ -664,11 +664,11 @@ import NWWebSocket
             return false
         case .endpoint(authEndpoint: let authEndpoint):
             let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
-            sendAuthorisationRequest(request: request, channel: channel, completionHandler: completionHandler)
+            sendAuthorizationRequest(request: request, channel: channel, completionHandler: completionHandler)
             return true
         case .authRequestBuilder(authRequestBuilder: let builder):
             if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
-                sendAuthorisationRequest(request: request, channel: channel, completionHandler: completionHandler)
+                sendAuthorizationRequest(request: request, channel: channel, completionHandler: completionHandler)
                 return true
             } else {
                 let errorMessage = "Authentication request could not be built"
@@ -779,7 +779,7 @@ import NWWebSocket
         - parameter request: The request to send
         - parameter channel: The PusherChannel to authenticate subscription for
     */
-    fileprivate func sendAuthorisationRequest(request: URLRequest,
+    fileprivate func sendAuthorizationRequest(request: URLRequest,
                                               channel: PusherChannel,
                                               completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> Void) {
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, sessionError in
