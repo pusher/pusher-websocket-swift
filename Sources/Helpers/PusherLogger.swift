@@ -13,12 +13,18 @@ internal class PusherLogger {
         case presenceChannelSubscriptionAttemptWithoutChannelData =
         "Attempting to subscribe to presence channel but no channelData value provided"
         case subscriptionSucceededNoDataInPayload = "Subscription succeeded event received without data key in payload"
+        case unableToSubscribeToChannel = "Unable to subscribe to channel:"
+        case unableToAddMemberToChannel = "Unable to add member to channel"
+        case unableToRemoveMemberFromChannel = "Unable to remove member from channel"
+        case authInfoForCompletionHandlerIsNil = "Auth info passed to authorizer completionHandler was nil"
+        case authenticationFailed = "Authentication failed. You may not be connected"
 
         // Events
 
         case clientEventSent = "sendClientEvent"
         case eventSent = "sendEvent"
         case skippedEventAfterDecryptionFailure = "Skipping event that failed to decrypt on channel"
+        case cannotSendClientEventForChannel = "You must be subscribed to a private or presence channel to send client events"
 
         // Network
 

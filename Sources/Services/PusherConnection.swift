@@ -112,7 +112,8 @@ import NWWebSocket
             guard self.connectionState == .connected else { return newChannel }
 
             if !self.authorize(newChannel, auth: auth) {
-                print("Unable to subscribe to channel: \(newChannel.name)")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToSubscribeToChannel,
+                                                                     context: newChannel.name))
             }
 
             return newChannel
@@ -148,7 +149,8 @@ import NWWebSocket
         guard self.connectionState == .connected else { return newChannel }
 
         if !self.authorize(newChannel, auth: auth) {
-            print("Unable to subscribe to channel: \(newChannel.name)")
+            self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToSubscribeToChannel,
+                                                                 context: newChannel.name))
         }
 
         return newChannel
@@ -218,7 +220,7 @@ import NWWebSocket
                                                                      context: dataString))
                 self.socket.send(string: dataString)
             } else {
-                print("You must be subscribed to a private or presence channel to send client events")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .cannotSendClientEventForChannel))
             }
         }
     }
@@ -498,7 +500,8 @@ import NWWebSocket
     fileprivate func attemptSubscriptionsToUnsubscribedChannels() {
         for (_, channel) in self.channels.channels {
             if !self.authorize(channel, auth: channel.auth) {
-                print("Unable to subscribe to channel: \(channel.name)")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToSubscribeToChannel,
+                                                                     context: channel.name))
             }
         }
     }
@@ -514,7 +517,7 @@ import NWWebSocket
             if let memberJSON = event.dataToJSONObject() as? [String: Any] {
                 chan.addMember(memberJSON: memberJSON)
             } else {
-                print("Unable to add member")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToAddMemberToChannel))
             }
         }
     }
@@ -530,7 +533,7 @@ import NWWebSocket
             if let memberJSON = event.dataToJSONObject() as? [String: Any] {
                 chan.removeMember(memberJSON: memberJSON)
             } else {
-                print("Unable to remove member")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToRemoveMemberFromChannel))
             }
         }
     }
@@ -565,9 +568,6 @@ import NWWebSocket
                 self.handleEvent(event: event)
             }
 
-            if let message = error.message {
-                print(message)
-            }
             self.delegate?.failedToSubscribeToChannel?(name: channelName,
                                                        response: error.response,
                                                        data: error.data,
@@ -683,7 +683,8 @@ import NWWebSocket
         case .authorizer(authorizer: let authorizer):
             authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { pusherAuth in
                 if pusherAuth == nil {
-                    print("Auth info passed to authorizer completionHandler was nil")
+                    self.delegate?.debugLog?(message: PusherLogger.debug(for:
+                                                                            .authInfoForCompletionHandlerIsNil))
                 }
                 completionHandler(pusherAuth, nil)
             }
@@ -733,7 +734,7 @@ import NWWebSocket
             if let socketId = self.socketId {
                 return JSONStringify([Constants.JSONKeys.userId: socketId])
             } else {
-                print("Authentication failed. You may not be connected")
+                self.delegate?.debugLog?(message: PusherLogger.debug(for: .authenticationFailed))
                 return ""
             }
         }
