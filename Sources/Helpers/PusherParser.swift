@@ -20,10 +20,12 @@ internal struct PusherParser {
                                                                   options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
-                print("Unable to parse string from WebSocket: \(string)")
+                PusherLogger.shared.debug(for: .unableToParseStringAsJSON,
+                                          context: string)
             }
         } catch let error as NSError {
-            print("Error: \(error.localizedDescription)")
+            PusherLogger.shared.error(for: .genericError,
+                                      context: error.localizedDescription)
         }
         return nil
     }
@@ -42,7 +44,8 @@ internal struct PusherParser {
             if let jsonData = data, let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) {
                 return jsonObject
             } else {
-                print("Unable to parse string as JSON - check that your JSON is valid.")
+                PusherLogger.shared.debug(for: .unableToParseStringAsJSON,
+                                          context: string)
             }
         }
         return nil

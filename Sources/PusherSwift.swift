@@ -57,14 +57,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
         let isEncryptedChannel = PusherEncryptionHelpers.isEncryptedChannel(channelName: channelName)
 
         if isEncryptedChannel && auth != nil {
-            let error = """
-
-            WARNING: Passing an auth value to 'subscribe' is not supported for encrypted channels. \
-            Event decryption will fail. You must use one of the following auth methods: \
-            'endpoint', 'authRequestBuilder', 'authorizer'
-
-            """
-            print(error)
+            PusherLogger.shared.warning(for: .authValueOnSubscriptionNotSupported)
         }
 
         return self.connection.subscribe(

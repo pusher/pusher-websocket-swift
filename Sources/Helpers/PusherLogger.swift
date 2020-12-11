@@ -18,6 +18,11 @@ internal class PusherLogger {
         case unableToRemoveMemberFromChannel = "Unable to remove member from channel"
         case authInfoForCompletionHandlerIsNil = "Auth info passed to authorizer completionHandler was nil"
         case authenticationFailed = "Authentication failed. You may not be connected"
+        case authValueOnSubscriptionNotSupported = """
+            Passing an auth value to 'subscribe' is not supported for encrypted channels. \
+            Event decryption will fail. You must use one of the following auth methods: \
+            'endpoint', 'authRequestBuilder', 'authorizer'
+            """
 
         // Events
 
@@ -25,6 +30,15 @@ internal class PusherLogger {
         case eventSent = "sendEvent"
         case skippedEventAfterDecryptionFailure = "Skipping event that failed to decrypt on channel"
         case cannotSendClientEventForChannel = "You must be subscribed to a private or presence channel to send client events"
+        case clientEventsNotSupported = "Client events are not supported on encrypted channels:"
+
+        // JSON parsing
+
+        case unableToParseStringAsJSON = "Unable to parse string as JSON:"
+
+        // Misc
+
+        case genericError = ""
 
         // Network
 
