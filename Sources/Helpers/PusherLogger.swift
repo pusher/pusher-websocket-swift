@@ -54,63 +54,62 @@ internal class PusherLogger {
         case error      = "[PUSHER ERROR]"
     }
 
+    internal static let shared = PusherLogger()
+
+    internal weak var delegate: PusherDelegate?
+
     // MARK: - Event logging
 
-    /// A debug message relating to a particular event of interest.
+    /// Logs a debug message relating to a particular event of interest.
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    /// - Returns: A `String` with information to log concerning the event.
-    internal static func debug(for event: LoggingEvent,
-                               context: CustomStringConvertible? = nil) -> String {
-        return message(for: event, level: .debug, context: context)
+    internal func debug(for event: LoggingEvent,
+                        context: CustomStringConvertible? = nil) {
+        message(for: event, level: .debug, context: context)
     }
 
-    /// An informational message relating to a particular event of interest.
+    /// Logs an informational message relating to a particular event of interest.
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    /// - Returns: A `String` with information to log concerning the event.
-    internal static func info(for event: LoggingEvent,
-                              context: CustomStringConvertible? = nil) -> String {
-        return message(for: event, level: .info, context: context)
+    internal func info(for event: LoggingEvent,
+                       context: CustomStringConvertible? = nil) {
+        message(for: event, level: .info, context: context)
     }
 
-    /// A warning message relating to a particular event of interest.
+    /// Logs a warning message relating to a particular event of interest.
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    /// - Returns: A `String` with information to log concerning the event.
-    internal static func warning(for event: LoggingEvent,
-                                 context: CustomStringConvertible? = nil) -> String {
-        return message(for: event, level: .warning, context: context)
+    internal func warning(for event: LoggingEvent,
+                          context: CustomStringConvertible? = nil) {
+        message(for: event, level: .warning, context: context)
     }
 
-    /// An error message relating to a particular event of interest.
+    /// Logs an error message relating to a particular event of interest.
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    /// - Returns: A `String` with information to log concerning the event.
-    internal static func error(for event: LoggingEvent,
-                               context: CustomStringConvertible? = nil) -> String {
-        return message(for: event, level: .error, context: context)
+    internal func error(for event: LoggingEvent,
+                        context: CustomStringConvertible? = nil) {
+        message(for: event, level: .error, context: context)
     }
 
     // MARK: - Private methods
 
-    /// An informational message relating to a particular event of interest.
+    /// Logs an informational message relating to a particular event of interest.
     /// - Parameter event: A particular `LoggingEvent` of interest.
     /// - Parameter level: The `LoggingLevel` to set for the message.
     /// - Parameter context: Additional context for the message.
-    /// - Returns: A `String` with information to log concerning the event.
-    private static func message(for event: LoggingEvent,
-                                level: LoggingLevel,
-                                context: CustomStringConvertible? = nil) -> String {
+    private func message(for event: LoggingEvent,
+                         level: LoggingLevel,
+                         context: CustomStringConvertible? = nil) {
         var message = "\(level.rawValue) \(event.rawValue)"
         if let context = context {
             message += " \(context)"
         }
 
-        return message
+        self.delegate?.debugLog?(message: message)
     }
 }
