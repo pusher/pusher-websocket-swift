@@ -146,7 +146,7 @@ let package = Package(
             targets: ["YourPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "9.1.0"),
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "9.1.1"),
     ],
     targets: [
         .target(
