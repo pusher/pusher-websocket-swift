@@ -26,7 +26,19 @@ public enum PusherChannelType {
 
 @objcMembers
 open class PusherChannel: NSObject {
-    open var eventHandlers: [String: [EventHandler]] = [:]
+    // Access via queue for thread safety if user binds/unbinds events to a channel off the main queue
+    // (Concurrent reads are allowed. Writes using `.barrier` so queue waits for completion before continuing)
+    private let eventHandlersQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-event-handlers-\(UUID().uuidString)",
+                                                   attributes: .concurrent)
+    private var eventHandlersInternal = [String: [EventHandler]]()
+    open var eventHandlers: [String: [EventHandler]] {
+        get {
+            return eventHandlersQueue.sync { eventHandlersInternal }
+        }
+        set {
+            eventHandlersQueue.async(flags: .barrier) { self.eventHandlersInternal = newValue }
+        }
+    }
     open var subscribed = false
     public let name: String
     open weak var connection: PusherConnection?
