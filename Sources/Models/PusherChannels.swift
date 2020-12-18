@@ -2,7 +2,19 @@ import Foundation
 
 @objcMembers
 @objc open class PusherChannels: NSObject {
-    open var channels = [String: PusherChannel]()
+    // Access via queue for thread safety if user subscribes/unsubscribes to a channel off the main queue
+    // (Concurrent reads are allowed. Writes using `.barrier` so queue waits for completion before continuing)
+    private let channelsQueue = DispatchQueue(label: "com.pusher.pusherswift-channels-\(UUID().uuidString)",
+                                              attributes: .concurrent)
+    private var channelsInternal = [String: PusherChannel]()
+    open var channels: [String: PusherChannel] {
+        get {
+            return channelsQueue.sync { channelsInternal }
+        }
+        set {
+            channelsQueue.async(flags: .barrier) { self.channelsInternal = newValue }
+        }
+    }
 
     /**
         Create a new PusherChannel, which is returned, and add it to the PusherChannels list
