@@ -126,6 +126,10 @@ Examples of why you’d need to update:
 - Apple has released a new version of Xcode, Swift, and/or devices
 - We’ve updated/added a third-party dependency in the main project and it has a higher minimum deployment target and/or Swift version.
 
+#### Xcode 12 considerations
+
+Using Carthage under Xcode 12.0 and above currently requires [a workaround](https://github.com/Carthage/Carthage/issues/3019) in order for the build to be successful. You can find an example of the workaround, which is used for running the 'Consumption-Tests' [here](Consumption-Tests/Shared/carthage.sh).
+
 How to update:
 - All that’s require is adjusting the values in one or more of the following files:
     - `LATEST_SUPPORTED_VERSIONS.xcconfig`
