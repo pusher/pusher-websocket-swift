@@ -47,7 +47,7 @@ import Foundation
     }
 
     /**
-        Create a new PresencPusherChannel, which is returned, and add it to the PusherChannels
+        Create a new PresencePusherChannel, which is returned, and add it to the PusherChannels
         list of channels
 
         - parameter channelName:     The name of the channel to create

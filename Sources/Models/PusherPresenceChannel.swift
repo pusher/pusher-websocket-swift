@@ -10,7 +10,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
     open var myId: String?
 
     /**
-        Initializes a new PusherPresenceChannel with a given name, conenction, and optional
+        Initializes a new PusherPresenceChannel with a given name, connection, and optional
         member added and member removed handler functions
 
         - parameter name:            The name of the channel
@@ -142,10 +142,12 @@ public typealias PusherUserInfoObject = [String: AnyObject]
                                                                   options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
-                print("Unable to parse string: \(channelData)")
+                PusherLogger.shared.debug(for: .unableToParseStringAsJSON,
+                                          context: channelData)
             }
         } catch let error as NSError {
-            print(error.localizedDescription)
+            PusherLogger.shared.error(for: .genericError,
+                                      context: error.localizedDescription)
         }
         return nil
     }

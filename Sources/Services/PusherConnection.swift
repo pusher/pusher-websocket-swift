@@ -18,7 +18,12 @@ import NWWebSocket
     open var reconnectAttemptsMax: Int?
     open var reconnectAttempts: Int = 0
     open var maxReconnectGapInSeconds: Double? = 120
-    open weak var delegate: PusherDelegate?
+    open weak var delegate: PusherDelegate? = nil {
+        // Set the delegate for logging purposes via `debugLog(message:)`
+        didSet {
+            PusherLogger.shared.delegate = self.delegate
+        }
+    }
     open var pongResponseTimeoutInterval: TimeInterval = 30
     open var activityTimeoutInterval: TimeInterval
     var reconnectTimer: Timer?
@@ -46,7 +51,7 @@ import NWWebSocket
         - parameter key:        The Pusher app key
         - parameter socket:     The websocket object
         - parameter url:        The URL the connection is made to
-        - parameter options:    A PusherClientOptions instance containing all of the user-speficied
+        - parameter options:    A PusherClientOptions instance containing all of the user-specified
                                 client options
         - parameter URLSession: An NSURLSession instance for the connection to use for making
                                 authentication requests
@@ -112,7 +117,8 @@ import NWWebSocket
             guard self.connectionState == .connected else { return newChannel }
 
             if !self.authorize(newChannel, auth: auth) {
-                print("Unable to subscribe to channel: \(newChannel.name)")
+                PusherLogger.shared.debug(for: .unableToSubscribeToChannel,
+                                          context: newChannel.name)
             }
 
             return newChannel
@@ -148,7 +154,8 @@ import NWWebSocket
         guard self.connectionState == .connected else { return newChannel }
 
         if !self.authorize(newChannel, auth: auth) {
-            print("Unable to subscribe to channel: \(newChannel.name)")
+            PusherLogger.shared.debug(for: .unableToSubscribeToChannel,
+                                      context: newChannel.name)
         }
 
         return newChannel
@@ -197,8 +204,8 @@ import NWWebSocket
         } else {
             let dataString = JSONStringify([Constants.JSONKeys.event: event,
                                             Constants.JSONKeys.data: data])
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .eventSent,
-                                                                 context: dataString))
+            PusherLogger.shared.debug(for: .eventSent,
+                                      context: dataString)
             self.socket.send(string: dataString)
         }
     }
@@ -219,11 +226,11 @@ import NWWebSocket
             let dataString = JSONStringify([Constants.JSONKeys.event: event,
                                             Constants.JSONKeys.data: data,
                                             Constants.JSONKeys.channel: channel.name] as [String: Any])
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .clientEventSent,
-                                                                 context: dataString))
+            PusherLogger.shared.debug(for: .clientEventSent,
+                                      context: dataString)
             self.socket.send(string: dataString)
         } else {
-            print("You must be subscribed to a private or presence channel to send client events")
+            PusherLogger.shared.debug(for: .cannotSendClientEventForChannel)
         }
     }
 
@@ -275,7 +282,7 @@ import NWWebSocket
     }
 
     /**
-        Instantiate a new GloblalChannel instance for the connection
+        Instantiate a new GlobalChannel instance for the connection
     */
     internal func createGlobalChannel() {
         self.globalChannel = GlobalChannel(connection: self)
@@ -402,13 +409,13 @@ import NWWebSocket
     */
     @objc fileprivate func sendPing() {
         socket.ping()
-        self.delegate?.debugLog?(message: PusherLogger.debug(for: .pingSent))
+        PusherLogger.shared.debug(for: .pingSent)
         self.setupPongResponseTimeoutTimer()
     }
 
     /**
         Schedule a timer that will fire if no pong response is received within the
-        pongResponseTImeoutInterval
+        pongResponseTimeoutInterval
     */
     fileprivate func setupPongResponseTimeoutTimer() {
         pongResponseTimeoutTimer = Timer.scheduledTimer(
@@ -445,7 +452,7 @@ import NWWebSocket
         chan.subscribed = true
 
         guard event.data != nil else {
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .subscriptionSucceededNoDataInPayload))
+            PusherLogger.shared.debug(for: .subscriptionSucceededNoDataInPayload)
             return
         }
 
@@ -487,8 +494,8 @@ import NWWebSocket
         }
 
         self.socketId = socketId
-        self.delegate?.debugLog?(message: PusherLogger.debug(for: .connectionEstablished,
-                                                             context: socketId))
+        PusherLogger.shared.debug(for: .connectionEstablished,
+                                  context: socketId)
         self.reconnectAttempts = 0
         self.reconnectTimer?.invalidate()
 
@@ -507,7 +514,8 @@ import NWWebSocket
     fileprivate func attemptSubscriptionsToUnsubscribedChannels() {
         for (_, channel) in self.channels.channels {
             if !self.authorize(channel, auth: channel.auth) {
-                print("Unable to subscribe to channel: \(channel.name)")
+                PusherLogger.shared.debug(for: .unableToSubscribeToChannel,
+                                          context: channel.name)
             }
         }
     }
@@ -526,7 +534,7 @@ import NWWebSocket
         if let memberJSON = event.dataToJSONObject() as? [String: Any] {
             chan.addMember(memberJSON: memberJSON)
         } else {
-            print("Unable to add member")
+            PusherLogger.shared.debug(for: .unableToAddMemberToChannel)
         }
     }
 
@@ -544,7 +552,7 @@ import NWWebSocket
         if let memberJSON = event.dataToJSONObject() as? [String: Any] {
             chan.removeMember(memberJSON: memberJSON)
         } else {
-            print("Unable to remove member")
+            PusherLogger.shared.debug(for: .unableToRemoveMemberFromChannel)
         }
     }
 
@@ -581,9 +589,6 @@ import NWWebSocket
             self.handleEvent(event: event)
         }
 
-        if let message = error.message {
-            print(message)
-        }
         self.delegate?.failedToSubscribeToChannel?(name: channelName,
                                                    response: error.response,
                                                    data: error.data,
@@ -648,7 +653,7 @@ import NWWebSocket
             } else if let channelData = auth.channelData {
                 self.handlePresenceChannelAuth(authValue: auth.auth, channel: channel, channelData: channelData)
             } else {
-                self.delegate?.debugLog?(message: PusherLogger.debug(for: .presenceChannelSubscriptionAttemptWithoutChannelData))
+                PusherLogger.shared.debug(for: .presenceChannelSubscriptionAttemptWithoutChannelData)
                 return false
             }
             return true
@@ -681,11 +686,11 @@ import NWWebSocket
             return false
         case .endpoint(authEndpoint: let authEndpoint):
             let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
-            sendAuthorisationRequest(request: request, channel: channel, completionHandler: completionHandler)
+            sendAuthorizationRequest(request: request, channel: channel, completionHandler: completionHandler)
             return true
         case .authRequestBuilder(authRequestBuilder: let builder):
             if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
-                sendAuthorisationRequest(request: request, channel: channel, completionHandler: completionHandler)
+                sendAuthorizationRequest(request: request, channel: channel, completionHandler: completionHandler)
                 return true
             } else {
                 let errorMessage = "Authentication request could not be built"
@@ -700,7 +705,7 @@ import NWWebSocket
         case .authorizer(authorizer: let authorizer):
             authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { pusherAuth in
                 if pusherAuth == nil {
-                    print("Auth info passed to authorizer completionHandler was nil")
+                    PusherLogger.shared.debug(for: .authInfoForCompletionHandlerIsNil)
                 }
                 completionHandler(pusherAuth, nil)
             }
@@ -750,7 +755,7 @@ import NWWebSocket
             if let socketId = self.socketId {
                 return JSONStringify([Constants.JSONKeys.userId: socketId])
             } else {
-                print("Authentication failed. You may not be connected")
+                PusherLogger.shared.debug(for: .authenticationFailed)
                 return ""
             }
         }
@@ -775,7 +780,7 @@ import NWWebSocket
 
         - parameter endpoint: The authEndpoint to which the request will be made
         - parameter socketId: The socketId of the connection's websocket
-        - parameter channel:  The PusherChannel to authenticate subsciption for
+        - parameter channel:  The PusherChannel to authenticate subscription for
 
         - returns: URLRequest object to be used by the function making the auth request
     */
@@ -794,9 +799,9 @@ import NWWebSocket
         Send authentication request to the authEndpoint specified
 
         - parameter request: The request to send
-        - parameter channel: The PusherChannel to authenticate subsciption for
+        - parameter channel: The PusherChannel to authenticate subscription for
     */
-    fileprivate func sendAuthorisationRequest(request: URLRequest,
+    fileprivate func sendAuthorizationRequest(request: URLRequest,
                                               channel: PusherChannel,
                                               completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> Void) {
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, sessionError in
@@ -863,7 +868,7 @@ import NWWebSocket
 
         - parameter authString:  The auth response as a dictionary
         - parameter channelData: The channelData to send along with the auth request
-        - parameter channel:     The PusherChannel to authorize the subsciption for
+        - parameter channel:     The PusherChannel to authorize the subscription for
     */
     fileprivate func handleAuthInfo(pusherAuth: PusherAuth, channel: PusherChannel) {
         if let decryptionKey = pusherAuth.sharedSecret {
@@ -881,7 +886,7 @@ import NWWebSocket
         Handle presence channel auth response and send subscribe message to Pusher API
 
         - parameter auth:        The auth string
-        - parameter channel:     The PusherChannel to authorize subsciption for
+        - parameter channel:     The PusherChannel to authorize subscription for
         - parameter channelData: The channelData to send along with the auth request
     */
     fileprivate func handlePresenceChannelAuth(
@@ -905,7 +910,7 @@ import NWWebSocket
         Handle private channel auth response and send subscribe message to Pusher API
 
         - parameter auth:    The auth string
-        - parameter channel: The PusherChannel to authenticate subsciption for
+        - parameter channel: The PusherChannel to authenticate subscription for
     */
     fileprivate func handlePrivateChannelAuth(authValue auth: String, channel: PusherChannel) {
         self.sendEvent(
@@ -921,8 +926,8 @@ import NWWebSocket
 extension PusherConnection: PusherEventQueueDelegate {
     func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
         DispatchQueue.main.async {
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .unableToHandleIncomingMessage,
-                                                                 context: payload))
+            PusherLogger.shared.debug(for: .unableToHandleIncomingMessage,
+                                      context: payload)
         }
     }
 
@@ -934,8 +939,8 @@ extension PusherConnection: PusherEventQueueDelegate {
                 let data = payload[Constants.JSONKeys.data] as? String
                 self.delegate?.failedToDecryptEvent?(eventName: eventName, channelName: channelName, data: data)
             }
-            self.delegate?.debugLog?(message: PusherLogger.debug(for: .skippedEventAfterDecryptionFailure,
-                                                                 context: channelName))
+            PusherLogger.shared.debug(for: .skippedEventAfterDecryptionFailure,
+                                      context: channelName)
         }
     }
 

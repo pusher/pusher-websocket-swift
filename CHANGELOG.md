@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.1.0...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.1.1...HEAD)
+
+## [9.1.1](https://github.com/pusher/pusher-websocket-swift/compare/9.1.0...9.1.1) - 2020-12-15
+
+### Fixed
+
+- Resolved a race condition that could prevent automatic reconnection attempts in certain circumstances.
 
 ## [9.1.0](https://github.com/pusher/pusher-websocket-swift/compare/9.0.0...9.1.0) - 2020-12-07
 
@@ -73,7 +79,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Added new `bind` functions which accept a callback that receives a `PusherEvent`. A `PusherEvent` represents an event received from the websocket and has properties containing the event name, channel name and data. In addition, `PusherEvent` has a new property, `userId`, which allows you to verify the ID of the user who triggered a client event on a presence channel. You can read more about this feature in [the docs](https://pusher.com/docs/channels/using_channels/events#user-id-in-client-events). All the old `bind` functions are still available for backwards compatibility. The `data` property of `PusherEvent` is not automatically parsed from JSON and you can decide to parse that as required. The parsing behaviour is unchanged for data passed to callbacks bound by the old `bind` functions.
+- Added new `bind` functions which accept a callback that receives a `PusherEvent`. A `PusherEvent` represents an event received from the websocket and has properties containing the event name, channel name and data. In addition, `PusherEvent` has a new property, `userId`, which allows you to verify the ID of the user who triggered a client event on a presence channel. You can read more about this feature in [the docs](https://pusher.com/docs/channels/using_channels/events#user-id-in-client-events). All the old `bind` functions are still available for backwards compatibility. The `data` property of `PusherEvent` is not automatically parsed from JSON and you can decide to parse that as required. The parsing behavior is unchanged for data passed to callbacks bound by the old `bind` functions.
 
 ### Changed
 

@@ -52,7 +52,7 @@ open class PusherChannel: NSObject {
     }
 
     /**
-        Initializes a new PusherChannel with a given name and conenction
+        Initializes a new PusherChannel with a given name and connection
 
         - parameter name:       The name of the channel
         - parameter connection: The connection that this channel is relevant to
@@ -81,7 +81,7 @@ open class PusherChannel: NSObject {
     @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         return bind(eventName: eventName, eventCallback: { [weak self] (event: PusherEvent) -> Void in
             guard let self = self else { return }
-            // Mimic the old parsing behaviour for backwards compatibility
+            // Mimic the old parsing behavior for backwards compatibility
             let callbackData: Any?
             if self.shouldParseJSONForLegacyCallbacks {
                 if let data = event.dataToJSONObject() {
@@ -176,11 +176,9 @@ open class PusherChannel: NSObject {
     */
     open func trigger(eventName: String, data: Any) {
         if PusherEncryptionHelpers.isEncryptedChannel(channelName: self.name) {
-            let error = """
-            ERROR: Client events are not supported on encrypted channels: '\(self.name)'. \
-            Client event '\(eventName)' will not be sent.
-            """
-            print(error)
+            let context = "'\(self.name)'. Client event '\(eventName)' will not be sent"
+            PusherLogger.shared.error(for: .clientEventsNotSupported,
+                                      context: context)
             return
         }
 
