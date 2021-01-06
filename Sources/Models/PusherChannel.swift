@@ -26,7 +26,19 @@ public enum PusherChannelType {
 
 @objcMembers
 open class PusherChannel: NSObject {
-    open var eventHandlers: [String: [EventHandler]] = [:]
+    // Access via queue for thread safety if user binds/unbinds events to a channel off the main queue
+    // (Concurrent reads are allowed. Writes using `.barrier` so queue waits for completion before continuing)
+    private let eventHandlersQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-event-handlers-\(UUID().uuidString)",
+                                                   attributes: .concurrent)
+    private var eventHandlersInternal = [String: [EventHandler]]()
+    open var eventHandlers: [String: [EventHandler]] {
+        get {
+            return eventHandlersQueue.sync { eventHandlersInternal }
+        }
+        set {
+            eventHandlersQueue.async(flags: .barrier) { self.eventHandlersInternal = newValue }
+        }
+    }
     open var subscribed = false
     public let name: String
     open weak var connection: PusherConnection?
@@ -35,15 +47,15 @@ open class PusherChannel: NSObject {
     public var auth: PusherAuth?
 
     // Wrap accesses to the decryption key in a serial queue because it will be accessed from multiple threads
-    @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)")
+    @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)",
+                                                            attributes: .concurrent)
     @nonobjc private var decryptionKeyInternal: String?
     @nonobjc internal var decryptionKey: String? {
         get {
             return decryptionKeyQueue.sync { decryptionKeyInternal }
         }
-
         set {
-            decryptionKeyQueue.sync { decryptionKeyInternal = newValue }
+            decryptionKeyQueue.async(flags: .barrier) { self.decryptionKeyInternal = newValue }
         }
     }
 
