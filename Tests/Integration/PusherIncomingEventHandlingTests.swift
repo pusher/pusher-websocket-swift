@@ -235,12 +235,16 @@ class HandlingIncomingEventsTests: XCTestCase {
         let ex = expectation(description: "Callback should be called")
 
         _ = pusher.bind({ (message: Any?) in
-            if let message = message as? [String: AnyObject], let eventName = message["event"] as? String, eventName == "pusher:error" {
-                if let data = message["data"] as? [String: AnyObject], let errorMessage = data["message"] as? String {
-                    XCTAssertEqual(errorMessage, "Existing subscription to channel my-channel")
-                    ex.fulfill()
-                }
+            guard let message = message as? [String: AnyObject],
+               let eventName = message["event"] as? String,
+               eventName == "pusher:error",
+               let data = message["data"] as? [String: AnyObject],
+               let errorMessage = data["message"] as? String else {
+                return
             }
+
+            XCTAssertEqual(errorMessage, "Existing subscription to channel my-channel")
+            ex.fulfill()
         })
         // pretend that we tried to subscribe to my-channel twice and got this error
         // back from Pusher

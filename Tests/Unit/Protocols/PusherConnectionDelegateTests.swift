@@ -24,15 +24,19 @@ class PusherConnectionDelegateTests: XCTestCase {
         }
 
         open func subscribedToChannel(name: String) {
-            if let cName = testingChannelName, cName == name {
-                ex!.fulfill()
+            guard let cName = testingChannelName, cName == name else {
+                return
             }
+
+            ex!.fulfill()
         }
 
         open func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
-            if let cName = testingChannelName, cName == name {
-                ex!.fulfill()
+            guard let cName = testingChannelName, cName == name else {
+                return
             }
+
+            ex!.fulfill()
         }
 
         open func receivedError(error: PusherError) {

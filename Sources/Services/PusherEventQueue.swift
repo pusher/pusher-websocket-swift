@@ -53,21 +53,25 @@ class PusherConcreteEventQueue: PusherEventQueue {
         } catch PusherEventError.invalidDecryptionKey {
             // Reload decryption key if we could not decrypt the payload due to the key
             // Only events on encrypted channels throw this error, which have a channel
-            if let channel = channel {
-                self.delegate?.eventQueue(self, reloadDecryptionKeySyncForChannel: channel)
-                do {
-                    try self.processEvent(json: json, channel: channel)
-                } catch {
-                    self.delegate?.eventQueue(self,
-                                              didFailToDecryptEventWithPayload: json,
-                                              forChannelName: channel.name)
-                }
+            guard let channel = channel else {
+                return
+            }
+
+            self.delegate?.eventQueue(self, reloadDecryptionKeySyncForChannel: channel)
+            do {
+                try self.processEvent(json: json, channel: channel)
+            } catch {
+                self.delegate?.eventQueue(self,
+                                          didFailToDecryptEventWithPayload: json,
+                                          forChannelName: channel.name)
             }
         } catch PusherEventError.invalidEncryptedData {
             // If there was a problem with the payload, e.g. nonce missing, then we cannot retry
-            if let channelName = channel?.name {
-                self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channelName)
+            guard let channelName = channel?.name else {
+                return
             }
+
+            self.delegate?.eventQueue(self, didFailToDecryptEventWithPayload: json, forChannelName: channelName)
         } catch {
             self.delegate?.eventQueue(self, didReceiveInvalidEventWithPayload: json)
         }

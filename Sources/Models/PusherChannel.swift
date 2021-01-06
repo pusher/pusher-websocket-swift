@@ -128,9 +128,11 @@ open class PusherChannel: NSObject {
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
     open func unbind(eventName: String, callbackId: String) {
-        if let eventSpecificHandlers = self.eventHandlers[eventName] {
-            self.eventHandlers[eventName] = eventSpecificHandlers.filter({ $0.id != callbackId })
+        guard let eventSpecificHandlers = self.eventHandlers[eventName] else {
+            return
         }
+
+        self.eventHandlers[eventName] = eventSpecificHandlers.filter({ $0.id != callbackId })
     }
 
     /**
@@ -155,11 +157,13 @@ open class PusherChannel: NSObject {
         - parameter event: The event received from the websocket
     */
     open func handleEvent(event: PusherEvent) {
-        if let eventHandlerArray = self.eventHandlers[event.eventName] {
-            for eventHandler in eventHandlerArray {
-                // swiftlint:disable:next force_cast
-                eventHandler.callback(event.copy() as! PusherEvent)
-            }
+        guard let eventHandlerArray = self.eventHandlers[event.eventName] else {
+            return
+        }
+
+        for eventHandler in eventHandlerArray {
+            // swiftlint:disable:next force_cast
+            eventHandler.callback(event.copy() as! PusherEvent)
         }
     }
 
