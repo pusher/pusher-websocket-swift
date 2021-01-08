@@ -178,6 +178,7 @@ import NWWebSocket
         )
 
         self.channels.remove(name: channelName)
+        chan.subscribed = false
     }
 
     /**
