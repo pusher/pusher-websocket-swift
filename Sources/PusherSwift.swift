@@ -2,7 +2,7 @@ import Foundation
 import NWWebSocket
 
 let PROTOCOL = 7
-let VERSION = "9.0.0"
+let VERSION = "9.1.1"
 // swiftlint:disable:next identifier_name
 let CLIENT_NAME = "pusher-websocket-swift"
 
@@ -56,27 +56,8 @@ let CLIENT_NAME = "pusher-websocket-swift"
 
         let isEncryptedChannel = PusherEncryptionHelpers.isEncryptedChannel(channelName: channelName)
 
-        if isEncryptedChannel && !PusherDecryptor.isDecryptionAvailable() {
-            let error = """
-
-            WARNING: You are subscribing to an encrypted channel: '\(channelName)' but this \
-            version of PusherSwift does not support end-to-end encryption. \
-            Events will not be decrypted. You must import 'PusherSwiftWithEncryption' in \
-            order for events to be decrypted. See https://github.com/pusher/pusher-websocket-swift for more information
-
-            """
-            print(error)
-        }
-
         if isEncryptedChannel && auth != nil {
-            let error = """
-
-            WARNING: Passing an auth value to 'subscribe' is not supported for encrypted channels. \
-            Event decryption will fail. You must use one of the following auth methods: \
-            'endpoint', 'authRequestBuilder', 'authorizer'
-
-            """
-            print(error)
+            PusherLogger.shared.warning(for: .authValueOnSubscriptionNotSupported)
         }
 
         return self.connection.subscribe(

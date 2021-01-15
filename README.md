@@ -56,6 +56,7 @@ What else would you want? Head over to one of our example apps:
   - [Callback parameters](#callback-parameters)
   - [Parsing event data](#parsing-event-data)
   - [Receiving errors](#receiving-errors)
+- [Triggering events](#triggering-events)
 - [Testing](#testing)
 - [Extensions](#extensions)
 - [Communication](#communication)
@@ -67,8 +68,6 @@ What else would you want? Head over to one of our example apps:
 ### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects and is our recommended method of installing PusherSwift and its dependencies.
-
-> If you are looking to use encrypted channels, please read the [specific installation instructions](#cocoapods-1).
 
 If you don't already have the Cocoapods gem installed, run the following command:
 
@@ -106,8 +105,6 @@ Also you'll need to make sure that you've not got the version of PusherSwift loc
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
 
-> If you are looking to use encrypted channels, please read the [specific installation instructions](#carthage-1).
-
 You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
 
 ```bash
@@ -121,18 +118,13 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
-Carthage will produce a number of frameworks. Which of those you need to include in you project depends on which features you are using:
-
-- If you **are not** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwift` and `Reachability`
-- If you **are** using the end-to-end encryption features, you need to include the following framework binaries from the `Carthage/Build` directory: `PusherSwiftWithEncryption`, `Sodium` and `Reachability`
+Carthage will produce a number of frameworks. You need to include the following framework binaries in your project from the `Carthage/Build` directory: `PusherSwift` and `TweetNacl`
 
 #### Xcode 12 considerations
 
 Using Carthage under Xcode 12.0 and above currently requires [a workaround](https://github.com/Carthage/Carthage/issues/3019) in order for the build to be successful. You can find an example of the workaround, which is used for running the 'Consumption-Tests' [here](Consumption-Tests/Shared/carthage.sh).
 
 ### Swift Package Manager
-
-> Please note that if you are looking to use encrypted channels, this is not currently possible with Swift Package Manager.
 
 To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
 
@@ -154,7 +146,7 @@ let package = Package(
             targets: ["YourPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "9.0.0"),
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "9.1.1"),
     ],
     targets: [
         .target(
@@ -163,6 +155,8 @@ let package = Package(
     ]
 )
 ```
+
+You will then need to include an `import PusherSwift` statement in any source files where you wish to use the SDK.
 
 ## Configuration
 
@@ -576,15 +570,15 @@ There are three main ways in which a disconnection can occur:
 
 In the case of the first type of disconnection the library will (as you'd hope) not attempt a reconnection.
 
-The library uses [Reachability](https://github.com/ashleymills/Reachability.swift) to attempt to detect network degradation events that lead to disconnection. If this is detected then the library will attempt to reconnect (by default) with an exponential backoff, indefinitely (the maximum time between reconnect attempts is, by default, capped at 120 seconds). The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish to set a maximum number of reconnect attempts.
+The library uses [NWWebSocket](https://github.com/pusher/NWWebSocket) which attempts to detect network degradation events that lead to disconnection. If this is detected then the library will attempt to reconnect (by default) with an exponential backoff, indefinitely (the maximum time between reconnect attempts is, by default, capped at 120 seconds). The value of `reconnectAttemptsMax` is a public property on the `PusherConnection` and so can be changed if you wish to set a maximum number of reconnect attempts.
 
-If the Pusher servers close the websocket, or if a disconnection happens due to network events that aren't covered by Reachability, then the library will still attempt to reconnect as described above.
+If the Pusher servers close the websocket, or if a disconnection happens due to network events that aren't covered by NWWebSocket, then the library will still attempt to reconnect as described above.
 
 All of this is the case if you have the client option of `autoReconnect` set as `true`, which it is by default. If the reconnection strategies are not suitable for your use case then you can set `autoReconnect` to `false` and implement your own reconnection strategy based on the connection state changes.
 
 N.B: If the Pusher servers close the websocket with a [Channels Protocol closure code](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#connection-closure), then the `autoReconnect` option is ignored, and the reconnection strategy is determined by the specific closure code that was received.
 
-There are a couple of properties on the connection (`PusherConnection`) that you can set that affect how the reconnection behaviour works. These are:
+There are a couple of properties on the connection (`PusherConnection`) that you can set that affect how the reconnection behavior works. These are:
 
 - `public var reconnectAttemptsMax: Int? = 6` - if you set this to `nil` then there is no maximum number of reconnect attempts and so attempts will continue to be made with an exponential backoff (based on number of attempts), otherwise only as many attempts as this property's value will be made before the connection's state moves to `.disconnected`
 - `public var maxReconnectGapInSeconds: Double? = nil` - if you want to set a maximum length of time (in seconds) between reconnect attempts then set this property appropriately
@@ -639,23 +633,9 @@ The shared secret used to decrypt events is loaded from the same auth endpoint r
 
 Because of the requirement to reload the shared secret on demand, you can only use the following [auth methods](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
 
-### Installation
-
-In your Swift files, you will need to import `PusherSwiftWithEncryption` rather than `PusherSwift`. In Objective-C files, you will need to import `PusherSwiftWithEncryption/PusherSwiftWithEncryption-Swift.h` rather than `PusherSwift/PusherSwift-Swift.h`.
-
-#### CocoaPods
-Update your Podfile to include `PusherSwiftWithEncryption` instead of `PusherSwift`.
-
-#### Carthage
-You do not need to change your Cartfile. However, you will need to import the `PusherSwiftWithEncryption` framework into your project, instead of `PusherSwift`. You will also need to import the `Sodium` framework into your project (in addition to `Reachability`).
-
-#### Swift Package Manager
-PusherSwiftWithEncryption is not yet compatible with the Swift Package Manager.
-
 #### Limitations
 
-* Is not currently compatible with tvOS.
-* Is not safe for use in extensions.
+* Is not safe for use in extensions
 * Client events are not supported on encrypted channels
 
 #### Swift
@@ -824,7 +804,7 @@ let pusherAuth = PusherAuth(auth: yourAuthString, channelData: yourOptionalChann
 let chan = self.pusher.subscribe(channelName, auth: pusherAuth)
 ```
 
-This PusherAuth object can be initialised with just an auth (String) value if the subscription is to a private channel, or both an `auth (String)` and `channelData (String)` pair of values if the subscription is to a presence channel.
+This PusherAuth object can be initialized with just an auth (String) value if the subscription is to a private channel, or both an `auth (String)` and `channelData (String)` pair of values if the subscription is to a presence channel.
 
 These `auth` and `channelData` values are the values that you received if the json object created by a call to pusher.authenticate(...) in one of our various server libraries.
 
@@ -897,7 +877,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 ### Global events
 
-You can attach behaviour to these events regardless of the channel the event is broadcast to. 
+You can attach behavior to these events regardless of the channel the event is broadcast to. 
 
 #### Swift
 
@@ -1146,6 +1126,22 @@ NSString *callbackId = [chan bindWithEventName:@"new-price" eventCallback:^void 
 
 You can unbind from events at both the global and per channel level. For both objects you also have the option of calling `unbindAll`, which, as you can guess, will unbind all eventHandlers on the object.
 
+## Triggering events
+
+Once a [private](https://pusher.com/docs/channels/using_channels/private-channels) or [presence](https://pusher.com/docs/channels/using_channels/presence-channels) subscription has been authorized (see [authenticating users](https://pusher.com/docs/channels/server_api/authenticating-users)) and the subscription has succeeded, it is possible to trigger events on those channels.
+
+```swift
+chan.trigger(eventName: "client-myEvent", data: ["myName": "Bob"])
+```
+
+Events triggered by clients are called [client events](https://pusher.com/docs/channels/using_channels/events#triggering-client-events). Because they are being triggered from a client which may not be trusted there are a number of enforced rules when using them. Some of these rules include:
+
+* Event names must have a `client-` prefix
+* Rate limits
+* You can only trigger an event when the subscription has succeeded
+
+For full details see the [client events documentation](https://pusher.com/docs/channels/using_channels/events#triggering-client-events).
+
 ## Testing
 
 There are a set of tests for the library that can be run using the standard method (Command-U in Xcode).
@@ -1168,9 +1164,7 @@ PusherSwift is owned and maintained by [Pusher](https://pusher.com). It was orig
 
 It uses code from the following repositories:
 
-- [Reachability.swift](https://github.com/ashleymills/Reachability.swift)
-- [Starscream](https://github.com/daltoniam/Starscream) (removed in v9.0.0)
-- [Sodium](https://github.com/jedisct1/swift-sodium)
+- [TweetNacl](https://github.com/bitmark-inc/tweetnacl-swiftwrap)
 
 The individual licenses for these libraries are included in the corresponding Swift files.
 

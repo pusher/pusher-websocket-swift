@@ -1,3 +1,2 @@
-github "ashleymills/Reachability.swift" ~> 5.0.0
-github "jedisct1/swift-sodium" == 0.8.0
-github "pusher/NWWebSocket" ~> 0.3.0
+github "bitmark-inc/tweetnacl-swiftwrap" ~> 1.0
+github "pusher/NWWebSocket" ~> 0.5.1

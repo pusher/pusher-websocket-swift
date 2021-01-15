@@ -2,11 +2,7 @@ import Foundation
 import NWWebSocket
 import Network
 
-#if WITH_ENCRYPTION
-    @testable import PusherSwiftWithEncryption
-#else
-    @testable import PusherSwift
-#endif
+@testable import PusherSwift
 
 open class MockWebSocket: NWWebSocket {
     let stubber = StubberForMocks()

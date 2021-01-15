@@ -215,10 +215,10 @@ public extension AuthMethod {
 public extension PusherError {
     /// The error code as an NSNumber (for Objective-C compatibility).
     var codeOC: NSNumber? {
-        if let code = code {
-            return NSNumber(value: code)
-        } else {
+        guard let code = code else {
             return nil
         }
+
+        return NSNumber(value: code)
     }
 }

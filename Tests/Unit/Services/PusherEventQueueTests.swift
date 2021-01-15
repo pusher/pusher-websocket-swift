@@ -1,10 +1,8 @@
 import XCTest
 
-#if WITH_ENCRYPTION
-    @testable import PusherSwiftWithEncryption
-#else
-    @testable import PusherSwift
-#endif
+@testable import PusherSwift
+
+// swiftlint:disable unused_closure_parameter
 
 class InlineMockEventQueueDelegate: PusherEventQueueDelegate {
     var didReceiveEvent: ((PusherEventQueue, PusherEvent, String?) -> Void)?

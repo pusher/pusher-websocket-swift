@@ -2,3 +2,5 @@ disabled_rules:
   - force_try
   - force_cast
   - line_length
+  - type_body_length
+  - file_length

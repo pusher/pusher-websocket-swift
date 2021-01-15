@@ -1,4 +1,4 @@
-@testable import PusherSwiftWithEncryption
+@testable import PusherSwift
 import XCTest
 
 class PrivateEncryptedChannelTests: XCTestCase {
@@ -193,7 +193,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
 
         // set a new expectation for the error delegate for the second event
-        errorDelegate.expectation = expectation(description: "second event should fail to decrpyt too.")
+        errorDelegate.expectation = expectation(description: "second event should fail to decrypt too.")
 
         // send a second message
         socket.delegate?.webSocketDidReceiveMessage(
@@ -202,7 +202,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func authorizerReponseSequence(_ authSequence: [PusherAuth]) {
+    func authorizerResponseSequence(_ authSequence: [PusherAuth]) {
         let (pusher, socket) = configurePusherWithAuthMethod(authMethod: AuthMethod.authorizer(authorizer: TestAuthorizer(authSequence)))
         pusher.connect()
 
@@ -238,11 +238,11 @@ class PrivateEncryptedChannelTests: XCTestCase {
     }
 
     func testInitialLoadKeyAuthorizerAuthMethod() {
-        authorizerReponseSequence([validAuth])
+        authorizerResponseSequence([validAuth])
     }
 
     func testReloadKeyAuthorizerAuthMethod() {
-        authorizerReponseSequence([incorrectSharedSecretAuth, validAuth])
+        authorizerResponseSequence([incorrectSharedSecretAuth, validAuth])
     }
 
     func testInitialLoadKeyRequestBuilder() {
@@ -346,12 +346,12 @@ class PrivateEncryptedChannelTests: XCTestCase {
     }
 
     class TestAuthorizer: Authorizer {
-        var authReponseSequence: [PusherAuth]
-        public init(_ authReponseSequence: [PusherAuth]) {
-            self.authReponseSequence = authReponseSequence
+        var authResponseSequence: [PusherAuth]
+        public init(_ authResponseSequence: [PusherAuth]) {
+            self.authResponseSequence = authResponseSequence
         }
         func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> Void) {
-            completionHandler(authReponseSequence.removeFirst())
+            completionHandler(authResponseSequence.removeFirst())
         }
     }
 
@@ -375,7 +375,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         }
     }
 
-    // utility method to mock an authorizor response with the jsonData provided
+    // utility method to mock an authorizer response with the jsonData provided
     func mockAuthResponse(jsonData: String, pusher: Pusher) {
         let urlResponse = HTTPURLResponse(
             url: URL(string: "\(authEndpointURL)?channel_name=\(channelName)&socket_id=45481.3166671")!,

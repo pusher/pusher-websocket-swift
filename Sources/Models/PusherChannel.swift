@@ -26,7 +26,19 @@ public enum PusherChannelType {
 
 @objcMembers
 open class PusherChannel: NSObject {
-    open var eventHandlers: [String: [EventHandler]] = [:]
+    // Access via queue for thread safety if user binds/unbinds events to a channel off the main queue
+    // (Concurrent reads are allowed. Writes using `.barrier` so queue waits for completion before continuing)
+    private let eventHandlersQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-event-handlers-\(UUID().uuidString)",
+                                                   attributes: .concurrent)
+    private var eventHandlersInternal = [String: [EventHandler]]()
+    open var eventHandlers: [String: [EventHandler]] {
+        get {
+            return eventHandlersQueue.sync { eventHandlersInternal }
+        }
+        set {
+            eventHandlersQueue.async(flags: .barrier) { self.eventHandlersInternal = newValue }
+        }
+    }
     open var subscribed = false
     public let name: String
     open weak var connection: PusherConnection?
@@ -35,15 +47,15 @@ open class PusherChannel: NSObject {
     public var auth: PusherAuth?
 
     // Wrap accesses to the decryption key in a serial queue because it will be accessed from multiple threads
-    @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)")
+    @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)",
+                                                            attributes: .concurrent)
     @nonobjc private var decryptionKeyInternal: String?
     @nonobjc internal var decryptionKey: String? {
         get {
             return decryptionKeyQueue.sync { decryptionKeyInternal }
         }
-
         set {
-            decryptionKeyQueue.sync { decryptionKeyInternal = newValue }
+            decryptionKeyQueue.async(flags: .barrier) { self.decryptionKeyInternal = newValue }
         }
     }
 
@@ -52,7 +64,7 @@ open class PusherChannel: NSObject {
     }
 
     /**
-        Initializes a new PusherChannel with a given name and conenction
+        Initializes a new PusherChannel with a given name and connection
 
         - parameter name:       The name of the channel
         - parameter connection: The connection that this channel is relevant to
@@ -81,7 +93,7 @@ open class PusherChannel: NSObject {
     @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         return bind(eventName: eventName, eventCallback: { [weak self] (event: PusherEvent) -> Void in
             guard let self = self else { return }
-            // Mimic the old parsing behaviour for backwards compatibility
+            // Mimic the old parsing behavior for backwards compatibility
             let callbackData: Any?
             if self.shouldParseJSONForLegacyCallbacks {
                 if let data = event.dataToJSONObject() {
@@ -128,9 +140,11 @@ open class PusherChannel: NSObject {
         - parameter callbackId: The unique callbackId string used to identify which callback to unbind
     */
     open func unbind(eventName: String, callbackId: String) {
-        if let eventSpecificHandlers = self.eventHandlers[eventName] {
-            self.eventHandlers[eventName] = eventSpecificHandlers.filter({ $0.id != callbackId })
+        guard let eventSpecificHandlers = self.eventHandlers[eventName] else {
+            return
         }
+
+        self.eventHandlers[eventName] = eventSpecificHandlers.filter({ $0.id != callbackId })
     }
 
     /**
@@ -155,11 +169,13 @@ open class PusherChannel: NSObject {
         - parameter event: The event received from the websocket
     */
     open func handleEvent(event: PusherEvent) {
-        if let eventHandlerArray = self.eventHandlers[event.eventName] {
-            for eventHandler in eventHandlerArray {
-                // swiftlint:disable:next force_cast
-                eventHandler.callback(event.copy() as! PusherEvent)
-            }
+        guard let eventHandlerArray = self.eventHandlers[event.eventName] else {
+            return
+        }
+
+        for eventHandler in eventHandlerArray {
+            // swiftlint:disable:next force_cast
+            eventHandler.callback(event.copy() as! PusherEvent)
         }
     }
 
@@ -172,11 +188,9 @@ open class PusherChannel: NSObject {
     */
     open func trigger(eventName: String, data: Any) {
         if PusherEncryptionHelpers.isEncryptedChannel(channelName: self.name) {
-            let error = """
-            ERROR: Client events are not supported on encrypted channels: '\(self.name)'. \
-            Client event '\(eventName)' will not be sent.
-            """
-            print(error)
+            let context = "'\(self.name)'. Client event '\(eventName)' will not be sent"
+            PusherLogger.shared.error(for: .clientEventsNotSupported,
+                                      context: context)
             return
         }
 
