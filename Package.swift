@@ -1,14 +1,10 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.0
 
 import PackageDescription
 
 let package = Package(
     name: "PusherSwift",
-    platforms: [
-        .iOS(.v13),
-        .tvOS(.v13),
-        .macOS(.v10_15)
-    ],
+    platforms: [.iOS("13.0"), .macOS("10.15"), .tvOS("13.0")],
     products: [
         .library(name: "PusherSwift", targets: ["PusherSwift"])
     ],
