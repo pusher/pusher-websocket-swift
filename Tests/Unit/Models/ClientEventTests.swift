@@ -1,10 +1,6 @@
 import XCTest
 
-#if WITH_ENCRYPTION
-    @testable import PusherSwiftWithEncryption
-#else
-    @testable import PusherSwift
-#endif
+@testable import PusherSwift
 
 class ClientEventTests: XCTestCase {
     var connection: MockPusherConnection!
@@ -51,12 +47,14 @@ class ClientEventTests: XCTestCase {
         let ex = expectation(description: "send client event eventually")
         socket.stubber.registerCallback { calls in
             let expectedDict = ["data": ["data": "testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
-            if let lastCall = calls.last, lastCall.name == "writeString" {
-                let parsedSubscribeArgs = convertStringToDictionary(lastCall.args!.first as! String)
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
-                if parsedEqualsExpected {
-                    ex.fulfill()
-                }
+            guard let lastCall = calls.last, lastCall.name == "writeString" else {
+                return
+            }
+
+            let parsedSubscribeArgs = convertStringToDictionary(lastCall.args!.first as! String)
+            let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+            if parsedEqualsExpected {
+                ex.fulfill()
             }
         }
         connection.connect()
@@ -75,13 +73,15 @@ class ClientEventTests: XCTestCase {
 
         let ex = expectation(description: "send client event eventually")
         socket.stubber.registerCallback { calls in
-            if let lastCall = calls.last, lastCall.name == "writeString" {
-                let parsedSubscribeArgs = convertStringToDictionary(lastCall.args!.first as! String)
-                let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
-                let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
-                if parsedEqualsExpected {
-                    ex.fulfill()
-                }
+            guard let lastCall = calls.last, lastCall.name == "writeString" else {
+                return
+            }
+
+            let parsedSubscribeArgs = convertStringToDictionary(lastCall.args!.first as! String)
+            let expectedDict = ["data": ["data": "more testing client events"], "event": "client-test-event", "channel": "private-channel"] as [String: Any]
+            let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
+            if parsedEqualsExpected {
+                ex.fulfill()
             }
 
         }

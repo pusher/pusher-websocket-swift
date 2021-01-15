@@ -6,17 +6,17 @@
         "repositoryURL": "https://github.com/pusher/NWWebSocket.git",
         "state": {
           "branch": null,
-          "revision": "241b5bf7df4fef930e8085483124e77643f108f0",
-          "version": "0.3.0"
+          "revision": "f62ab0ace742531ad8f99355823fa8429fac4bbe",
+          "version": "0.5.1"
         }
       },
       {
-        "package": "Reachability",
-        "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
+        "package": "TweetNacl",
+        "repositoryURL": "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
         "state": {
           "branch": null,
-          "revision": "98e968e7b6c1318fb61df23e347bc319761e8acb",
-          "version": "5.0.0"
+          "revision": "d1552db4d907f2c5cb3d1bf1336496b2e16c8ecf",
+          "version": "1.0.2"
         }
       }
     ]
