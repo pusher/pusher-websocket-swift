@@ -4,7 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.1.1...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.2.0...HEAD)
+
+## [9.2.0](https://github.com/pusher/pusher-websocket-swift/compare/9.1.1...9.2.0) - 2021-01-15
+
+### Added
+
+- Added an optional `path` parameter to `PusherClientOptions` to specify custom additional path components.
+
+### Changed
+
+- All debugging messages are now sent via `debugLog(message: String)` (previously there were some messages which weren't sent this way).
+
+### Fixed
+
+- The `subscribed` parameter on a `PusherChannel` is now set to `false` when calling `unsubscribe(_ channelName: String)`.
+- Enhanced thread safety for common operations: subscribing / unsubscribing with channels, and binding / unbinding with events.
 
 ## [9.1.1](https://github.com/pusher/pusher-websocket-swift/compare/9.1.0...9.1.1) - 2020-12-15
 

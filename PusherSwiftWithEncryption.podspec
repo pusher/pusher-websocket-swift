@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PusherSwiftWithEncryption'
-  s.version          = '9.1.1'
+  s.version          = '9.2.0'
   s.summary          = 'A Pusher client library in Swift that supports encrypted channels'
   s.homepage         = 'https://github.com/pusher/pusher-websocket-swift'
   s.license          = 'MIT'
