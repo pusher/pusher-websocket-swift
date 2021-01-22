@@ -90,6 +90,7 @@ open class PusherChannel: NSObject {
 
         - returns: A unique callbackId that can be used to unbind the callback at a later time
     */
+    @available(*, deprecated, message: "This will be removed in v10.0.0. Use 'bind(eventName:eventCallback:)' instead.")
     @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
         return bind(eventName: eventName, eventCallback: { [weak self] (event: PusherEvent) -> Void in
             guard let self = self else { return }
