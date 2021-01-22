@@ -1,7 +1,5 @@
 import XCTest
 
-// swiftlint:disable nesting
-
 @testable import PusherSwift
 
 class AuthenticationTests: XCTestCase {
@@ -133,7 +131,7 @@ class AuthenticationTests: XCTestCase {
                   eventName == "pusher:subscription_error" else {
                 return
             }
-            
+
             XCTAssertEqual("private-test-channel", data["channel"] as? String)
             XCTAssertTrue(Thread.isMainThread)
             ex.fulfill()
