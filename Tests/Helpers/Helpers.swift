@@ -12,7 +12,7 @@ func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {
         return json
     } catch {
         print("Something went wrong")
-        
+
         return nil
     }
 }

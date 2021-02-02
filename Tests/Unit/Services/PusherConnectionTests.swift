@@ -1,7 +1,5 @@
 import XCTest
 
-// swiftlint:disable nesting
-
 @testable import PusherSwift
 
 class PusherConnectionTests: XCTestCase {
