@@ -118,7 +118,7 @@ To integrate PusherSwift into your Xcode project using Carthage, specify it in y
 github "pusher/pusher-websocket-swift"
 ```
 
-Carthage will produce a number of frameworks. You need to include the following framework binaries in your project from the `Carthage/Build` directory: `PusherSwift` and `TweetNacl`
+Carthage will produce a number of frameworks. You need to include the following framework binaries in your project from the `Carthage/Build` directory: `PusherSwift`, `NWWebSocket` and `TweetNacl`
 
 #### Xcode 12 considerations
 
