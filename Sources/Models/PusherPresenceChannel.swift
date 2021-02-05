@@ -55,10 +55,10 @@ public typealias PusherUserInfoObject = [String: AnyObject]
             }
         } else {
             if let userInfo = memberJSON[Constants.JSONKeys.userInfo] as? PusherUserInfoObject {
-                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON[Constants.JSONKeys.userId]!),
+                member = PusherPresenceChannelMember(userId: String(describing: memberJSON[Constants.JSONKeys.userId]!),
                                                      userInfo: userInfo as AnyObject?)
             } else {
-                member = PusherPresenceChannelMember(userId: String.init(describing: memberJSON[Constants.JSONKeys.userId]!))
+                member = PusherPresenceChannelMember(userId: String(describing: memberJSON[Constants.JSONKeys.userId]!))
             }
         }
         members.append(member)
@@ -97,7 +97,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         if let userId = memberJSON[Constants.JSONKeys.userId] as? String {
             id = userId
         } else {
-            id = String.init(describing: memberJSON[Constants.JSONKeys.userId]!)
+            id = String(describing: memberJSON[Constants.JSONKeys.userId]!)
         }
 
         guard let index = self.members.firstIndex(where: { $0.userId == id }) else {
@@ -122,7 +122,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
             return
         }
 
-        self.myId = String.init(describing: userId)
+        self.myId = String(describing: userId)
     }
 
     /**
