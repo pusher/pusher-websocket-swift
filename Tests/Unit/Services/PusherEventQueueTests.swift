@@ -70,7 +70,7 @@ class PusherEventQueueTests: XCTestCase {
         """.toJsonDict()
 
         let ex = expectation(description: "should call didReceiveEvent")
-        eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in
+        eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: event.raw)
             XCTAssertTrue(equal)
             XCTAssertEqual(channel.name, channelName)
@@ -97,7 +97,7 @@ class PusherEventQueueTests: XCTestCase {
         """.toJsonDict()
 
         let ex = expectation(description: "should call didReceiveEvent")
-        eventQueueDelegate.didReceiveEvent = { (eventQueue, event, channelName) in
+        eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: event.raw)
             XCTAssertTrue(equal)
             XCTAssertNil(channelName)
@@ -123,7 +123,7 @@ class PusherEventQueueTests: XCTestCase {
         """.toJsonDict()
 
         let ex = expectation(description: "should call didReceiveInvalidEvent")
-        eventQueueDelegate.didReceiveInvalidEvent = { (eventQueue, payload) in
+        eventQueueDelegate.didReceiveInvalidEvent = { eventQueue, payload in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: payload)
             XCTAssertTrue(equal)
             ex.fulfill()

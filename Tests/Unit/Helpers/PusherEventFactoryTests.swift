@@ -210,7 +210,7 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
         }
     }

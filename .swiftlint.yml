@@ -13,6 +13,7 @@ opt_in_rules:
   - prefer_self_type_over_type_of_self
   - sorted_imports
   - test_case_accessibility
+  - unneeded_parentheses_in_closure_argument
   - vertical_whitespace_between_cases
   - vertical_whitespace_closing_braces
 
