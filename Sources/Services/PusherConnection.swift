@@ -606,12 +606,16 @@ import NWWebSocket
         switch event.eventName {
         case Constants.Events.PusherInternal.subscriptionSucceeded:
             handleSubscriptionSucceededEvent(event: event)
+
         case Constants.Events.Pusher.connectionEstablished:
             handleConnectionEstablishedEvent(event: event)
+
         case Constants.Events.PusherInternal.memberAdded:
             handleMemberAddedEvent(event: event)
+
         case Constants.Events.PusherInternal.memberRemoved:
             handleMemberRemovedEvent(event: event)
+
         default:
             callGlobalCallbacks(event: event)
             guard let channelName = event.channelName,
@@ -685,10 +689,12 @@ import NWWebSocket
                                 userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
             completionHandler(nil, PusherAuthError(kind: .noMethod, message: errorMessage, error: error))
             return false
+
         case .endpoint(authEndpoint: let authEndpoint):
             let request = requestForAuthValue(from: authEndpoint, socketId: socketId, channelName: channel.name)
             sendAuthorizationRequest(request: request, channel: channel, completionHandler: completionHandler)
             return true
+
         case .authRequestBuilder(authRequestBuilder: let builder):
             if let request = builder.requestFor?(socketID: socketId, channelName: channel.name) {
                 sendAuthorizationRequest(request: request, channel: channel, completionHandler: completionHandler)
@@ -703,6 +709,7 @@ import NWWebSocket
                                                        error: error))
                 return false
             }
+
         case .authorizer(authorizer: let authorizer):
             authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { pusherAuth in
                 if pusherAuth == nil {
@@ -711,6 +718,7 @@ import NWWebSocket
                 completionHandler(pusherAuth, nil)
             }
             return true
+
         case .inline(secret: let secret):
             var message = ""
             var channelData = ""

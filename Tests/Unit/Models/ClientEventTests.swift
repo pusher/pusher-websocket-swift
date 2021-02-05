@@ -83,7 +83,6 @@ class ClientEventTests: XCTestCase {
             if parsedEqualsExpected {
                 ex.fulfill()
             }
-
         }
         connection.connect()
         waitForExpectations(timeout: 0.5)

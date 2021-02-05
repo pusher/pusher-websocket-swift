@@ -284,5 +284,4 @@ class AuthenticationTests: XCTestCase {
 
         waitForExpectations(timeout: 0.5)
     }
-
 }

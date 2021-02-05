@@ -17,5 +17,4 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.pusher = makeAndLaunchPusher()
     }
-
 }

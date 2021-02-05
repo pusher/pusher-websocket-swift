@@ -50,7 +50,6 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         if let userId = memberJSON[Constants.JSONKeys.userId] as? String {
             if let userInfo = memberJSON[Constants.JSONKeys.userInfo] as? PusherUserInfoObject {
                 member = PusherPresenceChannelMember(userId: userId, userInfo: userInfo as AnyObject?)
-
             } else {
                 member = PusherPresenceChannelMember(userId: userId)
             }

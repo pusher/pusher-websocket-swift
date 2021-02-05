@@ -133,7 +133,6 @@ class PusherPresenceChannelTests: XCTestCase {
 
            XCTAssertEqual(member.userId, userId, "the userId should be \(userId)")
            XCTAssertEqual(member.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
-
         }
         waitForExpectations(timeout: 0.5)
     }

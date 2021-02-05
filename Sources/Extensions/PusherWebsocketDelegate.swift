@@ -101,6 +101,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
         switch result {
         case .success:
             updateConnectionState(to: .reconnecting)
+
         case .failure(let error):
             PusherLogger.shared.debug(for: .errorReceived,
                                       context: """
@@ -201,8 +202,10 @@ extension PusherConnection: WebSocketConnectionDelegate {
         switch closeCode {
         case .protocolCode(let definedCode):
             rawCode = definedCode.rawValue
+
         case .applicationCode(let applicationCode):
             rawCode = applicationCode
+
         case .privateCode(let protocolCode):
             rawCode = protocolCode
         @unknown default:

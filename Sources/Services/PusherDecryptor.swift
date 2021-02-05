@@ -6,7 +6,6 @@ class PusherDecryptor {
     private struct EncryptedData: Decodable {
         let nonce: String
         let ciphertext: String
-
     }
 
     static func decrypt(data: String?, decryptionKey: String?) throws -> String? {

@@ -38,7 +38,6 @@ extension String {
                 return [:]
             }
             return jsonDict
-
         } catch {
             XCTFail("\(error)", file: file, line: line)
         }
@@ -57,7 +56,6 @@ extension String {
         }
         return data
     }
-
 }
 
 // MARK: - Error handling

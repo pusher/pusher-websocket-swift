@@ -46,7 +46,6 @@ class PusherConnectionDelegateTests: XCTestCase {
                 functionToCall: nil
             )
         }
-
     }
 
     var key: String!

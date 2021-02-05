@@ -4,6 +4,10 @@ excluded:
   - Consumption-Tests/*/Carthage
   - Consumption-Tests/*/Pods
 
+opt_in_rules:
+  - vertical_whitespace_between_cases
+  - vertical_whitespace_closing_braces
+
 identifier_name:
   excluded:
   - id

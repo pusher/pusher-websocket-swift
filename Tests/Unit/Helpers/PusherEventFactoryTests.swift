@@ -214,5 +214,4 @@ class PusherEventFactoryTests: XCTestCase {
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
         }
     }
-
 }

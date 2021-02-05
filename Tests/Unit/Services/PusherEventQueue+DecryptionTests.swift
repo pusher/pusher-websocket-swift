@@ -343,5 +343,4 @@ class PusherEventQueueDecryptionTests: XCTestCase {
 
         waitForExpectations(timeout: 0.5)
     }
-
 }

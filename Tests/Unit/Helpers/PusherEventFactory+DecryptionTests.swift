@@ -35,7 +35,6 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
             XCTAssertEqual(event.channelName, "my-channel")
             XCTAssertEqual(event.data, dataPayload)
         }
-
     }
 
     func test_init_unencryptedChannelAndEncryptedPayload_returnsWithUnalteredPayload() {
@@ -62,7 +61,6 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
             XCTAssertEqual(event.channelName, "my-channel")
             XCTAssertEqual(event.data, dataPayload)
         }
-
     }
 
     func test_init_encryptedChannelAndPusherEventAndUnencryptedPayload_returnsWithUnalteredPayload() {

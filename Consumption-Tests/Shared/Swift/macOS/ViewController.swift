@@ -9,5 +9,4 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         self.pusher = makeAndLaunchPusher()
     }
-
 }
