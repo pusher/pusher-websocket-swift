@@ -6,7 +6,7 @@ public enum PusherChannelType {
     case normal
 
     public init(name: String) {
-        self = Swift.type(of: self).type(forName: name)
+        self = Self.type(forName: name)
     }
 
     public static func type(forName name: String) -> PusherChannelType {
