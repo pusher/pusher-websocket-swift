@@ -10,7 +10,7 @@ class PusherEventFactoryTests: XCTestCase {
         eventFactory = PusherConcreteEventFactory()
     }
 
-    func testChannelNameIsExtracted() {
+    func testChannelNameIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -19,13 +19,13 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.channelName!, "my-channel")
         XCTAssertEqual(event.property(withKey: "channel") as! String, "my-channel")
     }
 
-    func testEventNameIsExtracted() {
+    func testEventNameIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -34,13 +34,13 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.eventName, "test-event")
         XCTAssertEqual(event.property(withKey: "event") as! String, "test-event")
     }
 
-    func testDataIsExtracted() {
+    func testDataIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -49,13 +49,13 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
         XCTAssertEqual(event.property(withKey: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
     }
 
-    func testUserIdIsExtracted() {
+    func testUserIdIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -65,13 +65,13 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.userId!, "user123")
         XCTAssertEqual(event.property(withKey: "user_id") as! String, "user123")
     }
 
-    func testDoubleEncodedJsonDataIsParsed() {
+    func testDoubleEncodedJsonDataIsParsed() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -80,13 +80,13 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
         XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"] as [String: String])
     }
 
-    func testDoubleEncodedArrayDataIsParsed() {
+    func testDoubleEncodedArrayDataIsParsed() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -95,13 +95,13 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.data!, "[\"test\",\"and\"]")
         XCTAssertEqual(event.dataToJSONObject() as! [String], ["test", "and"] as [String])
     }
 
-    func testIfDataStringCannotBeParsed() {
+    func testIfDataStringCannotBeParsed() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -110,14 +110,14 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.data!, "test")
         XCTAssertNil(event.dataToJSONObject())
         XCTAssertEqual(event.property(withKey: "data") as! String, "test")
     }
 
-    func testStringPropertyIsExtracted() {
+    func testStringPropertyIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -126,11 +126,11 @@ class PusherEventFactoryTests: XCTestCase {
             "my_property": "string123"
         }
         """.toJsonDict()
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
         XCTAssertEqual(event.property(withKey: "my_property") as! String, "string123")
     }
 
-    func testIntegerPropertyIsExtracted() {
+    func testIntegerPropertyIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -139,12 +139,12 @@ class PusherEventFactoryTests: XCTestCase {
             "my_integer": 1234567
         }
         """.toJsonDict()
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.property(withKey: "my_integer") as! Int, 1234567)
     }
 
-    func testBooleanPropertyIsExtracted() {
+    func testBooleanPropertyIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -153,12 +153,12 @@ class PusherEventFactoryTests: XCTestCase {
             "my_boolean": true
         }
         """.toJsonDict()
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.property(withKey: "my_boolean") as! Bool, true)
     }
 
-    func testArrayPropertyIsExtracted() {
+    func testArrayPropertyIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -167,12 +167,12 @@ class PusherEventFactoryTests: XCTestCase {
             "my_array": [1, 2, 3]
         }
         """.toJsonDict()
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.property(withKey: "my_array") as! [Int], [1, 2, 3])
     }
 
-    func testObjectPropertyIsExtracted() {
+    func testObjectPropertyIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -182,12 +182,12 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertEqual(event.property(withKey: "my_object") as! [String: String], ["key": "value"])
     }
 
-    func testNullPropertyIsExtracted() {
+    func testNullPropertyIsExtracted() throws {
         let jsonDict = """
         {
             "event": "test-event",
@@ -197,7 +197,7 @@ class PusherEventFactoryTests: XCTestCase {
         }
         """.toJsonDict()
 
-        let event = try! eventFactory.makeEvent(fromJSON: jsonDict)
+        let event = try eventFactory.makeEvent(fromJSON: jsonDict)
 
         XCTAssertTrue(event.property(withKey: "my_null") is NSNull)
     }
