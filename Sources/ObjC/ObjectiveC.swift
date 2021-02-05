@@ -137,7 +137,7 @@ public extension PusherHost {
     var host: String?
     var cluster: String?
 
-    public override init() {
+    override public init() {
         self.type = 2
     }
 
