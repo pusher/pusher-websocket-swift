@@ -1,6 +1,6 @@
 import Foundation
-import NWWebSocket
 import Network
+import NWWebSocket
 
 @testable import PusherSwift
 
