@@ -5,6 +5,7 @@ excluded:
   - Consumption-Tests/*/Pods
 
 opt_in_rules:
+  - anyobject_protocol
   - vertical_whitespace_between_cases
   - vertical_whitespace_closing_braces
 

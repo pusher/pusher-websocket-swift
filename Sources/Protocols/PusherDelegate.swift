@@ -1,6 +1,6 @@
 import Foundation
 
-@objc public protocol PusherDelegate: class {
+@objc public protocol PusherDelegate: AnyObject {
     @objc optional func debugLog(message: String)
 
     @objc optional func changedConnectionState(from old: ConnectionState, to new: ConnectionState)
