@@ -3,8 +3,8 @@
 //  iOS Example
 //
 
-import UIKit
 import PusherSwift
+import UIKit
 
 class ViewController: UIViewController, PusherDelegate {
     var pusher: Pusher! = nil

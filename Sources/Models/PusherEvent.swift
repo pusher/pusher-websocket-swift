@@ -85,5 +85,4 @@ open class PusherEvent: NSObject, NSCopying {
                            userId: self.userId,
                            raw: self.raw)
     }
-
 }

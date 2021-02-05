@@ -5,9 +5,9 @@ import XCTest
 // swiftlint:disable unused_closure_parameter
 
 class HandlingIncomingEventsTests: XCTestCase {
-    var key: String!
-    var pusher: Pusher!
-    var socket: MockWebSocket!
+    private var key: String!
+    private var pusher: Pusher!
+    private var socket: MockWebSocket!
 
     override func setUp() {
         super.setUp()

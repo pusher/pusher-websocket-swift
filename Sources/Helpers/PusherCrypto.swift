@@ -1,5 +1,5 @@
-import Foundation
 import CommonCrypto
+import Foundation
 
 struct PusherCrypto {
 

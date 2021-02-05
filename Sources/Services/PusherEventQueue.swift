@@ -5,7 +5,6 @@ protocol PusherEventQueue {
     var delegate: PusherEventQueueDelegate? { get set }
 
     func enqueue(json: PusherEventPayload)
-
 }
 
 // MARK: - Concrete implementation
@@ -97,5 +96,4 @@ protocol PusherEventQueueDelegate: AnyObject {
                     didReceiveInvalidEventWithPayload payload: PusherEventPayload)
     func eventQueue(_ eventQueue: PusherEventQueue,
                     reloadDecryptionKeySyncForChannel channel: PusherChannel)
-
 }

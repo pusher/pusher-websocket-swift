@@ -5,8 +5,8 @@ import XCTest
 let VERSION = "9.2.0"
 
 class ClientInitializationTests: XCTestCase {
-    var key: String!
-    var pusher: Pusher!
+    private var key: String!
+    private var pusher: Pusher!
 
     override func setUp() {
         super.setUp()

@@ -3,7 +3,6 @@ import Foundation
 protocol PusherEventFactory {
 
     func makeEvent(fromJSON json: PusherEventPayload, withDecryptionKey decryptionKey: String?) throws -> PusherEvent
-
 }
 
 // MARK: - Concrete implementation
@@ -54,5 +53,4 @@ enum PusherEventError: Error {
     case invalidFormat
     case invalidDecryptionKey
     case invalidEncryptedData
-
 }

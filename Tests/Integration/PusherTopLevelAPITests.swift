@@ -6,7 +6,7 @@ import XCTest
 
 class PusherTopLevelApiTests: XCTestCase {
 
-    class ConnectionStateDelegate: PusherDelegate {
+    private class ConnectionStateDelegate: PusherDelegate {
         var callbacks: [ConnectionState: [() -> Void]] = [:]
 
         func registerCallback(connectionState: ConnectionState, callback: @escaping () -> Void) {
@@ -26,7 +26,7 @@ class PusherTopLevelApiTests: XCTestCase {
         }
     }
 
-    class DummyDelegate: PusherDelegate {
+    private class DummyDelegate: PusherDelegate {
         var ex: XCTestExpectation?
         var testingChannelName: String?
         var connectionStubber = StubberForMocks()
@@ -49,9 +49,9 @@ class PusherTopLevelApiTests: XCTestCase {
         }
     }
 
-    var key: String!
-    var pusher: Pusher!
-    var socket: MockWebSocket!
+    private var key: String!
+    private var pusher: Pusher!
+    private var socket: MockWebSocket!
 
     override func setUp() {
         super.setUp()

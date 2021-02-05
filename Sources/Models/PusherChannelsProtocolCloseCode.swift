@@ -38,10 +38,13 @@ internal enum PusherChannelsProtocolCloseCode: UInt16 {
             switch rawValue {
             case 4000...4099:
                 self = .doNotReconnectUnchanged
+
             case 4100...4199:
                 self = .reconnectAfterBackingOff
+
             case 4200...4299:
                 self = .reconnectImmediately
+
             default:
                 self = .unknown
             }

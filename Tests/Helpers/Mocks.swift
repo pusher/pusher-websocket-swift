@@ -1,6 +1,6 @@
 import Foundation
-import NWWebSocket
 import Network
+import NWWebSocket
 
 @testable import PusherSwift
 
@@ -26,7 +26,7 @@ open class MockWebSocket: NWWebSocket {
         self.eventGivenToCallback = event
     }
 
-    open override func connect() {
+    override open func connect() {
         let connectionEstablishedString = "{\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"
         _ = stubber.stub(
             functionName: "connect",
@@ -42,7 +42,7 @@ open class MockWebSocket: NWWebSocket {
         )
     }
 
-    open override func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+    override open func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
@@ -55,7 +55,7 @@ open class MockWebSocket: NWWebSocket {
     }
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    open override func send(string: String) {
+    override open func send(string: String) {
         if string == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             _ = stubber.stub(
                 functionName: "writeString",
@@ -70,7 +70,7 @@ open class MockWebSocket: NWWebSocket {
                 args: [string],
                 functionToCall: {
                     self.delegate?.webSocketDidReceiveMessage(connection: self, string: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"test-channel2\",\"data\":\"{}\"}")
-            }
+                }
             )
         } else if stringContainsElements(string, elements: ["testkey123:6aae8814fabd5285245422096705abbed64ea59614648814ffb0bf2dc5d19168", "private-channel", "pusher:subscribe"]) {
             _ = stubber.stub(
@@ -210,7 +210,7 @@ open class MockWebSocket: NWWebSocket {
                 args: [string],
                 functionToCall: {
                     self.delegate?.webSocketDidReceiveMessage(connection: self, string: "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"private-encrypted-channel\",\"data\":\"{}\"}")
-            })
+                })
         } else {
             print("No match in write(string: ...) mock for string: \(string)")
         }
@@ -235,7 +235,7 @@ open class MockPusherConnection: PusherConnection {
         super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: options)
     }
 
-    open override func handleEvent(event: PusherEvent) {
+    override open func handleEvent(event: PusherEvent) {
         _ = stubber.stub(
             functionName: "handleEvent",
             args: [event],
@@ -291,9 +291,9 @@ open class FunctionCall {
 public typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSError?)
 
 public class MockSession: URLSession {
-    static public var mockResponses: [String: Response] = [:]
+    public static var mockResponses: [String: Response] = [:]
     // swiftlint:disable:next large_tuple
-    static public var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
+    public static var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
 
     override public class var shared: URLSession {
         return MockSession()

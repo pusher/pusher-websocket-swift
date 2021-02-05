@@ -116,6 +116,7 @@ public extension PusherHost {
         switch self {
         case let .host(host):
             return OCPusherHost(host: host)
+
         case let .cluster(cluster):
             return OCPusherHost(cluster: "ws-\(cluster).\(Constants.API.pusherDomain)")
         }
@@ -136,7 +137,7 @@ public extension PusherHost {
     var host: String?
     var cluster: String?
 
-    public override init() {
+    override public init() {
         self.type = 2
     }
 
@@ -156,12 +157,16 @@ public extension AuthMethod {
         switch self {
         case let .endpoint(authEndpoint):
             return OCAuthMethod(authEndpoint: authEndpoint)
+
         case let .authRequestBuilder(authRequestBuilder):
             return OCAuthMethod(authRequestBuilder: authRequestBuilder)
+
         case let .inline(secret):
             return OCAuthMethod(secret: secret)
+
         case let .authorizer(authorizer):
             return OCAuthMethod(authorizer: authorizer)
+
         case .noMethod:
             return OCAuthMethod(type: 4)
         }

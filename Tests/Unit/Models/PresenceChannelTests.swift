@@ -3,10 +3,10 @@ import XCTest
 @testable import PusherSwift
 
 class PusherPresenceChannelTests: XCTestCase {
-    var pusher: Pusher!
-    var socket: MockWebSocket!
-    var options: PusherClientOptions!
-    var stubber: StubberForMocks!
+    private var pusher: Pusher!
+    private var socket: MockWebSocket!
+    private var options: PusherClientOptions!
+    private var stubber: StubberForMocks!
 
     override func setUp() {
         super.setUp()
@@ -133,7 +133,6 @@ class PusherPresenceChannelTests: XCTestCase {
 
            XCTAssertEqual(member.userId, userId, "the userId should be \(userId)")
            XCTAssertEqual(member.userInfo as! [String: Int], ["friends": 0], "the userInfo should be [\"friends\": 0]")
-
         }
         waitForExpectations(timeout: 0.5)
     }

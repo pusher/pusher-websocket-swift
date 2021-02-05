@@ -13,7 +13,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
     private let incorrectSharedSecretAuth = PusherAuth(auth: "636a81ba7e7b15725c00:3ee04892514e8a669dc5d30267221f16727596688894712cad305986e6fc0f3c", sharedSecret: "iBvNoPVYwByqSfg6anjPpEQ2j051b3rt1Vmnb+z5do0=")
     private lazy var incorrectSharedSecretAuthData = "{\"auth\":\"\(incorrectSharedSecretAuth.auth)\",\"shared_secret\":\"\(incorrectSharedSecretAuth.sharedSecret!)\"}"
 
-    func configurePusherWithAuthMethod(authMethod: AuthMethod? = nil) -> (Pusher, MockWebSocket) {
+    private func configurePusherWithAuthMethod(authMethod: AuthMethod? = nil) -> (Pusher, MockWebSocket) {
         super.setUp()
 
         let authMethod = authMethod ?? AuthMethod.endpoint(authEndpoint: authEndpointURL)
@@ -202,7 +202,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func authorizerResponseSequence(_ authSequence: [PusherAuth]) {
+    private func authorizerResponseSequence(_ authSequence: [PusherAuth]) {
         let (pusher, socket) = configurePusherWithAuthMethod(authMethod: AuthMethod.authorizer(authorizer: TestAuthorizer(authSequence)))
         pusher.connect()
 
@@ -333,7 +333,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
     }
 
     // PusherDelegate that handles the expectation that a subscription event has occurred
-    class DummySubscriptionDelegate: PusherDelegate {
+    private class DummySubscriptionDelegate: PusherDelegate {
         var expectation: XCTestExpectation?
         var channelName: String?
 
@@ -345,7 +345,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         }
     }
 
-    class TestAuthorizer: Authorizer {
+    private class TestAuthorizer: Authorizer {
         var authResponseSequence: [PusherAuth]
         public init(_ authResponseSequence: [PusherAuth]) {
             self.authResponseSequence = authResponseSequence
@@ -355,7 +355,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         }
     }
 
-    class TestAuthRequestBuilder: AuthRequestBuilderProtocol {
+    private class TestAuthRequestBuilder: AuthRequestBuilderProtocol {
         func requestFor(socketID: String, channelName: String) -> URLRequest? {
             var request = URLRequest(url: URL(string: "http://localhost:3030")!)
             request.httpMethod = "POST"
@@ -364,7 +364,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
         }
     }
 
-    class DummyErrorDelegate: PusherDelegate {
+    private class DummyErrorDelegate: PusherDelegate {
         var expectation: XCTestExpectation?
         var channelName: String?
 
@@ -376,7 +376,7 @@ class PrivateEncryptedChannelTests: XCTestCase {
     }
 
     // utility method to mock an authorizer response with the jsonData provided
-    func mockAuthResponse(jsonData: String, pusher: Pusher) {
+    private func mockAuthResponse(jsonData: String, pusher: Pusher) {
         let urlResponse = HTTPURLResponse(
             url: URL(string: "\(authEndpointURL)?channel_name=\(channelName)&socket_id=45481.3166671")!,
             statusCode: 200,

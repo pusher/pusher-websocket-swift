@@ -3,7 +3,7 @@ import XCTest
 
 class PusherEventFactoryDecryptionTests: XCTestCase {
 
-    var eventFactory: PusherConcreteEventFactory!
+    private var eventFactory: PusherConcreteEventFactory!
 
     override func setUp() {
         eventFactory = PusherConcreteEventFactory()
@@ -35,7 +35,6 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
             XCTAssertEqual(event.channelName, "my-channel")
             XCTAssertEqual(event.data, dataPayload)
         }
-
     }
 
     func test_init_unencryptedChannelAndEncryptedPayload_returnsWithUnalteredPayload() {
@@ -62,7 +61,6 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
             XCTAssertEqual(event.channelName, "my-channel")
             XCTAssertEqual(event.data, dataPayload)
         }
-
     }
 
     func test_init_encryptedChannelAndPusherEventAndUnencryptedPayload_returnsWithUnalteredPayload() {
@@ -134,7 +132,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
         }
     }
@@ -156,7 +154,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
         }
     }
@@ -179,7 +177,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidEncryptedData)
         }
     }
@@ -201,7 +199,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidEncryptedData)
         }
     }
@@ -223,7 +221,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidEncryptedData)
         }
     }
@@ -282,7 +280,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
         }
     }
@@ -306,7 +304,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
         }
     }
@@ -330,7 +328,7 @@ class PusherEventFactoryDecryptionTests: XCTestCase {
         }
         """.toJsonDict()
 
-        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { (error) in
+        XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: decryptionKey)) { error in
             XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidDecryptionKey)
         }
     }
