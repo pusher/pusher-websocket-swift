@@ -3,7 +3,7 @@ import XCTest
 
 class PusherEventFactoryDecryptionTests: XCTestCase {
 
-    var eventFactory: PusherConcreteEventFactory!
+    private var eventFactory: PusherConcreteEventFactory!
 
     override func setUp() {
         eventFactory = PusherConcreteEventFactory()

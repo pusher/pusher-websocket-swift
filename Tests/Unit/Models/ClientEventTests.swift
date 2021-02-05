@@ -3,8 +3,8 @@ import XCTest
 @testable import PusherSwift
 
 class ClientEventTests: XCTestCase {
-    var connection: MockPusherConnection!
-    var socket: MockWebSocket!
+    private var connection: MockPusherConnection!
+    private var socket: MockWebSocket!
 
     override func setUp() {
         super.setUp()

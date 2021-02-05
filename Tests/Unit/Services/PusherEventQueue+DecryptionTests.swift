@@ -5,12 +5,12 @@ import XCTest
 
 class PusherEventQueueDecryptionTests: XCTestCase {
 
-    var eventQueue: PusherEventQueue!
-    var channels: PusherChannels!
-    var eventFactory: PusherEventFactory!
+    private var eventQueue: PusherEventQueue!
+    private var channels: PusherChannels!
+    private var eventFactory: PusherEventFactory!
     // swiftlint:disable:next weak_delegate
-    var eventQueueDelegate: InlineMockEventQueueDelegate!
-    var mockConnection: PusherConnection!
+    private var eventQueueDelegate: InlineMockEventQueueDelegate!
+    private var mockConnection: PusherConnection!
 
     override func setUp() {
         super.setUp()
@@ -22,7 +22,7 @@ class PusherEventQueueDecryptionTests: XCTestCase {
         mockConnection = MockPusherConnection()
     }
 
-    func createAndSubscribe(_ channelName: String) -> PusherChannel {
+    private func createAndSubscribe(_ channelName: String) -> PusherChannel {
         let channel = channels.add(name: channelName, connection: mockConnection)
         channel.subscribed = true
         return channel

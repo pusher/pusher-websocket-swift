@@ -3,7 +3,7 @@ import XCTest
 @testable import PusherSwift
 
 class PusherConnectionDelegateTests: XCTestCase {
-    open class DummyDelegate: PusherDelegate {
+    private class DummyDelegate: PusherDelegate {
         public let stubber = StubberForMocks()
         open var socket: MockWebSocket?
         open var ex: XCTestExpectation?
@@ -48,11 +48,11 @@ class PusherConnectionDelegateTests: XCTestCase {
         }
     }
 
-    var key: String!
-    var pusher: Pusher!
-    var socket: MockWebSocket!
+    private var key: String!
+    private var pusher: Pusher!
+    private var socket: MockWebSocket!
     // swiftlint:disable:next weak_delegate
-    var dummyDelegate: DummyDelegate!
+    private var dummyDelegate: DummyDelegate!
 
     override func setUp() {
         super.setUp()

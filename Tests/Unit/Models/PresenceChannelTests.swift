@@ -3,10 +3,10 @@ import XCTest
 @testable import PusherSwift
 
 class PusherPresenceChannelTests: XCTestCase {
-    var pusher: Pusher!
-    var socket: MockWebSocket!
-    var options: PusherClientOptions!
-    var stubber: StubberForMocks!
+    private var pusher: Pusher!
+    private var socket: MockWebSocket!
+    private var options: PusherClientOptions!
+    private var stubber: StubberForMocks!
 
     override func setUp() {
         super.setUp()

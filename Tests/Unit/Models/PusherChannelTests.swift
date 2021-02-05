@@ -3,7 +3,7 @@ import XCTest
 @testable import PusherSwift
 
 class PusherChannelTests: XCTestCase {
-    var chan: PusherChannel!
+    private var chan: PusherChannel!
 
     override func setUp() {
         super.setUp()

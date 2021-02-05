@@ -3,7 +3,7 @@ import XCTest
 @testable import PusherSwift
 
 class AuthenticationTests: XCTestCase {
-    class DummyDelegate: PusherDelegate {
+    private class DummyDelegate: PusherDelegate {
         var ex: XCTestExpectation?
         var testingChannelName: String?
 
@@ -16,8 +16,8 @@ class AuthenticationTests: XCTestCase {
         }
     }
 
-    var pusher: Pusher!
-    var socket: MockWebSocket!
+    private var pusher: Pusher!
+    private var socket: MockWebSocket!
 
     override func setUp() {
         super.setUp()

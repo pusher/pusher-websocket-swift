@@ -3,8 +3,8 @@ import XCTest
 @testable import PusherSwift
 
 class PusherConnectionTests: XCTestCase {
-    var key: String!
-    var pusher: Pusher!
+    private var key: String!
+    private var pusher: Pusher!
 
     override func setUp() {
         super.setUp()
