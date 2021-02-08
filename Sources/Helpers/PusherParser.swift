@@ -1,6 +1,6 @@
 import Foundation
 
-internal struct PusherParser {
+struct PusherParser {
 
     /**
      Parse a string to extract Pusher event information from it

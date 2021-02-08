@@ -1,17 +1,17 @@
 import Foundation
 
 /// Used for logging events for informational purposes
-internal class PusherLogger {
+class PusherLogger {
 
     // MARK: - Enum definitions
 
-    internal enum LoggingEvent: String {
+    enum LoggingEvent: String {
 
         // Channels
 
         // swiftlint:disable:next identifier_name
         case presenceChannelSubscriptionAttemptWithoutChannelData =
-        "Attempting to subscribe to presence channel but no channelData value provided"
+                "Attempting to subscribe to presence channel but no channelData value provided"
         case subscriptionSucceededNoDataInPayload = "Subscription succeeded event received without data key in payload"
         case unableToSubscribeToChannel = "Unable to subscribe to channel:"
         case unableToAddMemberToChannel = "Unable to add member to channel"
@@ -61,16 +61,16 @@ internal class PusherLogger {
         case unableToHandleIncomingMessage = "Unable to handle incoming Websocket message"
     }
 
-    internal enum LoggingLevel: String {
+    enum LoggingLevel: String {
         case debug      = "[PUSHER DEBUG]"
         case info       = "[PUSHER INFO]"
         case warning    = "[PUSHER WARNING]"
         case error      = "[PUSHER ERROR]"
     }
 
-    internal static let shared = PusherLogger()
+    static let shared = PusherLogger()
 
-    internal weak var delegate: PusherDelegate?
+    weak var delegate: PusherDelegate?
 
     // MARK: - Event logging
 
@@ -78,8 +78,8 @@ internal class PusherLogger {
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    internal func debug(for event: LoggingEvent,
-                        context: CustomStringConvertible? = nil) {
+    func debug(for event: LoggingEvent,
+               context: CustomStringConvertible? = nil) {
         message(for: event, level: .debug, context: context)
     }
 
@@ -87,8 +87,8 @@ internal class PusherLogger {
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    internal func info(for event: LoggingEvent,
-                       context: CustomStringConvertible? = nil) {
+    func info(for event: LoggingEvent,
+              context: CustomStringConvertible? = nil) {
         message(for: event, level: .info, context: context)
     }
 
@@ -96,8 +96,8 @@ internal class PusherLogger {
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    internal func warning(for event: LoggingEvent,
-                          context: CustomStringConvertible? = nil) {
+    func warning(for event: LoggingEvent,
+                 context: CustomStringConvertible? = nil) {
         message(for: event, level: .warning, context: context)
     }
 
@@ -105,8 +105,8 @@ internal class PusherLogger {
     /// - Parameters:
     ///   - event: A particular `LoggingEvent` of interest.
     ///   - context: Additional context for the message.
-    internal func error(for event: LoggingEvent,
-                        context: CustomStringConvertible? = nil) {
+    func error(for event: LoggingEvent,
+               context: CustomStringConvertible? = nil) {
         message(for: event, level: .error, context: context)
     }
 
