@@ -132,7 +132,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
 
         - returns: A dictionary of channel data
     */
-    fileprivate func parse(channelData: String) -> [String: AnyObject]? {
+    private func parse(channelData: String) -> [String: AnyObject]? {
         let data = (channelData as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {

@@ -218,7 +218,7 @@ import NWWebSocket
         - parameter data:    The data to be stringified and sent
         - parameter channel: The name of the channel
     */
-    fileprivate func sendClientEvent(event: String, data: Any, channel: PusherChannel?) {
+    private func sendClientEvent(event: String, data: Any, channel: PusherChannel?) {
         guard let channel = channel else {
             return
         }
@@ -242,7 +242,7 @@ import NWWebSocket
 
         - returns: A JSON-stringified version of the value
     */
-    fileprivate func JSONStringify(_ value: Any) -> String {
+    private func JSONStringify(_ value: Any) -> String {
         if JSONSerialization.isValidJSONObject(value) {
             do {
                 let data = try JSONSerialization.data(withJSONObject: value, options: [])
@@ -341,7 +341,7 @@ import NWWebSocket
     /**
         Update connection state and attempt subscriptions to unsubscribed channels
     */
-    fileprivate func setConnectionStateToConnectedAndAttemptSubscriptions() {
+    private func setConnectionStateToConnectedAndAttemptSubscriptions() {
         if self.connectionEstablishedMessageReceived &&
            self.socketConnected &&
            self.connectionState != .connected {
@@ -355,7 +355,7 @@ import NWWebSocket
         reset connection-related state to initial state, and initiate reconnect
         process
     */
-    fileprivate func resetConnectionAndAttemptReconnect() {
+    private func resetConnectionAndAttemptReconnect() {
         if connectionState != .disconnected {
             updateConnectionState(to: .disconnected)
         }
@@ -395,7 +395,7 @@ import NWWebSocket
         Schedule a timer to be fired if no activity occurs over the socket within
         the activityTimeoutInterval
     */
-    fileprivate func establishActivityTimeoutTimer() {
+    private func establishActivityTimeoutTimer() {
         self.activityTimeoutTimer = Timer.scheduledTimer(
             timeInterval: self.activityTimeoutInterval,
             target: self,
@@ -408,7 +408,7 @@ import NWWebSocket
     /**
         Send a ping to the server
     */
-    @objc fileprivate func sendPing() {
+    @objc private func sendPing() {
         socket.ping()
         PusherLogger.shared.debug(for: .pingSent)
         self.setupPongResponseTimeoutTimer()
@@ -418,7 +418,7 @@ import NWWebSocket
         Schedule a timer that will fire if no pong response is received within the
         pongResponseTimeoutInterval
     */
-    fileprivate func setupPongResponseTimeoutTimer() {
+    private func setupPongResponseTimeoutTimer() {
         pongResponseTimeoutTimer = Timer.scheduledTimer(
             timeInterval: pongResponseTimeoutInterval,
             target: self,
@@ -432,7 +432,7 @@ import NWWebSocket
         Invalidate the pongResponseTimeoutTimer and set connection state to disconnected
         as well as marking channels as unsubscribed
     */
-    @objc fileprivate func cleanupAfterNoPongResponse() {
+    @objc private func cleanupAfterNoPongResponse() {
         pongResponseTimeoutTimer?.invalidate()
         pongResponseTimeoutTimer = nil
         resetConnectionAndAttemptReconnect()
@@ -444,7 +444,7 @@ import NWWebSocket
 
         - parameter json: The PusherEventJSON containing successful subscription data
     */
-    fileprivate func handleSubscriptionSucceededEvent(event: PusherEvent) {
+    private func handleSubscriptionSucceededEvent(event: PusherEvent) {
         guard let channelName = event.channelName,
               let chan = self.channels.find(name: channelName) else {
             return
@@ -488,7 +488,7 @@ import NWWebSocket
 
         - parameter event: The event to be processed
     */
-    fileprivate func handleConnectionEstablishedEvent(event: PusherEvent) {
+    private func handleConnectionEstablishedEvent(event: PusherEvent) {
         guard let connectionData = event.dataToJSONObject() as? [String: Any],
               let socketId = connectionData[Constants.JSONKeys.socketId] as? String else {
             return
@@ -512,7 +512,7 @@ import NWWebSocket
         Attempts to make subscriptions that couldn't be attempted while the
         connection was not in a connected state
     */
-    fileprivate func attemptSubscriptionsToUnsubscribedChannels() {
+    private func attemptSubscriptionsToUnsubscribedChannels() {
         for (_, channel) in self.channels.channels {
             if !self.authorize(channel, auth: channel.auth) {
                 PusherLogger.shared.debug(for: .unableToSubscribeToChannel,
@@ -526,7 +526,7 @@ import NWWebSocket
 
         - parameter event: The event to be processed
     */
-    fileprivate func handleMemberAddedEvent(event: PusherEvent) {
+    private func handleMemberAddedEvent(event: PusherEvent) {
         guard let channelName = event.channelName,
             let chan = self.channels.find(name: channelName) as? PusherPresenceChannel else {
             return
@@ -544,7 +544,7 @@ import NWWebSocket
 
         - parameter event: The event to be processed
     */
-    fileprivate func handleMemberRemovedEvent(event: PusherEvent) {
+    private func handleMemberRemovedEvent(event: PusherEvent) {
         guard let channelName = event.channelName,
             let chan = self.channels.find(name: channelName) as? PusherPresenceChannel else {
             return
@@ -574,7 +574,7 @@ import NWWebSocket
         - parameter channelName: The name of channel for which authorization failed
         - parameter data:        The error returned by the auth endpoint
     */
-    fileprivate func handleAuthorizationError(forChannel channelName: String, error: PusherAuthError) {
+    private func handleAuthorizationError(forChannel channelName: String, error: PusherAuthError) {
         let eventName = Constants.Events.Pusher.subscriptionError
         let json = [
             Constants.JSONKeys.event: eventName,
@@ -631,7 +631,7 @@ import NWWebSocket
 
         - parameter event: The incoming event
     */
-    fileprivate func callGlobalCallbacks(event: PusherEvent) {
+    private func callGlobalCallbacks(event: PusherEvent) {
         globalChannel?.handleGlobalEvent(event: event)
         globalChannel?.handleGlobalEventLegacy(event: event.raw)
     }
@@ -647,7 +647,7 @@ import NWWebSocket
         - returns: A Bool indicating whether or not the authentication request was made
                    successfully
     */
-    fileprivate func authorize(_ channel: PusherChannel, auth: PusherAuth? = nil) -> Bool {
+    private func authorize(_ channel: PusherChannel, auth: PusherAuth? = nil) -> Bool {
         if channel.type != .presence && channel.type != .private {
             subscribeToNormalChannel(channel)
             return true
@@ -673,8 +673,8 @@ import NWWebSocket
         }
     }
 
-    fileprivate func requestPusherAuthFromAuthMethod(channel: PusherChannel,
-                                                     completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> Void) -> Bool {
+    private func requestPusherAuthFromAuthMethod(channel: PusherChannel,
+                                                 completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> Void) -> Bool {
         guard let socketId = self.socketId else {
             let message = "socketId value not found. You may not be connected."
             completionHandler(nil, PusherAuthError(kind: .notConnected, message: message))
@@ -751,7 +751,7 @@ import NWWebSocket
 
         - returns: A JSON stringified user data object
     */
-    fileprivate func getUserDataJSON() -> String {
+    private func getUserDataJSON() -> String {
         if let userDataFetcher = self.userDataFetcher {
             let userData = userDataFetcher()
             if let userInfo: Any = userData.userInfo {
@@ -775,7 +775,7 @@ import NWWebSocket
 
         - parameter channel:  The PusherChannel to subscribe to
     */
-    fileprivate func subscribeToNormalChannel(_ channel: PusherChannel) {
+    private func subscribeToNormalChannel(_ channel: PusherChannel) {
         self.sendEvent(
             event: Constants.Events.Pusher.subscribe,
             data: [
@@ -793,7 +793,7 @@ import NWWebSocket
 
         - returns: URLRequest object to be used by the function making the auth request
     */
-    fileprivate func requestForAuthValue(from endpoint: String, socketId: String, channelName: String) -> URLRequest {
+    private func requestForAuthValue(from endpoint: String, socketId: String, channelName: String) -> URLRequest {
         let allowedCharacterSet = CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[] ").inverted
         let encodedChannelName = channelName.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? channelName
 
@@ -810,9 +810,9 @@ import NWWebSocket
         - parameter request: The request to send
         - parameter channel: The PusherChannel to authenticate subscription for
     */
-    fileprivate func sendAuthorizationRequest(request: URLRequest,
-                                              channel: PusherChannel,
-                                              completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> Void) {
+    private func sendAuthorizationRequest(request: URLRequest,
+                                          channel: PusherChannel,
+                                          completionHandler: @escaping (PusherAuth?, PusherAuthError?) -> Void) {
         let task = URLSession.dataTask(with: request, completionHandler: { data, response, sessionError in
             if let error = sessionError {
                 let message = "Error authorizing channel [\(channel.name)]: \(error)"
@@ -879,7 +879,7 @@ import NWWebSocket
         - parameter channelData: The channelData to send along with the auth request
         - parameter channel:     The PusherChannel to authorize the subscription for
     */
-    fileprivate func handleAuthInfo(pusherAuth: PusherAuth, channel: PusherChannel) {
+    private func handleAuthInfo(pusherAuth: PusherAuth, channel: PusherChannel) {
         if let decryptionKey = pusherAuth.sharedSecret {
             channel.decryptionKey = decryptionKey
         }
@@ -898,7 +898,7 @@ import NWWebSocket
         - parameter channel:     The PusherChannel to authorize subscription for
         - parameter channelData: The channelData to send along with the auth request
     */
-    fileprivate func handlePresenceChannelAuth(
+    private func handlePresenceChannelAuth(
         authValue: String,
         channel: PusherChannel,
         channelData: String
@@ -921,7 +921,7 @@ import NWWebSocket
         - parameter auth:    The auth string
         - parameter channel: The PusherChannel to authenticate subscription for
     */
-    fileprivate func handlePrivateChannelAuth(authValue auth: String, channel: PusherChannel) {
+    private func handlePrivateChannelAuth(authValue auth: String, channel: PusherChannel) {
         self.sendEvent(
             event: Constants.Events.Pusher.subscribe,
             data: [
