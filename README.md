@@ -122,7 +122,11 @@ Carthage will produce a number of frameworks. You need to include the following 
 
 #### Xcode 12 considerations
 
-Using Carthage under Xcode 12.0 and above currently requires [a workaround](https://github.com/Carthage/Carthage/issues/3019) in order for the build to be successful. You can find an example of the workaround, which is used for running the 'Consumption-Tests' [here](Consumption-Tests/Shared/carthage.sh).
+There have been changes to the architectures included when building universal frameworks under Xcode 12.0 and above. This is to support the introduction of the Apple Silicon family of processors.
+
+It is strongly recommended that you integrate PusherSwift using the `--use-xcframeworks` flag, running Carthage `0.37.0` or above. There are [full instructions](https://github.com/Carthage/Carthage#building-platform-independent-xcframeworks-xcode-12-and-above) for this (as well as instructions for [migrating to XCFrameworks](https://github.com/Carthage/Carthage#migrating-a-project-from-framework-bundles-to-xcframeworks) if you are already integrating using Carthage).
+
+Alternatively, if you are building using an Intel Mac and do not want to migrate to build Carthage dependencies using XCFrameworks there is [a workaround](https://github.com/Carthage/Carthage/blob/master/Documentation/Xcode12Workaround.md) to build successfully. You can find an example of this workaround, which is used for running the 'Consumption-Tests' [here](Consumption-Tests/Shared/carthage.sh).
 
 ### Swift Package Manager
 
