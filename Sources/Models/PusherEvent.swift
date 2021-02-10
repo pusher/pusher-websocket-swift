@@ -43,7 +43,7 @@ open class PusherEvent: NSObject, NSCopying {
             return nil
         }
         // Parse or return nil if we can't parse
-        return PusherParser.getEventDataJSON(from: data)
+        return EventParser.getEventDataJSON(from: data)
     }
 
     /**

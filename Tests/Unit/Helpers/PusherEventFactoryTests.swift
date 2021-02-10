@@ -4,10 +4,10 @@ import XCTest
 
 class PusherEventFactoryTests: XCTestCase {
 
-    private var eventFactory: PusherConcreteEventFactory!
+    private var eventFactory: PusherEventFactory!
 
     override func setUp() {
-        eventFactory = PusherConcreteEventFactory()
+        eventFactory = PusherEventFactory()
     }
 
     func testChannelNameIsExtracted() throws {
@@ -211,7 +211,7 @@ class PusherEventFactoryTests: XCTestCase {
         """.toJsonDict()
 
         XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { error in
-            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
+            XCTAssertEqual(error as? EventError, EventError.invalidFormat)
         }
     }
 }

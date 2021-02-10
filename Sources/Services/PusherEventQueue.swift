@@ -4,15 +4,15 @@ class PusherEventQueue: EventQueue {
 
     // MARK: - Properties
 
-    private let eventFactory: PusherEventFactory
+    private let eventFactory: EventFactory
     private let channels: PusherChannels
     private var queue = DispatchQueue(label: "com.pusher.pusherswift-event-queue-\(UUID().uuidString)")
 
-    weak var delegate: PusherEventQueueDelegate?
+    weak var delegate: EventQueueDelegate?
 
     // MARK: - Initializers
 
-    init(eventFactory: PusherEventFactory, channels: PusherChannels) {
+    init(eventFactory: EventFactory, channels: PusherChannels) {
         self.eventFactory = eventFactory
         self.channels = channels
     }
@@ -40,7 +40,7 @@ class PusherEventQueue: EventQueue {
     private func processEventWithRetries(json: PusherEventPayload, channel: PusherChannel?) {
         do {
             try self.processEvent(json: json, channel: channel)
-        } catch PusherEventError.invalidDecryptionKey {
+        } catch EventError.invalidDecryptionKey {
             // Reload decryption key if we could not decrypt the payload due to the key
             // Only events on encrypted channels throw this error, which have a channel
             guard let channel = channel else {
@@ -55,7 +55,7 @@ class PusherEventQueue: EventQueue {
                                           didFailToDecryptEventWithPayload: json,
                                           forChannelName: channel.name)
             }
-        } catch PusherEventError.invalidEncryptedData {
+        } catch EventError.invalidEncryptedData {
             // If there was a problem with the payload, e.g. nonce missing, then we cannot retry
             guard let channelName = channel?.name else {
                 return

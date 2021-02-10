@@ -2,16 +2,16 @@ import Foundation
 
 // MARK: - Types
 
-// MARK: - Concrete implementation
+typealias PusherEventPayload = [String: Any]
 
-struct PusherConcreteEventFactory: PusherEventFactory {
+struct PusherEventFactory: EventFactory {
 
     // MARK: - Event factory
 
     func makeEvent(fromJSON json: PusherEventPayload,
                    withDecryptionKey decryptionKey: String? = nil) throws -> PusherEvent {
         guard let eventName = json[Constants.JSONKeys.event] as? String else {
-            throw PusherEventError.invalidFormat
+            throw EventError.invalidFormat
         }
 
         let channelName = json[Constants.JSONKeys.channel] as? String
@@ -31,14 +31,10 @@ struct PusherConcreteEventFactory: PusherEventFactory {
                       decryptionKey: String?) throws -> String? {
         let data = json[Constants.JSONKeys.data] as? String
 
-        if PusherEncryptionHelpers.shouldDecryptMessage(eventName: eventName, channelName: channelName) {
-            return try PusherDecryptor.decrypt(data: data, decryptionKey: decryptionKey)
+        if Crypto.shouldDecryptMessage(eventName: eventName, channelName: channelName) {
+            return try Crypto.decrypt(data: data, decryptionKey: decryptionKey)
         } else {
             return data
         }
     }
 }
-
-// MARK: - Types
-
-typealias PusherEventPayload = [String: Any]

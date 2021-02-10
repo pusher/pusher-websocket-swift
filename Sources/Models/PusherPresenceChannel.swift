@@ -141,12 +141,12 @@ public typealias PusherUserInfoObject = [String: AnyObject]
                                                                   options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
-                PusherLogger.shared.debug(for: .unableToParseStringAsJSON,
-                                          context: channelData)
+                Logger.shared.debug(for: .unableToParseStringAsJSON,
+                                    context: channelData)
             }
         } catch let error as NSError {
-            PusherLogger.shared.error(for: .genericError,
-                                      context: error.localizedDescription)
+            Logger.shared.error(for: .genericError,
+                                context: error.localizedDescription)
         }
         return nil
     }

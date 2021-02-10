@@ -54,10 +54,10 @@ let CLIENT_NAME = "pusher-websocket-swift"
         onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
     ) -> PusherChannel {
 
-        let isEncryptedChannel = PusherEncryptionHelpers.isEncryptedChannel(channelName: channelName)
+        let isEncryptedChannel = Crypto.isEncryptedChannel(channelName: channelName)
 
         if isEncryptedChannel && auth != nil {
-            PusherLogger.shared.warning(for: .authValueOnSubscriptionNotSupported)
+            Logger.shared.warning(for: .authValueOnSubscriptionNotSupported)
         }
 
         return self.connection.subscribe(
