@@ -266,8 +266,8 @@
 			isa = PBXGroup;
 			children = (
 				E2F40FA423ED782B00985C40 /* Crypto.swift */,
-				539D9AFB2507F67300B5765A /* Logger.swift */,
 				E2CFE43022D79CA7004187C3 /* EventParser.swift */,
+				539D9AFB2507F67300B5765A /* Logger.swift */,
 				E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */,
 			);
 			path = Helpers;
