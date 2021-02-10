@@ -1,15 +1,6 @@
 import Foundation
 
-protocol PusherEventQueue {
-
-    var delegate: PusherEventQueueDelegate? { get set }
-
-    func enqueue(json: PusherEventPayload)
-}
-
-// MARK: - Concrete implementation
-
-class PusherConcreteEventQueue: PusherEventQueue {
+class PusherEventQueue: EventQueue {
 
     // MARK: - Properties
 
@@ -80,20 +71,4 @@ class PusherConcreteEventQueue: PusherEventQueue {
         let event = try self.eventFactory.makeEvent(fromJSON: json, withDecryptionKey: channel?.decryptionKey)
         self.delegate?.eventQueue(self, didReceiveEvent: event, forChannelName: channel?.name)
     }
-}
-
-// MARK: - Delegate
-
-protocol PusherEventQueueDelegate: AnyObject {
-
-    func eventQueue(_ eventQueue: PusherEventQueue,
-                    didReceiveEvent event: PusherEvent,
-                    forChannelName channelName: String?)
-    func eventQueue(_ eventQueue: PusherEventQueue,
-                    didFailToDecryptEventWithPayload payload: PusherEventPayload,
-                    forChannelName channelName: String)
-    func eventQueue(_ eventQueue: PusherEventQueue,
-                    didReceiveInvalidEventWithPayload payload: PusherEventPayload)
-    func eventQueue(_ eventQueue: PusherEventQueue,
-                    reloadDecryptionKeySyncForChannel channel: PusherChannel)
 }
