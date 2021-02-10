@@ -26,7 +26,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     */
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
         self.key = key
-        let urlString = constructUrl(key: key, options: options)
+        let urlString = URL.channelsSocketUrl(key: key, options: options)
         let wsOptions = NWWebSocket.defaultOptions
         wsOptions.setSubprotocols(["pusher-channels-protocol-\(PROTOCOL)"])
         let ws = NWWebSocket(url: URL(string: urlString)!, options: wsOptions)
@@ -169,23 +169,4 @@ let CLIENT_NAME = "pusher-websocket-swift"
     open func connect() {
         self.connection.connect()
     }
-}
-
-/**
-    Creates a valid URL that can be used in a connection attempt
-
-    - parameter key:     The app key to be inserted into the URL
-    - parameter options: The collection of options needed to correctly construct the URL
-
-    - returns: The constructed URL ready to use in a connection attempt
-*/
-func constructUrl(key: String, options: PusherClientOptions) -> String {
-    var url = ""
-    let additionalPathComponents = options.path ?? ""
-    if options.useTLS {
-        url = "wss://\(options.host):\(options.port)\(additionalPathComponents)/app/\(key)"
-    } else {
-        url = "ws://\(options.host):\(options.port)\(additionalPathComponents)/app/\(key)"
-    }
-    return "\(url)?client=\(CLIENT_NAME)&version=\(VERSION)&protocol=\(PROTOCOL)"
 }
