@@ -2,12 +2,11 @@ import Foundation
 
 // swiftlint:disable nesting
 
-public enum Constants {
+enum Constants {
 
-    public enum API {
-        public static let defaultHost   = "ws.pusherapp.com"
+    enum API {
+        static let defaultHost          = "ws.pusherapp.com"
         static let pusherDomain         = "pusher.com"
-        static let pusherAppDomain      = "pusherapp.com"
     }
 
     enum ChannelTypes {
