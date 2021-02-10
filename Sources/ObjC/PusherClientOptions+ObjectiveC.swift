@@ -6,7 +6,7 @@ import Foundation
     convenience init(
         ocAuthMethod authMethod: OCAuthMethod,
         autoReconnect: Bool = true,
-        ocHost host: OCPusherHost = PusherHost.host(Constants.API.defaultHost).toObjc(),
+        ocHost host: OCPusherHost = PusherHost.defaultHost.toObjc(),
         port: NSNumber? = nil,
         useTLS: Bool = true,
         activityTimeout: NSNumber? = nil
@@ -26,7 +26,7 @@ import Foundation
         ocAuthMethod authMethod: OCAuthMethod,
         attemptToReturnJSONObject: Bool = true,
         autoReconnect: Bool = true,
-        ocHost host: OCPusherHost = PusherHost.host(Constants.API.defaultHost).toObjc(),
+        ocHost host: OCPusherHost = PusherHost.defaultHost.toObjc(),
         port: NSNumber? = nil,
         useTLS: Bool = true,
         activityTimeout: NSNumber? = nil

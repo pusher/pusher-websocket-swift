@@ -15,7 +15,7 @@ import Foundation
         authMethod: AuthMethod = .noMethod,
         attemptToReturnJSONObject: Bool = true,
         autoReconnect: Bool = true,
-        host: PusherHost = .host(Constants.API.defaultHost),
+        host: PusherHost = .defaultHost,
         port: Int? = nil,
         path: String? = nil,
         useTLS: Bool = true,
