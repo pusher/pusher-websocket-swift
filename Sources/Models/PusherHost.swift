@@ -7,7 +7,7 @@ public enum PusherHost {
     public var stringValue: String {
         switch self {
         case .host(let host): return host
-        case .cluster(let cluster): return "ws-\(cluster).pusher.com"
+        case .cluster(let cluster): return "ws-\(cluster).\(Constants.API.pusherDomain)"
         }
     }
 }
