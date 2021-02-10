@@ -7,14 +7,14 @@ import Foundation
 /// These closure codes fall in the 4000 - 4999 range, i.e. the `privateCode` case of `NWProtocolWebSocket.CloseCode`.
 ///
 /// Reference: https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes
-internal enum PusherChannelsProtocolCloseCode: UInt16 {
+enum PusherChannelsProtocolCloseCode: UInt16 {
 
     // MARK: - Pusher Channels Protocol reconnection strategies
 
     /// Describes the reconnection strategy for a given `PusherChannelsProtocolCloseCode`.
     ///
     /// Reference: https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#connection-closure
-    internal enum ReconnectionStrategy: UInt16 {
+    enum ReconnectionStrategy: UInt16 {
 
         /// Indicates an error resulting in the connection being closed by Pusher Channels,
         /// and that attempting to reconnect using the same parameters will not succeed.

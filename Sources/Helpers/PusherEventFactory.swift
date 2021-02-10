@@ -45,12 +45,3 @@ struct PusherConcreteEventFactory: PusherEventFactory {
 // MARK: - Types
 
 typealias PusherEventPayload = [String: Any]
-
-// MARK: - Error handling
-
-enum PusherEventError: Error {
-
-    case invalidFormat
-    case invalidDecryptionKey
-    case invalidEncryptedData
-}

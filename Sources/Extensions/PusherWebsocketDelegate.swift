@@ -117,7 +117,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
      `PusherChannelsProtocolCloseCode.ReconnectionStrategy`.
      - Parameter closeCode: The closure code received by the WebSocket connection.
      */
-    internal func attemptReconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+    func attemptReconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         guard connectionState != .connected else {
             return
         }
@@ -161,7 +161,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
     /// Returns a `TimeInterval` appropriate for a reconnection attempt after some delay.
     /// - Parameter strategy: The reconnection strategy for the reconnection attempt.
     /// - Returns: An appropriate `TimeInterval`. (0.0 if `strategy == .reconnectImmediately`).
-    internal func reconnectionAttemptTimeInterval(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) -> TimeInterval {
+    func reconnectionAttemptTimeInterval(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) -> TimeInterval {
         if case .reconnectImmediately = strategy {
             return 0.0
         }
@@ -174,7 +174,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
     /// Logs the websocket reconnection attempt.
     /// - Parameter strategy: The reconnection strategy for the reconnection attempt.
-    internal func logReconnectionAttempt(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) {
+    func logReconnectionAttempt(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) {
 
         var context = "(attempt \(reconnectAttempts + 1))"
         var loggingEvent = PusherLogger.LoggingEvent.attemptReconnectionImmediately
@@ -197,7 +197,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
     /// - Parameters:
     ///   - closeCode: The closure code for the websocket connection.
     ///   - reason: Optional further information on the connection closure.
-    internal func logDisconnection(closeCode: NWProtocolWebSocket.CloseCode, reason: Data?) {
+    func logDisconnection(closeCode: NWProtocolWebSocket.CloseCode, reason: Data?) {
         var rawCode: UInt16!
         switch closeCode {
         case .protocolCode(let definedCode):

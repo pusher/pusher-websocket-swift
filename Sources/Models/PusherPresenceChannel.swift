@@ -132,7 +132,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
 
         - returns: A dictionary of channel data
     */
-    fileprivate func parse(channelData: String) -> [String: AnyObject]? {
+    private func parse(channelData: String) -> [String: AnyObject]? {
         let data = (channelData as NSString).data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)
 
         do {
@@ -174,16 +174,5 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         }
 
         return findMember(userId: id)
-    }
-}
-
-@objcMembers
-@objc public class PusherPresenceChannelMember: NSObject {
-    public let userId: String
-    public let userInfo: Any?
-
-    public init(userId: String, userInfo: Any? = nil) {
-        self.userId = userId
-        self.userInfo = userInfo
     }
 }
