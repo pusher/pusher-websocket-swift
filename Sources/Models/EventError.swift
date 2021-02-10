@@ -1,6 +1,6 @@
 import Foundation
 
-enum PusherEventError: Error {
+enum EventError: Error {
 
     case invalidFormat
     case invalidDecryptionKey

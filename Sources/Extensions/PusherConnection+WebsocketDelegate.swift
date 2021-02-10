@@ -11,20 +11,20 @@ extension PusherConnection: WebSocketConnectionDelegate {
         - parameter string: The message received over the websocket
     */
     public func webSocketDidReceiveMessage(connection: WebSocketConnection, string: String) {
-        PusherLogger.shared.debug(for: .receivedMessage, context: string)
+        Logger.shared.debug(for: .receivedMessage, context: string)
 
-        guard let payload = PusherParser.getPusherEventJSON(from: string),
+        guard let payload = EventParser.getPusherEventJSON(from: string),
             let event = payload[Constants.JSONKeys.event] as? String
         else {
-            PusherLogger.shared.debug(for: .unableToHandleIncomingMessage,
-                                      context: string)
+            Logger.shared.debug(for: .unableToHandleIncomingMessage,
+                                context: string)
             return
         }
 
         if event == Constants.Events.Pusher.error {
             guard let error = PusherError(jsonObject: payload) else {
-                PusherLogger.shared.debug(for: .unableToHandleIncomingError,
-                                          context: string)
+                Logger.shared.debug(for: .unableToHandleIncomingError,
+                                    context: string)
                 return
             }
             self.handleError(error: error)
@@ -36,7 +36,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
     /// Delegate method called when a pong is received over a websocket
     /// - Parameter connection: The websocket that has received the pong
     public func webSocketDidReceivePong(connection: WebSocketConnection) {
-        PusherLogger.shared.debug(for: .pongReceived)
+        Logger.shared.debug(for: .pongReceived)
         resetActivityTimeoutTimer()
     }
 
@@ -64,7 +64,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
         updateConnectionState(to: .disconnected)
 
         guard !intentionalDisconnect else {
-            PusherLogger.shared.debug(for: .intentionalDisconnection)
+            Logger.shared.debug(for: .intentionalDisconnection)
             return
         }
 
@@ -82,7 +82,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
         }
 
         guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
-            PusherLogger.shared.debug(for: .maxReconnectAttemptsLimitReached)
+            Logger.shared.debug(for: .maxReconnectAttemptsLimitReached)
             return
         }
 
@@ -91,9 +91,9 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
     public func webSocketViabilityDidChange(connection: WebSocketConnection, isViable: Bool) {
         if isViable {
-            PusherLogger.shared.debug(for: .networkConnectionViable)
+            Logger.shared.debug(for: .networkConnectionViable)
         } else {
-            PusherLogger.shared.debug(for: .networkConnectionUnviable)
+            Logger.shared.debug(for: .networkConnectionUnviable)
         }
     }
 
@@ -103,8 +103,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
             updateConnectionState(to: .reconnecting)
 
         case .failure(let error):
-            PusherLogger.shared.debug(for: .errorReceived,
-                                      context: """
+            Logger.shared.debug(for: .errorReceived,
+                                context: """
                 Path migration error: \(error.debugDescription)
                 """)
         }
@@ -128,9 +128,9 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
         // Reconnect attempt according to Pusher Channels Protocol close code (if present).
         // (Otherwise, the default behavior is to attempt reconnection after backing off).
-        var channelsCloseCode: PusherChannelsProtocolCloseCode?
+        var channelsCloseCode: ChannelsProtocolCloseCode?
         if case let .privateCode(code) = closeCode {
-            channelsCloseCode = PusherChannelsProtocolCloseCode(rawValue: code)
+            channelsCloseCode = ChannelsProtocolCloseCode(rawValue: code)
         }
         let strategy = channelsCloseCode?.reconnectionStrategy ?? .reconnectAfterBackingOff
 
@@ -161,7 +161,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
     /// Returns a `TimeInterval` appropriate for a reconnection attempt after some delay.
     /// - Parameter strategy: The reconnection strategy for the reconnection attempt.
     /// - Returns: An appropriate `TimeInterval`. (0.0 if `strategy == .reconnectImmediately`).
-    func reconnectionAttemptTimeInterval(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) -> TimeInterval {
+    func reconnectionAttemptTimeInterval(strategy: ChannelsProtocolCloseCode.ReconnectionStrategy) -> TimeInterval {
         if case .reconnectImmediately = strategy {
             return 0.0
         }
@@ -174,10 +174,10 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
     /// Logs the websocket reconnection attempt.
     /// - Parameter strategy: The reconnection strategy for the reconnection attempt.
-    func logReconnectionAttempt(strategy: PusherChannelsProtocolCloseCode.ReconnectionStrategy) {
+    func logReconnectionAttempt(strategy: ChannelsProtocolCloseCode.ReconnectionStrategy) {
 
         var context = "(attempt \(reconnectAttempts + 1))"
-        var loggingEvent = PusherLogger.LoggingEvent.attemptReconnectionImmediately
+        var loggingEvent = Logger.LoggingEvent.attemptReconnectionImmediately
 
         if reconnectAttemptsMax != nil {
             context.insert(contentsOf: " of \(reconnectAttemptsMax!)", at: context.index(before: context.endIndex))
@@ -189,8 +189,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
             context = "\(timeInterval) seconds " + context
         }
 
-        PusherLogger.shared.debug(for: loggingEvent,
-                                  context: context)
+        Logger.shared.debug(for: loggingEvent,
+                            context: context)
     }
 
     /// Logs the websocket disconnection event.
@@ -218,8 +218,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
             closeMessage += " Reason: \(reasonString)."
         }
 
-        PusherLogger.shared.debug(for: .disconnectionWithoutError,
-                                  context: closeMessage)
+        Logger.shared.debug(for: .disconnectionWithoutError,
+                            context: closeMessage)
     }
 
     /**
@@ -236,8 +236,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
     }
 
     public func webSocketDidReceiveError(connection: WebSocketConnection, error: NWError) {
-        PusherLogger.shared.debug(for: .errorReceived,
-                                  context: """
+        Logger.shared.debug(for: .errorReceived,
+                            context: """
             Error: \(error.debugDescription)
             """)
     }

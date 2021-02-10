@@ -1,6 +1,6 @@
 import Foundation
 
-struct PusherParser {
+struct EventParser {
 
     /**
      Parse a string to extract Pusher event information from it
@@ -20,12 +20,12 @@ struct PusherParser {
                                                                   options: []) as? [String: AnyObject] {
                 return jsonObject
             } else {
-                PusherLogger.shared.debug(for: .unableToParseStringAsJSON,
-                                          context: string)
+                Logger.shared.debug(for: .unableToParseStringAsJSON,
+                                    context: string)
             }
         } catch let error as NSError {
-            PusherLogger.shared.error(for: .genericError,
-                                      context: error.localizedDescription)
+            Logger.shared.error(for: .genericError,
+                                context: error.localizedDescription)
         }
         return nil
     }
@@ -44,8 +44,8 @@ struct PusherParser {
             if let jsonData = data, let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) {
                 return jsonObject
             } else {
-                PusherLogger.shared.debug(for: .unableToParseStringAsJSON,
-                                          context: string)
+                Logger.shared.debug(for: .unableToParseStringAsJSON,
+                                    context: string)
             }
         }
         return nil

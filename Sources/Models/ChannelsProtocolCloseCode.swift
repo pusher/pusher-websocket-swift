@@ -1,15 +1,15 @@
 import Foundation
 
-// MARK: - Pusher Channels Protocol close codes
+// MARK: - Channels Protocol close codes
 
 /// Describes closure codes as specified by the Pusher Channels Protocol.
 ///
 /// These closure codes fall in the 4000 - 4999 range, i.e. the `privateCode` case of `NWProtocolWebSocket.CloseCode`.
 ///
 /// Reference: https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes
-enum PusherChannelsProtocolCloseCode: UInt16 {
+enum ChannelsProtocolCloseCode: UInt16 {
 
-    // MARK: - Pusher Channels Protocol reconnection strategies
+    // MARK: - Channels Protocol reconnection strategies
 
     /// Describes the reconnection strategy for a given `PusherChannelsProtocolCloseCode`.
     ///
