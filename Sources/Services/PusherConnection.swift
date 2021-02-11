@@ -31,7 +31,7 @@ import NWWebSocket
     var activityTimeoutTimer: Timer?
     var intentionalDisconnect: Bool = false
 
-    var eventQueue: PusherEventQueue
+    var eventQueue: ChannelEventQueue
     var eventFactory: EventFactory
 
     var socketConnected: Bool = false {
@@ -72,8 +72,8 @@ import NWWebSocket
         self.socket = socket
         self.activityTimeoutInterval = options.activityTimeout ?? 60
 
-        self.eventFactory = PusherEventFactory()
-        self.eventQueue = PusherEventQueue(eventFactory: eventFactory, channels: channels)
+        self.eventFactory = ChannelEventFactory()
+        self.eventQueue = ChannelEventQueue(eventFactory: eventFactory, channels: channels)
 
         super.init()
 

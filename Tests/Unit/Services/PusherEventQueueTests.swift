@@ -29,7 +29,7 @@ class InlineMockEventQueueDelegate: EventQueueDelegate {
 
 class PusherEventQueueTests: XCTestCase {
 
-    private var eventQueue: PusherEventQueue!
+    private var eventQueue: ChannelEventQueue!
     private var eventFactory: EventFactory!
     // swiftlint:disable:next weak_delegate
     private var eventQueueDelegate: InlineMockEventQueueDelegate!
@@ -40,8 +40,8 @@ class PusherEventQueueTests: XCTestCase {
         super.setUp()
         channels = PusherChannels()
         connection = MockPusherConnection()
-        eventFactory = PusherEventFactory()
-        eventQueue = PusherEventQueue(eventFactory: eventFactory, channels: channels)
+        eventFactory = ChannelEventFactory()
+        eventQueue = ChannelEventQueue(eventFactory: eventFactory, channels: channels)
         eventQueueDelegate = InlineMockEventQueueDelegate()
         eventQueue.delegate = eventQueueDelegate
     }

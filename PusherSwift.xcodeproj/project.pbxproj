@@ -62,8 +62,8 @@
 		E2498293231E612700CFBBD6 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
 		E2594CE42447753200E36300 /* PusherEventQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2594CE32447753200E36300 /* PusherEventQueueTests.swift */; };
 		E29A4CBC2301BA31000BC499 /* PusherEventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */; };
-		E2B21EFF243F5B1E0049A35B /* PusherEventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */; };
-		E2B21F01243F5B1E0049A35B /* PusherEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */; };
+		E2B21EFF243F5B1E0049A35B /* ChannelEventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFD243F5B1E0049A35B /* ChannelEventQueue.swift */; };
+		E2B21F01243F5B1E0049A35B /* ChannelEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21EFE243F5B1E0049A35B /* ChannelEventFactory.swift */; };
 		E2B21F07243F5B860049A35B /* PusherEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F06243F5B860049A35B /* PusherEvent.swift */; };
 		E2B21F0A243F5BB50049A35B /* PusherConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F09243F5BB50049A35B /* PusherConnection.swift */; };
 		E2B21F0D243F5DC10049A35B /* PusherConnection+WebsocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B21F0C243F5DC10049A35B /* PusherConnection+WebsocketDelegate.swift */; };
@@ -142,8 +142,8 @@
 		E2594CE32447753200E36300 /* PusherEventQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventQueueTests.swift; sourceTree = "<group>"; };
 		E291AFA124486CAB00594552 /* PusherEventQueue+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventQueue+DecryptionTests.swift"; sourceTree = "<group>"; };
 		E29A4CBB2301BA31000BC499 /* PusherEventFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherEventFactoryTests.swift; sourceTree = "<group>"; };
-		E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherEventQueue.swift; sourceTree = "<group>"; };
-		E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherEventFactory.swift; sourceTree = "<group>"; };
+		E2B21EFD243F5B1E0049A35B /* ChannelEventQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEventQueue.swift; sourceTree = "<group>"; };
+		E2B21EFE243F5B1E0049A35B /* ChannelEventFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEventFactory.swift; sourceTree = "<group>"; };
 		E2B21F06243F5B860049A35B /* PusherEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherEvent.swift; sourceTree = "<group>"; };
 		E2B21F09243F5BB50049A35B /* PusherConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherConnection.swift; sourceTree = "<group>"; };
 		E2B21F0C243F5DC10049A35B /* PusherConnection+WebsocketDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PusherConnection+WebsocketDelegate.swift"; sourceTree = "<group>"; };
@@ -270,7 +270,6 @@
 				E2F40FA423ED782B00985C40 /* Crypto.swift */,
 				E2CFE43022D79CA7004187C3 /* EventParser.swift */,
 				539D9AFB2507F67300B5765A /* Logger.swift */,
-				E2B21EFE243F5B1E0049A35B /* PusherEventFactory.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -302,8 +301,9 @@
 		5333ACFF24F81468006E8DF0 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E2B21EFE243F5B1E0049A35B /* ChannelEventFactory.swift */,
+				E2B21EFD243F5B1E0049A35B /* ChannelEventQueue.swift */,
 				E2B21F09243F5BB50049A35B /* PusherConnection.swift */,
-				E2B21EFD243F5B1E0049A35B /* PusherEventQueue.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -589,7 +589,7 @@
 				E2CFE43122D79CA7004187C3 /* EventParser.swift in Sources */,
 				53A9AFCD25CDAFD8008B1736 /* EventError.swift in Sources */,
 				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
-				E2B21F01243F5B1E0049A35B /* PusherEventFactory.swift in Sources */,
+				E2B21F01243F5B1E0049A35B /* ChannelEventFactory.swift in Sources */,
 				53A9AFE325D13D1F008B1736 /* PusherAuth.swift in Sources */,
 				53A9B00925D140B8008B1736 /* OCAuthMethod.swift in Sources */,
 				53AF00C925D2AEC70005621D /* EventQueue.swift in Sources */,
@@ -598,7 +598,7 @@
 				53A9AFF325D13FE5008B1736 /* PusherConnection+ObjectiveC.swift in Sources */,
 				539D9AFC2507F67300B5765A /* Logger.swift in Sources */,
 				53A9AFDF25CDB2F0008B1736 /* PusherPresenceChannelMember.swift in Sources */,
-				E2B21EFF243F5B1E0049A35B /* PusherEventQueue.swift in Sources */,
+				E2B21EFF243F5B1E0049A35B /* ChannelEventQueue.swift in Sources */,
 				53A9B00325D1407E008B1736 /* PusherError+ObjectiveC.swift in Sources */,
 				53AF00C525D2AE760005621D /* EventFactory.swift in Sources */,
 				3389F56E1CAEDDD800563F49 /* PusherPresenceChannel.swift in Sources */,

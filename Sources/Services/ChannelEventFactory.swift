@@ -4,7 +4,7 @@ import Foundation
 
 typealias PusherEventPayload = [String: Any]
 
-struct PusherEventFactory: EventFactory {
+struct ChannelEventFactory: EventFactory {
 
     // MARK: - Event factory
 

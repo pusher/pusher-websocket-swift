@@ -3,10 +3,10 @@ import XCTest
 
 class PusherEventFactoryDecryptionTests: XCTestCase {
 
-    private var eventFactory: PusherEventFactory!
+    private var eventFactory: ChannelEventFactory!
 
     override func setUp() {
-        eventFactory = PusherEventFactory()
+        eventFactory = ChannelEventFactory()
     }
 
     // MARK: Encryption related tests

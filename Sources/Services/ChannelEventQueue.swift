@@ -1,6 +1,6 @@
 import Foundation
 
-class PusherEventQueue: EventQueue {
+class ChannelEventQueue: EventQueue {
 
     // MARK: - Properties
 

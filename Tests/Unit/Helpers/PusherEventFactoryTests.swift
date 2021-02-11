@@ -4,10 +4,10 @@ import XCTest
 
 class PusherEventFactoryTests: XCTestCase {
 
-    private var eventFactory: PusherEventFactory!
+    private var eventFactory: ChannelEventFactory!
 
     override func setUp() {
-        eventFactory = PusherEventFactory()
+        eventFactory = ChannelEventFactory()
     }
 
     func testChannelNameIsExtracted() throws {
