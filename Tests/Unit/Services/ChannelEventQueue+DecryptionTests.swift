@@ -3,7 +3,7 @@ import XCTest
 
 // swiftlint:disable unused_closure_parameter
 
-class PusherEventQueueDecryptionTests: XCTestCase {
+class ChannelEventQueueDecryptionTests: XCTestCase {
 
     private var eventQueue: ChannelEventQueue!
     private var channels: PusherChannels!

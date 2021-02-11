@@ -27,7 +27,7 @@ class InlineMockEventQueueDelegate: EventQueueDelegate {
     }
 }
 
-class PusherEventQueueTests: XCTestCase {
+class ChannelEventQueueTests: XCTestCase {
 
     private var eventQueue: ChannelEventQueue!
     private var eventFactory: EventFactory!

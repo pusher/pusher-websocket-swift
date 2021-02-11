@@ -2,7 +2,7 @@ import XCTest
 
 @testable import PusherSwift
 
-class PusherEventFactoryTests: XCTestCase {
+class ChannelEventFactoryTests: XCTestCase {
 
     private var eventFactory: ChannelEventFactory!
 
