@@ -160,7 +160,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         - returns: The PusherPresenceChannelMember object for the given user id
     */
     open func findMember(userId: String) -> PusherPresenceChannelMember? {
-        return self.members.filter({ $0.userId == userId }).first
+        return self.members.first(where: { $0.userId == userId })
     }
 
     /**

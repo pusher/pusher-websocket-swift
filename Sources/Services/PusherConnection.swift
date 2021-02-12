@@ -475,7 +475,7 @@ import NWWebSocket
 
         chan.auth = nil
 
-        while chan.unsentEvents.count > 0 {
+        while !chan.unsentEvents.isEmpty {
             if let pusherEvent = chan.unsentEvents.popLast() {
                 chan.trigger(eventName: pusherEvent.name, data: pusherEvent.data)
             }
