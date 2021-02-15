@@ -6,11 +6,11 @@ import XCTest
 
 class InlineMockEventQueueDelegate: EventQueueDelegate {
     var didReceiveEvent: ((EventQueue, PusherEvent, String?) -> Void)?
-    var didFailToDecryptEvent: ((EventQueue, PusherEventPayload, String) -> Void)?
+    var didFailToDecryptEvent: ((EventQueue, ChannelEventPayload, String) -> Void)?
     var reloadDecryptionKeySync: ((EventQueue, PusherChannel) -> Void)?
-    var didReceiveInvalidEvent: ((EventQueue, PusherEventPayload) -> Void)?
+    var didReceiveInvalidEvent: ((EventQueue, ChannelEventPayload) -> Void)?
 
-    func eventQueue(_ eventQueue: EventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
+    func eventQueue(_ eventQueue: EventQueue, didReceiveInvalidEventWithPayload payload: ChannelEventPayload) {
         self.didReceiveInvalidEvent?(eventQueue, payload)
     }
 
@@ -18,7 +18,7 @@ class InlineMockEventQueueDelegate: EventQueueDelegate {
         self.didReceiveEvent?(eventQueue, event, channelName)
     }
 
-    func eventQueue(_ eventQueue: EventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
+    func eventQueue(_ eventQueue: EventQueue, didFailToDecryptEventWithPayload payload: ChannelEventPayload, forChannelName channelName: String) {
         self.didFailToDecryptEvent?(eventQueue, payload, channelName)
     }
 
