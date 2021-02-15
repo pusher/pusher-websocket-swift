@@ -5,11 +5,11 @@ import XCTest
 class PusherConnectionDelegateTests: XCTestCase {
     private class DummyDelegate: PusherDelegate {
         let stubber = StubberForMocks()
-        open var socket: MockWebSocket?
-        open var ex: XCTestExpectation?
+        var socket: MockWebSocket?
+        var ex: XCTestExpectation?
         var testingChannelName: String?
 
-        open func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
+        func changedConnectionState(from old: ConnectionState, to new: ConnectionState) {
             _ = stubber.stub(
                 functionName: "connectionChange",
                 args: [old, new],
@@ -17,13 +17,13 @@ class PusherConnectionDelegateTests: XCTestCase {
             )
         }
 
-        open func debugLog(message: String) {
+        func debugLog(message: String) {
             if message.range(of: "websocketDidReceiveMessage") != nil {
                 self.socket?.appendToCallbackCheckString(message)
             }
         }
 
-        open func subscribedToChannel(name: String) {
+        func subscribedToChannel(name: String) {
             guard let cName = testingChannelName, cName == name else {
                 return
             }
@@ -31,7 +31,7 @@ class PusherConnectionDelegateTests: XCTestCase {
             ex!.fulfill()
         }
 
-        open func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
+        func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
             guard let cName = testingChannelName, cName == name else {
                 return
             }
@@ -39,7 +39,7 @@ class PusherConnectionDelegateTests: XCTestCase {
             ex!.fulfill()
         }
 
-        open func receivedError(error: PusherError) {
+        func receivedError(error: PusherError) {
             _ = stubber.stub(
                 functionName: "error",
                 args: [error],

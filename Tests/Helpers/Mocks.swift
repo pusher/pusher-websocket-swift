@@ -4,7 +4,7 @@ import NWWebSocket
 
 @testable import PusherSwift
 
-open class MockWebSocket: NWWebSocket {
+class MockWebSocket: NWWebSocket {
     let stubber = StubberForMocks()
     var callbackCheckString: String = ""
     var objectGivenToCallback: Any?
@@ -14,19 +14,19 @@ open class MockWebSocket: NWWebSocket {
         super.init(url: URL(string: "test")!)
     }
 
-    open func appendToCallbackCheckString(_ str: String) {
+    func appendToCallbackCheckString(_ str: String) {
         self.callbackCheckString += str
     }
 
-    open func storeDataObjectGivenToCallback(_ data: Any) {
+    func storeDataObjectGivenToCallback(_ data: Any) {
         self.objectGivenToCallback = data
     }
 
-    open func storeEventGivenToCallback(_ event: PusherEvent) {
+    func storeEventGivenToCallback(_ event: PusherEvent) {
         self.eventGivenToCallback = event
     }
 
-    override open func connect() {
+    override func connect() {
         let connectionEstablishedString = "{\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"
         _ = stubber.stub(
             functionName: "connect",
@@ -42,7 +42,7 @@ open class MockWebSocket: NWWebSocket {
         )
     }
 
-    override open func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+    override func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
@@ -55,7 +55,7 @@ open class MockWebSocket: NWWebSocket {
     }
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    override open func send(string: String) {
+    override func send(string: String) {
         if string == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             _ = stubber.stub(
                 functionName: "writeString",
@@ -228,14 +228,14 @@ func stringContainsElements(_ str: String, elements: [String]) -> Bool {
     return allElementsPresent
 }
 
-open class MockPusherConnection: PusherConnection {
+class MockPusherConnection: PusherConnection {
     let stubber = StubberForMocks()
 
     init(options: PusherClientOptions = PusherClientOptions()) {
         super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: options)
     }
 
-    override open func handleEvent(event: PusherEvent) {
+    override func handleEvent(event: PusherEvent) {
         _ = stubber.stub(
             functionName: "handleEvent",
             args: [event],
@@ -244,10 +244,10 @@ open class MockPusherConnection: PusherConnection {
     }
 }
 
-open class StubberForMocks {
-    open var calls: [FunctionCall]
-    open var responses: [String: AnyObject]
-    open var callbacks: [([FunctionCall]) -> Void]
+class StubberForMocks {
+    var calls: [FunctionCall]
+    var responses: [String: AnyObject]
+    var callbacks: [([FunctionCall]) -> Void]
 
     init() {
         self.calls = []
@@ -255,7 +255,7 @@ open class StubberForMocks {
         self.callbacks = []
     }
 
-    open func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
+    func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
         calls.append(FunctionCall(name: functionName, args: args))
         if let response: AnyObject = responses[functionName] {
             self.callCallbacks(calls: calls)
@@ -267,18 +267,18 @@ open class StubberForMocks {
         return nil
     }
 
-    open func registerCallback(callback: @escaping ([FunctionCall]) -> Void) {
+    func registerCallback(callback: @escaping ([FunctionCall]) -> Void) {
         callbacks.append(callback)
     }
 
-    open func callCallbacks(calls: [FunctionCall]) {
+    func callCallbacks(calls: [FunctionCall]) {
         for callback in callbacks {
             callback(calls)
         }
     }
 }
 
-open class FunctionCall {
+class FunctionCall {
     let name: String
     let args: [Any]?
 
