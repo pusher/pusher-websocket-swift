@@ -2,5 +2,5 @@ import Foundation
 
 protocol EventFactory {
 
-    func makeEvent(fromJSON json: PusherEventPayload, withDecryptionKey decryptionKey: String?) throws -> PusherEvent
+    func makeEvent(fromJSON json: ChannelEventPayload, withDecryptionKey decryptionKey: String?) throws -> PusherEvent
 }

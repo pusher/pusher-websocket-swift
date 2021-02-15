@@ -4,5 +4,5 @@ protocol EventQueue {
 
     var delegate: EventQueueDelegate? { get set }
 
-    func enqueue(json: PusherEventPayload)
+    func enqueue(json: ChannelEventPayload)
 }

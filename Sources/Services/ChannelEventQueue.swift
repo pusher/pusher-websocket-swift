@@ -18,7 +18,7 @@ class ChannelEventQueue: EventQueue {
     }
 
     // MARK: - Event queue
-    public func enqueue(json: PusherEventPayload) {
+    public func enqueue(json: ChannelEventPayload) {
         var channel: PusherChannel?
 
         // If this event is for a particular channel, find the channel
@@ -37,7 +37,7 @@ class ChannelEventQueue: EventQueue {
 
     // MARK: - Private methods
 
-    private func processEventWithRetries(json: PusherEventPayload, channel: PusherChannel?) {
+    private func processEventWithRetries(json: ChannelEventPayload, channel: PusherChannel?) {
         do {
             try self.processEvent(json: json, channel: channel)
         } catch EventError.invalidDecryptionKey {
@@ -67,7 +67,7 @@ class ChannelEventQueue: EventQueue {
         }
     }
 
-    private func processEvent(json: PusherEventPayload, channel: PusherChannel? = nil) throws {
+    private func processEvent(json: ChannelEventPayload, channel: PusherChannel? = nil) throws {
         let event = try self.eventFactory.makeEvent(fromJSON: json, withDecryptionKey: channel?.decryptionKey)
         self.delegate?.eventQueue(self, didReceiveEvent: event, forChannelName: channel?.name)
     }

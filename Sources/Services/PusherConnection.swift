@@ -935,7 +935,7 @@ import NWWebSocket
 // MARK: - EventQueueDelegate methods
 
 extension PusherConnection: EventQueueDelegate {
-    func eventQueue(_ eventQueue: EventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
+    func eventQueue(_ eventQueue: EventQueue, didReceiveInvalidEventWithPayload payload: ChannelEventPayload) {
         DispatchQueue.main.async {
             Logger.shared.debug(for: .unableToHandleIncomingMessage,
                                 context: payload)
@@ -943,7 +943,7 @@ extension PusherConnection: EventQueueDelegate {
     }
 
     func eventQueue(_ eventQueue: EventQueue,
-                    didFailToDecryptEventWithPayload payload: PusherEventPayload,
+                    didFailToDecryptEventWithPayload payload: ChannelEventPayload,
                     forChannelName channelName: String) {
         DispatchQueue.main.async {
             if let eventName = payload[Constants.JSONKeys.event] as? String {

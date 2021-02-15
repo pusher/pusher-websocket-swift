@@ -6,10 +6,10 @@ protocol EventQueueDelegate: AnyObject {
                     didReceiveEvent event: PusherEvent,
                     forChannelName channelName: String?)
     func eventQueue(_ eventQueue: EventQueue,
-                    didFailToDecryptEventWithPayload payload: PusherEventPayload,
+                    didFailToDecryptEventWithPayload payload: ChannelEventPayload,
                     forChannelName channelName: String)
     func eventQueue(_ eventQueue: EventQueue,
-                    didReceiveInvalidEventWithPayload payload: PusherEventPayload)
+                    didReceiveInvalidEventWithPayload payload: ChannelEventPayload)
     func eventQueue(_ eventQueue: EventQueue,
                     reloadDecryptionKeySyncForChannel channel: PusherChannel)
 }

@@ -2,13 +2,13 @@ import Foundation
 
 // MARK: - Types
 
-typealias PusherEventPayload = [String: Any]
+typealias ChannelEventPayload = [String: Any]
 
 struct ChannelEventFactory: EventFactory {
 
     // MARK: - Event factory
 
-    func makeEvent(fromJSON json: PusherEventPayload,
+    func makeEvent(fromJSON json: ChannelEventPayload,
                    withDecryptionKey decryptionKey: String? = nil) throws -> PusherEvent {
         guard let eventName = json[Constants.JSONKeys.event] as? String else {
             throw EventError.invalidFormat
@@ -25,7 +25,7 @@ struct ChannelEventFactory: EventFactory {
 
     // MARK: - Private methods
 
-    private func data(fromJSON json: PusherEventPayload,
+    private func data(fromJSON json: ChannelEventPayload,
                       eventName: String,
                       channelName: String?,
                       decryptionKey: String?) throws -> String? {
