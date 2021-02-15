@@ -8,7 +8,7 @@ private func executeAndAssignEquatableResult<T>(_ expression: @autoclosure () th
     to = try expression()
 }
 
-public func XCTAssertNotNil<T>(_ expression: @autoclosure () throws -> T?, _ message: String = "", file: StaticString = #file, line: UInt = #line, also validateResult: (T) -> Void) {
+func XCTAssertNotNil<T>(_ expression: @autoclosure () throws -> T?, _ message: String = "", file: StaticString = #file, line: UInt = #line, also validateResult: (T) -> Void) {
 
     var result: T?
 
