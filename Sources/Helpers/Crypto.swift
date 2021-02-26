@@ -1,4 +1,4 @@
-import CommonCrypto
+import CryptoKit
 import Foundation
 import TweetNacl
 
@@ -17,33 +17,12 @@ struct Crypto {
     ///   - message: The message.
     /// - Returns: The hex-encoded MAC string.
     static func generateSHA256HMAC(secret: String, message: String) -> String {
-        let secretData = Data(secret.utf8)
-        let messageData = Data(message.utf8)
-
-        let algorithm = CCHmacAlgorithm(kCCHmacAlgSHA256)
-        let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
-
-        var digest = Data(count: digestLength)
-
-        digest.withUnsafeMutableBytes { (digestBytes: UnsafeMutableRawBufferPointer) in
-            secretData.withUnsafeBytes { (secretBytes: UnsafeRawBufferPointer) in
-                messageData.withUnsafeBytes { (messageBytes: UnsafeRawBufferPointer) in
-                    CCHmac(algorithm,
-                           secretBytes.baseAddress,
-                           secretData.count,
-                           messageBytes.baseAddress,
-                           messageData.count,
-                           digestBytes.baseAddress)
-                }
-            }
-        }
-
-        // Data to hex string
-        let signature = digest
-            .map { String(format: "%02x", $0) }
-            .joined()
+        let key = SymmetricKey(data: Data(secret.utf8))
+        let signature = HMAC<SHA256>.authenticationCode(for: Data(message.utf8), using: key)
 
         return signature
+            .map { String(format: "%02hhx", $0) }
+            .joined()
     }
 
     /// Decrypts some data `String` using a key, according to the NaCl secret box algorithm.
