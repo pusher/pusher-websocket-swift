@@ -31,7 +31,7 @@ struct ChannelEventFactory: EventFactory {
                       decryptionKey: String?) throws -> String? {
         let data = json[Constants.JSONKeys.data] as? String
 
-        if Crypto.shouldDecryptMessage(eventName: eventName, channelName: channelName) {
+        if PusherChannel.decryptsMessage(name: channelName, eventName: eventName) {
             return try Crypto.decrypt(data: data, decryptionKey: decryptionKey)
         } else {
             return data

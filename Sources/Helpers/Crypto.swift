@@ -55,22 +55,6 @@ struct Crypto {
         return decryptedString
     }
 
-    /// Determines whether or not a message should be decrypted, based on event and channel attributes.
-    /// - Parameters:
-    ///   - eventName: The name of the event.
-    ///   - channelName: The name of the channel associated with the event.
-    /// - Returns: A `Bool` indicating whether the message should be decrypted or not.
-    public static func shouldDecryptMessage(eventName: String, channelName: String?) -> Bool {
-        return isEncryptedChannel(channelName: channelName) && !isPusherSystemEvent(eventName: eventName)
-    }
-
-    /// Determines if a data sent over a channel are encrypted or not.
-    /// - Parameter channelName: The name of the channel.
-    /// - Returns: A `Bool` indicating whether the channel is encrypted or not.
-    public static func isEncryptedChannel(channelName: String?) -> Bool {
-        return channelName?.starts(with: "\(Constants.ChannelTypes.privateEncrypted)-") ?? false
-    }
-
     // MARK: - Private methods
 
     private static func encryptedData(fromData data: String) throws -> EncryptedData {
@@ -104,10 +88,5 @@ struct Crypto {
         }
 
         return decodedDecryptionKey
-    }
-
-    private static func isPusherSystemEvent(eventName: String) -> Bool {
-        return eventName.starts(with: "\(Constants.EventTypes.pusher):")
-            || eventName.starts(with: "\(Constants.EventTypes.pusherInternal):")
     }
 }

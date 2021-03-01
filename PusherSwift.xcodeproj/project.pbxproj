@@ -57,6 +57,7 @@
 		53AF00C525D2AE760005621D /* EventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AF00C425D2AE760005621D /* EventFactory.swift */; };
 		53AF00C925D2AEC70005621D /* EventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AF00C825D2AEC70005621D /* EventQueue.swift */; };
 		53AF00D125D2B02D0005621D /* EventQueueDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AF00D025D2B02D0005621D /* EventQueueDelegate.swift */; };
+		53F08C4825ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F08C4725ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift */; };
 		736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
 		736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */; };
 		E2498293231E612700CFBBD6 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
@@ -134,6 +135,7 @@
 		53AF00C425D2AE760005621D /* EventFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFactory.swift; sourceTree = "<group>"; };
 		53AF00C825D2AEC70005621D /* EventQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventQueue.swift; sourceTree = "<group>"; };
 		53AF00D025D2B02D0005621D /* EventQueueDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventQueueDelegate.swift; sourceTree = "<group>"; };
+		53F08C4725ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherChannel+EncryptionHelpers.swift"; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
 		73D8A22C2435F381001FDE05 /* ChannelEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 		5333ACFC24F80F5C006E8DF0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				53F08C4725ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift */,
 				E2B21F0C243F5DC10049A35B /* PusherConnection+WebsocketDelegate.swift */,
 				533CA05825D42FE400043763 /* URL+Pusher.swift */,
 			);
@@ -587,6 +590,7 @@
 				3390D1E81F054D1E00E1944D /* Authorizer.swift in Sources */,
 				3389F5721CAEDDF300563F49 /* PusherChannels.swift in Sources */,
 				E2CFE43122D79CA7004187C3 /* EventParser.swift in Sources */,
+				53F08C4825ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift in Sources */,
 				53A9AFCD25CDAFD8008B1736 /* EventError.swift in Sources */,
 				3389F5761CAEDE2800563F49 /* PusherGlobalChannel.swift in Sources */,
 				E2B21F01243F5B1E0049A35B /* ChannelEventFactory.swift in Sources */,
