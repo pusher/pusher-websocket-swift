@@ -1,20 +1,17 @@
 import Foundation
 
-protocol PusherEventFactory {
+// MARK: - Types
 
-    func makeEvent(fromJSON json: PusherEventPayload, withDecryptionKey decryptionKey: String?) throws -> PusherEvent
-}
+typealias ChannelEventPayload = [String: Any]
 
-// MARK: - Concrete implementation
-
-struct PusherConcreteEventFactory: PusherEventFactory {
+struct ChannelEventFactory: EventFactory {
 
     // MARK: - Event factory
 
-    func makeEvent(fromJSON json: PusherEventPayload,
+    func makeEvent(fromJSON json: ChannelEventPayload,
                    withDecryptionKey decryptionKey: String? = nil) throws -> PusherEvent {
         guard let eventName = json[Constants.JSONKeys.event] as? String else {
-            throw PusherEventError.invalidFormat
+            throw EventError.invalidFormat
         }
 
         let channelName = json[Constants.JSONKeys.channel] as? String
@@ -28,20 +25,16 @@ struct PusherConcreteEventFactory: PusherEventFactory {
 
     // MARK: - Private methods
 
-    private func data(fromJSON json: PusherEventPayload,
+    private func data(fromJSON json: ChannelEventPayload,
                       eventName: String,
                       channelName: String?,
                       decryptionKey: String?) throws -> String? {
         let data = json[Constants.JSONKeys.data] as? String
 
-        if PusherEncryptionHelpers.shouldDecryptMessage(eventName: eventName, channelName: channelName) {
-            return try PusherDecryptor.decrypt(data: data, decryptionKey: decryptionKey)
+        if PusherChannel.decryptsMessage(name: channelName, eventName: eventName) {
+            return try Crypto.decrypt(data: data, decryptionKey: decryptionKey)
         } else {
             return data
         }
     }
 }
-
-// MARK: - Types
-
-typealias PusherEventPayload = [String: Any]

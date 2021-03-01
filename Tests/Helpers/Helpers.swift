@@ -18,20 +18,20 @@ func convertStringToDictionary(_ text: String) -> [String: AnyObject]? {
 }
 
 extension AuthMethod: Equatable {
-}
 
-public func == (lhs: AuthMethod, rhs: AuthMethod) -> Bool {
-    switch (lhs, rhs) {
-    case (let .endpoint(authEndpoint1), let .endpoint(authEndpoint2)):
-        return authEndpoint1 == authEndpoint2
+    public static func == (lhs: AuthMethod, rhs: AuthMethod) -> Bool {
+        switch (lhs, rhs) {
+        case (let .endpoint(authEndpoint1), let .endpoint(authEndpoint2)):
+            return authEndpoint1 == authEndpoint2
 
-    case (let .inline(secret1), let .inline(secret2)):
-        return secret1 == secret2
+        case (let .inline(secret1), let .inline(secret2)):
+            return secret1 == secret2
 
-    case (.noMethod, .noMethod):
-        return true
+        case (.noMethod, .noMethod):
+            return true
 
-    default:
-        return false
+        default:
+            return false
+        }
     }
 }

@@ -4,33 +4,33 @@ import XCTest
 
 // swiftlint:disable unused_closure_parameter
 
-class InlineMockEventQueueDelegate: PusherEventQueueDelegate {
-    var didReceiveEvent: ((PusherEventQueue, PusherEvent, String?) -> Void)?
-    var didFailToDecryptEvent: ((PusherEventQueue, PusherEventPayload, String) -> Void)?
-    var reloadDecryptionKeySync: ((PusherEventQueue, PusherChannel) -> Void)?
-    var didReceiveInvalidEvent: ((PusherEventQueue, PusherEventPayload) -> Void)?
+class InlineMockEventQueueDelegate: EventQueueDelegate {
+    var didReceiveEvent: ((EventQueue, PusherEvent, String?) -> Void)?
+    var didFailToDecryptEvent: ((EventQueue, ChannelEventPayload, String) -> Void)?
+    var reloadDecryptionKeySync: ((EventQueue, PusherChannel) -> Void)?
+    var didReceiveInvalidEvent: ((EventQueue, ChannelEventPayload) -> Void)?
 
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveInvalidEventWithPayload payload: PusherEventPayload) {
+    func eventQueue(_ eventQueue: EventQueue, didReceiveInvalidEventWithPayload payload: ChannelEventPayload) {
         self.didReceiveInvalidEvent?(eventQueue, payload)
     }
 
-    func eventQueue(_ eventQueue: PusherEventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?) {
+    func eventQueue(_ eventQueue: EventQueue, didReceiveEvent event: PusherEvent, forChannelName channelName: String?) {
         self.didReceiveEvent?(eventQueue, event, channelName)
     }
 
-    func eventQueue(_ eventQueue: PusherEventQueue, didFailToDecryptEventWithPayload payload: PusherEventPayload, forChannelName channelName: String) {
+    func eventQueue(_ eventQueue: EventQueue, didFailToDecryptEventWithPayload payload: ChannelEventPayload, forChannelName channelName: String) {
         self.didFailToDecryptEvent?(eventQueue, payload, channelName)
     }
 
-    func eventQueue(_ eventQueue: PusherEventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel) {
+    func eventQueue(_ eventQueue: EventQueue, reloadDecryptionKeySyncForChannel channel: PusherChannel) {
         self.reloadDecryptionKeySync?(eventQueue, channel)
     }
 }
 
-class PusherEventQueueTests: XCTestCase {
+class ChannelEventQueueTests: XCTestCase {
 
-    private var eventQueue: PusherEventQueue!
-    private var eventFactory: PusherEventFactory!
+    private var eventQueue: ChannelEventQueue!
+    private var eventFactory: EventFactory!
     // swiftlint:disable:next weak_delegate
     private var eventQueueDelegate: InlineMockEventQueueDelegate!
     private var channels: PusherChannels!
@@ -40,8 +40,8 @@ class PusherEventQueueTests: XCTestCase {
         super.setUp()
         channels = PusherChannels()
         connection = MockPusherConnection()
-        eventFactory = PusherConcreteEventFactory()
-        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, channels: channels)
+        eventFactory = ChannelEventFactory()
+        eventQueue = ChannelEventQueue(eventFactory: eventFactory, channels: channels)
         eventQueueDelegate = InlineMockEventQueueDelegate()
         eventQueue.delegate = eventQueueDelegate
     }

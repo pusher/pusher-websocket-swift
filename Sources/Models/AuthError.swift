@@ -1,6 +1,6 @@
 import Foundation
 
-struct PusherAuthError: Error {
+struct AuthError: Error {
     enum Kind {
         case notConnected
         case noMethod

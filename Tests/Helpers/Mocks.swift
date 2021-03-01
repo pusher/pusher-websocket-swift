@@ -4,7 +4,7 @@ import NWWebSocket
 
 @testable import PusherSwift
 
-open class MockWebSocket: NWWebSocket {
+class MockWebSocket: NWWebSocket {
     let stubber = StubberForMocks()
     var callbackCheckString: String = ""
     var objectGivenToCallback: Any?
@@ -14,19 +14,19 @@ open class MockWebSocket: NWWebSocket {
         super.init(url: URL(string: "test")!)
     }
 
-    open func appendToCallbackCheckString(_ str: String) {
+    func appendToCallbackCheckString(_ str: String) {
         self.callbackCheckString += str
     }
 
-    open func storeDataObjectGivenToCallback(_ data: Any) {
+    func storeDataObjectGivenToCallback(_ data: Any) {
         self.objectGivenToCallback = data
     }
 
-    open func storeEventGivenToCallback(_ event: PusherEvent) {
+    func storeEventGivenToCallback(_ event: PusherEvent) {
         self.eventGivenToCallback = event
     }
 
-    override open func connect() {
+    override func connect() {
         let connectionEstablishedString = "{\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}"
         _ = stubber.stub(
             functionName: "connect",
@@ -42,7 +42,7 @@ open class MockWebSocket: NWWebSocket {
         )
     }
 
-    override open func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+    override func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
@@ -55,7 +55,7 @@ open class MockWebSocket: NWWebSocket {
     }
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    override open func send(string: String) {
+    override func send(string: String) {
         if string == "{\"data\":{\"channel\":\"test-channel\"},\"event\":\"pusher:subscribe\"}" || string == "{\"event\":\"pusher:subscribe\",\"data\":{\"channel\":\"test-channel\"}}" {
             _ = stubber.stub(
                 functionName: "writeString",
@@ -217,7 +217,7 @@ open class MockWebSocket: NWWebSocket {
     }
 }
 
-public func stringContainsElements(_ str: String, elements: [String]) -> Bool {
+func stringContainsElements(_ str: String, elements: [String]) -> Bool {
     var allElementsPresent = true
     for element in elements {
         if str.range(of: element) == nil {
@@ -228,14 +228,14 @@ public func stringContainsElements(_ str: String, elements: [String]) -> Bool {
     return allElementsPresent
 }
 
-open class MockPusherConnection: PusherConnection {
+class MockPusherConnection: PusherConnection {
     let stubber = StubberForMocks()
 
     init(options: PusherClientOptions = PusherClientOptions()) {
         super.init(key: "key", socket: MockWebSocket(), url: "ws://blah.blah:80", options: options)
     }
 
-    override open func handleEvent(event: PusherEvent) {
+    override func handleEvent(event: PusherEvent) {
         _ = stubber.stub(
             functionName: "handleEvent",
             args: [event],
@@ -244,10 +244,10 @@ open class MockPusherConnection: PusherConnection {
     }
 }
 
-open class StubberForMocks {
-    open var calls: [FunctionCall]
-    open var responses: [String: AnyObject]
-    open var callbacks: [([FunctionCall]) -> Void]
+class StubberForMocks {
+    var calls: [FunctionCall]
+    var responses: [String: AnyObject]
+    var callbacks: [([FunctionCall]) -> Void]
 
     init() {
         self.calls = []
@@ -255,7 +255,7 @@ open class StubberForMocks {
         self.callbacks = []
     }
 
-    open func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
+    func stub(functionName: String, args: [Any]?, functionToCall: (() -> Void)?) -> AnyObject? {
         calls.append(FunctionCall(name: functionName, args: args))
         if let response: AnyObject = responses[functionName] {
             self.callCallbacks(calls: calls)
@@ -267,20 +267,20 @@ open class StubberForMocks {
         return nil
     }
 
-    open func registerCallback(callback: @escaping ([FunctionCall]) -> Void) {
+    func registerCallback(callback: @escaping ([FunctionCall]) -> Void) {
         callbacks.append(callback)
     }
 
-    open func callCallbacks(calls: [FunctionCall]) {
+    func callCallbacks(calls: [FunctionCall]) {
         for callback in callbacks {
             callback(calls)
         }
     }
 }
 
-open class FunctionCall {
-    public let name: String
-    public let args: [Any]?
+class FunctionCall {
+    let name: String
+    let args: [Any]?
 
     init(name: String, args: [Any]?) {
         self.name = name
@@ -288,18 +288,18 @@ open class FunctionCall {
     }
 }
 
-public typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSError?)
+typealias Response = (data: Data?, urlResponse: URLResponse?, error: NSError?)
 
-public class MockSession: URLSession {
-    public static var mockResponses: [String: Response] = [:]
+class MockSession: URLSession {
+    static var mockResponses: [String: Response] = [:]
     // swiftlint:disable:next large_tuple
-    public static var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
+    static var mockResponse: (data: Data?, urlResponse: URLResponse?, error: NSError?) = (data: nil, urlResponse: nil, error: nil)
 
-    override public class var shared: URLSession {
+    override class var shared: URLSession {
         return MockSession()
     }
 
-    override public func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+    override func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         var response: Response
         let mockedMethodAndUrlString = "\(with.httpMethod!)||\((with.url?.absoluteString)!)"
 
@@ -311,22 +311,22 @@ public class MockSession: URLSession {
         return MockTask(response: response, completionHandler: completionHandler)
     }
 
-    public class func addMockResponse(for url: URL, httpMethod: String, data: Data?, urlResponse: URLResponse?, error: NSError?) {
+    class func addMockResponse(for url: URL, httpMethod: String, data: Data?, urlResponse: URLResponse?, error: NSError?) {
         let response = (data: data, urlResponse: urlResponse, error: error)
         let mockedResponseString = "\(httpMethod)||\(url.absoluteString)"
         mockResponses[mockedResponseString] = response
     }
 
-    public class MockTask: URLSessionDataTask {
-        public var mockResponse: Response
-        public let completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?
+    class MockTask: URLSessionDataTask {
+        var mockResponse: Response
+        let completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?
 
-        public init(response: Response, completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?) {
+        init(response: Response, completionHandler: ((Data?, URLResponse?, NSError?) -> Void)?) {
             self.mockResponse = response
             self.completionHandler = completionHandler
         }
 
-        override public func resume() {
+        override func resume() {
             DispatchQueue.global(qos: .default).async {
                 self.completionHandler!(self.mockResponse.data, self.mockResponse.urlResponse, self.mockResponse.error)
             }

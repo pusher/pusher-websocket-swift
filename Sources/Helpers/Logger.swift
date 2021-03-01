@@ -1,7 +1,7 @@
 import Foundation
 
 /// Used for logging events for informational purposes
-class PusherLogger {
+class Logger {
 
     // MARK: - Enum definitions
 
@@ -68,7 +68,7 @@ class PusherLogger {
         case error      = "[PUSHER ERROR]"
     }
 
-    static let shared = PusherLogger()
+    static let shared = Logger()
 
     weak var delegate: PusherDelegate?
 

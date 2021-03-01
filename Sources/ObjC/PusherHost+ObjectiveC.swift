@@ -15,7 +15,7 @@ public extension PusherHost {
         switch source.type {
         case 0: return PusherHost.host(source.host!)
         case 1: return PusherHost.cluster(source.cluster!)
-        default: return PusherHost.host(Constants.API.defaultHost)
+        default: return PusherHost.defaultHost
         }
     }
 }

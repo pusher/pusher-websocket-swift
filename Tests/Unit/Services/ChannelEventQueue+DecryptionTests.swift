@@ -3,11 +3,11 @@ import XCTest
 
 // swiftlint:disable unused_closure_parameter
 
-class PusherEventQueueDecryptionTests: XCTestCase {
+class ChannelEventQueueDecryptionTests: XCTestCase {
 
-    private var eventQueue: PusherEventQueue!
+    private var eventQueue: ChannelEventQueue!
     private var channels: PusherChannels!
-    private var eventFactory: PusherEventFactory!
+    private var eventFactory: EventFactory!
     // swiftlint:disable:next weak_delegate
     private var eventQueueDelegate: InlineMockEventQueueDelegate!
     private var mockConnection: PusherConnection!
@@ -15,8 +15,8 @@ class PusherEventQueueDecryptionTests: XCTestCase {
     override func setUp() {
         super.setUp()
         channels = PusherChannels()
-        eventFactory = PusherConcreteEventFactory()
-        eventQueue = PusherConcreteEventQueue(eventFactory: eventFactory, channels: channels)
+        eventFactory = ChannelEventFactory()
+        eventQueue = ChannelEventQueue(eventFactory: eventFactory, channels: channels)
         eventQueueDelegate = InlineMockEventQueueDelegate()
         eventQueue.delegate = eventQueueDelegate
         mockConnection = MockPusherConnection()

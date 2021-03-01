@@ -2,12 +2,12 @@ import XCTest
 
 @testable import PusherSwift
 
-class PusherEventFactoryTests: XCTestCase {
+class ChannelEventFactoryTests: XCTestCase {
 
-    private var eventFactory: PusherConcreteEventFactory!
+    private var eventFactory: ChannelEventFactory!
 
     override func setUp() {
-        eventFactory = PusherConcreteEventFactory()
+        eventFactory = ChannelEventFactory()
     }
 
     func testChannelNameIsExtracted() throws {
@@ -211,7 +211,7 @@ class PusherEventFactoryTests: XCTestCase {
         """.toJsonDict()
 
         XCTAssertThrowsError(try eventFactory.makeEvent(fromJSON: jsonDict, withDecryptionKey: nil)) { error in
-            XCTAssertEqual(error as? PusherEventError, PusherEventError.invalidFormat)
+            XCTAssertEqual(error as? EventError, EventError.invalidFormat)
         }
     }
 }

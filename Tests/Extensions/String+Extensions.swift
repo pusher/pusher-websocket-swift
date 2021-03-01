@@ -2,7 +2,7 @@ import XCTest
 
 extension String {
 
-    public func removing(_ set: CharacterSet) -> String {
+    func removing(_ set: CharacterSet) -> String {
         var newString = self
         newString.removeAll { char -> Bool in
             guard let scalar = char.unicodeScalars.first else { return false }
@@ -11,11 +11,11 @@ extension String {
         return newString
     }
 
-    public var escaped: String {
+    var escaped: String {
         return self.debugDescription
     }
 
-    public func toJsonData(validate: Bool = true, file: StaticString = #file, line: UInt = #line) -> Data {
+    func toJsonData(validate: Bool = true, file: StaticString = #file, line: UInt = #line) -> Data {
         do {
             let data = try self.toData()
             if validate {
@@ -29,7 +29,7 @@ extension String {
         return Data()
     }
 
-    public func toJsonDict(file: StaticString = #file, line: UInt = #line) -> [String: Any] {
+    func toJsonDict(file: StaticString = #file, line: UInt = #line) -> [String: Any] {
         do {
             let json = try toJsonAny()
 
