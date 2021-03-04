@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.2.0...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.2.1...HEAD)
+
+## [9.2.1](https://github.com/pusher/pusher-websocket-swift/compare/9.2.0...9.2.1) - 2021-03-04
+
+### Deprecated
+
+- Marked the legacy `bind(_ callback:)` method on `Pusher` as deprecated.
+- Marked the legacy `bind(eventName:callback:)` method on `PusherChannel` as deprecated.
 
 ## [9.2.0](https://github.com/pusher/pusher-websocket-swift/compare/9.1.1...9.2.0) - 2021-01-15
 
