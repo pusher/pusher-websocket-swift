@@ -35,10 +35,6 @@ open class PusherChannel: NSObject {
         }
     }
 
-    internal var shouldParseJSONForLegacyCallbacks: Bool {
-        return connection?.options.attemptToReturnJSONObject ?? true
-    }
-
     /**
         Initializes a new PusherChannel with a given name and connection
 
@@ -54,37 +50,6 @@ open class PusherChannel: NSObject {
         self.connection = connection
         self.auth = auth
         self.type = PusherChannelType(name: name)
-    }
-
-    /**
-        Binds a callback to a given event name, scoped to the PusherChannel the function is
-        called on
-
-        - parameter eventName: The name of the event to bind to
-        - parameter callback:  The function to call when a new event is received. The
-                               callback receives the event's data payload
-
-        - returns: A unique callbackId that can be used to unbind the callback at a later time
-    */
-    @available(*, deprecated, message: "This will be removed in v10.0.0. Use 'bind(eventName:eventCallback:)' instead.")
-    @discardableResult open func bind(eventName: String, callback: @escaping (Any?) -> Void) -> String {
-        return bind(eventName: eventName, eventCallback: { [weak self] (event: PusherEvent) -> Void in
-            guard let self = self else { return }
-            // Mimic the old parsing behavior for backwards compatibility
-            let callbackData: Any?
-            if self.shouldParseJSONForLegacyCallbacks {
-                if let data = event.dataToJSONObject() {
-                    // Parsed data
-                    callbackData = data
-                } else {
-                    // Unparsed string if we couldn't parse
-                    callbackData = event.data
-                }
-            } else {
-                callbackData = event.raw[Constants.JSONKeys.data]
-            }
-            callback(callbackData)
-        })
     }
 
     /**

@@ -204,54 +204,23 @@ class PusherTopLevelApiTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    func testSubscriptionSucceededEventSentToGlobalChannelViaDataCallback() {
-        let ex = expectation(description: "should call global callback")
-        pusher.connect()
-        let callback = { (data: Any?) -> Void in
-            guard let data = data as? [String: Any],
-                  let eName = data["event"] as? String,
-                  eName == "pusher:subscription_succeeded" else {
-                return
-            }
-
-            ex.fulfill()
-        }
-        _ = pusher.bind(callback)
-        _ = pusher.subscribe("test-channel")
-        waitForExpectations(timeout: 0.5)
-    }
-
-    func testSubscriptionSucceededEventSentToChannelCallbackViaDataCallback() {
-        let ex = expectation(description: "should call channel callback")
-        let callback = { (data: Any?) -> Void in
-            ex.fulfill()
-        }
-        let channel = pusher.subscribe("test-channel")
-        _ = channel.bind(eventName: "pusher:subscription_succeeded", callback: callback)
-        pusher.connect()
-        waitForExpectations(timeout: 0.5)
-    }
-
     func testSubscriptionSucceededEventSentToGlobalChannelViaEventCallback() {
         let ex = expectation(description: "should call global callback")
         pusher.connect()
-        let callback = { (event: PusherEvent) -> Void in
-            if event.eventName == "pusher:subscription_succeeded" {
-                ex.fulfill()
-            }
+        pusher.bind { event in
+            XCTAssertEqual(event.eventName, "pusher:subscription_succeeded")
+            ex.fulfill()
         }
-        _ = pusher.bind(eventCallback: callback)
         _ = pusher.subscribe("test-channel")
         waitForExpectations(timeout: 0.5)
     }
 
     func testSubscriptionSucceededEventSentToChannelCallbackViaEventCallback() {
         let ex = expectation(description: "should call channel callback")
-        let callback = { (event: PusherEvent) -> Void in
+        let channel = pusher.subscribe("test-channel")
+        channel.bind(eventName: "pusher:subscription_succeeded") { event in
             ex.fulfill()
         }
-        let channel = pusher.subscribe("test-channel")
-        _ = channel.bind(eventName: "pusher:subscription_succeeded", eventCallback: callback)
         pusher.connect()
         waitForExpectations(timeout: 0.5)
     }
@@ -453,67 +422,29 @@ class PusherTopLevelApiTests: XCTestCase {
 
     /* global channel interactions */
 
-    func testBindingToEventsGloballyAddsALegacyCallbackToTheGlobalChannel() {
-        pusher.connect()
-        let callback = { (data: Any?) in }
-
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 0, "the global channel should not have any bound callbacks")
-        _ = pusher.bind(callback)
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 1, "the global channel should have 1 bound callback")
-    }
-
     func testBindingToEventsGloballyAddsACallbackToTheGlobalChannel() {
         pusher.connect()
-        let callback = { (data: PusherEvent?) in }
 
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
-        _ = pusher.bind(eventCallback: callback)
+        pusher.bind { event in }
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
-    }
-
-    func testUnbindingAGlobalDataCallbackRemovesItFromTheGlobalChannelsCallbackList() {
-        pusher.connect()
-        let callback = { (data: Any?) in }
-        let callBackId = pusher.bind(callback)
-
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 1, "the global channel should have 1 bound callback")
-        pusher.unbind(callbackId: callBackId)
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 0, "the global channel should not have any bound callbacks")
     }
 
     func testUnbindingAGlobalEventCallbackRemovesItFromTheGlobalChannelsCallbackList() {
         pusher.connect()
-        let callback = { (event: PusherEvent) in }
-        let callBackId = pusher.bind(eventCallback: callback)
+        let callBackId = pusher.bind { event in }
 
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound callback")
         pusher.unbind(callbackId: callBackId)
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound callbacks")
     }
 
-    func testUnbindingAllGlobalCallbacksShouldRemoveAllLegacyCallbacksFromGlobalChannel() {
-        pusher.connect()
-        let callback = { (data: Any?) in }
-        _ = pusher.bind(callback)
-        let callbackTwo = { (someData: Any?) in }
-        _ = pusher.bind(callbackTwo)
-
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 2, "the global channel should have 2 bound callbacks")
-        pusher.unbindAll()
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 0, "the global channel should not have any bound callbacks")
-    }
-
     func testUnbindingAllGlobalCallbacksShouldRemoveAllCallbacksFromGlobalChannel() {
         pusher.connect()
-        let callback = { (data: Any?) in }
-        _ = pusher.bind(callback)
-        let callbackTwo = { (someData: PusherEvent?) in }
-        _ = pusher.bind(eventCallback: callbackTwo)
+        pusher.bind { event in }
 
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 1, "the global channel should have 1 bound legacy callback")
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 1, "the global channel should have 1 bound regular callback")
         pusher.unbindAll()
-        XCTAssertEqual(pusher.connection.globalChannel?.globalLegacyCallbacks.count, 0, "the global channel should not have any bound legacy callbacks")
         XCTAssertEqual(pusher.connection.globalChannel?.globalCallbacks.count, 0, "the global channel should not have any bound regular callbacks")
     }
 }

@@ -22,7 +22,7 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testCallbacksOnGlobalChannelShouldBeCalled() {
         let ex = expectation(description: "Callback should be called")
         _ = pusher.subscribe(channelName: "my-channel")
-        _ = pusher.bind { (_: Any?) -> Void in
+        pusher.bind { event in
             ex.fulfill()
         }
 
@@ -41,7 +41,7 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testCallbacksOnRelevantChannelsShouldBeCalled() {
         let ex = expectation(description: "Callback should be called")
         let chan = pusher.subscribe("my-channel")
-        _ = chan.bind(eventName: "test-event") { (_: Any?) -> Void in
+        chan.bind(eventName: "test-event") { event in
             ex.fulfill()
         }
 
@@ -61,11 +61,13 @@ class HandlingIncomingEventsTests: XCTestCase {
         let globalEx = expectation(description: "Global callback should be called")
         let channelEx = expectation(description: "Channel callback should be called")
 
-        let callback = { (data: Any?) -> Void in globalEx.fulfill() }
-        _ = pusher.bind(callback)
+        pusher.bind { event in
+            globalEx.fulfill()
+        }
         let chan = pusher.subscribe("my-channel")
-        let callbackForChannel = { (data: Any?) -> Void in channelEx.fulfill() }
-        _ = chan.bind(eventName: "test-event", callback: callbackForChannel)
+        chan.bind(eventName: "test-event") { event in
+            channelEx.fulfill()
+        }
 
         let jsonDict = """
         {
@@ -81,12 +83,13 @@ class HandlingIncomingEventsTests: XCTestCase {
 
     func testGlobalCallbackReturnsEventData() {
         let ex = expectation(description: "Callback should be called")
-        let callback = { (data: Any?) -> Void in
-            XCTAssertEqual(data as! [String: String], ["event": "test-event", "channel": "my-channel", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
+        _ = pusher.subscribe("my-channel")
+        pusher.bind { event in
+            XCTAssertEqual(event.channelName, "my-channel")
+            XCTAssertEqual(event.eventName, "test-event")
+            XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
             ex.fulfill()
         }
-        _ = pusher.subscribe("my-channel")
-        _ = pusher.bind(callback)
 
         let jsonDict = """
         {
@@ -108,12 +111,13 @@ class HandlingIncomingEventsTests: XCTestCase {
      */
     func testGlobalCallbackReturnsEventDataWithoutChannelName() {
         let ex = expectation(description: "Callback should be called")
-        let callback = { (data: Any?) -> Void in
-            XCTAssertEqual(data as! [String: String], ["event": "test-event", "data": "{\"test\":\"test string\",\"and\":\"another\"}"])
+        _ = pusher.subscribe("my-channel")
+        pusher.bind { event in
+            XCTAssertNil(event.channelName)
+            XCTAssertEqual(event.eventName, "test-event")
+            XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
             ex.fulfill()
         }
-        _ = pusher.subscribe("my-channel")
-        _ = pusher.bind(callback)
 
         let jsonDict = """
         {
@@ -162,13 +166,12 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testReturningAJSONObjectToCallbacksIfTheStringCanBeParsed() {
         let ex = expectation(description: "Callback should be called")
 
-        let callback = { (data: Any?) -> Void in
-            XCTAssertEqual(data as! [String: String], ["test": "test string", "and": "another"])
+        let chan = pusher.subscribe("my-channel")
+        chan.bind(eventName: "test-event") { event in
+            event.dataToJSONObject() as! [String: String]
+            XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
             ex.fulfill()
         }
-
-        let chan = pusher.subscribe("my-channel")
-        _ = chan.bind(eventName: "test-event", callback: callback)
 
         let jsonDict = """
         {
@@ -185,13 +188,11 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testReturningAJSONStringToCallbacksIfTheStringCannotBeParsed() {
         let ex = expectation(description: "Callback should be called")
 
-        let callback = { (data: Any?) -> Void in
-            XCTAssertEqual(data as? String, "test")
+        let chan = pusher.subscribe("my-channel")
+        chan.bind(eventName: "test-event") { event in
+            XCTAssertEqual(event.data, "test")
             ex.fulfill()
         }
-
-        let chan = pusher.subscribe("my-channel")
-        _ = chan.bind(eventName: "test-event", callback: callback)
 
         let jsonDict = """
         {
@@ -212,12 +213,11 @@ class HandlingIncomingEventsTests: XCTestCase {
         pusher = Pusher(key: key, options: options)
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
-        let callback = { (data: Any?) -> Void in
-            XCTAssertEqual(data as? String, "{\"test\":\"test string\",\"and\":\"another\"}")
+        let chan = pusher.subscribe("my-channel")
+        chan.bind(eventName: "test-event") { event in
+            XCTAssertEqual(event.data, "{\"test\":\"test string\",\"and\":\"another\"}")
             ex.fulfill()
         }
-        let chan = pusher.subscribe("my-channel")
-        _ = chan.bind(eventName: "test-event", callback: callback)
 
         let jsonDict = """
         {
@@ -257,7 +257,8 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testEventObjectReturnedToChannelCallback() {
         let ex = expectation(description: "Callback should be called")
 
-        let callback = { (event: PusherEvent) -> Void in
+        let chan = pusher.subscribe("my-channel")
+        chan.bind(eventName: "test-event") { event in
             XCTAssertEqual(event.eventName, "test-event")
             XCTAssertEqual(event.channelName!, "my-channel")
             XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
@@ -272,8 +273,6 @@ class HandlingIncomingEventsTests: XCTestCase {
 
             ex.fulfill()
         }
-        let chan = pusher.subscribe("my-channel")
-        _ = chan.bind(eventName: "test-event", eventCallback: callback)
 
         let jsonDict = """
         {
@@ -290,7 +289,8 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testEventObjectReturnedToGlobalCallback() {
         let ex = expectation(description: "Callback should be called")
 
-        let callback = { (event: PusherEvent) -> Void in
+        _ = pusher.subscribe("my-channel")
+        pusher.bind { event in
             XCTAssertEqual(event.eventName, "test-event")
             XCTAssertEqual(event.channelName!, "my-channel")
             XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
@@ -305,8 +305,6 @@ class HandlingIncomingEventsTests: XCTestCase {
 
             ex.fulfill()
         }
-        _ = pusher.subscribe("my-channel")
-        _ = pusher.bind(eventCallback: callback)
 
         XCTAssertNil(socket.eventGivenToCallback)
          let jsonDict = """
