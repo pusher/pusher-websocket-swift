@@ -126,8 +126,8 @@ class AuthenticationTests: XCTestCase {
         XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
 
         pusher.bind { event in
-            XCTAssertEqual("pusher:subscription_error", event.eventName)
-            XCTAssertEqual("private-test-channel", event.channelName)
+            XCTAssertEqual(event.eventName, "pusher:subscription_error")
+            XCTAssertEqual(event.channelName, "private-test-channel")
             XCTAssertTrue(Thread.isMainThread)
             ex.fulfill()
         }

@@ -61,7 +61,7 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
 
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
             XCTAssertEqual(event.data, expectedDecryptedPayload)
-            XCTAssertEqual("private-encrypted-channel", channelName)
+            XCTAssertEqual(channelName, "private-encrypted-channel")
             ex.fulfill()
         }
 
@@ -94,7 +94,7 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         eventQueueDelegate.didFailToDecryptEvent = { eventQueue, payload, channelName in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: payload)
             XCTAssertTrue(equal)
-            XCTAssertEqual("private-encrypted-channel", channelName)
+            XCTAssertEqual(channelName, "private-encrypted-channel")
             ex.fulfill()
         }
 
@@ -143,7 +143,7 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
 
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
             XCTAssertEqual(event.data, expectedDecryptedPayload)
-            XCTAssertEqual("private-encrypted-channel", channelName)
+            XCTAssertEqual(channelName, "private-encrypted-channel")
             receivedEv.fulfill()
         }
 
@@ -186,7 +186,7 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         eventQueueDelegate.didFailToDecryptEvent = { event, payload, channelName in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: payload)
             XCTAssertTrue(equal)
-            XCTAssertEqual("private-encrypted-channel", channelName)
+            XCTAssertEqual(channelName, "private-encrypted-channel")
             failedEv.fulfill()
         }
 
@@ -252,13 +252,13 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         eventQueueDelegate.didFailToDecryptEvent = { event, payload, channelName in
             let equal = NSDictionary(dictionary: undecryptableEvent).isEqual(to: payload)
             XCTAssertTrue(equal)
-            XCTAssertEqual("private-encrypted-channel", channelName)
+            XCTAssertEqual(channelName, "private-encrypted-channel")
             failedEx.fulfill()
         }
 
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
             XCTAssertEqual(expectedDecryptedPayload, event.data)
-            XCTAssertEqual("private-encrypted-channel", channelName)
+            XCTAssertEqual(channelName, "private-encrypted-channel")
             successEx.fulfill()
         }
 
