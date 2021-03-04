@@ -130,39 +130,6 @@ class HandlingIncomingEventsTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    func testGlobalCallbackReturnsErrorData() {
-        let ex = expectation(description: "Callback should be called")
-
-        let callback = { (eventData: Any?) -> Void in
-            guard let event = eventData as? [String: AnyObject] else {
-                return XCTFail("Event not received")
-            }
-
-            guard let eventName = event["event"] as? String else {
-                return XCTFail("No event name in event")
-            }
-            XCTAssertEqual(eventName, "pusher:error")
-
-            guard let data = event["data"] as? [String: String] else {
-                return XCTFail("No data in event")
-            }
-            XCTAssertEqual(data, ["code": "<null>", "message": "Existing subscription to channel my-channel"] as [String: String])
-            ex.fulfill()
-        }
-        _ = pusher.bind(callback)
-
-        let jsonDict = """
-        {
-            "event": "pusher:error",
-            "channel": "my-channel",
-            "data": {"code": "<null>", "message": "Existing subscription to channel my-channel"}
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
-
-        waitForExpectations(timeout: 0.5)
-    }
-
     func testReturningAJSONObjectToCallbacksIfTheStringCanBeParsed() {
         let ex = expectation(description: "Callback should be called")
 
@@ -227,29 +194,6 @@ class HandlingIncomingEventsTests: XCTestCase {
         }
         """.removing(.newlines)
         pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
-
-        waitForExpectations(timeout: 0.5)
-    }
-
-    func testReceivingAnErrorWhereTheDataPartOfTheMessageIsNotDoubleEncodedViaDataCallback() {
-        let ex = expectation(description: "Callback should be called")
-
-        _ = pusher.bind({ (message: Any?) in
-            guard let message = message as? [String: AnyObject],
-               let eventName = message["event"] as? String,
-               eventName == "pusher:error",
-               let data = message["data"] as? [String: AnyObject],
-               let errorMessage = data["message"] as? String else {
-                return
-            }
-
-            XCTAssertEqual(errorMessage, "Existing subscription to channel my-channel")
-            ex.fulfill()
-        })
-        // pretend that we tried to subscribe to my-channel twice and got this error
-        // back from Pusher
-        let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Existing subscription to channel my-channel\"}}"
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: payload)
 
         waitForExpectations(timeout: 0.5)
     }
