@@ -135,7 +135,6 @@ class HandlingIncomingEventsTests: XCTestCase {
 
         let chan = pusher.subscribe("my-channel")
         chan.bind(eventName: "test-event") { event in
-            event.dataToJSONObject() as! [String: String]
             XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
             ex.fulfill()
         }
