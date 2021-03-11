@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.2.1...HEAD)
+## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/9.2.2...HEAD)
+
+## [9.2.2](https://github.com/pusher/pusher-websocket-swift/compare/9.2.1...9.2.2) - 2021-03-11
+
+### Fixed
+
+- Resolved an issue preventing App Store submission when integrating the SDK using certain dependency managers.
 
 ## [9.2.1](https://github.com/pusher/pusher-websocket-swift/compare/9.2.0...9.2.1) - 2021-03-04
 
