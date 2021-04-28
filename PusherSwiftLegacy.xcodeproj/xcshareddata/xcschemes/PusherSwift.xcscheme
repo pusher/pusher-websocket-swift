@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "33831C881A9CF61600B124F1"
                BuildableName = "PusherSwift.framework"
-               BlueprintName = "PusherSwift"
-               ReferencedContainer = "container:PusherSwift.xcodeproj">
+               BlueprintName = "PusherSwiftLegacy"
+               ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,8 +33,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33831C881A9CF61600B124F1"
             BuildableName = "PusherSwift.framework"
-            BlueprintName = "PusherSwift"
-            ReferencedContainer = "container:PusherSwift.xcodeproj">
+            BlueprintName = "PusherSwiftLegacy"
+            ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -44,8 +44,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "33831C931A9CF61600B124F1"
                BuildableName = "PusherSwiftTests.xctest"
-               BlueprintName = "PusherSwiftTests"
-               ReferencedContainer = "container:PusherSwift.xcodeproj">
+               BlueprintName = "PusherSwiftLegacyTests"
+               ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -65,8 +65,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33831C881A9CF61600B124F1"
             BuildableName = "PusherSwift.framework"
-            BlueprintName = "PusherSwift"
-            ReferencedContainer = "container:PusherSwift.xcodeproj">
+            BlueprintName = "PusherSwiftLegacy"
+            ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33831C881A9CF61600B124F1"
             BuildableName = "PusherSwift.framework"
-            BlueprintName = "PusherSwift"
-            ReferencedContainer = "container:PusherSwift.xcodeproj">
+            BlueprintName = "PusherSwiftLegacy"
+            ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

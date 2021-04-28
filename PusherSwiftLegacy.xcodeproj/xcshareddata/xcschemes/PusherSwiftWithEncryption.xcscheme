@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "73D8A1E42435E5F3001FDE05"
-               BuildableName = "PusherSwiftWithEncryption.framework"
-               BlueprintName = "PusherSwiftWithEncryption"
-               ReferencedContainer = "container:PusherSwift.xcodeproj">
+               BuildableName = "PusherSwiftLegacyWithEncryption.framework"
+               BlueprintName = "PusherSwiftLegacyWithEncryption"
+               ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "73D8A20A2435F24E001FDE05"
-               BuildableName = "PusherSwiftWithEncryptionTests.xctest"
-               BlueprintName = "PusherSwiftWithEncryptionTests"
-               ReferencedContainer = "container:PusherSwift.xcodeproj">
+               BuildableName = "PusherSwiftLegacyWithEncryptionTests.xctest"
+               BlueprintName = "PusherSwiftLegacyWithEncryptionTests"
+               ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "73D8A1E42435E5F3001FDE05"
-            BuildableName = "PusherSwiftWithEncryption.framework"
-            BlueprintName = "PusherSwiftWithEncryption"
-            ReferencedContainer = "container:PusherSwift.xcodeproj">
+            BuildableName = "PusherSwiftLegacyWithEncryption.framework"
+            BlueprintName = "PusherSwiftLegacyWithEncryption"
+            ReferencedContainer = "container:PusherSwiftLegacy.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

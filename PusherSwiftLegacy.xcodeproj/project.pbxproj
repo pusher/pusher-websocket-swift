@@ -114,9 +114,9 @@
 /* Begin PBXFileReference section */
 		3301FED22051AB6400AE591A /* Carthage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Carthage.xcconfig; path = ../Carthage.xcconfig; sourceTree = "<group>"; };
 		3342F3BB1D808AC500C0296E /* ClientEventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientEventTests.swift; sourceTree = "<group>"; };
-		33831C891A9CF61600B124F1 /* PusherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33831C891A9CF61600B124F1 /* PusherSwiftLegacy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwiftLegacy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831C8D1A9CF61600B124F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		33831C941A9CF61600B124F1 /* PusherSwiftLegacyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftLegacyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33831CD31A9CFFD900B124F1 /* PusherSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherSwift.swift; path = Sources/PusherSwift.swift; sourceTree = SOURCE_ROOT; };
 		33831CD61A9CFFF200B124F1 /* PusherSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PusherSwift.h; path = Sources/PusherSwift.h; sourceTree = SOURCE_ROOT; };
 		3384C1B81CAECD9C00F10796 /* PusherChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PusherChannel.swift; path = Sources/Models/PusherChannel.swift; sourceTree = SOURCE_ROOT; };
@@ -143,10 +143,10 @@
 		539D9AFD2507F68400B5765A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
-		73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwiftWithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73D8A1FE2435E5F3001FDE05 /* PusherSwiftLegacyWithEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PusherSwiftLegacyWithEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D8A2012435E686001FDE05 /* PusherDecryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherDecryptor.swift; sourceTree = "<group>"; };
 		73D8A2062435EAD5001FDE05 /* PusherDecryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PusherDecryptor.swift; sourceTree = "<group>"; };
-		73D8A2262435F24E001FDE05 /* PusherSwiftWithEncryptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftWithEncryptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73D8A2262435F24E001FDE05 /* PusherSwiftLegacyWithEncryptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PusherSwiftLegacyWithEncryptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D8A22C2435F381001FDE05 /* PusherEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
 		73D8A22E2435F393001FDE05 /* PusherEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
 		D32DBA192445BCD60064DA56 /* PrivateEncryptedChannelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateEncryptedChannelTests.swift; sourceTree = "<group>"; };
@@ -210,10 +210,10 @@
 		33831C8A1A9CF61600B124F1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				33831C891A9CF61600B124F1 /* PusherSwift.framework */,
-				33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */,
-				73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */,
-				73D8A2262435F24E001FDE05 /* PusherSwiftWithEncryptionTests.xctest */,
+				33831C891A9CF61600B124F1 /* PusherSwiftLegacy.framework */,
+				33831C941A9CF61600B124F1 /* PusherSwiftLegacyTests.xctest */,
+				73D8A1FE2435E5F3001FDE05 /* PusherSwiftLegacyWithEncryption.framework */,
+				73D8A2262435F24E001FDE05 /* PusherSwiftLegacyWithEncryptionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -470,9 +470,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		33831C881A9CF61600B124F1 /* PusherSwift */ = {
+		33831C881A9CF61600B124F1 /* PusherSwiftLegacy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 33831C9D1A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwift" */;
+			buildConfigurationList = 33831C9D1A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacy" */;
 			buildPhases = (
 				33831C841A9CF61600B124F1 /* Sources */,
 				33831C861A9CF61600B124F1 /* Headers */,
@@ -485,14 +485,14 @@
 			);
 			dependencies = (
 			);
-			name = PusherSwift;
+			name = PusherSwiftLegacy;
 			productName = PusherSwift;
-			productReference = 33831C891A9CF61600B124F1 /* PusherSwift.framework */;
+			productReference = 33831C891A9CF61600B124F1 /* PusherSwiftLegacy.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		33831C931A9CF61600B124F1 /* PusherSwiftTests */ = {
+		33831C931A9CF61600B124F1 /* PusherSwiftLegacyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 33831CA01A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwiftTests" */;
+			buildConfigurationList = 33831CA01A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacyTests" */;
 			buildPhases = (
 				33831C911A9CF61600B124F1 /* Frameworks */,
 				33831C901A9CF61600B124F1 /* Sources */,
@@ -505,14 +505,14 @@
 			dependencies = (
 				33831C971A9CF61600B124F1 /* PBXTargetDependency */,
 			);
-			name = PusherSwiftTests;
+			name = PusherSwiftLegacyTests;
 			productName = PusherSwiftTests;
-			productReference = 33831C941A9CF61600B124F1 /* PusherSwiftTests.xctest */;
+			productReference = 33831C941A9CF61600B124F1 /* PusherSwiftLegacyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		73D8A1E42435E5F3001FDE05 /* PusherSwiftWithEncryption */ = {
+		73D8A1E42435E5F3001FDE05 /* PusherSwiftLegacyWithEncryption */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 73D8A1FB2435E5F3001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryption" */;
+			buildConfigurationList = 73D8A1FB2435E5F3001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacyWithEncryption" */;
 			buildPhases = (
 				73D8A1E52435E5F3001FDE05 /* Sources */,
 				73D8A1F72435E5F3001FDE05 /* Headers */,
@@ -525,14 +525,14 @@
 			);
 			dependencies = (
 			);
-			name = PusherSwiftWithEncryption;
+			name = PusherSwiftLegacyWithEncryption;
 			productName = PusherSwift;
-			productReference = 73D8A1FE2435E5F3001FDE05 /* PusherSwiftWithEncryption.framework */;
+			productReference = 73D8A1FE2435E5F3001FDE05 /* PusherSwiftLegacyWithEncryption.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		73D8A20A2435F24E001FDE05 /* PusherSwiftWithEncryptionTests */ = {
+		73D8A20A2435F24E001FDE05 /* PusherSwiftLegacyWithEncryptionTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 73D8A2232435F24E001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryptionTests" */;
+			buildConfigurationList = 73D8A2232435F24E001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacyWithEncryptionTests" */;
 			buildPhases = (
 				73D8A20D2435F24E001FDE05 /* Frameworks */,
 				73D8A20E2435F24E001FDE05 /* Sources */,
@@ -545,9 +545,9 @@
 			dependencies = (
 				73D8A2312435F6A9001FDE05 /* PBXTargetDependency */,
 			);
-			name = PusherSwiftWithEncryptionTests;
+			name = PusherSwiftLegacyWithEncryptionTests;
 			productName = PusherSwiftTests;
-			productReference = 73D8A2262435F24E001FDE05 /* PusherSwiftWithEncryptionTests.xctest */;
+			productReference = 73D8A2262435F24E001FDE05 /* PusherSwiftLegacyWithEncryptionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -575,7 +575,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 33831C4D1A9CEDF800B124F1 /* Build configuration list for PBXProject "PusherSwift" */;
+			buildConfigurationList = 33831C4D1A9CEDF800B124F1 /* Build configuration list for PBXProject "PusherSwiftLegacy" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -588,10 +588,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				33831C881A9CF61600B124F1 /* PusherSwift */,
-				73D8A1E42435E5F3001FDE05 /* PusherSwiftWithEncryption */,
-				33831C931A9CF61600B124F1 /* PusherSwiftTests */,
-				73D8A20A2435F24E001FDE05 /* PusherSwiftWithEncryptionTests */,
+				33831C881A9CF61600B124F1 /* PusherSwiftLegacy */,
+				73D8A1E42435E5F3001FDE05 /* PusherSwiftLegacyWithEncryption */,
+				33831C931A9CF61600B124F1 /* PusherSwiftLegacyTests */,
+				73D8A20A2435F24E001FDE05 /* PusherSwiftLegacyWithEncryptionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -850,12 +850,12 @@
 /* Begin PBXTargetDependency section */
 		33831C971A9CF61600B124F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 33831C881A9CF61600B124F1 /* PusherSwift */;
+			target = 33831C881A9CF61600B124F1 /* PusherSwiftLegacy */;
 			targetProxy = 33831C961A9CF61600B124F1 /* PBXContainerItemProxy */;
 		};
 		73D8A2312435F6A9001FDE05 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 73D8A1E42435E5F3001FDE05 /* PusherSwiftWithEncryption */;
+			target = 73D8A1E42435E5F3001FDE05 /* PusherSwiftLegacyWithEncryption */;
 			targetProxy = 73D8A2302435F6A9001FDE05 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -990,7 +990,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = PusherSwift;
+				PRODUCT_NAME = PusherSwiftLegacy;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				SKIP_INSTALL = YES;
@@ -1045,7 +1045,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = PusherSwift;
+				PRODUCT_NAME = PusherSwiftLegacy;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = "";
 				SKIP_INSTALL = YES;
@@ -1101,7 +1101,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = PusherSwiftTests;
+				PRODUCT_NAME = PusherSwiftLegacyTests;
 				SDKROOT = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1145,7 +1145,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = PusherSwiftTests;
+				PRODUCT_NAME = PusherSwiftLegacyTests;
 				SDKROOT = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
 				SWIFT_VERSION = 5.0;
@@ -1369,7 +1369,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		33831C4D1A9CEDF800B124F1 /* Build configuration list for PBXProject "PusherSwift" */ = {
+		33831C4D1A9CEDF800B124F1 /* Build configuration list for PBXProject "PusherSwiftLegacy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				33831C4E1A9CEDF800B124F1 /* Debug */,
@@ -1378,7 +1378,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		33831C9D1A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwift" */ = {
+		33831C9D1A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				33831C9E1A9CF61600B124F1 /* Debug */,
@@ -1387,7 +1387,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		33831CA01A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwiftTests" */ = {
+		33831CA01A9CF61600B124F1 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				33831CA11A9CF61600B124F1 /* Debug */,
@@ -1396,7 +1396,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		73D8A1FB2435E5F3001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryption" */ = {
+		73D8A1FB2435E5F3001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacyWithEncryption" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				73D8A1FC2435E5F3001FDE05 /* Debug */,
@@ -1405,7 +1405,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		73D8A2232435F24E001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftWithEncryptionTests" */ = {
+		73D8A2232435F24E001FDE05 /* Build configuration list for PBXNativeTarget "PusherSwiftLegacyWithEncryptionTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				73D8A2242435F24E001FDE05 /* Debug */,
