@@ -22,7 +22,7 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 - iOS 13.0 and above
 - macOS (OS X) 10.15 and above
 - tvOS 13.0 and above
-- Not currently compatible with watchOS
+- watchOS 6.0 and above
 
 ### Legacy OS support
 
