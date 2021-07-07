@@ -114,19 +114,6 @@ let CLIENT_NAME = "pusher-websocket-swift"
     }
 
     /**
-        Binds the client's global channel to all events
-
-        - parameter callback: The function to call when a new event is received. The callback
-                              receives the event's data payload
-
-        - returns: A unique string that can be used to unbind the callback from the client
-    */
-    @available(*, deprecated, message: "This will be removed in v10.0.0. Use 'bind(eventCallback:)' instead.")
-    @discardableResult open func bind(_ callback: @escaping (Any?) -> Void) -> String {
-        return self.connection.addLegacyCallbackToGlobalChannel(callback)
-    }
-
-    /**
      Binds the client's global channel to all events
 
      - parameter eventCallback: The function to call when a new event is received. The callback

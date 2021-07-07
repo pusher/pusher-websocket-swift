@@ -301,17 +301,6 @@ import NWWebSocket
     }
 
     /**
-     Add legacy callback to the connection's global channel
-
-     - parameter callback: The callback to be stored
-
-     - returns: A callbackId that can be used to remove the callback from the connection
-     */
-    internal func addLegacyCallbackToGlobalChannel(_ callback: @escaping (Any?) -> Void) -> String {
-        return globalChannel.bindLegacy(callback)
-    }
-
-    /**
         Remove the callback with id of callbackId from the connection's global channel
 
         - parameter callbackId: The unique string representing the callback to be removed
@@ -565,7 +554,6 @@ import NWWebSocket
     open func handleError(error: PusherError) {
         resetActivityTimeoutTimer()
         self.delegate?.receivedError?(error: error)
-        self.globalChannel?.handleGlobalEventLegacy(event: error.raw)
     }
 
     /**
@@ -633,7 +621,6 @@ import NWWebSocket
     */
     private func callGlobalCallbacks(event: PusherEvent) {
         globalChannel?.handleGlobalEvent(event: event)
-        globalChannel?.handleGlobalEventLegacy(event: event.raw)
     }
 
     /**

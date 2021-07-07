@@ -125,17 +125,12 @@ class AuthenticationTests: XCTestCase {
         let chan = pusher.subscribe("private-test-channel")
         XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
 
-        _ = pusher.bind({ (data: Any?) -> Void in
-            guard let data = data as? [String: AnyObject],
-                  let eventName = data["event"] as? String,
-                  eventName == "pusher:subscription_error" else {
-                return
-            }
-
-            XCTAssertEqual("private-test-channel", data["channel"] as? String)
+        pusher.bind { event in
+            XCTAssertEqual(event.eventName, "pusher:subscription_error")
+            XCTAssertEqual(event.channelName, "private-test-channel")
             XCTAssertTrue(Thread.isMainThread)
             ex.fulfill()
-        })
+        }
 
         pusher.connect()
 
