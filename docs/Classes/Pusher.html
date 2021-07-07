@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pusher Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Pusher" class="dashAnchor"></a>
+    <a title="Pusher Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">PusherSwift 9.2.2 Docs</a> (25% documented)</p>
+        <p class="header-right"><a href="https://github.com/pusher/pusher-websocket-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">PusherSwift Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Pusher Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/GlobalChannel.html">GlobalChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OCAuthMethod.html">OCAuthMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OCPusherHost.html">OCPusherHost</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Pusher.html">Pusher</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherAuth.html">PusherAuth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherChannel.html">PusherChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherChannels.html">PusherChannels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherClientOptions.html">PusherClientOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherConnection.html">PusherConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherError.html">PusherError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherEvent.html">PusherEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherPresenceChannel.html">PusherPresenceChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AuthMethod.html">AuthMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ConnectionState.html">ConnectionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PusherChannelType.html">PusherChannelType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PusherHost.html">PusherHost</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AuthRequestBuilderProtocol.html">AuthRequestBuilderProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Authorizer.html">Authorizer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PusherDelegate.html">PusherDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:11PusherSwift12EventHandlerV">EventHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/QueuedClientEvent.html">QueuedClientEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:11PusherSwift0A14UserInfoObjecta">PusherUserInfoObject</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Pusher</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">Pusher</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+              <div class="slightly-smaller">
+                <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L10-L172">Show on GitHub</a>
+              </div>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(py)connection"></a>
+                    <a name="//apple_ref/swift/Property/connection" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(py)connection">connection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherConnection.html">PusherConnection</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(py)delegate"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(py)delegate">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PusherDelegate.html">PusherDelegate</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L12-L16">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)initWithKey:options:"></a>
+                    <a name="//apple_ref/swift/Method/init(key:options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)initWithKey:options:">init(key:<wbr>options:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes the Pusher client with an app key and any appropriate options.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherClientOptions.html">PusherClientOptions</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/PusherClientOptions.html">PusherClientOptions</a></span><span class="p">())</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Pusher app key</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An optional collection of options</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new Pusher client instance</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L27-L35">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)subscribe:auth:onMemberAdded:onMemberRemoved:"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(_:auth:onMemberAdded:onMemberRemoved:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)subscribe:auth:onMemberAdded:onMemberRemoved:">subscribe(_:<wbr>auth:<wbr>onMemberAdded:<wbr>onMemberRemoved:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes the client to a new channel</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">auth</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherAuth.html">PusherAuth</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onMemberAdded</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onMemberRemoved</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/PusherChannel.html">PusherChannel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>channelName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the channel to subscribe to</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>auth</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A PusherAuth value if subscription is being made to an
+                         authenticated channel without using the default auth methods</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onMemberAdded</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will be called with information about the
+                         member who has just joined the presence channel</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onMemberRemoved</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will be called with information about the
+                         member who has just left the presence channel</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new PusherChannel instance</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L50-L69">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)subscribeToPresenceChannelWithChannelName:auth:onMemberAdded:onMemberRemoved:"></a>
+                    <a name="//apple_ref/swift/Method/subscribeToPresenceChannel(channelName:auth:onMemberAdded:onMemberRemoved:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)subscribeToPresenceChannelWithChannelName:auth:onMemberAdded:onMemberRemoved:">subscribeToPresenceChannel(channelName:<wbr>auth:<wbr>onMemberAdded:<wbr>onMemberRemoved:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subscribes the client to a new presence channel. Use this instead of the subscribe
+function when you want a presence channel object to be returned instead of just a
+generic channel object (which you can then cast)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">subscribeToPresenceChannel</span><span class="p">(</span>
+    <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">auth</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherAuth.html">PusherAuth</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onMemberAdded</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onMemberRemoved</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/PusherPresenceChannel.html">PusherPresenceChannel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>channelName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the channel to subscribe to</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>auth</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A PusherAuth value if subscription is being made to an
+                         authenticated channel without using the default auth methods</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onMemberAdded</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will be called with information about the
+                         member who has just joined the presence channel</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onMemberRemoved</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will be called with information about the
+                         member who has just left the presence channel</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new PusherPresenceChannel instance</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L86-L98">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)unsubscribe:"></a>
+                    <a name="//apple_ref/swift/Method/unsubscribe(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)unsubscribe:">unsubscribe(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unsubscribes the client from a given channel</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">unsubscribe</span><span class="p">(</span><span class="n">_</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>channelName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the channel to unsubscribe from</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L105-L107">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)unsubscribeAll"></a>
+                    <a name="//apple_ref/swift/Method/unsubscribeAll()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)unsubscribeAll">unsubscribeAll()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unsubscribes the client from all channels</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">unsubscribeAll</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L112-L114">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)bind:"></a>
+                    <a name="//apple_ref/swift/Method/bind(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)bind:">bind(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Binds the client&rsquo;s global channel to all events</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"This will be removed in v10.0.0. Use 'bind(eventCallback:﹚' instead."</span><span class="p">)</span>
+<span class="kd">@discardableResult</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">bind</span><span class="p">(</span><span class="n">_</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The function to call when a new event is received. The callback
+                  receives the event&rsquo;s data payload</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A unique string that can be used to unbind the callback from the client</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L125-L127">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)bindWithEventCallback:"></a>
+                    <a name="//apple_ref/swift/Method/bind(eventCallback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)bindWithEventCallback:">bind(eventCallback:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Binds the client&rsquo;s global channel to all events</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">bind</span><span class="p">(</span><span class="nv">eventCallback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/PusherEvent.html">PusherEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>eventCallback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The function to call when a new event is received. The callback
+                       receives a PusherEvent, containing the event&rsquo;s data payload and
+                       other properties.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A unique string that can be used to unbind the callback from the client</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L138-L140">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)unbindWithCallbackId:"></a>
+                    <a name="//apple_ref/swift/Method/unbind(callbackId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)unbindWithCallbackId:">unbind(callbackId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unbinds the client from its global channel</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">unbind</span><span class="p">(</span><span class="nv">callbackId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callbackId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The unique callbackId string used to identify which callback
+                    to unbind</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L148-L150">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)unbindAll"></a>
+                    <a name="//apple_ref/swift/Method/unbindAll()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)unbindAll">unbindAll()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unbinds the client from all global callbacks</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">unbindAll</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L155-L157">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)disconnect"></a>
+                    <a name="//apple_ref/swift/Method/disconnect()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)disconnect">disconnect()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Disconnects the client&rsquo;s connection</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">disconnect</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L162-L164">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)Pusher(im)connect"></a>
+                    <a name="//apple_ref/swift/Method/connect()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)Pusher(im)connect">connect()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initiates a connection attempt using the client&rsquo;s existing connection details</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">connect</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/PusherSwift.swift#L169-L171">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeWithChannelName:"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(channelName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeWithChannelName:">subscribe(channelName:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span><span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/PusherChannel.html">PusherChannel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/Pusher+ObjectiveC.swift#L4-L6">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeWithChannelName:onMemberAdded:onMemberRemoved:"></a>
+                    <a name="//apple_ref/swift/Method/subscribe(channelName:onMemberAdded:onMemberRemoved:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeWithChannelName:onMemberAdded:onMemberRemoved:">subscribe(channelName:<wbr>onMemberAdded:<wbr>onMemberRemoved:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">subscribe</span><span class="p">(</span>
+    <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">onMemberAdded</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onMemberRemoved</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/PusherChannel.html">PusherChannel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/Pusher+ObjectiveC.swift#L8-L14">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeToPresenceChannelWithChannelName:"></a>
+                    <a name="//apple_ref/swift/Method/subscribeToPresenceChannel(channelName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeToPresenceChannelWithChannelName:">subscribeToPresenceChannel(channelName:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">subscribeToPresenceChannel</span><span class="p">(</span><span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/PusherPresenceChannel.html">PusherPresenceChannel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/Pusher+ObjectiveC.swift#L16-L21">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeToPresenceChannelWithChannelName:onMemberAdded:onMemberRemoved:"></a>
+                    <a name="//apple_ref/swift/Method/subscribeToPresenceChannel(channelName:onMemberAdded:onMemberRemoved:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)Pusher(im)subscribeToPresenceChannelWithChannelName:onMemberAdded:onMemberRemoved:">subscribeToPresenceChannel(channelName:<wbr>onMemberAdded:<wbr>onMemberRemoved:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">subscribeToPresenceChannel</span><span class="p">(</span>
+    <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">onMemberAdded</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onMemberRemoved</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/PusherPresenceChannel.html">PusherPresenceChannel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/Pusher+ObjectiveC.swift#L23-L32">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)Pusher(im)initWithAppKey:options:"></a>
+                    <a name="//apple_ref/swift/Method/init(withAppKey:options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)Pusher(im)initWithAppKey:options:">init(withAppKey:<wbr>options:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">withAppKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherClientOptions.html">PusherClientOptions</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/Pusher+ObjectiveC.swift#L34-L36">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)Pusher(im)initWithKey:"></a>
+                    <a name="//apple_ref/swift/Method/init(withKey:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)Pusher(im)initWithKey:">init(withKey:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">withKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/Pusher+ObjectiveC.swift#L38-L40">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://pusher.com" target="_blank" rel="external">Pusher</a>. All rights reserved. (Last updated: 2021-07-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PusherConnection Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/PusherConnection" class="dashAnchor"></a>
+    <a title="PusherConnection Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">PusherSwift 9.2.2 Docs</a> (25% documented)</p>
+        <p class="header-right"><a href="https://github.com/pusher/pusher-websocket-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">PusherSwift Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        PusherConnection Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/GlobalChannel.html">GlobalChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OCAuthMethod.html">OCAuthMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OCPusherHost.html">OCPusherHost</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Pusher.html">Pusher</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherAuth.html">PusherAuth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherChannel.html">PusherChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherChannels.html">PusherChannels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherClientOptions.html">PusherClientOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherConnection.html">PusherConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherError.html">PusherError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherEvent.html">PusherEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherPresenceChannel.html">PusherPresenceChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AuthMethod.html">AuthMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ConnectionState.html">ConnectionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PusherChannelType.html">PusherChannelType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PusherHost.html">PusherHost</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AuthRequestBuilderProtocol.html">AuthRequestBuilderProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Authorizer.html">Authorizer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PusherDelegate.html">PusherDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:11PusherSwift12EventHandlerV">EventHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/QueuedClientEvent.html">QueuedClientEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:11PusherSwift0A14UserInfoObjecta">PusherUserInfoObject</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PusherConnection</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PusherConnection</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">PusherConnection</span><span class="p">:</span> <span class="kt">WebSocketConnectionDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+              <div class="slightly-smaller">
+                <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L7-L933">Show on GitHub</a>
+              </div>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)url"></a>
+                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)url">url</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)key"></a>
+                    <a name="//apple_ref/swift/Property/key" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)key">key</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)options"></a>
+                    <a name="//apple_ref/swift/Property/options" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)options">options</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherClientOptions.html">PusherClientOptions</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)globalChannel"></a>
+                    <a name="//apple_ref/swift/Property/globalChannel" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)globalChannel">globalChannel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">globalChannel</span><span class="p">:</span> <span class="kt"><a href="../Classes/GlobalChannel.html">GlobalChannel</a></span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)socketId"></a>
+                    <a name="//apple_ref/swift/Property/socketId" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)socketId">socketId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">socketId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)connectionState"></a>
+                    <a name="//apple_ref/swift/Property/connectionState" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)connectionState">connectionState</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">connectionState</span><span class="p">:</span> <span class="kt"><a href="../Enums/ConnectionState.html">ConnectionState</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)channels"></a>
+                    <a name="//apple_ref/swift/Property/channels" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)channels">channels</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">channels</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherChannels.html">PusherChannels</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC6socket11NWWebSocketAECSgvp"></a>
+                    <a name="//apple_ref/swift/Property/socket" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC6socket11NWWebSocketAECSgvp">socket</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">socket</span><span class="p">:</span> <span class="kt">NWWebSocket</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)URLSession"></a>
+                    <a name="//apple_ref/swift/Property/URLSession" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)URLSession">URLSession</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">URLSession</span><span class="p">:</span> <span class="kt">Foundation</span><span class="o">.</span><span class="kt">URLSession</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)userDataFetcher"></a>
+                    <a name="//apple_ref/swift/Property/userDataFetcher" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)userDataFetcher">userDataFetcher</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">userDataFetcher</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a></span><span class="p">)?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC20reconnectAttemptsMaxSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/reconnectAttemptsMax" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC20reconnectAttemptsMaxSiSgvp">reconnectAttemptsMax</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">reconnectAttemptsMax</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)reconnectAttempts"></a>
+                    <a name="//apple_ref/swift/Property/reconnectAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)reconnectAttempts">reconnectAttempts</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">reconnectAttempts</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC24maxReconnectGapInSecondsSdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/maxReconnectGapInSeconds" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC24maxReconnectGapInSecondsSdSgvp">maxReconnectGapInSeconds</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">maxReconnectGapInSeconds</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)delegate"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)delegate">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PusherDelegate.html">PusherDelegate</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L21-L26">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)pongResponseTimeoutInterval"></a>
+                    <a name="//apple_ref/swift/Property/pongResponseTimeoutInterval" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)pongResponseTimeoutInterval">pongResponseTimeoutInterval</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">pongResponseTimeoutInterval</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(py)activityTimeoutInterval"></a>
+                    <a name="//apple_ref/swift/Property/activityTimeoutInterval" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(py)activityTimeoutInterval">activityTimeoutInterval</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">activityTimeoutInterval</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC3key6socket3url7options10URLSessionACSS_11NWWebSocketAICSSAA0A13ClientOptionsCSo12NSURLSessionCtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(key:socket:url:options:URLSession:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC3key6socket3url7options10URLSessionACSS_11NWWebSocketAICSSAA0A13ClientOptionsCSo12NSURLSessionCtcfc">init(key:<wbr>socket:<wbr>url:<wbr>options:<wbr>URLSession:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes a new PusherConnection with an app key, websocket, URL, options and URLSession</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
+    <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">socket</span><span class="p">:</span> <span class="kt">NWWebSocket</span><span class="p">,</span>
+    <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherClientOptions.html">PusherClientOptions</a></span><span class="p">,</span>
+    <span class="kt"><a href="../Classes/PusherConnection.html#/c:@M@PusherSwift@objc(cs)PusherConnection(py)URLSession">URLSession</a></span><span class="p">:</span> <span class="kt">Foundation</span><span class="o">.</span><span class="kt"><a href="../Classes/PusherConnection.html#/c:@M@PusherSwift@objc(cs)PusherConnection(py)URLSession">URLSession</a></span> <span class="o">=</span> <span class="kt">Foundation</span><span class="o">.</span><span class="kt"><a href="../Classes/PusherConnection.html#/c:@M@PusherSwift@objc(cs)PusherConnection(py)URLSession">URLSession</a></span><span class="o">.</span><span class="n">shared</span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Pusher app key</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>socket</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The websocket object</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The URL the connection is made to</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A PusherClientOptions instance containing all of the user-specified
+                    client options</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>URLSession</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An NSURLSession instance for the connection to use for making
+                    authentication requests</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new PusherConnection instance</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L61-L82">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(im)sendEventWithEvent:data:channel:"></a>
+                    <a name="//apple_ref/swift/Method/sendEvent(event:data:channel:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(im)sendEventWithEvent:data:channel:">sendEvent(event:<wbr>data:<wbr>channel:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Either writes a string directly to the websocket with the given event name
+and data, or calls a client event to be sent if the event is prefixed with
+&ldquo;client&rdquo;</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">sendEvent</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Any</span><span class="p">,</span> <span class="nv">channel</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherChannel.html">PusherChannel</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the event</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The data to be stringified and sent</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>channel</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the channel</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L202-L212">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(im)disconnect"></a>
+                    <a name="//apple_ref/swift/Method/disconnect()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(im)disconnect">disconnect()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Disconnects the websocket</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">disconnect</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L262-L268">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(im)connect"></a>
+                    <a name="//apple_ref/swift/Method/connect()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(im)connect">connect()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Establish a websocket connection</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">connect</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L273-L283">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(im)handleErrorWithError:"></a>
+                    <a name="//apple_ref/swift/Method/handleError(error:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(im)handleErrorWithError:">handleError(error:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Handles incoming error</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">handleError</span><span class="p">(</span><span class="nv">error</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherError.html">PusherError</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>error</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The incoming error to be processed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L565-L569">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@PusherSwift@objc(cs)PusherConnection(im)handleEventWithEvent:"></a>
+                    <a name="//apple_ref/swift/Method/handleEvent(event:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@PusherSwift@objc(cs)PusherConnection(im)handleEventWithEvent:">handleEvent(event:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Handles incoming events and passes them on to be handled by the appropriate function</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/PusherEvent.html">PusherEvent</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The incoming event to be processed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Services/PusherConnection.swift#L604-L627">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC26webSocketDidReceiveMessage10connection6stringy05NWWebE003WebeC0_p_SStF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketDidReceiveMessage(connection:string:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC26webSocketDidReceiveMessage10connection6stringy05NWWebE003WebeC0_p_SStF">webSocketDidReceiveMessage(connection:<wbr>string:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Delegate method called when a message is received over a websocket</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketDidReceiveMessage</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">WebSocketConnection</span><span class="p">,</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The websocket that has received the message</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>string</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The message received over the websocket</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L13-L34">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC23webSocketDidReceivePong10connectiony05NWWebE003WebeC0_p_tF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketDidReceivePong(connection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC23webSocketDidReceivePong10connectiony05NWWebE003WebeC0_p_tF">webSocketDidReceivePong(connection:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Delegate method called when a pong is received over a websocket</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketDidReceivePong</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">WebSocketConnection</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The websocket that has received the pong</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L38-L41">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC22webSocketDidDisconnect10connection9closeCode6reasony05NWWebE003WebeC0_p_7Network010NWProtocolmE0C05CloseJ0O10Foundation4DataVSgtF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketDidDisconnect(connection:closeCode:reason:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC22webSocketDidDisconnect10connection9closeCode6reasony05NWWebE003WebeC0_p_7Network010NWProtocolmE0C05CloseJ0O10Foundation4DataVSgtF">webSocketDidDisconnect(connection:<wbr>closeCode:<wbr>reason:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Delegate method called when a websocket disconnected</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketDidDisconnect</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">WebSocketConnection</span><span class="p">,</span>
+                                   <span class="nv">closeCode</span><span class="p">:</span> <span class="kt">NWProtocolWebSocket</span><span class="o">.</span><span class="kt">CloseCode</span><span class="p">,</span>
+                                   <span class="nv">reason</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The websocket that disconnected</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closeCode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The closure code for the websocket connection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>reason</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional further information on the connection closure.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L50-L90">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11NWWebSocket03WebB18ConnectionDelegateP03webB18ViabilityDidChange10connection8isViableyAA0cbD0_p_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketViabilityDidChange(connection:isViable:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11NWWebSocket03WebB18ConnectionDelegateP03webB18ViabilityDidChange10connection8isViableyAA0cbD0_p_SbtF">webSocketViabilityDidChange(connection:<wbr>isViable:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketViabilityDidChange</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">WebSocketConnection</span><span class="p">,</span> <span class="nv">isViable</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L92-L98">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11NWWebSocket03WebB18ConnectionDelegateP03webB29DidAttemptBetterPathMigration6resultys6ResultOyAA0cbD0_p7Network7NWErrorOG_tF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketDidAttemptBetterPathMigration(result:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11NWWebSocket03WebB18ConnectionDelegateP03webB29DidAttemptBetterPathMigration6resultys6ResultOyAA0cbD0_p7Network7NWErrorOG_tF">webSocketDidAttemptBetterPathMigration(result:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketDidAttemptBetterPathMigration</span><span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">WebSocketConnection</span><span class="p">,</span> <span class="kt">NWError</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L100-L111">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11PusherSwift0A10ConnectionC19webSocketDidConnect10connectiony05NWWebE003WebeC0_p_tF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketDidConnect(connection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11PusherSwift0A10ConnectionC19webSocketDidConnect10connectiony05NWWebE003WebeC0_p_tF">webSocketDidConnect(connection:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Delegate method called when a websocket connected</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketDidConnect</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">WebSocketConnection</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The websocket that connected</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L230-L232">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11NWWebSocket03WebB18ConnectionDelegateP03webB17DidReceiveMessage10connection4datayAA0cbD0_p_10Foundation4DataVtF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketDidReceiveMessage(connection:data:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11NWWebSocket03WebB18ConnectionDelegateP03webB17DidReceiveMessage10connection4datayAA0cbD0_p_10Foundation4DataVtF">webSocketDidReceiveMessage(connection:<wbr>data:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketDidReceiveMessage</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">WebSocketConnection</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L234-L236">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11NWWebSocket03WebB18ConnectionDelegateP03webB15DidReceiveError10connection5erroryAA0cbD0_p_7Network7NWErrorOtF"></a>
+                    <a name="//apple_ref/swift/Method/webSocketDidReceiveError(connection:error:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11NWWebSocket03WebB18ConnectionDelegateP03webB15DidReceiveError10connection5erroryAA0cbD0_p_7Network7NWErrorOtF">webSocketDidReceiveError(connection:<wbr>error:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSocketDidReceiveError</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">WebSocketConnection</span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NWError</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/Extensions/PusherConnection+WebsocketDelegate.swift#L238-L243">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)PusherConnection(py)OCReconnectAttemptsMax"></a>
+                    <a name="//apple_ref/swift/Property/OCReconnectAttemptsMax" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)PusherConnection(py)OCReconnectAttemptsMax">OCReconnectAttemptsMax</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">OCReconnectAttemptsMax</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/PusherConnection+ObjectiveC.swift#L4-L11">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@PusherSwift@objc(cs)PusherConnection(py)OCMaxReconnectGapInSeconds"></a>
+                    <a name="//apple_ref/swift/Property/OCMaxReconnectGapInSeconds" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@PusherSwift@objc(cs)PusherConnection(py)OCMaxReconnectGapInSeconds">OCMaxReconnectGapInSeconds</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">OCMaxReconnectGapInSeconds</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pusher/pusher-websocket-swift/tree/9.2.2/Sources/ObjC/PusherConnection+ObjectiveC.swift#L13-L20">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://pusher.com" target="_blank" rel="external">Pusher</a>. All rights reserved. (Last updated: 2021-07-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
