@@ -1,4 +1,5 @@
 excluded:
+  - .build
   - Carthage
   - Package.swift
   - Consumption-Tests/*/Carthage

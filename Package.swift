@@ -11,6 +11,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/pusher/NWWebSocket.git", .upToNextMajor(from: "0.5.2")),
         .package(url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap", .upToNextMajor(from: "1.0.0")),
+        // Source code linting
+        .package(url: "https://github.com/realm/SwiftLint", .upToNextMajor(from: "0.43.1"))
     ],
     targets: [
         .target(
