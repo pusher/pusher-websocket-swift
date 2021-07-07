@@ -1,13 +1,13 @@
 # Pusher Channels Swift Client (also works with Objective-C)
 
 ![Build Status](https://app.bitrise.io/app/3c6dac112b98e7fe.svg?token=n0z-aWua_Bc35kUGu4qpYg)
-![Languages](https://img.shields.io/badge/languages-swift%20%7C%20objc-orange.svg)
-[![Platform](https://img.shields.io/cocoapods/p/PusherSwift.svg?style=flat)](http://cocoadocs.org/docsets/PusherSwift)
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/PusherSwift.svg)](https://img.shields.io/cocoapods/v/PusherSwift.svg)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![codecov](https://codecov.io/gh/pusher/pusher-websocket-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/pusher/pusher-websocket-swift)
+[![Latest Release](https://img.shields.io/github/v/release/pusher/pusher-websocket-swift)](https://github.com/pusher/pusher-websocket-swift/releases)
+[![API Docs](https://img.shields.io/badge/Docs-here!-lightgrey)](https://pusher.github.io/pusher-websocket-swift/)
+[![Supported Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-websocket-swift%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/pusher/pusher-websocket-swift)
+[![Swift Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-websocket-swift%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/pusher/pusher-websocket-swift)
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
-[![codecov](https://codecov.io/gh/pusher/pusher-websocket-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/pusher/pusher-websocket-swift)
 
 This is the [Pusher Channels](https://pusher.com/channels) websocket client, PusherSwift, which supports iOS, macOS (OS X) and tvOS. It works with Swift and Objective-C.
 

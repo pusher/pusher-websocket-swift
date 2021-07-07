@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PusherSwift  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a title="PusherSwift  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">PusherSwift 9.2.2 Docs</a> (25% documented)</p>
+        <p class="header-right"><a href="https://github.com/pusher/pusher-websocket-swift"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">PusherSwift Reference</a>
+        <img id="carat" src="img/carat.png" />
+        PusherSwift  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/GlobalChannel.html">GlobalChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/OCAuthMethod.html">OCAuthMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/OCPusherHost.html">OCPusherHost</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Pusher.html">Pusher</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherAuth.html">PusherAuth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherChannel.html">PusherChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherChannels.html">PusherChannels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherClientOptions.html">PusherClientOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherConnection.html">PusherConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherError.html">PusherError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherEvent.html">PusherEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherPresenceChannel.html">PusherPresenceChannel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PusherPresenceChannelMember.html">PusherPresenceChannelMember</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/AuthMethod.html">AuthMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ConnectionState.html">ConnectionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/PusherChannelType.html">PusherChannelType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/PusherHost.html">PusherHost</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/AuthRequestBuilderProtocol.html">AuthRequestBuilderProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Authorizer.html">Authorizer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PusherDelegate.html">PusherDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs.html#/s:11PusherSwift12EventHandlerV">EventHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/QueuedClientEvent.html">QueuedClientEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:11PusherSwift0A14UserInfoObjecta">PusherUserInfoObject</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='pusher-channels-swift-client-also-works-with-objective-c' class='heading'>Pusher Channels Swift Client (also works with Objective-C)</h1>
+
+<p><img src="https://app.bitrise.io/app/3c6dac112b98e7fe.svg?token=n0z-aWua_Bc35kUGu4qpYg" alt="Build Status">
+<a href="https://codecov.io/gh/pusher/pusher-websocket-swift"><img src="https://codecov.io/gh/pusher/pusher-websocket-swift/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://github.com/pusher/pusher-websocket-swift/releases"><img src="https://img.shields.io/github/v/release/pusher/pusher-websocket-swift" alt="Latest Release"></a>
+<a href="https://pusher.github.io/pusher-websocket-swift/"><img src="https://img.shields.io/badge/Docs-here!-lightgrey" alt="API Docs"></a>
+<a href="https://swiftpackageindex.com/pusher/pusher-websocket-swift"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-websocket-swift%2Fbadge%3Ftype%3Dplatforms" alt="Supported Platforms"></a>
+<a href="https://swiftpackageindex.com/pusher/pusher-websocket-swift"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-websocket-swift%2Fbadge%3Ftype%3Dswift-versions" alt="Swift Versions"></a>
+<a href="http://twitter.com/Pusher"><img src="https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat" alt="Twitter"></a>
+<a href="https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-lightgrey.svg" alt="GitHub license"></a></p>
+
+<p>This is the <a href="https://pusher.com/channels">Pusher Channels</a> websocket client, PusherSwift, which supports iOS, macOS (OS X) and tvOS. It works with Swift and Objective-C.</p>
+
+<p>For tutorials and more in-depth information about Pusher Channels, visit our <a href="https://pusher.com/docs/channels">official docs</a>.</p>
+<h2 id='supported-platforms' class='heading'>Supported platforms</h2>
+
+<ul>
+<li>Swift 5.0 and above</li>
+<li>Xcode 11.0 and above</li>
+<li>Can be used with Objective-C</li>
+</ul>
+<h3 id='deployment-targets' class='heading'>Deployment targets</h3>
+
+<ul>
+<li>iOS 13.0 and above</li>
+<li>macOS (OS X) 10.15 and above</li>
+<li>tvOS 13.0 and above</li>
+<li>Not currently compatible with watchOS</li>
+</ul>
+<h3 id='legacy-os-support' class='heading'>Legacy OS support</h3>
+
+<p>If you need support for older versions of iOS, macOS or tvOS, please use the latest v8.x release of the SDK.</p>
+<h2 id='i-just-want-to-copy-and-paste-some-code-to-get-me-started' class='heading'>I just want to copy and paste some code to get me started</h2>
+
+<p>What else would you want? Head over to one of our example apps:</p>
+
+<ul>
+<li>For iOS with Swift, see <a href="https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Swift/iOS%20Example%20Swift/ViewController.swift">ViewController.swift</a></li>
+<li>For iOS with Objective-C, see <a href="https://github.com/pusher/pusher-websocket-swift/blob/master/iOS%20Example%20Obj-C/iOS%20Example%20Obj-C/ViewController.m">ViewController.m</a></li>
+</ul>
+<h2 id='table-of-contents' class='heading'>Table of Contents</h2>
+
+<ul>
+<li><a href="#installation">Installation</a>
+
+<ul>
+<li><a href="#cocoapods">CocoaPods</a></li>
+<li><a href="#carthage">Carthage</a></li>
+<li><a href="#swift-package-manager">Swift Package Manager</a></li>
+</ul></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#connection">Connection</a>
+
+<ul>
+<li><a href="#connection-delegate">Connection delegate</a></li>
+<li><a href="#reconnection">Reconnection</a></li>
+</ul></li>
+<li><a href="#subscribing">Subscribing to channels</a>
+
+<ul>
+<li><a href="#public-channels">Public channels</a></li>
+<li><a href="#private-channels">Private channels</a></li>
+<li><a href="#private-encrypted-channels">Private encrypted channels</a></li>
+<li><a href="#presence-channels">Presence channels</a></li>
+</ul></li>
+<li><a href="#binding-to-events">Binding to events</a>
+
+<ul>
+<li><a href="#per-channel-events">Per-channel</a></li>
+<li><a href="#global-events">Globally</a></li>
+<li><a href="#callback-parameters">Callback parameters</a></li>
+<li><a href="#parsing-event-data">Parsing event data</a></li>
+<li><a href="#receiving-errors">Receiving errors</a></li>
+</ul></li>
+<li><a href="#triggering-events">Triggering events</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#extensions">Extensions</a></li>
+<li><a href="#communication">Communication</a></li>
+<li><a href="#credits">Credits</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='cocoapods' class='heading'>CocoaPods</h3>
+
+<p><a href="http://cocoapods.org">CocoaPods</a> is a dependency manager for Cocoa projects and is our recommended method of installing PusherSwift and its dependencies.</p>
+
+<p>If you don&rsquo;t already have the Cocoapods gem installed, run the following command:</p>
+<pre class="highlight shell"><code><span class="nv">$ </span>gem <span class="nb">install </span>cocoapods
+</code></pre>
+
+<p>To integrate PusherSwift into your Xcode project using CocoaPods, specify it in your <code>Podfile</code>:</p>
+<pre class="highlight ruby"><code><span class="n">source</span> <span class="s1">'https://github.com/CocoaPods/Specs.git'</span>
+<span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'10.0'</span>
+<span class="n">use_frameworks!</span>
+
+<span class="n">pod</span> <span class="s1">'PusherSwift'</span><span class="p">,</span> <span class="s1">'~&gt; 9.0'</span>
+</code></pre>
+
+<p>Then, run the following command:</p>
+<pre class="highlight shell"><code><span class="nv">$ </span>pod <span class="nb">install</span>
+</code></pre>
+
+<p>If you find that you&rsquo;re not having the most recent version installed when you run <code>pod install</code> then try running:</p>
+<pre class="highlight shell"><code><span class="nv">$ </span>pod cache clean
+<span class="nv">$ </span>pod repo update PusherSwift
+<span class="nv">$ </span>pod <span class="nb">install</span>
+</code></pre>
+
+<p>Also you&rsquo;ll need to make sure that you&rsquo;ve not got the version of PusherSwift locked to an old version in your <code>Podfile.lock</code> file.</p>
+<h3 id='carthage' class='heading'>Carthage</h3>
+
+<p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.</p>
+
+<p>You can install Carthage with <a href="http://brew.sh/">Homebrew</a> using the following command:</p>
+<pre class="highlight shell"><code><span class="nv">$ </span>brew update
+<span class="nv">$ </span>brew <span class="nb">install </span>carthage
+</code></pre>
+
+<p>To integrate PusherSwift into your Xcode project using Carthage, specify it in your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "pusher/pusher-websocket-swift"
+</code></pre>
+
+<p>Carthage will produce a number of frameworks. You need to include the following framework binaries in your project from the <code>Carthage/Build</code> directory: <code>PusherSwift</code>, <code>NWWebSocket</code> and <code>TweetNacl</code></p>
+<h4 id='xcode-12-considerations' class='heading'>Xcode 12 considerations</h4>
+
+<p>There have been changes to the architectures included when building universal frameworks under Xcode 12.0 and above. This is to support the introduction of the Apple Silicon family of processors.</p>
+
+<p>It is strongly recommended that you integrate PusherSwift using the <code>--use-xcframeworks</code> flag, running Carthage <code>0.37.0</code> or above. There are <a href="https://github.com/Carthage/Carthage#building-platform-independent-xcframeworks-xcode-12-and-above">full instructions</a> for this (as well as instructions for <a href="https://github.com/Carthage/Carthage#migrating-a-project-from-framework-bundles-to-xcframeworks">migrating to XCFrameworks</a> if you are already integrating using Carthage).</p>
+
+<p>Alternatively, if you are building using an Intel Mac and do not want to migrate to build Carthage dependencies using XCFrameworks there is <a href="https://github.com/Carthage/Carthage/blob/master/Documentation/Xcode12Workaround.md">a workaround</a> to build successfully. You can find an example of this workaround, which is used for running the &lsquo;Consumption-Tests&rsquo; <a href="Consumption-Tests/Shared/carthage.sh">here</a>.</p>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
+
+<p>To integrate PusherSwift into your project using <a href="https://swift.org/package-manager/">Swift Package Manager</a>, you can add the library as a dependency in Xcode (11 and above) – see the <a href="https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app">docs</a>. The package repository URL is:</p>
+<pre class="highlight shell"><code>https://github.com/pusher/pusher-websocket-swift.git
+</code></pre>
+
+<p>Alternatively, you can add PusherSwift as a dependency in your <code>Package.swift</code> file. For example:</p>
+<pre class="highlight swift"><code><span class="c1">// swift-tools-version:5.1</span>
+<span class="kd">import</span> <span class="kt">PackageDescription</span>
+
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+    <span class="nv">name</span><span class="p">:</span> <span class="s">"YourPackage"</span><span class="p">,</span>
+    <span class="nv">products</span><span class="p">:</span> <span class="p">[</span>
+        <span class="o">.</span><span class="nf">library</span><span class="p">(</span>
+            <span class="nv">name</span><span class="p">:</span> <span class="s">"YourPackage"</span><span class="p">,</span>
+            <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span><span class="s">"YourPackage"</span><span class="p">]),</span>
+    <span class="p">],</span>
+    <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+        <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/pusher/pusher-websocket-swift.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"9.2.2"</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span>
+        <span class="o">.</span><span class="nf">target</span><span class="p">(</span>
+            <span class="nv">name</span><span class="p">:</span> <span class="s">"YourPackage"</span><span class="p">,</span>
+            <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="s">"PusherSwift"</span><span class="p">]),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</code></pre>
+
+<p>You will then need to include an <code>import PusherSwift</code> statement in any source files where you wish to use the SDK.</p>
+<h2 id='configuration' class='heading'>Configuration</h2>
+
+<p>There are a number of configuration parameters which can be set for the Pusher client. For Swift usage they are:</p>
+
+<ul>
+<li><code>authMethod (AuthMethod)</code> - the method you would like the client to use to authenticate subscription requests to channels requiring authentication (see below for more details)</li>
+<li><code>useTLS (Bool)</code> - whether or not you&rsquo;d like to use TLS encrypted transport or not, default is <code>true</code></li>
+<li><code>autoReconnect (Bool)</code> - set whether or not you&rsquo;d like the library to try and automatically reconnect upon disconnection (where possible). See <a href="#reconnection">Reconnection</a> for more info</li>
+<li><code>host (PusherHost)</code> - set a custom value for the host you&rsquo;d like to connect to, e.g. <code>PusherHost.host(&quot;ws-test.pusher.com&quot;)</code></li>
+<li><code>port (Int)</code> - set a custom value for the port that you&rsquo;d like to connect to</li>
+<li><code>activityTimeout (TimeInterval)</code> - after this time (in seconds) without any messages received from the server, a ping message will be sent to check if the connection is still working; the default value is supplied by the server, low values will result in unnecessary traffic.</li>
+</ul>
+
+<details><summary>View legacy configuration options</summary>
+
+- `attemptToReturnJSONObject (Bool)` - whether or not you&rsquo;d like the library to try and parse your data as JSON (or not, and just return a string)
+
+</details>
+
+<p>The <code>authMethod</code> parameter must be of the type <code><a href="Enums/AuthMethod.html">AuthMethod</a></code>. This is an enum defined as:</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AuthMethod</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">endpoint</span><span class="p">(</span><span class="nv">authEndpoint</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">authRequestBuilder</span><span class="p">(</span><span class="nv">authRequestBuilder</span><span class="p">:</span> <span class="kt">AuthRequestBuilderProtocol</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">inline</span><span class="p">(</span><span class="nv">secret</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">authorizer</span><span class="p">(</span><span class="nv">authorizer</span><span class="p">:</span> <span class="kt">Authorizer</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">noMethod</span>
+<span class="p">}</span>
+</code></pre>
+
+<ul>
+<li><code>endpoint(authEndpoint: String)</code> - the client will make a <code>POST</code> request to the endpoint you specify with the socket ID of the client and the channel name attempting to be subscribed to</li>
+<li><code>authRequestBuilder(authRequestBuilder: AuthRequestBuilderProtocol)</code> - you specify an object that conforms to the <code><a href="Protocols/AuthRequestBuilderProtocol.html">AuthRequestBuilderProtocol</a></code> (defined below), which must generate an <code>URLRequest</code> object that will be used to make the auth request</li>
+<li><code>inline(secret: String)</code> - your app&rsquo;s secret so that authentication requests do not need to be made to your authentication endpoint and instead subscriptions can be authenticated directly inside the library (this is mainly designed to be used for development)</li>
+<li><code>authorizer(authorizer: Authorizer)</code> - you specify an object that conforms to the <code><a href="Protocols/Authorizer.html">Authorizer</a></code> protocol which must be able to provide the appropriate auth information</li>
+<li><code>noMethod</code> - if you are only using public channels then you do not need to set an <code>authMethod</code> (this is the default value)</li>
+</ul>
+
+<p>This is the <code><a href="Protocols/AuthRequestBuilderProtocol.html">AuthRequestBuilderProtocol</a></code> definition:</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AuthRequestBuilderProtocol</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">requestFor</span><span class="p">(</span><span class="nv">socketID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLRequest</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This is the <code><a href="Protocols/Authorizer.html">Authorizer</a></code> protocol definition:</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Authorizer</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">fetchAuthValue</span><span class="p">(</span><span class="nv">socketID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">(</span><span class="kt">PusherAuth</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">())</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>where <code><a href="Classes/PusherAuth.html">PusherAuth</a></code> is defined as:</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PusherAuth</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="k">let</span> <span class="nv">auth</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="kd">public</span> <span class="k">let</span> <span class="nv">channelData</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">public</span> <span class="k">let</span> <span class="nv">sharedSecret</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+
+    <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">auth</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">channelData</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">sharedSecret</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">channelData</span> <span class="o">=</span> <span class="n">channelData</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">sharedSecret</span> <span class="o">=</span> <span class="n">sharedSecret</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Provided the authorization process succeeds you need to then call the supplied <code>completionHandler</code> with a <code><a href="Classes/PusherAuth.html">PusherAuth</a></code> object so that the subscription process can complete.</p>
+
+<p>If for whatever reason your authorization process fails then you just need to call the <code>completionHandler</code> with <code>nil</code> as the only parameter.</p>
+
+<p>Note that if you want to specify the cluster to which you want to connect then you use the <code>host</code> property as follows:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">PusherClientOptions</span><span class="p">(</span>
+    <span class="nv">host</span><span class="p">:</span> <span class="o">.</span><span class="nf">cluster</span><span class="p">(</span><span class="s">"eu"</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">OCAuthMethod</span> <span class="o">*</span><span class="n">authMethod</span> <span class="o">=</span> <span class="p">[[</span><span class="n">OCAuthMethod</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAuthEndpoint</span><span class="p">:</span><span class="s">@"https://your.authendpoint/pusher/auth"</span><span class="p">];</span>
+<span class="n">OCPusherHost</span> <span class="o">*</span><span class="n">host</span> <span class="o">=</span> <span class="p">[[</span><span class="n">OCPusherHost</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithCluster</span><span class="p">:</span><span class="s">@"eu"</span><span class="p">];</span>
+<span class="n">PusherClientOptions</span> <span class="o">*</span><span class="n">options</span> <span class="o">=</span> <span class="p">[[</span><span class="n">PusherClientOptions</span> <span class="nf">alloc</span><span class="p">]</span>
+                                <span class="nl">initWithOcAuthMethod:</span><span class="n">authMethod</span>
+                                <span class="nl">autoReconnect:</span><span class="nb">YES</span>
+                                <span class="nl">ocHost:</span><span class="n">host</span>
+                                <span class="nl">port:</span><span class="nb">nil</span>
+                                <span class="nl">useTLS:</span><span class="nb">YES</span>
+                                <span class="nl">activityTimeout:</span><span class="nf">nil</span><span class="p">];</span>
+</code></pre>
+
+<p>All of these configuration options need to be passed to a <code><a href="Classes/PusherClientOptions.html">PusherClientOptions</a></code> object, which in turn needs to be passed to the Pusher object, when instantiating it, for example:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">PusherClientOptions</span><span class="p">(</span>
+    <span class="nv">authMethod</span><span class="p">:</span> <span class="o">.</span><span class="nf">endpoint</span><span class="p">(</span><span class="nv">authEndpoint</span><span class="p">:</span> <span class="s">"http://localhost:9292/pusher/auth"</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"APP_KEY"</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">OCAuthMethod</span> <span class="o">*</span><span class="n">authMethod</span> <span class="o">=</span> <span class="p">[[</span><span class="n">OCAuthMethod</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAuthEndpoint</span><span class="p">:</span><span class="s">@"https://your.authendpoint/pusher/auth"</span><span class="p">];</span>
+<span class="n">OCPusherHost</span> <span class="o">*</span><span class="n">host</span> <span class="o">=</span> <span class="p">[[</span><span class="n">OCPusherHost</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithCluster</span><span class="p">:</span><span class="s">@"eu"</span><span class="p">];</span>
+<span class="n">PusherClientOptions</span> <span class="o">*</span><span class="n">options</span> <span class="o">=</span> <span class="p">[[</span><span class="n">PusherClientOptions</span> <span class="nf">alloc</span><span class="p">]</span>
+                                <span class="nl">initWithOcAuthMethod:</span><span class="n">authMethod</span>
+                                <span class="nl">autoReconnect:</span><span class="nb">YES</span>
+                                <span class="nl">ocHost:</span><span class="n">host</span>
+                                <span class="nl">port:</span><span class="nb">nil</span>
+                                <span class="nl">useTLS:</span><span class="nb">YES</span>
+                                <span class="nl">activityTimeout:</span><span class="nf">nil</span><span class="p">];</span>
+<span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span> <span class="nf">options</span><span class="p">:</span><span class="n">options</span><span class="p">];</span>
+</code></pre>
+
+<p>As you may have noticed, this differs slightly for Objective-C usage. The main changes are that you need to use <code><a href="Classes/OCAuthMethod.html">OCAuthMethod</a></code> and <code><a href="Classes/OCPusherHost.html">OCPusherHost</a></code> in place of <code><a href="Enums/AuthMethod.html">AuthMethod</a></code> and <code><a href="Enums/PusherHost.html">PusherHost</a></code>. The <code><a href="Classes/OCAuthMethod.html">OCAuthMethod</a></code> class has the following functions that you can call in your Objective-C code.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">authEndpoint</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">authRequestBuilder</span><span class="p">:</span> <span class="kt">AuthRequestBuilderProtocol</span><span class="p">)</span>
+
+<span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">secret</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="kd">public</span> <span class="nf">init</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight objective_c"><code><span class="n">OCAuthMethod</span> <span class="o">*</span><span class="n">authMethod</span> <span class="o">=</span> <span class="p">[[</span><span class="n">OCAuthMethod</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithSecret</span><span class="p">:</span><span class="s">@"YOUR_APP_SECRET"</span><span class="p">];</span>
+<span class="n">PusherClientOptions</span> <span class="o">*</span><span class="n">options</span> <span class="o">=</span> <span class="p">[[</span><span class="n">PusherClientOptions</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAuthMethod</span><span class="p">:</span><span class="n">authMethod</span><span class="p">];</span>
+</code></pre>
+
+<p>The case is similar for <code><a href="Classes/OCPusherHost.html">OCPusherHost</a></code>. You have the following functions available:</p>
+<pre class="highlight objective_c"><code><span class="n">public</span> <span class="n">init</span><span class="p">(</span><span class="n">host</span><span class="o">:</span> <span class="n">String</span><span class="p">)</span>
+
+<span class="n">public</span> <span class="n">init</span><span class="p">(</span><span class="n">cluster</span><span class="o">:</span> <span class="n">String</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight objective_c"><code><span class="p">[[</span><span class="n">OCPusherHost</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithCluster</span><span class="p">:</span><span class="s">@"YOUR_CLUSTER_SHORTCODE"</span><span class="p">];</span>
+</code></pre>
+
+<p>Authenticated channel example:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">AuthRequestBuilder</span><span class="p">:</span> <span class="kt">AuthRequestBuilderProtocol</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">requestFor</span><span class="p">(</span><span class="nv">socketID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLRequest</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">request</span> <span class="o">=</span> <span class="kt">URLRequest</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"http://localhost:9292/builder"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">httpMethod</span> <span class="o">=</span> <span class="s">"POST"</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">httpBody</span> <span class="o">=</span> <span class="s">"socket_id=</span><span class="se">\(</span><span class="n">socketID</span><span class="se">)</span><span class="s">&amp;channel_name=</span><span class="se">\(</span><span class="n">channel</span><span class="o">.</span><span class="n">name</span><span class="se">)</span><span class="s">"</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Encoding</span><span class="o">.</span><span class="n">utf8</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="nf">addValue</span><span class="p">(</span><span class="s">"myToken"</span><span class="p">,</span> <span class="nv">forHTTPHeaderField</span><span class="p">:</span> <span class="s">"Authorization"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">request</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">PusherClientOptions</span><span class="p">(</span>
+    <span class="nv">authMethod</span><span class="p">:</span> <span class="kt">AuthMethod</span><span class="o">.</span><span class="nf">authRequestBuilder</span><span class="p">(</span><span class="nv">authRequestBuilder</span><span class="p">:</span> <span class="kt">AuthRequestBuilder</span><span class="p">())</span>
+<span class="p">)</span>
+<span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span>
+  <span class="nv">key</span><span class="p">:</span> <span class="s">"APP_KEY"</span><span class="p">,</span>
+  <span class="nv">options</span><span class="p">:</span> <span class="n">options</span>
+<span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">AuthRequestBuilder</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">AuthRequestBuilderProtocol</span><span class="o">&gt;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSURLRequest</span> <span class="o">*</span><span class="p">)</span><span class="nf">requestForSocketID</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">socketID</span> <span class="nf">channelName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">channelName</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">AuthRequestBuilder</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSURLRequest</span> <span class="o">*</span><span class="p">)</span><span class="nf">requestForSocketID</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">socketID</span> <span class="nf">channelName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">channelName</span> <span class="p">{</span>
+    <span class="n">NSURLRequest</span> <span class="o">*</span><span class="n">request</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSURLRequest</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithURL</span><span class="p">:[[</span><span class="n">NSURL</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithString</span><span class="p">:</span><span class="s">@"http://localhost:9292/pusher/auth"</span><span class="p">]];</span>
+    <span class="n">NSMutableURLRequest</span> <span class="o">*</span><span class="n">mutableRequest</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableURLRequest</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithURL</span><span class="p">:</span> <span class="p">[[</span><span class="n">NSURL</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithString</span><span class="p">:</span><span class="s">@"http://localhost:9292/pusher/auth"</span><span class="p">]];</span>
+
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">dataStr</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span> <span class="s">@"socket_id=%@&amp;channel_name=%@"</span><span class="p">,</span> <span class="n">socketID</span><span class="p">,</span> <span class="n">channelName</span><span class="p">];</span>
+    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataStr</span> <span class="nf">dataUsingEncoding</span><span class="p">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
+    <span class="n">mutableRequest</span><span class="p">.</span><span class="n">HTTPBody</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="n">mutableRequest</span><span class="p">.</span><span class="n">HTTPMethod</span> <span class="o">=</span> <span class="s">@"POST"</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">mutableRequest</span> <span class="nf">addValue</span><span class="p">:</span><span class="s">@"myToken"</span> <span class="nf">forHTTPHeaderField</span><span class="p">:</span><span class="s">@"Authorization"</span><span class="p">];</span>
+
+    <span class="n">request</span> <span class="o">=</span> <span class="p">[</span><span class="n">mutableRequest</span> <span class="nf">copy</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">request</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+<span class="n">OCAuthMethod</span> <span class="o">*</span><span class="n">authMethod</span> <span class="o">=</span> <span class="p">[[</span><span class="n">OCAuthMethod</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAuthRequestBuilder</span><span class="p">:[[</span><span class="n">AuthRequestBuilder</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">]];</span>
+<span class="n">PusherClientOptions</span> <span class="o">*</span><span class="n">options</span> <span class="o">=</span> <span class="p">[[</span><span class="n">PusherClientOptions</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAuthMethod</span><span class="p">:</span><span class="n">authMethod</span><span class="p">];</span>
+</code></pre>
+
+<p>Where <code>&quot;Authorization&quot;</code> and <code>&quot;myToken&quot;</code> are the field and value your server is expecting in the headers of the request.</p>
+<h2 id='connection' class='heading'>Connection</h2>
+
+<p>A Websocket connection is established by providing your API key to the constructor function:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"APP_KEY"</span><span class="p">)</span>
+<span class="n">pusher</span><span class="o">.</span><span class="nf">connect</span><span class="p">()</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">pusher</span> <span class="nf">connect</span><span class="p">];</span>
+</code></pre>
+
+<p>This returns a client object which can then be used to subscribe to channels and then calling <code>connect()</code> triggers the connection process to start.</p>
+
+<p><strong>Important:</strong> You must keep a strong reference to the <code><a href="Classes/Pusher.html">Pusher</a></code> client. You could achieve that by making <code>pusher</code> a property of your app delegate, for example.</p>
+
+<p>You can also set a <code>userDataFetcher</code> on the connection object.</p>
+
+<ul>
+<li><code>userDataFetcher (() -&gt; PusherPresenceChannelMember)</code> - if you are subscribing to an authenticated channel and wish to provide a function to return user data</li>
+</ul>
+
+<p>You set it like this:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"APP_KEY"</span><span class="p">)</span>
+
+<span class="n">pusher</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">userDataFetcher</span> <span class="o">=</span> <span class="p">{</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">PusherPresenceChannelMember</span> <span class="k">in</span>
+    <span class="k">return</span> <span class="kt">PusherPresenceChannelMember</span><span class="p">(</span><span class="nv">userId</span><span class="p">:</span> <span class="s">"123"</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="s">"twitter"</span><span class="p">:</span> <span class="s">"hamchapman"</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+
+<span class="n">pusher</span><span class="p">.</span><span class="n">connection</span><span class="p">.</span><span class="n">userDataFetcher</span> <span class="o">=</span> <span class="o">^</span><span class="n">PusherPresenceChannelMember</span><span class="o">*</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">uuid</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSUUID</span> <span class="nf">UUID</span><span class="p">]</span> <span class="nf">UUIDString</span><span class="p">];</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">PusherPresenceChannelMember</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithUserId</span><span class="p">:</span><span class="n">uuid</span> <span class="nf">userInfo</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">};</span>
+</code></pre>
+<h3 id='connection-delegate' class='heading'>Connection delegate</h3>
+
+<p>There is a <code><a href="Protocols/PusherDelegate.html">PusherDelegate</a></code> that you can use to get notified of connection-related information. These are the functions that you can optionally implement when conforming to the <code><a href="Protocols/PusherDelegate.html">PusherDelegate</a></code> protocol:</p>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">changedConnectionState</span><span class="p">(</span><span class="n">from</span> <span class="nv">old</span><span class="p">:</span> <span class="kt">ConnectionState</span><span class="p">,</span> <span class="n">to</span> <span class="nv">new</span><span class="p">:</span> <span class="kt">ConnectionState</span><span class="p">)</span>
+<span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">subscribedToChannel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+<span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">failedToSubscribeToChannel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">response</span><span class="p">:</span> <span class="kt">URLResponse</span><span class="p">?,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span>
+<span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">debugLog</span><span class="p">(</span><span class="nv">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+<span class="kd">@objc</span><span class="p">(</span><span class="nv">receivedError</span><span class="p">:)</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">receivedError</span><span class="p">(</span><span class="nv">error</span><span class="p">:</span> <span class="kt">PusherError</span><span class="p">)</span>
+<span class="kd">@objc</span> <span class="kd">optional</span> <span class="kd">func</span> <span class="nf">failedToDecryptEvent</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span>
+</code></pre>
+
+<p>The names of the functions largely give away what their purpose is but just for completeness:</p>
+
+<ul>
+<li><code>changedConnectionState</code> - use this if you want to use connection state changes to perform different actions / UI updates</li>
+<li><code>subscribedToChannel</code> - use this if you want to be informed of when a channel has successfully been subscribed to, which is useful if you want to perform actions that are only relevant after a subscription has succeeded, e.g. logging out the members of a presence channel</li>
+<li><code>failedToSubscribeToChannel</code> - use this if you want to be informed of a failed subscription attempt, which you could use, for example, to then attempt another subscription or make a call to a service you use to track errors</li>
+<li><code>debugLog</code> - use this if you want to log Pusher-related events, e.g. the underlying websocket receiving a message</li>
+<li><code>receivedError</code> - use this if you want to be informed of errors received from Pusher Channels e.g. <code>Application is over connection quota</code>. You can find some of the possible errors listed <a href="https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#error-codes">here</a>.</li>
+<li><code>failedToDecryptEvent</code> - only used with private encrypted channels - use this if you want to be notified if any messages fail to decrypt.</li>
+</ul>
+
+<p>Setting up a delegate looks like this:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">PusherDelegate</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+        <span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"APP_KEY"</span><span class="p">)</span>
+        <span class="n">pusher</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+
+    <span class="n">self</span><span class="p">.</span><span class="n">client</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+
+    <span class="n">self</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">connection</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Here are examples of setting up a class with functions for each of the optional protocol functions:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">DummyDelegate</span><span class="p">:</span> <span class="kt">PusherDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">changedConnectionState</span><span class="p">(</span><span class="n">from</span> <span class="nv">old</span><span class="p">:</span> <span class="kt">ConnectionState</span><span class="p">,</span> <span class="n">to</span> <span class="nv">new</span><span class="p">:</span> <span class="kt">ConnectionState</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">debugLog</span><span class="p">(</span><span class="nv">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">subscribedToChannel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">failedToSubscribeToChannel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">response</span><span class="p">:</span> <span class="kt">URLResponse</span><span class="p">?,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">receivedError</span><span class="p">(</span><span class="nv">error</span><span class="p">:</span> <span class="kt">PusherError</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">message</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">message</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">code</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">code</span> <span class="p">{</span>
+            <span class="c1">// ...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">failedToDecryptEvent</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="p">{</span>
+      <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">DummyDelegate</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">PusherDelegate</span><span class="o">&gt;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">changedConnectionState</span><span class="p">:(</span><span class="k">enum</span> <span class="n">ConnectionState</span><span class="p">)</span><span class="nv">old</span> <span class="nf">to</span><span class="p">:(</span><span class="k">enum</span> <span class="n">ConnectionState</span><span class="p">)</span><span class="nv">new_</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">debugLogWithMessage</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">message</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribedToChannelWithName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">name</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">failedToSubscribeToChannelWithName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">name</span> <span class="nf">response</span><span class="p">:(</span><span class="n">NSURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span> <span class="nf">data</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">receivedError</span><span class="p">:(</span><span class="n">PusherError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">failedToDecryptEventWithEventName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">eventName</span> <span class="nf">channelName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">channelName</span> <span class="nf">data</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">DummyDelegate</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">changedConnectionState</span><span class="p">:(</span><span class="k">enum</span> <span class="n">ConnectionState</span><span class="p">)</span><span class="nv">old</span> <span class="nf">to</span><span class="p">:(</span><span class="k">enum</span> <span class="n">ConnectionState</span><span class="p">)</span><span class="nv">new_</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">debugLogWithMessage</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">message</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribedToChannelWithName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">name</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">failedToSubscribeToChannelWithName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">name</span> <span class="nf">response</span><span class="p">:(</span><span class="n">NSURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span> <span class="nf">data</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">receivedError</span><span class="p">:(</span><span class="n">PusherError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span> <span class="p">{</span>
+    <span class="n">NSNumber</span> <span class="o">*</span><span class="n">code</span> <span class="o">=</span> <span class="n">error</span><span class="p">.</span><span class="n">codeOC</span><span class="p">;</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">message</span> <span class="o">=</span> <span class="n">error</span><span class="p">.</span><span class="n">message</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">failedToDecryptEventWithEventName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">eventName</span> <span class="nf">channelName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">channelName</span> <span class="nf">data</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+
+<p>The different states that the connection can be in are (Objective-C integer enum cases in brackets):</p>
+
+<ul>
+<li><code>connecting (0)</code> - the connection is about to attempt to be made</li>
+<li><code>connected (1)</code> - the connection has been successfully made</li>
+<li><code>disconnecting (2)</code> - the connection has been instructed to disconnect and it is just about to do so</li>
+<li><code>disconnected (3)</code> - the connection has disconnected and no attempt will be made to reconnect automatically</li>
+<li><code>reconnecting (4)</code> - an attempt is going to be made to try and re-establish the connection</li>
+</ul>
+
+<p>There is a <code>stringValue()</code> function that you can call on <code><a href="Enums/ConnectionState.html">ConnectionState</a></code> objects in order to get a <code>String</code> representation of the state, for example <code>&quot;connecting&quot;</code>.</p>
+<h3 id='reconnection' class='heading'>Reconnection</h3>
+
+<p>There are three main ways in which a disconnection can occur:</p>
+
+<ul>
+<li>The client explicitly calls disconnect and a close frame is sent over the websocket connection</li>
+<li>The client experiences some form of network degradation which leads to a heartbeat (ping/pong) message being missed and thus the client disconnects</li>
+<li>The Pusher server closes the websocket connection; typically this will only occur during a restart of the Pusher socket servers and an almost immediate reconnection should occur</li>
+</ul>
+
+<p>In the case of the first type of disconnection the library will (as you&rsquo;d hope) not attempt a reconnection.</p>
+
+<p>The library uses <a href="https://github.com/pusher/NWWebSocket">NWWebSocket</a> which attempts to detect network degradation events that lead to disconnection. If this is detected then the library will attempt to reconnect (by default) with an exponential backoff, indefinitely (the maximum time between reconnect attempts is, by default, capped at 120 seconds). The value of <code>reconnectAttemptsMax</code> is a public property on the <code><a href="Classes/PusherConnection.html">PusherConnection</a></code> and so can be changed if you wish to set a maximum number of reconnect attempts.</p>
+
+<p>If the Pusher servers close the websocket, or if a disconnection happens due to network events that aren&rsquo;t covered by NWWebSocket, then the library will still attempt to reconnect as described above.</p>
+
+<p>All of this is the case if you have the client option of <code>autoReconnect</code> set as <code>true</code>, which it is by default. If the reconnection strategies are not suitable for your use case then you can set <code>autoReconnect</code> to <code>false</code> and implement your own reconnection strategy based on the connection state changes.</p>
+
+<p>N.B: If the Pusher servers close the websocket with a <a href="https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol#connection-closure">Channels Protocol closure code</a>, then the <code>autoReconnect</code> option is ignored, and the reconnection strategy is determined by the specific closure code that was received.</p>
+
+<p>There are a couple of properties on the connection (<code><a href="Classes/PusherConnection.html">PusherConnection</a></code>) that you can set that affect how the reconnection behavior works. These are:</p>
+
+<ul>
+<li><code>public var reconnectAttemptsMax: Int? = 6</code> - if you set this to <code>nil</code> then there is no maximum number of reconnect attempts and so attempts will continue to be made with an exponential backoff (based on number of attempts), otherwise only as many attempts as this property&rsquo;s value will be made before the connection&rsquo;s state moves to <code>.disconnected</code></li>
+<li><code>public var maxReconnectGapInSeconds: Double? = nil</code> - if you want to set a maximum length of time (in seconds) between reconnect attempts then set this property appropriately</li>
+</ul>
+
+<p>Note that the number of reconnect attempts gets reset to 0 as soon as a successful connection is made.</p>
+<h2 id='subscribing' class='heading'>Subscribing</h2>
+<h3 id='public-channels' class='heading'>Public channels</h3>
+
+<p>The default method for subscribing to a channel involves invoking the <code>subscribe</code> method of your client object:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">myChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"my-channel"</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">PusherChannel</span> <span class="o">*</span><span class="n">myChannel</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"my-channel"</span><span class="p">];</span>
+</code></pre>
+
+<p>This returns PusherChannel object, which events can be bound to.</p>
+<h3 id='private-channels' class='heading'>Private channels</h3>
+
+<p>Private channels are created in exactly the same way as public channels, except that they reside in the &lsquo;private-&rsquo; namespace. This means prefixing the channel name:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">myPrivateChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"private-my-channel"</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">PusherChannel</span> <span class="o">*</span><span class="n">myPrivateChannel</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"private-my-channel"</span><span class="p">];</span>
+</code></pre>
+
+<p>Subscribing to private channels involves the client being authenticated. See the <a href="#configuration">Configuration</a> section for the authenticated channel example for more information.</p>
+<h3 id='private-encrypted-channels' class='heading'>Private encrypted channels</h3>
+
+<p>Similar to Private channels, you can also subscribe to a <a href="https://pusher.com/docs/channels/using_channels/encrypted-channels">private encrypted channel</a>. This library now fully supports end-to-end encryption. This means that only you and your connected clients will be able to read your messages. Pusher cannot decrypt them.</p>
+
+<p>Like with private channels, you must provide an authentication endpoint. That endpoint must be using a <a href="https://pusher.com/docs/channels/using_channels/encrypted-channels#server">server client that supports end-to-end encryption</a>. There is a <a href="https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption">demonstration endpoint to look at using nodejs</a>. </p>
+
+<p>The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the <code>failedToDecryptEvent</code> connection delegate function will be called, and the next received event will be processed. </p>
+
+<p>Because of the requirement to reload the shared secret on demand, you can only use the following <a href="#configuration">auth methods</a>: <code>endpoint</code>, <code>authRequestBuilder</code>, <code>authorizer</code>. It is not possible to pass an instance of <code><a href="Classes/PusherAuth.html">PusherAuth</a></code> to the <code>subscribe</code> function if you are subscribing to an encrypted channel.</p>
+<h4 id='limitations' class='heading'>Limitations</h4>
+
+<ul>
+<li>Is not safe for use in extensions</li>
+<li>Client events are not supported on encrypted channels</li>
+</ul>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">privateEncryptedChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">channelName</span><span class="p">:</span> <span class="s">"private-encrypted-my-channel"</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">PusherChannel</span> <span class="o">*</span><span class="n">privateEncryptedChannel</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"private-encrypted-my-channel"</span><span class="p">];</span>
+</code></pre>
+
+<p>There is also an optional callback in the connection delegate when you can listen for
+any failed decryption events:</p>
+<pre class="highlight swift"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">failedToDecryptEvent</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">channelName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span>
+</code></pre>
+<h3 id='presence-channels' class='heading'>Presence channels</h3>
+
+<p>Presence channels are channels whose names are prefixed by <code>presence-</code>.</p>
+
+<p>The recommended way of subscribing to a presence channel is to use the <code>subscribeToPresenceChannel</code> function, as opposed to the standard <code>subscribe</code> function. Using the <code>subscribeToPresenceChannel</code> function means that you get a <code><a href="Classes/PusherPresenceChannel.html">PusherPresenceChannel</a></code> object returned, as opposed to a standard <code><a href="Classes/PusherChannel.html">PusherChannel</a></code>. This <code><a href="Classes/PusherPresenceChannel.html">PusherPresenceChannel</a></code> object has some extra, presence-channel-specific functions available to it, such as <code>members</code>, <code>me</code>, and <code>findMember</code>.</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">myPresenceChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribeToPresenceChannel</span><span class="p">(</span><span class="nv">channelName</span><span class="p">:</span> <span class="s">"presence-my-channel"</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">PusherPresenceChannel</span> <span class="o">*</span><span class="n">myPresenceChannel</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeToPresenceChannelWithChannelName</span><span class="p">:</span><span class="s">@"presence-my-channel"</span><span class="p">];</span>
+</code></pre>
+
+<p>As alluded to, you can still subscribe to presence channels using the <code>subscribe</code> method, but the channel object you get back won&rsquo;t have access to the presence-channel-specific functions, unless you choose to cast the channel object to a <code><a href="Classes/PusherPresenceChannel.html">PusherPresenceChannel</a></code>.</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">myPresenceChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"presence-my-channel"</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">PusherChannel</span> <span class="o">*</span><span class="n">myPresenceChannel</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"presence-my-channel"</span><span class="p">];</span>
+</code></pre>
+
+<p>You can also provide functions that will be called when members are either added to or removed from the channel. These are available as parameters to both <code>subscribe</code> and <code>subscribeToPresenceChannel</code>.</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">onMemberChange</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="nv">member</span><span class="p">:</span> <span class="kt">PusherPresenceChannelMember</span><span class="p">)</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">chan</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribeToPresenceChannel</span><span class="p">(</span><span class="s">"presence-channel"</span><span class="p">,</span> <span class="nv">onMemberAdded</span><span class="p">:</span> <span class="n">onMemberChange</span><span class="p">,</span> <span class="nv">onMemberRemoved</span><span class="p">:</span> <span class="n">onMemberChange</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">onMemberChange</span><span class="p">)(</span><span class="n">PusherPresenceChannelMember</span><span class="o">*</span><span class="p">)</span> <span class="o">=</span> <span class="o">^</span><span class="kt">void</span> <span class="p">(</span><span class="n">PusherPresenceChannelMember</span> <span class="o">*</span><span class="n">member</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span> <span class="n">member</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="n">PusherChannel</span> <span class="o">*</span><span class="n">myPresenceChannel</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"presence-my-channel"</span> <span class="nf">onMemberAdded</span><span class="p">:</span><span class="n">onMemberChange</span> <span class="n">onMemberRemoved</span><span class="o">:</span><span class="n">onMemberChange</span><span class="p">];</span>
+</code></pre>
+
+<p><strong>Note</strong>: The <code>members</code> and <code>myId</code> properties of <code><a href="Classes/PusherPresenceChannel.html">PusherPresenceChannel</a></code> objects (and functions that get the value of these properties) will only be set once subscription to the channel has succeeded.</p>
+
+<p>The easiest way to find out when a channel has been successfully subscribed to is to bind to the event named <code>pusher:subscription_succeeded</code> on the channel you&rsquo;re interested in. It would look something like this:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"YOUR_APP_KEY"</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="nv">chan</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribeToPresenceChannel</span><span class="p">(</span><span class="s">"presence-channel"</span><span class="p">)</span>
+
+<span class="n">chan</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"pusher:subscription_succeeded"</span><span class="p">,</span> <span class="nv">eventCallback</span><span class="p">:</span> <span class="p">{</span> <span class="n">event</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Subscribed!"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"I can now access myId: </span><span class="se">\(</span><span class="n">chan</span><span class="o">.</span><span class="n">myId</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"And here are the channel members: </span><span class="se">\(</span><span class="n">chan</span><span class="o">.</span><span class="n">members</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+<span class="n">PusherPresenceChannel</span> <span class="o">*</span><span class="n">chan</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeToPresenceChannelWithChannelName</span><span class="p">:</span><span class="s">@"presence-channel"</span><span class="p">];</span>
+
+<span class="p">[</span><span class="n">chan</span> <span class="nf">bindWithEventName</span><span class="p">:</span><span class="s">@"pusher:subscription_succeeded"</span> <span class="nf">eventCallback</span><span class="p">:</span> <span class="o">^</span><span class="kt">void</span> <span class="p">(</span><span class="n">PusherEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Subscribed!"</span><span class="p">);</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"I can now access myId: %@"</span><span class="p">,</span> <span class="n">chan</span><span class="p">.</span><span class="n">myId</span><span class="p">);</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"And here are my channel members: %@"</span><span class="p">,</span> <span class="n">chan</span><span class="p">.</span><span class="n">members</span><span class="p">);</span>
+<span class="p">}];</span>
+</code></pre>
+
+<p>You can also be notified of a successful subscription by using the <code>subscriptionDidSucceed</code> delegate method that is part of the <code><a href="Protocols/PusherDelegate.html">PusherDelegate</a></code> protocol.</p>
+
+<p>Here is an example of using the delegate:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">DummyDelegate</span><span class="p">:</span> <span class="kt">PusherDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">subscribedToChannel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">channelName</span> <span class="o">==</span> <span class="s">"presence-channel"</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">presChan</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="nf">findPresence</span><span class="p">(</span><span class="n">channelName</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// in here you can now have access to the channel's members and myId properties</span>
+                <span class="nf">print</span><span class="p">(</span><span class="n">presChan</span><span class="o">.</span><span class="n">members</span><span class="p">)</span>
+                <span class="nf">print</span><span class="p">(</span><span class="n">presChan</span><span class="o">.</span><span class="n">myId</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"YOUR_APP_KEY"</span><span class="p">)</span>
+<span class="n">pusher</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="kt">DummyDelegate</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">chan</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribeToPresenceChannel</span><span class="p">(</span><span class="s">"presence-channel"</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="k">@implementation</span> <span class="nc">DummyDelegate</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribedToChannelWithName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">name</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">channelName</span> <span class="nf">isEqual</span><span class="p">:</span> <span class="s">@"presence-channel"</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">PusherPresenceChannel</span> <span class="o">*</span><span class="n">presChan</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">connection</span><span class="p">.</span><span class="n">channels</span> <span class="nf">findPresenceWithName</span><span class="p">:</span><span class="s">@"presence-channel"</span><span class="p">];</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span> <span class="p">[</span><span class="n">presChan</span> <span class="nf">members</span><span class="p">]);</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span> <span class="p">[</span><span class="n">presChan</span> <span class="nf">myId</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+    <span class="n">pusher</span><span class="p">.</span><span class="n">connection</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="p">[[</span><span class="n">DummyDelegate</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="n">PusherChannel</span> <span class="o">*</span><span class="n">chan</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeToPresenceChannelWithChannelName</span><span class="p">:</span><span class="s">@"presence-channel"</span><span class="p">];</span>
+</code></pre>
+
+<p>Note that both private and presence channels require the user to be authenticated in order to subscribe to the channel. This authentication can either happen inside the library, if you configured your Pusher object with your app&rsquo;s secret, or an authentication request is made to an authentication endpoint that you provide, again when instantiating your Pusher object.</p>
+
+<p>We recommend that you use an authentication endpoint over including your app&rsquo;s secret in your app in the vast majority of use cases. If you are completely certain that there&rsquo;s no risk to you including your app&rsquo;s secret in your app, for example if your app is just for internal use at your company, then it can make things easier than setting up an authentication endpoint.</p>
+<h3 id='subscribing-with-self-provided-auth-values' class='heading'>Subscribing with self-provided auth values</h3>
+
+<p>It is possible to subscribe to channels that require authentication by providing the auth information at the point of calling <code>subscribe</code> or <code>subscribeToPresenceChannel</code>. This is done as shown below:</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusherAuth</span> <span class="o">=</span> <span class="kt">PusherAuth</span><span class="p">(</span><span class="nv">auth</span><span class="p">:</span> <span class="n">yourAuthString</span><span class="p">,</span> <span class="nv">channelData</span><span class="p">:</span> <span class="n">yourOptionalChannelDataString</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">chan</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="n">channelName</span><span class="p">,</span> <span class="nv">auth</span><span class="p">:</span> <span class="n">pusherAuth</span><span class="p">)</span>
+</code></pre>
+
+<p>This PusherAuth object can be initialized with just an auth (String) value if the subscription is to a private channel, or both an <code>auth (String)</code> and <code>channelData (String)</code> pair of values if the subscription is to a presence channel.</p>
+
+<p>These <code>auth</code> and <code>channelData</code> values are the values that you received if the json object created by a call to pusher.authenticate(&hellip;) in one of our various server libraries.</p>
+
+<p>Keep in mind that in order to generate a valid auth value for a subscription the <code>socketId</code> (i.e. the unique identifier for a web socket connection to the Pusher servers) must be present when the auth value is generated. As such, the likely flow for using this is something like this would involve checking for when the connection state becomes <code>connected</code> before trying to subscribe to any channels requiring authentication.</p>
+<h2 id='binding-to-events' class='heading'>Binding to events</h2>
+
+<p>Events can be bound to at 2 levels; globally and per channel. When binding to an event you can choose to save the return value, which is a unique identifier for the event handler that gets created. The only reason to save this is if you&rsquo;re going to want to unbind from the event at a later point in time. There is an example of this below.</p>
+<h3 id='per-channel-events' class='heading'>Per-channel events</h3>
+
+<p>These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. </p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"YOUR_APP_KEY"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">myChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"my-channel"</span><span class="p">)</span>
+
+<span class="n">myChannel</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"new-price"</span><span class="p">,</span> <span class="nv">eventCallback</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">PusherEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span> <span class="p">{</span>
+        <span class="c1">// `data` is a string that you can parse if necessary.</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<p>The callback is passed a <code><a href="Classes/PusherEvent.html">PusherEvent</a></code>  (see <a href="#pusherevent">docs</a>).</p>
+
+<details><summary>View legacy approach</summary>
+
+&ldquo;`swift
+let pusher = Pusher(key: &quot;YOUR_APP_KEY&rdquo;)
+let myChannel = pusher.subscribe(&ldquo;my-channel&rdquo;)
+
+myChannel.bind(eventName: &ldquo;new-price&rdquo;, callback: { (data: Any?) -> Void in
+    if let data = data as? [String : AnyObject] {
+        if let price = data[&ldquo;price&rdquo;] as? String, company = data[&ldquo;company&rdquo;] as? String {
+            print(&ldquo;\(company) is now priced at \(price)&rdquo;)
+        }
+    }
+})
+&ldquo;`
+</details>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+<span class="n">PusherChannel</span> <span class="o">*</span><span class="n">chan</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"my-channel"</span><span class="p">];</span>
+
+<span class="p">[</span><span class="n">chan</span> <span class="nf">bindWithEventName</span><span class="p">:</span><span class="s">@"new-price"</span> <span class="nf">eventCallback</span><span class="p">:</span><span class="o">^</span><span class="kt">void</span> <span class="p">(</span><span class="n">PusherEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">data</span><span class="p">;</span>
+    <span class="c1">// `data` is a string that you can parse if necessary.</span>
+<span class="p">}];</span>
+</code></pre>
+
+<details><summary>View legacy approach</summary>
+
+&rdquo;`objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@&ldquo;YOUR_APP_KEY&rdquo;];
+PusherChannel *chan = [pusher subscribeWithChannelName:@&ldquo;my-channel&rdquo;];
+
+[chan bindWithEventName:@&ldquo;new-price&rdquo; callback:^void (NSDictionary *data) {
+    NSString *price = data[@&ldquo;price&rdquo;];
+    NSString *company = data[@&ldquo;company&rdquo;];
+
+    NSLog(@&ldquo;%@ is now priced at %@&rdquo;, company, price);
+}];
+&ldquo;`
+</details>
+<h3 id='global-events' class='heading'>Global events</h3>
+
+<p>You can attach behavior to these events regardless of the channel the event is broadcast to. </p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"YOUR_APP_KEY"</span><span class="p">)</span>
+<span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"my-channel"</span><span class="p">)</span>
+
+<span class="n">pusher</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">eventCallback</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">PusherEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span> <span class="p">{</span>
+        <span class="c1">// `data` is a string that you can parse if necessary.</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<p>The callback is passed a <code><a href="Classes/PusherEvent.html">PusherEvent</a></code>  (see <a href="#pusherevent">docs</a>).</p>
+
+<details><summary>View legacy approach</summary>
+
+&rdquo;`swift
+let pusher = Pusher(key: &ldquo;YOUR_APP_KEY&rdquo;)
+pusher.subscribe(&ldquo;my-channel&rdquo;)
+
+pusher.bind(callback: { (event: Any?) -> Void in
+    if let data = event[&ldquo;data&rdquo;] as? [String : AnyObject] {
+        if let commenter = data[&ldquo;commenter&rdquo;] as? String, message = data[&ldquo;message&rdquo;] as? String {
+            print(&ldquo;\(commenter) wrote \(message)&rdquo;)
+        }
+    }
+})
+&ldquo;`
+</details>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+<span class="n">PusherChannel</span> <span class="o">*</span><span class="n">chan</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"my-channel"</span><span class="p">];</span>
+
+<span class="p">[</span><span class="n">pusher</span> <span class="nf">bindWithEventCallback</span><span class="p">:</span> <span class="o">^</span><span class="kt">void</span> <span class="p">(</span><span class="n">PusherEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// `data` is a string that you can parse if necessary.</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">data</span><span class="p">;</span>
+<span class="p">}];</span>
+</code></pre>
+
+<details><summary>View legacy approach</summary>
+
+&rdquo;`objc
+Pusher *pusher = [[Pusher alloc] initWithAppKey:@&ldquo;YOUR_APP_KEY&rdquo;];
+PusherChannel *chan = [pusher subscribeWithChannelName:@&ldquo;my-channel&rdquo;];
+
+[pusher bind: ^void (NSDictionary *event) {
+    NSDictionary *data = event[@&ldquo;data&rdquo;];
+    NSString *commenter = data[@&ldquo;commenter&rdquo;];
+    NSString *message = data[@&ldquo;message&rdquo;];
+
+    NSLog(@&ldquo;%@ wrote %@&rdquo;, commenter, message);
+}];
+&ldquo;`
+</details>
+<h3 id='callback-parameters' class='heading'>Callback parameters</h3>
+<h4 id='pusherevent' class='heading'>PusherEvent</h4>
+
+<p>The callbacks you bind receive a <code><a href="Classes/PusherEvent.html">PusherEvent</a></code>:</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>eventName</code></td>
+<td><code>String</code></td>
+<td>The name of the event.</td>
+</tr>
+<tr>
+<td><code>channelName</code></td>
+<td><code>String?</code></td>
+<td>The name of the channel that the event was triggered on.</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>String?</code></td>
+<td>The data that was passed to <code>trigger</code>, encoded as a string. If you passed an object then that will have been serialized to a JSON string which you can parse as necessary. See <a href="#parsing-event-data">parsing event data</a>.</td>
+</tr>
+<tr>
+<td><code>userId</code></td>
+<td><code>String?</code></td>
+<td>The ID of the user who triggered the event. This is only available for client events triggered on presence channels.</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Return Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>property</code></td>
+<td><code>withKey: String</code> - The key of the property</td>
+<td><code>Any?</code></td>
+<td>A helper function for accessing raw properties from the websocket event. Data returned by this function should not be considered stable and it is recommended that you use the properties above instead.</td>
+</tr>
+</tbody></table>
+<h3 id='parsing-event-data' class='heading'>Parsing event data</h3>
+
+<p>The <code>data</code> property of  <a href="#pusherevent"><code><a href="Classes/PusherEvent.html">PusherEvent</a></code></a> contains the string representation of the data that you passed when you triggered the event. If you passed an object then that object will have been serialized to JSON. You can parse that JSON as appropriate. You can make use of <a href="https://developer.apple.com/swift/blog/?id=37"><code>JSONSerialization</code></a>, or you can use the <code>JSONDecoder</code> to decode the JSON into a Codable Class or Struct. See the Apple docs: <a href="https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types">Encoding and Decoding Custom Types</a>.</p>
+
+<p>For example, the following might be an example of a stock tracking app publishing price updates for companies. You can decode the &quot;price-update&rdquo; event into a struct in Swift:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">PriceUpdate</span><span class="p">:</span> <span class="kt">Codable</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="k">let</span> <span class="nv">company</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="kd">public</span> <span class="k">let</span> <span class="nv">price</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"YOUR_APP_KEY"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">myChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"my-channel"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">decoder</span> <span class="o">=</span> <span class="kt">JSONDecoder</span><span class="p">()</span>
+
+<span class="n">myChannel</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"price-update"</span><span class="p">,</span> <span class="nv">eventCallback</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">PusherEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">json</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+        <span class="k">let</span> <span class="nv">jsonData</span><span class="p">:</span> <span class="kt">Data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Could not convert JSON string to data"</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="k">let</span> <span class="nv">decoded</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="n">decoder</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">PriceUpdate</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">jsonData</span><span class="p">)</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">priceUpdate</span> <span class="o">=</span> <span class="n">decoded</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Could not decode price update"</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">priceUpdate</span><span class="o">.</span><span class="n">company</span><span class="se">)</span><span class="s"> is now priced at </span><span class="se">\(</span><span class="n">priceUpdate</span><span class="o">.</span><span class="n">price</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">})</span>
+
+</code></pre>
+
+<p>Alternatively, you could use <a href="https://developer.apple.com/documentation/foundation/jsonserialization"><code>JSONSerialization</code></a> to decode the JSON into Swift data types: </p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"YOUR_APP_KEY"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">myChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"my-channel"</span><span class="p">)</span>
+
+<span class="n">myChannel</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"price-update"</span><span class="p">,</span> <span class="nv">eventCallback</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">PusherEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">json</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+        <span class="k">let</span> <span class="nv">jsonData</span><span class="p">:</span> <span class="kt">Data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Could not convert JSON string to data"</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="k">let</span> <span class="nv">decoded</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="kt">JSONSerialization</span><span class="o">.</span><span class="nf">jsonObject</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">jsonData</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[])</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">priceUpdate</span> <span class="o">=</span> <span class="n">decoded</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Could not decode price update"</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">company</span> <span class="o">=</span> <span class="n">priceUpdate</span><span class="p">[</span><span class="s">"company"</span><span class="p">]</span> <span class="k">as?</span> <span class="kt">String</span><span class="p">,</span> <span class="k">let</span> <span class="nv">price</span> <span class="o">=</span> <span class="n">priceUpdate</span><span class="p">[</span><span class="s">"price"</span><span class="p">]</span> <span class="k">as?</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">company</span><span class="se">)</span><span class="s"> is now priced at </span><span class="se">\(</span><span class="n">price</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+<span class="n">PusherChannel</span> <span class="o">*</span><span class="n">chan</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"my-channel"</span><span class="p">];</span>
+
+<span class="p">[</span><span class="n">chan</span> <span class="nf">bindWithEventName</span><span class="p">:</span><span class="s">@"price-update"</span> <span class="nf">eventCallback</span><span class="p">:</span><span class="o">^</span><span class="kt">void</span> <span class="p">(</span><span class="n">PusherEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">dataString</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">data</span><span class="p">;</span>
+    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataString</span> <span class="nf">dataUsingEncoding</span><span class="p">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
+
+    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">jsonObject</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="nf">JSONObjectWithData</span><span class="p">:</span><span class="n">data</span> <span class="nf">options</span><span class="p">:</span><span class="n">kNilOptions</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">price</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="p">[</span><span class="s">@"price"</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">company</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="p">[</span><span class="s">@"company"</span><span class="p">];</span>
+
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@ is now priced at %@"</span><span class="p">,</span> <span class="n">company</span><span class="p">,</span> <span class="n">price</span><span class="p">);</span>
+<span class="p">}];</span>
+</code></pre>
+<h3 id='receiving-errors' class='heading'>Receiving errors</h3>
+
+<p>Errors received from Pusher Channels can be accessed via the <a href="#connection-delegate">connection delegate</a>. This was previously done by binding callbacks.</p>
+
+<details><summary>View legacy approach</summary>
+
+Errors are sent to the client for which they are relevant with an event name of `pusher:error`. These can be received and handled using code as follows. Obviously the specifics of how to handle them are left up to the developer but this displays the general pattern.
+
+#### Swift
+
+&ldquo;`swift
+pusher.bind({ (message: Any?) in
+    if let message = message as? [String: AnyObject], eventName = message[&quot;event&rdquo;] as? String where eventName == &ldquo;pusher:error&rdquo; {
+        if let data = message[&ldquo;data&rdquo;] as? [String: AnyObject], errorMessage = data[&ldquo;message&rdquo;] as? String {
+            print(&ldquo;Error message: \(errorMessage)&rdquo;)
+        }
+    }
+})
+&ldquo;`
+
+#### Objective-C
+    
+&rdquo;`objc
+[pusher bind:^void (NSDictionary *data) {
+    NSString *eventName = data[@&ldquo;event&rdquo;];
+
+    if ([eventName isEqualToString:@&ldquo;pusher:error&rdquo;]) {
+        NSString *errorMessage = data[@&ldquo;data&rdquo;][@&ldquo;message&rdquo;];
+        NSLog(@&ldquo;Error message: %@&rdquo;, errorMessage);
+    }
+}];
+&ldquo;`
+
+The sort of errors you might get are:
+
+&rdquo;`bash
+# if attempting to subscribe to an already subscribed-to channel
+
+&ldquo;{"event":"pusher:error","data":{"code":null,"message":"Existing subscription to channel presence-channel"}}&rdquo;
+
+# if the auth signature generated by your auth mechanism is invalid
+
+&ldquo;{"event":"pusher:error","data":{"code":null,"message":"Invalid signature: Expected HMAC SHA256 hex digest of 200557.5043858:presence-channel:{\"user_id\":\"200557.5043858\"}, but got 8372e1649cf5a45a2de3cd97fe11d85de80b214243e3a9e9f5cee502fa03f880"}}&rdquo;
+&ldquo;`
+
+You can see that the general form they take is:
+
+&rdquo;`bash
+{
+  &ldquo;event&rdquo;: &ldquo;pusher:error&rdquo;,
+  &ldquo;data&rdquo;: {
+    &ldquo;code&rdquo;: null,
+    &ldquo;message&rdquo;: &ldquo;Error message here&rdquo;
+  }
+}
+&ldquo;`
+
+</details>
+<h3 id='unbind-event-handlers' class='heading'>Unbind event handlers</h3>
+
+<p>You can remove previously-bound handlers from an object by using the <code>unbind</code> function. For example,</p>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pusher</span> <span class="o">=</span> <span class="kt">Pusher</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="s">"YOUR_APP_KEY"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">myChannel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="s">"my-channel"</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="nv">eventHandlerId</span> <span class="o">=</span> <span class="n">myChannel</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"new-price"</span><span class="p">,</span> <span class="nv">eventCallback</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt">PusherEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+  <span class="c1">//...</span>
+<span class="p">})</span>
+
+<span class="n">myChannel</span><span class="o">.</span><span class="nf">unbind</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"new-price"</span><span class="p">,</span> <span class="nv">callbackId</span><span class="p">:</span> <span class="n">eventHandlerId</span><span class="p">)</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">Pusher</span> <span class="o">*</span><span class="n">pusher</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Pusher</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAppKey</span><span class="p">:</span><span class="s">@"YOUR_APP_KEY"</span><span class="p">];</span>
+<span class="n">PusherChannel</span> <span class="o">*</span><span class="n">chan</span> <span class="o">=</span> <span class="p">[</span><span class="n">pusher</span> <span class="nf">subscribeWithChannelName</span><span class="p">:</span><span class="s">@"my-channel"</span><span class="p">];</span>
+
+<span class="n">NSString</span> <span class="o">*</span><span class="n">callbackId</span> <span class="o">=</span> <span class="p">[</span><span class="n">chan</span> <span class="nf">bindWithEventName</span><span class="p">:</span><span class="s">@"new-price"</span> <span class="nf">eventCallback</span><span class="p">:</span><span class="o">^</span><span class="kt">void</span> <span class="p">(</span><span class="n">PusherEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//...</span>
+<span class="p">}];</span>
+
+<span class="p">[</span><span class="n">chan</span> <span class="nf">unbindWithEventName</span><span class="p">:</span><span class="s">@"new-price"</span> <span class="nf">callbackId</span><span class="p">:</span><span class="n">callbackId</span><span class="p">];</span>
+</code></pre>
+
+<p>You can unbind from events at both the global and per channel level. For both objects you also have the option of calling <code>unbindAll</code>, which, as you can guess, will unbind all eventHandlers on the object.</p>
+<h2 id='triggering-events' class='heading'>Triggering events</h2>
+
+<p>Once a <a href="https://pusher.com/docs/channels/using_channels/private-channels">private</a> or <a href="https://pusher.com/docs/channels/using_channels/presence-channels">presence</a> subscription has been authorized (see <a href="https://pusher.com/docs/channels/server_api/authenticating-users">authenticating users</a>) and the subscription has succeeded, it is possible to trigger events on those channels.</p>
+<pre class="highlight swift"><code><span class="n">chan</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"client-myEvent"</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="p">[</span><span class="s">"myName"</span><span class="p">:</span> <span class="s">"Bob"</span><span class="p">])</span>
+</code></pre>
+
+<p>Events triggered by clients are called <a href="https://pusher.com/docs/channels/using_channels/events#triggering-client-events">client events</a>. Because they are being triggered from a client which may not be trusted there are a number of enforced rules when using them. Some of these rules include:</p>
+
+<ul>
+<li>Event names must have a <code>client-</code> prefix</li>
+<li>Rate limits</li>
+<li>You can only trigger an event when the subscription has succeeded</li>
+</ul>
+
+<p>For full details see the <a href="https://pusher.com/docs/channels/using_channels/events#triggering-client-events">client events documentation</a>.</p>
+<h2 id='testing' class='heading'>Testing</h2>
+
+<p>There are a set of tests for the library that can be run using the standard method (Command-U in Xcode).</p>
+
+<p>The tests also get run on <a href="https://travis-ci.org/pusher/pusher-websocket-swift">Travis-CI</a>. See <a href="https://github.com/pusher/pusher-websocket-swift/blob/master/.travis.yml">.travis.yml</a> for details on how the Travis tests are run.</p>
+<h2 id='extensions' class='heading'>Extensions</h2>
+
+<ul>
+<li><a href="https://github.com/jondwillis/RxPusherSwift">RxPusherSwift</a></li>
+</ul>
+<h2 id='communication' class='heading'>Communication</h2>
+
+<ul>
+<li>If you have found a bug, please open an issue.</li>
+<li>If you have a feature request, please open an issue.</li>
+<li>If you want to contribute, please submit a pull request (preferably with some tests 🙂 ).</li>
+</ul>
+<h2 id='credits' class='heading'>Credits</h2>
+
+<p>PusherSwift is owned and maintained by <a href="https://pusher.com">Pusher</a>. It was originally created by <a href="https://github.com/hamchapman">Hamilton Chapman</a>.</p>
+
+<p>It uses code from the following repositories:</p>
+
+<ul>
+<li><a href="https://github.com/bitmark-inc/tweetnacl-swiftwrap">TweetNacl</a></li>
+</ul>
+
+<p>The individual licenses for these libraries are included in the corresponding Swift files.</p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>PusherSwift is released under the MIT license. See <a href="https://github.com/pusher/pusher-websocket-swift/blob/master/LICENSE.md">LICENSE</a> for details.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://pusher.com" target="_blank" rel="external">Pusher</a>. All rights reserved. (Last updated: 2021-07-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
