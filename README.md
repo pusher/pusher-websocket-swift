@@ -15,7 +15,7 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 
 ## Supported platforms
 - Swift 5.0 and above
-- Xcode 11.0 and above
+- Xcode 12.0 and above
 - Can be used with Objective-C
 
 ### Deployment targets
@@ -130,7 +130,7 @@ Alternatively, if you are building using an Intel Mac and do not want to migrate
 
 ### Swift Package Manager
 
-To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode (11 and above) – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
+To integrate PusherSwift into your project using [Swift Package Manager](https://swift.org/package-manager/), you can add the library as a dependency in Xcode – see the [docs](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app). The package repository URL is:
 
 ```bash
 https://github.com/pusher/pusher-websocket-swift.git
