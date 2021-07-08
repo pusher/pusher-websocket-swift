@@ -1,3 +1,0 @@
-FRAMEWORK_SEARCH_PATHS[sdk=macosx*] = $(SRCROOT)/Carthage/Build/Mac/ $(inherited)
-FRAMEWORK_SEARCH_PATHS[sdk=iphone*] = $(SRCROOT)/Carthage/Build/iOS/ $(inherited)
-FRAMEWORK_SEARCH_PATHS[sdk=appletv*] = $(SRCROOT)/Carthage/Build/tvOS/ $(inherited)
