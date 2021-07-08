@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335AD5A820569C3B000D4D08 /* Reachability.framework */; };
 		335AD5B220569F14000D4D08 /* PusherSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33CC82EA1D7F16A8003B699F /* PusherSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33831CC21A9CFCDB00B124F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33831CBE1A9CFCDB00B124F1 /* AppDelegate.swift */; };
 		33831CC41A9CFCDB00B124F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33831CC01A9CFCDB00B124F1 /* Main.storyboard */; };
@@ -57,7 +56,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335AD5AC20569C3C000D4D08 /* Reachability.framework in Frameworks */,
 				33CC82EB1D7F16A8003B699F /* PusherSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,7 +119,6 @@
 			buildConfigurationList = 33831C7D1A9CEEEA00B124F1 /* Build configuration list for PBXNativeTarget "iOS Example" */;
 			buildPhases = (
 				33831C5A1A9CEEE900B124F1 /* Sources */,
-				335AD5AE20569C58000D4D08 /* Copy Carthage Frameworks */,
 				33831C5B1A9CEEE900B124F1 /* Frameworks */,
 				33831C5C1A9CEEE900B124F1 /* Resources */,
 				3330F8921D86EF1900D8DC88 /* Embed App Extensions */,
@@ -189,25 +186,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		335AD5AE20569C58000D4D08 /* Copy Carthage Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/../Carthage/Build/iOS/TweetNacl.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/NWWebSocket.framework",
-			);
-			name = "Copy Carthage Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		33831C5A1A9CEEE900B124F1 /* Sources */ = {
@@ -363,6 +341,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = H7FL434D9W;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = "iOS Example Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -58,6 +58,8 @@
 		53AF00C925D2AEC70005621D /* EventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AF00C825D2AEC70005621D /* EventQueue.swift */; };
 		53AF00D125D2B02D0005621D /* EventQueueDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AF00D025D2B02D0005621D /* EventQueueDelegate.swift */; };
 		53F08C4825ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F08C4725ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift */; };
+		57A44493264942B700984790 /* NWWebSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A44492264942B700984790 /* NWWebSocket.xcframework */; };
+		57A44495264942BB00984790 /* TweetNacl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A44494264942BB00984790 /* TweetNacl.xcframework */; };
 		736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
 		736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */; };
 		E2498293231E612700CFBBD6 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
@@ -136,6 +138,8 @@
 		53AF00C825D2AEC70005621D /* EventQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventQueue.swift; sourceTree = "<group>"; };
 		53AF00D025D2B02D0005621D /* EventQueueDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventQueueDelegate.swift; sourceTree = "<group>"; };
 		53F08C4725ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherChannel+EncryptionHelpers.swift"; sourceTree = "<group>"; };
+		57A44492264942B700984790 /* NWWebSocket.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NWWebSocket.xcframework; path = Carthage/Build/NWWebSocket.xcframework; sourceTree = "<group>"; };
+		57A44494264942BB00984790 /* TweetNacl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TweetNacl.xcframework; path = Carthage/Build/TweetNacl.xcframework; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
 		73D8A22C2435F381001FDE05 /* ChannelEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57A44493264942B700984790 /* NWWebSocket.xcframework in Frameworks */,
+				57A44495264942BB00984790 /* TweetNacl.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +184,7 @@
 				33831C8B1A9CF61600B124F1 /* Sources */,
 				33BB995C1D21225B00B25C2A /* Tests */,
 				33831C8A1A9CF61600B124F1 /* Products */,
+				57A44491264942B700984790 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -390,6 +397,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		57A44491264942B700984790 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				57A44494264942BB00984790 /* TweetNacl.xcframework */,
+				57A44492264942B700984790 /* NWWebSocket.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -440,7 +456,6 @@
 				33831C901A9CF61600B124F1 /* Sources */,
 				33C40CB81C1DFC91008A54E3 /* Headers */,
 				33831C921A9CF61600B124F1 /* Resources */,
-				33A108CA2051B57800D624C9 /* Copy Carthage Frameworks */,
 			);
 			buildRules = (
 			);
@@ -508,22 +523,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		33A108CA2051B57800D624C9 /* Copy Carthage Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				NWWebSocket,
-				TweetNacl,
-			);
-			name = "Copy Carthage Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "case \"$PLATFORM_NAME\" in\nmacosx) plat=Mac;;\niphone*) plat=iOS;;\nwatch*) plat=watchOS;;\ntv*) plat=tvOS;;\nappletv*) plat=tvOS;;\n*) echo \"error: Unknown PLATFORM_NAME: $PLATFORM_NAME\"; exit 1;;\nesac\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nframework=$(basename \"${!VAR}\")\nexport SCRIPT_INPUT_FILE_$n=\"$SRCROOT\"/Carthage/Build/$plat/\"$framework\".framework\ndone\n\n/usr/local/bin/carthage copy-frameworks || exit\n\nfor (( n = 0; n < SCRIPT_INPUT_FILE_COUNT; n++ )); do\nVAR=SCRIPT_INPUT_FILE_$n\nsource=${!VAR}.dSYM\ndest=${BUILT_PRODUCTS_DIR}/$(basename \"$source\")\nditto \"$source\" \"$dest\" || exit\ndone\n";
-		};
 		5333AD0824F928F1006E8DF0 /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -652,7 +651,6 @@
 /* Begin XCBuildConfiguration section */
 		33831C4E1A9CEDF800B124F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3301FED22051AB6400AE591A /* Carthage.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -675,6 +673,9 @@
 				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -695,7 +696,6 @@
 		};
 		33831C4F1A9CEDF800B124F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3301FED22051AB6400AE591A /* Carthage.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -717,6 +717,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -728,7 +731,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				SDKROOT = "";
 				SUPPORTED_PLATFORMS = "macosx appletvos iphoneos watchos appletvsimulator iphonesimulator watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 13.0;
 				WATCHOS_DEPLOYMENT_TARGET = 6.0;
@@ -779,7 +783,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
@@ -835,7 +843,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PusherSwift;
@@ -874,6 +886,9 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -889,8 +904,16 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
@@ -928,6 +951,9 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -936,8 +962,16 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pusher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PusherSwiftTests;
