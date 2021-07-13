@@ -186,16 +186,15 @@ class PusherConnectionDelegateTests: XCTestCase {
     func testPassingIncomingMessagesToTheDebugLogFunctionIfOneIsImplemented() {
         pusher.connect()
 
-        XCTAssertEqual(socket.callbackCheckString, "[PUSHER DEBUG] websocketDidReceiveMessage {\"event\":\"pusher:connection_established\",\"data\":\"{\\\"socket_id\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}")
+        XCTAssertEqual(socket.callbackCheckString, "[PUSHER DEBUG] websocketDidReceiveMessage {\"\(Constants.JSONKeys.event)\":\"\(Constants.Events.Pusher.connectionEstablished)\",\"\(Constants.JSONKeys.data)\":\"{\\\"\(Constants.JSONKeys.socketId)\\\":\\\"45481.3166671\\\",\\\"activity_timeout\\\":120}\"}")
     }
 
     func testsubscriptionDidSucceedDelegateFunctionGetsCalledWhenChannelSubscriptionSucceeds() {
         let ex = expectation(description: "the subscriptionDidSucceed function should be called")
-        let channelName = "private-channel"
         dummyDelegate.ex = ex
-        dummyDelegate.testingChannelName = channelName
+        dummyDelegate.testingChannelName = TestObjects.Event.privateChannelName
 
-        _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(TestObjects.Event.privateChannelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
@@ -203,19 +202,18 @@ class PusherConnectionDelegateTests: XCTestCase {
 
     func testsubscriptionDidFailDelegateFunctionGetsCalledWhenChannelSubscriptionFails() {
         let ex = expectation(description: "the subscriptionDidFail function should be called")
-        let channelName = "private-channel"
         dummyDelegate.ex = ex
-        dummyDelegate.testingChannelName = channelName
+        dummyDelegate.testingChannelName = TestObjects.Event.privateChannelName
         pusher.connection.options.authMethod = .noMethod
 
-        _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(TestObjects.Event.privateChannelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
     }
 
     func testErrorFunctionCalledWhenPusherErrorIsReceived() {
-        let payload = "{\"event\":\"pusher:error\", \"data\":{\"message\":\"Application is over connection quota\",\"code\":4004}}"
+        let payload = "{\"\(Constants.JSONKeys.event)\":\"\(Constants.Events.Pusher.error)\", \"\(Constants.JSONKeys.data)\":{\"\(Constants.JSONKeys.message)\":\"Application is over connection quota\",\"code\":4004}}"
         pusher.connection.webSocketDidReceiveMessage(connection: socket, string: payload)
 
         XCTAssertEqual(dummyDelegate.stubber.calls.last?.name, "error")

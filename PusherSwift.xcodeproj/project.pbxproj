@@ -60,6 +60,7 @@
 		53F08C4825ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F08C4725ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift */; };
 		57A44493264942B700984790 /* NWWebSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A44492264942B700984790 /* NWWebSocket.xcframework */; };
 		57A44495264942BB00984790 /* TweetNacl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A44494264942BB00984790 /* TweetNacl.xcframework */; };
+		57F6E444269C5A2E00ECFAD4 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6E443269C5A2E00ECFAD4 /* TestObjects.swift */; };
 		736E53F5242A378B0052CC1B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F3242A35D90052CC1B /* String+Extensions.swift */; };
 		736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */; };
 		E2498293231E612700CFBBD6 /* PusherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2498292231E612700CFBBD6 /* PusherError.swift */; };
@@ -140,6 +141,7 @@
 		53F08C4725ECEFFD00BDFFB3 /* PusherChannel+EncryptionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PusherChannel+EncryptionHelpers.swift"; sourceTree = "<group>"; };
 		57A44492264942B700984790 /* NWWebSocket.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NWWebSocket.xcframework; path = Carthage/Build/NWWebSocket.xcframework; sourceTree = "<group>"; };
 		57A44494264942BB00984790 /* TweetNacl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TweetNacl.xcframework; path = Carthage/Build/TweetNacl.xcframework; sourceTree = "<group>"; };
+		57F6E443269C5A2E00ECFAD4 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		736E53F3242A35D90052CC1B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		736E53F6242A45AC0052CC1B /* XCTest+Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Assertions.swift"; sourceTree = "<group>"; };
 		73D8A22C2435F381001FDE05 /* ChannelEventFactory+DecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelEventFactory+DecryptionTests.swift"; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			children = (
 				33BB995F1D21226C00B25C2A /* Helpers.swift */,
 				33BB99601D21226C00B25C2A /* Mocks.swift */,
+				57F6E443269C5A2E00ECFAD4 /* TestObjects.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				33BB99771D21230100B25C2A /* PresenceChannelTests.swift in Sources */,
 				33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */,
 				736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */,
+				57F6E444269C5A2E00ECFAD4 /* TestObjects.swift in Sources */,
 				E2594CE42447753200E36300 /* ChannelEventQueueTests.swift in Sources */,
 				33BB997B1D21230100B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */,
 				3342F3BD1D808AC900C0296E /* ClientEventTests.swift in Sources */,

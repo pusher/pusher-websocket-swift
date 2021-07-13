@@ -29,39 +29,22 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
     }
 
     func testEncryptedChannelShouldCallDidReceiveEventWithDecryptedMessage() {
-        let channel = createAndSubscribe("private-encrypted-channel")
+        let channel = createAndSubscribe(TestObjects.Event.encryptedChannelName)
 
-        let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+        let decryptionKey = TestObjects.Event.Data.validDecryptionKey
 
-        let dataPayload = """
-        {
-          "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
-          "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let jsonDict = """
-        {
-          "event": "user-event",
-          "channel": "private-encrypted-channel",
-          "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
-
-        let expectedDecryptedPayload = """
-        {
-          "name": "freddy",
-          "message": "hello"
-        }
-        """.removing(.whitespacesAndNewlines)
+        let jsonDict = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                  channel: TestObjects.Event.encryptedChannelName,
+                                                  data: TestObjects.Event.Data.encryptedJSONTwo)
+            .toJsonDict()
 
         channel.decryptionKey = decryptionKey
 
         let ex = expectation(description: "should call didReceiveEvent")
 
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
-            XCTAssertEqual(event.data, expectedDecryptedPayload)
-            XCTAssertEqual(channelName, "private-encrypted-channel")
+            XCTAssertEqual(event.data, TestObjects.Event.Data.decryptedJSONTwo.removing(.whitespacesAndNewlines))
+            XCTAssertEqual(channelName, TestObjects.Event.encryptedChannelName)
             ex.fulfill()
         }
 
@@ -70,22 +53,13 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
     }
 
     func testEncryptedChannelShouldCallDidFailToDecryptEventWithNonEncryptedEvent() {
-        let channel = createAndSubscribe("private-encrypted-channel")
-        let decryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+        let channel = createAndSubscribe(TestObjects.Event.encryptedChannelName)
+        let decryptionKey = TestObjects.Event.Data.validDecryptionKey
 
-        let dataPayload = """
-        {
-          "message": "Hello"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let jsonDict = """
-        {
-          "event": "user-event",
-          "channel": "private-encrypted-channel",
-          "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
+        let jsonDict = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                  channel: TestObjects.Event.encryptedChannelName,
+                                                  data: TestObjects.Event.Data.decryptedJSONOne)
+                           .toJsonDict()
 
         channel.decryptionKey = decryptionKey
 
@@ -94,7 +68,7 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         eventQueueDelegate.didFailToDecryptEvent = { eventQueue, payload, channelName in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: payload)
             XCTAssertTrue(equal)
-            XCTAssertEqual(channelName, "private-encrypted-channel")
+            XCTAssertEqual(channelName, TestObjects.Event.encryptedChannelName)
             ex.fulfill()
         }
 
@@ -103,32 +77,15 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
     }
 
     func testShouldReloadDecryptionKeyAndDecryptSuccessfully() {
-        let channel = createAndSubscribe("private-encrypted-channel")
+        let channel = createAndSubscribe(TestObjects.Event.encryptedChannelName)
 
-        let wrongDecryptionKey = "00000000000000000000000000000000000000000000"
-        let correctDecryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+        let wrongDecryptionKey = TestObjects.Event.Data.badDecryptionKey
+        let correctDecryptionKey = TestObjects.Event.Data.validDecryptionKey
 
-        let dataPayload = """
-        {
-          "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
-          "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let jsonDict = """
-        {
-          "event": "user-event",
-          "channel": "private-encrypted-channel",
-          "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
-
-        let expectedDecryptedPayload = """
-        {
-          "name": "freddy",
-          "message": "hello"
-        }
-        """.removing(.whitespacesAndNewlines)
+        let jsonDict = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                  channel: TestObjects.Event.encryptedChannelName,
+                                                  data: TestObjects.Event.Data.encryptedJSONTwo)
+            .toJsonDict()
 
         channel.decryptionKey = wrongDecryptionKey
 
@@ -142,8 +99,8 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         }
 
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
-            XCTAssertEqual(event.data, expectedDecryptedPayload)
-            XCTAssertEqual(channelName, "private-encrypted-channel")
+            XCTAssertEqual(event.data, TestObjects.Event.Data.decryptedJSONTwo.removing(.whitespacesAndNewlines))
+            XCTAssertEqual(channelName, TestObjects.Event.encryptedChannelName)
             receivedEv.fulfill()
         }
 
@@ -152,25 +109,15 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
     }
 
     func testShouldReloadDecryptionKeyOnceAndFailIfSecondKeyIsBad() {
-        let channel = createAndSubscribe("private-encrypted-channel")
+        let channel = createAndSubscribe(TestObjects.Event.encryptedChannelName)
 
-        let wrongDecryptionKey0 = "00000000000000000000000000000000000000000000"
+        let wrongDecryptionKey0 = TestObjects.Event.Data.badDecryptionKey
         let wrongDecryptionKey1 = "11111111111111111111111111111111111111111111"
 
-        let dataPayload = """
-        {
-          "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
-          "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let jsonDict = """
-        {
-          "event": "user-event",
-          "channel": "private-encrypted-channel",
-          "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
+        let jsonDict = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                  channel: TestObjects.Event.encryptedChannelName,
+                                                  data: TestObjects.Event.Data.encryptedJSONTwo)
+            .toJsonDict()
 
         channel.decryptionKey = wrongDecryptionKey0
 
@@ -186,7 +133,7 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         eventQueueDelegate.didFailToDecryptEvent = { event, payload, channelName in
             let equal = NSDictionary(dictionary: jsonDict).isEqual(to: payload)
             XCTAssertTrue(equal)
-            XCTAssertEqual(channelName, "private-encrypted-channel")
+            XCTAssertEqual(channelName, TestObjects.Event.encryptedChannelName)
             failedEv.fulfill()
         }
 
@@ -194,48 +141,22 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    // swiftlint:disable:next function_body_length
     func testShouldMoveOnAfterFailingToDecryptAMessage() {
-        let channel = createAndSubscribe("private-encrypted-channel")
+        let channel = createAndSubscribe(TestObjects.Event.encryptedChannelName)
 
-        let wrongDecryptionKey = "00000000000000000000000000000000000000000000"
+        let wrongDecryptionKey = TestObjects.Event.Data.badDecryptionKey
 
         // Decryption key for "decryptableData" but not "undecryptableData"
-        let correctDecryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+        let correctDecryptionKey = TestObjects.Event.Data.validDecryptionKey
 
-        let undecryptableData = """
-        {
-          "nonce": "7w2hU5r5VMj3PGXXepgP6E/KgPob5o6t",
-          "ciphertext": "FX0lJZu33f0dWPb89816ngn0l9NfJC5mFny6EQF6z25K+Ly5LFS9hP7XAC6s5pUoZqGXzC03FA=="
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let decryptableData = """
-        {
-          "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
-          "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let generateEvent = { (payload: String) in
-            return """
-            {
-              "event": "user-event",
-              "channel": "private-encrypted-channel",
-              "data": \(payload.escaped)
-            }
-            """.toJsonDict()
-        }
-
-        let undecryptableEvent = generateEvent(undecryptableData)
-        let decryptableEvent = generateEvent(decryptableData)
-
-        let expectedDecryptedPayload = """
-        {
-          "name": "freddy",
-          "message": "hello"
-        }
-        """.removing(.whitespacesAndNewlines)
+        let undecryptableEvent = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                            channel: TestObjects.Event.encryptedChannelName,
+                                                            data: TestObjects.Event.Data.undecryptableJSON)
+                                     .toJsonDict()
+        let decryptableEvent = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                          channel: TestObjects.Event.encryptedChannelName,
+                                                          data: TestObjects.Event.Data.encryptedJSONTwo)
+                                   .toJsonDict()
 
         channel.decryptionKey = wrongDecryptionKey
 
@@ -252,13 +173,13 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         eventQueueDelegate.didFailToDecryptEvent = { event, payload, channelName in
             let equal = NSDictionary(dictionary: undecryptableEvent).isEqual(to: payload)
             XCTAssertTrue(equal)
-            XCTAssertEqual(channelName, "private-encrypted-channel")
+            XCTAssertEqual(channelName, TestObjects.Event.encryptedChannelName)
             failedEx.fulfill()
         }
 
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
-            XCTAssertEqual(expectedDecryptedPayload, event.data)
-            XCTAssertEqual(channelName, "private-encrypted-channel")
+            XCTAssertEqual(event.data, TestObjects.Event.Data.decryptedJSONTwo.removing(.whitespacesAndNewlines))
+            XCTAssertEqual(channelName, TestObjects.Event.encryptedChannelName)
             successEx.fulfill()
         }
 
@@ -268,49 +189,23 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    // swiftlint:disable:next function_body_length
     func testFailingToDecryptOnOneChannelShouldNotAffectAnother() {
         let decryptableChannel = createAndSubscribe("private-encrypted-decryptable")
         let undecryptableChannel = createAndSubscribe("private-encrypted-undecryptable")
 
-        let wrongDecryptionKey = "00000000000000000000000000000000000000000000"
+        let wrongDecryptionKey = TestObjects.Event.Data.badDecryptionKey
 
         // Decryption key for "decryptableData" but not "undecryptableData"
-        let correctDecryptionKey = "EOWC/ked3NtBDvEs9gFwk7x4oZEbH9I0Lz2qkopBxxs="
+        let correctDecryptionKey = TestObjects.Event.Data.validDecryptionKey
 
-        let undecryptableData = """
-        {
-          "nonce": "7w2hU5r5VMj3PGXXepgP6E/KgPob5o6t",
-          "ciphertext": "FX0lJZu33f0dWPb89816ngn0l9NfJC5mFny6EQF6z25K+Ly5LFS9hP7XAC6s5pUoZqGXzC03FA=="
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let decryptableData = """
-        {
-          "nonce": "Ew2lLeGzSefk8fyVPbwL1yV+8HMyIBrm",
-          "ciphertext": "ig9HfL7OKJ9TL97WFRG0xpuk9w0DXUJhLQlQbGf+ID9S3h15vb/fgDfsnsGxQNQDxw+i"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let generateEvent = { (channel: String, payload: String) in
-            return """
-            {
-              "event": "user-event",
-              "channel": "\(channel)",
-              "data": \(payload.escaped)
-            }
-            """.toJsonDict()
-        }
-
-        let undecryptableEvent = generateEvent(undecryptableChannel.name, undecryptableData)
-        let decryptableEvent = generateEvent(decryptableChannel.name, decryptableData)
-
-        let expectedDecryptedPayload = """
-        {
-          "name": "freddy",
-          "message": "hello"
-        }
-        """.removing(.whitespacesAndNewlines)
+        let undecryptableEvent = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                            channel: undecryptableChannel.name,
+                                                            data: TestObjects.Event.Data.undecryptableJSON)
+                                     .toJsonDict()
+        let decryptableEvent = TestObjects.Event.withJSON(name: TestObjects.Event.userEventName,
+                                                          channel: decryptableChannel.name,
+                                                          data: TestObjects.Event.Data.encryptedJSONTwo)
+                                   .toJsonDict()
 
         decryptableChannel.decryptionKey = correctDecryptionKey
         undecryptableChannel.decryptionKey = wrongDecryptionKey
@@ -333,7 +228,7 @@ class ChannelEventQueueDecryptionTests: XCTestCase {
         }
 
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
-            XCTAssertEqual(expectedDecryptedPayload, event.data)
+            XCTAssertEqual(event.data, TestObjects.Event.Data.decryptedJSONTwo.removing(.whitespacesAndNewlines))
             XCTAssertEqual(decryptableChannel.name, channelName)
             successEx.fulfill()
         }
