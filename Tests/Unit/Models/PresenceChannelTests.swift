@@ -8,6 +8,10 @@ class PusherPresenceChannelTests: XCTestCase {
     private var options: PusherClientOptions!
     private var stubber: StubberForMocks!
 
+    private let userIdAsIntegerJSON = "{\"\(Constants.JSONKeys.userId)\":100}"
+    private let userIdJSON = "{\"\(Constants.JSONKeys.userId)\":\"100\"}"
+    private let userIdWithUserInfoJSON = "{\"\(Constants.JSONKeys.userId)\":\"100\", \"\(Constants.JSONKeys.userInfo)\":{\"twitter\":\"hamchapman\"}}"
+
     override func setUp() {
         super.setUp()
 
@@ -29,8 +33,8 @@ class PusherPresenceChannelTests: XCTestCase {
 
         pusher.connect()
         let ex = expectation(description: "subscription succeed")
-        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+        let chan = pusher.subscribe(TestObjects.Event.presenceChannelName) as? PusherPresenceChannel
+        chan?.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
             ex.fulfill()
             XCTAssertEqual(chan?.members.first!.userId, "123", "the userId should be 123")
         }
@@ -40,9 +44,9 @@ class PusherPresenceChannelTests: XCTestCase {
     func testMembersObjectStoresSocketIdIfNoUserDataFetcherIsProvided() {
         pusher.connect()
 
-        let chan = pusher.subscribe("presence-channel") as? PusherPresenceChannel
+        let chan = pusher.subscribe(TestObjects.Event.presenceChannelName) as? PusherPresenceChannel
         let ex = expectation(description: "subscription succeed")
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+        chan?.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
             ex.fulfill()
             XCTAssertEqual(chan?.members.first!.userId, "46123.486095", "the userId should be 46123.486095")
         }
@@ -65,7 +69,7 @@ class PusherPresenceChannelTests: XCTestCase {
             return XCTFail("Couldn't subscribe to channel: \(channelName).")
         }
 
-        chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+        chan.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
             ex.fulfill()
 
             guard let firstUser = chan.members.first else {
@@ -94,15 +98,11 @@ class PusherPresenceChannelTests: XCTestCase {
             ex.fulfill()
         }
 
-        chan = pusher.subscribe("presence-channel", onMemberAdded: memberAdded) as? PusherPresenceChannel
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            let jsonDict = """
-            {
-                "event": "pusher_internal:member_added",
-                "channel": "presence-channel",
-                "data": "{\\"user_id\\":\\"100\\", \\"user_info\\":{\\"twitter\\":\\"hamchapman\\"}}"
-            }
-            """.removing(.newlines)
+        chan = pusher.subscribe(TestObjects.Event.presenceChannelName, onMemberAdded: memberAdded) as? PusherPresenceChannel
+        chan?.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
+            let jsonDict = TestObjects.Event.withJSON(name: Constants.Events.PusherInternal.memberAdded,
+                                                      channel: TestObjects.Event.presenceChannelName,
+                                                      data: self.userIdWithUserInfoJSON)
             self.pusher.connection.webSocketDidReceiveMessage(connection: self.socket, string: jsonDict)
         }
 
@@ -117,14 +117,12 @@ class PusherPresenceChannelTests: XCTestCase {
 
         pusher.connect()
 
-        let channelName = "presence-channel"
-
-        guard let presenceChannel = pusher.subscribe(channelName: channelName) as? PusherPresenceChannel else {
-            return XCTFail("Couldn't subscribe to channel: \(channelName).")
+        guard let presenceChannel = pusher.subscribe(channelName: TestObjects.Event.presenceChannelName) as? PusherPresenceChannel else {
+            return XCTFail("Couldn't subscribe to channel: \(TestObjects.Event.presenceChannelName).")
         }
 
         let ex = expectation(description: "subscription succeed")
-        presenceChannel.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+        presenceChannel.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
             ex.fulfill()
 
             guard let member = presenceChannel.me() else {
@@ -145,15 +143,13 @@ class PusherPresenceChannelTests: XCTestCase {
 
         pusher.connect()
 
-        let channelName = "presence-channel"
-
-        let presenceChannel = pusher.subscribe(channelName)
+        let presenceChannel = pusher.subscribe(TestObjects.Event.presenceChannelName)
 
         let ex = expectation(description: "subscription succeed")
-        presenceChannel.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+        presenceChannel.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
             ex.fulfill()
-            guard let presenceChannel = self.pusher.connection.channels.findPresence(name: channelName) else {
-                return XCTFail("Presence for channel: \(channelName) not found.")
+            guard let presenceChannel = self.pusher.connection.channels.findPresence(name: TestObjects.Event.presenceChannelName) else {
+                return XCTFail("Presence for channel: \(TestObjects.Event.presenceChannelName) not found.")
             }
 
             guard let member = presenceChannel.me() else {
@@ -174,15 +170,11 @@ class PusherPresenceChannelTests: XCTestCase {
             XCTAssertEqual(member.userId, "100", "the userId should be 100")
             ex.fulfill()
         }
-        let chan = pusher.subscribe("presence-channel", onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            let jsonDict = """
-            {
-                "event": "pusher_internal:member_added",
-                "channel": "presence-channel",
-                "data": "{\\"user_id\\":\\"100\\"}"
-            }
-            """.removing(.newlines)
+        let chan = pusher.subscribe(TestObjects.Event.presenceChannelName, onMemberAdded: memberAddedFunction) as? PusherPresenceChannel
+        chan?.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
+            let jsonDict = TestObjects.Event.withJSON(name: Constants.Events.PusherInternal.memberAdded,
+                                                      channel: TestObjects.Event.presenceChannelName,
+                                                      data: self.userIdJSON)
             self.pusher.connection.webSocketDidReceiveMessage(connection: self.socket, string: jsonDict)
         }
         waitForExpectations(timeout: 0.5)
@@ -197,16 +189,12 @@ class PusherPresenceChannelTests: XCTestCase {
             XCTAssertEqual(member.userId, "100", "the userId should be 100")
             ex.fulfill()
         }
-        let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
+        let chan = pusher.subscribe(TestObjects.Event.presenceChannelName, onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
         chan?.members.append(PusherPresenceChannelMember(userId: "100"))
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            let jsonDict = """
-            {
-                "event": "pusher_internal:member_removed",
-                "channel": "presence-channel",
-                "data": "{\\"user_id\\":\\"100\\"}"
-            }
-            """.removing(.newlines)
+        chan?.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
+            let jsonDict = TestObjects.Event.withJSON(name: Constants.Events.PusherInternal.memberRemoved,
+                                                      channel: TestObjects.Event.presenceChannelName,
+                                                      data: self.userIdJSON)
             self.pusher.connection.webSocketDidReceiveMessage(connection: self.socket, string: jsonDict)
         }
         waitForExpectations(timeout: 0.5)
@@ -221,24 +209,16 @@ class PusherPresenceChannelTests: XCTestCase {
             XCTAssertEqual(member.userId, "100", "the userId should be 100")
             ex.fulfill()
         }
-        let chan = pusher.subscribe("presence-channel", onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
-        chan?.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            let addedJsonDict = """
-            {
-                "event": "pusher_internal:member_added",
-                "channel": "presence-channel",
-                "data": "{\\"user_id\\":100}"
-            }
-            """.removing(.newlines)
+        let chan = pusher.subscribe(TestObjects.Event.presenceChannelName, onMemberAdded: nil, onMemberRemoved: memberRemovedFunction) as? PusherPresenceChannel
+        chan?.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
+            let addedJsonDict = TestObjects.Event.withJSON(name: Constants.Events.PusherInternal.memberAdded,
+                                                      channel: TestObjects.Event.presenceChannelName,
+                                                      data: self.userIdAsIntegerJSON)
             self.pusher.connection.webSocketDidReceiveMessage(connection: self.socket, string: addedJsonDict)
 
-            let removedJsonDict = """
-            {
-                "event": "pusher_internal:member_removed",
-                "channel": "presence-channel",
-                "data": "{\\"user_id\\":100}"
-            }
-            """.removing(.newlines)
+            let removedJsonDict = TestObjects.Event.withJSON(name: Constants.Events.PusherInternal.memberRemoved,
+                                                             channel: TestObjects.Event.presenceChannelName,
+                                                             data: self.userIdAsIntegerJSON)
             self.pusher.connection.webSocketDidReceiveMessage(connection: self.socket, string: removedJsonDict)
         }
         waitForExpectations(timeout: 0.5)

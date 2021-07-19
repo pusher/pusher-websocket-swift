@@ -21,38 +21,26 @@ class HandlingIncomingEventsTests: XCTestCase {
 
     func testCallbacksOnGlobalChannelShouldBeCalled() {
         let ex = expectation(description: "Callback should be called")
-        _ = pusher.subscribe(channelName: "my-channel")
+        _ = pusher.subscribe(channelName: TestObjects.Event.testChannelName)
         pusher.bind { event in
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "stupid data"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON(data: "test"))
 
         waitForExpectations(timeout: 0.5)
     }
 
     func testCallbacksOnRelevantChannelsShouldBeCalled() {
         let ex = expectation(description: "Callback should be called")
-        let chan = pusher.subscribe("my-channel")
-        chan.bind(eventName: "test-event") { event in
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        chan.bind(eventName: TestObjects.Event.testEventName) { event in
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "stupid data"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON(data: "test"))
 
         waitForExpectations(timeout: 0.5)
     }
@@ -64,41 +52,29 @@ class HandlingIncomingEventsTests: XCTestCase {
         pusher.bind { event in
             globalEx.fulfill()
         }
-        let chan = pusher.subscribe("my-channel")
-        chan.bind(eventName: "test-event") { event in
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        chan.bind(eventName: TestObjects.Event.testEventName) { event in
             channelEx.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "stupid data"
-        }
-        """.removing(.whitespacesAndNewlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON(data: "test"))
 
         waitForExpectations(timeout: 0.5)
     }
 
     func testGlobalCallbackReturnsEventData() {
         let ex = expectation(description: "Callback should be called")
-        _ = pusher.subscribe("my-channel")
+        _ = pusher.subscribe(TestObjects.Event.testChannelName)
         pusher.bind { event in
-            XCTAssertEqual(event.channelName, "my-channel")
-            XCTAssertEqual(event.eventName, "test-event")
-            XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
+            XCTAssertEqual(event.channelName, TestObjects.Event.testChannelName)
+            XCTAssertEqual(event.eventName, TestObjects.Event.testEventName)
+            XCTAssertEqual(event.dataToJSONObject() as! [String: String], TestObjects.Event.Data.unencryptedJSON.toJsonDict() as! [String: String])
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON())
 
         waitForExpectations(timeout: 0.5)
     }
@@ -111,21 +87,16 @@ class HandlingIncomingEventsTests: XCTestCase {
      */
     func testGlobalCallbackReturnsEventDataWithoutChannelName() {
         let ex = expectation(description: "Callback should be called")
-        _ = pusher.subscribe("my-channel")
+        _ = pusher.subscribe(TestObjects.Event.testChannelName)
         pusher.bind { event in
             XCTAssertNil(event.channelName)
-            XCTAssertEqual(event.eventName, "test-event")
-            XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
+            XCTAssertEqual(event.eventName, TestObjects.Event.testEventName)
+            XCTAssertEqual(event.dataToJSONObject() as! [String: String], TestObjects.Event.Data.unencryptedJSON.toJsonDict() as! [String: String])
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withoutChannelNameJSON)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -133,20 +104,14 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testReturningAJSONObjectToCallbacksIfTheStringCanBeParsed() {
         let ex = expectation(description: "Callback should be called")
 
-        let chan = pusher.subscribe("my-channel")
-        chan.bind(eventName: "test-event") { event in
-            XCTAssertEqual(event.dataToJSONObject() as! [String: String], ["test": "test string", "and": "another"])
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        chan.bind(eventName: TestObjects.Event.testEventName) { event in
+            XCTAssertEqual(event.dataToJSONObject() as! [String: String], TestObjects.Event.Data.unencryptedJSON.toJsonDict() as! [String: String])
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON())
 
         waitForExpectations(timeout: 0.5)
     }
@@ -154,20 +119,14 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testReturningAJSONStringToCallbacksIfTheStringCannotBeParsed() {
         let ex = expectation(description: "Callback should be called")
 
-        let chan = pusher.subscribe("my-channel")
-        chan.bind(eventName: "test-event") { event in
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        chan.bind(eventName: TestObjects.Event.testEventName) { event in
             XCTAssertEqual(event.data, "test")
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "test"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON(data: "test"))
 
         waitForExpectations(timeout: 0.5)
     }
@@ -179,20 +138,14 @@ class HandlingIncomingEventsTests: XCTestCase {
         pusher = Pusher(key: key, options: options)
         socket.delegate = pusher.connection
         pusher.connection.socket = socket
-        let chan = pusher.subscribe("my-channel")
-        chan.bind(eventName: "test-event") { event in
-            XCTAssertEqual(event.data, "{\"test\":\"test string\",\"and\":\"another\"}")
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        chan.bind(eventName: TestObjects.Event.testEventName) { event in
+            XCTAssertEqual(event.data, TestObjects.Event.Data.unencryptedJSON.removing(.whitespacesAndNewlines))
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON())
 
         waitForExpectations(timeout: 0.5)
     }
@@ -200,31 +153,25 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testEventObjectReturnedToChannelCallback() {
         let ex = expectation(description: "Callback should be called")
 
-        let chan = pusher.subscribe("my-channel")
-        chan.bind(eventName: "test-event") { event in
-            XCTAssertEqual(event.eventName, "test-event")
-            XCTAssertEqual(event.channelName!, "my-channel")
-            XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        chan.bind(eventName: TestObjects.Event.testEventName) { event in
+            XCTAssertEqual(event.eventName, TestObjects.Event.testEventName)
+            XCTAssertEqual(event.channelName!, TestObjects.Event.testChannelName)
+            XCTAssertEqual(event.data!, TestObjects.Event.Data.unencryptedJSON.removing(.whitespacesAndNewlines))
 
             XCTAssertNil(event.userId)
 
-            XCTAssertEqual(event.property(withKey: "event") as! String, "test-event")
-            XCTAssertEqual(event.property(withKey: "channel") as! String, "my-channel")
-            XCTAssertEqual(event.property(withKey: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+            XCTAssertEqual(event.property(withKey: Constants.JSONKeys.event) as! String, TestObjects.Event.testEventName)
+            XCTAssertEqual(event.property(withKey: Constants.JSONKeys.channel) as! String, TestObjects.Event.testChannelName)
+            XCTAssertEqual(event.property(withKey: Constants.JSONKeys.data) as! String, TestObjects.Event.Data.unencryptedJSON.removing(.whitespacesAndNewlines))
 
             XCTAssertNil(event.property(withKey: "random-key"))
 
             ex.fulfill()
         }
 
-        let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON())
 
         waitForExpectations(timeout: 0.5)
     }
@@ -232,17 +179,17 @@ class HandlingIncomingEventsTests: XCTestCase {
     func testEventObjectReturnedToGlobalCallback() {
         let ex = expectation(description: "Callback should be called")
 
-        _ = pusher.subscribe("my-channel")
+        _ = pusher.subscribe(TestObjects.Event.testChannelName)
         pusher.bind { event in
-            XCTAssertEqual(event.eventName, "test-event")
-            XCTAssertEqual(event.channelName!, "my-channel")
-            XCTAssertEqual(event.data!, "{\"test\":\"test string\",\"and\":\"another\"}")
+            XCTAssertEqual(event.eventName, TestObjects.Event.testEventName)
+            XCTAssertEqual(event.channelName!, TestObjects.Event.testChannelName)
+            XCTAssertEqual(event.data!, TestObjects.Event.Data.unencryptedJSON.removing(.whitespacesAndNewlines))
 
             XCTAssertNil(event.userId)
 
-            XCTAssertEqual(event.property(withKey: "event") as! String, "test-event")
-            XCTAssertEqual(event.property(withKey: "channel") as! String, "my-channel")
-            XCTAssertEqual(event.property(withKey: "data") as! String, "{\"test\":\"test string\",\"and\":\"another\"}")
+            XCTAssertEqual(event.property(withKey: Constants.JSONKeys.event) as! String, TestObjects.Event.testEventName)
+            XCTAssertEqual(event.property(withKey: Constants.JSONKeys.channel) as! String, TestObjects.Event.testChannelName)
+            XCTAssertEqual(event.property(withKey: Constants.JSONKeys.data) as! String, TestObjects.Event.Data.unencryptedJSON.removing(.whitespacesAndNewlines))
 
             XCTAssertNil(event.property(withKey: "random-key"))
 
@@ -250,14 +197,8 @@ class HandlingIncomingEventsTests: XCTestCase {
         }
 
         XCTAssertNil(socket.eventGivenToCallback)
-         let jsonDict = """
-        {
-            "event": "test-event",
-            "channel": "my-channel",
-            "data": "{\\"test\\":\\"test string\\",\\"and\\":\\"another\\"}"
-        }
-        """.removing(.newlines)
-        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: jsonDict)
+        pusher.connection.webSocketDidReceiveMessage(connection: socket,
+                                                     string: TestObjects.Event.withJSON())
 
         waitForExpectations(timeout: 0.5)
     }

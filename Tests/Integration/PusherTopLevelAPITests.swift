@@ -136,13 +136,13 @@ class PusherTopLevelApiTests: XCTestCase {
         let subscribed = expectation(description: "should subscribe")
         let disconnected = expectation(description: "should disconnect")
 
-        let chan = pusher.subscribe("test-channel")
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
         connectionDelegate.registerCallback(connectionState: ConnectionState.disconnected) {
             XCTAssertFalse(chan.subscribed)
             disconnected.fulfill()
         }
 
-        chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+        chan.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
             XCTAssertTrue(chan.subscribed)
             subscribed.fulfill()
             self.pusher.disconnect()
@@ -158,8 +158,8 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testChannelIsSetupCorrectly() {
         pusher.connect()
-        let chan = pusher.subscribe("test-channel")
-        XCTAssertEqual(chan.name, "test-channel", "the channel name should be test-channel")
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        XCTAssertEqual(chan.name, TestObjects.Event.testChannelName, "the channel name should be \(TestObjects.Event.testChannelName)")
         XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
     }
 
@@ -172,7 +172,7 @@ class PusherTopLevelApiTests: XCTestCase {
 
         delegate.registerCallback(connectionState: ConnectionState.connected) {
             connected.fulfill()
-            _ = self.pusher.subscribe("test-channel")
+            _ = self.pusher.subscribe(TestObjects.Event.testChannelName)
 
             self.socket.stubber.registerCallback { calls in
                 guard let name = calls.last?.name, name == "writeString" else {
@@ -180,7 +180,7 @@ class PusherTopLevelApiTests: XCTestCase {
                 }
 
                 let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
-                let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:subscribe"] as [String: Any]
+                let expectedDict = [Constants.JSONKeys.data: [Constants.JSONKeys.channel: TestObjects.Event.testChannelName], Constants.JSONKeys.event: Constants.Events.Pusher.subscribe] as [String: Any]
                 let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
                 XCTAssertTrue(parsedEqualsExpected)
                 subscribed.fulfill()
@@ -195,9 +195,9 @@ class PusherTopLevelApiTests: XCTestCase {
     func testSubscribingToAPublicChannel() {
         pusher.connect()
         let subscribed = expectation(description: "should subscribe")
-        let channel = pusher.subscribe("test-channel")
-        channel.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            let testChannel = self.pusher.connection.channels.channels["test-channel"]
+        let channel = pusher.subscribe(TestObjects.Event.testChannelName)
+        channel.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
+            let testChannel = self.pusher.connection.channels.channels[TestObjects.Event.testChannelName]
             XCTAssertTrue(testChannel!.subscribed)
             subscribed.fulfill()
         }
@@ -208,17 +208,17 @@ class PusherTopLevelApiTests: XCTestCase {
         let ex = expectation(description: "should call global callback")
         pusher.connect()
         pusher.bind { event in
-            XCTAssertEqual(event.eventName, "pusher:subscription_succeeded")
+            XCTAssertEqual(event.eventName, Constants.Events.Pusher.subscriptionSucceeded)
             ex.fulfill()
         }
-        _ = pusher.subscribe("test-channel")
+        _ = pusher.subscribe(TestObjects.Event.testChannelName)
         waitForExpectations(timeout: 0.5)
     }
 
     func testSubscriptionSucceededEventSentToChannelCallbackViaEventCallback() {
         let ex = expectation(description: "should call channel callback")
-        let channel = pusher.subscribe("test-channel")
-        channel.bind(eventName: "pusher:subscription_succeeded") { event in
+        let channel = pusher.subscribe(TestObjects.Event.testChannelName)
+        channel.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { event in
             ex.fulfill()
         }
         pusher.connect()
@@ -229,37 +229,35 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testAuthenticatedChannelIsSetupCorrectly() {
         pusher.connect()
-        let chan = pusher.subscribe("private-channel")
-        XCTAssertEqual(chan.name, "private-channel", "the channel name should be private-channel")
+        let chan = pusher.subscribe(TestObjects.Event.privateChannelName)
+        XCTAssertEqual(chan.name, TestObjects.Event.privateChannelName, "the channel name should be \(TestObjects.Event.privateChannelName)")
         XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
     }
 
     func testSubscribingToAPrivateChannel() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
-        let channelName = "private-channel"
 
         let dummyDelegate = DummyDelegate()
         dummyDelegate.ex = ex
-        dummyDelegate.testingChannelName = channelName
+        dummyDelegate.testingChannelName = TestObjects.Event.privateChannelName
         pusher.delegate = dummyDelegate
 
         pusher.connect()
-        _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(TestObjects.Event.privateChannelName)
 
         waitForExpectations(timeout: 0.5)
     }
 
     func testSubscribingToAPresenceChannel() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
-        let channelName = "presence-channel"
 
         let dummyDelegate = DummyDelegate()
         dummyDelegate.ex = ex
-        dummyDelegate.testingChannelName = channelName
+        dummyDelegate.testingChannelName = TestObjects.Event.presenceChannelName
         pusher.delegate = dummyDelegate
 
         pusher.connect()
-        _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(TestObjects.Event.presenceChannelName)
 
         waitForExpectations(timeout: 0.5)
     }
@@ -267,17 +265,17 @@ class PusherTopLevelApiTests: XCTestCase {
     /* subscribing to channels when starting disconnected */
 
     func testChannelIsSetupCorrectlyWhenSubscribingStartingDisconnected() {
-        let chan = pusher.subscribe("test-channel")
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
         pusher.connect()
-        XCTAssertEqual(chan.name, "test-channel", "the channel name should be test-channel")
+        XCTAssertEqual(chan.name, TestObjects.Event.testChannelName, "the channel name should be \(TestObjects.Event.testChannelName)")
         XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
     }
 
     func testSubscribingToAPublicChannelWhenCurrentlyDisconnected() {
         let subscribed = expectation(description: "should subscribe")
-        _ = pusher.subscribe("test-channel")
-        let testChannel = pusher.connection.channels.channels["test-channel"]
-        testChannel!.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+        _ = pusher.subscribe(TestObjects.Event.testChannelName)
+        let testChannel = pusher.connection.channels.channels[TestObjects.Event.testChannelName]
+        testChannel!.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
             XCTAssertTrue(testChannel!.subscribed)
             subscribed.fulfill()
         }
@@ -289,22 +287,21 @@ class PusherTopLevelApiTests: XCTestCase {
     /* authenticated channels */
 
     func testAuthenticatedChannelIsSetupCorrectlyWhenSubscribingStartingDisconnected() {
-        let chan = pusher.subscribe("private-channel")
+        let chan = pusher.subscribe(TestObjects.Event.privateChannelName)
         pusher.connect()
-        XCTAssertEqual(chan.name, "private-channel", "the channel name should be private-channel")
+        XCTAssertEqual(chan.name, TestObjects.Event.privateChannelName, "the channel name should be \(TestObjects.Event.privateChannelName)")
         XCTAssertEqual(chan.eventHandlers.count, 0, "the channel should have no event handlers")
     }
 
     func testSubscribingToAPrivateChannelWhenStartingDisconnected() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
-        let channelName = "private-channel"
 
         let dummyDelegate = DummyDelegate()
         dummyDelegate.ex = ex
-        dummyDelegate.testingChannelName = channelName
+        dummyDelegate.testingChannelName = TestObjects.Event.privateChannelName
         pusher.connection.delegate = dummyDelegate
 
-        _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(TestObjects.Event.privateChannelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
@@ -312,14 +309,13 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testSubscribingToAPresenceChannelWhenStartingDisconnected() {
         let ex = expectation(description: "the channel should be subscribed to successfully")
-        let channelName = "presence-channel"
 
         let dummyDelegate = DummyDelegate()
         dummyDelegate.ex = ex
-        dummyDelegate.testingChannelName = channelName
+        dummyDelegate.testingChannelName = TestObjects.Event.presenceChannelName
         pusher.connection.delegate = dummyDelegate
 
-        _ = pusher.subscribe(channelName)
+        _ = pusher.subscribe(TestObjects.Event.presenceChannelName)
         pusher.connect()
 
         waitForExpectations(timeout: 0.5)
@@ -329,12 +325,12 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testUnsubscribingFromAChannelRemovesTheChannel() {
         pusher.connect()
-        let chan = pusher.subscribe("test-channel")
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
         let ex = expectation(description: "the channel should be subscribed to successfully")
-        chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            XCTAssertNotNil(self.pusher.connection.channels.channels["test-channel"], "test-channel should exist")
-            self.pusher.unsubscribe("test-channel")
-            XCTAssertNil(self.pusher.connection.channels.channels["test-channel"], "test-channel should not exist")
+        chan.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
+            XCTAssertNotNil(self.pusher.connection.channels.channels[TestObjects.Event.testChannelName], "\(TestObjects.Event.testChannelName) should exist")
+            self.pusher.unsubscribe(TestObjects.Event.testChannelName)
+            XCTAssertNil(self.pusher.connection.channels.channels[TestObjects.Event.testChannelName], "\(TestObjects.Event.testChannelName) should not exist")
             ex.fulfill()
         }
         waitForExpectations(timeout: 0.5)
@@ -342,9 +338,9 @@ class PusherTopLevelApiTests: XCTestCase {
 
     func testUnsubscribingFromAChannelSendsUnsubscribeEventOverSocket() {
         pusher.connect()
-        let chan = pusher.subscribe("test-channel")
-        chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
-            self.pusher.unsubscribe("test-channel")
+        let chan = pusher.subscribe(TestObjects.Event.testChannelName)
+        chan.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
+            self.pusher.unsubscribe(TestObjects.Event.testChannelName)
         }
         let ex = expectation(description: "should send unsubscribe")
         socket.stubber.registerCallback { calls in
@@ -354,7 +350,7 @@ class PusherTopLevelApiTests: XCTestCase {
             }
 
             let parsedSubscribeArgs = convertStringToDictionary(calls.last?.args!.first as! String)
-            let expectedDict = ["data": ["channel": "test-channel"], "event": "pusher:unsubscribe"] as [String: Any]
+            let expectedDict = [Constants.JSONKeys.data: [Constants.JSONKeys.channel: TestObjects.Event.testChannelName], Constants.JSONKeys.event: Constants.Events.Pusher.unsubscribe] as [String: Any]
             let parsedEqualsExpected = NSDictionary(dictionary: parsedSubscribeArgs!).isEqual(to: NSDictionary(dictionary: expectedDict) as [NSObject: AnyObject])
             if parsedEqualsExpected {
                 ex.fulfill()
@@ -368,13 +364,13 @@ class PusherTopLevelApiTests: XCTestCase {
         let queue = DispatchQueue(label: "com.pusher.PusherSwift-Tests")
 
         pusher.connect()
-        let channels = ["test-channel", "test-channel2"]
+        let channels = [TestObjects.Event.testChannelName, "test-channel2"]
 
         let dispatchGroup = DispatchGroup()
         for channel in channels {
             dispatchGroup.enter()
             let chan = self.pusher.subscribe(channel)
-            chan.bind(eventName: "pusher:subscription_succeeded") { (_: PusherEvent) in
+            chan.bind(eventName: Constants.Events.Pusher.subscriptionSucceeded) { (_: PusherEvent) in
                 dispatchGroup.leave()
             }
         }
@@ -392,7 +388,7 @@ class PusherTopLevelApiTests: XCTestCase {
             self.socket.stubber.registerCallback { calls in
                 var unsubscribeCount = 0
                 for channel in channels {
-                    let expectedCallArguments = ["data": ["channel": channel], "event": "pusher:unsubscribe"] as [String: Any]
+                    let expectedCallArguments = [Constants.JSONKeys.data: [Constants.JSONKeys.channel: channel], Constants.JSONKeys.event: Constants.Events.Pusher.unsubscribe] as [String: Any]
                     let unsubscribedFromChannel = calls.contains { call in
                         guard
                             call.name == "writeString",

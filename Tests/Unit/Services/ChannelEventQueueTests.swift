@@ -53,21 +53,8 @@ class ChannelEventQueueTests: XCTestCase {
     }
 
     func testNonEncryptedChannelShouldCallDidReceiveEvent() {
-        let channel = createAndSubscribe("my-channel")
-        let dataPayload = """
-        {
-           "test": "test string",
-           "and": "another"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let jsonDict = """
-        {
-           "event": "test-event",
-           "channel": "my-channel",
-           "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
+        let channel = createAndSubscribe(TestObjects.Event.testChannelName)
+        let jsonDict = TestObjects.Event.withJSON().toJsonDict()
 
         let ex = expectation(description: "should call didReceiveEvent")
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
@@ -82,19 +69,7 @@ class ChannelEventQueueTests: XCTestCase {
     }
 
     func testEventWithNoChannelShouldCallDidReceiveEvent() {
-        let dataPayload = """
-        {
-           "test": "test string",
-           "and": "another"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let jsonDict = """
-        {
-           "event": "pusher:new-event",
-           "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
+        let jsonDict = TestObjects.Event.withoutChannelNameJSON.toJsonDict()
 
         let ex = expectation(description: "should call didReceiveEvent")
         eventQueueDelegate.didReceiveEvent = { eventQueue, event, channelName in
@@ -109,18 +84,7 @@ class ChannelEventQueueTests: XCTestCase {
     }
 
     func testInvalidEventShouldCallDidReceiveInvalidEvent() {
-        let dataPayload = """
-        {
-           "test": "test string",
-           "and": "another"
-        }
-        """.removing(.whitespacesAndNewlines)
-
-        let jsonDict = """
-        {
-           "data": \(dataPayload.escaped)
-        }
-        """.toJsonDict()
+        let jsonDict = TestObjects.Event.withoutEventOrChannelNameJSON.toJsonDict()
 
         let ex = expectation(description: "should call didReceiveInvalidEvent")
         eventQueueDelegate.didReceiveInvalidEvent = { eventQueue, payload in
