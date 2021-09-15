@@ -73,6 +73,7 @@ public typealias PusherUserInfoObject = [String: AnyObject]
                                 subscribed to the presence channel
     */
     internal func addExistingMembers(memberHash: [String: AnyObject]) {
+        self.members.removeAll()
         for (userId, userInfo) in memberHash {
             let member: PusherPresenceChannelMember
             if let userInfo = userInfo as? PusherUserInfoObject {
