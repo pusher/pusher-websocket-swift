@@ -244,6 +244,38 @@ class AuthenticationTests: XCTestCase {
 
         waitForExpectations(timeout: 0.5)
     }
+    
+    func testAuthorizationUsingSomethingConformingToTheAuthorizerProtocolWithError() {
+        let ex = expectation(description: "subscription error callback gets called")
+        class SomeAuthorizer: Authorizer {
+            func fetchAuthValue(socketID: String, channelName: String, completionHandler: @escaping (PusherAuth?) -> Void) {
+                completionHandler(nil)
+            }
+        }
+
+        let channelName = "private-test-channel-authorizer-with-error"
+        
+        let options = PusherClientOptions(
+            authMethod: AuthMethod.authorizer(authorizer: SomeAuthorizer()),
+            autoReconnect: false
+        )
+        pusher = Pusher(key: "testKey123", options: options)
+        socket.delegate = pusher.connection
+        pusher.connection.socket = socket
+        
+        let chan = pusher.subscribe(channelName)
+        XCTAssertFalse(chan.subscribed, "the channel should not be subscribed")
+        pusher.connect()
+        
+        pusher.bind { event in
+            XCTAssertEqual(event.eventName, Constants.Events.Pusher.subscriptionError)
+            XCTAssertEqual(event.channelName, "private-test-channel-authorizer-with-error")
+            XCTAssertTrue(Thread.isMainThread)
+            ex.fulfill()
+        }
+
+        waitForExpectations(timeout: 0.5)
+    }
 
     func testAuthorizationOfPresenceChannelSubscriptionUsingSomethingConformingToTheAuthorizerProtocol() {
 
