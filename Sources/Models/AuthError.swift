@@ -7,6 +7,7 @@ struct AuthError: Error {
         case couldNotBuildRequest
         case invalidAuthResponse
         case requestFailure
+        case authInfoIsNil
     }
 
     let kind: Kind

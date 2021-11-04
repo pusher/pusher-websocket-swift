@@ -701,8 +701,14 @@ import NWWebSocket
             authorizer.fetchAuthValue(socketID: socketId, channelName: channel.name) { pusherAuth in
                 if pusherAuth == nil {
                     Logger.shared.debug(for: .authInfoForCompletionHandlerIsNil)
+                    let errorMessage = "AuthInfo should not be nil"
+                    let error = NSError(domain: "com.pusher.PusherSwift",
+                                        code: 0,
+                                        userInfo: [NSLocalizedFailureReasonErrorKey: errorMessage])
+                    completionHandler(nil, AuthError(kind: .authInfoIsNil, message: errorMessage, error: error))
+                } else {
+                    completionHandler(pusherAuth, nil)
                 }
-                completionHandler(pusherAuth, nil)
             }
             return true
 
