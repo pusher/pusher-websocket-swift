@@ -358,6 +358,10 @@ import NWWebSocket
         socketConnected = false
         connectionEstablishedMessageReceived = false
         socketId = nil
+        
+        guard !intentionalDisconnect else {
+            return
+        }
 
         attemptReconnect()
     }
