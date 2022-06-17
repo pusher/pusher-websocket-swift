@@ -549,6 +549,22 @@ import NWWebSocket
             Logger.shared.debug(for: .unableToRemoveMemberFromChannel)
         }
     }
+    
+    private func handleSubscriptionCountEvent(event: PusherEvent) {
+        guard let channelName = event.channelName,
+              let channel = self.channels.find(name: channelName),
+              let subscriptionCountData = event.dataToJSONObject() as? [String: Any],
+              let count = subscriptionCountData[Constants.JSONKeys.subscriptionCount] as? Int else {
+            return
+        }
+        
+        channel.subscriptionCount = count
+        
+        let subscriptionEvent = event.copy(withEventName: Constants.Events.Pusher.subscriptionCount)
+        channel.handleEvent(event: subscriptionEvent)
+        
+        self.delegate?.subscriptionCountReceived?(count: count)
+    }
 
     /**
      Handles incoming error
@@ -607,6 +623,9 @@ import NWWebSocket
 
         case Constants.Events.PusherInternal.memberRemoved:
             handleMemberRemovedEvent(event: event)
+        
+        case Constants.Events.PusherInternal.subscriptionCount:
+            handleSubscriptionCountEvent(event: event)
 
         default:
             callGlobalCallbacks(event: event)

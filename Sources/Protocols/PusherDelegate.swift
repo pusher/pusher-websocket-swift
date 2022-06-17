@@ -8,4 +8,5 @@ import Foundation
     @objc optional func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?)
     @objc optional func failedToDecryptEvent(eventName: String, channelName: String, data: String?)
     @objc(receivedError:) optional func receivedError(error: PusherError)
+    @objc optional func subscriptionCountReceived(count: Int)
 }

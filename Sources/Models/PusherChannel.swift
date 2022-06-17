@@ -21,6 +21,7 @@ open class PusherChannel: NSObject {
     open var unsentEvents = [QueuedClientEvent]()
     public let type: PusherChannelType
     public var auth: PusherAuth?
+    public var subscriptionCount: Int
 
     // Wrap accesses to the decryption key in a serial queue because it will be accessed from multiple threads
     @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)",
@@ -50,6 +51,7 @@ open class PusherChannel: NSObject {
         self.connection = connection
         self.auth = auth
         self.type = PusherChannelType(name: name)
+        self.subscriptionCount = 0
     }
 
     /**
