@@ -460,7 +460,6 @@ import NWWebSocket
             }
         }
         
-
         let subscriptionEvent = event.copy(withEventName: Constants.Events.Pusher.subscriptionSucceeded)
         callGlobalCallbacks(event: subscriptionEvent)
         chan.handleEvent(event: subscriptionEvent)
