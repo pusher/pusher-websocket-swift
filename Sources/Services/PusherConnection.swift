@@ -459,6 +459,7 @@ import NWWebSocket
                 }
             }
         }
+        
 
         let subscriptionEvent = event.copy(withEventName: Constants.Events.Pusher.subscriptionSucceeded)
         callGlobalCallbacks(event: subscriptionEvent)
@@ -550,6 +551,12 @@ import NWWebSocket
         }
     }
     
+    /**
+        Handle subscription count event
+     
+        - parameter event: The event to be processed
+     */
+    
     private func handleSubscriptionCountEvent(event: PusherEvent) {
         guard let channelName = event.channelName,
               let channel = self.channels.find(name: channelName),
@@ -558,12 +565,7 @@ import NWWebSocket
             return
         }
         
-        channel.subscriptionCount = count
-        
-        let subscriptionEvent = event.copy(withEventName: Constants.Events.Pusher.subscriptionCount)
-        channel.handleEvent(event: subscriptionEvent)
-        
-        self.delegate?.subscriptionCountReceived?(count: count)
+        channel.updateSubscriptionCount(count: count, event: event)
     }
 
     /**
