@@ -613,8 +613,7 @@ For non-presence channels, you can also provide a function that will be called w
 
 ```swift
 let onSubscriptionCountChanged = { (count: Int) in
-    let message = "\(count) subscriptions"
-    self.message = message
+    print("\(count) subscriptions")
 }
 
 let channel = pusher.subscribe(
