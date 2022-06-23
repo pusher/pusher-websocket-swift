@@ -143,14 +143,16 @@ import NWWebSocket
         channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onSubscriptionCountChanged: ((Int) -> Void)? = nil
     ) -> PusherPresenceChannel {
         let newChannel = channels.addPresence(
             channelName: channelName,
             connection: self,
             auth: auth,
             onMemberAdded: onMemberAdded,
-            onMemberRemoved: onMemberRemoved
+            onMemberRemoved: onMemberRemoved,
+            onSubscriptionCountChanged: onSubscriptionCountChanged
         )
 
         guard self.connectionState == .connected else { return newChannel }

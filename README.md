@@ -609,7 +609,7 @@ PusherChannel *myChannel = [pusher subscribeWithChannelName:@"my-channel"];
 
 This returns PusherChannel object, which events can be bound to.
 
-For non-presence channels, you can also provide a function that will be called when a client either subscribes or unsubscribes to a channel with the number of subscribers as a parameter. Also, this function is available as a parameter to `subscribe` function. 
+You can also provide a function that will be called when a client either subscribes or unsubscribes to a channel with the number of subscribers as a parameter. Also, this function is available as a parameter to `subscribe` function. 
 
 ```swift
 let onSubscriptionCountChanged = { (count: Int) in

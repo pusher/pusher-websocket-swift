@@ -89,13 +89,15 @@ let CLIENT_NAME = "pusher-websocket-swift"
         channelName: String,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onSubscriptionCountChanged: ((Int) -> Void)? = nil
     ) -> PusherPresenceChannel {
         return self.connection.subscribeToPresenceChannel(
             channelName: channelName,
             auth: auth,
             onMemberAdded: onMemberAdded,
-            onMemberRemoved: onMemberRemoved
+            onMemberRemoved: onMemberRemoved,
+            onSubscriptionCountChanged: onSubscriptionCountChanged
         )
     }
 
