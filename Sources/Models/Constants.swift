@@ -23,7 +23,6 @@ enum Constants {
             static let unsubscribe              = "pusher:unsubscribe"
             static let subscriptionError        = "pusher:subscription_error"
             static let subscriptionSucceeded    = "pusher:subscription_succeeded"
-            static let subscriptionCount        = "pusher:subscription_count"
         }
 
         enum PusherInternal {
