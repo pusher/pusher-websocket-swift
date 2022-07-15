@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- `onSubscriptionCountChanged` function to handle `pusher_internal:subscription_count` event
+- `onSubscriptionCountChanged(count:Int)` method to handle `pusher_internal:subscription_count` event
 
 ### Removed
 
