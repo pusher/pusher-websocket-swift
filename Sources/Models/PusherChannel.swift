@@ -15,12 +15,19 @@ open class PusherChannel: NSObject {
             eventHandlersQueue.async(flags: .barrier) { self.eventHandlersInternal = newValue }
         }
     }
+    
+    private var _subscriptionCount: Int? = nil
+    public var subscriptionCount: Int? {
+        get { return _subscriptionCount }
+    }
+    
     open var subscribed = false
     public let name: String
     open weak var connection: PusherConnection?
     open var unsentEvents = [QueuedClientEvent]()
     public let type: PusherChannelType
     public var auth: PusherAuth?
+    open var onSubscriptionCountChanged: ((Int) -> Void)?
 
     // Wrap accesses to the decryption key in a serial queue because it will be accessed from multiple threads
     @nonobjc private var decryptionKeyQueue = DispatchQueue(label: "com.pusher.pusherswift-channel-decryption-key-\(UUID().uuidString)",
@@ -45,11 +52,17 @@ open class PusherChannel: NSObject {
 
         - returns: A new PusherChannel instance
     */
-    public init(name: String, connection: PusherConnection, auth: PusherAuth? = nil) {
+    public init(name: String, connection: PusherConnection, auth: PusherAuth? = nil, onSubscriptionCountChanged: ((Int) -> Void)? = nil) {
         self.name = name
         self.connection = connection
         self.auth = auth
         self.type = PusherChannelType(name: name)
+        self.onSubscriptionCountChanged = onSubscriptionCountChanged
+    }
+    
+    internal func updateSubscriptionCount(count: Int) {
+        self._subscriptionCount = count
+        self.onSubscriptionCountChanged?(count)
     }
 
     /**

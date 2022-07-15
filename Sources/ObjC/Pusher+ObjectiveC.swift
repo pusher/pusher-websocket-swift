@@ -8,27 +8,35 @@ import Foundation
     func subscribe(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onSubscriptionCountChanged: ((Int) -> Void)? = nil
     ) -> PusherChannel {
-        return self.subscribe(channelName, auth: nil, onMemberAdded: onMemberAdded, onMemberRemoved: onMemberRemoved)
+        return self.subscribe(channelName,
+                              auth: nil,
+                              onMemberAdded: onMemberAdded,
+                              onMemberRemoved: onMemberRemoved,
+                              onSubscriptionCountChanged: onSubscriptionCountChanged)
     }
 
     func subscribeToPresenceChannel(channelName: String) -> PusherPresenceChannel {
         return self.subscribeToPresenceChannel(channelName: channelName,
                                                auth: nil,
                                                onMemberAdded: nil,
-                                               onMemberRemoved: nil)
+                                               onMemberRemoved: nil,
+                                               onSubscriptionCountChanged: nil)
     }
 
     func subscribeToPresenceChannel(
         channelName: String,
         onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onSubscriptionCountChanged: ((Int) -> Void)? = nil
     ) -> PusherPresenceChannel {
         return self.subscribeToPresenceChannel(channelName: channelName,
                                                auth: nil,
                                                onMemberAdded: onMemberAdded,
-                                               onMemberRemoved: onMemberRemoved)
+                                               onMemberRemoved: onMemberRemoved,
+                                               onSubscriptionCountChanged: onSubscriptionCountChanged)
     }
 
     convenience init(withAppKey key: String, options: PusherClientOptions) {

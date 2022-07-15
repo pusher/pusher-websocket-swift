@@ -29,12 +29,13 @@ public typealias PusherUserInfoObject = [String: AnyObject]
         connection: PusherConnection,
         auth: PusherAuth? = nil,
         onMemberAdded: ((PusherPresenceChannelMember) -> Void)? = nil,
-        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil
+        onMemberRemoved: ((PusherPresenceChannelMember) -> Void)? = nil,
+        onSubscriptionCountChanged: ((Int) -> Void)? = nil
     ) {
         self.members = []
         self.onMemberAdded = onMemberAdded
         self.onMemberRemoved = onMemberRemoved
-        super.init(name: name, connection: connection, auth: auth)
+        super.init(name: name, connection: connection, auth: auth, onSubscriptionCountChanged: onSubscriptionCountChanged)
     }
 
     /**

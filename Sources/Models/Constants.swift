@@ -29,6 +29,7 @@ enum Constants {
             static let memberAdded              = "pusher_internal:member_added"
             static let memberRemoved            = "pusher_internal:member_removed"
             static let subscriptionSucceeded    = "pusher_internal:subscription_succeeded"
+            static let subscriptionCount        = "pusher_internal:subscription_count"
         }
     }
 
@@ -39,21 +40,22 @@ enum Constants {
     }
 
     enum JSONKeys {
-        static let activityTimeout  = "activity_timeout"
-        static let auth             = "auth"
-        static let channel          = "channel"
-        static let channelData      = "channel_data"
-        static let ciphertext       = "ciphertext"
-        static let code             = "code"
-        static let data             = "data"
-        static let event            = "event"
-        static let hash             = "hash"
-        static let message          = "message"
-        static let nonce            = "nonce"
-        static let presence         = "presence"
-        static let socketId         = "socket_id"
-        static let sharedSecret     = "shared_secret"
-        static let userId           = "user_id"
-        static let userInfo         = "user_info"
+        static let activityTimeout   = "activity_timeout"
+        static let auth              = "auth"
+        static let channel           = "channel"
+        static let channelData       = "channel_data"
+        static let ciphertext        = "ciphertext"
+        static let code              = "code"
+        static let data              = "data"
+        static let event             = "event"
+        static let hash              = "hash"
+        static let message           = "message"
+        static let nonce             = "nonce"
+        static let presence          = "presence"
+        static let socketId          = "socket_id"
+        static let sharedSecret      = "shared_secret"
+        static let userId            = "user_id"
+        static let userInfo          = "user_info"
+        static let subscriptionCount = "subscription_count"
     }
 }
