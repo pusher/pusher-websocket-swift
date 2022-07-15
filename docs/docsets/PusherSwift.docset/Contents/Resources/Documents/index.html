@@ -16,19 +16,19 @@
     <a title="PusherSwift  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">PusherSwift 9.2.2 Docs</a> (25% documented)</p>
-        <p class="header-right"><a href="https://github.com/pusher/pusher-websocket-swift"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right">
+        <p><a href="index.html">PusherSwift 10.1.0 Docs</a> (24% documented)</p>
+        <p class="header-right"><a href="git@github.com:pusher/pusher-websocket-swift"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
           </form>
-        </p>
+        </div>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="index.html">PusherSwift Reference</a>
-        <img id="carat" src="img/carat.png" />
+        <img id="carat" src="img/carat.png" alt=""/>
         PusherSwift  Reference
       </p>
     </div>
@@ -140,6 +140,7 @@
 <p><img src="https://app.bitrise.io/app/3c6dac112b98e7fe.svg?token=n0z-aWua_Bc35kUGu4qpYg" alt="Build Status">
 <a href="https://codecov.io/gh/pusher/pusher-websocket-swift"><img src="https://codecov.io/gh/pusher/pusher-websocket-swift/branch/master/graph/badge.svg" alt="codecov"></a>
 <a href="https://github.com/pusher/pusher-websocket-swift/releases"><img src="https://img.shields.io/github/v/release/pusher/pusher-websocket-swift" alt="Latest Release"></a>
+<a href="https://img.shields.io/cocoapods/v/PusherSwift"><img src="https://img.shields.io/cocoapods/v/PusherSwift" alt="CocoaPods"></a>
 <a href="https://pusher.github.io/pusher-websocket-swift/"><img src="https://img.shields.io/badge/Docs-here!-lightgrey" alt="API Docs"></a>
 <a href="https://swiftpackageindex.com/pusher/pusher-websocket-swift"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-websocket-swift%2Fbadge%3Ftype%3Dplatforms" alt="Supported Platforms"></a>
 <a href="https://swiftpackageindex.com/pusher/pusher-websocket-swift"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-websocket-swift%2Fbadge%3Ftype%3Dswift-versions" alt="Swift Versions"></a>
@@ -153,7 +154,7 @@
 
 <ul>
 <li>Swift 5.0 and above</li>
-<li>Xcode 11.0 and above</li>
+<li>Xcode 12.0 and above</li>
 <li>Can be used with Objective-C</li>
 </ul>
 <h3 id='deployment-targets' class='heading'>Deployment targets</h3>
@@ -162,7 +163,7 @@
 <li>iOS 13.0 and above</li>
 <li>macOS (OS X) 10.15 and above</li>
 <li>tvOS 13.0 and above</li>
-<li>Not currently compatible with watchOS</li>
+<li>watchOS 6.0 and above</li>
 </ul>
 <h3 id='legacy-os-support' class='heading'>Legacy OS support</h3>
 
@@ -230,7 +231,7 @@
 <span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'10.0'</span>
 <span class="n">use_frameworks!</span>
 
-<span class="n">pod</span> <span class="s1">'PusherSwift'</span><span class="p">,</span> <span class="s1">'~&gt; 9.0'</span>
+<span class="n">pod</span> <span class="s1">'PusherSwift'</span><span class="p">,</span> <span class="s1">'~&gt; 10.1.0'</span>
 </code></pre>
 
 <p>Then, run the following command:</p>
@@ -267,7 +268,7 @@
 <p>Alternatively, if you are building using an Intel Mac and do not want to migrate to build Carthage dependencies using XCFrameworks there is <a href="https://github.com/Carthage/Carthage/blob/master/Documentation/Xcode12Workaround.md">a workaround</a> to build successfully. You can find an example of this workaround, which is used for running the &lsquo;Consumption-Tests&rsquo; <a href="Consumption-Tests/Shared/carthage.sh">here</a>.</p>
 <h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
 
-<p>To integrate PusherSwift into your project using <a href="https://swift.org/package-manager/">Swift Package Manager</a>, you can add the library as a dependency in Xcode (11 and above) – see the <a href="https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app">docs</a>. The package repository URL is:</p>
+<p>To integrate PusherSwift into your project using <a href="https://swift.org/package-manager/">Swift Package Manager</a>, you can add the library as a dependency in Xcode – see the <a href="https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app">docs</a>. The package repository URL is:</p>
 <pre class="highlight shell"><code>https://github.com/pusher/pusher-websocket-swift.git
 </code></pre>
 
@@ -283,7 +284,7 @@
             <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span><span class="s">"YourPackage"</span><span class="p">]),</span>
     <span class="p">],</span>
     <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
-        <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/pusher/pusher-websocket-swift.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"9.2.2"</span><span class="p">),</span>
+        <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/pusher/pusher-websocket-swift.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"10.1.0"</span><span class="p">),</span>
     <span class="p">],</span>
     <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span>
         <span class="o">.</span><span class="nf">target</span><span class="p">(</span>
@@ -683,6 +684,17 @@
 </code></pre>
 
 <p>This returns PusherChannel object, which events can be bound to.</p>
+
+<p>For non-presence channels, you can also provide a function that will be called when a client either subscribes or unsubscribes to a channel with the number of subscribers as a parameter. Also, this function is available as a parameter to <code>subscribe</code> function. </p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">onSubscriptionCountChanged</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">count</span><span class="se">)</span><span class="s"> subscriptions"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">channel</span> <span class="o">=</span> <span class="n">pusher</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span>
+    <span class="nv">channelName</span><span class="p">:</span> <span class="s">"my-channel"</span><span class="p">,</span>
+    <span class="nv">onSubscriptionCountChanged</span><span class="p">:</span> <span class="n">onSubscriptionCountChanged</span>
+<span class="p">)</span>
+</code></pre>
 <h3 id='private-channels' class='heading'>Private channels</h3>
 
 <p>Private channels are created in exactly the same way as public channels, except that they reside in the &lsquo;private-&rsquo; namespace. This means prefixing the channel name:</p>
@@ -1208,11 +1220,10 @@ You can see that the general form they take is:
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="https://pusher.com" target="_blank" rel="external">Pusher</a>. All rights reserved. (Last updated: 2021-07-07)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="https://pusher.com" target="_blank" rel="external noopener">Pusher</a>. All rights reserved. (Last updated: 2022-07-15)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
   </body>
-</div>
 </html>
