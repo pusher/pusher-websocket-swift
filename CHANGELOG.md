@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [10.1.0](https://github.com/pusher/pusher-websocket-swift/compare/10.0.1...10.1.0) - 2022-07-15
 
 ### Added
+
 - `onSubscriptionCountChanged` function to handle `pusher_internal:subscription_count` event
 
 ### Removed
