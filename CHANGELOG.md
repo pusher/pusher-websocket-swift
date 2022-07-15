@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [10.1.0](https://github.com/pusher/pusher-websocket-swift/compare/10.0.1...10.1.0) - 2022-07-15
 
 ### Added
-- Add `onSubscriptionCountChanged` function to handle `pusher_internal:subscription_count` event
+- `onSubscriptionCountChanged` function to handle `pusher_internal:subscription_count` event
 
-## [Unreleased](https://github.com/pusher/pusher-websocket-swift/compare/10.0.1...HEAD) - 2022-03-23
+### Removed
+
+- SwiftLint from SPM's package.swift.
+
 
 ## [10.0.1](https://github.com/pusher/pusher-websocket-swift/compare/10.0.0...10.0.1) - 2022-03-23
 
