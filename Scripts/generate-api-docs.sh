@@ -16,7 +16,7 @@ read -p 'Enter release tag (without quotes): ' RELEASE_TAG
 
 AUTHOR_NAME="Pusher Limited"
 AUTHOR_URL="https://pusher.com"
-GITHUB_ORIGIN=$(git remote get-url origin)
+GITHUB_ORIGIN="https://github.com/pusher/pusher-websocket-swift"
 GITHUB_URL=${GITHUB_ORIGIN%".git"}
 MODULE_NAME=$(swift package dump-package | jq --raw-output '.name')
 

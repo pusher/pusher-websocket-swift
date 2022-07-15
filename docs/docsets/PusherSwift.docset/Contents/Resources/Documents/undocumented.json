@@ -1,943 +1,950 @@
 {
   "warnings": [
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
       "line": 3,
       "symbol": "AuthMethod",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
       "line": 3,
       "symbol": "AuthMethod",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
       "line": 4,
       "symbol": "AuthMethod.endpoint(authEndpoint:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
       "line": 5,
       "symbol": "AuthMethod.authRequestBuilder(authRequestBuilder:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
       "line": 6,
       "symbol": "AuthMethod.authorizer(authorizer:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
       "line": 7,
       "symbol": "AuthMethod.inline(secret:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/AuthMethod.swift",
       "line": 8,
       "symbol": "AuthMethod.noMethod",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
       "line": 3,
       "symbol": "ConnectionState",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
       "line": 4,
       "symbol": "ConnectionState.connecting",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
       "line": 5,
       "symbol": "ConnectionState.connected",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
       "line": 6,
       "symbol": "ConnectionState.disconnecting",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
       "line": 7,
       "symbol": "ConnectionState.disconnected",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
       "line": 8,
       "symbol": "ConnectionState.reconnecting",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/ConnectionState.swift",
       "line": 18,
       "symbol": "ConnectionState.stringValue()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/EventHandler.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/EventHandler.swift",
       "line": 3,
       "symbol": "EventHandler",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
       "line": 3,
       "symbol": "PusherAuth",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
       "line": 4,
       "symbol": "PusherAuth.auth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
       "line": 5,
       "symbol": "PusherAuth.channelData",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
       "line": 6,
       "symbol": "PusherAuth.sharedSecret",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherAuth.swift",
       "line": 8,
       "symbol": "PusherAuth.init(auth:channelData:sharedSecret:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
       "line": 4,
       "symbol": "PusherChannel",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
       "line": 10,
       "symbol": "PusherChannel.eventHandlers",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
-      "line": 18,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 20,
+      "symbol": "PusherChannel.subscriptionCount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 24,
       "symbol": "PusherChannel.subscribed",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
-      "line": 19,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 25,
       "symbol": "PusherChannel.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
-      "line": 20,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 26,
       "symbol": "PusherChannel.connection",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
-      "line": 21,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 27,
       "symbol": "PusherChannel.unsentEvents",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
-      "line": 22,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 28,
       "symbol": "PusherChannel.type",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
-      "line": 23,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 29,
       "symbol": "PusherChannel.auth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannel.swift",
+      "line": 30,
+      "symbol": "PusherChannel.onSubscriptionCountChanged",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
       "line": 3,
       "symbol": "PusherChannelType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
       "line": 4,
       "symbol": "PusherChannelType.private",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
       "line": 5,
       "symbol": "PusherChannelType.presence",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
       "line": 6,
       "symbol": "PusherChannelType.normal",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
       "line": 8,
       "symbol": "PusherChannelType.init(name:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
       "line": 12,
       "symbol": "PusherChannelType.type(forName:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannelType.swift",
       "line": 22,
       "symbol": "PusherChannelType.isPresenceChannel(name:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannels.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannels.swift",
       "line": 4,
       "symbol": "PusherChannels",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherChannels.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherChannels.swift",
       "line": 10,
       "symbol": "PusherChannels.channels",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 3,
       "symbol": "PusherClientOptions",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 4,
       "symbol": "PusherClientOptions",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 5,
       "symbol": "PusherClientOptions.authMethod",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 6,
       "symbol": "PusherClientOptions.attemptToReturnJSONObject",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 7,
       "symbol": "PusherClientOptions.autoReconnect",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 8,
       "symbol": "PusherClientOptions.host",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 9,
       "symbol": "PusherClientOptions.port",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 10,
       "symbol": "PusherClientOptions.path",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 11,
       "symbol": "PusherClientOptions.useTLS",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 12,
       "symbol": "PusherClientOptions.activityTimeout",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherClientOptions.swift",
       "line": 14,
       "symbol": "PusherClientOptions.init(authMethod:attemptToReturnJSONObject:autoReconnect:host:port:path:useTLS:activityTimeout:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherError.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherError.swift",
       "line": 3,
       "symbol": "PusherError",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherError.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherError.swift",
       "line": 4,
       "symbol": "PusherError",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherEvent.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherEvent.swift",
       "line": 4,
       "symbol": "PusherEvent",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherEvent.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherEvent.swift",
       "line": 81,
       "symbol": "PusherEvent.copy(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherGlobalChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherGlobalChannel.swift",
       "line": 4,
       "symbol": "GlobalChannel",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherGlobalChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherGlobalChannel.swift",
       "line": 5,
       "symbol": "GlobalChannel.globalCallbacks",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherGlobalChannel.swift",
-      "line": 6,
-      "symbol": "GlobalChannel.globalLegacyCallbacks",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherHost.swift",
       "line": 3,
       "symbol": "PusherHost",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherHost.swift",
       "line": 3,
       "symbol": "PusherHost",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherHost.swift",
       "line": 4,
       "symbol": "PusherHost.host(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherHost.swift",
       "line": 5,
       "symbol": "PusherHost.cluster(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherHost.swift",
       "line": 7,
       "symbol": "PusherHost.defaultHost",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherHost.swift",
       "line": 11,
       "symbol": "PusherHost.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
       "line": 3,
       "symbol": "PusherUserInfoObject",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
       "line": 6,
       "symbol": "PusherPresenceChannel",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
       "line": 7,
       "symbol": "PusherPresenceChannel.members",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
       "line": 8,
       "symbol": "PusherPresenceChannel.onMemberAdded",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
       "line": 9,
       "symbol": "PusherPresenceChannel.onMemberRemoved",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannel.swift",
       "line": 10,
       "symbol": "PusherPresenceChannel.myId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
       "line": 4,
       "symbol": "PusherPresenceChannelMember",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
       "line": 5,
       "symbol": "PusherPresenceChannelMember.userId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
       "line": 6,
       "symbol": "PusherPresenceChannelMember.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/PusherPresenceChannelMember.swift",
       "line": 8,
       "symbol": "PusherPresenceChannelMember.init(userId:userInfo:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/QueuedClientEvent.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/QueuedClientEvent.swift",
       "line": 3,
       "symbol": "QueuedClientEvent",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/QueuedClientEvent.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/QueuedClientEvent.swift",
       "line": 4,
       "symbol": "QueuedClientEvent.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Models/QueuedClientEvent.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Models/QueuedClientEvent.swift",
       "line": 5,
       "symbol": "QueuedClientEvent.data",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/AuthMethod+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/AuthMethod+ObjectiveC.swift",
       "line": 4,
       "symbol": "AuthMethod.toObjc()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/AuthMethod+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/AuthMethod+ObjectiveC.swift",
       "line": 23,
       "symbol": "AuthMethod.fromObjc(source:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
       "line": 4,
       "symbol": "OCAuthMethod",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
       "line": 11,
       "symbol": "OCAuthMethod.init(type:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
       "line": 15,
       "symbol": "OCAuthMethod.init(authEndpoint:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
       "line": 20,
       "symbol": "OCAuthMethod.init(authRequestBuilder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
       "line": 25,
       "symbol": "OCAuthMethod.init(secret:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCAuthMethod.swift",
       "line": 30,
       "symbol": "OCAuthMethod.init(authorizer:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
       "line": 4,
       "symbol": "OCPusherHost",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
       "line": 9,
       "symbol": "OCPusherHost.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
       "line": 13,
       "symbol": "OCPusherHost.init(host:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/OCPusherHost.swift",
       "line": 18,
       "symbol": "OCPusherHost.init(cluster:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
       "line": 4,
       "symbol": "Pusher.subscribe(channelName:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
       "line": 8,
-      "symbol": "Pusher.subscribe(channelName:onMemberAdded:onMemberRemoved:)",
+      "symbol": "Pusher.subscribe(channelName:onMemberAdded:onMemberRemoved:onSubscriptionCountChanged:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
-      "line": 16,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
+      "line": 21,
       "symbol": "Pusher.subscribeToPresenceChannel(channelName:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
-      "line": 23,
-      "symbol": "Pusher.subscribeToPresenceChannel(channelName:onMemberAdded:onMemberRemoved:)",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
+      "line": 29,
+      "symbol": "Pusher.subscribeToPresenceChannel(channelName:onMemberAdded:onMemberRemoved:onSubscriptionCountChanged:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
-      "line": 34,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
+      "line": 42,
       "symbol": "Pusher.init(withAppKey:options:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
-      "line": 38,
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/Pusher+ObjectiveC.swift",
+      "line": 46,
       "symbol": "Pusher.init(withKey:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
       "line": 6,
       "symbol": "PusherClientOptions.init(ocAuthMethod:autoReconnect:ocHost:port:useTLS:activityTimeout:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
       "line": 25,
       "symbol": "PusherClientOptions.init(ocAuthMethod:attemptToReturnJSONObject:autoReconnect:ocHost:port:useTLS:activityTimeout:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
       "line": 45,
       "symbol": "PusherClientOptions.init(authMethod:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherClientOptions+ObjectiveC.swift",
       "line": 49,
       "symbol": "PusherClientOptions.setAuthMethod(authMethod:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherConnection+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherConnection+ObjectiveC.swift",
       "line": 4,
       "symbol": "PusherConnection.OCReconnectAttemptsMax",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherConnection+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherConnection+ObjectiveC.swift",
       "line": 13,
       "symbol": "PusherConnection.OCMaxReconnectGapInSeconds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherHost+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherHost+ObjectiveC.swift",
       "line": 4,
       "symbol": "PusherHost.toObjc()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/ObjC/PusherHost+ObjectiveC.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/ObjC/PusherHost+ObjectiveC.swift",
       "line": 14,
       "symbol": "PusherHost.fromObjc(source:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/AuthRequestBuilderProtocol.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/AuthRequestBuilderProtocol.swift",
       "line": 3,
       "symbol": "AuthRequestBuilderProtocol",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/AuthRequestBuilderProtocol.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/AuthRequestBuilderProtocol.swift",
       "line": 4,
       "symbol": "AuthRequestBuilderProtocol.requestFor(socketID:channelName:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/Authorizer.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/Authorizer.swift",
       "line": 3,
       "symbol": "Authorizer",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/Authorizer.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/Authorizer.swift",
       "line": 4,
       "symbol": "Authorizer.fetchAuthValue(socketID:channelName:completionHandler:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
       "line": 3,
       "symbol": "PusherDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
       "line": 4,
       "symbol": "PusherDelegate.debugLog(message:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
       "line": 6,
       "symbol": "PusherDelegate.changedConnectionState(from:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
       "line": 7,
       "symbol": "PusherDelegate.subscribedToChannel(name:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
       "line": 8,
       "symbol": "PusherDelegate.failedToSubscribeToChannel(name:response:data:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
       "line": 9,
       "symbol": "PusherDelegate.failedToDecryptEvent(eventName:channelName:data:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Protocols/PusherDelegate.swift",
       "line": 10,
       "symbol": "PusherDelegate.receivedError(error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/PusherSwift.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/PusherSwift.swift",
       "line": 3,
       "symbol": "Pusher",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/PusherSwift.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/PusherSwift.swift",
       "line": 10,
       "symbol": "Pusher",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/PusherSwift.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/PusherSwift.swift",
       "line": 11,
       "symbol": "Pusher.connection",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/PusherSwift.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/PusherSwift.swift",
       "line": 12,
       "symbol": "Pusher.delegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 3,
       "symbol": "PusherConnection",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 5,
       "symbol": "PusherConnection",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 7,
       "symbol": "PusherConnection",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 8,
       "symbol": "PusherConnection.url",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 9,
       "symbol": "PusherConnection.key",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 10,
       "symbol": "PusherConnection.options",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 11,
       "symbol": "PusherConnection.globalChannel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 12,
       "symbol": "PusherConnection.socketId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 13,
       "symbol": "PusherConnection.connectionState",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 14,
       "symbol": "PusherConnection.channels",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 15,
       "symbol": "PusherConnection.socket",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 16,
       "symbol": "PusherConnection.URLSession",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 17,
       "symbol": "PusherConnection.userDataFetcher",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 18,
       "symbol": "PusherConnection.reconnectAttemptsMax",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 19,
       "symbol": "PusherConnection.reconnectAttempts",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 20,
       "symbol": "PusherConnection.maxReconnectGapInSeconds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 21,
       "symbol": "PusherConnection.delegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 27,
       "symbol": "PusherConnection.pongResponseTimeoutInterval",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
+      "file": "/Users/bene/projects/pusher-websocket-swift/Sources/Services/PusherConnection.swift",
       "line": 28,
       "symbol": "PusherConnection.activityTimeoutInterval",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/danielbrowne/Documents/Work/pusher-websocket-swift"
+  "source_directory": "/Users/bene/projects/pusher-websocket-swift"
 }
