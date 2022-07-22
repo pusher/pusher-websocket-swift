@@ -179,17 +179,6 @@ function performTests {
 		sudo xcode-select -s "$DESIRED_XCODE_SELECT"
 	fi
 	
-	if [[ "$NAME" == "SwiftPackageManager-"* ]]; then
-		true # Do nothing. No checkout to perform
-	elif [[ "$NAME" == "Carthage-"* ]] && (( $SHOULD_CARTHAGE_CHECKOUT )); then
-		sh "$SCRIPT_DIRECTORY/carthage-checkout.sh" -w "$WORKING_DIRECTORY"
-	elif [[ "$NAME" == "Cocoapods-"* ]] && (( $SHOULD_COCOAPODS_CHECKOUT )); then
-		sh "$SCRIPT_DIRECTORY/cocoapods-checkout.sh" -w "$WORKING_DIRECTORY"
-	else
-		echo "**** SKIPPING CHECKOUT ****"
-		SUMMARY_LOG_OUTPUT+=" (checkout was skipped) +++++"
-	fi
-
 	runXcodeBuild "$NAME" "Swift-iOS-WithEncryption"
 	runXcodeBuild "$NAME" "Swift-macOS-WithEncryption"
 	runXcodeBuild "$NAME" "Swift-tvOS-WithEncryption"
