@@ -1,0 +1,33 @@
+on:
+   push:
+    branches:
+      - release-process
+
+jobs:
+  check-release-tag:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        run: npm install -g podspec-bump 
+      - name: Prepare tag
+        id: prepare_tag
+        continue-on-error: true
+        run: |
+          export TAG=v$(podspec-bump --dump-version)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          export CHECK_TAG=$(git tag | grep $TAG)
+          if [[ $CHECK_TAG ]]; then
+            echo "Skipping because release tag already exists"
+            exit 1
+          fi
+      - name: Output
+        id: release_output
+        if: ${{ steps.prepare_tag.outcome == 'success' }}
+        run: |
+          echo "::set-output name=tag::${{ env.TAG }}"
+    outputs:
+      tag: ${{ steps.release_output.outputs.tag }}
