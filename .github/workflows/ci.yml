@@ -35,4 +35,4 @@ jobs:
             COMPILER_INDEX_STORE_ENABLE=NO \
             test \
             -destination "id=${{ steps.simulator.outputs.udid }}" \
-            | xcpretty
+            | xcpretty --color
