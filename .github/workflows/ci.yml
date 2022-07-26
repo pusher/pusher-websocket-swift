@@ -1,0 +1,19 @@
+name: CI
+
+on:
+   push:
+    branches:
+      - release-process
+
+jobs:
+  run-tests:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: maxim-lobanov/setup-xcode@v1
+        name: "Build for testing"
+        with:
+          xcode-version: '13.2.1'
+      - run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme PusherSwift -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+      - name: "Run tests iOS"
+        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme PusherSwift -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
