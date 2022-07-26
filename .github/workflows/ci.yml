@@ -14,15 +14,15 @@ jobs:
         name: "Build for testing"
         with:
           xcode-version: '13.2.1'
-      - uses: olejnjak/carthage-workaround@v3
-        with:
-          action: bootstrap --cache-builds
-          force: true
       - uses: futureware-tech/simulator-action@v1
         id: simulator
         with:
           model: 'iPhone 8'
-      - run: |
+      - uses: olejnjak/carthage-workaround@v3
+        with:
+          action: bootstrap --cache-builds
+          force: true
+        run: |
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
             -scheme PusherSwift \
