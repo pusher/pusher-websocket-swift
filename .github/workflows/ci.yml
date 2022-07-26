@@ -27,6 +27,7 @@ jobs:
     runs-on: macos-latest
     needs: build-tests
     steps:
+      - uses: actions/checkout@v2
       - uses: futureware-tech/simulator-action@v1
         id: iphone_simulator
         with:
