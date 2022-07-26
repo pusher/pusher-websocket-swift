@@ -23,7 +23,6 @@ jobs:
         if: steps.carthage-cache.outputs.cache-hit != 'true'
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --cache-builds --use-xcframeworks
-      - uses: actions/checkout@v2
       - uses: futureware-tech/simulator-action@v1
         id: apple_tv
         with:
