@@ -6,8 +6,9 @@ on:
       - ci
 
 jobs:
-  build-tests:
+  run-tvos-tests:
     runs-on: macos-latest
+    needs: build-tests
     steps:
       - uses: actions/checkout@v2
       - uses: maxim-lobanov/setup-xcode@v1
@@ -23,25 +24,7 @@ jobs:
         if: steps.carthage-cache.outputs.cache-hit != 'true'
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --cache-builds --use-xcframeworks
-  run_tests:
-    runs-on: macos-latest
-    needs: build-tests
-    steps:
       - uses: actions/checkout@v2
-      - uses: futureware-tech/simulator-action@v1
-        id: iphone_simulator
-        with:
-          model: 'iPhone 8'
-      - name: "Run iOS Tests"
-        run: |
-          set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
-            -project PusherSwift.xcodeproj \
-            -scheme PusherSwift \
-            build \
-            COMPILER_INDEX_STORE_ENABLE=NO \
-            test \
-            -destination "id=${{ steps.iphone_simulator.outputs.udid }}" \
-            | xcpretty --color
       - uses: futureware-tech/simulator-action@v1
         id: apple_tv
         with:
@@ -56,4 +39,36 @@ jobs:
             test \
             -destination "id=${{ steps.apple_tv.outputs.udid }}" \
             | xcpretty --color
-      
+
+  run-ios-tests:
+    runs-on: macos-latest
+    needs: build-tests
+    steps:
+      - uses: actions/checkout@v2
+      - uses: maxim-lobanov/setup-xcode@v1
+        name: "Build for testing"
+        with:
+          xcode-version: '13.2.1'
+      - uses: actions/cache@v1
+        id: carthage-cache
+        with:
+          path: Carthage
+          key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
+      - name: Carthage
+        if: steps.carthage-cache.outputs.cache-hit != 'true'
+        run: |
+          sh ./Consumption-Tests/Shared/carthage.sh bootstrap --cache-builds --use-xcframeworks
+      - uses: futureware-tech/simulator-action@v1
+        id: iphone_simulator
+        with:
+          model: 'iPhone 8'
+      - name: "Run iOS Tests"
+        run: |
+          set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
+            -project PusherSwift.xcodeproj \
+            -scheme PusherSwift \
+            build \
+            COMPILER_INDEX_STORE_ENABLE=NO \
+            test \
+            -destination "id=${{ steps.iphone_simulator.outputs.udid }}" \
+            | xcpretty --color
