@@ -14,6 +14,8 @@ jobs:
         name: "Build for testing"
         with:
           xcode-version: '13.2.1'
-      - run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme PusherSwift -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+      - run: |
+          sh ./Consumption-Tests/Shared/carthage.sh update --use-xcframeworks
+          set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme PusherSwift -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty 
       - name: "Run tests iOS"
         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme PusherSwift -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
