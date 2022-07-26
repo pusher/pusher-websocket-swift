@@ -19,9 +19,12 @@ jobs:
         with:
           model: 'iPhone 8'
       - run: |
-          sh ./Consumption-Tests/Shared/carthage.sh update --use-xcframeworks
-          set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing \
+          sh ./Consumption-Tests/Shared/carthage.sh bootstrap --use-xcframeworks
+          set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
             -scheme PusherSwift \
+            build \
+            COMPILER_INDEX_STORE_ENABLE=NO \
+            test \
             -destination "id=${{ steps.simulator.outputs.udid }}" \
-            | xcpretty 
+            | xcpretty
