@@ -29,7 +29,7 @@ jobs:
         id: simulator
         with:
           os: ${{ matrix.os }}
-      - name: "Run ${{ matrix.device_model }} Tests"
+      - name: "Run ${{ matrix.os }} Tests"
         run: |
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
