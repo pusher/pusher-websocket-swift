@@ -18,10 +18,15 @@ jobs:
         id: simulator
         with:
           model: 'iPhone 8'
-      - uses: olejnjak/carthage-workaround@v3
+      - uses: actions/cache@v1
+        id: carthage-cache
         with:
-          action: bootstrap --cache-builds
-          force: true
+          path: Carthage
+          key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
+      - name: Carthage
+        if: steps.carthage-cache.outputs.cache-hit != 'true'
+        run: |
+          sh ./Consumption-Tests/Shared/carthage.sh bootstrap --cache-builds --use-xcframeworks
       - run: |
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
