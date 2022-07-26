@@ -22,7 +22,7 @@ jobs:
         with:
           action: bootstrap --cache-builds
           force: true
-        run: |
+      - run: |
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
             -scheme PusherSwift \
