@@ -6,7 +6,7 @@ on:
       - ci
 
 jobs:
-  run-tests:
+  build-tests:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,10 +14,6 @@ jobs:
         name: "Build for testing"
         with:
           xcode-version: '13.2.1'
-      - uses: futureware-tech/simulator-action@v1
-        id: simulator
-        with:
-          model: 'iPhone 8'
       - uses: actions/cache@v1
         id: carthage-cache
         with:
@@ -27,12 +23,36 @@ jobs:
         if: steps.carthage-cache.outputs.cache-hit != 'true'
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --cache-builds --use-xcframeworks
-      - run: |
+  run_tests:
+    runs-on: macos-latest
+    needs: build-tests
+    steps:
+      - uses: futureware-tech/simulator-action@v1
+        id: iphone_simulator
+        with:
+          model: 'iPhone 8'
+      - name: "Run iOS Tests"
+        run: |
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
             -scheme PusherSwift \
             build \
             COMPILER_INDEX_STORE_ENABLE=NO \
             test \
-            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -destination "id=${{ steps.iphone_simulator.outputs.udid }}" \
             | xcpretty --color
+      - uses: futureware-tech/simulator-action@v1
+        id: apple_tv
+        with:
+          model: 'Apple TV 4K'
+      - name: "Run tvOS Tests"
+        run: |
+          set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
+            -project PusherSwift.xcodeproj \
+            -scheme PusherSwift \
+            build \
+            COMPILER_INDEX_STORE_ENABLE=NO \
+            test \
+            -destination "id=${{ steps.apple_tv.outputs.udid }}" \
+            | xcpretty --color
+      
