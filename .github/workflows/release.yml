@@ -16,8 +16,8 @@ jobs:
         id: prepare_tag
         continue-on-error: true
         run: |
-          npm install -g podspec-bump
-          export TAG=$(podspec-bump --dump-version -p PusherSwift)
+          npm install podspec-bump
+          export TAG=$(podspec-bump --dump-version -p PusherSwift.podspec)
           echo "TAG=$TAG" >> $GITHUB_ENV
           export CHECK_TAG=$(git tag | grep $TAG)
           if [[ $CHECK_TAG ]]; then
