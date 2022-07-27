@@ -46,8 +46,9 @@ jobs:
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
             -scheme PusherSwift \
-            build
-  
+            build \
+            | xcpretty --color
+
   publish-cocoapods:
     runs-on: ubuntu-latest
     needs: build
