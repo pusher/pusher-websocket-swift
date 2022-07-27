@@ -1,0 +1,33 @@
+name: Prepare release
+
+on:
+  push:
+    branches: [ automate-versioning ]
+
+jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Fetch the lastest release version
+        id: fetch_latest_release
+        uses: thebritican/fetch-latest-release@v1
+        with:
+          github_token: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
+      - uses: actions/checkout@v2
+        with:
+          repository: pusher/actions
+          token: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
+          path: .github/actions
+      - uses: ./.github/actions/prepare-version-bump
+        id: bump
+        with:
+          current_version: ${{ steps.fetch_latest_release.outputs.tag_name }}
+      - uses: actions/setup-node@v3
+        run: |
+          npm install -g podspec-bump
+          podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwift.podspec
+          podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwiftWithEncryption.podspec
