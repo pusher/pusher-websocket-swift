@@ -40,3 +40,7 @@ jobs:
           sed -i  's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' Sources/Info.plist
           podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwift.podspec
           podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwiftWithEncryption.podspec
+
+          git add Tests/Info.plist Tests/Integration/PusherClientInitializationTests.swift Sources/PusherSwift.swift Sources/Info.plist
+          git commit -m "Bump to version ${{ steps.bump.outputs.new_version }}"
+          git push
