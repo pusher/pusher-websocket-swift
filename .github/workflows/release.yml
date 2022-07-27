@@ -43,7 +43,7 @@ jobs:
       - name: build
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --use-xcframeworks
-          sh ./Consumption-Tests/run-tests-CI-latest.sh
+          sh ./Consumption-Tests/run-tests-CI-latest.sh -skip-carthage-checkouts
   
   publish-cocoapods:
     runs-on: ubuntu-latest
