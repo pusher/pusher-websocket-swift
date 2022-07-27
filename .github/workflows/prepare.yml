@@ -1,8 +1,10 @@
 name: Prepare release
 
 on:
-  push:
-    branches: [ automate-versioning ]
+  pull_request:
+    types: [ labeled ]
+    branches:
+      - master
 
 jobs:
   prepare-release:
