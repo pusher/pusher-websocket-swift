@@ -14,9 +14,10 @@ jobs:
           fetch-depth: 0
       - name: Fetch the lastest release version
         id: fetch_latest_release
-        uses: thebritican/fetch-latest-release@v2
+        uses: pozetroninc/github-action-get-latest-release@master
         with:
-          github_token: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
+          repository: ${{ github.repository }}
+          excludes: prerelease, draft
       - uses: actions/checkout@v2
         with:
           repository: pusher/actions
@@ -25,7 +26,7 @@ jobs:
       - uses: ./.github/actions/prepare-version-bump
         id: bump
         with:
-          current_version: ${{ steps.fetch_latest_release.outputs.tag_name }}
+          current_version: ${{ steps.fetch_latest_release.outputs.release }}
       - uses: actions/setup-node@v3
       - name: "Bump podspec versions"
         run: |
