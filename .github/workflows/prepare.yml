@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
       - name: Fetch the lastest release version
         id: fetch_latest_release
-        uses: thebritican/fetch-latest-release@v1
+        uses: thebritican/fetch-latest-release@v2
         with:
           github_token: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
       - uses: actions/checkout@v2
