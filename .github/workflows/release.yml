@@ -11,7 +11,6 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v3
-
       - name: Prepare tag
         id: prepare_tag
         continue-on-error: true
@@ -40,7 +39,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: build
         run: |
-          sh ./Consumption-Tests/Shared/carthage.sh build --cache-builds --use-xcframeworks
+          sh ./Consumption-Tests/Shared/carthage.sh build
   
   publish-cocoapods:
     runs-on: ubuntu-latest
