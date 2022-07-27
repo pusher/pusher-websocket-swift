@@ -114,7 +114,7 @@ function runXcodeBuild {
 	echo "WORKSPACE_FILEPATH=$WORKSPACE_FILEPATH"
 	
 	set +e
-	xcodebuild clean build -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME" -allowProvisioningUpdates
+	xcodebuild clean build -workspace "$WORKSPACE_FILEPATH" -scheme "$SCHEME"
 	local XCODEBUILD_STATUS_CODE=$?
 	set -e
 	

@@ -37,9 +37,13 @@ jobs:
     if: ${{ needs.check-release-tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v2
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '13.2.1'
       - name: build
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh build
+          sh ./Consumption-Tests/run-tests-CI-latest.sh
   
   publish-cocoapods:
     runs-on: ubuntu-latest
