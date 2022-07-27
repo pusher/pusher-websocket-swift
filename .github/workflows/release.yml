@@ -59,6 +59,8 @@ jobs:
           ruby-version: '2.6'
       - run: |
           gem install cocoapods
+          pod trunk push PusherSwift.podspec
+          pod trunk push PusherSwiftWithEncryption.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TOKEN }}
 
