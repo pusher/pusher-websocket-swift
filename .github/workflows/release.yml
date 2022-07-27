@@ -43,7 +43,10 @@ jobs:
       - name: build
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --use-xcframeworks
-          sh ./Consumption-Tests/run-tests-CI-latest.sh -skip-carthage-checkouts
+          set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
+            -project PusherSwift.xcodeproj \
+            -scheme PusherSwift \
+            build
   
   publish-cocoapods:
     runs-on: ubuntu-latest
