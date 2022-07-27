@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ PS-140-release-process ]
+    branches: [ master ]
 
 jobs:
   check-release-tag:
@@ -61,5 +61,29 @@ jobs:
           gem install cocoapods
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TOKEN }}
+
+  create-github-release:
+    runs-on: ubuntu-latest
+    needs: publish-cocoapods
+    if: ${{ needs.check-release-tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare tag
+        run: |
+          export TAG=${{ needs.check-release-tag.outputs.tag }}
+          echo "TAG=$TAG" >> $GITHUB_ENV
+      - name: Setup git
+        run: |
+          git config user.email "pusher-ci@pusher.com"
+          git config user.name "Pusher CI"
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG }}
+          release_name: ${{ env.TAG }}
+          draft: false
+          prerelease: false
 
   
