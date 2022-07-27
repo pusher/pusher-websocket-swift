@@ -27,6 +27,7 @@ jobs:
         with:
           current_version: ${{ steps.fetch_latest_release.outputs.tag_name }}
       - uses: actions/setup-node@v3
+      - name: "Bump podspec versions"
         run: |
           npm install -g podspec-bump
           podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwift.podspec
