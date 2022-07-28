@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-node@v3
       - name: "Bump podspec versions"
         run: |
-          npm install -g podspec-bump
+          npm install --location=global podspec-bump
 
           sed -i 's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' Tests/Integration/PusherClientInitializationTests.swift
           sed -i 's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' Tests/Info.plist
