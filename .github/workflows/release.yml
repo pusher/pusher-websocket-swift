@@ -1,0 +1,91 @@
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  check-release-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+      - name: Prepare tag
+        id: prepare_tag
+        continue-on-error: true
+        run: |
+          npm install --location=global podspec-bump
+          export TAG=$(podspec-bump --dump-version -p PusherSwift.podspec)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          export CHECK_TAG=$(git tag | grep $TAG)
+          if [[ $CHECK_TAG ]]; then
+            echo "Skipping because release tag already exists"
+            exit 1
+          fi
+      - name: Output
+        id: release_output
+        if: ${{ steps.prepare_tag.outcome == 'success' }}
+        run: |
+          echo "::set-output name=tag::${{ env.TAG }}"
+    outputs:
+      tag: ${{ steps.release_output.outputs.tag }}
+
+  build:
+    runs-on: macos-latest
+    needs: check-release-tag
+    if: ${{ needs.check-release-tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '13.2.1'
+      - name: build
+        run: |
+          sh ./Consumption-Tests/Shared/carthage.sh bootstrap --use-xcframeworks
+          set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
+            -project PusherSwift.xcodeproj \
+            -scheme PusherSwift \
+            build \
+            | xcpretty --color
+
+  publish-cocoapods:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - run: |
+          gem install cocoapods
+          pod trunk push PusherSwift.podspec
+          pod trunk push PusherSwiftWithEncryption.podspec
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TOKEN }}
+
+  create-github-release:
+    runs-on: ubuntu-latest
+    needs: publish-cocoapods
+    if: ${{ needs.check-release-tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare tag
+        run: |
+          export TAG=${{ needs.check-release-tag.outputs.tag }}
+          echo "TAG=$TAG" >> $GITHUB_ENV
+      - name: Setup git
+        run: |
+          git config user.email "pusher-ci@pusher.com"
+          git config user.name "Pusher CI"
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG }}
+          release_name: ${{ env.TAG }}
+          draft: false
+          prerelease: false
+
+  
