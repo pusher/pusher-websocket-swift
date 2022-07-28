@@ -29,8 +29,9 @@ jobs:
         id: bump
         with:
           current_version: ${{ steps.fetch_latest_release.outputs.release }}
-      - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
       - name: "Bump podspec versions"
         shell: bash
         run: |
