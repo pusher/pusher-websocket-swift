@@ -45,12 +45,7 @@ jobs:
           podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwift.podspec
           podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwiftWithEncryption.podspec
 
-          git add Tests/Integration/PusherClientInitializationTests.swift \ 
-            Tests/Info.plist \
-            Sources/PusherSwift.swift \
-            Sources/Info.plist \
-            PusherSwift.podspec \
-            PusherSwiftWithEncryption.podspec
+          git add Tests/Integration/PusherClientInitializationTests.swift Tests/Info.plist Sources/PusherSwift.swift Sources/Info.plist PusherSwift.podspec PusherSwiftWithEncryption.podspec
 
           git commit -m "Bump to version ${{ steps.bump.outputs.new_version }}"
           git push
