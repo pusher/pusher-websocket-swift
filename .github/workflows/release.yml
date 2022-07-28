@@ -59,6 +59,10 @@ jobs:
           ruby-version: '2.6'
       - run: |
           gem install cocoapods
+          
+          git tag -a ${{ needs.check-release-tag.outputs.tag }} -m "${{ needs.check-release-tag.outputs.tag }}"
+          git push origin ${{ needs.check-release-tag.outputs.tag }}
+
           pod trunk push PusherSwift.podspec
           pod trunk push PusherSwiftWithEncryption.podspec
         env:
