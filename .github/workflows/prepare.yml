@@ -1,0 +1,51 @@
+name: Prepare release
+
+on:
+  pull_request:
+    types: [ labeled ]
+    branches:
+      - master
+
+jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Fetch the lastest release version
+        id: fetch_latest_release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: ${{ github.repository }}
+          excludes: prerelease, draft
+      - uses: actions/checkout@v2
+        with:
+          repository: pusher/actions
+          token: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
+          path: .github/actions
+      - uses: ./.github/actions/prepare-version-bump
+        id: bump
+        with:
+          current_version: ${{ steps.fetch_latest_release.outputs.release }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: "Bump podspec versions"
+        shell: bash
+        run: |
+          npm install --location=global podspec-bump
+
+          sed -i 's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' Tests/Integration/PusherClientInitializationTests.swift
+          sed -i 's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' Tests/Info.plist
+          sed -i 's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' Sources/PusherSwift.swift
+          sed -i 's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' Sources/Info.plist
+
+          podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwift.podspec
+          podspec-bump -i ${{ steps.bump.outputs.new_version }} -w -p PusherSwiftWithEncryption.podspec
+
+          git add Tests/Integration/PusherClientInitializationTests.swift Tests/Info.plist Sources/PusherSwift.swift Sources/Info.plist PusherSwift.podspec PusherSwiftWithEncryption.podspec
+
+          git commit -m "Bump to version ${{ steps.bump.outputs.new_version }}"
+          git push
