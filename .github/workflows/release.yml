@@ -48,10 +48,13 @@ jobs:
             -scheme PusherSwift \
             build \
             | xcpretty --color
+    outputs:
+      tag: ${{ needs.check-release-tag.outputs.tag }}
 
   publish-cocoapods:
     runs-on: ubuntu-latest
     needs: build
+    if: ${{ needs.build.outputs.tag }}
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -60,23 +63,25 @@ jobs:
       - run: |
           gem install cocoapods
           
-          git tag -a ${{ needs.check-release-tag.outputs.tag }} -m "${{ needs.check-release-tag.outputs.tag }}"
-          git push origin ${{ needs.check-release-tag.outputs.tag }}
+          git tag -a ${{ needs.build.outputs.tag }} -m "${{ needs.build.outputs.tag }}"
+          git push origin ${{ needs.build.outputs.tag }}
 
           pod trunk push PusherSwift.podspec
           pod trunk push PusherSwiftWithEncryption.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TOKEN }}
+    outputs:
+      release_version: ${{ ${{ needs.build.outputs.tag }} }}
 
   create-github-release:
     runs-on: ubuntu-latest
     needs: publish-cocoapods
-    if: ${{ needs.check-release-tag.outputs.tag }}
+    if: ${{ needs.publish-cocoapods.outputs.release_version }}
     steps:
       - uses: actions/checkout@v2
       - name: Prepare tag
         run: |
-          export TAG=${{ needs.check-release-tag.outputs.tag }}
+          export TAG=${{ needs.publish-cocoapods.outputs.release_version }}
           echo "TAG=$TAG" >> $GITHUB_ENV
       - name: Setup git
         run: |
