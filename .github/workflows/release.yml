@@ -71,7 +71,7 @@ jobs:
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TOKEN }}
     outputs:
-      release_version: ${{ ${{ needs.build.outputs.tag }} }}
+      release_version: ${{ ${{ needs.build.outputs.tag }}
 
   create-github-release:
     runs-on: ubuntu-latest
