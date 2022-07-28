@@ -62,6 +62,9 @@ jobs:
           ruby-version: '2.6'
       - run: |
           gem install cocoapods
+
+          git config user.email "pusher-ci@pusher.com"
+          git config user.name "Pusher CI"
           
           git tag -a ${{ needs.build.outputs.tag }} -m "${{ needs.build.outputs.tag }}"
           git push origin ${{ needs.build.outputs.tag }}
