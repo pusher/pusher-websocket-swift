@@ -32,6 +32,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
       - name: "Bump podspec versions"
+        shell: bash
         run: |
           npm install --location=global podspec-bump
 
