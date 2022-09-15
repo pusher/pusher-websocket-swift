@@ -50,18 +50,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
     public func webSocketDidDisconnect(connection: WebSocketConnection,
                                        closeCode: NWProtocolWebSocket.CloseCode,
                                        reason: Data?) {
-        // Handles setting channel subscriptions to unsubscribed whether disconnection
-        // is intentional or not
-        if connectionState == .disconnecting || connectionState == .connected {
-            for (_, channel) in self.channels.channels {
-                channel.subscribed = false
-            }
-        }
-
-        self.connectionEstablishedMessageReceived = false
-        self.socketConnected = false
-
-        updateConnectionState(to: .disconnected)
+        resetConnection()
 
         guard !intentionalDisconnect else {
             Logger.shared.debug(for: .intentionalDisconnection)
