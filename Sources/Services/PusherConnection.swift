@@ -362,7 +362,7 @@ import NWWebSocket
         socketConnected = false
         connectionEstablishedMessageReceived = false
         socketId = nil
-        
+
         guard !intentionalDisconnect else {
             return
         }
@@ -463,7 +463,7 @@ import NWWebSocket
                 }
             }
         }
-        
+
         let subscriptionEvent = event.copy(withEventName: Constants.Events.Pusher.subscriptionSucceeded)
         callGlobalCallbacks(event: subscriptionEvent)
         chan.handleEvent(event: subscriptionEvent)
@@ -553,13 +553,13 @@ import NWWebSocket
             Logger.shared.debug(for: .unableToRemoveMemberFromChannel)
         }
     }
-    
+
     /**
         Handle subscription count event
-     
+
         - parameter event: The event to be processed
      */
-    
+
     private func handleSubscriptionCountEvent(event: PusherEvent) {
         guard let channelName = event.channelName,
               let channel = self.channels.find(name: channelName),
@@ -567,7 +567,7 @@ import NWWebSocket
               let count = subscriptionCountData[Constants.JSONKeys.subscriptionCount] as? Int else {
             return
         }
-        
+
         channel.updateSubscriptionCount(count: count)
     }
 
@@ -628,7 +628,7 @@ import NWWebSocket
 
         case Constants.Events.PusherInternal.memberRemoved:
             handleMemberRemovedEvent(event: event)
-        
+
         case Constants.Events.PusherInternal.subscriptionCount:
             handleSubscriptionCountEvent(event: event)
 
@@ -652,14 +652,14 @@ import NWWebSocket
     }
 
     /**
-        Uses the appropriate authentication method to authenticate subscriptions to private and
+        Uses the appropriate authorization method to authorie subscriptions to private and
         presence channels
 
-        - parameter channel: The PusherChannel to authenticate
-        - parameter auth:    A PusherAuth value if subscription is being made to an
-                             authenticated channel without using the default auth methods
+        - parameter channel: The PusherChannel to authorize
+        - parameter auth:    A PusherAuth value if subscription is being made to a
+                             channel without using the default authorization method
 
-        - returns: A Bool indicating whether or not the authentication request was made
+        - returns: A Bool indicating whether or not the authorization request was made
                    successfully
     */
     private func authorize(_ channel: PusherChannel, auth: PusherAuth? = nil) -> Bool {
@@ -678,11 +678,16 @@ import NWWebSocket
             }
             return true
         } else {
+            let socketId = self.socketId
             return requestPusherAuthFromAuthMethod(channel: channel) { [weak self] pusherAuth, error in
                 if let error = error {
                     self?.handleAuthorizationError(forChannel: channel.name, error: error)
-                } else if let pusherAuth = pusherAuth {
-                    self?.handleAuthInfo(pusherAuth: pusherAuth, channel: channel)
+                } else if let pusherAuth = pusherAuth, let socketId = socketId {
+                    // With flapping connections and slow authorization responses, we have
+                    // to ignore requests made with a previous connection (different socket id)
+                    if pusherAuth.auth.hasPrefix(socketId) {
+                        self?.handleAuthInfo(pusherAuth: pusherAuth, channel: channel)
+                    }
                 }
             }
         }
