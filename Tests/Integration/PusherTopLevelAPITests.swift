@@ -138,7 +138,6 @@ class PusherTopLevelApiTests: XCTestCase {
 
         let chan = pusher.subscribe(TestObjects.Event.testChannelName)
         connectionDelegate.registerCallback(connectionState: ConnectionState.disconnected) {
-            XCTAssertFalse(chan.subscribed)
             disconnected.fulfill()
         }
 
@@ -150,6 +149,7 @@ class PusherTopLevelApiTests: XCTestCase {
 
         pusher.connect()
         waitForExpectations(timeout: 0.5)
+        XCTAssertFalse(chan.subscribed)
     }
 
     /* subscribing to channels when already connected */
