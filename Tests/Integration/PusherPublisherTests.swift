@@ -3,7 +3,7 @@ import Combine
 
 @testable import PusherSwift
 
-class PusherExtensionTests: XCTestCase {
+class PusherPublisherTests: XCTestCase {
     
     private var key: String!
     private var pusher: Pusher!
