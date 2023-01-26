@@ -20,6 +20,7 @@ public extension Pusher {
         ChannelEventPublisher(pusher: self, channelName: channelName, eventName: eventName)
     }
     
+    /// A Publisher for global Pusher events.
     struct GlobalEventPublisher: Publisher {
         
         public typealias Output = PusherEvent
@@ -35,6 +36,7 @@ public extension Pusher {
             } else {
                 subscriptionType = .global(callbackId: nil)
             }
+            
             let subscription = EventSubscription<S>(
                 subscriber: subscriber,
                 pusher: pusher,
@@ -44,6 +46,7 @@ public extension Pusher {
         }
     }
     
+    /// A Publisher for channel-specific Pusher events.
     struct ChannelEventPublisher: Publisher {
         
         public typealias Output = PusherEvent
@@ -92,12 +95,16 @@ public extension Pusher {
     }
 }
 
-/// A type responsible for housing the necessary fields for binding and unbinding
-/// Pusher events.
+/// A type responsible for binding and unbinding to various types of Pusher events.
 fileprivate enum SubscriptionType {
     
+    /// All events broadcast globally.
     case global(callbackId: String?)
+    
+    /// Events matching `eventName` that are broadcast globally.
     case globalEvent(eventName: String, callbackId: String?)
+    
+    /// Channel-specific events.
     case channel(_: PusherChannel, eventName: String, callbackId: String?)
     
     mutating func bind(with pusher: Pusher, callback: @escaping (PusherEvent) -> Void) {
@@ -133,17 +140,17 @@ fileprivate enum SubscriptionType {
         case .global(.some(let callbackId)):
             pusher.unbind(callbackId: callbackId)
         case .global(.none):
-            return
+            return // Not bound
             
         case .globalEvent(_, .some(let callbackId)):
             pusher.unbind(callbackId: callbackId)
         case .globalEvent(_, .none):
-            return
+            return // Not bound
             
         case .channel(let channel, let eventName, .some(let callbackId)):
             channel.unbind(eventName: eventName, callbackId: callbackId)
         case .channel(_, _, .none):
-            return
+            return // Not bound
         }
     }
 }
