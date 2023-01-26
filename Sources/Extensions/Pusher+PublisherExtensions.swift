@@ -1,6 +1,8 @@
 import Foundation
 import Combine
 
+public protocol PusherPublisher: Publisher where Output == PusherEvent, Failure == Never {}
+
 public extension Pusher {
     
     /// Creates a Publisher that can be used to stream global Pusher events.
@@ -21,13 +23,10 @@ public extension Pusher {
     }
     
     /// A Publisher for global Pusher events.
-    struct GlobalEventPublisher: Publisher {
+    struct GlobalEventPublisher: PusherPublisher {
         
-        public typealias Output = PusherEvent
-        public typealias Failure = Never
-        
-        fileprivate var pusher: Pusher
-        fileprivate var eventName: String?
+        fileprivate let pusher: Pusher
+        fileprivate let eventName: String?
         
         public func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
             let subscriptionType: SubscriptionType
@@ -47,14 +46,11 @@ public extension Pusher {
     }
     
     /// A Publisher for channel-specific Pusher events.
-    struct ChannelEventPublisher: Publisher {
+    struct ChannelEventPublisher: PusherPublisher {
         
-        public typealias Output = PusherEvent
-        public typealias Failure = Never
-        
-        fileprivate var pusher: Pusher
-        fileprivate var channelName: String
-        fileprivate var eventName: String
+        fileprivate let pusher: Pusher
+        fileprivate let channelName: String
+        fileprivate let eventName: String
         
         public func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
             let channel = pusher.subscribe(channelName)
