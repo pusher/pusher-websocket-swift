@@ -73,8 +73,8 @@ public extension Pusher {
         
         fileprivate init(subscriber: S, pusher: Pusher, subscriptionType: SubscriptionType) {
             self.subscriber = subscriber
-            self.subscriptionType = subscriptionType
             self.pusher = pusher
+            self.subscriptionType = subscriptionType
             self.subscriptionType.bind(with: pusher, callback: eventReceived(_:))
         }
         
@@ -91,7 +91,7 @@ public extension Pusher {
     }
 }
 
-/// A type responsible for binding and unbinding to various types of Pusher events.
+/// A type responsible for binding and unbinding various types of Pusher events.
 fileprivate enum SubscriptionType {
     
     /// All events broadcast globally.
