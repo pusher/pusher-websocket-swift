@@ -7,7 +7,7 @@ public extension Pusher {
     /// - Parameter eventName: The event that should be received. If nil, all
     /// events are received.
     /// - Returns: A Publisher for a global Pusher event.
-    func publisher(for eventName: String? = nil) -> GlobalEventPublisher {
+    func publisher(eventName: String? = nil) -> GlobalEventPublisher {
         GlobalEventPublisher(pusher: self, eventName: eventName)
     }
     
@@ -16,7 +16,7 @@ public extension Pusher {
     ///   - channelName: The channel that should be bound to.
     ///   - eventName: The event that should be received.
     /// - Returns: A Publisher for a Pusher channel event.
-    func publisher(for channelName: String, eventName: String) -> ChannelEventPublisher {
+    func publisher(channelName: String, eventName: String) -> ChannelEventPublisher {
         ChannelEventPublisher(pusher: self, channelName: channelName, eventName: eventName)
     }
     

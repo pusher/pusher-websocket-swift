@@ -26,7 +26,7 @@ class PusherExtensionTests: XCTestCase {
     func testChannelEventStreamReceivesEvent() {
         let sinkExpectation = expectation(description: "Event received")
         let cancellable = pusher
-            .publisher(for: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
+            .publisher(channelName: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
             .sink { event in
                 let expectedData = TestObjects.Event.Data.unencryptedJSON.toJsonDict() as! [String: String]
                 XCTAssertEqual(event.channelName, TestObjects.Event.testChannelName)
@@ -48,7 +48,7 @@ class PusherExtensionTests: XCTestCase {
         var cancellables = [AnyCancellable]()
         let sink1Expectation = expectation(description: "Event received on stream 1")
         pusher
-            .publisher(for: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
+            .publisher(channelName: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
             .sink { event in
                 XCTAssertEqual(event.channelName, TestObjects.Event.testChannelName)
                 XCTAssertEqual(event.eventName, TestObjects.Event.testEventName)
@@ -59,7 +59,7 @@ class PusherExtensionTests: XCTestCase {
         
         let sink2Expectation = expectation(description: "Event received on stream 2")
         pusher
-            .publisher(for: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
+            .publisher(channelName: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
             .sink { event in
                 XCTAssertEqual(event.channelName, TestObjects.Event.testChannelName)
                 XCTAssertEqual(event.eventName, TestObjects.Event.testEventName)
@@ -78,7 +78,7 @@ class PusherExtensionTests: XCTestCase {
     
     func testChannelEventStreamUnbindsUponCancelling() throws {
         let cancellable = pusher
-            .publisher(for: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
+            .publisher(channelName: TestObjects.Event.testChannelName, eventName: TestObjects.Event.testEventName)
             .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
         
         let channel = try XCTUnwrap(pusher.connection.channels.find(name: TestObjects.Event.testChannelName))
@@ -112,7 +112,7 @@ class PusherExtensionTests: XCTestCase {
     func testGlobalEventStreamReceivesSpecificEvent() {
         let sinkExpectation = expectation(description: "Event received")
         let cancellable = pusher
-            .publisher(for: TestObjects.Event.testEventName)
+            .publisher(eventName: TestObjects.Event.testEventName)
             .sink { event in
                 let expectedData = TestObjects.Event.Data.unencryptedJSON.toJsonDict() as! [String: String]
                 XCTAssertNil(event.channelName)
@@ -141,7 +141,7 @@ class PusherExtensionTests: XCTestCase {
     
     func testSpecificGlobalEventStreamUnbindsUponCancelling() {
         let cancellable = pusher
-            .publisher(for: TestObjects.Event.testEventName)
+            .publisher(eventName: TestObjects.Event.testEventName)
             .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
         
         XCTAssertEqual(pusher.connection.globalChannel.globalCallbacks.count, 1)
