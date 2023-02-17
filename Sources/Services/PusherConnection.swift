@@ -18,7 +18,7 @@ import NWWebSocket
     open var reconnectAttemptsMax: Int?
     open var reconnectAttempts: Int = 0
     open var maxReconnectGapInSeconds: Double? = 120
-    open weak var delegate: PusherDelegate? = nil {
+    open weak var delegate: PusherDelegate? {
         // Set the delegate for logging purposes via `debugLog(message:)`
         didSet {
             Logger.shared.delegate = self.delegate
