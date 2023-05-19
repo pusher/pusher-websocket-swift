@@ -1163,7 +1163,7 @@ For full details see the [client events documentation](https://pusher.com/docs/c
 
 There are a set of tests for the library that can be run using the standard method (Command-U in Xcode).
 
-The tests also get run on [Travis-CI](https://travis-ci.org/pusher/pusher-websocket-swift). See [.travis.yml](https://github.com/pusher/pusher-websocket-swift/blob/master/.travis.yml) for details on how the Travis tests are run.
+The tests also get run on Github Actions, see [CI Action](https://github.com/pusher/pusher-websocket-swift/actions/workflows/ci.yml)
 
 ## Extensions
 

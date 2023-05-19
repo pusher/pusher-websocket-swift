@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix: 
-        os: ['tvOS', 'watchOS', 'iOS']
+        os: ['tvOS', 'iOS']
     steps:
       - uses: actions/checkout@v2
       - uses: maxim-lobanov/setup-xcode@v1
