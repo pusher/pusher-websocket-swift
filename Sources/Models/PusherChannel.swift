@@ -15,12 +15,12 @@ open class PusherChannel: NSObject {
             eventHandlersQueue.async(flags: .barrier) { self.eventHandlersInternal = newValue }
         }
     }
-    
-    private var _subscriptionCount: Int? = nil
+
+    private var _subscriptionCount: Int?
     public var subscriptionCount: Int? {
         get { return _subscriptionCount }
     }
-    
+
     open var subscribed = false
     public let name: String
     open weak var connection: PusherConnection?
@@ -59,7 +59,7 @@ open class PusherChannel: NSObject {
         self.type = PusherChannelType(name: name)
         self.onSubscriptionCountChanged = onSubscriptionCountChanged
     }
-    
+
     internal func updateSubscriptionCount(count: Int) {
         self._subscriptionCount = count
         self.onSubscriptionCountChanged?(count)
