@@ -229,5 +229,11 @@ extension PusherConnection: WebSocketConnectionDelegate {
                             context: """
             Error: \(error.debugDescription)
             """)
+
+        if (error as? POSIXError)?.code != .ENOTCONN {
+            // Resetting connection if we receive another POSIXError
+            // than ENOTCONN (57 - Socket is not connected)
+            resetConnectionAndAttemptReconnect()
+        }
     }
 }
