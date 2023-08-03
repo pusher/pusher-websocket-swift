@@ -230,7 +230,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
             Error: \(error.debugDescription)
             """)
 
-        if (error as? POSIXError)?.code != .ENOTCONN {
+        if case .posix(let code) = error, code != .ENOTCONN {
             // Resetting connection if we receive another POSIXError
             // than ENOTCONN (57 - Socket is not connected)
             resetConnection()
