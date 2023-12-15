@@ -11,7 +11,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/pusher/NWWebSocket.git", .upToNextMajor(from: "0.5.4")),
         .package(url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap", .upToNextMajor(from: "1.0.0")),
-    ],
+    ], 
     targets: [
         .target(
             name: "PusherSwift",
