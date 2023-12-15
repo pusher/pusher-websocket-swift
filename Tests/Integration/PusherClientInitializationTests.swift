@@ -2,7 +2,7 @@ import XCTest
 
 @testable import PusherSwift
 
-let VERSION = "10.1.4"
+let VERSION = "10.1.5"
 
 class ClientInitializationTests: XCTestCase {
     private var key: String!
