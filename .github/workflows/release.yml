@@ -72,7 +72,7 @@ jobs:
           pod trunk push PusherSwift.podspec
           pod trunk push PusherSwiftWithEncryption.podspec
         env:
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TOKEN }}
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.PUSHER_CI_COCOAPODS_TOKEN }}
     outputs:
       release_version: ${{ needs.build.outputs.tag }}
 
