@@ -1,6 +1,9 @@
-# Pusher Channels Swift Client (also works with Objective-C)
+# Pusher Channels - Swift Client
 
-![Build Status](https://app.bitrise.io/app/3c6dac112b98e7fe.svg?token=n0z-aWua_Bc35kUGu4qpYg)
+> [!NOTE]  
+> Also works with Objective-C
+
+
 [![codecov](https://codecov.io/gh/pusher/pusher-websocket-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/pusher/pusher-websocket-swift)
 [![Latest Release](https://img.shields.io/github/v/release/pusher/pusher-websocket-swift)](https://github.com/pusher/pusher-websocket-swift/releases)
 [![CocoaPods](https://img.shields.io/cocoapods/v/PusherSwift)](https://img.shields.io/cocoapods/v/PusherSwift)
@@ -10,7 +13,7 @@
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/pusher/pusher-websocket-swift/master/LICENSE.md)
 
-This is the [Pusher Channels](https://pusher.com/channels) websocket client, PusherSwift, which supports iOS, macOS (OS X) and tvOS. It works with Swift and Objective-C.
+This is the [Pusher Channels](https://pusher.com/channels) websocket client, PusherSwift, which supports iOS, watchOS, macOS (OS X) and tvOS. It works with Swift and Objective-C.
 
 For tutorials and more in-depth information about Pusher Channels, visit our [official docs](https://pusher.com/docs/channels).
 
@@ -23,6 +26,7 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 - iOS 13.0 and above
 - macOS (OS X) 10.15 and above
 - tvOS 13.0 and above
+- watchOS 6.0 and above
 
 ### Legacy OS support
 
