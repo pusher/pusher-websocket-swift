@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.10
 
 import PackageDescription
 
@@ -17,7 +17,7 @@ let package = Package(
             name: "PusherSwift",
             dependencies: [
                 "NWWebSocket",
-                "TweetNacl",
+                .product(name: "TweetNacl", package: "tweetnacl-swiftwrap"),
             ],
             path: "Sources"
         ),

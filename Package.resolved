@@ -1,25 +1,24 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "NWWebSocket",
-        "repositoryURL": "https://github.com/pusher/NWWebSocket.git",
-        "state": {
-          "branch": null,
-          "revision": "19d23951c8099304ad98e2fc762fa23d6bfab0b9",
-          "version": "0.5.3"
-        }
-      },
-      {
-        "package": "TweetNacl",
-        "repositoryURL": "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
-        "state": {
-          "branch": null,
-          "revision": "d1552db4d907f2c5cb3d1bf1336496b2e16c8ecf",
-          "version": "1.0.2"
-        }
+  "originHash" : "605cc700630e4320c3649a030310fe4d880c160d3c2791f93c8744c936480120",
+  "pins" : [
+    {
+      "identity" : "nwwebsocket",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pusher/NWWebSocket.git",
+      "state" : {
+        "revision" : "1e545fcb53966272fc042aa17ae932f11239e00f",
+        "version" : "0.5.4"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "tweetnacl-swiftwrap",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
+      "state" : {
+        "revision" : "d1552db4d907f2c5cb3d1bf1336496b2e16c8ecf",
+        "version" : "1.0.2"
+      }
+    }
+  ],
+  "version" : 3
 }
