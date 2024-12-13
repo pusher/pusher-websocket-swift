@@ -233,7 +233,21 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
         // Resetting connection if we receive another POSIXError
         // than ENOTCONN (57 - Socket is not connected)
-        fatalError("TODO: FIX THIS PATH")
+        if let urlError = error as? URLError, urlError.code.rawValue != POSIXError.ENOTCONN.rawValue {
+            resetConnection()
+
+            guard !intentionalDisconnect else {
+                Logger.shared.debug(for: .intentionalDisconnection)
+                return
+            }
+
+            guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
+                Logger.shared.debug(for: .maxReconnectAttemptsLimitReached)
+                return
+            }
+
+            attemptReconnect()
+        }
 //        if case .posix(let code) = error, code != .ENOTCONN {
 //            resetConnection()
 //
