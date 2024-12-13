@@ -48,7 +48,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
      - parameter reason: Optional further information on the connection closure.
      */
     public func webSocketDidDisconnect(connection: WebSocketConnection,
-                                       closeCode: NWProtocolWebSocket.CloseCode,
+                                       closeCode: URLSessionWebSocketTask.CloseCode,
                                        reason: Data?) {
         resetConnection()
 
@@ -64,7 +64,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
         // Attempt reconnect if possible
 
         // `autoReconnect` option is ignored if the closure code is within the 4000-4999 range
-        if case .privateCode = closeCode {} else {
+
+        if (4000...4999).contains(closeCode.rawValue) {} else {
             guard self.options.autoReconnect else {
                 return
             }
@@ -86,7 +87,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
         }
     }
 
-    public func webSocketDidAttemptBetterPathMigration(result: Result<WebSocketConnection, NWError>) {
+    public func webSocketDidAttemptBetterPathMigration(result: Result<WebSocketConnection, Error>) {
         switch result {
         case .success:
             updateConnectionState(to: .reconnecting)
@@ -94,7 +95,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
         case .failure(let error):
             Logger.shared.debug(for: .errorReceived,
                                 context: """
-                Path migration error: \(error.debugDescription)
+                Path migration error: \(error)
                 """)
         }
     }
@@ -106,7 +107,7 @@ extension PusherConnection: WebSocketConnectionDelegate {
      `PusherChannelsProtocolCloseCode.ReconnectionStrategy`.
      - Parameter closeCode: The closure code received by the WebSocket connection.
      */
-    func attemptReconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+    func attemptReconnect(closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) {
         guard connectionState != .connected else {
             return
         }
@@ -118,8 +119,8 @@ extension PusherConnection: WebSocketConnectionDelegate {
         // Reconnect attempt according to Pusher Channels Protocol close code (if present).
         // (Otherwise, the default behavior is to attempt reconnection after backing off).
         var channelsCloseCode: ChannelsProtocolCloseCode?
-        if case let .privateCode(code) = closeCode {
-            channelsCloseCode = ChannelsProtocolCloseCode(rawValue: code)
+        if (4000...4999).contains(closeCode.rawValue) {
+            channelsCloseCode = ChannelsProtocolCloseCode(rawValue: UInt16(closeCode.rawValue))
         }
         let strategy = channelsCloseCode?.reconnectionStrategy ?? .reconnectAfterBackingOff
 
@@ -186,29 +187,29 @@ extension PusherConnection: WebSocketConnectionDelegate {
     /// - Parameters:
     ///   - closeCode: The closure code for the websocket connection.
     ///   - reason: Optional further information on the connection closure.
-    func logDisconnection(closeCode: NWProtocolWebSocket.CloseCode, reason: Data?) {
-        var rawCode: UInt16!
-        switch closeCode {
-        case .protocolCode(let definedCode):
-            rawCode = definedCode.rawValue
+    func logDisconnection(closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
+//        var rawCode: UInt16!
+//        switch closeCode {
+//        case .protocolCode(let definedCode):
+//            rawCode = definedCode.rawValue
+//
+//        case .applicationCode(let applicationCode):
+//            rawCode = applicationCode
+//
+//        case .privateCode(let protocolCode):
+//            rawCode = protocolCode
+//        @unknown default:
+//            fatalError()
+//        }
 
-        case .applicationCode(let applicationCode):
-            rawCode = applicationCode
-
-        case .privateCode(let protocolCode):
-            rawCode = protocolCode
-        @unknown default:
-            fatalError()
-        }
-
-        var closeMessage: String = "Close code: \(String(describing: rawCode))."
-        if let reason = reason,
-            let reasonString = String(data: reason, encoding: .utf8) {
-            closeMessage += " Reason: \(reasonString)."
-        }
-
-        Logger.shared.debug(for: .disconnectionWithoutError,
-                            context: closeMessage)
+//        var closeMessage: String = "Close code: \(String(describing: rawCode))."
+//        if let reason = reason,
+//            let reasonString = String(data: reason, encoding: .utf8) {
+//            closeMessage += " Reason: \(reasonString)."
+//        }
+//
+//        Logger.shared.debug(for: .disconnectionWithoutError,
+//                            context: closeMessage)
     }
 
     /**
@@ -224,28 +225,29 @@ extension PusherConnection: WebSocketConnectionDelegate {
         //
     }
 
-    public func webSocketDidReceiveError(connection: WebSocketConnection, error: NWError) {
+    public func webSocketDidReceiveError(connection: WebSocketConnection, error: Error) {
         Logger.shared.debug(for: .errorReceived,
                             context: """
-            Error: \(error.debugDescription)
+            Error: \(error)
             """)
 
         // Resetting connection if we receive another POSIXError
         // than ENOTCONN (57 - Socket is not connected)
-        if case .posix(let code) = error, code != .ENOTCONN {
-            resetConnection()
-
-            guard !intentionalDisconnect else {
-                Logger.shared.debug(for: .intentionalDisconnection)
-                return
-            }
-
-            guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
-                Logger.shared.debug(for: .maxReconnectAttemptsLimitReached)
-                return
-            }
-
-            attemptReconnect()
-        }
+        fatalError("TODO: FIX THIS PATH")
+//        if case .posix(let code) = error, code != .ENOTCONN {
+//            resetConnection()
+//
+//            guard !intentionalDisconnect else {
+//                Logger.shared.debug(for: .intentionalDisconnection)
+//                return
+//            }
+//
+//            guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
+//                Logger.shared.debug(for: .maxReconnectAttemptsLimitReached)
+//                return
+//            }
+//
+//            attemptReconnect()
+//        }
     }
 }

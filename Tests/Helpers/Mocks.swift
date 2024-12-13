@@ -11,7 +11,7 @@ class MockWebSocket: NWWebSocket {
     var eventGivenToCallback: PusherEvent?
 
     init() {
-        super.init(url: URL(string: "test")!)
+        super.init(url: URL(string: "test")!, options: .default)
     }
 
     func appendToCallbackCheckString(_ str: String) {
@@ -42,7 +42,7 @@ class MockWebSocket: NWWebSocket {
         )
     }
 
-    override func disconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
+    override func disconnect(closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure) {
         _ = stubber.stub(
             functionName: "disconnect",
             args: nil,
