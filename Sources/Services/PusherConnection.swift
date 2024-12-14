@@ -1,5 +1,4 @@
 import Foundation
-import NWWebSocket
 
 // swiftlint:disable file_length type_body_length
 

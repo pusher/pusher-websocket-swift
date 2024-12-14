@@ -1,5 +1,4 @@
 import Foundation
-import NWWebSocket
 
 let PROTOCOL = 7
 let VERSION = "10.1.5"

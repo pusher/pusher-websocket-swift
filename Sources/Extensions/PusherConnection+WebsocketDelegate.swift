@@ -1,6 +1,5 @@
 import Foundation
 import Network
-import NWWebSocket
 
 extension PusherConnection: WebSocketConnectionDelegate {
 
