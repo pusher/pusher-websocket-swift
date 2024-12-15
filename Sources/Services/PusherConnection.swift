@@ -11,7 +11,7 @@ import Foundation
     open var socketId: String?
     open var connectionState = ConnectionState.disconnected
     open var channels = PusherChannels()
-    open var socket: NWWebSocket!
+    open var socket: WebSocketClient!
     open var URLSession: Foundation.URLSession
     open var userDataFetcher: (() -> PusherPresenceChannelMember)?
     open var reconnectAttemptsMax: Int?
@@ -59,7 +59,7 @@ import Foundation
     */
     public init(
         key: String,
-        socket: NWWebSocket,
+        socket: WebSocketClient,
         url: String,
         options: PusherClientOptions,
         URLSession: Foundation.URLSession = Foundation.URLSession.shared

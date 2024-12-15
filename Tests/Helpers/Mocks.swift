@@ -3,7 +3,7 @@ import Network
 
 @testable import PusherSwift
 
-class MockWebSocket: NWWebSocket {
+class MockWebSocket: WebSocketClient {
     let stubber = StubberForMocks()
     var callbackCheckString: String = ""
     var objectGivenToCallback: Any?

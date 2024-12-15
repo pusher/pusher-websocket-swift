@@ -1,7 +1,7 @@
 import Foundation
 
 /// A WebSocket client that manages a socket connection.
-open class NWWebSocket: WebSocketConnection {
+open class WebSocketClient: WebSocketConnection {
 
     // MARK: - Public properties
 
