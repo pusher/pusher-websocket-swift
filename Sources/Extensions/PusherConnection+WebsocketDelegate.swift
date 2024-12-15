@@ -187,28 +187,14 @@ extension PusherConnection: WebSocketConnectionDelegate {
     ///   - closeCode: The closure code for the websocket connection.
     ///   - reason: Optional further information on the connection closure.
     func logDisconnection(closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
-//        var rawCode: UInt16!
-//        switch closeCode {
-//        case .protocolCode(let definedCode):
-//            rawCode = definedCode.rawValue
-//
-//        case .applicationCode(let applicationCode):
-//            rawCode = applicationCode
-//
-//        case .privateCode(let protocolCode):
-//            rawCode = protocolCode
-//        @unknown default:
-//            fatalError()
-//        }
+        var closeMessage: String = "Close code: \(String(describing: closeCode.rawValue))."
+        if let reason = reason,
+            let reasonString = String(data: reason, encoding: .utf8) {
+            closeMessage += " Reason: \(reasonString)."
+        }
 
-//        var closeMessage: String = "Close code: \(String(describing: rawCode))."
-//        if let reason = reason,
-//            let reasonString = String(data: reason, encoding: .utf8) {
-//            closeMessage += " Reason: \(reasonString)."
-//        }
-//
-//        Logger.shared.debug(for: .disconnectionWithoutError,
-//                            context: closeMessage)
+        Logger.shared.debug(for: .disconnectionWithoutError,
+                            context: closeMessage)
     }
 
     /**
