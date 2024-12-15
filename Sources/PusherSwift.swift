@@ -26,7 +26,7 @@ let CLIENT_NAME = "pusher-websocket-swift"
     public init(key: String, options: PusherClientOptions = PusherClientOptions()) {
         self.key = key
         let urlString = URL.channelsSocketUrl(key: key, options: options)
-        var config = URLSessionConfiguration.default
+        let config = URLSessionConfiguration.default
         config.httpAdditionalHeaders = [
             "Sec-WebSocket-Protocol": "pusher-channels-protocol-\(PROTOCOL)"
         ]
