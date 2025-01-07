@@ -1174,6 +1174,7 @@ The tests also get run on Github Actions, see [CI Action](https://github.com/pus
 - If you have found a bug, please open an issue.
 - If you have a feature request, please open an issue.
 - If you want to contribute, please submit a pull request (preferably with some tests 🙂 ).
+- If you do not receive a timely response, feel free to check our [support portal](https://docs.bird.com/pusher).
 
 ## Credits
 
