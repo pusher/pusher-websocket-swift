@@ -233,20 +233,5 @@ extension PusherConnection: WebSocketConnectionDelegate {
 
             attemptReconnect()
         }
-//        if case .posix(let code) = error, code != .ENOTCONN {
-//            resetConnection()
-//
-//            guard !intentionalDisconnect else {
-//                Logger.shared.debug(for: .intentionalDisconnection)
-//                return
-//            }
-//
-//            guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
-//                Logger.shared.debug(for: .maxReconnectAttemptsLimitReached)
-//                return
-//            }
-//
-//            attemptReconnect()
-//        }
     }
 }
