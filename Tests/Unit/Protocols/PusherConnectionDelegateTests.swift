@@ -81,7 +81,12 @@ class PusherConnectionDelegateTests: XCTestCase {
                 isConnected.fulfill()
 
                 // Spoof an unintentional disconnection event (that should not reconnect)
-                self.socket.disconnect(closeCode: .privateCode(ChannelsProtocolCloseCode.connectionIsUnauthorized.rawValue))
+                let closeCode = URLSessionWebSocketTask.CloseCode(
+                    rawValue: Int(ChannelsProtocolCloseCode.connectionIsUnauthorized.rawValue)
+                )
+                self.socket.disconnect(
+                    closeCode: closeCode!
+                )
             } else if calls.count == 3 {
                 XCTAssertEqual(calls[0].name, "connectionChange")
                 XCTAssertEqual(calls[0].args?.first as? ConnectionState, ConnectionState.disconnected)
@@ -115,7 +120,12 @@ class PusherConnectionDelegateTests: XCTestCase {
                 isConnected.fulfill()
 
                 // Spoof an unintentional disconnection event (that should attempt a reconnect)
-                self.socket.disconnect(closeCode: .privateCode(ChannelsProtocolCloseCode.genericReconnectImmediately.rawValue))
+                let closeCode = URLSessionWebSocketTask.CloseCode(
+                    rawValue: Int(ChannelsProtocolCloseCode.genericReconnectImmediately.rawValue)
+                )
+                self.socket.disconnect(
+                    closeCode: closeCode!
+                )
             } else if calls.count == 6 {
                 XCTAssertEqual(calls[0].name, "connectionChange")
                 XCTAssertEqual(calls[0].args?.first as? ConnectionState, ConnectionState.disconnected)
