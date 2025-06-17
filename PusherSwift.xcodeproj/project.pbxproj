@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -74,6 +74,9 @@
 		E2CFE43122D79CA7004187C3 /* EventParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFE43022D79CA7004187C3 /* EventParser.swift */; };
 		E2F40FA523ED782B00985C40 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA423ED782B00985C40 /* Crypto.swift */; };
 		E2F40FA723ED79BC00985C40 /* CryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F40FA623ED79BC00985C40 /* CryptoTests.swift */; };
+		E468054E2E015A300054E468 /* WebSocketClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E468054D2E015A300054E468 /* WebSocketClientTests.swift */; };
+		E46805542E015A350054E468 /* NWWebSocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46805512E015A350054E468 /* NWWebSocketServer.swift */; };
+		E46805552E015A350054E468 /* WebSocketServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46805522E015A350054E468 /* WebSocketServerConnection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +161,9 @@
 		E2CFE43022D79CA7004187C3 /* EventParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventParser.swift; sourceTree = "<group>"; };
 		E2F40FA423ED782B00985C40 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		E2F40FA623ED79BC00985C40 /* CryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTests.swift; sourceTree = "<group>"; };
+		E468054D2E015A300054E468 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
+		E46805512E015A350054E468 /* NWWebSocketServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NWWebSocketServer.swift; sourceTree = "<group>"; };
+		E46805522E015A350054E468 /* WebSocketServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketServerConnection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,6 +380,8 @@
 		539D9AF72507E11200B5765A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E46805532E015A350054E468 /* Server */,
+				E468054D2E015A300054E468 /* WebSocketClientTests.swift */,
 				33BB99641D21226C00B25C2A /* PusherConnectionTests.swift */,
 				E2594CE32447753200E36300 /* ChannelEventQueueTests.swift */,
 				E291AFA124486CAB00594552 /* ChannelEventQueue+DecryptionTests.swift */,
@@ -407,6 +415,15 @@
 				57A44492264942B700984790 /* NWWebSocket.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E46805532E015A350054E468 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				E46805512E015A350054E468 /* NWWebSocketServer.swift */,
+				E46805522E015A350054E468 /* WebSocketServerConnection.swift */,
+			);
+			path = Server;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -628,7 +645,10 @@
 				33BB99791D21230100B25C2A /* PusherClientInitializationTests.swift in Sources */,
 				33BB99771D21230100B25C2A /* PresenceChannelTests.swift in Sources */,
 				33BB997C1D21230100B25C2A /* PusherTopLevelAPITests.swift in Sources */,
+				E468054E2E015A300054E468 /* WebSocketClientTests.swift in Sources */,
 				736E53F7242A45AC0052CC1B /* XCTest+Assertions.swift in Sources */,
+				E46805542E015A350054E468 /* NWWebSocketServer.swift in Sources */,
+				E46805552E015A350054E468 /* WebSocketServerConnection.swift in Sources */,
 				57F6E444269C5A2E00ECFAD4 /* TestObjects.swift in Sources */,
 				E2594CE42447753200E36300 /* ChannelEventQueueTests.swift in Sources */,
 				33BB997B1D21230100B25C2A /* PusherIncomingEventHandlingTests.swift in Sources */,

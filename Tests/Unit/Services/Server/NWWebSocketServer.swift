@@ -77,9 +77,9 @@ internal class WebSocketServer {
         case .ready:
             print("Server ready.")
         case .cancelled:
-            self.stopSever(error: nil)
+            self.stopServer(error: nil)
         case .failed(let error):
-            self.stopSever(error: error)
+            self.stopServer(error: error)
         @unknown default:
             fatalError()
         }
@@ -90,7 +90,7 @@ internal class WebSocketServer {
         print("server did close connection \(connection.id)")
     }
 
-    private func stopSever(error: NWError?) {
+    private func stopServer(error: NWError?) {
         self.listener = nil
         for connection in self.connectionsByID.values {
             connection.didStopHandler = nil
