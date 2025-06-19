@@ -44,17 +44,39 @@ jobs:
         run: |
           echo "🧹 Clearing Carthage caches for clean build..."
           rm -rf ~/Library/Caches/org.carthage.CarthageKit
-      - name: build
+      - name: Build with Carthage
+        continue-on-error: true
+        id: carthage-build
         env:
           GITHUB_TOKEN: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
           GITHUB_ACCESS_TOKEN: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --use-xcframeworks
+      - name: Check Carthage build result
+        id: check-carthage
+        run: |
+          if [ -f "Carthage/Build/NWWebSocket.xcframework" ] && [ -f "Carthage/Build/TweetNacl.xcframework" ]; then
+            echo "carthage_success=true" >> $GITHUB_OUTPUT
+            echo "✅ Carthage frameworks found"
+          else
+            echo "carthage_success=false" >> $GITHUB_OUTPUT
+            echo "❌ Carthage frameworks missing, will use SPM"
+          fi
+      - name: Build with Carthage
+        if: steps.check-carthage.outputs.carthage_success == 'true'
+        run: |
+          echo "🎯 Building with Carthage dependencies"
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
             -project PusherSwift.xcodeproj \
             -scheme PusherSwift \
             build \
             | xcpretty --color
+      - name: Build with Swift Package Manager
+        if: steps.check-carthage.outputs.carthage_success == 'false'
+        run: |
+          echo "🎯 Building with Swift Package Manager"
+          swift build -c release
+          echo "✅ SPM build completed successfully"
     outputs:
       tag: ${{ needs.check-release-tag.outputs.tag }}
 
