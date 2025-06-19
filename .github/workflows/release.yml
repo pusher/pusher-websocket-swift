@@ -43,6 +43,7 @@ jobs:
       - name: build
         env:
           GITHUB_TOKEN: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
+          GITHUB_ACCESS_TOKEN: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --use-xcframeworks
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
