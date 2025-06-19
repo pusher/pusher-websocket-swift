@@ -41,6 +41,8 @@ jobs:
         with:
           xcode-version: '16.2.0'
       - name: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --use-xcframeworks
           set -o pipefail && env NSUnbufferedIO=YES xcodebuild \

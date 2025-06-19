@@ -20,8 +20,10 @@ jobs:
         with:
           path: Carthage
           key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
-      - name: Build
+      - name: Build with Carthage
         if: steps.carthage-cache.outputs.cache-hit != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
         run: |
           sh ./Consumption-Tests/Shared/carthage.sh bootstrap --cache-builds --use-xcframeworks
       - uses: futureware-tech/simulator-action@v1
