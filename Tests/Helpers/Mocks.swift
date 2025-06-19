@@ -327,9 +327,8 @@ class MockSession: URLSession {
         }
 
         override func resume() {
-            DispatchQueue.global(qos: .default).async {
-                self.completionHandler!(self.mockResponse.data, self.mockResponse.urlResponse, self.mockResponse.error)
-            }
+            // Call synchronously to avoid race conditions with Swift 6.0+ stricter memory management
+            self.completionHandler!(self.mockResponse.data, self.mockResponse.urlResponse, self.mockResponse.error)
         }
     }
 }
