@@ -82,7 +82,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 10.1.0'
+pod 'PusherSwift', '~> 10.1.6'
 ```
 
 Then, run the following command:
@@ -150,7 +150,7 @@ let package = Package(
             targets: ["YourPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "10.1.0"),
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "10.1.6"),
     ],
     targets: [
         .target(
@@ -609,7 +609,7 @@ PusherChannel *myChannel = [pusher subscribeWithChannelName:@"my-channel"];
 
 This returns PusherChannel object, which events can be bound to.
 
-For non-presence channels, you can also provide a function that will be called when a client either subscribes or unsubscribes to a channel with the number of subscribers as a parameter. Also, this function is available as a parameter to `subscribe` function. 
+For non-presence channels, you can also provide a function that will be called when a client either subscribes or unsubscribes to a channel with the number of subscribers as a parameter. Also, this function is available as a parameter to `subscribe` function.
 
 ```swift
 let onSubscriptionCountChanged = { (count: Int) in
@@ -644,9 +644,9 @@ Subscribing to private channels involves the client being authenticated. See the
 
 Similar to Private channels, you can also subscribe to a [private encrypted channel](https://pusher.com/docs/channels/using_channels/encrypted-channels). This library now fully supports end-to-end encryption. This means that only you and your connected clients will be able to read your messages. Pusher cannot decrypt them.
 
-Like with private channels, you must provide an authentication endpoint. That endpoint must be using a [server client that supports end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels#server). There is a [demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption). 
+Like with private channels, you must provide an authentication endpoint. That endpoint must be using a [server client that supports end-to-end encryption](https://pusher.com/docs/channels/using_channels/encrypted-channels#server). There is a [demonstration endpoint to look at using nodejs](https://github.com/pusher/pusher-channels-auth-example#using-e2e-encryption).
 
-The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed. 
+The shared secret used to decrypt events is loaded from the same auth endpoint request that is used to authorize your subscription. There is also a mechanism for reloading the shared secret if your encryption master key changes. If an event is encountered that cannot be decrypted, a request is made to your auth endpoint to attempt to load the new shared secret. If that request fails or if the returned secret still cannot decrypt the event then that event will be skipped, the `failedToDecryptEvent` connection delegate function will be called, and the next received event will be processed.
 
 Because of the requirement to reload the shared secret on demand, you can only use the following [auth methods](#configuration): `endpoint`, `authRequestBuilder`, `authorizer`. It is not possible to pass an instance of `PusherAuth` to the `subscribe` function if you are subscribing to an encrypted channel.
 
@@ -833,7 +833,7 @@ Events can be bound to at 2 levels; globally and per channel. When binding to an
 
 ### Per-channel events
 
-These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application. 
+These are bound to a specific channel, and mean that you can reuse event names in different parts of your client application.
 
 #### Swift
 
@@ -894,7 +894,7 @@ PusherChannel *chan = [pusher subscribeWithChannelName:@"my-channel"];
 
 ### Global events
 
-You can attach behavior to these events regardless of the channel the event is broadcast to. 
+You can attach behavior to these events regardless of the channel the event is broadcast to.
 
 #### Swift
 
@@ -1005,7 +1005,7 @@ myChannel.bind(eventName: "price-update", eventCallback: { (event: PusherEvent) 
 
 ```
 
-Alternatively, you could use [`JSONSerialization`](https://developer.apple.com/documentation/foundation/jsonserialization) to decode the JSON into Swift data types: 
+Alternatively, you could use [`JSONSerialization`](https://developer.apple.com/documentation/foundation/jsonserialization) to decode the JSON into Swift data types:
 
 #### Swift
 
@@ -1073,7 +1073,7 @@ pusher.bind({ (message: Any?) in
 ```
 
 #### Objective-C
-    
+
 ```objc
 [pusher bind:^void (NSDictionary *data) {
     NSString *eventName = data[@"event"];

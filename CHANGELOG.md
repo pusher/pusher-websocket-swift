@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [10.1.6](https://github.com/pusher/pusher-websocket-swift/compare/10.1.5...10.1.6) - 2025-06-20
+
+### Fixed
+
+- Upgrade NWWebSocket library to version 0.5.7 to fix reported crashes due to data race.
+
 ## [10.1.3](https://github.com/pusher/pusher-websocket-swift/compare/10.1.2...10.1.3) - 2023-05-19
 
 ### Fixed
