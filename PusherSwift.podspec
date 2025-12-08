@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PusherSwift'
-  s.version          = '10.1.8'
+  s.version          = '10.1.9'
   s.summary          = 'A Pusher client library in Swift'
   s.homepage         = 'https://github.com/pusher/pusher-websocket-swift'
   s.license          = 'MIT'
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.requires_arc  = true
   s.source_files  = ['Sources/**/*.swift']
 
-  s.dependency 'TweetNacl', '~> 1.0.0'
+  s.dependency 'KHTweetNacl', '~> 1.1.0'
   s.dependency 'NWWebSocket', '~> 0.5.9'
 
   s.ios.deployment_target = '13.0'
