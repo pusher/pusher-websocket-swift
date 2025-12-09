@@ -1,6 +1,10 @@
 import CryptoKit
 import Foundation
+#if SWIFT_PACKAGE
 import TweetNacl
+#else
+import PusherTweetNacl
+#endif
 
 struct Crypto {
 
