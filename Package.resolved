@@ -12,11 +12,11 @@
       },
       {
         "package": "TweetNacl",
-        "repositoryURL": "https://github.com/khipu/tweetnacl-swiftwrap",
+        "repositoryURL": "https://github.com/pusher/tweetnacl-swiftwrap",
         "state": {
           "branch": null,
-          "revision": "7f6907d8352fd4454bdda4fc4b059baa66fe014a",
-          "version": "1.1.5"
+          "revision": "92375f83c3af1b8af011d3c0af1001929844b936",
+          "version": "1.2.0"
         }
       }
     ]
