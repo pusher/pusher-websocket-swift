@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [10.1.9](https://github.com/pusher/pusher-websocket-swift/compare/10.1.8...10.1.9) - 2025-12-08
+## [10.1.9](https://github.com/pusher/pusher-websocket-swift/compare/10.1.8...10.1.9) - 2025-12-09
 
 ### Changed
 
-- Switched TweetNacl dependency to KHTweetNacl fork for Xcode 16+ compatibility
+- Switched TweetNacl dependency to Pusher's own fork for Xcode 16+ compatibility
 
 ## [10.1.8](https://github.com/pusher/pusher-websocket-swift/compare/10.1.6...10.1.7) - 2025-12-05
 
