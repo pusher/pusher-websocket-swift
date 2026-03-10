@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/pusher/NWWebSocket.git",
         "state": {
           "branch": null,
-          "revision": "501c6bd6063628e1d50661a3742311d812ba6546",
-          "version": "0.5.9"
+          "revision": "3d3b8a24b17a0f079195031ca86af117fc158bef",
+          "version": "0.5.10"
         }
       },
       {
