@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [10.1.10](https://github.com/pusher/pusher-websocket-swift/compare/10.1.9...10.1.10) - 2026-03-10
+
+### Fixed
+
+- Upgrade NWWebSocket to 0.5.10 to treat all POSIX errors as disconnections, fixing zombie connections caused by ENODATA (96) and other unrecognised error codes
+
 ## [10.1.9](https://github.com/pusher/pusher-websocket-swift/compare/10.1.8...10.1.9) - 2025-12-09
 
 ### Changed
