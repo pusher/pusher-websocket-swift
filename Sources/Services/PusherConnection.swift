@@ -30,6 +30,7 @@ import NWWebSocket
     var pongResponseTimeoutTimer: Timer?
     var activityTimeoutTimer: Timer?
     var intentionalDisconnect: Bool = false
+    var terminalEventHandledForCurrentAttempt: Bool = false
 
     var eventQueue: ChannelEventQueue
     var eventFactory: EventFactory
@@ -264,8 +265,14 @@ import NWWebSocket
         Disconnects the websocket
     */
     open func disconnect() {
-        if self.connectionState == .connected {
+        if self.connectionState == .connected
+            || self.connectionState == .connecting
+            || self.connectionState == .reconnecting
+            || self.connectionState == .disconnecting {
             intentionalDisconnect = true
+            terminalEventHandledForCurrentAttempt = true
+            reconnectTimer?.invalidate()
+            reconnectTimer = nil
             updateConnectionState(to: .disconnecting)
             self.socket.disconnect()
         }
@@ -277,6 +284,9 @@ import NWWebSocket
     open func connect() {
         // reset the intentional disconnect state
         intentionalDisconnect = false
+        terminalEventHandledForCurrentAttempt = false
+        reconnectTimer?.invalidate()
+        reconnectTimer = nil
 
         if self.connectionState == .connected {
             return
@@ -365,6 +375,10 @@ import NWWebSocket
         process
     */
     private func resetConnectionAndAttemptReconnect() {
+        guard !terminalEventHandledForCurrentAttempt else { return }
+
+        terminalEventHandledForCurrentAttempt = true
+        socket.disconnect()
         resetConnection()
 
         guard !intentionalDisconnect else {
@@ -500,6 +514,7 @@ import NWWebSocket
                             context: socketId)
         self.reconnectAttempts = 0
         self.reconnectTimer?.invalidate()
+        self.reconnectTimer = nil
 
         if options.activityTimeout == nil,
            let activityTimeoutFromServer = connectionData["activity_timeout"] as? TimeInterval {
