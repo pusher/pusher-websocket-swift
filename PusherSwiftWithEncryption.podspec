@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.source_files  = ['Sources/**/*.swift']
 
   s.dependency 'PusherTweetNacl', '~> 1.2.0'
-  s.dependency 'NWWebSocket', '~> 0.5.9'
+  s.dependency 'NWWebSocket', '~> 0.5.10'
 
   s.ios.deployment_target = '13.0'
   s.osx.deployment_target = '10.15'
