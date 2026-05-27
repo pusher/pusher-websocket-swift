@@ -50,12 +50,16 @@ extension PusherConnection: WebSocketConnectionDelegate {
     public func webSocketDidDisconnect(connection: WebSocketConnection,
                                        closeCode: NWProtocolWebSocket.CloseCode,
                                        reason: Data?) {
-        resetConnection()
-
-        guard !intentionalDisconnect else {
+        if intentionalDisconnect {
+            resetConnection()
             Logger.shared.debug(for: .intentionalDisconnection)
             return
         }
+
+        if terminalEventHandledForCurrentAttempt { return }
+
+        terminalEventHandledForCurrentAttempt = true
+        resetConnection()
 
         // Log the disconnection
 
@@ -105,11 +109,13 @@ extension PusherConnection: WebSocketConnectionDelegate {
      If the `closeCode` case is `.privateCode()`, then the reconnection logic is determined by
      `PusherChannelsProtocolCloseCode.ReconnectionStrategy`.
      - Parameter closeCode: The closure code received by the WebSocket connection.
-     */
+    */
     func attemptReconnect(closeCode: NWProtocolWebSocket.CloseCode = .protocolCode(.normalClosure)) {
         guard connectionState != .connected else {
             return
         }
+
+        if let reconnectTimer = reconnectTimer, reconnectTimer.isValid { return }
 
         guard reconnectAttemptsMax == nil || reconnectAttempts < reconnectAttemptsMax! else {
             return
@@ -137,13 +143,14 @@ extension PusherConnection: WebSocketConnectionDelegate {
             logReconnectionAttempt(strategy: strategy)
         }
 
-        reconnectTimer = Timer.scheduledTimer(
-            timeInterval: reconnectionAttemptTimeInterval(strategy: strategy),
-            target: self,
-            selector: #selector(connect),
-            userInfo: nil,
-            repeats: false
-        )
+        reconnectTimer = Timer.scheduledTimer(withTimeInterval: reconnectionAttemptTimeInterval(strategy: strategy),
+                                              repeats: false) { [weak self] timer in
+            guard let self = self else { return }
+
+            timer.invalidate()
+            self.reconnectTimer = nil
+            self.connect()
+        }
         reconnectAttempts += 1
     }
 
@@ -233,6 +240,10 @@ extension PusherConnection: WebSocketConnectionDelegate {
         // Resetting connection if we receive another POSIXError
         // than ENOTCONN (57 - Socket is not connected)
         if case .posix(let code) = error, code != .ENOTCONN {
+            if terminalEventHandledForCurrentAttempt { return }
+
+            terminalEventHandledForCurrentAttempt = true
+            socket.disconnect()
             resetConnection()
 
             guard !intentionalDisconnect else {
