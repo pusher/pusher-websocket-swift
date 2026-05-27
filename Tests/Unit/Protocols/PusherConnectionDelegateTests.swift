@@ -200,6 +200,25 @@ class PusherConnectionDelegateTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
+    func testSubscribedToChannelDelegateCalledWhenSubscriptionSucceedsWithNoData() {
+        let channelName = "private-no-data-channel"
+        let ex = expectation(description: "subscribedToChannel should be called even when subscription_succeeded has no data")
+        dummyDelegate.ex = ex
+        dummyDelegate.testingChannelName = channelName
+
+        _ = pusher.subscribe(channelName)
+        pusher.connect()
+
+        // Inject a subscription_succeeded event without a data field, matching real Pusher server
+        // behaviour for private channels. This is a regression test for the bug introduced in
+        // PR #227 where the delegate call was placed after a guard that returned early when data
+        // was absent.
+        let payload = "{\"event\":\"pusher_internal:subscription_succeeded\",\"channel\":\"\(channelName)\"}"
+        pusher.connection.webSocketDidReceiveMessage(connection: socket, string: payload)
+
+        waitForExpectations(timeout: 0.5)
+    }
+
     func testsubscriptionDidFailDelegateFunctionGetsCalledWhenChannelSubscriptionFails() {
         let ex = expectation(description: "the subscriptionDidFail function should be called")
         dummyDelegate.ex = ex

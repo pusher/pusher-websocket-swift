@@ -469,6 +469,7 @@ import NWWebSocket
 
         guard event.data != nil else {
             Logger.shared.debug(for: .subscriptionSucceededNoDataInPayload)
+            self.delegate?.subscribedToChannel?(name: channelName)
             return
         }
 
