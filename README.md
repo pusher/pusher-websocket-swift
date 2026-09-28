@@ -16,17 +16,17 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 
 ## Supported platforms
 - Swift 5.0 and above
-- Xcode 12.0 and above
+- Xcode 13.0 and above
 - Can be used with Objective-C
 
 ### Deployment targets
-- iOS 13.0 and above
-- macOS (OS X) 10.15 and above
-- tvOS 13.0 and above
+- iOS 15.0 and above
+- macOS (OS X) 12.0 and above
+- tvOS 15.0 and above
 
 ### Legacy OS support
 
-If you need support for older versions of iOS, macOS or tvOS, please use the latest v8.x release of the SDK.
+If you need support for older versions of iOS, macOS or tvOS, please use the latest v10.x release of the SDK.
 
 ## I just want to copy and paste some code to get me started
 
@@ -79,10 +79,10 @@ To integrate PusherSwift into your Xcode project using CocoaPods, specify it in 
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '15.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 10.1.10'
+pod 'PusherSwift', '~> 11.0.0'
 ```
 
 Then, run the following command:
@@ -150,7 +150,7 @@ let package = Package(
             targets: ["YourPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "10.1.10"),
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "11.0.0"),
     ],
     targets: [
         .target(

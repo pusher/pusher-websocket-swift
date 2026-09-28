@@ -18,11 +18,11 @@ A “suite” of projects/targets exist, each is configured to use one of:
 
 | Toolset                    | MINIMUM | LATEST |
 |----------------------------|---------|--------|
-| Xcode version              | 11.0      | 12.1   |
+| Xcode version              | 13.0      | 13.0   |
 | SWIFT_VERSION              | 5.0     |  5.3  |
-| IPHONEOS_DEPLOYMENT_TARGET | 13.0     |  14.1  |
-| MACOSX_DEPLOYMENT_TARGET   | 10.15   | 10.15  |
-| TVOS_DEPLOYMENT_TARGET     | 13.0     | 14.0  |
+| IPHONEOS_DEPLOYMENT_TARGET | 15.0     |  15.0  |
+| MACOSX_DEPLOYMENT_TARGET   | 12.0   | 12.0  |
+| TVOS_DEPLOYMENT_TARGET     | 15.0     | 15.0  |
 
 Giving us the following “suite”:
 
