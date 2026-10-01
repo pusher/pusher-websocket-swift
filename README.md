@@ -26,7 +26,7 @@ For tutorials and more in-depth information about Pusher Channels, visit our [of
 
 ### Legacy OS support
 
-If you need support for older versions of iOS, macOS or tvOS, please use the latest v10.x release of the SDK.
+If you need support for older versions of iOS, macOS or tvOS, please pin to `10.1.10` or earlier.
 
 ## I just want to copy and paste some code to get me started
 
@@ -82,7 +82,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '15.0'
 use_frameworks!
 
-pod 'PusherSwift', '~> 11.0.0'
+pod 'PusherSwift', '~> 10.2.0'
 ```
 
 Then, run the following command:
@@ -150,7 +150,7 @@ let package = Package(
             targets: ["YourPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "11.0.0"),
+        .package(url: "https://github.com/pusher/pusher-websocket-swift.git", from: "10.2.0"),
     ],
     targets: [
         .target(
