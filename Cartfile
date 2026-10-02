@@ -1,2 +1,2 @@
-github "pusher/tweetnacl-swiftwrap" ~> 1.2.0
-github "pusher/NWWebSocket" ~> 0.5.9
+github "pusher/tweetnacl-swiftwrap" ~> 1.3.0
+github "pusher/NWWebSocket" ~> 1.0.0

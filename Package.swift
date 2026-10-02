@@ -4,13 +4,13 @@ import PackageDescription
 
 let package = Package(
     name: "PusherSwift",
-    platforms: [.iOS("13.0"), .macOS("10.15"), .tvOS("13.0")],
+    platforms: [.iOS("15.0"), .macOS("12.0"), .tvOS("15.0")],
     products: [
         .library(name: "PusherSwift", targets: ["PusherSwift"])
     ],
     dependencies: [
-        .package(url: "https://github.com/pusher/NWWebSocket.git", .upToNextMajor(from: "0.5.9")),
-        .package(url: "https://github.com/pusher/tweetnacl-swiftwrap", .upToNextMajor(from: "1.2.0")),
+        .package(url: "https://github.com/pusher/NWWebSocket.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/pusher/tweetnacl-swiftwrap", .upToNextMajor(from: "1.3.0")),
     ],
     targets: [
         .target(
